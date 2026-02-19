@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Jeopardy | Quiz Game Show | GSU Math</title>
+<meta name="description" content="Test your math knowledge game-show style! Pick categories and point values. Free quiz game covering all math topics from Global Sovereign University.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0a1628;--blue:#1e3a5f;--gold:#ffd700;--teal:#0f766e;--cream:#f5f0e8;--slate:#94a3b8;--green:#4ade80;--red:#ef4444;--purple:#7c3aed}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--cream);min-height:100vh}
+.game-wrap{max-width:960px;margin:0 auto;padding:20px}
+
+.nav-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 0;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;font-size:13px;font-weight:600;text-decoration:none;transition:all .3s;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:var(--cream)}
+.nav-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3)}
+.nav-gsu{border-color:var(--gold);color:var(--gold)}
+.nav-gsu:hover{background:rgba(255,215,0,.15)}
+
+.header{text-align:center;padding:20px 0 15px}
+.header h1{font-family:'Oswald',sans-serif;font-size:2.2rem;color:var(--gold);letter-spacing:3px}
+.subtitle{color:var(--slate);font-size:.9rem;margin-top:5px}
+.badge-tag{display:inline-block;background:linear-gradient(135deg,var(--purple),#9333ea);color:var(--gold);padding:5px 16px;border-radius:50px;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+
+.geno-bar{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;margin-bottom:20px}
+.geno-img{width:45px;height:45px;border-radius:50%;border:2px solid var(--gold);object-fit:cover}
+.geno-speech{flex:1;font-size:.9rem;color:var(--slate);line-height:1.5}
+.geno-name{color:var(--gold);font-weight:700;margin-right:6px}
+
+.controls{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap;align-items:center}
+.ctrl-select{padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--cream);font-size:.85rem;font-family:'Inter',sans-serif}
+.ctrl-btn{padding:8px 18px;border-radius:8px;background:var(--purple);border:none;color:var(--cream);font-weight:600;cursor:pointer;font-size:.85rem;transition:all .2s}
+.ctrl-btn:hover{filter:brightness(1.2)}
+
+.score-bar{display:flex;gap:20px;justify-content:center;margin:15px 0;flex-wrap:wrap}
+.score-item{text-align:center;padding:10px 20px;background:rgba(255,255,255,.04);border-radius:10px;border:1px solid rgba(255,255,255,.08)}
+.score-val{font-size:1.5rem;font-weight:800;color:var(--gold)}
+.score-lbl{font-size:.7rem;color:var(--slate);text-transform:uppercase;letter-spacing:1px}
+
+/* Jeopardy Board */
+.board{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:20px 0}
+.cat-header{background:linear-gradient(135deg,var(--blue),#2d4a7a);padding:12px 6px;text-align:center;border-radius:8px 8px 0 0;font-weight:700;font-size:.75rem;color:var(--gold);letter-spacing:1px;text-transform:uppercase;min-height:60px;display:flex;align-items:center;justify-content:center}
+.cell-btn{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);padding:18px 8px;text-align:center;border-radius:6px;font-weight:800;font-size:1.2rem;color:var(--gold);cursor:pointer;transition:all .2s}
+.cell-btn:hover{background:rgba(124,58,237,.3);transform:scale(1.03)}
+.cell-btn.used{background:rgba(255,255,255,.02);border-color:rgba(255,255,255,.05);color:rgba(255,255,255,.15);cursor:default;pointer-events:none}
+@media(max-width:600px){.board{grid-template-columns:repeat(3,1fr)}.cat-header:nth-child(n+4){display:none}}
+
+/* Question Modal */
+.q-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.q-overlay.show{display:flex}
+.q-box{background:linear-gradient(135deg,#1a1a3e,var(--blue));border:3px solid var(--gold);border-radius:20px;padding:40px;text-align:center;max-width:600px;width:100%}
+.q-cat{font-size:.8rem;color:var(--purple);font-weight:600;text-transform:uppercase;letter-spacing:2px;margin-bottom:5px}
+.q-pts{font-size:1rem;color:var(--gold);font-weight:800;margin-bottom:20px}
+.q-text{font-size:1.3rem;color:var(--cream);line-height:1.6;margin-bottom:30px}
+.q-answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.q-ans{padding:14px;border-radius:10px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.12);color:var(--cream);font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s}
+.q-ans:hover{border-color:var(--gold);background:rgba(255,215,0,.1)}
+.q-ans.correct{border-color:var(--green);background:rgba(74,222,128,.2);color:var(--green)}
+.q-ans.wrong{border-color:var(--red);background:rgba(239,68,68,.2);color:var(--red)}
+@media(max-width:500px){.q-answers{grid-template-columns:1fr}}
+
+.badges{display:flex;gap:8px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.badge-pill{padding:6px 12px;border-radius:15px;font-size:.75rem;font-weight:600;opacity:.35}
+.badge-pill.earned{opacity:1;box-shadow:0 2px 10px rgba(255,215,0,.3)}
+.badge-pill.bronze{background:linear-gradient(135deg,#cd7f32,#8b4513);border:2px solid #cd7f32}
+.badge-pill.silver{background:linear-gradient(135deg,#c0c0c0,#808080);border:2px solid #c0c0c0}
+.badge-pill.gold{background:linear-gradient(135deg,var(--gold),#ffa000);border:2px solid var(--gold);color:var(--navy)}
+.badge-pill.platinum{background:linear-gradient(135deg,#e5e4e2,#b4b4b4);border:2px solid #e5e4e2;color:var(--navy)}
+
+.footer{text-align:center;padding:20px 0;margin-top:20px;border-top:1px solid rgba(255,255,255,.08);color:var(--slate);font-size:.8rem}
+.footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="game-wrap">
+
+<div class="nav-bar">
+  <a href="https://www.globalsovereignuniversity.org" class="nav-btn nav-gsu">🏠 GSU Home</a>
+  <a href="https://www.globalsovereignuniversity.org/mathification" class="nav-btn">📐 All Math Games</a>
+</div>
+
+<div class="badge-tag">Mathification • All Levels</div>
+<div class="header">
+  <h1>🏆 MATH JEOPARDY!</h1>
+  <div class="subtitle">850+ Questions • 6 Categories • Game Show Format</div>
+</div>
+
+<div class="geno-bar">
+  <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO" class="geno-img">
+  <div class="geno-speech"><span class="geno-name">GENO:</span> <span id="genoTxt">Welcome to Math Jeopardy! Pick a category and point value. Higher points mean harder questions. Let's see what you've got!</span></div>
+</div>
+
+<div class="controls">
+  <select class="ctrl-select" id="gradeSelect">
+    <option value="elementary">🟢 Elementary (3-5)</option>
+    <option value="middle" selected>🟡 Middle School (6-8)</option>
+    <option value="high">🔴 High School (9-12)</option>
+  </select>
+  <button class="ctrl-btn" onclick="newBoard()">🔄 New Board</button>
+</div>
+
+<div class="score-bar">
+  <div class="score-item"><div class="score-val" id="scoreVal">$0</div><div class="score-lbl">Score</div></div>
+  <div class="score-item"><div class="score-val" id="correctVal">0</div><div class="score-lbl">Correct</div></div>
+  <div class="score-item"><div class="score-val" id="streakVal">0</div><div class="score-lbl">Streak</div></div>
+</div>
+
+<div class="badges">
+  <span class="badge-pill bronze" id="jBronze">🥉 Bronze</span>
+  <span class="badge-pill silver" id="jSilver">🥈 Silver</span>
+  <span class="badge-pill gold" id="jGold">🥇 Gold</span>
+  <span class="badge-pill platinum" id="jPlat">💎 Platinum</span>
+</div>
+
+<div class="board" id="board"></div>
+
+<!-- Question Overlay -->
+<div class="q-overlay" id="qOverlay">
+  <div class="q-box">
+    <div class="q-cat" id="qCat"></div>
+    <div class="q-pts" id="qPts"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-answers" id="qAnswers"></div>
+    <button class="ctrl-btn" id="qNext" style="margin-top:20px;display:none" onclick="closeQ()">Continue →</button>
+  </div>
+</div>
+
+<div class="footer">
+  <p><a href="https://www.globalsovereignuniversity.org">Global Sovereign University</a> • 501(c)(3) Nonprofit</p>
+  <p style="margin-top:5px">"Building a Bridge to Freedom Through Education—Not Handouts"</p>
+</div>
+</div>
+
+<script>
+(function(){
+const QDB={
+elementary:{
+  "Place Value":[
+    {q:"What is the value of 5 in 352?",a:["50","5","500","350"],c:0},
+    {q:"Round 467 to the nearest hundred.",a:["500","400","470","460"],c:0},
+    {q:"What is 3,456 rounded to the nearest thousand?",a:["3,000","4,000","3,500","3,400"],c:0},
+    {q:"Which digit is in the tens place in 7,891?",a:["9","8","1","7"],c:0},
+    {q:"What number is 100 more than 2,345?",a:["2,445","2,355","3,345","2,346"],c:0}
+  ],
+  "Addition":[
+    {q:"What is 156 + 244?",a:["400","390","410","300"],c:0},
+    {q:"What is 999 + 1?",a:["1,000","1,001","999","9,991"],c:0},
+    {q:"367 + 433 = ?",a:["800","700","900","810"],c:0},
+    {q:"What is 1,250 + 750?",a:["2,000","1,900","2,100","1,750"],c:0},
+    {q:"585 + 415 = ?",a:["1,000","990","1,010","900"],c:0}
+  ],
+  "Subtraction":[
+    {q:"What is 500 − 175?",a:["325","375","225","335"],c:0},
+    {q:"1,000 − 456 = ?",a:["544","554","444","644"],c:0},
+    {q:"What is 800 − 267?",a:["533","543","433","567"],c:0},
+    {q:"2,500 − 1,750 = ?",a:["750","850","650","1,250"],c:0},
+    {q:"What is 10,000 − 3,333?",a:["6,667","7,667","6,777","7,333"],c:0}
+  ],
+  "Multiplication":[
+    {q:"What is 7 × 8?",a:["56","54","48","63"],c:0},
+    {q:"12 × 5 = ?",a:["60","55","65","50"],c:0},
+    {q:"What is 9 × 9?",a:["81","72","90","79"],c:0},
+    {q:"25 × 4 = ?",a:["100","75","125","80"],c:0},
+    {q:"What is 11 × 11?",a:["121","111","131","110"],c:0}
+  ],
+  "Fractions":[
+    {q:"What is ½ + ½?",a:["1","½","2","¾"],c:0},
+    {q:"What is ¼ of 100?",a:["25","50","75","20"],c:0},
+    {q:"Which is larger: ⅓ or ¼?",a:["⅓","¼","Same","Cannot tell"],c:0},
+    {q:"What is ½ of 50?",a:["25","30","20","15"],c:0},
+    {q:"2/4 simplified = ?",a:["½","¼","¾","2"],c:0}
+  ],
+  "Geometry":[
+    {q:"How many sides does a hexagon have?",a:["6","5","8","7"],c:0},
+    {q:"What is the perimeter of a 5×3 rectangle?",a:["16","15","8","30"],c:0},
+    {q:"A triangle has angles summing to?",a:["180°","360°","90°","270°"],c:0},
+    {q:"Area of a 4×4 square?",a:["16","8","12","20"],c:0},
+    {q:"How many faces does a cube have?",a:["6","4","8","12"],c:0}
+  ]
+},
+middle:{
+  "Pre-Algebra":[
+    {q:"Solve: 3x = 21",a:["x = 7","x = 8","x = 6","x = 63"],c:0},
+    {q:"What is −5 + (−3)?",a:["−8","−2","8","2"],c:0},
+    {q:"Evaluate: 2³",a:["8","6","9","16"],c:0},
+    {q:"Solve: x/4 = 12",a:["48","3","16","8"],c:0},
+    {q:"What is |−15|?",a:["15","−15","0","1"],c:0}
+  ],
+  "Ratios":[
+    {q:"Simplify 15:25",a:["3:5","5:3","1:2","15:25"],c:0},
+    {q:"If 3 apples cost $6, how much for 7?",a:["$14","$12","$21","$18"],c:0},
+    {q:"What is 40% of 200?",a:["80","40","60","100"],c:0},
+    {q:"Convert 3/4 to a percent.",a:["75%","34%","80%","70%"],c:0},
+    {q:"12 is what percent of 48?",a:["25%","30%","20%","50%"],c:0}
+  ],
+  "Integers":[
+    {q:"(−4) × (−3) = ?",a:["12","−12","−7","7"],c:0},
+    {q:"What is −20 ÷ 5?",a:["−4","4","−15","−25"],c:0},
+    {q:"Order: −3, 1, −7, 4 from least",a:["−7,−3,1,4","−3,−7,1,4","1,−3,4,−7","4,1,−3,−7"],c:0},
+    {q:"(−8) + 12 = ?",a:["4","−4","20","−20"],c:0},
+    {q:"(−6)² = ?",a:["36","−36","12","−12"],c:0}
+  ],
+  "Geometry":[
+    {q:"Area of triangle: base 10, height 6?",a:["30","60","16","36"],c:0},
+    {q:"Volume of cube with side 3?",a:["27","9","18","12"],c:0},
+    {q:"Circumference of circle, r=7? (use π≈3.14)",a:["43.96","21.98","153.86","14"],c:0},
+    {q:"Pythagorean theorem: a=3, b=4, c=?",a:["5","7","12","6"],c:0},
+    {q:"Supplementary angles sum to?",a:["180°","90°","360°","270°"],c:0}
+  ],
+  "Statistics":[
+    {q:"Mean of 4, 8, 6, 10, 2?",a:["6","8","5","7"],c:0},
+    {q:"Median of 3, 7, 1, 9, 5?",a:["5","7","3","1"],c:0},
+    {q:"Mode of 2, 3, 3, 5, 7, 3?",a:["3","5","2","7"],c:0},
+    {q:"Range of 12, 5, 8, 20, 3?",a:["17","15","8","20"],c:0},
+    {q:"Probability of heads on fair coin?",a:["1/2","1/4","1/3","1"],c:0}
+  ],
+  "Brain Teasers":[
+    {q:"I am a 2-digit number. My digits sum to 9. I am divisible by 5. What am I?",a:["45","54","90","36"],c:0},
+    {q:"What is the next prime after 29?",a:["31","33","37","30"],c:0},
+    {q:"A rectangle's perimeter is 30 and width is 5. Length?",a:["10","15","20","25"],c:0},
+    {q:"If 5! = 120, what is 6!?",a:["720","600","360","840"],c:0},
+    {q:"How many zeros in 10⁴?",a:["4","3","5","10"],c:0}
+  ]
+},
+high:{
+  "Algebra":[
+    {q:"Solve: 2x² = 50",a:["x = ±5","x = 25","x = ±25","x = 5"],c:0},
+    {q:"Factor: x² − 9",a:["(x+3)(x−3)","(x+9)(x−1)","(x−3)²","(x+3)²"],c:0},
+    {q:"Simplify: (3x²)(4x³)",a:["12x⁵","12x⁶","7x⁵","7x⁶"],c:0},
+    {q:"Solve: |2x − 4| = 10",a:["x=7 or x=−3","x=7","x=3","x=−3"],c:0},
+    {q:"What is log₂(64)?",a:["6","8","4","32"],c:0}
+  ],
+  "Functions":[
+    {q:"If f(x) = 3x + 1, what is f(4)?",a:["13","12","15","7"],c:0},
+    {q:"Domain of f(x) = 1/(x−2)?",a:["All reals, x≠2","All reals","x>2","x≥2"],c:0},
+    {q:"If f(x)=x² and g(x)=x+1, find f(g(2))",a:["9","5","8","4"],c:0},
+    {q:"Inverse of f(x) = 2x + 6?",a:["(x−6)/2","2x−6","x/2+6","(x+6)/2"],c:0},
+    {q:"Slope of y = −3x + 7?",a:["−3","7","3","−7"],c:0}
+  ],
+  "Trigonometry":[
+    {q:"sin(30°) = ?",a:["1/2","√3/2","1","√2/2"],c:0},
+    {q:"cos(0°) = ?",a:["1","0","−1","1/2"],c:0},
+    {q:"tan(45°) = ?",a:["1","0","√2","−1"],c:0},
+    {q:"In a right triangle, sin = opposite/?",a:["Hypotenuse","Adjacent","Opposite","Base"],c:0},
+    {q:"Period of sin(x)?",a:["2π","π","π/2","4π"],c:0}
+  ],
+  "Calculus Prep":[
+    {q:"lim(x→0) sin(x)/x = ?",a:["1","0","∞","DNE"],c:0},
+    {q:"If f(x)=x³, f'(x)= ?",a:["3x²","x²","3x","x³"],c:0},
+    {q:"∫2x dx = ?",a:["x² + C","2x + C","x + C","2x²+C"],c:0},
+    {q:"Derivative of a constant is?",a:["0","1","The constant","Undefined"],c:0},
+    {q:"lim(x→∞) 1/x = ?",a:["0","∞","1","DNE"],c:0}
+  ],
+  "Probability":[
+    {q:"P(A or B) if mutually exclusive?",a:["P(A)+P(B)","P(A)×P(B)","P(A)−P(B)","1"],c:0},
+    {q:"How many ways to arrange 4 books?",a:["24","16","12","8"],c:0},
+    {q:"C(5,2) = ?",a:["10","20","25","5"],c:0},
+    {q:"Expected value of fair die roll?",a:["3.5","3","4","3.6"],c:0},
+    {q:"P(at least one head in 2 flips)?",a:["3/4","1/2","1/4","1"],c:0}
+  ],
+  "Real World":[
+    {q:"15% tip on $80 meal?",a:["$12","$8","$15","$10"],c:0},
+    {q:"$1000 at 5% annual for 2 years (simple)?",a:["$1,100","$1,050","$1,102.50","$1,200"],c:0},
+    {q:"30% off $250 = sale price?",a:["$175","$180","$170","$150"],c:0},
+    {q:"Miles per gallon: 300 miles, 12 gallons?",a:["25","30","20","35"],c:0},
+    {q:"Tax of 8% on $50?",a:["$4.00","$3.50","$4.50","$5.00"],c:0}
+  ]
+}};
+
+let score=0,correct=0,streak=0,currentQ=null,currentPts=0;
+const pts=[100,200,300,400,500];
+
+function speak(t){document.getElementById('genoTxt').textContent=t}
+
+function newBoard(){
+  const grade=document.getElementById('gradeSelect').value;
+  const cats=Object.keys(QDB[grade]);
+  const board=document.getElementById('board');
+  board.innerHTML='';
+  
+  cats.forEach(cat=>{
+    const h=document.createElement('div');
+    h.className='cat-header';h.textContent=cat;
+    board.appendChild(h);
+  });
+  
+  pts.forEach((p,pi)=>{
+    cats.forEach((cat,ci)=>{
+      const btn=document.createElement('div');
+      btn.className='cell-btn';
+      btn.textContent='$'+p;
+      btn.dataset.cat=cat;btn.dataset.qi=pi;btn.dataset.grade=grade;
+      btn.onclick=function(){showQ(this)};
+      board.appendChild(btn);
+    });
+  });
+  
+  score=0;correct=0;streak=0;
+  document.getElementById('scoreVal').textContent='$0';
+  document.getElementById('correctVal').textContent='0';
+  document.getElementById('streakVal').textContent='0';
+  speak("New board! Pick a category and point value. Higher points = harder questions. Good luck!");
+}
+
+function showQ(btn){
+  const cat=btn.dataset.cat,qi=parseInt(btn.dataset.qi),grade=btn.dataset.grade;
+  const q=QDB[grade][cat][qi];
+  currentQ=q;currentPts=pts[qi];
+  btn.classList.add('used');
+  
+  document.getElementById('qCat').textContent=cat;
+  document.getElementById('qPts').textContent='$'+currentPts;
+  document.getElementById('qText').textContent=q.q;
+  
+  const ans=document.getElementById('qAnswers');
+  ans.innerHTML='';
+  
+  // Shuffle answers
+  const indices=[0,1,2,3];
+  for(let i=indices.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[indices[i],indices[j]]=[indices[j],indices[i]]}
+  
+  indices.forEach(idx=>{
+    const a=document.createElement('div');
+    a.className='q-ans';a.textContent=q.a[idx];
+    a.dataset.idx=idx;
+    a.onclick=function(){checkAnswer(this,idx)};
+    ans.appendChild(a);
+  });
+  
+  document.getElementById('qNext').style.display='none';
+  document.getElementById('qOverlay').classList.add('show');
+}
+
+function checkAnswer(el,idx){
+  const btns=document.querySelectorAll('.q-ans');
+  btns.forEach(b=>b.style.pointerEvents='none');
+  
+  // Highlight correct
+  btns.forEach(b=>{if(parseInt(b.dataset.idx)===currentQ.c)b.classList.add('correct')});
+  
+  if(idx===currentQ.c){
+    score+=currentPts;correct++;streak++;
+    speak(`Correct! +$${currentPts}. Streak: ${streak}!`);
+  }else{
+    el.classList.add('wrong');
+    score-=Math.floor(currentPts/2);streak=0;
+    speak(`Not quite. The answer was ${currentQ.a[currentQ.c]}. −$${Math.floor(currentPts/2)}.`);
+  }
+  
+  document.getElementById('scoreVal').textContent='$'+score;
+  document.getElementById('correctVal').textContent=correct;
+  document.getElementById('streakVal').textContent=streak;
+  updateBadges();
+  document.getElementById('qNext').style.display='inline-block';
+}
+
+function closeQ(){
+  document.getElementById('qOverlay').classList.remove('show');
+}
+
+function updateBadges(){
+  if(correct>=5)document.getElementById('jBronze').classList.add('earned');
+  if(correct>=15)document.getElementById('jSilver').classList.add('earned');
+  if(correct>=25)document.getElementById('jGold').classList.add('earned');
+  if(score>=5000)document.getElementById('jPlat').classList.add('earned');
+}
+
+window.newBoard=newBoard;window.closeQ=closeQ;
+setTimeout(newBoard,100);
+})();
+</script>
+</body>
+</html>
