@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Math Simulator | GSU</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Arial',sans-serif;background:linear-gradient(135deg,#065f46 0%,#059669 50%,#10b981 100%);min-height:100vh;color:#fff;padding:20px}
+.nav{display:flex;justify-content:space-between;max-width:900px;margin:0 auto 15px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.2)}
+.nav a{color:#6ee7b7;text-decoration:none;font-size:.85rem;font-weight:600;padding:8px 16px;border:1px solid rgba(110,231,183,.3);border-radius:50px}
+.nav a:hover{background:rgba(110,231,183,.1)}
+.gc{max-width:900px;margin:0 auto}
+.gh{text-align:center;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:25px}
+.gt{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+.gt .icon{font-size:2.5rem}
+.gt h1{font-size:2.2rem;font-weight:700;color:#6ee7b7}
+.gs{color:#d1d5db;font-size:1.1rem}
+.geno{background:linear-gradient(135deg,rgba(110,231,183,0.2),rgba(52,211,153,0.1));border-radius:16px;padding:20px 25px;margin-bottom:20px;display:flex;align-items:center;gap:15px}
+.ga{width:60px;height:60px;border-radius:50%;border:3px solid #34d399;flex-shrink:0;overflow:hidden}
+.ga img{width:100%;height:auto}
+.gm{flex:1}
+.gl{color:#34d399;font-weight:600;font-size:0.85rem;margin-bottom:4px}
+.gtx{color:#fff;font-size:.95rem;line-height:1.5}
+.vbtn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(110,231,183,.3);background:rgba(255,255,255,.04);color:#6ee7b7;cursor:pointer;font-size:1rem;flex-shrink:0}
+.vbtn.off{opacity:.4}
+.sr{display:flex;justify-content:space-between;background:rgba(0,0,0,0.2);border-radius:12px;padding:15px 20px;margin-bottom:20px}
+.si{text-align:center}
+.sl{font-size:0.75rem;color:#d1d5db;margin-bottom:4px}
+.sv{font-size:1.3rem;font-weight:700;color:#6ee7b7}
+.cl{display:inline-block;background:rgba(110,231,183,0.2);color:#6ee7b7;padding:6px 16px;border-radius:20px;font-size:0.85rem;font-weight:600;margin-bottom:12px}
+.qc{background:rgba(0,0,0,0.25);border-left:4px solid #34d399;border-radius:12px;padding:25px;margin-bottom:20px}
+.qt{font-size:1.15rem;font-weight:500;line-height:1.6;margin-bottom:18px}
+.ag{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:600px){.ag{grid-template-columns:1fr}}
+.ab{padding:14px 18px;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-size:.95rem;text-align:left;cursor:pointer;transition:all 0.3s}
+.ab:hover{border-color:#34d399;background:rgba(52,211,153,0.1)}
+.ab.sel{border-color:#6ee7b7;background:rgba(110,231,183,0.2)}
+.ab.cor{border-color:#22c55e;background:rgba(34,197,94,0.3)}
+.ab.inc{border-color:#ef4444;background:rgba(239,68,68,0.3)}
+.sub{display:block;width:100%;padding:14px;background:linear-gradient(135deg,#059669,#047857);border:none;border-radius:10px;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;margin-top:15px;transition:all 0.3s}
+.sub:hover{transform:translateY(-2px)}
+.bs{background:rgba(0,0,0,0.2);border-radius:14px;padding:20px;margin-top:25px;text-align:center}
+.bst{color:#6ee7b7;font-size:1rem;margin-bottom:15px}
+.br{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.bd{width:60px;height:60px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.4rem;opacity:0.3;transition:all 0.4s}
+.bd.e{opacity:1;transform:scale(1.1)}
+.b1{background:linear-gradient(135deg,#cd7f32,#8b4513)}
+.b2{background:linear-gradient(135deg,#c0c0c0,#808080)}
+.b3{background:linear-gradient(135deg,#ffd700,#daa520)}
+.b4{background:linear-gradient(135deg,#e5e4e2,#a0a0a0)}
+.bla{font-size:0.55rem;margin-top:2px;color:#fff}
+.gf{text-align:center;padding:20px 0;margin-top:30px;border-top:1px solid rgba(255,255,255,0.1);color:#9ca3af;font-size:0.85rem}
+.gf a{color:#6ee7b7;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="nav"><a href="https://www.globalsovereignuniversity.org">🏠 GSU Home</a><a href="https://www.globalsovereignuniversity.org/math">📐 All Math</a></div>
+<div class="gc">
+<div class="gh"><div class="gt"><span class="icon">📐</span><h1>TRADE MATH</h1></div><p class="gs">60 Questions • The Numbers Behind Every Trade</p></div>
+<div class="geno"><div class="ga"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO"></div><div class="gm"><div class="gl">GENO says:</div><div class="gtx" id="gT">Welcome to Trade Math! Master measurements, fractions, area, volume, and the calculations every tradesperson needs.</div></div><button class="vbtn" id="vBtn" onclick="togV()">🔊</button></div>
+<div class="sr"><div class="si"><div class="sl">Question</div><div class="sv" id="qN">1/60</div></div><div class="si"><div class="sl">Score</div><div class="sv" id="sc">0</div></div><div class="si"><div class="sl">Streak</div><div class="sv" id="st">0 🔥</div></div></div>
+<div class="cl" id="cL">Fractions</div>
+<div class="qc"><div class="qt" id="qT">Loading...</div><div class="ag" id="aG"></div><button class="sub" onclick="sub()">Submit Answer</button></div>
+<div class="bs"><div class="bst">🏆 Mastery Badges</div><div class="br"><div class="bd b1" id="b1">🥉<span class="bla">5</span></div><div class="bd b2" id="b2">🥈<span class="bla">15</span></div><div class="bd b3" id="b3">🥇<span class="bla">30</span></div><div class="bd b4" id="b4">💎<span class="bla">50</span></div></div></div>
+<div class="gf"><a href="https://www.globalsovereignuniversity.org">Global Sovereign University</a> — "Building a Bridge to Freedom Through Education—Not Handouts."</div>
+</div>
+<script>
+var vo=true,synth=window.speechSynthesis;
+function say(t){document.getElementById('gT').textContent=t;if(vo&&synth){synth.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=.95;u.pitch=1;u.volume=.8;var v=synth.getVoices(),p=v.find(function(x){return x.name.includes('Google')&&x.lang.startsWith('en')})||v.find(function(x){return x.lang.startsWith('en-')});if(p)u.voice=p;synth.speak(u)}}
+function togV(){vo=!vo;document.getElementById('vBtn').textContent=vo?'🔊':'🔇';document.getElementById('vBtn').classList.toggle('off',!vo);if(vo)say('Voice on!');else synth.cancel()}
+if(synth)synth.onvoiceschanged=function(){};
+
+const Q=[
+{q:"1/2 + 1/4 equals:",a:["1/6","2/4","3/4","1/8"],c:2,cat:"Fractions"},
+{q:"3/4 - 1/2 equals:",a:["1/2","1/4","2/4","1/6"],c:1,cat:"Fractions"},
+{q:"1/8 + 3/8 equals:",a:["4/16","1/2","3/8","2/8"],c:1,cat:"Fractions"},
+{q:"5/8 - 1/4 equals:",a:["4/8","3/8","1/2","1/4"],c:1,cat:"Fractions"},
+{q:"Convert 3/4 inch to sixteenths:",a:["8/16","10/16","12/16","14/16"],c:2,cat:"Fractions"},
+{q:"Convert 7/8 to decimal:",a:["0.75","0.875","0.625","0.5"],c:1,cat:"Fractions"},
+{q:"1/2 × 1/4 equals:",a:["1/8","2/6","1/2","2/8"],c:0,cat:"Fractions"},
+{q:"3/4 ÷ 1/2 equals:",a:["3/8","1 1/2","3/2","1/4"],c:1,cat:"Fractions"},
+{q:"What is 0.625 as a fraction?",a:["1/2","5/8","3/4","7/8"],c:1,cat:"Fractions"},
+{q:"Reduce 6/8 to lowest terms:",a:["3/4","2/4","6/8","1/2"],c:0,cat:"Fractions"},
+{q:"How many inches in 1 foot?",a:["10","12","16","8"],c:1,cat:"Measurements"},
+{q:"How many feet in 1 yard?",a:["2","3","4","6"],c:1,cat:"Measurements"},
+{q:"How many inches in 1 yard?",a:["24","36","48","30"],c:1,cat:"Measurements"},
+{q:"Convert 18 inches to feet:",a:["1 foot","1.5 feet","2 feet","1.25 feet"],c:1,cat:"Measurements"},
+{q:"Convert 2.5 feet to inches:",a:["25 in","30 in","28 in","32 in"],c:1,cat:"Measurements"},
+{q:"A 2×4 lumber actual size is:",a:["2\" × 4\"","1.5\" × 3.5\"","1.75\" × 3.75\"","2\" × 3.5\""],c:1,cat:"Measurements"},
+{q:"1 meter ≈ how many feet?",a:["2 ft","3.28 ft","4 ft","5 ft"],c:1,cat:"Measurements"},
+{q:"How many mm in 1 inch?",a:["10 mm","25.4 mm","50 mm","100 mm"],c:1,cat:"Measurements"},
+{q:"Convert 48 inches to feet:",a:["3 ft","4 ft","5 ft","6 ft"],c:1,cat:"Measurements"},
+{q:"10-ft board cut into 2.5-ft pieces:",a:["3 pieces","4 pieces","5 pieces","6 pieces"],c:1,cat:"Measurements"},
+{q:"Area: 8 ft × 12 ft =",a:["20 sq ft","80 sq ft","96 sq ft","100 sq ft"],c:2,cat:"Area"},
+{q:"Area of 10 ft × 10 ft room:",a:["20 sq ft","40 sq ft","100 sq ft","1000 sq ft"],c:2,cat:"Area"},
+{q:"Square feet in a 12×14 room:",a:["168 sq ft","156 sq ft","144 sq ft","182 sq ft"],c:0,cat:"Area"},
+{q:"Triangle: base 6, height 4. Area?",a:["24 sq ft","12 sq ft","10 sq ft","8 sq ft"],c:1,cat:"Area"},
+{q:"How many sq ft in 1 sq yard?",a:["3","6","9","12"],c:2,cat:"Area"},
+{q:"15×20 ft room flooring needed:",a:["35 sq ft","150 sq ft","300 sq ft","350 sq ft"],c:2,cat:"Area"},
+{q:"Convert 144 sq ft to sq yards:",a:["12 sq yd","16 sq yd","18 sq yd","48 sq yd"],c:1,cat:"Area"},
+{q:"Circle area: radius 7 ft (π≈3.14):",a:["21.98 sq ft","43.96 sq ft","153.86 sq ft","307.72 sq ft"],c:2,cat:"Area"},
+{q:"Roof section: 10 ft × 30 ft =",a:["40 sq ft","300 sq ft","400 sq ft","3000 sq ft"],c:1,cat:"Area"},
+{q:"Wall: 8 ft high × 15 ft wide =",a:["23 sq ft","120 sq ft","150 sq ft","180 sq ft"],c:1,cat:"Area"},
+{q:"Box volume: 2 × 3 × 4 ft =",a:["9 cu ft","12 cu ft","24 cu ft","48 cu ft"],c:2,cat:"Volume"},
+{q:"Cubic feet in 10×10×10 space:",a:["30","100","1000","300"],c:2,cat:"Volume"},
+{q:"Cubic feet in 1 cubic yard?",a:["3","9","27","81"],c:2,cat:"Volume"},
+{q:"4\" slab, 10×10 ft area concrete:",a:["33.3 cu ft","40 cu ft","100 cu ft","400 cu ft"],c:0,cat:"Volume"},
+{q:"Convert 54 cu ft to cu yards:",a:["2 cu yd","6 cu yd","18 cu yd","162 cu yd"],c:0,cat:"Volume"},
+{q:"Cylinder: r=2 ft, h=5 ft (π≈3.14):",a:["31.4 cu ft","62.8 cu ft","125.6 cu ft","20 cu ft"],c:1,cat:"Volume"},
+{q:"Excavation: 6×8×2 ft deep =",a:["16 cu ft","48 cu ft","96 cu ft","192 cu ft"],c:2,cat:"Volume"},
+{q:"Trench: 50 ft long, 2 wide, 3 deep:",a:["300 cu ft","150 cu ft","100 cu ft","55 cu ft"],c:0,cat:"Volume"},
+{q:"Water tank: 4×4×3 ft holds:",a:["11 cu ft","48 cu ft","36 cu ft","64 cu ft"],c:1,cat:"Volume"},
+{q:"1 gallon ≈ how many cu ft?",a:["0.13 cu ft","0.5 cu ft","1 cu ft","2 cu ft"],c:0,cat:"Volume"},
+{q:"Pythagorean: a=3, b=4, c=?",a:["5","6","7","12"],c:0,cat:"Geometry"},
+{q:"3-4-5 rule checks for:",a:["Level","Square (90°)","Plumb","Slope"],c:1,cat:"Geometry"},
+{q:"Stair rise 7\", run 11\", angle ≈?",a:["30°","32°","45°","60°"],c:1,cat:"Geometry"},
+{q:"Roof pitch 4:12 means:",a:["4 ft rise per 12 ft run","4 degrees","12 ft rise per 4 ft run","4 in per foot"],c:0,cat:"Geometry"},
+{q:"Diagonal of 6×8 rectangle:",a:["10","14","48","7"],c:0,cat:"Geometry"},
+{q:"Circumference: diameter 10 ft:",a:["31.4 ft","15.7 ft","78.5 ft","100 ft"],c:0,cat:"Geometry"},
+{q:"Perimeter of 12×16 rectangle:",a:["28 ft","56 ft","192 ft","48 ft"],c:1,cat:"Geometry"},
+{q:"8 risers = how many treads?",a:["8","7","9","6"],c:1,cat:"Geometry"},
+{q:"Total rise 84\", 7\" risers = ?",a:["11","12","14","7"],c:1,cat:"Geometry"},
+{q:"Slope 1/4\"/ft over 20 ft =",a:["5\" drop","2.5\" drop","10\" drop","20\" drop"],c:0,cat:"Geometry"},
+{q:"$2.50/sq ft × 200 sq ft =",a:["$250","$500","$750","$1000"],c:1,cat:"Job Calcs"},
+{q:"Lumber $0.75/ft, need 120 ft:",a:["$90","$160","$75","$120"],c:0,cat:"Job Calcs"},
+{q:"Labor: 8 hrs × $35/hr =",a:["$210","$280","$320","$350"],c:1,cat:"Job Calcs"},
+{q:"10% waste on 500 sq ft:",a:["50 sq ft extra","550 sq ft total","450 sq ft total","500 sq ft total"],c:1,cat:"Job Calcs"},
+{q:"3 workers × 5 days × 8 hrs =",a:["40 hrs","80 hrs","120 hrs","15 hrs"],c:2,cat:"Job Calcs"},
+{q:"$800 material + 25% markup =",a:["$200","$1000","$825","$900"],c:1,cat:"Job Calcs"},
+{q:"Board feet: 2×6, 8 ft long:",a:["8 BF","16 BF","96 BF","4 BF"],c:0,cat:"Job Calcs"},
+{q:"15A circuit, 120V = watts?",a:["1800W","1200W","900W","2400W"],c:0,cat:"Job Calcs"},
+{q:"12,000 BTU = how many tons?",a:["1 ton","2 tons","0.5 ton","12 tons"],c:0,cat:"Job Calcs"},
+{q:"400 sq ft/gal, 1200 sq ft wall:",a:["2 gal","3 gal","4 gal","5 gal"],c:1,cat:"Job Calcs"}
+];
+var cq=0,sc=0,sk=0,sel=null,sQ=[];
+function shuf(a){var r=a.slice();for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=r[i];r[i]=r[j];r[j]=t}return r}
+function init(){sQ=shuf(Q);ld()}
+function ld(){if(cq>=sQ.length){fin();return}sel=null;var q=sQ[cq];document.getElementById('qN').textContent=(cq+1)+'/'+sQ.length;document.getElementById('cL').textContent=q.cat;document.getElementById('qT').textContent=q.q;document.getElementById('aG').innerHTML=q.a.map(function(a,i){return'<button class="ab" onclick="sA('+i+')">'+a+'</button>'}).join('')}
+function sA(i){sel=i;document.querySelectorAll('.ab').forEach(function(b,j){b.classList.remove('sel');if(j===i)b.classList.add('sel')})}
+function sub(){if(sel===null){say("Please select an answer!");return}var q=sQ[cq],btns=document.querySelectorAll('.ab');btns.forEach(function(b,i){b.style.pointerEvents='none';if(i===q.c)b.classList.add('cor');if(i===sel&&sel!==q.c)b.classList.add('inc')});if(sel===q.c){sc++;sk++;say(['Excellent!','Correct!','Perfect!','Right!'][Math.floor(Math.random()*4)])}else{sk=0;say('Not quite. The answer is '+q.a[q.c])}document.getElementById('sc').textContent=sc;document.getElementById('st').textContent=sk+' 🔥';cB();setTimeout(function(){cq++;ld()},1500)}
+function cB(){if(sc>=5)document.getElementById('b1').classList.add('e');if(sc>=15)document.getElementById('b2').classList.add('e');if(sc>=30)document.getElementById('b3').classList.add('e');if(sc>=50)document.getElementById('b4').classList.add('e')}
+function fin(){var p=Math.round((sc/sQ.length)*100);var m=p>=90?"Math Master!":p>=70?"Strong skills!":p>=50?"Good progress!":"Keep studying!";document.querySelector('.qc').innerHTML='<div style="text-align:center;padding:40px"><h2 style="color:#6ee7b7;margin-bottom:20px">📐 Training Complete!</h2><p style="font-size:2rem;margin-bottom:10px">'+sc+'/'+sQ.length+'</p><p style="font-size:1.2rem;margin-bottom:20px">'+p+'% Accuracy</p><p style="color:#d1d5db;margin-bottom:30px">'+m+'</p><button onclick="location.reload()" class="sub">Train Again</button></div>';say(m)}
+init();
+setTimeout(function(){say("Welcome to Trade Math! 60 questions covering fractions, measurements, area, volume, geometry, and job calculations.")},600);
+</script>
+</body>
+</html>

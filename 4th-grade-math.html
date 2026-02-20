@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>4th Grade Math with GENO | GSU</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;min-height:100vh}
+.nav{display:flex;justify-content:space-between;padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+.nav a{color:#ffd700;text-decoration:none;font-size:.85rem;font-weight:600;padding:8px 16px;border:1px solid rgba(255,215,0,.3);border-radius:50px}
+.nav a:hover{background:rgba(255,215,0,.1)}
+.wrap{max-width:900px;margin:0 auto;padding:20px}
+.hdr{text-align:center;padding:20px 0}
+.hdr h1{font-size:2rem;color:#ffd700;font-weight:900;margin-bottom:6px}
+.hdr p{color:#b8b8d0;font-size:1rem}
+.geno{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;margin-bottom:20px}
+.geno img{width:50px;height:50px;border-radius:50%;border:2px solid #ffd700}
+.geno-msg{flex:1;color:#b8b8d0;font-size:.9rem;line-height:1.5}
+.geno-msg b{color:#ffd700}
+.vbtn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:#ffd700;cursor:pointer;font-size:1rem;flex-shrink:0}
+.vbtn.off{opacity:.4}
+.stats{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.stat{text-align:center;padding:8px 20px;background:rgba(255,255,255,.04);border-radius:8px}
+.stat-v{font-size:1.4rem;font-weight:800;color:#ffd700}
+.stat-l{font-size:.65rem;color:#64748b;text-transform:uppercase;letter-spacing:1px}
+.badges{display:flex;gap:15px;justify-content:center;margin-bottom:20px}
+.badge{width:55px;height:55px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;opacity:.25;transition:all .4s}
+.badge.on{opacity:1;transform:scale(1.1)}
+.b-br{background:linear-gradient(135deg,#cd7f32,#8b4513)}
+.b-si{background:linear-gradient(135deg,#c0c0c0,#808080)}
+.b-go{background:linear-gradient(135deg,#ffd700,#daa520)}
+.b-pl{background:linear-gradient(135deg,#e5e4e2,#a0a0a0)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
+.tab{padding:10px 20px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#b8b8d0;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}
+.tab:hover{border-color:rgba(255,215,0,.3);color:#ffd700}
+.tab.on{background:rgba(255,215,0,.12);border-color:#ffd700;color:#ffd700}
+.arena{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:20px;margin-bottom:20px}
+.q{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:16px;margin-bottom:12px}
+.q-text{font-size:1.05rem;margin-bottom:10px;line-height:1.5}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:500px){.opts{grid-template-columns:1fr}}
+.opt{padding:10px 14px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:.9rem;cursor:pointer;transition:all .2s;text-align:left}
+.opt:hover{border-color:#ffd700;background:rgba(255,215,0,.08)}
+.opt.cor{background:rgba(74,222,128,.2);border-color:#4ade80;color:#4ade80}
+.opt.wr{background:rgba(239,68,68,.2);border-color:#ef4444;color:#ef4444}
+.fb{font-size:.8rem;font-weight:600;margin-top:6px;min-height:18px}
+.more{display:block;width:100%;padding:14px;border-radius:10px;background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,215,0,.08));border:1px solid rgba(255,215,0,.3);color:#ffd700;font-size:1rem;font-weight:700;cursor:pointer;margin-top:10px}
+.more:hover{background:linear-gradient(135deg,rgba(255,215,0,.25),rgba(255,215,0,.12))}
+.dl{text-align:center;padding:20px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);border-radius:14px;margin-bottom:20px}
+.dl h3{color:#ffd700;margin-bottom:8px}
+.dl a{display:inline-block;background:#ffd700;color:#1a1a2e;padding:10px 30px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:8px}
+.ft{text-align:center;padding:15px 0;border-top:1px solid rgba(255,255,255,.1);color:#64748b;font-size:.8rem;margin-top:20px}
+.ft a{color:#ffd700;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="nav"><a href="https://www.globalsovereignuniversity.org">🏠 GSU Home</a><a href="https://www.globalsovereignuniversity.org/math">📐 All Math</a></div>
+<div class="wrap">
+<div class="hdr"><h1>4TH GRADE MATH WITH GENO</h1><p>Unlimited practice • AI voice tutor • Badge progression</p></div>
+<div class="geno">
+<img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO">
+<div class="geno-msg"><b>GENO:</b> <span id="gT">Welcome to 4th Grade Math! Pick a topic and start solving. I'll guide you with hints and celebrate your wins!</span></div>
+<button class="vbtn" id="vBtn" onclick="togV()">🔊</button>
+</div>
+<div class="stats">
+<div class="stat"><div class="stat-v" id="sC">0</div><div class="stat-l">Correct</div></div>
+<div class="stat"><div class="stat-v" id="sS">0</div><div class="stat-l">Streak</div></div>
+<div class="stat"><div class="stat-v" id="sT">0</div><div class="stat-l">Total</div></div>
+<div class="stat"><div class="stat-v" id="sA">0%</div><div class="stat-l">Accuracy</div></div>
+</div>
+<div class="badges">
+<div class="badge b-br" id="bBr">🥉</div>
+<div class="badge b-si" id="bSi">🥈</div>
+<div class="badge b-go" id="bGo">🥇</div>
+<div class="badge b-pl" id="bPl">💎</div>
+</div>
+<div class="tabs">
+<div class="tab on" onclick="setT(0,this)">✖️ Multiplication</div>
+<div class="tab" onclick="setT(1,this)">➗ Division</div>
+<div class="tab" onclick="setT(2,this)">🍕 Fractions</div>
+<div class="tab" onclick="setT(3,this)">📐 Geometry</div>
+</div>
+<div class="arena" id="arena"></div>
+<button class="more" onclick="gen()">🎯 More Problems (5 at a time — unlimited!)</button>
+<div class="dl">
+<h3>📚 FREE 4th Grade Math Textbook</h3>
+<p style="color:#b8b8d0;font-size:.9rem">Complete curriculum with hundreds of practice problems</p>
+<a href="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69533cd2eade75d97398a005_4th%20Grade%20Math%20Textbook%20-%20Student%20edition%20GSU.pdf" download>📖 Download Free PDF</a>
+</div>
+<div class="ft"><a href="https://www.globalsovereignuniversity.org">Global Sovereign University</a> • 501(c)(3) Nonprofit<br>"Building a Bridge to Freedom Through Education—Not Handouts"</div>
+</div>
+<script>
+var vo=true,sy=window.speechSynthesis,cor=0,str=0,tot=0,curT=0,qc=0;
+function say(t){document.getElementById('gT').textContent=t;if(vo&&sy){sy.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=.95;u.pitch=1;u.volume=.8;var v=sy.getVoices(),p=v.find(x=>x.name.includes('Google')&&x.lang.startsWith('en'))||v.find(x=>x.lang.startsWith('en-'));if(p)u.voice=p;sy.speak(u)}}
+function togV(){vo=!vo;var b=document.getElementById('vBtn');b.textContent=vo?'🔊':'🔇';b.classList.toggle('off',!vo);if(vo)say('Voice on!');else sy.cancel()}
+if(sy)sy.onvoiceschanged=function(){};
+
+function setT(n,el){curT=n;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');gen();var names=['multiplication','division','fractions','geometry'];say("Let's practice "+names[n]+"! Here are 5 problems.")}
+
+function R(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+
+function mkQ(){
+  var q,opts,ci;
+  if(curT===0){// Multiplication
+    var type=R(0,3);
+    if(type===0){var a=R(2,9),b=R(10,99);q=a+" × "+b+" = ?";var ans=a*b;ci=0;opts=[ans,ans+a,ans-b,ans+R(1,10)]}
+    else if(type===1){var a=R(10,50),b=R(10,30);q=a+" × "+b+" = ?";var ans=a*b;ci=0;opts=[ans,ans+a,ans-b,(a+1)*b]}
+    else if(type===2){var a=R(2,12),b=R(2,12);q="What is "+a+" × "+b+"?";var ans=a*b;ci=0;opts=[ans,a+b,ans+a,ans-1]}
+    else{var a=R(100,500),b=R(2,9);q=a+" × "+b+" = ?";var ans=a*b;ci=0;opts=[ans,ans+100,ans-b,(a+1)*b]}
+  }else if(curT===1){// Division
+    var type=R(0,3);
+    if(type===0){var b=R(2,9),ans=R(3,20),a=b*ans;q=a+" ÷ "+b+" = ?";ci=0;opts=[ans,ans+1,ans-1,b]}
+    else if(type===1){var b=R(2,12),ans=R(10,50),a=b*ans;q=a+" ÷ "+b+" = ?";ci=0;opts=[ans,ans+b,a-b,ans*2]}
+    else if(type===2){var b=R(2,9),ans=R(2,15),rem=R(1,b-1),a=b*ans+rem;q=a+" ÷ "+b+" = ? remainder ?";ci=0;opts=[ans+" R"+rem,(ans+1)+" R"+rem,ans+" R"+(rem+1),(ans-1)+" R0"]}
+    else{var a=R(100,500),b=R(2,9);while(a%b!==0)a++;q=a+" ÷ "+b+" = ?";var ans=a/b;ci=0;opts=[ans,ans+1,ans-1,ans+b]}
+  }else if(curT===2){// Fractions
+    var type=R(0,4);
+    if(type===0){var d=R(2,8),n1=R(1,d-1),n2=R(1,d-1);while(n1+n2>d){n2=R(1,d-n1)}q=n1+"/"+d+" + "+n2+"/"+d+" = ?";var ans=(n1+n2);ci=0;opts=[ans+"/"+d,(n1+n2+1)+"/"+d,(n1*n2)+"/"+d,n1+"/"+(d+n2)]}
+    else if(type===1){var d=R(3,10),n1=R(2,d),n2=R(1,n1-1);q=n1+"/"+d+" − "+n2+"/"+d+" = ?";var ans=n1-n2;ci=0;opts=[ans+"/"+d,(ans+1)+"/"+d,n1+"/"+n2,(n1+n2)+"/"+d]}
+    else if(type===2){var pairs=[[1,2,1,4],[1,3,1,6],[2,3,1,6],[3,4,1,4],[1,2,1,3],[2,5,1,5]];var p=pairs[R(0,pairs.length-1)];q="Which is larger: "+p[0]+"/"+p[1]+" or "+p[2]+"/"+p[3]+"?";var v1=p[0]/p[1],v2=p[2]/p[3];if(v1>v2){ci=0;opts=[p[0]+"/"+p[1],p[2]+"/"+p[3],"They're equal","Cannot tell"]}else{ci=0;opts=[p[2]+"/"+p[3],p[0]+"/"+p[1],"They're equal","Cannot tell"]}}
+    else if(type===3){var w=R(1,5),n=R(1,3),d=R(n+1,8);q="Convert "+w+" "+n+"/"+d+" to improper fraction:";var ans=w*d+n;ci=0;opts=[ans+"/"+d,(w+n)+"/"+d,w+"/"+(d*n),(ans+1)+"/"+d]}
+    else{var d=R(2,6),n=R(1,d);var equivs=[[n,d],[n*2,d*2],[n*3,d*3]];var wrong=[n+1,d];q="Which fraction equals "+n+"/"+d+"?";var eq=equivs[R(1,2)];ci=0;opts=[eq[0]+"/"+eq[1],wrong[0]+"/"+wrong[1],(n+d)+"/"+d,n+"/"+(d+1)]}
+  }else{// Geometry
+    var type=R(0,3);
+    if(type===0){var l=R(3,20),w=R(2,15);q="Perimeter of rectangle: "+l+" ft × "+w+" ft = ?";var ans=2*(l+w);ci=0;opts=[ans+" ft",(l*w)+" ft",(l+w)+" ft",(ans+2)+" ft"]}
+    else if(type===1){var l=R(3,15),w=R(2,12);q="Area of rectangle: "+l+" cm × "+w+" cm = ?";var ans=l*w;ci=0;opts=[ans+" sq cm",(2*(l+w))+" sq cm",(l+w)+" sq cm",(ans+l)+" sq cm"]}
+    else if(type===2){var s=R(2,15);q="Perimeter of square with side "+s+" in = ?";var ans=4*s;ci=0;opts=[ans+" in",(s*s)+" in",(2*s)+" in",(ans+s)+" in"]}
+    else{var angles=[["acute",R(10,89)],["right",90],["obtuse",R(91,170)]];var pick=angles[R(0,2)];q="An angle of "+pick[1]+"° is called:";ci=0;if(pick[0]==="acute")opts=["Acute","Obtuse","Right","Straight"];else if(pick[0]==="right")opts=["Right","Acute","Obtuse","Reflex"];else opts=["Obtuse","Acute","Right","Straight"]}
+  }
+  // Shuffle options but track correct
+  var correct=opts[ci];
+  for(var i=opts.length-1;i>0;i--){var j=R(0,i);var tmp=opts[i];opts[i]=opts[j];opts[j]=tmp}
+  ci=opts.indexOf(correct);
+  return{q:q,opts:opts,ci:ci}
+}
+
+function gen(){
+  var html='';
+  for(var i=0;i<5;i++){
+    qc++;var id=qc;var prob=mkQ();
+    window['pd_'+id]=prob;
+    html+='<div class="q" id="q'+id+'"><div class="q-text">'+i+1+'. '+prob.q+'</div><div class="opts">';
+    for(var j=0;j<prob.opts.length;j++){
+      html+='<div class="opt" onclick="ans('+id+','+j+')">'+prob.opts[j]+'</div>';
+    }
+    html+='</div><div class="fb" id="fb'+id+'"></div></div>';
+  }
+  document.getElementById('arena').innerHTML=html;
+}
+
+function ans(id,pick){
+  var prob=window['pd_'+id];
+  var qEl=document.getElementById('q'+id);
+  var fb=document.getElementById('fb'+id);
+  var opts=qEl.querySelectorAll('.opt');
+  opts.forEach(function(o){o.style.pointerEvents='none'});
+  opts[prob.ci].classList.add('cor');
+  tot++;
+  if(pick===prob.ci){
+    cor++;str++;fb.textContent='✅ Correct!';fb.style.color='#4ade80';
+    var msgs=['Correct!','Great job!','Nailed it!','Perfect!','Excellent!'];
+    say(msgs[R(0,msgs.length-1)]);
+  }else{
+    opts[pick].classList.add('wr');str=0;
+    fb.textContent='❌ Answer: '+prob.opts[prob.ci];fb.style.color='#ef4444';
+    say('Not quite. The answer is '+prob.opts[prob.ci]);
+  }
+  upd();
+}
+
+function upd(){
+  document.getElementById('sC').textContent=cor;
+  document.getElementById('sS').textContent=str;
+  document.getElementById('sT').textContent=tot;
+  document.getElementById('sA').textContent=tot>0?Math.round(cor/tot*100)+'%':'0%';
+  if(cor>=3)document.getElementById('bBr').classList.add('on');
+  if(cor>=10)document.getElementById('bSi').classList.add('on');
+  if(cor>=25)document.getElementById('bGo').classList.add('on');
+  if(cor>=50)document.getElementById('bPl').classList.add('on');
+}
+
+gen();
+setTimeout(function(){say("Welcome to 4th Grade Math! Pick a topic and start solving. I'll guide you with hints and celebrate your wins!")},600);
+</script>
+</body>
+</html>
