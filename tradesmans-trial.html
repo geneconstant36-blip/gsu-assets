@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tradesman's Trial | GSU Tradeification</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); border-bottom: 1px solid rgba(245, 158, 11, 0.2); }
+        .logo { font-weight: 700; color: #f59e0b; letter-spacing: 1px; text-transform: uppercase; }
+        .wrap { max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Dashboard Stats */
+        .dash { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
+        .stat-box { background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 15px; text-align: center; transition: all 0.3s ease; }
+        .stat-label { font-size: 12px; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
+        .stat-val { font-size: 28px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+        .rep { color: #38bdf8; }
+        .budget { color: #4ade80; }
+        .danger { background: rgba(248, 113, 113, 0.1); border-color: #f87171; }
+        
+        /* Game Area */
+        .scene-card { background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid #f59e0b; }
+        .scene-title { font-size: 24px; color: #f59e0b; margin-bottom: 15px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); padding-bottom: 10px; }
+        .scene-desc { font-size: 18px; margin-bottom: 25px; }
+        
+        /* Choices */
+        .choice-btn { display: block; width: 100%; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 16px 20px; margin-bottom: 12px; border-radius: 8px; font-size: 16px; cursor: pointer; transition: all 0.2s ease; }
+        .choice-btn:hover { background: rgba(245, 158, 11, 0.1); border-color: #f59e0b; transform: translateX(5px); }
+        
+        /* GENO Feedback Area */
+        .feedback-area { display: none; background: rgba(56, 189, 248, 0.1); border-left: 4px solid #38bdf8; padding: 20px; border-radius: 0 8px 8px 0; margin-top: 20px; }
+        .feedback-title { font-weight: 700; color: #38bdf8; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .next-btn { background: #f59e0b; color: #000; border: none; padding: 12px 24px; font-size: 16px; font-weight: 700; border-radius: 6px; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+        .next-btn:hover { background: #d97706; }
+        
+        @media (max-width: 600px) { .dash { grid-template-columns: 1fr; gap: 10px; } }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <div class="logo">GSU Tradeification</div>
+    <div style="font-size: 14px; color: #94a3b8;">Level 2: Applied Math</div>
+</div>
+
+<div class="wrap">
+    <div class="dash">
+        <div class="stat-box" id="box-rep">
+            <div class="stat-label">Foreman's Trust (Reputation)</div>
+            <div class="stat-val rep" id="v-rep">100 / 100</div>
+        </div>
+        <div class="stat-box" id="box-bud">
+            <div class="stat-label">Materials Budget</div>
+            <div class="stat-val budget" id="v-bud">$500</div>
+        </div>
+    </div>
+
+    <div class="scene-card" id="game-card">
+        <h2 class="scene-title" id="s-title">Day 1 on the Job Site</h2>
+        <div class="scene-desc" id="s-desc">
+            You are an apprentice on a residential build. The foreman is watching you closely. You have $500 in your materials budget. If you measure twice and cut once, you will earn his trust. If you guess the math and ruin materials, you will drain the budget and lose your job. Prove your competence.
+        </div>
+        
+        <div id="choices-area">
+            <button class="choice-btn" onclick="startGame()">Punch the Clock (Start)</button>
+        </div>
+
+        <div class="feedback-area" id="feedback-area">
+            <div class="feedback-title">🤖 GENO the Journeyman Says:</div>
+            <div id="f-text"></div>
+            <button class="next-btn" onclick="nextTask()">Next Task ➔</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let state = { rep: 100, budget: 500, task: 0 };
+
+    const tasks = [
+        {
+            title: "Task 1: Carpentry (Centering)",
+            desc: "The foreman asks you to frame a window. The wall is 10 feet, 4 inches long. The window is 36 inches wide and must be perfectly centered. To find your mark, how much space should be on EACH side of the window?",
+            choices: [
+                {
+                    text: "48 inches on each side.",
+                    repEffect: -15, budEffect: -40,
+                    feedback: "Wrong. You just cut the framing studs in the wrong place and ruined $40 in lumber. 10 feet 4 inches is 124 inches. Center is 62. The window is 36, meaning 18 inches on each side of center. 62 minus 18 equals 44 inches. Math matters in carpentry."
+                },
+                {
+                    text: "44 inches on each side.",
+                    repEffect: +10, budEffect: 0,
+                    feedback: "Perfectly plumb and square! 10ft 4in = 124 inches. 124 total minus the 36-inch window leaves 88 inches of empty wall. Divide that by 2, and you get exactly 44 inches on each side."
+                },
+                {
+                    text: "42.5 inches on each side.",
+                    repEffect: -10, budEffect: -40,
+                    feedback: "Incorrect. The window won't fit, and you ruined the framing. 124 inches total length minus 36 inches of window equals 88 inches. Half of 88 is 44, not 42.5. Never guess the math."
+                }
+            ]
+        },
+        {
+            title: "Task 2: Plumbing (Drainage Slope)",
+            desc: "You are laying a PVC drain pipe for a shower. Plumbing code requires a 1/4 inch fall (slope) for every foot of pipe so water drains properly. The pipe run is 20 feet long. What is the total drop from start to finish?",
+            choices: [
+                {
+                    text: "5 inches of drop.",
+                    repEffect: +15, budEffect: 0,
+                    feedback: "Spot on! 20 feet multiplied by 1/4 inch per foot equals 20/4, which simplifies to exactly 5 inches. The water will flow perfectly. The foreman nods in approval."
+                },
+                {
+                    text: "10 inches of drop.",
+                    repEffect: -15, budEffect: -60,
+                    feedback: "Too steep! At 1/2 inch per foot, the water runs too fast and leaves the solids behind, causing clogs. We have to tear out $60 of pipe and do it again. 20 times 1/4 is 5, not 10."
+                },
+                {
+                    text: "2.5 inches of drop.",
+                    repEffect: -20, budEffect: -80,
+                    feedback: "Too flat! At 1/8 inch per foot, the water won't drain fast enough, and the shower will flood. We have to rip it all out. 20 * 0.25 = 5 inches."
+                }
+            ]
+        },
+        {
+            title: "Task 3: Electrical (Ohm's Law)",
+            desc: "The homeowner wants to plug a 1500-watt space heater into a bedroom outlet. The bedroom is on a standard 15-amp breaker, and the house runs on 120 volts. Is this safe for continuous use?",
+            choices: [
+                {
+                    text: "Yes, it will draw 12.5 amps. The 15-amp breaker can handle it perfectly.",
+                    repEffect: -25, budEffect: 0,
+                    feedback: "DANGEROUS MISTAKE. You calculated the amps correctly (1500W / 120V = 12.5 Amps), but you forgot the NEC code. A continuous load can only be 80% of the breaker rating. 80% of 15A is 12A. 12.5 Amps will eventually trip the breaker or melt the wire."
+                },
+                {
+                    text: "No, because 1500 watts divided by 120 volts is 12.5 amps. Code limits continuous loads to 80% of the breaker (12 amps).",
+                    repEffect: +20, budEffect: 0,
+                    feedback: "Excellent! You used Watt's Law (Amps = Watts / Volts) to find 12.5 Amps, and then you applied the 80% continuous load safety rule. You just prevented an electrical fire."
+                }
+            ]
+        },
+        {
+            title: "Task 4: Materials Estimation (Tile)",
+            desc: "Time to lay flooring. The room is 12 feet by 15 feet. A box of luxury vinyl plank covers 20 square feet. Allowing for 10% waste for cutting, how many boxes do you need to order?",
+            choices: [
+                {
+                    text: "9 boxes.",
+                    repEffect: -10, budEffect: -20,
+                    feedback: "Rookie mistake. 12x15 = 180 sq ft. Divided by 20 = 9 boxes. But you forgot the 10% waste! You ran out of tile halfway through the closet and had to pay $20 expedited shipping for another box."
+                },
+                {
+                    text: "10 boxes.",
+                    repEffect: +15, budEffect: 0,
+                    feedback: "Exactly right. 12 x 15 = 180 sq ft. 10% of 180 is 18, so you need 198 sq ft total. 198 divided by 20 is 9.9 boxes. You always round up to the nearest whole box. You ordered 10 boxes and finished the job beautifully."
+                },
+                {
+                    text: "12 boxes.",
+                    repEffect: -5, budEffect: -100,
+                    feedback: "Your math is sloppy. You ordered way too much. 12x15 = 180 sq ft. 10% waste is 18 sq ft. You only needed 198 sq ft (10 boxes). You bought two extra boxes and wasted $100 of our budget."
+                }
+            ]
+        }
+    ];
+
+    function updateDash() {
+        document.getElementById('v-rep').textContent = state.rep + " / 100";
+        document.getElementById('v-bud').textContent = '$' + state.budget;
+        
+        let repBox = document.getElementById('box-rep');
+        if (state.rep < 50) repBox.classList.add('danger');
+        else repBox.classList.remove('danger');
+        
+        let budBox = document.getElementById('box-bud');
+        if (state.budget < 200) budBox.classList.add('danger');
+        else budBox.classList.remove('danger');
+    }
+
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            let msg = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(msg);
+        }
+    }
+
+    function startGame() {
+        state.rep = 100;
+        state.budget = 500;
+        state.task = 0;
+        updateDash();
+        loadTask();
+    }
+
+    function loadTask() {
+        if (state.rep <= 0 || state.budget <= 0) {
+            gameOver("You have proven to be a liability on the job site. You are fired. The trades require precision, not guesswork.");
+            return;
+        }
+
+        if (state.task >= tasks.length) {
+            gameWin();
+            return;
+        }
+
+        let task = tasks[state.task];
+        document.getElementById('s-title').textContent = task.title;
+        document.getElementById('s-desc').textContent = task.desc;
+        
+        let choicesHTML = "";
+        task.choices.forEach((choice, idx) => {
+            choicesHTML += `<button class="choice-btn" onclick="makeChoice(${idx})">${choice.text}</button>`;
+        });
+        
+        document.getElementById('choices-area').innerHTML = choicesHTML;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+    }
+
+    function makeChoice(idx) {
+        let choice = tasks[state.task].choices[idx];
+        
+        state.rep += choice.repEffect;
+        state.budget += choice.budEffect;
+        updateDash();
+
+        document.getElementById('choices-area').style.display = "none";
+        document.getElementById('f-text').innerHTML = `<strong>${choice.feedback}</strong>`;
+        document.getElementById('feedback-area').style.display = "block";
+        
+        speak(choice.feedback);
+    }
+
+    function nextTask() {
+        state.task++;
+        loadTask();
+    }
+
+    function gameOver(reason) {
+        document.getElementById('s-title').textContent = "🛑 YOU WERE FIRED";
+        document.getElementById('s-title').style.color = "#f87171";
+        document.getElementById('s-desc').textContent = reason;
+        document.getElementById('choices-area').innerHTML = `<button class="choice-btn" style="text-align:center" onclick="startGame()">Retake the Apprenticeship</button>`;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+        speak("You have been fired. Try again and measure twice.");
+    }
+
+    function gameWin() {
+        document.getElementById('s-title').textContent = "🏆 FOREMAN'S APPROVAL";
+        document.getElementById('s-title').style.color = "#fbbf24";
+        
+        let finalStatus = `You finished the job with a Reputation of ${state.rep} and $${state.budget} remaining in the materials budget. You proved that grammar and logic are not just academic—they build the world. You have earned your Honest Transcript for this module.`;
+
+        document.getElementById('s-desc').textContent = finalStatus;
+        document.getElementById('choices-area').innerHTML = `<button class="choice-btn" style="text-align:center" onclick="startGame()">Play Again</button>`;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+        speak("Congratulations. " + finalStatus);
+    }
+</script>
+
+</body>
+</html>
