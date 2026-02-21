@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mentor's Call | GSU Civilization Builders</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a12; color: #e2e8f0; line-height: 1.6; }
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: rgba(0, 0, 0, 0.8); border-bottom: 1px solid rgba(124, 58, 237, 0.3); }
+        .logo { font-weight: 700; color: #a855f7; letter-spacing: 1px; text-transform: uppercase; }
+        .wrap { max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Dashboard Stats */
+        .dash { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
+        .stat-box { background: rgba(124, 58, 237, 0.05); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 8px; padding: 15px; text-align: center; transition: all 0.3s ease; }
+        .stat-label { font-size: 12px; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
+        .stat-val { font-size: 28px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+        .impact { color: #d4af37; }
+        .confidence { color: #4ade80; }
+        .danger { background: rgba(248, 113, 113, 0.1); border-color: #f87171; color: #f87171 !important; }
+        
+        /* Game Area */
+        .scene-card { background: #13111c; border: 1px solid rgba(124, 58, 237, 0.2); border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border-top: 3px solid #a855f7; }
+        .scene-title { font-size: 24px; color: #a855f7; margin-bottom: 15px; border-bottom: 1px solid rgba(124, 58, 237, 0.2); padding-bottom: 10px; }
+        .scene-desc { font-size: 18px; margin-bottom: 25px; line-height: 1.7; }
+        
+        /* Choices */
+        .choice-btn { display: block; width: 100%; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 16px 20px; margin-bottom: 12px; border-radius: 8px; font-size: 16px; cursor: pointer; transition: all 0.2s ease; }
+        .choice-btn:hover { background: rgba(124, 58, 237, 0.15); border-color: #a855f7; transform: translateX(5px); }
+        
+        /* GENO Feedback Area */
+        .feedback-area { display: none; background: rgba(212, 175, 55, 0.1); border-left: 4px solid #d4af37; padding: 20px; border-radius: 0 8px 8px 0; margin-top: 20px; }
+        .feedback-title { font-weight: 700; color: #d4af37; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .next-btn { background: #a855f7; color: #fff; border: none; padding: 12px 24px; font-size: 16px; font-weight: 700; border-radius: 6px; cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .next-btn:hover { background: #9333ea; }
+        .cta-btn { background: linear-gradient(135deg, #d4af37, #b89020); color: #000; text-decoration: none; display: inline-block; padding: 15px 30px; border-radius: 6px; font-weight: 800; font-size: 18px; margin-top: 20px; text-transform: uppercase; }
+        
+        @media (max-width: 600px) { .dash { grid-template-columns: 1fr; gap: 10px; } }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <div class="logo">GSU Mentor Simulator</div>
+    <div style="font-size: 14px; color: #94a3b8;">Level: Civilization Builder</div>
+</div>
+
+<div class="wrap">
+    <div class="dash">
+        <div class="stat-box">
+            <div class="stat-label">Your Impact Score</div>
+            <div class="stat-val impact" id="v-impact">0</div>
+        </div>
+        <div class="stat-box" id="box-conf">
+            <div class="stat-label">Student Confidence</div>
+            <div class="stat-val confidence" id="v-conf">50%</div>
+        </div>
+    </div>
+
+    <div class="scene-card" id="game-card">
+        <h2 class="scene-title" id="s-title">The Call to Build</h2>
+        <div class="scene-desc" id="s-desc">
+            You have spent a lifetime acquiring skills. You know how the real world works. But across the country, millions of young people and transitioning adults are being left behind by a broken educational system. They don't need another loan; they need a mentor. Step into the role of a Civilization Builder. Can you guide these three students to sovereignty?
+        </div>
+        
+        <div id="choices-area">
+            <button class="choice-btn" onclick="startGame()">Accept the Mission</button>
+        </div>
+
+        <div class="feedback-area" id="feedback-area">
+            <div class="feedback-title">🤖 System Analysis:</div>
+            <div id="f-text"></div>
+            <button class="next-btn" onclick="nextTask()">Next Student ➔</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let state = { impact: 0, conf: 50, task: 0 };
+
+    const tasks = [
+        {
+            title: "Student 1: Marcus (The Apprentice)",
+            desc: "Marcus is 19. He is working his first construction job, but he is hiding a secret: he doesn't understand fractions, so he can't read a tape measure accurately. The foreman is getting frustrated with his bad cuts and is threatening to fire him. As his mentor, what do you do?",
+            choices: [
+                {
+                    text: "Cover for him. Do the math and make the marks for him so he doesn't get fired.",
+                    impEffect: -10, confEffect: -20,
+                    feedback: "You saved his job today, but you destroyed his sovereignty. By doing the work for him (enabling), you taught him that he is incapable. He will remain dependent on you forever."
+                },
+                {
+                    text: "Tell him to go home and watch YouTube tutorials until he figures it out.",
+                    impEffect: -20, confEffect: -40,
+                    feedback: "You abandoned the mission. Marcus is overwhelmed and doesn't know where to start. He quits the trade tomorrow and takes a minimum-wage job where math isn't required."
+                },
+                {
+                    text: "Pull him aside. Break down the logic of fractions on the tape. Make him measure and cut 20 scrap pieces while you watch.",
+                    impEffect: +30, confEffect: +30,
+                    feedback: "Exactly. You used the Trivium. You gave him the Grammar (how to read the lines), forced him to use the Logic (doing the math), and made him produce the Rhetoric (cutting the wood). He keeps his job and his dignity."
+                }
+            ]
+        },
+        {
+            title: "Student 2: Sarah (The Veteran)",
+            desc: "Sarah is 28. She just left the Navy after six years of managing complex supply chains. However, civilian HR departments keep rejecting her resume because she doesn't have a 4-year business degree. She feels completely useless. What is your advice?",
+            choices: [
+                {
+                    text: "Advise her to take out $40,000 in student loans to get the business degree.",
+                    impEffect: -30, confEffect: -10,
+                    feedback: "A catastrophic failure. You just told a highly competent logistics expert to enslave herself to debt to buy a credential she already has the skills for. You fed her to the system."
+                },
+                {
+                    text: "Help her use GSU to translate her military experience into an 'Honest Transcript' verified by industry professionals.",
+                    impEffect: +40, confEffect: +40,
+                    feedback: "Brilliant. You helped her bypass the gatekeepers. By translating her actual, proven competence into an Honest Transcript, you proved to employers that she doesn't need a piece of paper—she can do the job."
+                },
+                {
+                    text: "Tell her to lower her expectations and apply for entry-level security jobs.",
+                    impEffect: -10, confEffect: -30,
+                    feedback: "You accepted defeat. You allowed a broken hiring system to waste the immense talent and discipline of a veteran. Her confidence plummets."
+                }
+            ]
+        },
+        {
+            title: "Student 3: Leo (The Middle Schooler)",
+            desc: "Leo is 12. He constantly gets sent to the principal's office for acting out in class. You discover the truth: he is acting out so the teacher won't call on him to read out loud. He is functionally illiterate.",
+            choices: [
+                {
+                    text: "Tell his parents he likely has a learning disability and needs medication to sit still.",
+                    impEffect: -30, confEffect: -40,
+                    feedback: "The standard institutional response. You medicated a symptom (acting out) instead of fixing the root cause (illiteracy). You have condemned him to a life of low expectations."
+                },
+                {
+                    text: "Introduce him to the GSU 'Phonification' games. Sit with him daily as he rebuilds his understanding of letters and sounds.",
+                    impEffect: +40, confEffect: +40,
+                    feedback: "You changed the trajectory of a human life. By giving him the foundational Grammar of reading in a safe, gamified environment without judgment, you gave him the master key to all future learning."
+                },
+                {
+                    text: "Read his homework out loud to him so he doesn't fall behind in his other subjects.",
+                    impEffect: -10, confEffect: -10,
+                    feedback: "You are treating the wound with a band-aid. He might pass the homework assignment today, but he will be unable to function in society tomorrow."
+                }
+            ]
+        }
+    ];
+
+    function updateDash() {
+        document.getElementById('v-impact').textContent = state.impact;
+        document.getElementById('v-conf').textContent = state.conf + "%";
+        
+        let confBox = document.getElementById('box-conf');
+        if (state.conf < 30) confBox.classList.add('danger');
+        else confBox.classList.remove('danger');
+    }
+
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            let msg = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(msg);
+        }
+    }
+
+    function startGame() {
+        state.impact = 0;
+        state.conf = 50;
+        state.task = 0;
+        updateDash();
+        loadTask();
+    }
+
+    function loadTask() {
+        if (state.conf <= 0) {
+            gameOver("Your students lost all confidence and dropped out of the program. Mentorship requires patience and a demand for excellence, not enabling or abandonment.");
+            return;
+        }
+
+        if (state.task >= tasks.length) {
+            gameWin();
+            return;
+        }
+
+        let task = tasks[state.task];
+        document.getElementById('s-title').textContent = task.title;
+        document.getElementById('s-desc').textContent = task.desc;
+        
+        let choicesHTML = "";
+        task.choices.forEach((choice, idx) => {
+            choicesHTML += `<button class="choice-btn" onclick="makeChoice(${idx})">${choice.text}</button>`;
+        });
+        
+        document.getElementById('choices-area').innerHTML = choicesHTML;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+    }
+
+    function makeChoice(idx) {
+        let choice = tasks[state.task].choices[idx];
+        
+        state.impact += choice.impEffect;
+        state.conf += choice.confEffect;
+        if (state.conf > 100) state.conf = 100;
+        updateDash();
+
+        document.getElementById('choices-area').style.display = "none";
+        document.getElementById('f-text').innerHTML = `<strong>${choice.feedback}</strong>`;
+        document.getElementById('feedback-area').style.display = "block";
+        
+        speak(choice.feedback);
+    }
+
+    function nextTask() {
+        state.task++;
+        loadTask();
+    }
+
+    function gameOver(reason) {
+        document.getElementById('s-title').textContent = "🛑 MISSION FAILED";
+        document.getElementById('s-title').style.color = "#f87171";
+        document.getElementById('s-desc').textContent = reason;
+        document.getElementById('choices-area').innerHTML = `<button class="choice-btn" style="text-align:center" onclick="startGame()">Try Again</button>`;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+        speak("Mission failed. Try again.");
+    }
+
+    function gameWin() {
+        let titleColor = state.impact > 80 ? "#d4af37" : "#a855f7";
+        let titleText = state.impact > 80 ? "🏆 MASTER CIVILIZATION BUILDER" : "✅ MISSION COMPLETE";
+        
+        document.getElementById('s-title').textContent = titleText;
+        document.getElementById('s-title').style.color = titleColor;
+        
+        let finalStatus = `You finished with an Impact Score of ${state.impact}. You didn't just teach skills; you restored sovereignty to people who had been written off by the system. <br><br><strong>This story doesn't have to be fiction.</strong> Global Sovereign University is actively seeking retired professionals, tradesmen, and veterans to evaluate students and issue Honest Transcripts. We need your experience.`;
+
+        document.getElementById('s-desc').innerHTML = finalStatus;
+        document.getElementById('choices-area').innerHTML = `
+            <a href="/civilization-builders" class="cta-btn" style="text-align:center; width:100%;">Become a Mentor Today</a>
+            <br><br>
+            <button class="choice-btn" style="text-align:center" onclick="startGame()">Play Simulation Again</button>
+        `;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+        
+        speak("Congratulations. You have proven you understand the mission of a Civilization Builder. We need your experience in the real world.");
+    }
+</script>
+
+</body>
+</html>
