@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path of the Peacemaker | Epic Edition | GSU Historification</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); border-bottom: 1px solid rgba(239, 68, 68, 0.2); }
+        .logo { font-weight: 700; color: #ef4444; letter-spacing: 1px; text-transform: uppercase; }
+        .wrap { max-width: 800px; margin: 0 auto; padding: 20px; }
+        
+        /* Dashboard Stats */
+        .dash { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
+        .stat-box { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 15px; text-align: center; transition: all 0.3s ease; }
+        .stat-label { font-size: 12px; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
+        .stat-val { font-size: 28px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+        .unity { color: #4ade80; }
+        .honor { color: #fbbf24; }
+        .danger { background: rgba(248, 113, 113, 0.1); border-color: #f87171; }
+        
+        /* Game Area */
+        .scene-card { background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid #ef4444; }
+        .scene-title { font-size: 24px; color: #ef4444; margin-bottom: 15px; border-bottom: 1px solid rgba(239, 68, 68, 0.2); padding-bottom: 10px; }
+        .scene-desc { font-size: 18px; margin-bottom: 25px; }
+        
+        /* Choices */
+        .choice-btn { display: block; width: 100%; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 16px 20px; margin-bottom: 12px; border-radius: 8px; font-size: 16px; cursor: pointer; transition: all 0.2s ease; }
+        .choice-btn:hover { background: rgba(239, 68, 68, 0.1); border-color: #ef4444; transform: translateX(5px); }
+        
+        /* GENO Feedback Area */
+        .feedback-area { display: none; background: rgba(56, 189, 248, 0.1); border-left: 4px solid #38bdf8; padding: 20px; border-radius: 0 8px 8px 0; margin-top: 20px; }
+        .feedback-title { font-weight: 700; color: #38bdf8; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .next-btn { background: #ef4444; color: #fff; border: none; padding: 12px 24px; font-size: 16px; font-weight: 700; border-radius: 6px; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+        .next-btn:hover { background: #dc2626; }
+        
+        @media (max-width: 600px) { .dash { grid-template-columns: 1fr; gap: 10px; } }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <div class="logo">GSU Historification</div>
+    <div style="font-size: 14px; color: #94a3b8;">Epic Level: The 20-Chapter Journey</div>
+</div>
+
+<div class="wrap">
+    <div class="dash">
+        <div class="stat-box" id="box-unity">
+            <div class="stat-label">Five Nations Unity</div>
+            <div class="stat-val unity" id="v-unity">10%</div>
+        </div>
+        <div class="stat-box" id="box-honor">
+            <div class="stat-label">Clan Mother's Honor</div>
+            <div class="stat-val honor" id="v-honor">40 / 100</div>
+        </div>
+    </div>
+
+    <div class="scene-card" id="game-card">
+        <h2 class="scene-title" id="s-title">The Endless War</h2>
+        <div class="scene-desc" id="s-desc">
+            You live in a time of endless fighting. The Mohawk, Oneida, Onondaga, Cayuga, and Seneca are constantly at war. You have just met a man named Dekanawida, the Great Peacemaker. He wants to unite the tribes. Will you help him build the First American Democracy, or will the cycle of revenge consume you all?
+        </div>
+        
+        <div id="choices-area">
+            <button class="choice-btn" onclick="startGame()">Begin the Epic Journey</button>
+        </div>
+
+        <div class="feedback-area" id="feedback-area">
+            <div class="feedback-title">🤖 GENO Says:</div>
+            <div id="f-text"></div>
+            <button class="next-btn" onclick="nextTask()">Continue ➔</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let state = { unity: 10, honor: 40, task: 0 };
+
+    const tasks = [
+        {
+            title: "Chapter 2: The Three Sisters",
+            desc: "Before you set out on your journey for peace, you must help the village plant crops to survive the winter. You have seeds for corn, beans, and squash. How do you plant them?",
+            choices: [
+                {
+                    text: "Plant them in three separate fields so they don't fight for water.",
+                    uniEffect: 0, honEffect: -10,
+                    feedback: "You survived, but the crops were weak. The Haudenosaunee knew better: they planted them together. The corn provides a pole for the beans, the beans give nitrogen to the soil, and the squash leaves protect the roots."
+                },
+                {
+                    text: "Plant them all together in the same mound so they support each other.",
+                    uniEffect: +10, honEffect: +10,
+                    feedback: "Perfect! These are the 'Three Sisters.' Just like the crops, the Great Peacemaker believes the nations will be much stronger if they grow together rather than apart."
+                }
+            ]
+        },
+        {
+            title: "Chapter 5: Hiawatha's Choice",
+            desc: "You meet Hiawatha in the forest. He is filled with grief and anger because his family was killed in the endless wars. What is your advice to him?",
+            choices: [
+                {
+                    text: "Tell him to gather his weapons and seek revenge on the village that did it.",
+                    uniEffect: -15, honEffect: -20,
+                    feedback: "You chose the path of the Endless War. Seeking revenge only creates more grieving families. Dekanawida shakes his head in disappointment."
+                },
+                {
+                    text: "Tell him to let go of his anger and use his powerful voice to speak for peace.",
+                    uniEffect: +15, honEffect: +10,
+                    feedback: "A sovereign choice! Hiawatha chooses forgiveness over revenge. He teams up with the Peacemaker and becomes the greatest speaker the nations have ever heard."
+                }
+            ]
+        },
+        {
+            title: "Chapter 6: The Rival Warriors",
+            desc: "You and Hiawatha approach the territory of the Seneca, the fierce 'Keepers of the Western Door.' A warrior blocks your path and insults your tribe. How do you respond?",
+            choices: [
+                {
+                    text: "Draw your weapon! Honor demands that you fight him.",
+                    uniEffect: -15, honEffect: -15,
+                    feedback: "Violence begets violence. You endangered the peace mission and proved you are no different than the warmongers."
+                },
+                {
+                    text: "Lower your weapon and use Logic and Rhetoric to explain the vision of a united people.",
+                    uniEffect: +10, honEffect: +10,
+                    feedback: "Excellent. You used your words to stop a fight. The Seneca warrior listens to your message of peace and escorts you into the village."
+                }
+            ]
+        },
+        {
+            title: "Chapter 12: The Clan Mother's Test",
+            desc: "Inside the village, you must seek permission to speak. The Clan Mother steps forward and tests you: 'Why should we trust strangers who speak of peace when we are surrounded by enemies?'",
+            choices: [
+                {
+                    text: "'Because the men have decided it is time, and the women must follow.'",
+                    uniEffect: -10, honEffect: -30,
+                    feedback: "A terrible mistake! In the Iroquois Confederacy, the Clan Mothers hold the true power and choose the chiefs! You disrespected her, and your honor plummets."
+                },
+                {
+                    text: "'Because our children deserve to grow up without fear. We offer an alliance of strength.'",
+                    uniEffect: +15, honEffect: +20,
+                    feedback: "A beautiful answer. You respected the Clan Mother's ultimate goal: protecting her people. She grants you permission to speak."
+                }
+            ]
+        },
+        {
+            title: "Chapter 15: The Firekeepers",
+            desc: "You have convinced four nations, but you must face the Onondaga—the central nation. Their leader, Tadodaho, is a terrifying man who loves war. How do you approach him?",
+            choices: [
+                {
+                    text: "Gather the warriors of the other four nations and force him to surrender.",
+                    uniEffect: -20, honEffect: -10,
+                    feedback: "You tried to build peace through war. That is a contradiction. Tadodaho's warriors fight back, and the unity shatters."
+                },
+                {
+                    text: "Approach him unarmed. Offer him the honor of being the 'Firekeepers' of the new council if he joins.",
+                    uniEffect: +20, honEffect: +10,
+                    feedback: "Brilliant diplomacy! By offering the Onondaga the respected role of Firekeepers, you turned an enemy into the heart of the Confederacy."
+                }
+            ]
+        },
+        {
+            title: "Chapter 11: The Grand Council",
+            desc: "The leaders of all Five Nations are gathered around the central fire. Two nations completely disagree on a new law. What is the rule of the Grand Council?",
+            choices: [
+                {
+                    text: "Take a vote. If three nations agree, the other two must obey. Majority rules!",
+                    uniEffect: -10, honEffect: -10,
+                    feedback: "Incorrect. Simple majority rule creates bitterness. The Haudenosaunee demanded a higher standard: Consensus."
+                },
+                {
+                    text: "Keep talking and adjusting the plan until ALL five nations agree on a solution.",
+                    uniEffect: +15, honEffect: +10,
+                    feedback: "Exactly! This is called 'consensus.' They kept talking until everyone felt heard. This takes more time, but creates an unbreakable bond."
+                }
+            ]
+        },
+        {
+            title: "Chapter 8: The Tree of Peace",
+            desc: "The Great Law is established! Dekanawida brings forth a giant white pine tree. What must the warriors do to prove they are finally done fighting?",
+            choices: [
+                {
+                    text: "Burn their weapons in the central council fire.",
+                    uniEffect: 0, honEffect: -10,
+                    feedback: "Not quite. They needed a symbol that would last for generations."
+                },
+                {
+                    text: "Bury their weapons beneath the roots of the tree.",
+                    uniEffect: +15, honEffect: +10,
+                    feedback: "Yes! They buried their weapons under the Tree of Peace. The eagle at the top watches for danger, and the roots spread peace in all four directions."
+                }
+            ]
+        },
+        {
+            title: "Chapter 14: The Arrival of Strangers",
+            desc: "Years pass. Strange men with pale skin arrive in large wooden ships from across the ocean. They bring new tools, but also terrible new diseases. What is your strategy?",
+            choices: [
+                {
+                    text: "Attack them immediately before they can settle on the land.",
+                    uniEffect: -15, honEffect: -10,
+                    feedback: "War brings devastation. While conflict eventually happened, the Confederacy initially sought a diplomatic path."
+                },
+                {
+                    text: "Trade with them to get new tools, but stay united as Five Nations to protect your sovereignty.",
+                    uniEffect: +10, honEffect: +10,
+                    feedback: "A wise strategy. The Confederacy used their unity to negotiate treaties and trade, remaining a powerful force for centuries."
+                }
+            ]
+        },
+        {
+            title: "Chapter 15: The Colonial Observer",
+            desc: "A colonial leader named Benjamin Franklin visits the Grand Council. He is amazed that five separate nations can govern themselves as one. What do you do?",
+            choices: [
+                {
+                    text: "Explain the Great Law to him. Show him how consensus and representation work.",
+                    uniEffect: +10, honEffect: +10,
+                    feedback: "You just changed world history! Benjamin Franklin took these ideas back to the colonies, using the Iroquois model to help inspire the United States Constitution!"
+                },
+                {
+                    text: "Keep the Great Law a secret. It is not for outsiders.",
+                    uniEffect: -10, honEffect: 0,
+                    feedback: "The Tree of Peace was meant to spread its roots to anyone who sought it. By hiding it, you missed a chance to inspire a new nation."
+                }
+            ]
+        }
+    ];
+
+    function updateDash() {
+        document.getElementById('v-unity').textContent = state.unity + "%";
+        document.getElementById('v-honor').textContent = state.honor + " / 100";
+        
+        let uniBox = document.getElementById('box-unity');
+        if (state.unity < 30) uniBox.classList.add('danger');
+        else uniBox.classList.remove('danger');
+        
+        let honBox = document.getElementById('box-honor');
+        if (state.honor < 30) honBox.classList.add('danger');
+        else honBox.classList.remove('danger');
+    }
+
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            let msg = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(msg);
+        }
+    }
+
+    function startGame() {
+        state.unity = 10;
+        state.honor = 40;
+        state.task = 0;
+        updateDash();
+        loadTask();
+    }
+
+    function loadTask() {
+        if (state.unity <= 0 || state.honor <= 0) {
+            gameOver("The cycle of violence consumed you. You failed to build consensus and lost the respect of the Clan Mothers. The Confederacy has broken apart.");
+            return;
+        }
+
+        if (state.task >= tasks.length) {
+            gameWin();
+            return;
+        }
+
+        let task = tasks[state.task];
+        document.getElementById('s-title').textContent = task.title;
+        document.getElementById('s-desc').textContent = task.desc;
+        
+        let choicesHTML = "";
+        task.choices.forEach((choice, idx) => {
+            choicesHTML += `<button class="choice-btn" onclick="makeChoice(${idx})">${choice.text}</button>`;
+        });
+        
+        document.getElementById('choices-area').innerHTML = choicesHTML;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+    }
+
+    function makeChoice(idx) {
+        let choice = tasks[state.task].choices[idx];
+        
+        state.unity += choice.uniEffect;
+        if (state.unity > 100) state.unity = 100;
+        state.honor += choice.honEffect;
+        if (state.honor > 100) state.honor = 100;
+        updateDash();
+
+        document.getElementById('choices-area').style.display = "none";
+        document.getElementById('f-text').innerHTML = `<strong>${choice.feedback}</strong>`;
+        document.getElementById('feedback-area').style.display = "block";
+        
+        speak(choice.feedback);
+    }
+
+    function nextTask() {
+        state.task++;
+        loadTask();
+    }
+
+    function gameOver(reason) {
+        document.getElementById('s-title').textContent = "🛑 THE WARS CONTINUE";
+        document.getElementById('s-title').style.color = "#f87171";
+        document.getElementById('s-desc').textContent = reason;
+        document.getElementById('choices-area').innerHTML = `<button class="choice-btn" style="text-align:center" onclick="startGame()">Try Again</button>`;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+        speak("The wars continue. Try again and choose the path of peace.");
+    }
+
+    function gameWin() {
+        document.getElementById('s-title').textContent = "🦅 THE FIRST DEMOCRACY";
+        document.getElementById('s-title').style.color = "#4ade80";
+        
+        let finalStatus = `Incredible! With ${state.unity}% Unity and an Honor score of ${state.honor}, you navigated the entire history of the Haudenosaunee. You buried the weapons of war, empowered the Clan Mothers, and your Great Law of Peace went on to inspire the Constitution of the United States!`;
+
+        document.getElementById('s-desc').textContent = finalStatus;
+        document.getElementById('choices-area').innerHTML = `<button class="choice-btn" style="text-align:center" onclick="startGame()">Play Again</button>`;
+        document.getElementById('choices-area').style.display = "block";
+        document.getElementById('feedback-area').style.display = "none";
+        speak("Congratulations! " + finalStatus);
+    }
+</script>
+
+</body>
+</html>
