@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GENO's World Tour | GSU</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#0a0e1a;color:#e2e8f0;min-height:100vh;overflow-x:hidden}
+.nav{display:flex;justify-content:space-between;padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.3)}
+.nav a{color:#38bdf8;text-decoration:none;font-size:.85rem;font-weight:600;padding:8px 16px;border:1px solid rgba(56,189,248,.3);border-radius:50px}
+.nav a:hover{background:rgba(56,189,248,.1)}
+.wrap{max-width:800px;margin:0 auto;padding:20px}
+.hdr{text-align:center;padding:20px 0}
+.hdr h1{font-size:2rem;font-weight:900;background:linear-gradient(135deg,#fbbf24,#f59e0b,#d97706);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.hdr p{color:#94a3b8;font-size:.95rem}
+
+/* GENO bar */
+.geno{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;margin-bottom:16px}
+.geno img{width:50px;height:50px;border-radius:50%;border:2px solid #fbbf24;flex-shrink:0}
+.geno-msg{flex:1;color:#cbd5e1;font-size:.9rem;line-height:1.5}
+.geno-msg b{color:#fbbf24}
+.vbtn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:#fbbf24;cursor:pointer;font-size:1rem;flex-shrink:0}
+.vbtn.off{opacity:.4}
+
+/* Difficulty selector */
+.diff-bar{display:flex;gap:8px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+.diff{padding:8px 18px;border-radius:50px;font-size:.8rem;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#94a3b8;transition:all .2s}
+.diff:hover{border-color:rgba(251,191,36,.3)}
+.diff.on{color:#000}
+.diff.bronze{background:linear-gradient(135deg,#cd7f32,#a0622e);border-color:#cd7f32;color:#fff}
+.diff.silver{background:linear-gradient(135deg,#c0c0c0,#a0a0a0);border-color:#c0c0c0;color:#000}
+.diff.gold{background:linear-gradient(135deg,#ffd700,#daa520);border-color:#ffd700;color:#000}
+.diff.plat{background:linear-gradient(135deg,#e5e4e2,#b0b0b0);border-color:#e5e4e2;color:#000}
+
+/* City/Language picker */
+.pick-label{color:#64748b;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:8px}
+.cities{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:20px}
+.city{padding:14px 10px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);cursor:pointer;text-align:center;transition:all .2s}
+.city:hover{border-color:rgba(251,191,36,.3);background:rgba(251,191,36,.05)}
+.city.on{border-color:#fbbf24;background:rgba(251,191,36,.1);box-shadow:0 2px 12px rgba(251,191,36,.15)}
+.city .flag{font-size:1.6rem;display:block;margin-bottom:4px}
+.city .cname{font-size:.85rem;font-weight:700;color:#e2e8f0}
+.city .clang{font-size:.7rem;color:#64748b}
+
+/* Stats */
+.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.stat{text-align:center;padding:6px 18px;background:rgba(255,255,255,.03);border-radius:8px}
+.stat-v{font-size:1.2rem;font-weight:800;color:#fbbf24}
+.stat-l{font-size:.6rem;color:#64748b;text-transform:uppercase;letter-spacing:1px}
+
+/* Scene area */
+.scene{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.scene-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(56,189,248,.05))}
+.scene-body{padding:20px}
+.scene-title{font-size:1.1rem;font-weight:800;color:#fbbf24;margin-bottom:12px}
+.narr{color:#cbd5e1;font-size:.95rem;line-height:1.7;margin-bottom:16px}
+.narr .tl{color:#38bdf8;font-weight:600;cursor:pointer;border-bottom:1px dashed rgba(56,189,248,.3)}
+.narr .tl:hover{color:#7dd3fc}
+.narr .hint{color:#64748b;font-size:.8rem;font-style:italic;display:block;margin-top:4px}
+
+/* Choices */
+.choices{display:flex;flex-direction:column;gap:8px}
+.choice{padding:14px 18px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .2s;font-size:.95rem;color:#e2e8f0;text-align:left}
+.choice:hover{border-color:#fbbf24;background:rgba(251,191,36,.08)}
+.choice.correct{background:rgba(74,222,128,.15);border-color:#4ade80;color:#4ade80}
+.choice.wrong{background:rgba(239,68,68,.15);border-color:#ef4444;color:#ef4444}
+.choice .cl{color:#fbbf24;font-weight:700}
+.choice .en{color:#64748b;font-size:.8rem;margin-left:8px}
+
+/* Type input for Gold/Platinum */
+.type-area{display:flex;gap:8px;margin-top:12px}
+.type-input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 16px;color:#e2e8f0;font-size:1rem;outline:none}
+.type-input:focus{border-color:#fbbf24}
+.type-input::placeholder{color:rgba(255,255,255,.3)}
+.type-submit{padding:12px 24px;border-radius:10px;background:linear-gradient(135deg,#fbbf24,#d97706);border:none;color:#000;font-weight:700;cursor:pointer;font-size:.95rem}
+
+/* Feedback */
+.fb{padding:14px;border-radius:10px;margin-top:12px;font-size:.9rem;line-height:1.5}
+.fb.ok{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);color:#4ade80}
+.fb.no{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444}
+.fb .correct-answer{color:#fbbf24;font-weight:600}
+
+/* Next button */
+.nxt{display:block;width:100%;padding:14px;border-radius:10px;background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(251,191,36,.08));border:1px solid rgba(251,191,36,.3);color:#fbbf24;font-size:1rem;font-weight:700;cursor:pointer;margin-top:12px;text-align:center}
+.nxt:hover{background:rgba(251,191,36,.2)}
+
+/* Score overlay */
+.score-card{text-align:center;padding:40px 20px}
+.score-card h2{font-size:1.8rem;color:#fbbf24;margin-bottom:8px}
+.score-card .big{font-size:3rem;font-weight:900;color:#fff;margin:16px 0}
+.score-card .badge-earned{font-size:2rem;margin:12px 0}
+.score-card p{color:#94a3b8;margin-bottom:20px}
+.play-again{padding:14px 40px;border-radius:50px;background:linear-gradient(135deg,#fbbf24,#d97706);border:none;color:#000;font-weight:800;font-size:1rem;cursor:pointer}
+
+/* Hear button */
+.hear{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2);color:#38bdf8;font-size:.75rem;cursor:pointer;margin-left:6px;vertical-align:middle}
+.hear:hover{background:rgba(56,189,248,.2)}
+
+.ft{text-align:center;padding:15px 0;border-top:1px solid rgba(255,255,255,.08);color:#64748b;font-size:.8rem;margin-top:20px}
+.ft a{color:#fbbf24;text-decoration:none}
+@media(max-width:500px){.cities{grid-template-columns:1fr 1fr}.scene-img{height:100px;font-size:2.5rem}}
+</style>
+</head>
+<body>
+<div class="nav"><a href="https://www.globalsovereignuniversity.org">🏠 GSU Home</a><a href="https://www.globalsovereignuniversity.org/bookgames/world-languages-with-geno">🌍 World Languages</a></div>
+<div class="wrap">
+<div class="hdr"><h1>✈️ GENO's World Tour</h1><p>Use your vocabulary in real-world adventures — GENO narrates in your target language</p></div>
+
+<div class="geno">
+<img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO">
+<div class="geno-msg"><b>GENO:</b> <span id="gT">Pick a difficulty level and a destination. I'll guide you through an adventure — and I'll be speaking the local language!</span></div>
+<button class="vbtn" id="vBtn" onclick="togV()">🔊</button>
+</div>
+
+<div class="diff-bar">
+<div class="diff bronze on" onclick="setDiff('bronze',this)">🥉 Bronze<br><small>Multiple choice</small></div>
+<div class="diff" onclick="setDiff('silver',this)">🥈 Silver<br><small>Fewer hints</small></div>
+<div class="diff" onclick="setDiff('gold',this)">🥇 Gold<br><small>Type answers</small></div>
+<div class="diff" onclick="setDiff('plat',this)">💎 Platinum<br><small>Full immersion</small></div>
+</div>
+
+<div class="pick-label">Choose Your Destination</div>
+<div class="cities" id="cityGrid"></div>
+
+<div class="stats">
+<div class="stat"><div class="stat-v" id="sScene">0/7</div><div class="stat-l">Scene</div></div>
+<div class="stat"><div class="stat-v" id="sScore">0</div><div class="stat-l">Points</div></div>
+<div class="stat"><div class="stat-v" id="sStreak">0</div><div class="stat-l">Streak</div></div>
+<div class="stat"><div class="stat-v" id="sAcc">0%</div><div class="stat-l">Accuracy</div></div>
+</div>
+
+<div class="scene" id="sceneArea">
+<div style="text-align:center;color:#64748b;padding:60px 20px">Select a destination above to begin your adventure!</div>
+</div>
+
+<div class="ft"><a href="https://www.globalsovereignuniversity.org">Global Sovereign University</a> • 501(c)(3)<br>"Building a Bridge to Freedom Through Education—Not Handouts"</div>
+</div>
+
+<script>
+var vo=true,sy=window.speechSynthesis,diff='bronze';
+var score=0,streak=0,total=0,correct=0,sceneIdx=0,answered=false;
+var curCity=null;
+
+var CITIES=[
+{id:'mx',flag:'🇲🇽',name:'Mexico City',lang:'Spanish',code:'es-ES',emoji:'🌮'},
+{id:'ma',flag:'🇲🇦',name:'Marrakech',lang:'Arabic',code:'ar-SA',emoji:'🕌'},
+{id:'cn',flag:'🇨🇳',name:'Beijing',lang:'Chinese',code:'zh-CN',emoji:'🏯'},
+{id:'fr',flag:'🇫🇷',name:'Paris',lang:'French',code:'fr-FR',emoji:'🗼'},
+{id:'in',flag:'🇮🇳',name:'Delhi',lang:'Hindi',code:'hi-IN',emoji:'🕌'},
+{id:'it',flag:'🇮🇹',name:'Rome',lang:'Italian',code:'it-IT',emoji:'🏛️'},
+{id:'de',flag:'🇩🇪',name:'Berlin',lang:'German',code:'de-DE',emoji:'🏰'},
+{id:'br',flag:'🇧🇷',name:'Rio de Janeiro',lang:'Portuguese',code:'pt-BR',emoji:'🏖️'},
+{id:'jp',flag:'🇯🇵',name:'Tokyo',lang:'Japanese',code:'ja-JP',emoji:'⛩️'},
+{id:'us',flag:'🇺🇸',name:'New York',lang:'English',code:'en-US',emoji:'🗽'}
+];
+
+/* SCENES: each city has 7 scenes. Each scene has:
+   emoji, title, narration (with {target} phrases), 
+   challenge question, correct answer, wrong answers,
+   targetPhrase (in target language), targetRoman (romanization if needed), targetEng (English) */
+
+var SCENES={
+mx:[
+{emoji:'✈️',title:'Arriving at the Airport',narr:'Your plane touches down in Mexico City. The signs are all in Spanish. You need to find the exit. A worker approaches and says:',target:'¿Necesita ayuda?',roman:'',eng:'Do you need help?',
+ q:'How do you reply "Yes, please" in Spanish?',correct:'Sí, por favor',wrongs:['No, gracias','Buenos días','Hasta luego']},
+{emoji:'🚕',title:'The Taxi Ride',narr:'You climb into a taxi. The driver asks where you want to go. You need to say the name of your hotel.',target:'¿A dónde va?',roman:'',eng:'Where are you going?',
+ q:'How do you say "To the hotel, please"?',correct:'Al hotel, por favor',wrongs:['Al aeropuerto','A la playa','Al restaurante']},
+{emoji:'🏨',title:'Hotel Check-In',narr:'You arrive at the hotel. The receptionist greets you warmly and asks for your name. She says:',target:'Bienvenido. ¿Cómo se llama?',roman:'',eng:'Welcome. What is your name?',
+ q:'She asks how many nights. "Tres noches" means:',correct:'Three nights',wrongs:['Three rooms','Three people','Three keys']},
+{emoji:'🍽️',title:'Dinner at the Restaurant',narr:'You\'re hungry after traveling. You find a local restaurant. The waiter brings a menu and asks:',target:'¿Qué desea comer?',roman:'',eng:'What would you like to eat?',
+ q:'You want chicken and rice. How do you order?',correct:'Pollo con arroz, por favor',wrongs:['Pescado con ensalada','Sopa de tomate','Café con leche']},
+{emoji:'🏪',title:'Shopping at the Market',narr:'The next morning, you explore a local market full of colors and sounds. A vendor holds up fruit and says:',target:'Las naranjas son muy frescas hoy',roman:'',eng:'The oranges are very fresh today',
+ q:'How do you ask "How much does it cost?"',correct:'¿Cuánto cuesta?',wrongs:['¿Dónde está?','¿Qué hora es?','¿Cómo estás?']},
+{emoji:'🌤️',title:'Weather Talk',narr:'You meet a friendly local at a café. They comment on the weather:',target:'Hace mucho calor hoy',roman:'',eng:'It is very hot today',
+ q:'What does "calor" mean?',correct:'Hot',wrongs:['Cold','Rain','Wind']},
+{emoji:'👋',title:'Saying Goodbye',narr:'Your adventure in Mexico City comes to an end. Your new friend at the hotel says:',target:'¡Fue un placer conocerte! ¡Hasta pronto!',roman:'',eng:'It was a pleasure meeting you! See you soon!',
+ q:'How do you say "Thank you for everything"?',correct:'Gracias por todo',wrongs:['Adiós amigo','Buenos días','Lo siento']}
+],
+ma:[
+{emoji:'✈️',title:'Arriving in Marrakech',narr:'You land in Marrakech. The warm desert air hits you as you exit. A porter approaches:',target:'مرحبا، أهلاً وسهلاً',roman:'marhaba, ahlan wa sahlan',eng:'Hello, welcome!',
+ q:'How do you reply "Thank you" in Arabic?',correct:'شكراً (shukran)',wrongs:['مع السلامة (maa al-salama)','نعم (naam)','لا (la)']},
+{emoji:'🚕',title:'Finding a Taxi',narr:'Outside the airport, taxi drivers call out. You need to get to your riad in the medina. A driver asks:',target:'إلى أين؟',roman:'ila ayn?',eng:'Where to?',
+ q:'How do you say "To the hotel, please"?',correct:'إلى الفندق، من فضلك (ila al-funduq, min fadlak)',wrongs:['إلى المطار (ila al-matar)','إلى السوق (ila al-suq)','إلى المطعم (ila al-mat\'am)']},
+{emoji:'🏨',title:'The Riad',narr:'Your riad is beautiful with a fountain in the courtyard. The host greets you:',target:'كيف حالك؟ هل أنت بخير؟',roman:'kayf halak? hal anta bikhayr?',eng:'How are you? Are you well?',
+ q:'How do you reply "I am fine, thank you"?',correct:'أنا بخير، شكراً (ana bikhayr, shukran)',wrongs:['أنا جائع (ana ja\'i)','أنا تعبان (ana ta\'ban)','لا أفهم (la afham)']},
+{emoji:'🍽️',title:'Eating in the Medina',narr:'The smell of spices fills the air. A food vendor offers you something delicious:',target:'هل تريد طعاماً؟ لدينا دجاج ممتاز',roman:'hal turid ta\'aman? ladayna dajaj mumtaz',eng:'Do you want food? We have excellent chicken',
+ q:'What does "دجاج" (dajaj) mean?',correct:'Chicken',wrongs:['Fish','Bread','Rice']},
+{emoji:'🏪',title:'The Souk',narr:'You enter the famous souk. A merchant shows you a beautiful lamp:',target:'هذا جميل جداً. السعر مئة درهم',roman:'hadha jamil jiddan. as-si\'r mi\'at dirham',eng:'This is very beautiful. The price is one hundred dirhams',
+ q:'How do you say "Too expensive" in Arabic?',correct:'غالي جداً (ghali jiddan)',wrongs:['رخيص (rakhis)','جميل (jamil)','كبير (kabir)']},
+{emoji:'🌤️',title:'Desert Weather',narr:'You take an evening walk. A local comments:',target:'الجو حار في النهار وبارد في الليل',roman:'al-jaw harr fi an-nahar wa barid fi al-layl',eng:'The weather is hot during the day and cold at night',
+ q:'What does "بارد" (barid) mean?',correct:'Cold',wrongs:['Hot','Windy','Rainy']},
+{emoji:'👋',title:'Farewell',narr:'Time to leave Marrakech. Your host says:',target:'مع السلامة! نتمنى أن تعود قريباً',roman:'maa al-salama! natamanaa an ta\'ud qariban',eng:'Goodbye! We hope you return soon',
+ q:'How do you say "Goodbye" in Arabic?',correct:'مع السلامة (maa al-salama)',wrongs:['شكراً (shukran)','مرحبا (marhaba)','نعم (naam)']}
+],
+cn:[
+{emoji:'✈️',title:'Landing in Beijing',narr:'You arrive at Beijing Capital Airport. Everything is in Chinese characters. An attendant asks:',target:'你好！需要帮助吗？',roman:'nǐ hǎo! xūyào bāngzhù ma?',eng:'Hello! Do you need help?',
+ q:'How do you say "Yes, thank you" in Chinese?',correct:'是的，谢谢 (shì de, xièxiè)',wrongs:['不是 (bú shì)','再见 (zàijiàn)','对不起 (duìbuqǐ)']},
+{emoji:'🚕',title:'Taxi to the City',narr:'You get in a taxi. The driver doesn\'t speak English. He asks:',target:'你去哪里？',roman:'nǐ qù nǎlǐ?',eng:'Where are you going?',
+ q:'How do you say "hotel"?',correct:'酒店 (jiǔdiàn)',wrongs:['机场 (jīchǎng)','车站 (chēzhàn)','餐厅 (cāntīng)']},
+{emoji:'🏨',title:'Hotel Check-In',narr:'The hotel lobby is grand. The clerk asks:',target:'欢迎！请问您的名字是什么？',roman:'huānyíng! qǐngwèn nín de míngzì shì shénme?',eng:'Welcome! May I ask your name?',
+ q:'"两个晚上" (liǎng gè wǎnshang) means:',correct:'Two nights',wrongs:['Two rooms','Two people','Two beds']},
+{emoji:'🍽️',title:'Peking Duck Dinner',narr:'You find a famous restaurant. The waiter recommends:',target:'北京烤鸭非常好吃，您要试试吗？',roman:'Běijīng kǎoyā fēicháng hǎochī, nín yào shìshì ma?',eng:'Peking duck is very delicious, would you like to try?',
+ q:'How do you say "I want water"?',correct:'我要水 (wǒ yào shuǐ)',wrongs:['我要咖啡 (wǒ yào kāfēi)','我要米饭 (wǒ yào mǐfàn)','我要鱼 (wǒ yào yú)']},
+{emoji:'🏯',title:'The Great Wall',narr:'You visit the Great Wall. A tour guide says:',target:'长城非常长，有两千多年的历史',roman:'Chángchéng fēicháng cháng, yǒu liǎng qiān duō nián de lìshǐ',eng:'The Great Wall is very long, with over two thousand years of history',
+ q:'What does "长" (cháng) mean?',correct:'Long',wrongs:['Short','Old','Big']},
+{emoji:'🌤️',title:'Weather in Beijing',narr:'Your guide comments on the weather:',target:'今天天气很冷，穿暖和一点',roman:'jīntiān tiānqì hěn lěng, chuān nuǎnhuo yīdiǎn',eng:'Today the weather is very cold, dress warmly',
+ q:'What does "冷" (lěng) mean?',correct:'Cold',wrongs:['Hot','Windy','Cloudy']},
+{emoji:'👋',title:'Leaving Beijing',narr:'Your new Chinese friend says at the airport:',target:'再见！希望你再来中国！',roman:'zàijiàn! xīwàng nǐ zài lái Zhōngguó!',eng:'Goodbye! Hope you come to China again!',
+ q:'How do you say "Goodbye"?',correct:'再见 (zàijiàn)',wrongs:['谢谢 (xièxiè)','你好 (nǐ hǎo)','对不起 (duìbuqǐ)']}
+],
+fr:[
+{emoji:'✈️',title:'Bienvenue à Paris',narr:'Your plane lands at Charles de Gaulle. A flight attendant says:',target:'Bienvenue à Paris! Bon séjour!',roman:'',eng:'Welcome to Paris! Enjoy your stay!',
+ q:'How do you say "Thank you very much"?',correct:'Merci beaucoup',wrongs:['S\'il vous plaît','Au revoir','Bonjour']},
+{emoji:'🚕',title:'To the Hotel',narr:'You hail a taxi outside the airport. The driver asks:',target:'Où allez-vous?',roman:'',eng:'Where are you going?',
+ q:'How do you say "To the hotel, please"?',correct:'À l\'hôtel, s\'il vous plaît',wrongs:['À l\'aéroport','À la gare','Au restaurant']},
+{emoji:'🏨',title:'A Charming Hotel',narr:'A small hotel near the Seine. The receptionist greets you:',target:'Bonjour! Avez-vous une réservation?',roman:'',eng:'Hello! Do you have a reservation?',
+ q:'How do you say "Yes, for three nights"?',correct:'Oui, pour trois nuits',wrongs:['Non, merci','Oui, pour une heure','Oui, pour deux personnes']},
+{emoji:'🍽️',title:'Café Dinner',narr:'You sit at a sidewalk café. The waiter brings the menu and says:',target:'Qu\'est-ce que vous désirez?',roman:'',eng:'What would you like?',
+ q:'You want bread and cheese. How do you order?',correct:'Du pain et du fromage, s\'il vous plaît',wrongs:['Du poisson et du riz','De la soupe','Du poulet et des légumes']},
+{emoji:'🗼',title:'The Eiffel Tower',narr:'You visit the Eiffel Tower. Another tourist asks you:',target:'Excusez-moi, quelle heure est-il?',roman:'',eng:'Excuse me, what time is it?',
+ q:'They asked about the:',correct:'Time',wrongs:['Weather','Directions','Price']},
+{emoji:'🌤️',title:'Paris Weather',narr:'It starts raining. A shopkeeper waves you inside and says:',target:'Il pleut beaucoup aujourd\'hui! Entrez!',roman:'',eng:'It\'s raining a lot today! Come in!',
+ q:'What does "il pleut" mean?',correct:'It\'s raining',wrongs:['It\'s snowing','It\'s hot','It\'s windy']},
+{emoji:'👋',title:'Au Revoir Paris',narr:'Your final morning. The hotel owner says:',target:'Au revoir! Revenez bientôt! Paris vous attend!',roman:'',eng:'Goodbye! Come back soon! Paris awaits you!',
+ q:'How do you say "Goodbye, see you soon"?',correct:'Au revoir, à bientôt',wrongs:['Bonjour, merci','Bonsoir, bonne nuit','Excusez-moi, pardon']}
+],
+in:[
+{emoji:'✈️',title:'Arriving in Delhi',narr:'You land at Indira Gandhi Airport. A greeter holds a sign:',target:'नमस्ते! भारत में आपका स्वागत है!',roman:'namaste! bharat mein apka swagat hai!',eng:'Hello! Welcome to India!',
+ q:'How do you reply "Thank you" in Hindi?',correct:'धन्यवाद (dhanyavad)',wrongs:['अलविदा (alvida)','कृपया (kripaya)','माफ कीजिए (maaf kijiye)']},
+{emoji:'🚕',title:'Auto-Rickshaw Ride',narr:'You hop into a colorful auto-rickshaw. The driver asks:',target:'कहाँ जाना है?',roman:'kahaan jana hai?',eng:'Where do you want to go?',
+ q:'How do you say "To the hotel"?',correct:'होटल चलिए (hotel chaliye)',wrongs:['बाज़ार चलिए (bazaar chaliye)','स्टेशन चलिए (station chaliye)','हवाई अड्डा (hawai adda)']},
+{emoji:'🏨',title:'Hotel Welcome',narr:'The hotel manager greets you with a warm smile:',target:'आपका कमरा तैयार है। कृपया आइए।',roman:'apka kamra taiyar hai. kripaya aaiye.',eng:'Your room is ready. Please come.',
+ q:'What does "कमरा" (kamra) mean?',correct:'Room',wrongs:['Key','Bed','Bathroom']},
+{emoji:'🍽️',title:'Street Food',narr:'The smell of spices draws you to a food stall. The vendor asks:',target:'क्या खाएँगे? चाय या लस्सी?',roman:'kya khayenge? chai ya lassi?',eng:'What will you eat? Tea or lassi?',
+ q:'How do you say "I want tea"?',correct:'मुझे चाय चाहिए (mujhe chai chahiye)',wrongs:['मुझे पानी चाहिए (mujhe pani chahiye)','मुझे दूध चाहिए (mujhe doodh chahiye)','मुझे कॉफी चाहिए (mujhe coffee chahiye)']},
+{emoji:'🕌',title:'Visiting the Red Fort',narr:'A guide at the Red Fort shares its history:',target:'यह बहुत पुराना किला है। चार सौ साल पुराना!',roman:'yeh bahut purana qila hai. char sau saal purana!',eng:'This is a very old fort. Four hundred years old!',
+ q:'What does "पुराना" (purana) mean?',correct:'Old',wrongs:['New','Big','Beautiful']},
+{emoji:'🌤️',title:'Delhi Heat',narr:'It\'s a scorching day. A shopkeeper says:',target:'आज बहुत गर्मी है! पानी पीजिए।',roman:'aaj bahut garmi hai! pani peejiye.',eng:'It\'s very hot today! Drink water.',
+ q:'What does "गर्मी" (garmi) mean?',correct:'Heat / Hot',wrongs:['Cold','Rain','Wind']},
+{emoji:'👋',title:'Farewell Delhi',narr:'Your driver takes you to the airport and says:',target:'फिर मिलेंगे! भारत फिर आइएगा!',roman:'phir milenge! bharat phir aaiyega!',eng:'See you again! Come to India again!',
+ q:'How do you say "Goodbye"?',correct:'अलविदा (alvida)',wrongs:['धन्यवाद (dhanyavad)','नमस्ते (namaste)','कृपया (kripaya)']}
+],
+it:[
+{emoji:'✈️',title:'Arriving in Rome',narr:'You land at Fiumicino Airport. A customs officer says:',target:'Benvenuto a Roma! Buon viaggio!',roman:'',eng:'Welcome to Rome! Good trip!',
+ q:'How do you reply "Thank you" in Italian?',correct:'Grazie',wrongs:['Arrivederci','Scusi','Prego']},
+{emoji:'🚕',title:'Taxi to the City',narr:'A taxi driver opens the door and asks:',target:'Dove vuole andare?',roman:'',eng:'Where do you want to go?',
+ q:'How do you say "To the hotel, please"?',correct:'All\'albergo, per favore',wrongs:['Alla stazione','Al ristorante','All\'aeroporto']},
+{emoji:'🏨',title:'The Boutique Hotel',narr:'A charming hotel near the Colosseum. The clerk says:',target:'Buonasera! Ha una prenotazione?',roman:'',eng:'Good evening! Do you have a reservation?',
+ q:'What does "Buonasera" mean?',correct:'Good evening',wrongs:['Good morning','Goodbye','Thank you']},
+{emoji:'🍽️',title:'Roman Trattoria',narr:'At a cozy trattoria, the waiter says:',target:'Cosa desidera mangiare? La pasta è ottima!',roman:'',eng:'What would you like to eat? The pasta is excellent!',
+ q:'How do you order water?',correct:'Acqua, per favore',wrongs:['Vino, per favore','Birra, per favore','Caffè, per favore']},
+{emoji:'🏛️',title:'The Colosseum',narr:'At the Colosseum, your guide explains:',target:'Il Colosseo ha quasi duemila anni. È bellissimo!',roman:'',eng:'The Colosseum is almost two thousand years old. It\'s beautiful!',
+ q:'What does "bellissimo" mean?',correct:'Very beautiful',wrongs:['Very old','Very large','Very famous']},
+{emoji:'🌤️',title:'Italian Weather',narr:'You eat gelato in a piazza. A local says:',target:'Che bella giornata! Il sole splende!',roman:'',eng:'What a beautiful day! The sun is shining!',
+ q:'What does "sole" mean?',correct:'Sun',wrongs:['Moon','Rain','Cloud']},
+{emoji:'👋',title:'Arrivederci Roma',narr:'Your hotel owner hugs you goodbye:',target:'Arrivederci! Torna presto a Roma!',roman:'',eng:'Goodbye! Come back to Rome soon!',
+ q:'How do you say "Goodbye" in Italian?',correct:'Arrivederci',wrongs:['Grazie','Buongiorno','Prego']}
+],
+de:[
+{emoji:'✈️',title:'Landing in Berlin',narr:'You arrive at Berlin Brandenburg Airport. A border officer says:',target:'Willkommen in Deutschland! Guten Tag!',roman:'',eng:'Welcome to Germany! Good day!',
+ q:'How do you say "Good day" in German?',correct:'Guten Tag',wrongs:['Gute Nacht','Auf Wiedersehen','Danke']},
+{emoji:'🚕',title:'The Taxi',narr:'A taxi driver asks your destination:',target:'Wohin möchten Sie?',roman:'',eng:'Where would you like to go?',
+ q:'How do you say "To the hotel, please"?',correct:'Zum Hotel, bitte',wrongs:['Zum Bahnhof','Zum Flughafen','Zum Restaurant']},
+{emoji:'🏨',title:'Hotel Registration',narr:'A modern hotel in Mitte. The receptionist asks:',target:'Guten Abend! Haben Sie eine Reservierung?',roman:'',eng:'Good evening! Do you have a reservation?',
+ q:'What does "Guten Abend" mean?',correct:'Good evening',wrongs:['Good morning','Good night','Goodbye']},
+{emoji:'🍽️',title:'Dinner Time',narr:'At a traditional restaurant, the waiter says:',target:'Was möchten Sie essen? Die Suppe ist ausgezeichnet!',roman:'',eng:'What would you like to eat? The soup is excellent!',
+ q:'How do you order bread and cheese?',correct:'Brot und Käse, bitte',wrongs:['Fisch und Reis','Fleisch und Salat','Suppe und Wein']},
+{emoji:'🏰',title:'Brandenburg Gate',narr:'At the Brandenburg Gate, a guide explains:',target:'Das Brandenburger Tor ist ein Symbol der Freiheit',roman:'',eng:'The Brandenburg Gate is a symbol of freedom',
+ q:'What does "Freiheit" mean?',correct:'Freedom',wrongs:['History','Beauty','Strength']},
+{emoji:'🌤️',title:'Berlin Weather',narr:'It\'s snowing! A passerby says:',target:'Es schneit heute! Sehr kalt!',roman:'',eng:'It\'s snowing today! Very cold!',
+ q:'What does "schneit" mean?',correct:'Snowing',wrongs:['Raining','Windy','Sunny']},
+{emoji:'👋',title:'Auf Wiedersehen Berlin',narr:'Your host says farewell:',target:'Auf Wiedersehen! Kommen Sie bald wieder!',roman:'',eng:'Goodbye! Come back soon!',
+ q:'How do you say "Goodbye"?',correct:'Auf Wiedersehen',wrongs:['Danke','Guten Tag','Bitte']}
+],
+br:[
+{emoji:'✈️',title:'Arriving in Rio',narr:'You land at Galeão Airport. A greeter says:',target:'Bem-vindo ao Rio de Janeiro! Tudo bem?',roman:'',eng:'Welcome to Rio de Janeiro! Everything good?',
+ q:'How do you reply "Everything good, thank you"?',correct:'Tudo bem, obrigado',wrongs:['Tchau','Desculpe','Com licença']},
+{emoji:'🚕',title:'Taxi to Copacabana',narr:'A taxi driver asks:',target:'Para onde vai?',roman:'',eng:'Where are you going?',
+ q:'How do you say "To the hotel, please"?',correct:'Para o hotel, por favor',wrongs:['Para a praia','Para o aeroporto','Para a estação']},
+{emoji:'🏨',title:'Beach Hotel',narr:'A colorful hotel overlooking the beach. The clerk says:',target:'Boa tarde! Qual é o seu nome?',roman:'',eng:'Good afternoon! What is your name?',
+ q:'What does "Boa tarde" mean?',correct:'Good afternoon',wrongs:['Good morning','Good night','Goodbye']},
+{emoji:'🍽️',title:'Brazilian Feast',narr:'At a churrascaria, the waiter says:',target:'O que você gostaria de beber? Suco ou água?',roman:'',eng:'What would you like to drink? Juice or water?',
+ q:'How do you say "Water, please"?',correct:'Água, por favor',wrongs:['Café, por favor','Cerveja, por favor','Leite, por favor']},
+{emoji:'🏖️',title:'Copacabana Beach',narr:'On the famous beach, a vendor calls out:',target:'Sorvete! Sorvete gelado! Muito barato!',roman:'',eng:'Ice cream! Cold ice cream! Very cheap!',
+ q:'What does "barato" mean?',correct:'Cheap',wrongs:['Expensive','Delicious','Cold']},
+{emoji:'🌤️',title:'Rio Weather',narr:'A lifeguard warns you:',target:'Está muito quente hoje! Beba muita água!',roman:'',eng:'It\'s very hot today! Drink lots of water!',
+ q:'What does "quente" mean?',correct:'Hot',wrongs:['Cold','Windy','Rainy']},
+{emoji:'👋',title:'Tchau Rio',narr:'Your hotel friend says goodbye:',target:'Tchau! Volta logo para o Brasil!',roman:'',eng:'Bye! Come back to Brazil soon!',
+ q:'How do you say "Goodbye"?',correct:'Tchau',wrongs:['Obrigado','Olá','Desculpe']}
+],
+jp:[
+{emoji:'✈️',title:'Landing in Tokyo',narr:'You arrive at Narita Airport. An attendant bows and says:',target:'ようこそ日本へ！',roman:'youkoso nihon e!',eng:'Welcome to Japan!',
+ q:'How do you say "Thank you" in Japanese?',correct:'ありがとう (arigatou)',wrongs:['さようなら (sayounara)','すみません (sumimasen)','おはよう (ohayou)']},
+{emoji:'🚃',title:'Taking the Train',narr:'You need to take the express train. The station attendant says:',target:'切符はどこで買いますか？あそこです。',roman:'kippu wa doko de kaimasu ka? asoko desu.',eng:'Where do you buy tickets? Over there.',
+ q:'What does "切符" (kippu) mean?',correct:'Ticket',wrongs:['Train','Station','Exit']},
+{emoji:'🏨',title:'Capsule Hotel',narr:'You check into a capsule hotel. The clerk says:',target:'おはようございます。お名前は？',roman:'ohayou gozaimasu. onamae wa?',eng:'Good morning. Your name?',
+ q:'What does "おはようございます" mean?',correct:'Good morning',wrongs:['Good evening','Goodbye','Welcome']},
+{emoji:'🍽️',title:'Ramen Shop',narr:'You find a tiny ramen shop. The chef calls out:',target:'いらっしゃいませ！何にしますか？',roman:'irasshaimase! nani ni shimasu ka?',eng:'Welcome! What will you have?',
+ q:'How do you say "Water, please"?',correct:'水をください (mizu wo kudasai)',wrongs:['コーヒーをください (koohii wo kudasai)','ビールをください (biiru wo kudasai)','お茶をください (ocha wo kudasai)']},
+{emoji:'⛩️',title:'Temple Visit',narr:'At a beautiful temple in Asakusa, a monk says:',target:'このお寺は千年以上の歴史があります',roman:'kono otera wa sennen ijou no rekishi ga arimasu',eng:'This temple has over one thousand years of history',
+ q:'What does "お寺" (otera) mean?',correct:'Temple',wrongs:['Castle','Museum','Garden']},
+{emoji:'🌤️',title:'Tokyo Weather',narr:'Cherry blossoms are falling. A local says:',target:'今日は暖かいですね。春が来ました！',roman:'kyou wa atatakai desu ne. haru ga kimashita!',eng:'It\'s warm today, isn\'t it? Spring has come!',
+ q:'What does "暖かい" (atatakai) mean?',correct:'Warm',wrongs:['Cold','Hot','Cool']},
+{emoji:'👋',title:'Sayounara Tokyo',narr:'Your host bows deeply and says:',target:'さようなら！また日本に来てくださいね！',roman:'sayounara! mata nihon ni kite kudasai ne!',eng:'Goodbye! Please come to Japan again!',
+ q:'How do you say "Goodbye"?',correct:'さようなら (sayounara)',wrongs:['ありがとう (arigatou)','こんにちは (konnichiwa)','すみません (sumimasen)']}
+],
+us:[
+{emoji:'✈️',title:'Arriving in New York',narr:'You land at JFK Airport. A customs officer says:',target:'Welcome to the United States! Enjoy your stay!',roman:'',eng:'Bienvenido a los Estados Unidos (ES)',
+ q:'How do you say "Thank you" in English?',correct:'Thank you',wrongs:['Goodbye','Please','Sorry']},
+{emoji:'🚕',title:'Yellow Cab Ride',narr:'You jump into an iconic yellow taxi. The driver asks:',target:'Where to, buddy?',roman:'',eng:'¿A dónde, amigo? (ES)',
+ q:'How do you say "To the hotel, please"?',correct:'To the hotel, please',wrongs:['To the airport','To the station','To the restaurant']},
+{emoji:'🏨',title:'Manhattan Hotel',narr:'A stylish hotel in Midtown. The receptionist says:',target:'Good evening! Checking in? What\'s your last name?',roman:'',eng:'Buenas noches. ¿Se registra? ¿Su apellido? (ES)',
+ q:'What does "checking in" mean?',correct:'Registering at the hotel',wrongs:['Leaving the hotel','Paying the bill','Asking for directions']},
+{emoji:'🍽️',title:'Pizza by the Slice',narr:'At a famous pizza shop, the guy behind the counter shouts:',target:'What can I get you? We got the best slices in the city!',roman:'',eng:'¿Qué le sirvo? ¡Tenemos las mejores rebanadas! (ES)',
+ q:'How do you order two slices and a drink?',correct:'Two slices and a drink, please',wrongs:['One pizza, please','A salad, please','Just water, please']},
+{emoji:'🗽',title:'Statue of Liberty',narr:'On the ferry, a tour guide announces:',target:'The Statue of Liberty was a gift from France in 1886',roman:'',eng:'La Estatua de la Libertad fue un regalo de Francia en 1886 (ES)',
+ q:'The statue was a gift from which country?',correct:'France',wrongs:['England','Spain','Italy']},
+{emoji:'🌤️',title:'NYC Weather',narr:'It starts snowing in Central Park. A jogger says:',target:'It\'s freezing out here! Bundle up!',roman:'',eng:'¡Está helando aquí! ¡Abrígate! (ES)',
+ q:'What does "freezing" mean?',correct:'Very cold',wrongs:['Very hot','Very windy','Very rainy']},
+{emoji:'👋',title:'Leaving New York',narr:'Your hotel doorman waves and says:',target:'Take care! Come back and visit us anytime!',roman:'',eng:'¡Cuídese! ¡Vuelva a visitarnos cuando quiera! (ES)',
+ q:'How do you say "Goodbye" in English?',correct:'Goodbye',wrongs:['Hello','Thank you','Please']}
+]
+};
+
+function say(t,lang){
+  document.getElementById('gT').textContent=t;
+  if(!vo||!sy)return;sy.cancel();
+  var u=new SpeechSynthesisUtterance(t);
+  u.lang=lang||'en-US';u.rate=0.85;u.pitch=1;u.volume=0.8;
+  var v=sy.getVoices(),p=v.find(function(x){return x.lang===lang})||v.find(function(x){return x.lang&&x.lang.startsWith((lang||'en').split('-')[0])});
+  if(p)u.voice=p;sy.speak(u);
+}
+function sayTarget(text){
+  if(!vo||!sy||!curCity)return;sy.cancel();
+  var u=new SpeechSynthesisUtterance(text);
+  u.lang=curCity.code;u.rate=0.7;u.pitch=1;u.volume=0.9;
+  var v=sy.getVoices(),p=v.find(function(x){return x.lang===curCity.code})||v.find(function(x){return x.lang&&x.lang.startsWith(curCity.code.split('-')[0])});
+  if(p)u.voice=p;sy.speak(u);
+}
+function togV(){vo=!vo;document.getElementById('vBtn').textContent=vo?'🔊':'🔇';document.getElementById('vBtn').classList.toggle('off',!vo)}
+if(sy)sy.onvoiceschanged=function(){};
+
+function setDiff(d,el){
+  diff=d;
+  document.querySelectorAll('.diff').forEach(function(x){x.classList.remove('on','bronze','silver','gold','plat')});
+  el.classList.add('on',d==='bronze'?'bronze':d==='silver'?'silver':d==='gold'?'gold':'plat');
+  say('Difficulty set to '+d+'!');
+}
+
+function buildCities(){
+  var h='';
+  for(var i=0;i<CITIES.length;i++){var c=CITIES[i];
+    h+='<div class="city" onclick="startCity(\''+c.id+'\',this)"><span class="flag">'+c.flag+'</span><div class="cname">'+c.name+'</div><div class="clang">'+c.lang+'</div></div>';
+  }
+  document.getElementById('cityGrid').innerHTML=h;
+}
+
+function startCity(id,el){
+  document.querySelectorAll('.city').forEach(function(c){c.classList.remove('on')});
+  el.classList.add('on');
+  curCity=CITIES.find(function(c){return c.id===id});
+  sceneIdx=0;score=0;streak=0;total=0;correct=0;
+  say("Let's explore "+curCity.name+"! I'll be speaking "+curCity.lang+". Ready?");
+  setTimeout(function(){renderScene()},1200);
+}
+
+function renderScene(){
+  var scenes=SCENES[curCity.id];
+  if(sceneIdx>=scenes.length){showScore();return}
+  var s=scenes[sceneIdx];
+  answered=false;
+  updStats();
+
+  var h='<div class="scene-img">'+s.emoji+'</div><div class="scene-body">';
+  h+='<div class="scene-title">Scene '+(sceneIdx+1)+'/'+scenes.length+': '+s.title+'</div>';
+  h+='<div class="narr">'+s.narr+'</div>';
+
+  // Target phrase
+  h+='<div class="narr" style="background:rgba(251,191,36,.05);padding:14px;border-radius:10px;border-left:3px solid #fbbf24;margin-bottom:16px">';
+  h+='<span class="tl" onclick="sayTarget(\''+s.target.replace(/'/g,"\\'")+'\')" title="Click to hear">🔊 '+s.target+'</span>';
+  if(s.roman)h+='<span class="hint">'+s.roman+'</span>';
+  
+  // Show English based on difficulty
+  if(diff==='bronze'||diff==='silver'){
+    h+='<span class="hint">'+s.eng+'</span>';
+  } else if(diff==='gold'){
+    h+='<span class="hint" style="cursor:pointer;text-decoration:underline" onclick="this.textContent=\''+s.eng.replace(/'/g,"\\'")+'\'">💡 Click for translation hint</span>';
+  }
+  // Platinum: no English at all
+  h+='</div>';
+
+  // Question
+  h+='<div style="color:#fbbf24;font-weight:700;margin-bottom:12px">'+s.q+'</div>';
+
+  if(diff==='bronze'||diff==='silver'){
+    // Multiple choice
+    var opts=[s.correct].concat(s.wrongs);
+    // Shuffle
+    for(var i=opts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=opts[i];opts[i]=opts[j];opts[j]=t}
+    var ci=opts.indexOf(s.correct);
+    h+='<div class="choices">';
+    for(var i=0;i<opts.length;i++){
+      h+='<div class="choice" onclick="pickChoice(this,'+i+','+ci+')">'+opts[i]+'</div>';
+    }
+    h+='</div>';
+  } else {
+    // Type answer for Gold/Platinum
+    h+='<div class="type-area">';
+    h+='<input class="type-input" id="typeInput" placeholder="Type your answer in '+curCity.lang+'..." onkeypress="if(event.key===\'Enter\')checkType()">';
+    h+='<button class="type-submit" onclick="checkType()">Check</button>';
+    h+='</div>';
+  }
+
+  h+='<div id="fb"></div>';
+  h+='</div>';
+  document.getElementById('sceneArea').innerHTML=h;
+
+  // Auto-speak the target phrase
+  setTimeout(function(){sayTarget(s.target)},500);
+}
+
+function pickChoice(el,i,ci){
+  if(answered)return;answered=true;
+  var opts=document.querySelectorAll('.choice');
+  opts.forEach(function(o){o.style.pointerEvents='none'});
+  opts[ci].classList.add('correct');
+  total++;
+  var s=SCENES[curCity.id][sceneIdx];
+  var fb=document.getElementById('fb');
+
+  if(i===ci){
+    correct++;streak++;score+=diff==='silver'?15:10;
+    if(streak>=3)score+=5; // streak bonus
+    fb.innerHTML='<div class="fb ok">✅ Correct! '+s.target+' → '+s.eng+'</div>';
+    var praise=['Excellent!','Wonderful!','You\'re a natural!','Perfect!','Great job!','Impressive!'];
+    say(praise[Math.floor(Math.random()*praise.length)]);
+  } else {
+    el.classList.add('wrong');streak=0;
+    fb.innerHTML='<div class="fb no">❌ The correct answer was: <span class="correct-answer">'+s.correct+'</span></div>';
+    say('Not quite. The answer is: '+s.correct);
+  }
+  fb.innerHTML+='<button class="nxt" onclick="nextScene()">➡️ Continue Journey</button>';
+  updStats();
+}
+
+function checkType(){
+  if(answered)return;
+  var input=document.getElementById('typeInput');
+  var answer=input.value.trim();
+  if(!answer)return;
+  answered=true;
+  total++;
+  var s=SCENES[curCity.id][sceneIdx];
+  var fb=document.getElementById('fb');
+  
+  // Flexible matching: lowercase, remove punctuation, trim
+  var clean=function(str){return str.toLowerCase().replace(/[¿¡?!.,;:()'"]/g,'').replace(/\s+/g,' ').trim()};
+  var userClean=clean(answer);
+  var correctClean=clean(s.correct);
+  // Also check without parenthetical romanization
+  var correctBase=clean(s.correct.replace(/\(.*?\)/g,''));
+
+  if(userClean===correctClean||userClean===correctBase||correctClean.includes(userClean)&&userClean.length>3){
+    correct++;streak++;score+=diff==='gold'?25:40; // Platinum gives more points
+    if(streak>=3)score+=10;
+    fb.innerHTML='<div class="fb ok">✅ Correct! Brilliant work!</div>';
+    say('Amazing! That\'s exactly right!');
+  } else {
+    streak=0;
+    fb.innerHTML='<div class="fb no">❌ Close! The answer was: <span class="correct-answer">'+s.correct+'</span><br>You typed: "'+answer+'"</div>';
+    say('The correct answer was: '+s.correct);
+  }
+  fb.innerHTML+='<button class="nxt" onclick="nextScene()">➡️ Continue Journey</button>';
+  input.disabled=true;
+  updStats();
+}
+
+function nextScene(){
+  sceneIdx++;
+  renderScene();
+}
+
+function updStats(){
+  var scenes=SCENES[curCity.id]||[];
+  document.getElementById('sScene').textContent=(sceneIdx+1)+'/'+scenes.length;
+  document.getElementById('sScore').textContent=score;
+  document.getElementById('sStreak').textContent=streak;
+  document.getElementById('sAcc').textContent=total>0?Math.round(correct/total*100)+'%':'0%';
+}
+
+function showScore(){
+  var pct=total>0?Math.round(correct/total*100):0;
+  var badge='🥉 Bronze';
+  if(pct>=90)badge='💎 Platinum';
+  else if(pct>=75)badge='🥇 Gold';
+  else if(pct>=50)badge='🥈 Silver';
+
+  var h='<div class="score-card">';
+  h+='<h2>🎉 Adventure Complete!</h2>';
+  h+='<p>You survived '+curCity.name+' speaking '+curCity.lang+'!</p>';
+  h+='<div class="big">'+score+' pts</div>';
+  h+='<div class="badge-earned">'+badge+'</div>';
+  h+='<p>'+correct+'/'+total+' correct ('+pct+'%)</p>';
+  h+='<button class="play-again" onclick="resetGame()">🌍 Choose Another Destination</button>';
+  h+='</div>';
+  document.getElementById('sceneArea').innerHTML=h;
+  
+  say('Adventure complete! You scored '+score+' points in '+curCity.name+'! '+
+    (pct>=75?'Outstanding work!':pct>=50?'Good effort! Try again for a higher score!':'Keep practicing and try again!'));
+}
+
+function resetGame(){
+  sceneIdx=0;score=0;streak=0;total=0;correct=0;answered=false;curCity=null;
+  document.querySelectorAll('.city').forEach(function(c){c.classList.remove('on')});
+  document.getElementById('sceneArea').innerHTML='<div style="text-align:center;color:#64748b;padding:60px 20px">Select a destination above to begin your adventure!</div>';
+  document.getElementById('sScene').textContent='0/7';
+  document.getElementById('sScore').textContent='0';
+  document.getElementById('sStreak').textContent='0';
+  document.getElementById('sAcc').textContent='0%';
+  say('Where to next? Pick a destination!');
+}
+
+buildCities();
+setTimeout(function(){say("Welcome to GENO's World Tour! Pick a difficulty level and a destination to start your language adventure!")},500);
+</script>
+</body>
+</html>
