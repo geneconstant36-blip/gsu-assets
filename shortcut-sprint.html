@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shortcut Sprint | Computer Literacy Unlocked | GSU</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0e1a;color:#e0e0e0;min-height:100vh}
+.gsu-nav{background:linear-gradient(135deg,#0c1221,#131d35);border-bottom:1px solid rgba(0,212,255,.15);padding:10px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.gsu-nav-avatar{width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid rgba(0,212,255,.3);flex-shrink:0}
+.gsu-nav-avatar img{width:100%;height:100%;object-fit:cover}
+.gsu-nav-text{line-height:1.2}
+.gsu-nav-title{font-size:.95rem;font-weight:700;color:#e8ecf4}
+.gsu-nav-sub{font-size:.75rem;font-weight:600;background:linear-gradient(135deg,#00d4ff,#ffb800);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.gsu-nav-back{margin-left:auto;padding:7px 16px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:10px;color:#00d4ff;text-decoration:none;font-size:.82rem;font-weight:600;transition:all .2s;white-space:nowrap}
+.gsu-nav-back:hover{background:rgba(0,212,255,.15);border-color:rgba(0,212,255,.4);transform:translateY(-1px)}
+.container{max-width:700px;margin:0 auto;padding:20px}
+header{text-align:center;padding:25px 0 15px}
+header h1{font-size:2rem;background:linear-gradient(135deg,#4fc3f7,#7c4dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+header p{color:#8892b0;font-size:.95rem}
+.badge-bar{display:flex;justify-content:center;gap:16px;margin:12px 0;flex-wrap:wrap}
+.badge-bar .stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:7px 16px;font-size:.82rem}
+.badge-bar .stat span{font-weight:700;color:#4fc3f7}
+.prog-bar{width:100%;height:7px;background:rgba(255,255,255,.1);border-radius:4px;margin:16px 0;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#4fc3f7,#7c4dff);border-radius:4px;transition:width .5s}
+.q-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:28px;margin:16px 0;text-align:center}
+.q-card .round-lbl{font-size:.75rem;color:#7c4dff;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:600}
+.q-card .question{font-size:1.2rem;font-weight:600;line-height:1.5;margin-bottom:6px}
+.timer-bar{width:100%;height:5px;background:rgba(255,255,255,.1);border-radius:3px;margin:12px 0;overflow:hidden}
+.timer-fill{height:100%;background:linear-gradient(90deg,#2ecc71,#f39c12,#e74c3c);border-radius:3px;transition:width .1s linear}
+.timer-text{font-size:.85rem;color:#8892b0;margin-bottom:8px}
+.choices{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.choice{flex:1 1 calc(50% - 10px);min-width:200px;padding:14px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;font-size:1rem;color:#e0e0e0;cursor:pointer;transition:all .2s;text-align:center;font-weight:600;font-family:monospace}
+.choice:hover{background:rgba(79,195,247,.1);border-color:rgba(79,195,247,.3);transform:translateY(-2px)}
+.choice.correct{background:rgba(46,204,113,.15);border-color:#2ecc71;color:#2ecc71}
+.choice.wrong{background:rgba(255,107,107,.15);border-color:#ff6b6b;color:#ff6b6b}
+.choice.disabled{pointer-events:none;opacity:.5}
+.feedback{text-align:center;padding:14px;margin:10px 0;border-radius:10px;font-size:.95rem;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.25)}
+.feedback.no{background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.25)}
+.btn{padding:13px 34px;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-go{background:linear-gradient(135deg,#4fc3f7,#7c4dff);color:#fff}
+.btn-next{background:linear-gradient(135deg,#ffd93d,#f39c12);color:#000}
+.start-screen{text-align:center;padding:35px 20px}
+.start-screen h2{font-size:1.6rem;margin-bottom:16px;color:#4fc3f7}
+.start-screen p{margin:8px 0;line-height:1.6;color:#ccc;max-width:580px;display:inline-block;text-align:left}
+.results{text-align:center;padding:35px 20px}
+.results h2{font-size:1.8rem;margin-bottom:12px}
+.score-big{font-size:3.5rem;font-weight:900;margin:16px 0}
+.score-big.gold{color:#ffd93d}.score-big.silver{color:#c0c0c0}.score-big.bronze{color:#cd7f32}
+.score-big.plat{background:linear-gradient(135deg,#e5e4e2,#ffd93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.badge-earned{display:inline-block;padding:10px 28px;border-radius:30px;font-size:1.05rem;font-weight:700;margin:12px 0}
+.badge-earned.bronze{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff}
+.badge-earned.silver{background:linear-gradient(135deg,#c0c0c0,#808080);color:#000}
+.badge-earned.gold{background:linear-gradient(135deg,#ffd93d,#f39c12);color:#000}
+.badge-earned.platinum{background:linear-gradient(135deg,#e5e4e2,#ffd93d);color:#000}
+.gsu-ft{text-align:center;padding:25px 0;color:#555;font-size:.75rem;border-top:1px solid rgba(255,255,255,.06);margin-top:30px}
+</style>
+</head>
+<body>
+<div class="gsu-nav">
+  <div class="gsu-nav-avatar"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"></div>
+  <div class="gsu-nav-text"><div class="gsu-nav-title">Computer Literacy Unlocked</div><div class="gsu-nav-sub">Global Sovereign University</div></div>
+  <a href="https://www.globalsovereignuniversity.org/bookgames" class="gsu-nav-back">🎮 All Games</a>
+</div>
+<div class="container">
+  <header><h1>⌨️ Shortcut Sprint</h1><p>Chapter 5: Typing &amp; Keyboard Mastery</p></header>
+  <div id="startScreen" class="start-screen">
+    <h2>How Fast Are Your Fingers?</h2>
+    <p>You'll face <strong>20 timed questions</strong> drawn randomly from a pool of <strong>60</strong>. Each question has 15 seconds. Faster answers earn bonus points. Every playthrough is a different mix of shortcuts.</p>
+    <p><strong>Scoring:</strong> Correct = 100 pts + speed bonus (up to 50). Wrong or timeout = 0.</p><br>
+    <button class="btn btn-go" onclick="startGame()">Start the Sprint</button>
+  </div>
+  <div id="gameArea" style="display:none">
+    <div class="badge-bar">
+      <div class="stat">Q <span id="cur">1</span>/20</div>
+      <div class="stat">Score <span id="sc">0</span></div>
+      <div class="stat">Streak <span id="stk">0</span>🔥</div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="pf"></div></div>
+    <div class="q-card">
+      <div class="round-lbl" id="rl"></div>
+      <div class="question" id="qq"></div>
+      <div class="timer-text">⏱ <span id="tt">15.0</span>s</div>
+      <div class="timer-bar"><div class="timer-fill" id="tf"></div></div>
+    </div>
+    <div class="choices" id="ch"></div>
+    <div id="fb" class="feedback"></div>
+    <div id="nr" style="display:none;text-align:center;margin:12px 0"><button class="btn btn-next" onclick="nxt()">Next →</button></div>
+  </div>
+  <div id="res" class="results" style="display:none"></div>
+  <div class="gsu-ft">Global Sovereign University · Building a Bridge to Freedom Through Education, Not Handouts · © 2025 GSU</div>
+</div>
+<script>
+const allQ=[
+// Big 5 Essentials
+{q:"Copy selected text or files",a:"Ctrl + C",cat:"Big 5 Essentials"},
+{q:"Paste from clipboard",a:"Ctrl + V",cat:"Big 5 Essentials"},
+{q:"Undo your last action",a:"Ctrl + Z",cat:"Big 5 Essentials"},
+{q:"Save the current file",a:"Ctrl + S",cat:"Big 5 Essentials"},
+{q:"Select all content",a:"Ctrl + A",cat:"Big 5 Essentials"},
+{q:"Cut selected text (remove and copy)",a:"Ctrl + X",cat:"Big 5 Essentials"},
+{q:"Redo an action you just undid",a:"Ctrl + Y",cat:"Big 5 Essentials"},
+{q:"Redo (alternative shortcut)",a:"Ctrl + Shift + Z",cat:"Big 5 Essentials"},
+// Text Editing
+{q:"Bold the selected text",a:"Ctrl + B",cat:"Text Editing"},
+{q:"Italicize the selected text",a:"Ctrl + I",cat:"Text Editing"},
+{q:"Underline the selected text",a:"Ctrl + U",cat:"Text Editing"},
+{q:"Find text on the page or in a document",a:"Ctrl + F",cat:"Text Editing"},
+{q:"Find and Replace text",a:"Ctrl + H",cat:"Text Editing"},
+{q:"Print the current page or document",a:"Ctrl + P",cat:"Text Editing"},
+{q:"Create a new document or window",a:"Ctrl + N",cat:"Text Editing"},
+{q:"Open a file",a:"Ctrl + O",cat:"Text Editing"},
+// Browser Shortcuts
+{q:"Open a new browser tab",a:"Ctrl + T",cat:"Browser"},
+{q:"Close the current browser tab",a:"Ctrl + W",cat:"Browser"},
+{q:"Reopen the last closed tab",a:"Ctrl + Shift + T",cat:"Browser"},
+{q:"Refresh the current web page",a:"Ctrl + R",cat:"Browser"},
+{q:"Open browser history",a:"Ctrl + H",cat:"Browser"},
+{q:"Open a new incognito/private window",a:"Ctrl + Shift + N",cat:"Browser"},
+{q:"Jump to the browser address bar",a:"Ctrl + L",cat:"Browser"},
+{q:"Bookmark the current page",a:"Ctrl + D",cat:"Browser"},
+{q:"Zoom in on a web page",a:"Ctrl + Plus (+)",cat:"Browser"},
+{q:"Zoom out on a web page",a:"Ctrl + Minus (-)",cat:"Browser"},
+{q:"Reset zoom to 100%",a:"Ctrl + 0",cat:"Browser"},
+{q:"Switch to the next browser tab",a:"Ctrl + Tab",cat:"Browser"},
+// Navigation & Windows
+{q:"Switch between open applications",a:"Alt + Tab",cat:"Navigation"},
+{q:"Lock your computer screen",a:"Windows + L",cat:"Navigation"},
+{q:"Open File Explorer (Windows)",a:"Windows + E",cat:"Navigation"},
+{q:"Minimize all windows and show desktop",a:"Windows + D",cat:"Navigation"},
+{q:"Take a screenshot of a selected area",a:"Windows + Shift + S",cat:"Navigation"},
+{q:"Open Task Manager",a:"Ctrl + Shift + Esc",cat:"Navigation"},
+{q:"Close the current program entirely",a:"Alt + F4",cat:"Navigation"},
+{q:"Snap window to the left half of screen",a:"Windows + Left Arrow",cat:"Navigation"},
+{q:"Snap window to the right half",a:"Windows + Right Arrow",cat:"Navigation"},
+{q:"Open the Start Menu",a:"Windows key",cat:"Navigation"},
+{q:"Open system Settings (Windows 10/11)",a:"Windows + I",cat:"Navigation"},
+{q:"Search your computer",a:"Windows + S",cat:"Navigation"},
+{q:"Open the Run dialog box",a:"Windows + R",cat:"Navigation"},
+{q:"Full screen the current window",a:"F11",cat:"Navigation"},
+// Power User
+{q:"Open the emoji picker (Windows)",a:"Windows + Period (.)",cat:"Power User"},
+{q:"Move cursor one word at a time",a:"Ctrl + Arrow Keys",cat:"Power User"},
+{q:"Select one word at a time",a:"Ctrl + Shift + Arrow",cat:"Power User"},
+{q:"Delete an entire word at once",a:"Ctrl + Backspace",cat:"Power User"},
+{q:"Jump to the beginning of a line",a:"Home key",cat:"Power User"},
+{q:"Jump to the end of a line",a:"End key",cat:"Power User"},
+{q:"Jump to the top of a document",a:"Ctrl + Home",cat:"Power User"},
+{q:"Jump to the bottom of a document",a:"Ctrl + End",cat:"Power User"},
+{q:"Open clipboard history (Win 10/11)",a:"Windows + V",cat:"Power User"},
+{q:"Rename a selected file or folder",a:"F2",cat:"Power User"},
+{q:"Open Help in most applications",a:"F1",cat:"Power User"},
+{q:"Toggle between open windows of the same app",a:"Ctrl + F4",cat:"Power User"},
+{q:"Select from cursor to end of line",a:"Shift + End",cat:"Power User"},
+{q:"Select from cursor to start of line",a:"Shift + Home",cat:"Power User"},
+// Mac Equivalents
+{q:"Force quit an application (Mac)",a:"Cmd + Option + Esc",cat:"Mac Shortcuts"},
+{q:"Take a screenshot on Mac",a:"Cmd + Shift + 3",cat:"Mac Shortcuts"},
+{q:"Screenshot a selected area (Mac)",a:"Cmd + Shift + 4",cat:"Mac Shortcuts"},
+{q:"Spotlight Search (Mac)",a:"Cmd + Space",cat:"Mac Shortcuts"},
+{q:"Switch between apps (Mac)",a:"Cmd + Tab",cat:"Mac Shortcuts"},
+{q:"Close a window (Mac)",a:"Cmd + W",cat:"Mac Shortcuts"},
+];
+
+const ROUND=20,TIME=15;
+let pool=[],cur=0,sc=0,stk=0,mx=0,timer=null,timeLeft=0,answered=false;
+
+function shuf(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+function getDistractors(correct,all){
+  const others=all.filter(x=>x.a!==correct).map(x=>x.a);
+  const unique=[...new Set(others)];
+  return shuf(unique).slice(0,3);
+}
+
+function startGame(){
+  pool=shuf(allQ).slice(0,ROUND);
+  cur=0;sc=0;stk=0;mx=0;
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("gameArea").style.display="block";
+  document.getElementById("res").style.display="none";
+  showQ();
+}
+
+function showQ(){
+  answered=false;
+  const q=pool[cur];
+  document.getElementById("cur").textContent=cur+1;
+  document.getElementById("sc").textContent=sc;
+  document.getElementById("stk").textContent=stk;
+  document.getElementById("pf").style.width=(cur/ROUND*100)+"%";
+  document.getElementById("rl").textContent=q.cat;
+  document.getElementById("qq").textContent=q.q;
+  document.getElementById("fb").className="feedback";
+  document.getElementById("nr").style.display="none";
+
+  const dist=getDistractors(q.a,allQ);
+  const opts=shuf([q.a,...dist]);
+  const ch=document.getElementById("ch");
+  ch.innerHTML=opts.map(o=>`<div class="choice" onclick="pick(this,'${o.replace(/'/g,"\\'")}')">${o}</div>`).join("");
+
+  timeLeft=TIME;
+  document.getElementById("tt").textContent=TIME.toFixed(1);
+  document.getElementById("tf").style.width="100%";
+  clearInterval(timer);
+  timer=setInterval(()=>{
+    timeLeft-=0.1;
+    if(timeLeft<=0){timeLeft=0;clearInterval(timer);timeout()}
+    document.getElementById("tt").textContent=timeLeft.toFixed(1);
+    document.getElementById("tf").style.width=(timeLeft/TIME*100)+"%";
+  },100);
+}
+
+function pick(el,choice){
+  if(answered)return;answered=true;clearInterval(timer);
+  const q=pool[cur],correct=choice===q.a;
+  const bonus=Math.round((timeLeft/TIME)*50);
+  if(correct){sc+=100+bonus;stk++;if(stk>mx)mx=stk}else stk=0;
+  document.getElementById("sc").textContent=sc;
+  document.getElementById("stk").textContent=stk;
+
+  document.querySelectorAll(".choice").forEach(c=>{
+    c.classList.add("disabled");
+    if(c.textContent===q.a)c.classList.add("correct");
+    else if(c===el&&!correct)c.classList.add("wrong");
+  });
+
+  const fb=document.getElementById("fb");
+  fb.className=correct?"feedback show ok":"feedback show no";
+  fb.innerHTML=correct?`✅ Correct! +${100+bonus} pts (${bonus} speed bonus)`:`❌ The answer is <strong>${q.a}</strong>`;
+  document.getElementById("nr").style.display="block";
+}
+
+function timeout(){
+  if(answered)return;answered=true;stk=0;
+  document.getElementById("stk").textContent=stk;
+  document.querySelectorAll(".choice").forEach(c=>{
+    c.classList.add("disabled");
+    if(c.textContent===pool[cur].a)c.classList.add("correct");
+  });
+  const fb=document.getElementById("fb");
+  fb.className="feedback show no";
+  fb.innerHTML=`⏰ Time's up! The answer is <strong>${pool[cur].a}</strong>`;
+  document.getElementById("nr").style.display="block";
+}
+
+function nxt(){cur++;if(cur>=ROUND)return showRes();showQ()}
+
+function showRes(){
+  clearInterval(timer);
+  document.getElementById("gameArea").style.display="none";
+  const maxPts=ROUND*150,pct=Math.round(sc/maxPts*100);
+  let badge,cls,bc;
+  if(pct>=95){badge="🏆 Platinum";cls="plat";bc="platinum"}
+  else if(pct>=70){badge="🥇 Gold";cls="gold";bc="gold"}
+  else if(pct>=50){badge="🥈 Silver";cls="silver";bc="silver"}
+  else{badge="🥉 Bronze";cls="bronze";bc="bronze"}
+  document.getElementById("res").style.display="block";
+  document.getElementById("res").innerHTML=`<h2>Sprint Complete!</h2><div class="score-big ${cls}">${sc}</div><p style="font-size:1.1rem;color:#ccc">${pct}% of max · Best streak: ${mx}🔥</p><div class="badge-earned ${bc}">${badge}</div><p style="margin:18px auto;color:#999;line-height:1.6;max-width:480px">Each round draws 20 from a pool of 60 shortcuts. The mix is always different — play again to sharpen your speed!</p><br><button class="btn btn-go" onclick="startGame()">Sprint Again — New Questions</button>`;
+}
+</script>
+</body>
+</html>

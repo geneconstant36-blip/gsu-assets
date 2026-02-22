@@ -1,0 +1,74 @@
+[!DOCTYPE html]
+[html lang="en"]
+[head]
+[meta charset="UTF-8"]
+[meta name="viewport" content="width=device-width, initial-scale=1.0"]
+[title]The Rhetoric Room | GSU Humanics[/title]
+[style]
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+.nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); border-bottom: 1px solid rgba(168, 85, 247, 0.3); }
+.logo { font-weight: 700; color: #a855f7; letter-spacing: 1px; text-transform: uppercase; }
+.wrap { max-width: 800px; margin: 0 auto; padding: 20px; }
+.dash { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
+.stat-box { background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 15px; text-align: center; }
+.stat-label { font-size: 12px; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; }
+.stat-val { font-size: 28px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+.sov { color: #4ade80; } .wealth { color: #fbbf24; }
+.danger { background: rgba(248, 113, 113, 0.1); border-color: #f87171; color: #f87171 !important; }
+.scene-card { background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid #a855f7; }
+.scene-title { font-size: 24px; color: #a855f7; margin-bottom: 15px; border-bottom: 1px solid rgba(168, 85, 247, 0.2); padding-bottom: 10px; }
+.scene-desc { font-size: 18px; margin-bottom: 25px; }
+.choice-btn { display: block; width: 100%; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 16px 20px; margin-bottom: 12px; border-radius: 8px; font-size: 16px; cursor: pointer; transition: all 0.2s ease; }
+.choice-btn:hover { background: rgba(168, 85, 247, 0.15); border-color: #a855f7; transform: translateX(5px); }
+.feedback-area { display: none; background: rgba(56, 189, 248, 0.1); border-left: 4px solid #38bdf8; padding: 20px; border-radius: 0 8px 8px 0; margin-top: 20px; }
+.feedback-title { font-weight: 700; color: #38bdf8; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.next-btn { background: #a855f7; color: #fff; border: none; padding: 12px 24px; font-size: 16px; font-weight: 700; border-radius: 6px; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+.next-btn:hover { background: #9333ea; }
+[/style]
+[/head]
+[body]
+[div class="nav"]
+[div class="logo"]GSU Humanics[/div]
+[div style="font-size: 14px; color: #94a3b8;"]Level 2: The Rhetoric Room[/div]
+[/div]
+[div class="wrap"]
+[div class="dash"]
+[div class="stat-box" id="box-sov"][div class="stat-label"]Intellectual Sovereignty[/div][div class="stat-val sov" id="v-sov"]100%[/div][/div]
+[div class="stat-box" id="box-wealth"][div class="stat-label"]Personal Wealth[/div][div class="stat-val wealth" id="v-wealth"]$1,000[/div][/div]
+[/div]
+[div class="scene-card" id="game-card"]
+[h2 class="scene-title" id="s-title"]The Master of Words[/h2]
+[div class="scene-desc" id="s-desc"]Welcome to the modern world. Every day, politicians, salesmen, and the media use language to manipulate you. Can you spot the logical fallacies and protect your sovereignty? G.E.N.O. is monitoring your responses.[/div]
+[div id="choices-area"][button class="choice-btn" onclick="startGame()"]Enter the Arena (Start)[/button][/div]
+[div class="feedback-area" id="feedback-area"]
+[div class="feedback-title"]🤖 G.E.N.O. Says:[/div]
+[div id="f-text"][/div]
+[button class="next-btn" onclick="nextTask()"]Next Scenario ➔[/button]
+[/div]
+[/div]
+[/div]
+[script]
+let state = { sov: 100, wealth: 1000, task: 0 };
+const tasks = [
+{ title: "Scenario 1: The Used Car Lot", desc: "The salesman says, 'I have three other guys coming in an hour. If you don't pay $500 right now, it will be gone forever!' Your defense?", choices: [ { text: "Panic and pay the $500 deposit.", sovEffect: -20, wealthEffect: -500, feedback: "You failed. The salesman used 'False Urgency' and FOMO. You made an emotional decision and lost $500." }, { text: "Identify the 'False Urgency' fallacy. Walk away.", sovEffect: +10, wealthEffect: 0, feedback: "Excellent! You spotted the 'False Urgency' tactic and kept your money safe." } ] },
+{ title: "Scenario 2: The Political Debate", desc: "Politician A proposes a tax plan. Politician B replies, 'My opponent is a greedy liar, so his tax plan is terrible!' How do you process this?", choices: [ { text: "If Politician A is bad, his tax plan must be bad too.", sovEffect: -30, wealthEffect: 0, feedback: "You fell for an 'Ad Hominem' attack. You allowed yourself to be manipulated by drama instead of facts." }, { text: "This is an 'Ad Hominem' attack. Personal insults don't disprove math.", sovEffect: +15, wealthEffect: 0, feedback: "Brilliant application of Logic! You separated the Grammar from the emotional manipulation." } ] },
+{ title: "Scenario 3: The Social Media News Feed", desc: "Headline: 'Mayor Proposes Cutting Park Budget. Why Does The Mayor Hate Children?' How do you react?", choices: [ { text: "Share the article. The Mayor is evil!", sovEffect: -40, wealthEffect: 0, feedback: "You are being used as a pawn. The media used a 'Straw Man' fallacy and an 'Appeal to Emotion'." }, { text: "Identify the 'Straw Man' fallacy. The media is twisting words to trigger anger.", sovEffect: +20, wealthEffect: 0, feedback: "Masterful. You recognized the 'Straw Man' fallacy and kept your mind free from manufactured outrage." } ] }
+];
+function updateDash() { document.getElementById('v-sov').textContent = state.sov + "%"; document.getElementById('v-wealth').textContent = "$" + state.wealth; }
+function speak(text) { if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); window.speechSynthesis.speak(new SpeechSynthesisUtterance(text)); } }
+function startGame() { state.sov = 100; state.wealth = 1000; state.task = 0; updateDash(); loadTask(); }
+function loadTask() {
+if (state.sov <= 0 || state.wealth <= 0) { gameOver("You lost your intellectual sovereignty to manipulation. Re-study the Trivium."); return; }
+if (state.task >= tasks.length) { gameWin(); return; }
+let task = tasks[state.task]; document.getElementById('s-title').textContent = task.title; document.getElementById('s-desc').textContent = task.desc;
+let choicesHTML = ""; task.choices.forEach((c, idx) => { choicesHTML += [button class="choice-btn" onclick="makeChoice(${idx})"]${c.text}[/button]; });
+document.getElementById('choices-area').innerHTML = choicesHTML; document.getElementById('choices-area').style.display = "block"; document.getElementById('feedback-area').style.display = "none";
+}
+function makeChoice(idx) { let choice = tasks[state.task].choices[idx]; state.sov += choice.sovEffect; if(state.sov>100) state.sov=100; state.wealth += choice.wealthEffect; updateDash(); document.getElementById('choices-area').style.display = "none"; document.getElementById('f-text').innerHTML = [strong]${choice.feedback}[/strong]; document.getElementById('feedback-area').style.display = "block"; speak(choice.feedback); }
+function nextTask() { state.task++; loadTask(); }
+function gameOver(reason) { document.getElementById('s-title').textContent = "🛑 SOVEREIGNTY LOST"; document.getElementById('s-desc').textContent = reason; document.getElementById('choices-area').innerHTML = [button class="choice-btn" style="text-align:center" onclick="startGame()"]Retake the Test[/button]; document.getElementById('choices-area').style.display = "block"; document.getElementById('feedback-area').style.display = "none"; }
+function gameWin() { document.getElementById('s-title').textContent = "🛡️ FUNCTIONAL MONSTER"; document.getElementById('s-title').style.color = "#4ade80"; document.getElementById('s-desc').textContent = You survived with ${state.sov}% sovereignty and $${state.wealth}. You are officially difficult to manipulate!; document.getElementById('choices-area').innerHTML = [button class="choice-btn" style="text-align:center" onclick="startGame()"]Play Again[/button]; document.getElementById('choices-area').style.display = "block"; document.getElementById('feedback-area').style.display = "none"; }
+[/script]
+[/body]
+[/html]

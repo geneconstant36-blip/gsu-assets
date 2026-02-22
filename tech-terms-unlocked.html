@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech Terms Unlocked | Computer Literacy Unlocked | GSU</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0e1a;color:#e0e0e0;min-height:100vh}
+.gsu-nav{background:linear-gradient(135deg,#0c1221,#131d35);border-bottom:1px solid rgba(0,212,255,.15);padding:10px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.gsu-nav-avatar{width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid rgba(0,212,255,.3);flex-shrink:0}
+.gsu-nav-avatar img{width:100%;height:100%;object-fit:cover}
+.gsu-nav-text{line-height:1.2}
+.gsu-nav-title{font-size:.95rem;font-weight:700;color:#e8ecf4}
+.gsu-nav-sub{font-size:.75rem;font-weight:600;background:linear-gradient(135deg,#00d4ff,#ffb800);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.gsu-nav-back{margin-left:auto;padding:7px 16px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:10px;color:#00d4ff;text-decoration:none;font-size:.82rem;font-weight:600;transition:all .2s;white-space:nowrap}
+.gsu-nav-back:hover{background:rgba(0,212,255,.15);border-color:rgba(0,212,255,.4);transform:translateY(-1px)}
+.container{max-width:800px;margin:0 auto;padding:20px}
+header{text-align:center;padding:25px 0 15px}
+header h1{font-size:2rem;background:linear-gradient(135deg,#2ecc71,#3498db);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+header p{color:#8892b0;font-size:.95rem}
+.badge-bar{display:flex;justify-content:center;gap:16px;margin:12px 0;flex-wrap:wrap}
+.badge-bar .stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:7px 16px;font-size:.82rem}
+.badge-bar .stat span{font-weight:700;color:#2ecc71}
+.prog-bar{width:100%;height:7px;background:rgba(255,255,255,.1);border-radius:4px;margin:16px 0;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#2ecc71,#3498db);border-radius:4px;transition:width .5s}
+.round-hdr{text-align:center;margin:20px 0 16px}
+.round-hdr h2{font-size:1.3rem;color:#2ecc71;margin-bottom:4px}
+.round-hdr p{font-size:.85rem;color:#8892b0}
+.match-area{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+.match-col{flex:1;min-width:250px;display:flex;flex-direction:column;gap:8px}
+.match-col h3{font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:#555;text-align:center;margin-bottom:4px}
+.tile{padding:13px 16px;border-radius:12px;cursor:pointer;transition:all .2s;font-size:.9rem;text-align:center;line-height:1.4;user-select:none}
+.tile:hover{transform:translateY(-1px)}
+.term{background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.2);color:#2ecc71;font-weight:600}
+.term.selected{background:rgba(46,204,113,.2);border-color:#2ecc71;box-shadow:0 0 15px rgba(46,204,113,.2)}
+.def{background:rgba(52,152,219,.08);border:1px solid rgba(52,152,219,.2);color:#87ceeb}
+.def.selected{background:rgba(52,152,219,.2);border-color:#3498db;box-shadow:0 0 15px rgba(52,152,219,.2)}
+.tile.matched{opacity:.4;pointer-events:none;border-color:rgba(255,255,255,.05);transform:scale(.97)}
+.tile.wrong{animation:shake .4s;border-color:#ff6b6b}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{text-align:center;padding:14px;margin:10px 0;border-radius:10px;font-size:.95rem;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.25)}
+.feedback.no{background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.25)}
+.btn{padding:13px 34px;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-go{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
+.btn-next{background:linear-gradient(135deg,#ffd93d,#f39c12);color:#000}
+.start-screen{text-align:center;padding:35px 20px}
+.start-screen h2{font-size:1.6rem;margin-bottom:16px;color:#2ecc71}
+.start-screen p{margin:8px 0;line-height:1.6;color:#ccc;max-width:580px;display:inline-block;text-align:left}
+.results{text-align:center;padding:35px 20px}
+.results h2{font-size:1.8rem;margin-bottom:12px}
+.score-big{font-size:3.5rem;font-weight:900;margin:16px 0}
+.score-big.gold{color:#ffd93d}.score-big.silver{color:#c0c0c0}.score-big.bronze{color:#cd7f32}
+.score-big.plat{background:linear-gradient(135deg,#e5e4e2,#ffd93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.badge-earned{display:inline-block;padding:10px 28px;border-radius:30px;font-size:1.05rem;font-weight:700;margin:12px 0}
+.badge-earned.bronze{background:linear-gradient(135deg,#cd7f32,#a0522d);color:#fff}
+.badge-earned.silver{background:linear-gradient(135deg,#c0c0c0,#808080);color:#000}
+.badge-earned.gold{background:linear-gradient(135deg,#ffd93d,#f39c12);color:#000}
+.badge-earned.platinum{background:linear-gradient(135deg,#e5e4e2,#ffd93d);color:#000}
+.gsu-ft{text-align:center;padding:25px 0;color:#555;font-size:.75rem;border-top:1px solid rgba(255,255,255,.06);margin-top:30px}
+</style>
+</head>
+<body>
+<div class="gsu-nav">
+  <div class="gsu-nav-avatar"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"></div>
+  <div class="gsu-nav-text"><div class="gsu-nav-title">Computer Literacy Unlocked</div><div class="gsu-nav-sub">Global Sovereign University</div></div>
+  <a href="https://www.globalsovereignuniversity.org/bookgames" class="gsu-nav-back">🎮 All Games</a>
+</div>
+<div class="container">
+  <header><h1>📖 Tech Terms Unlocked</h1><p>All 20 Chapters — Comprehensive Vocabulary</p></header>
+  <div id="startScreen" class="start-screen">
+    <h2>Know Your Tech Language</h2>
+    <p>Match <strong>30 terms</strong> to their definitions across 5 rounds. Each round shows 6 pairs. Click a term, then click its matching definition. Every playthrough draws from a pool of <strong>60 terms</strong> — a different mix every time.</p>
+    <p><strong>Scoring:</strong> Fewer errors = higher badge. 3 or fewer total errors earns Platinum.</p><br>
+    <button class="btn btn-go" onclick="startGame()">Start Matching</button>
+  </div>
+  <div id="gameArea" style="display:none">
+    <div class="badge-bar">
+      <div class="stat">Round <span id="rn">1</span>/5</div>
+      <div class="stat">Matched <span id="mc">0</span>/30</div>
+      <div class="stat">Errors <span id="er">0</span></div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="pf"></div></div>
+    <div class="round-hdr"><h2 id="rh">Round 1</h2><p id="rs"></p></div>
+    <div class="match-area">
+      <div class="match-col"><h3>Terms</h3><div id="tcol"></div></div>
+      <div class="match-col"><h3>Definitions</h3><div id="dcol"></div></div>
+    </div>
+    <div id="fb" class="feedback"></div>
+    <div id="nr" style="display:none;text-align:center;margin:12px 0"><button class="btn btn-next" onclick="nextRound()">Next Round →</button></div>
+  </div>
+  <div id="res" class="results" style="display:none"></div>
+  <div class="gsu-ft">Global Sovereign University · Building a Bridge to Freedom Through Education, Not Handouts · © 2025 GSU</div>
+</div>
+<script>
+const allTerms=[
+// Hardware & Basics
+{t:"CPU",d:"The brain of the computer that processes instructions"},
+{t:"RAM",d:"Short-term memory that holds data while you're working"},
+{t:"Hard Drive",d:"Long-term storage where files live permanently"},
+{t:"Motherboard",d:"Circuit board connecting all computer components"},
+{t:"GPU",d:"Processor dedicated to rendering graphics on screen"},
+{t:"Operating System",d:"Master software that manages all hardware and apps"},
+{t:"Input Device",d:"Hardware that sends data to a computer (keyboard, mouse)"},
+{t:"Output Device",d:"Hardware that receives data from a computer (monitor, printer)"},
+{t:"Solid State Drive",d:"Storage device with no moving parts, faster than a hard drive"},
+{t:"Power Supply",d:"Component that converts electricity for computer components"},
+// Internet & Networks
+{t:"IP Address",d:"A unique numerical label assigned to every device on a network"},
+{t:"Browser",d:"Application used to access and view websites"},
+{t:"Search Engine",d:"Website that helps you find other websites (Google, Bing)"},
+{t:"URL",d:"The web address you type to visit a specific page"},
+{t:"DNS",d:"System that translates website names into IP addresses"},
+{t:"ISP",d:"Company that provides your internet connection"},
+{t:"Bandwidth",d:"The amount of data that can travel through a connection at once"},
+{t:"Router",d:"Device that directs internet traffic between your devices and ISP"},
+{t:"WiFi",d:"Wireless technology connecting devices to a local network"},
+{t:"HTTP/HTTPS",d:"Protocol for transferring web pages; S means encrypted"},
+// Files & Documents
+{t:"File Extension",d:"Letters after the dot that identify a file type (.pdf, .jpg)"},
+{t:"Cloud Storage",d:"Saving files on remote servers accessed via the internet"},
+{t:"PDF",d:"Portable document format that looks the same on any device"},
+{t:"Spreadsheet Formula",d:"Instruction in a cell that calculates values automatically"},
+{t:"Folder",d:"A container used to organize and group related files"},
+{t:"Backup",d:"A copy of your files stored separately in case of data loss"},
+{t:"File Path",d:"The full location address of a file on your computer"},
+{t:"Zip File",d:"A compressed archive containing one or more files"},
+{t:"CSV",d:"Simple text file where data values are separated by commas"},
+{t:"Download",d:"Transferring a file from the internet to your device"},
+// Security & Privacy
+{t:"Phishing",d:"Fake emails or sites designed to steal your personal information"},
+{t:"Two-Factor Authentication",d:"Security requiring password plus a second verification"},
+{t:"Malware",d:"Software designed to damage, disrupt, or gain unauthorized access"},
+{t:"VPN",d:"Encrypted tunnel that hides your internet activity and location"},
+{t:"Password Manager",d:"Software that generates and stores strong unique passwords"},
+{t:"Encryption",d:"Scrambling data so only authorized parties can read it"},
+{t:"Firewall",d:"Security system that monitors and controls network traffic"},
+{t:"Ransomware",d:"Malware that locks your files and demands payment to unlock"},
+{t:"Cookie",d:"Small data file websites store on your device to remember you"},
+{t:"Incognito Mode",d:"Browser mode that doesn't save history or cookies locally"},
+// Modern Tech & AI
+{t:"Algorithm",d:"A step-by-step set of rules a computer follows to solve a problem"},
+{t:"Artificial Intelligence",d:"Software that learns from data and makes decisions"},
+{t:"Machine Learning",d:"AI technique where programs improve by finding patterns in data"},
+{t:"Large Language Model",d:"AI trained on text that generates human-like responses"},
+{t:"Open Source",d:"Software whose code is freely available to modify and share"},
+{t:"Accessibility",d:"Design features ensuring technology is usable by people with disabilities"},
+{t:"API",d:"Interface that lets different software applications communicate"},
+{t:"Deepfake",d:"AI-generated fake video or audio of a real person"},
+{t:"Blockchain",d:"Distributed ledger technology that records transactions permanently"},
+{t:"Cloud Computing",d:"Using remote servers over the internet instead of local hardware"},
+// Communication & Productivity
+{t:"Bookmark",d:"A saved link to a web page for quick future access"},
+{t:"CC (Carbon Copy)",d:"Email field that sends a copy to additional recipients visibly"},
+{t:"BCC (Blind Copy)",d:"Email field that sends a copy without showing other recipients"},
+{t:"Bandwidth Throttling",d:"Intentionally slowing internet speed by an ISP or network"},
+{t:"Screen Sharing",d:"Showing your screen to others during a video call"},
+{t:"Spam Filter",d:"Tool that automatically identifies and blocks junk email"},
+{t:"Digital Signature",d:"Electronic verification that authenticates a sender's identity"},
+{t:"Hashtag",d:"A word preceded by # used to categorize social media content"},
+{t:"QR Code",d:"A scannable square barcode that links to digital content"},
+{t:"Two-Step Verification",d:"Confirming identity via two separate methods before access"},
+];
+
+const ROUNDS=5,PER_ROUND=6,TOTAL=ROUNDS*PER_ROUND;
+let pool=[],round=0,matched=0,errors=0,selTerm=null,selDef=null,roundTerms=[];
+
+function shuf(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+const roundNames=["Hardware & Basics","Internet & Networks","Files & Documents","Security & Privacy","Modern Tech & AI"];
+
+function startGame(){
+  pool=shuf(allTerms).slice(0,TOTAL);
+  round=0;matched=0;errors=0;
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("gameArea").style.display="block";
+  document.getElementById("res").style.display="none";
+  showRound();
+}
+
+function showRound(){
+  selTerm=null;selDef=null;
+  const start=round*PER_ROUND;
+  roundTerms=pool.slice(start,start+PER_ROUND);
+  document.getElementById("rn").textContent=round+1;
+  document.getElementById("mc").textContent=matched;
+  document.getElementById("er").textContent=errors;
+  document.getElementById("pf").style.width=(matched/TOTAL*100)+"%";
+  document.getElementById("rh").textContent="Round "+(round+1);
+  // Assign a thematic label based on the round
+  const label=round<roundNames.length?roundNames[round]:"Mixed Terms";
+  document.getElementById("rs").textContent=label+" — Match each term to its definition";
+  document.getElementById("fb").className="feedback";
+  document.getElementById("nr").style.display="none";
+
+  const terms=shuf([...roundTerms]);
+  const defs=shuf([...roundTerms]);
+
+  document.getElementById("tcol").innerHTML=terms.map((_,i)=>
+    `<div class="tile term" data-idx="${terms[i].t}" onclick="pickT(this)">${terms[i].t}</div>`
+  ).join("");
+  document.getElementById("dcol").innerHTML=defs.map((_,i)=>
+    `<div class="tile def" data-idx="${defs[i].t}" onclick="pickD(this)">${defs[i].d}</div>`
+  ).join("");
+}
+
+function pickT(el){
+  if(el.classList.contains("matched"))return;
+  document.querySelectorAll(".term").forEach(t=>t.classList.remove("selected"));
+  el.classList.add("selected");
+  selTerm=el.dataset.idx;
+  if(selDef)checkMatch();
+}
+function pickD(el){
+  if(el.classList.contains("matched"))return;
+  document.querySelectorAll(".def").forEach(d=>d.classList.remove("selected"));
+  el.classList.add("selected");
+  selDef=el.dataset.idx;
+  if(selTerm)checkMatch();
+}
+
+function checkMatch(){
+  const t=selTerm,d=selDef;
+  const tEl=document.querySelector(`.term[data-idx="${CSS.escape(t)}"]`);
+  const dEl=document.querySelector(`.def.selected`);
+
+  if(t===d){
+    // Correct
+    tEl.classList.remove("selected");tEl.classList.add("matched");
+    dEl.classList.remove("selected");dEl.classList.add("matched");
+    matched++;
+    document.getElementById("mc").textContent=matched;
+    document.getElementById("pf").style.width=(matched/TOTAL*100)+"%";
+    // Check if round complete
+    const remaining=document.querySelectorAll(`.term:not(.matched)`).length;
+    if(remaining===0){
+      if(round<ROUNDS-1){
+        document.getElementById("nr").style.display="block";
+      }else{
+        setTimeout(showRes,600);
+      }
+    }
+  }else{
+    // Wrong
+    errors++;
+    document.getElementById("er").textContent=errors;
+    tEl.classList.add("wrong");dEl.classList.add("wrong");
+    setTimeout(()=>{
+      tEl.classList.remove("wrong","selected");
+      dEl.classList.remove("wrong","selected");
+    },500);
+  }
+  selTerm=null;selDef=null;
+}
+
+function nextRound(){round++;showRound()}
+
+function showRes(){
+  document.getElementById("gameArea").style.display="none";
+  let badge,cls,bc;
+  if(errors<=3){badge="🏆 Platinum";cls="plat";bc="platinum"}
+  else if(errors<=8){badge="🥇 Gold";cls="gold";bc="gold"}
+  else if(errors<=15){badge="🥈 Silver";cls="silver";bc="silver"}
+  else{badge="🥉 Bronze";cls="bronze";bc="bronze"}
+  document.getElementById("res").style.display="block";
+  document.getElementById("res").innerHTML=`<h2>All Terms Matched!</h2><div class="score-big ${cls}">${TOTAL}/${TOTAL}</div><p style="font-size:1.1rem;color:#ccc">${errors} error${errors!==1?"s":""} total</p><div class="badge-earned ${bc}">${badge}</div><p style="margin:18px auto;color:#999;line-height:1.6;max-width:480px">${errors<=3?"Flawless vocabulary! Every round draws 30 from a pool of 60 terms — play again for a completely different challenge!":"Keep building your tech vocabulary! Every round is different with 60 terms in the pool. The more you play, the more terms you master."}</p><br><button class="btn btn-go" onclick="startGame()">Play Again — New Terms</button>`;
+}
+</script>
+</body>
+</html>
