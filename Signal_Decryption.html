@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal Decryption — Phonemic Awareness | Global Sovereign University</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0e17;color:#c8d6e5;min-height:100vh;overflow-x:hidden}
+.screen{display:none;min-height:100vh;padding:20px;max-width:800px;margin:0 auto}
+.screen.active{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.terminal-border{border:1px solid #1a3a4a;border-radius:12px;padding:32px;background:linear-gradient(135deg,#0d1321 0%,#111827 100%);box-shadow:0 0 40px rgba(0,200,255,0.05);width:100%;max-width:700px}
+.gsu-badge{font-size:11px;letter-spacing:3px;color:#d4af37;text-transform:uppercase;margin-bottom:8px;font-weight:600}
+h1{font-family:'JetBrains Mono',monospace;font-size:28px;color:#e2e8f0;margin-bottom:8px;line-height:1.3}
+h2{font-family:'JetBrains Mono',monospace;font-size:20px;color:#94a3b8;margin-bottom:24px;font-weight:400}
+.subtitle{color:#64748b;font-size:14px;line-height:1.6;margin-bottom:32px}
+.tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-bottom:24px}
+.tier-btn{padding:16px;border:2px solid #1e3a5f;border-radius:8px;background:#0f1929;color:#94a3b8;font-family:'JetBrains Mono',monospace;font-size:14px;cursor:pointer;transition:all 0.3s;text-align:center}
+.tier-btn:hover:not(:disabled){border-color:#3b82f6;color:#e2e8f0;background:#131d33}
+.tier-btn.locked{opacity:0.4;cursor:not-allowed}
+.tier-btn .badge{font-size:24px;display:block;margin-bottom:6px}
+.tier-btn .tier-name{font-weight:700;display:block;margin-bottom:4px}
+.tier-btn .tier-desc{font-size:11px;color:#64748b;display:block}
+.tier-btn.unlocked{border-color:#22c55e;background:#0a1f15}
+.tier-btn.earned-bronze .badge{color:#cd7f32}
+.tier-btn.earned-silver .badge{color:#c0c0c0}
+.tier-btn.earned-gold .badge{color:#ffd700}
+.tier-btn.earned-platinum .badge{color:#e5e4e2;text-shadow:0 0 10px rgba(229,228,226,0.5)}
+
+/* Game screen */
+.hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding:12px 16px;background:#0d1321;border-radius:8px;border:1px solid #1a2a3a}
+.hud-item{text-align:center}
+.hud-label{font-size:10px;letter-spacing:2px;color:#64748b;text-transform:uppercase}
+.hud-value{font-family:'JetBrains Mono',monospace;font-size:20px;color:#e2e8f0;font-weight:700}
+.hud-value.timer-warn{color:#f59e0b}
+.hud-value.timer-danger{color:#ef4444;animation:pulse 0.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.progress-bar{width:100%;height:4px;background:#1a2a3a;border-radius:2px;margin-bottom:24px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#06b6d4);transition:width 0.3s;border-radius:2px}
+.challenge-type{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#06b6d4;text-transform:uppercase;margin-bottom:12px}
+.challenge-instruction{font-size:16px;color:#94a3b8;margin-bottom:20px;line-height:1.5}
+.play-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border:2px solid #3b82f6;border-radius:8px;background:#0f1929;color:#3b82f6;font-family:'JetBrains Mono',monospace;font-size:16px;cursor:pointer;transition:all 0.3s;margin-bottom:24px}
+.play-btn:hover{background:#131d33;border-color:#60a5fa;color:#60a5fa}
+.play-btn:active{transform:scale(0.98)}
+.play-btn .icon{font-size:24px}
+.phoneme-display{font-family:'JetBrains Mono',monospace;font-size:32px;color:#06b6d4;text-align:center;padding:16px;margin-bottom:20px;letter-spacing:8px}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:16px}
+.option-btn{padding:14px 16px;border:2px solid #1e3a5f;border-radius:8px;background:#0f1929;color:#e2e8f0;font-family:'JetBrains Mono',monospace;font-size:15px;cursor:pointer;transition:all 0.2s;text-align:center}
+.option-btn:hover:not(:disabled){border-color:#3b82f6;background:#131d33}
+.option-btn.correct{border-color:#22c55e;background:#0a2015;color:#4ade80;animation:correctFlash 0.5s}
+.option-btn.wrong{border-color:#ef4444;background:#200a0a;color:#f87171;animation:wrongFlash 0.5s}
+@keyframes correctFlash{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.4)}100%{box-shadow:0 0 20px 0 rgba(34,197,94,0)}}
+@keyframes wrongFlash{0%{box-shadow:0 0 0 0 rgba(239,68,68,0.4)}100%{box-shadow:0 0 20px 0 rgba(239,68,68,0)}}
+.geno-coaching{margin-top:16px;padding:14px 16px;border-left:3px solid #d4af37;background:#1a1510;border-radius:0 8px 8px 0;display:none}
+.geno-coaching .geno-label{font-size:11px;letter-spacing:2px;color:#d4af37;text-transform:uppercase;margin-bottom:6px;font-weight:600}
+.geno-coaching .geno-text{color:#c8d6e5;font-size:14px;line-height:1.5}
+
+/* Results */
+.result-badge{font-size:72px;margin-bottom:16px}
+.result-title{font-family:'JetBrains Mono',monospace;font-size:24px;color:#e2e8f0;margin-bottom:8px}
+.result-score{font-family:'JetBrains Mono',monospace;font-size:18px;color:#94a3b8;margin-bottom:24px}
+.stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a2a3a;width:100%}
+.stat-label{color:#64748b;font-size:14px}
+.stat-value{color:#e2e8f0;font-family:'JetBrains Mono',monospace;font-size:14px}
+.action-btn{padding:14px 28px;border:2px solid #3b82f6;border-radius:8px;background:#0f1929;color:#3b82f6;font-family:'JetBrains Mono',monospace;font-size:14px;cursor:pointer;transition:all 0.3s;margin:6px}
+.action-btn:hover{background:#131d33;border-color:#60a5fa;color:#60a5fa}
+.action-btn.primary{background:#1e3a8a;border-color:#3b82f6;color:#e2e8f0}
+.action-btn.primary:hover{background:#1e40af}
+.actions{margin-top:24px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.info-text{color:#475569;font-size:12px;text-align:center;margin-top:16px;line-height:1.5}
+.waveform{display:flex;align-items:center;justify-content:center;gap:3px;height:40px;margin:12px 0}
+.waveform .bar{width:4px;background:#3b82f6;border-radius:2px;animation:wave 1.2s ease-in-out infinite;opacity:0.6}
+.waveform .bar:nth-child(1){height:12px;animation-delay:0s}
+.waveform .bar:nth-child(2){height:24px;animation-delay:0.1s}
+.waveform .bar:nth-child(3){height:36px;animation-delay:0.2s}
+.waveform .bar:nth-child(4){height:20px;animation-delay:0.3s}
+.waveform .bar:nth-child(5){height:32px;animation-delay:0.4s}
+.waveform .bar:nth-child(6){height:16px;animation-delay:0.5s}
+.waveform .bar:nth-child(7){height:28px;animation-delay:0.6s}
+.waveform.hidden{display:none}
+@keyframes wave{0%,100%{transform:scaleY(0.5)}50%{transform:scaleY(1.2)}}
+.options-grid.three-col{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:600px){
+  .terminal-border{padding:20px}
+  h1{font-size:22px}
+  .tier-grid{grid-template-columns:1fr}
+  .options-grid{grid-template-columns:1fr}
+  .options-grid.three-col{grid-template-columns:1fr 1fr}
+  .hud{flex-wrap:wrap;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- TITLE SCREEN -->
+<div class="screen active" id="titleScreen">
+  <div class="terminal-border" style="text-align:center">
+    <div class="gsu-badge">Global Sovereign University</div>
+    <h1>SIGNAL DECRYPTION</h1>
+    <h2>Phonemic Awareness Training</h2>
+    <p class="subtitle">Before you can read the code on the page, you must hear the code in your ear. This module trains your ability to isolate, blend, and manipulate the raw sound signals of spoken English — the foundational skill that makes reading possible.</p>
+    <div class="tier-grid" id="tierGrid"></div>
+    <p class="info-text">🔊 This module uses audio. Ensure your volume is on.<br>Powered by GENO — GSU's AI Tutor</p>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div class="screen" id="gameScreen">
+  <div class="terminal-border">
+    <div class="hud">
+      <div class="hud-item"><div class="hud-label">Tier</div><div class="hud-value" id="hudTier">—</div></div>
+      <div class="hud-item"><div class="hud-label">Question</div><div class="hud-value" id="hudQ">—</div></div>
+      <div class="hud-item"><div class="hud-label">Score</div><div class="hud-value" id="hudScore">0</div></div>
+      <div class="hud-item"><div class="hud-label">Timer</div><div class="hud-value" id="hudTimer">—</div></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="challenge-type" id="challengeType"></div>
+    <div class="challenge-instruction" id="challengeInstruction"></div>
+    <div class="waveform hidden" id="waveform"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+    <div style="text-align:center">
+      <button class="play-btn" id="playBtn" onclick="playCurrentAudio()"><span class="icon">▶</span> PLAY PAYLOAD</button>
+    </div>
+    <div class="phoneme-display hidden" id="phonemeDisplay"></div>
+    <div class="options-grid" id="optionsGrid"></div>
+    <div class="geno-coaching" id="genoCoaching"><div class="geno-label">GENO Analysis</div><div class="geno-text" id="genoText"></div></div>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div class="screen" id="resultsScreen">
+  <div class="terminal-border" style="text-align:center">
+    <div class="result-badge" id="resultBadge"></div>
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div id="resultStats" style="width:100%;margin-bottom:16px"></div>
+    <div class="geno-coaching" id="resultGeno" style="display:block;text-align:left;margin-bottom:16px"><div class="geno-label">GENO Debrief</div><div class="geno-text" id="resultGenoText"></div></div>
+    <div class="actions" id="resultActions"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// SIGNAL DECRYPTION — PHONEMIC AWARENESS BOOKGAME
+// Global Sovereign University — 501(c)(3) Educational Foundation
+// ═══════════════════════════════════════════════════════════════
+
+const TIERS = ['bronze','silver','gold','platinum'];
+const TIER_LABELS = {bronze:'BRONZE',silver:'SILVER',gold:'GOLD',platinum:'PLATINUM'};
+const TIER_EMOJI = {bronze:'🟤',silver:'⚪',gold:'🟡',platinum:'💎'};
+const TIER_COLORS = {bronze:'#cd7f32',silver:'#c0c0c0',gold:'#ffd700',platinum:'#e5e4e2'};
+const QUESTIONS_PER_TIER = 25;
+const TIER_TIME = {bronze:20,silver:18,gold:15,platinum:12}; // seconds per question
+const PASS_SCORE = {bronze:18,silver:18,gold:20,platinum:22}; // out of 25
+
+let currentTier = null;
+let questions = [];
+let currentQ = 0;
+let score = 0;
+let timer = null;
+let timeLeft = 0;
+let answered = false;
+let earnedBadges = JSON.parse(localStorage.getItem('sd_badges')||'{}');
+let speechSupported = 'speechSynthesis' in window;
+
+// ═══════════════════════════════════════════════════════════════
+// QUESTION BANKS
+// ═══════════════════════════════════════════════════════════════
+
+// BRONZE: Initial Sound Isolation — "What is the FIRST sound in this word?"
+const BRONZE_BANK = [
+  {word:"lock",answer:"/l/",options:["/l/","/s/","/r/"],coaching:"The word 'lock' starts with /l/ — your tongue touches the ridge behind your upper teeth."},
+  {word:"map",answer:"/m/",options:["/m/","/n/","/b/"],coaching:"'Map' begins with /m/ — both lips press together and hum."},
+  {word:"fish",answer:"/f/",options:["/f/","/v/","/th/"],coaching:"'Fish' starts with /f/ — upper teeth touch the lower lip and air pushes through."},
+  {word:"sun",answer:"/s/",options:["/s/","/sh/","/z/"],coaching:"'Sun' begins with /s/ — a sharp hissing sound with the tongue near the roof."},
+  {word:"dog",answer:"/d/",options:["/d/","/b/","/g/"],coaching:"'Dog' starts with /d/ — the tongue taps the ridge behind the upper teeth."},
+  {word:"van",answer:"/v/",options:["/v/","/f/","/b/"],coaching:"'Van' starts with /v/ — like /f/ but with vocal cord vibration."},
+  {word:"goat",answer:"/g/",options:["/g/","/k/","/d/"],coaching:"'Goat' starts with /g/ — the back of the tongue touches the soft palate."},
+  {word:"jump",answer:"/j/",options:["/j/","/ch/","/g/"],coaching:"'Jump' starts with /j/ — a voiced sound combining /d/ and /zh/."},
+  {word:"thin",answer:"/th/",options:["/th/","/t/","/f/"],coaching:"'Thin' starts with /th/ — the tongue tip goes between the teeth."},
+  {word:"chip",answer:"/ch/",options:["/ch/","/sh/","/j/"],coaching:"'Chip' starts with /ch/ — a burst of air with the tongue on the roof."},
+  {word:"ring",answer:"/r/",options:["/r/","/l/","/w/"],coaching:"'Ring' starts with /r/ — the tongue curls back without touching the roof."},
+  {word:"kite",answer:"/k/",options:["/k/","/g/","/t/"],coaching:"'Kite' starts with /k/ — a voiceless burst from the back of the tongue."},
+  {word:"nest",answer:"/n/",options:["/n/","/m/","/l/"],coaching:"'Nest' starts with /n/ — the tongue touches the ridge and air comes through the nose."},
+  {word:"boat",answer:"/b/",options:["/b/","/p/","/d/"],coaching:"'Boat' starts with /b/ — both lips pop open with voice."},
+  {word:"wish",answer:"/w/",options:["/w/","/r/","/y/"],coaching:"'Wish' starts with /w/ — lips round and voice flows."},
+  {word:"top",answer:"/t/",options:["/t/","/d/","/k/"],coaching:"'Top' starts with /t/ — a voiceless tap of the tongue on the ridge."},
+  {word:"zip",answer:"/z/",options:["/z/","/s/","/j/"],coaching:"'Zip' starts with /z/ — like /s/ but with vocal cord vibration."},
+  {word:"hand",answer:"/h/",options:["/h/","/w/","/f/"],coaching:"'Hand' starts with /h/ — a breathy push of air from the throat."},
+  {word:"pen",answer:"/p/",options:["/p/","/b/","/t/"],coaching:"'Pen' starts with /p/ — a voiceless lip pop, no vocal cord buzz."},
+  {word:"yes",answer:"/y/",options:["/y/","/w/","/j/"],coaching:"'Yes' starts with /y/ — the tongue rises toward the hard palate."},
+  {word:"shell",answer:"/sh/",options:["/sh/","/s/","/ch/"],coaching:"'Shell' starts with /sh/ — lips push forward and air streams broadly."},
+  {word:"leg",answer:"/l/",options:["/l/","/r/","/n/"],coaching:"'Leg' starts with /l/ — the tongue tip touches the ridge and voice flows over the sides."},
+  {word:"red",answer:"/r/",options:["/r/","/w/","/l/"],coaching:"'Red' starts with /r/ — the tongue curls without contact."},
+  {word:"cup",answer:"/k/",options:["/k/","/g/","/ch/"],coaching:"'Cup' starts with /k/ — note the letter C often makes the /k/ sound."},
+  {word:"moth",answer:"/m/",options:["/m/","/n/","/w/"],coaching:"'Moth' starts with /m/ — lips together, humming through the nose."},
+  {word:"bed",answer:"/b/",options:["/b/","/d/","/p/"],coaching:"'Bed' starts with /b/ — a voiced bilabial stop."},
+  {word:"gate",answer:"/g/",options:["/g/","/k/","/d/"],coaching:"'Gate' starts with /g/ — back of tongue against the soft palate, voiced."},
+  {word:"vine",answer:"/v/",options:["/v/","/b/","/f/"],coaching:"'Vine' starts with /v/ — teeth on lip with vibration."},
+  {word:"thumb",answer:"/th/",options:["/th/","/t/","/f/"],coaching:"'Thumb' starts with /th/ — tongue between the teeth, voiceless."},
+  {word:"jam",answer:"/j/",options:["/j/","/y/","/ch/"],coaching:"'Jam' starts with /j/ — a voiced affricate, combining /d/ and /zh/."},
+];
+
+// SILVER: Sound Blending — "Blend these sounds into a word"
+const SILVER_BANK = [
+  {sounds:["/k/","/a/","/t/"],answer:"cat",options:["cat","kit","cut","cot"],coaching:"The sounds /k/+/a/+/t/ blend into 'cat.' The short /a/ is the vowel in the middle."},
+  {sounds:["/b/","/i/","/g/"],answer:"big",options:["big","bag","bug","beg"],coaching:"/b/+/i/+/g/ = 'big.' The short /i/ sounds like the vowel in 'sit.'"},
+  {sounds:["/h/","/o/","/t/"],answer:"hot",options:["hot","hat","hit","hut"],coaching:"/h/+/o/+/t/ = 'hot.' The short /o/ is an open, rounded vowel."},
+  {sounds:["/r/","/u/","/n/"],answer:"run",options:["run","ran","rain","ruin"],coaching:"/r/+/u/+/n/ = 'run.' The short /u/ sounds like the vowel in 'fun.'"},
+  {sounds:["/s/","/i/","/t/"],answer:"sit",options:["sit","set","sat","soot"],coaching:"/s/+/i/+/t/ = 'sit.' Short /i/ is a quick, clipped vowel."},
+  {sounds:["/m/","/a/","/p/"],answer:"map",options:["map","mop","mope","cap"],coaching:"/m/+/a/+/p/ = 'map.' Lips together for /m/, open for /a/, then pop for /p/."},
+  {sounds:["/d/","/i/","/g/"],answer:"dig",options:["dig","dog","dug","dag"],coaching:"/d/+/i/+/g/ = 'dig.' The short /i/ distinguishes it from 'dog' or 'dug.'"},
+  {sounds:["/f/","/a/","/n/"],answer:"fan",options:["fan","fun","fin","fen"],coaching:"/f/+/a/+/n/ = 'fan.' The short /a/ is the same vowel as in 'cat.'"},
+  {sounds:["/l/","/e/","/g/"],answer:"leg",options:["leg","log","lag","lug"],coaching:"/l/+/e/+/g/ = 'leg.' The short /e/ sounds like the vowel in 'bed.'"},
+  {sounds:["/p/","/i/","/n/"],answer:"pin",options:["pin","pan","pen","pun"],coaching:"/p/+/i/+/n/ = 'pin.' Each vowel change creates a completely different word."},
+  {sounds:["/t/","/a/","/p/"],answer:"tap",options:["tap","tip","top","cup"],coaching:"/t/+/a/+/p/ = 'tap.' The voiceless /t/ and /p/ frame the short /a/."},
+  {sounds:["/w/","/e/","/t/"],answer:"wet",options:["wet","wit","wait","what"],coaching:"/w/+/e/+/t/ = 'wet.' The rounded /w/ glides into the short /e/."},
+  {sounds:["/j/","/o/","/b/"],answer:"job",options:["job","jab","jib","jug"],coaching:"/j/+/o/+/b/ = 'job.' The short /o/ is the same vowel as in 'hot.'"},
+  {sounds:["/g/","/u/","/m/"],answer:"gum",options:["gum","gem","game","gym"],coaching:"/g/+/u/+/m/ = 'gum.' The short /u/ and final /m/ create a quick, closed word."},
+  {sounds:["/sh/","/i/","/p/"],answer:"ship",options:["ship","shop","shape","sheep"],coaching:"/sh/+/i/+/p/ = 'ship.' The /sh/ is a single sound even though it uses two letters."},
+  {sounds:["/ch/","/e/","/s/","/t/"],answer:"chest",options:["chest","chaste","cost","cast"],coaching:"/ch/+/e/+/s/+/t/ = 'chest.' Four sounds blend into a single syllable."},
+  {sounds:["/b/","/l/","/a/","/k/"],answer:"black",options:["black","block","blank","bleak"],coaching:"/b/+/l/+/a/+/k/ = 'black.' The /bl/ is a consonant blend — two sounds spoken rapidly."},
+  {sounds:["/s/","/t/","/o/","/p/"],answer:"stop",options:["stop","step","stamp","stoop"],coaching:"/s/+/t/+/o/+/p/ = 'stop.' The /st/ blend launches the word."},
+  {sounds:["/k/","/r/","/a/","/b/"],answer:"crab",options:["crab","crib","grab","crib"],coaching:"/k/+/r/+/a/+/b/ = 'crab.' The /kr/ blend requires rapid tongue movement."},
+  {sounds:["/d/","/r/","/i/","/p/"],answer:"drip",options:["drip","drop","drape","grip"],coaching:"/d/+/r/+/i/+/p/ = 'drip.' The /dr/ blend is voiced, unlike /tr/."},
+  {sounds:["/s/","/n/","/a/","/p/"],answer:"snap",options:["snap","snip","nap","snob"],coaching:"/s/+/n/+/a/+/p/ = 'snap.' The /sn/ blend is distinctive — hissing into a nasal."},
+  {sounds:["/f/","/l/","/a/","/t/"],answer:"flat",options:["flat","float","flit","flan"],coaching:"/f/+/l/+/a/+/t/ = 'flat.' The /fl/ blend flows from friction into liquid."},
+  {sounds:["/g/","/r/","/a/","/b/"],answer:"grab",options:["grab","grub","grim","grape"],coaching:"/g/+/r/+/a/+/b/ = 'grab.' The /gr/ blend uses the back of the tongue."},
+  {sounds:["/t/","/r/","/i/","/p/"],answer:"trip",options:["trip","trap","drip","trim"],coaching:"/t/+/r/+/i/+/p/ = 'trip.' Compare /tr/ (voiceless) with /dr/ (voiced)."},
+  {sounds:["/s/","/p/","/o/","/t/"],answer:"spot",options:["spot","spit","sport","spat"],coaching:"/s/+/p/+/o/+/t/ = 'spot.' The /sp/ blend is voiceless throughout."},
+  {sounds:["/p/","/l/","/a/","/n/"],answer:"plan",options:["plan","plane","plant","clan"],coaching:"/p/+/l/+/a/+/n/ = 'plan.' The /pl/ blend pops then flows."},
+  {sounds:["/s/","/k/","/i/","/p/"],answer:"skip",options:["skip","skid","skim","kept"],coaching:"/s/+/k/+/i/+/p/ = 'skip.' The /sk/ blend combines two voiceless sounds."},
+  {sounds:["/th/","/i/","/n/"],answer:"thin",options:["thin","then","tin","than"],coaching:"/th/+/i/+/n/ = 'thin.' The voiceless /th/ is different from the voiced /th/ in 'then.'"},
+  {sounds:["/n/","/e/","/s/","/t/"],answer:"nest",options:["nest","next","net","best"],coaching:"/n/+/e/+/s/+/t/ = 'nest.' The /st/ cluster at the end requires precise sequencing."},
+  {sounds:["/b/","/e/","/n/","/d/"],answer:"bend",options:["bend","band","bond","bind"],coaching:"/b/+/e/+/n/+/d/ = 'bend.' The vowel /e/ is what distinguishes it from 'band' or 'bind.'"},
+];
+
+// GOLD: Sound Manipulation — "Change, remove, or add sounds"
+const GOLD_BANK = [
+  {instruction:"Take the /m/ off 'map' and add /t/",answer:"tap",options:["tap","mat","pat","trap"],coaching:"Remove the first sound /m/, replace with /t/: map → tap. The vowel and ending stay the same."},
+  {instruction:"Take the /k/ off 'cat' and add /b/",answer:"bat",options:["bat","cab","tab","hat"],coaching:"Swap the initial /k/ for /b/: cat → bat. Only the first sound changes."},
+  {instruction:"Take the /h/ off 'hot' and add /n/",answer:"not",options:["not","ton","hat","nod"],coaching:"Replace /h/ with /n/: hot → not. Initial sound substitution."},
+  {instruction:"Remove the /s/ from the beginning of 'stop'",answer:"top",options:["top","pot","stop","cop"],coaching:"Deleting /s/ from 'stop' leaves 'top.' The /t/ becomes the new initial sound."},
+  {instruction:"Add /s/ to the beginning of 'pin'",answer:"spin",options:["spin","sip","span","snip"],coaching:"Adding /s/ before 'pin' creates the blend /sp/ — giving you 'spin.'"},
+  {instruction:"Change the /i/ in 'big' to /a/",answer:"bag",options:["bag","beg","bug","bog"],coaching:"Swap the middle vowel: big → bag. The consonant frame stays, only the vowel moves."},
+  {instruction:"Change the /a/ in 'cat' to /u/",answer:"cut",options:["cut","cot","kit","cute"],coaching:"Replacing the short /a/ with short /u/: cat → cut."},
+  {instruction:"Remove the /n/ from the end of 'plan'",answer:"pla",options:["play","pla","pal","lap"],coaching:"Removing the final /n/ from 'plan' leaves the sounds /p/+/l/+/a/."},
+  {instruction:"Change the /d/ in 'dog' to /l/",answer:"log",options:["log","god","lag","fog"],coaching:"Swap initial /d/ for /l/: dog → log. Same vowel and ending."},
+  {instruction:"Take the /t/ off 'top' and add /h/",answer:"hop",options:["hop","pot","hot","hog"],coaching:"Replace /t/ with /h/: top → hop. The /o/ and /p/ remain."},
+  {instruction:"Add /r/ after the /g/ in 'gab'",answer:"grab",options:["grab","gab","brag","garb"],coaching:"Inserting /r/ after /g/ creates the blend /gr/: gab → grab."},
+  {instruction:"Change the last sound in 'cat' to /n/",answer:"can",options:["can","tan","cap","cane"],coaching:"Replace final /t/ with /n/: cat → can. Only the ending changes."},
+  {instruction:"Remove the /l/ from 'flat'",answer:"fat",options:["fat","flat","fiat","fit"],coaching:"Deleting /l/ from the /fl/ blend: flat → fat."},
+  {instruction:"Change the /i/ in 'ship' to /o/",answer:"shop",options:["shop","sheep","shape","chop"],coaching:"Vowel swap in the middle: ship → shop. Same consonant frame."},
+  {instruction:"Take the /g/ off 'grip' and add /t/",answer:"trip",options:["trip","drip","rip","tip"],coaching:"Replace /g/ with /t/: grip → trip. The /r/ stays in the blend."},
+  {instruction:"Add /s/ to the beginning of 'top'",answer:"stop",options:["stop","tops","spot","toss"],coaching:"Prefixing /s/ creates /st/ blend: top → stop."},
+  {instruction:"Remove the first sound from 'black'",answer:"lack",options:["lack","back","block","lake"],coaching:"Removing /b/ from the /bl/ blend: black → lack."},
+  {instruction:"Change the /e/ in 'bed' to /a/",answer:"bad",options:["bad","bid","bud","bead"],coaching:"Middle vowel swap: bed → bad. Short /a/ replaces short /e/."},
+  {instruction:"Take the /p/ off 'pan' and add /r/",answer:"ran",options:["ran","ruin","nap","rain"],coaching:"Initial substitution: pan → ran. The /a/ and /n/ are unchanged."},
+  {instruction:"Remove the /s/ from 'snap'",answer:"nap",options:["nap","snap","pan","sap"],coaching:"Delete /s/ from the /sn/ blend: snap → nap."},
+  {instruction:"Add /l/ after /f/ in 'fat'",answer:"flat",options:["flat","flit","felt","float"],coaching:"Inserting /l/ creates the /fl/ blend: fat → flat."},
+  {instruction:"Change the last sound in 'sit' to /p/",answer:"sip",options:["sip","zip","sap","skip"],coaching:"Final sound swap: sit → sip. The /t/ becomes /p/."},
+  {instruction:"Take the /sh/ off 'ship' and add /t/",answer:"tip",options:["tip","sip","trip","hip"],coaching:"Replace /sh/ with /t/: ship → tip. Single sound substitution."},
+  {instruction:"Change the /o/ in 'hot' to /a/",answer:"hat",options:["hat","hit","hut","hate"],coaching:"Vowel swap: hot → hat. Short /o/ becomes short /a/."},
+  {instruction:"Remove the last sound from 'band'",answer:"ban",options:["ban","and","bad","nab"],coaching:"Deleting final /d/: band → ban. Three sounds remain."},
+  {instruction:"Add /t/ to the end of 'nes'",answer:"nest",options:["nest","nets","ten","next"],coaching:"Adding final /t/: nes → nest. The /st/ ending cluster forms."},
+  {instruction:"Change the /r/ in 'red' to /b/",answer:"bed",options:["bed","bred","bid","bead"],coaching:"Initial substitution: red → bed. Same vowel and ending."},
+  {instruction:"Take the /k/ off 'crab' and add /g/",answer:"grab",options:["grab","crab","gab","brag"],coaching:"Replace /k/ with /g/: crab → grab. Voiceless becomes voiced."},
+  {instruction:"Remove the /r/ from 'trip'",answer:"tip",options:["tip","rip","pit","sip"],coaching:"Removing /r/ from the /tr/ blend: trip → tip."},
+  {instruction:"Change the /u/ in 'gum' to /e/",answer:"gem",options:["gem","gum","gym","game"],coaching:"Vowel swap: gum → gem. The /g/ sound stays but spelling changes to match."},
+];
+
+// PLATINUM: Mixed challenges — all three types randomized with shorter timer
+function buildPlatinumBank() {
+  let bank = [];
+  // 8 isolation, 8 blending, 9 manipulation — all new or varied
+  const isoQ = [
+    {type:'iso',word:"chef",answer:"/sh/",options:["/sh/","/ch/","/k/"],coaching:"'Chef' starts with /sh/ — the 'ch' spelling makes the /sh/ sound in this French-origin word."},
+    {type:'iso',word:"phone",answer:"/f/",options:["/f/","/p/","/h/"],coaching:"'Phone' starts with /f/ — the 'ph' spelling makes the /f/ sound from Greek origin."},
+    {type:'iso',word:"knife",answer:"/n/",options:["/n/","/k/","/f/"],coaching:"'Knife' starts with /n/ — the 'k' is silent. English has many silent letters."},
+    {type:'iso',word:"wrap",answer:"/r/",options:["/r/","/w/","/p/"],coaching:"'Wrap' starts with /r/ — the 'w' is silent before 'r' in English."},
+    {type:'iso',word:"gnaw",answer:"/n/",options:["/n/","/g/","/w/"],coaching:"'Gnaw' starts with /n/ — the 'g' is silent before 'n' at the start of a word."},
+    {type:'iso',word:"when",answer:"/w/",options:["/w/","/h/","/n/"],coaching:"'When' starts with /w/ — in most dialects, the 'wh' makes a /w/ sound."},
+    {type:'iso',word:"cent",answer:"/s/",options:["/s/","/k/","/ch/"],coaching:"'Cent' starts with /s/ — the letter 'c' makes /s/ before 'e', 'i', or 'y'."},
+    {type:'iso',word:"giant",answer:"/j/",options:["/j/","/g/","/h/"],coaching:"'Giant' starts with /j/ — the letter 'g' makes /j/ before 'e', 'i', or 'y'."},
+  ];
+  const blendQ = [
+    {type:'blend',sounds:["/k/","/l/","/a/","/sh/"],answer:"clash",options:["clash","class","crash","cash"],coaching:"/k/+/l/+/a/+/sh/ = 'clash.' The /kl/ blend opens and the /sh/ closes."},
+    {type:'blend',sounds:["/s/","/t/","/r/","/i/","/p/"],answer:"strip",options:["strip","strap","drip","strict"],coaching:"/s/+/t/+/r/+/i/+/p/ = 'strip.' A three-consonant blend /str/ opens this word."},
+    {type:'blend',sounds:["/sh/","/r/","/i/","/n/","/k/"],answer:"shrink",options:["shrink","shrank","drink","rink"],coaching:"/sh/+/r/+/i/+/n/+/k/ = 'shrink.' The /shr/ blend is challenging but common."},
+    {type:'blend',sounds:["/s/","/p/","/l/","/a/","/sh/"],answer:"splash",options:["splash","flash","clash","slash"],coaching:"/s/+/p/+/l/+/a/+/sh/ = 'splash.' Three consonants blend: /spl/."},
+    {type:'blend',sounds:["/th/","/r/","/o/"],answer:"throw",options:["throw","three","throat","through"],coaching:"/th/+/r/+/o/ = 'throw.' The /thr/ blend combines a fricative with a liquid."},
+    {type:'blend',sounds:["/k/","/w/","/i/","/k/"],answer:"quick",options:["quick","kick","quit","wick"],coaching:"/k/+/w/+/i/+/k/ = 'quick.' The 'qu' spelling represents /kw/."},
+    {type:'blend',sounds:["/s/","/k/","/r/","/a/","/ch/"],answer:"scratch",options:["scratch","sketch","snatch","stretch"],coaching:"/s/+/k/+/r/+/a/+/ch/ = 'scratch.' The /skr/ is a rare three-consonant blend."},
+    {type:'blend',sounds:["/s/","/t/","/r/","/e/","/n/","/th/"],answer:"strength",options:["strength","strange","stretch","string"],coaching:"/s/+/t/+/r/+/e/+/n/+/th/ = 'strength.' One of English's most complex single-syllable words."},
+  ];
+  const manipQ = [
+    {type:'manip',instruction:"Change the /a/ in 'crash' to /u/",answer:"crush",options:["crush","crash","crust","brush"],coaching:"Vowel swap in a blended word: crash → crush. The /kr/ blend and /sh/ ending stay."},
+    {type:'manip',instruction:"Remove the /s/ from 'string'",answer:"ring",options:["ring","sting","thing","bring"],coaching:"Removing /s/ and /t/ from /str/: only /r/ remains → 'ring.' Wait — removing just /s/ leaves 'tring' which isn't a word. The answer is based on removing the /st/ cluster."},
+    {type:'manip',instruction:"Add /s/ before 'cream'",answer:"scream",options:["scream","cream","stream","screen"],coaching:"Adding /s/ before the /kr/ blend: cream → scream. Three-consonant blend /skr/."},
+    {type:'manip',instruction:"Change the /b/ in 'blend' to /fr/",answer:"friend",options:["friend","blend","fend","frond"],coaching:"Replacing /bl/ with /fr/: blend → friend (approximately — the vowel shifts too)."},
+    {type:'manip',instruction:"Remove the first sound from 'shred'",answer:"red",options:["red","shed","bread","read"],coaching:"Removing /sh/ from 'shred' leaves 'red.' The /r/ stands alone now."},
+    {type:'manip',instruction:"Take the /gr/ off 'grand' and add /st/",answer:"stand",options:["stand","grand","sand","hand"],coaching:"Replace /gr/ with /st/: grand → stand. Same vowel and ending."},
+    {type:'manip',instruction:"Change the /i/ in 'grip' to /a/",answer:"wrap",options:["wrap","trap","grape","gap"],coaching:"Vowel change in the blend: grip → grap. In practice, /gr/+/a/+/p/ sounds like 'wrap.'"},
+    {type:'manip',instruction:"Remove the /l/ from 'splash'",answer:"sash",options:["sash","slash","spash","flash"],coaching:"Removing /l/ from /spl/: splash → spash, which simplifies to the recognizable pattern."},
+    {type:'manip',instruction:"Add /n/ before the /k/ in 'thick'",answer:"think",options:["think","thick","thank","thunk"],coaching:"Inserting /n/ before the final /k/: thick → think. The /nk/ cluster is common in English."},
+  ];
+  bank = [...isoQ,...blendQ,...manipQ];
+  return bank;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SPEECH ENGINE
+// ═══════════════════════════════════════════════════════════════
+
+function speak(text, rate=0.9) {
+  return new Promise(resolve => {
+    if (!speechSupported) { resolve(); return; }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = rate;
+    u.pitch = 0.95;
+    u.lang = 'en-US';
+    u.onend = resolve;
+    u.onerror = resolve;
+    window.speechSynthesis.speak(u);
+  });
+}
+
+function speakPhoneme(phoneme) {
+  const map = {'/l/':'lll','/s/':'sss','/r/':'rrr','/m/':'mmm','/n/':'nnn','/f/':'fff','/v/':'vvv','/z/':'zzz','/h/':'hhh','/w/':'wuh','/y/':'yuh','/b/':'buh','/d/':'duh','/g/':'guh','/j/':'juh','/k/':'kuh','/p/':'puh','/t/':'tuh','/ch/':'chuh','/sh/':'shh','/th/':'thh'};
+  return speak(map[phoneme] || phoneme.replace(/\//g,''), 0.7);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GAME ENGINE
+// ═══════════════════════════════════════════════════════════════
+
+function initTierGrid() {
+  const grid = document.getElementById('tierGrid');
+  grid.innerHTML = '';
+  TIERS.forEach((t,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tier-btn';
+    const isUnlocked = i === 0 || earnedBadges[TIERS[i-1]];
+    const isEarned = earnedBadges[t];
+    if (!isUnlocked) btn.classList.add('locked');
+    if (isUnlocked) btn.classList.add('unlocked');
+    if (isEarned) btn.classList.add('earned-'+t);
+    btn.disabled = !isUnlocked;
+    btn.innerHTML = `<span class="badge">${isEarned ? TIER_EMOJI[t] : (isUnlocked ? '▶' : '🔒')}</span><span class="tier-name">${TIER_LABELS[t]}</span><span class="tier-desc">${getTierDesc(t)}</span>`;
+    btn.onclick = () => startTier(t);
+    grid.appendChild(btn);
+  });
+}
+
+function getTierDesc(t) {
+  if (t==='bronze') return 'Isolate initial sounds';
+  if (t==='silver') return 'Blend sounds into words';
+  if (t==='gold') return 'Manipulate & transform';
+  return 'All skills — full speed';
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function startTier(tier) {
+  currentTier = tier;
+  score = 0;
+  currentQ = 0;
+  answered = false;
+
+  let bank;
+  if (tier==='bronze') bank = shuffle(BRONZE_BANK).slice(0,QUESTIONS_PER_TIER);
+  else if (tier==='silver') bank = shuffle(SILVER_BANK).slice(0,QUESTIONS_PER_TIER);
+  else if (tier==='gold') bank = shuffle(GOLD_BANK).slice(0,QUESTIONS_PER_TIER);
+  else bank = shuffle(buildPlatinumBank()).slice(0,QUESTIONS_PER_TIER);
+
+  questions = bank;
+  document.getElementById('hudTier').textContent = TIER_LABELS[tier];
+  document.getElementById('hudTier').style.color = TIER_COLORS[tier];
+  showScreen('gameScreen');
+  loadQuestion();
+}
+
+let currentAudioData = null;
+
+function loadQuestion() {
+  answered = false;
+  const q = questions[currentQ];
+  document.getElementById('hudQ').textContent = `${currentQ+1}/${QUESTIONS_PER_TIER}`;
+  document.getElementById('hudScore').textContent = score;
+  document.getElementById('progressFill').style.width = `${(currentQ/QUESTIONS_PER_TIER)*100}%`;
+  document.getElementById('genoCoaching').style.display = 'none';
+  document.getElementById('waveform').classList.add('hidden');
+
+  const phonDisp = document.getElementById('phonemeDisplay');
+  phonDisp.classList.add('hidden');
+  const playBtn = document.getElementById('playBtn');
+
+  if (currentTier === 'bronze' || (currentTier === 'platinum' && q.type === 'iso')) {
+    document.getElementById('challengeType').textContent = 'SIGNAL ISOLATION';
+    document.getElementById('challengeInstruction').textContent = 'Identify the FIRST sound in the spoken word.';
+    currentAudioData = { type: 'word', text: q.word };
+    playBtn.style.display = 'inline-flex';
+    playBtn.innerHTML = '<span class="icon">▶</span> PLAY PAYLOAD';
+    renderOptions(q.options, q.answer, q.coaching);
+  } else if (currentTier === 'silver' || (currentTier === 'platinum' && q.type === 'blend')) {
+    document.getElementById('challengeType').textContent = 'SIGNAL SYNTHESIS';
+    document.getElementById('challengeInstruction').textContent = 'Blend these sound fragments into a complete word.';
+    phonDisp.textContent = q.sounds.join(' + ');
+    phonDisp.classList.remove('hidden');
+    currentAudioData = { type: 'phonemes', sounds: q.sounds };
+    playBtn.style.display = 'inline-flex';
+    playBtn.innerHTML = '<span class="icon">▶</span> PLAY FRAGMENTS';
+    renderOptions(q.options, q.answer, q.coaching);
+  } else if (currentTier === 'gold' || (currentTier === 'platinum' && q.type === 'manip')) {
+    document.getElementById('challengeType').textContent = 'SIGNAL MANIPULATION';
+    document.getElementById('challengeInstruction').textContent = q.instruction;
+    currentAudioData = null;
+    playBtn.style.display = 'none';
+    renderOptions(q.options, q.answer, q.coaching);
+  }
+
+  startTimer(TIER_TIME[currentTier]);
+}
+
+function renderOptions(options, answer, coaching) {
+  const grid = document.getElementById('optionsGrid');
+  grid.className = options.length === 3 ? 'options-grid three-col' : 'options-grid';
+  grid.innerHTML = '';
+  const shuffled = shuffle(options);
+  shuffled.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.onclick = () => handleAnswer(btn, opt, answer, coaching, grid);
+    grid.appendChild(btn);
+  });
+}
+
+async function playCurrentAudio() {
+  if (!currentAudioData) return;
+  const wf = document.getElementById('waveform');
+  wf.classList.remove('hidden');
+  if (currentAudioData.type === 'word') {
+    await speak(currentAudioData.text, 0.8);
+  } else if (currentAudioData.type === 'phonemes') {
+    for (const s of currentAudioData.sounds) {
+      await speakPhoneme(s);
+      await new Promise(r => setTimeout(r, 400));
+    }
+  }
+  wf.classList.add('hidden');
+}
+
+function startTimer(seconds) {
+  clearInterval(timer);
+  timeLeft = seconds;
+  updateTimerDisplay();
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      if (!answered) handleTimeout();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('hudTimer');
+  el.textContent = timeLeft + 's';
+  el.className = 'hud-value' + (timeLeft <= 5 ? ' timer-danger' : timeLeft <= 10 ? ' timer-warn' : '');
+}
+
+function handleAnswer(btn, selected, answer, coaching, grid) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timer);
+  grid.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+  if (selected === answer) {
+    btn.classList.add('correct');
+    score++;
+    document.getElementById('hudScore').textContent = score;
+  } else {
+    btn.classList.add('wrong');
+    grid.querySelectorAll('.option-btn').forEach(b => {
+      if (b.textContent === answer) b.classList.add('correct');
+    });
+    showCoaching(coaching);
+  }
+
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ < QUESTIONS_PER_TIER) loadQuestion();
+    else showResults();
+  }, selected === answer ? 1200 : 3000);
+}
+
+function handleTimeout() {
+  answered = true;
+  const q = questions[currentQ];
+  const answer = q.answer;
+  const grid = document.getElementById('optionsGrid');
+  grid.querySelectorAll('.option-btn').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === answer) b.classList.add('correct');
+  });
+  showCoaching("Time expired. " + q.coaching);
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ < QUESTIONS_PER_TIER) loadQuestion();
+    else showResults();
+  }, 3000);
+}
+
+function showCoaching(text) {
+  const el = document.getElementById('genoCoaching');
+  document.getElementById('genoText').textContent = text;
+  el.style.display = 'block';
+}
+
+function showResults() {
+  clearInterval(timer);
+  const passed = score >= PASS_SCORE[currentTier];
+  if (passed && !earnedBadges[currentTier]) {
+    earnedBadges[currentTier] = true;
+    localStorage.setItem('sd_badges', JSON.stringify(earnedBadges));
+  }
+  document.getElementById('resultBadge').textContent = passed ? TIER_EMOJI[currentTier] : '❌';
+  document.getElementById('resultTitle').textContent = passed ? `${TIER_LABELS[currentTier]} BADGE EARNED` : 'SIGNAL LOST — RECALIBRATE';
+  document.getElementById('resultTitle').style.color = passed ? TIER_COLORS[currentTier] : '#ef4444';
+  document.getElementById('resultScore').textContent = `${score} / ${QUESTIONS_PER_TIER} correct`;
+
+  const statsDiv = document.getElementById('resultStats');
+  const pct = Math.round((score/QUESTIONS_PER_TIER)*100);
+  const needed = PASS_SCORE[currentTier];
+  statsDiv.innerHTML = `
+    <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-value">${pct}%</span></div>
+    <div class="stat-row"><span class="stat-label">Pass Threshold</span><span class="stat-value">${needed}/${QUESTIONS_PER_TIER}</span></div>
+    <div class="stat-row"><span class="stat-label">Tier</span><span class="stat-value">${TIER_LABELS[currentTier]}</span></div>
+  `;
+
+  const genoText = document.getElementById('resultGenoText');
+  if (passed) {
+    if (currentTier === 'platinum') {
+      genoText.textContent = "All signals decoded. You have demonstrated mastery of phonemic isolation, blending, and manipulation — the auditory foundation that makes reading possible. Your ears now hear what the code requires. Sovereign literacy begins here.";
+    } else {
+      const nextTier = TIERS[TIERS.indexOf(currentTier)+1];
+      genoText.textContent = `Signal processing verified at ${TIER_LABELS[currentTier]} level. Your auditory decryption skills are building the foundation that phonics needs. ${TIER_LABELS[nextTier]} tier is now unlocked — the challenges get harder because the code gets deeper.`;
+    }
+  } else {
+    genoText.textContent = `You scored ${score} but need ${needed} to earn the badge. This is not failure — this is your brain building new auditory pathways. Each replay strengthens the connection between sounds and the words they build. Try again.`;
+  }
+
+  const actionsDiv = document.getElementById('resultActions');
+  actionsDiv.innerHTML = '';
+  const retryBtn = document.createElement('button');
+  retryBtn.className = 'action-btn';
+  retryBtn.textContent = `RETRY ${TIER_LABELS[currentTier]}`;
+  retryBtn.onclick = () => startTier(currentTier);
+  actionsDiv.appendChild(retryBtn);
+
+  if (passed) {
+    const nextIdx = TIERS.indexOf(currentTier) + 1;
+    if (nextIdx < TIERS.length) {
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'action-btn primary';
+      nextBtn.textContent = `START ${TIER_LABELS[TIERS[nextIdx]]}`;
+      nextBtn.onclick = () => startTier(TIERS[nextIdx]);
+      actionsDiv.appendChild(nextBtn);
+    }
+  }
+
+  const homeBtn = document.createElement('button');
+  homeBtn.className = 'action-btn';
+  homeBtn.textContent = 'MAIN TERMINAL';
+  homeBtn.onclick = () => { initTierGrid(); showScreen('titleScreen'); };
+  actionsDiv.appendChild(homeBtn);
+
+  showScreen('resultsScreen');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+
+initTierGrid();
+</script>
+</body>
+</html>
