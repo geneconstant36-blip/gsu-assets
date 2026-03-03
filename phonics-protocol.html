@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phonics Protocol — Free Educational Game | Global Sovereign University</title>
+<meta name="description" content="The Mississippi Method rebuilt for adults. Master phonics decoding with Bronze-Silver-Gold-Platinum progression. Free forever. No login required.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0f14;--deep:#0f1a24;--panel:#141e2a;
+  --gold:#d4a843;--gold-dim:rgba(212,168,67,.12);--gold-glow:rgba(212,168,67,.15);
+  --teal:#1a9b7a;--teal-dim:rgba(26,155,122,.12);
+  --bronze:#cd7f32;--silver:#8a8d8f;--goldT:#daa520;--platinum:#7eb8c9;
+  --cream:#f5f0e6;--cream-mid:rgba(245,240,230,.75);--cream-dim:rgba(245,240,230,.45);
+  --correct:#2d6a4f;--correct-bg:rgba(45,106,79,.15);
+  --wrong:#c54b3c;--wrong-bg:rgba(197,75,60,.12);
+  --border:rgba(255,255,255,.06);
+}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--cream);min-height:100vh;-webkit-font-smoothing:antialiased}
+.app{max-width:900px;margin:0 auto;min-height:100vh;position:relative}
+
+/* ============ TITLE SCREEN ============ */
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+.title-screen{align-items:center;justify-content:center;padding:2rem;text-align:center;background:linear-gradient(160deg,#0a0f14 0%,#0f1a24 40%,#122030 100%);position:relative;overflow:hidden}
+.title-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(212,168,67,.04) 0%,transparent 60%)}
+.icon-ring{width:110px;height:110px;border:3px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:2.6rem;position:relative}
+.icon-ring::after{content:'';position:absolute;inset:-10px;border:1px solid rgba(212,168,67,.15);border-radius:50%}
+h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3rem);color:var(--cream);line-height:1.15;margin-bottom:.4rem}
+.sub{font-size:.9rem;color:var(--gold);font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.5rem}
+.title-screen .desc{color:var(--cream-dim);max-width:540px;line-height:1.7;font-size:.88rem;margin-bottom:2rem}
+.badges{display:flex;gap:.7rem;margin-bottom:2rem;flex-wrap:wrap;justify-content:center}
+.badge{padding:.3rem .8rem;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:2px}
+.badge.br{color:var(--bronze);border-color:var(--bronze)}.badge.si{color:var(--silver);border-color:var(--silver)}.badge.go{color:var(--goldT);border-color:var(--goldT)}.badge.pl{color:var(--platinum);border-color:var(--platinum)}
+
+.btn{font-family:'Source Sans 3',sans-serif;padding:.8rem 2rem;border:none;cursor:pointer;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:all .25s;border-radius:3px}
+.btn-primary{background:var(--gold);color:var(--bg)}.btn-primary:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,.2)}.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-row{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+
+.stats-bar{display:flex;gap:2rem;margin-top:1.8rem;flex-wrap:wrap;justify-content:center}
+.stats-bar .s{text-align:center}.stats-bar .n{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold)}.stats-bar .l{font-size:.55rem;color:var(--cream-dim);letter-spacing:.1em;text-transform:uppercase}
+
+/* ============ TIER SELECT ============ */
+.tier-screen{background:var(--bg);padding:2rem}
+.tier-screen h2{font-family:'Cinzel',serif;font-size:1.6rem;text-align:center;margin-bottom:.4rem;color:var(--cream)}
+.tier-screen .tdesc{text-align:center;color:var(--cream-dim);margin-bottom:2rem;max-width:520px;margin-left:auto;margin-right:auto;font-size:.85rem}
+.tcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;max-width:760px;margin:0 auto 2rem}
+.tcard{background:var(--panel);border:2px solid var(--border);padding:1.3rem;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;border-radius:4px}
+.tcard:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.tcard.locked{opacity:.45;cursor:not-allowed}
+.tcard::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:4px 4px 0 0}
+.tcard.tb::before{background:var(--bronze)}.tcard.ts::before{background:var(--silver)}.tcard.tg::before{background:var(--goldT)}.tcard.tp::before{background:var(--platinum)}
+.tcard h3{font-family:'Cinzel',serif;font-size:1rem;margin-bottom:.3rem;color:var(--cream)}.tcard p{font-size:.78rem;color:var(--cream-dim);line-height:1.5}.tcard .req{font-size:.6rem;color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:.6rem}
+.back-link{display:block;text-align:center;color:var(--cream-dim);font-size:.8rem;cursor:pointer;text-decoration:underline;margin-top:1rem;transition:color .2s}.back-link:hover{color:var(--gold)}
+
+/* ============ GAME SCREEN ============ */
+.game-screen{background:var(--bg)}
+.game-hdr{background:var(--deep);padding:.8rem 1.5rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border)}
+.game-hdr .logo{font-family:'Cinzel',serif;color:var(--gold);font-size:.8rem;font-weight:700;letter-spacing:.05em}
+.game-hdr .tier-label{padding:.2rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;color:#fff;border-radius:2px}
+.tier-label.b-bg{background:var(--bronze)}.tier-label.s-bg{background:var(--silver)}.tier-label.g-bg{background:var(--goldT);color:var(--bg)}.tier-label.p-bg{background:var(--platinum);color:var(--bg)}
+.game-hdr .quit{font-size:.7rem;color:var(--cream-dim);cursor:pointer;text-decoration:underline;transition:color .2s}.game-hdr .quit:hover{color:var(--wrong)}
+
+.progress-strip{height:3px;background:rgba(212,168,67,.1)}.progress-fill{height:100%;background:var(--gold);transition:width .5s ease}
+
+.game-body{flex:1;padding:2rem 1.5rem;max-width:700px;margin:0 auto;width:100%}
+.q-counter{font-size:.65rem;color:var(--cream-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.q-type{font-size:.72rem;color:var(--teal);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.6rem}
+.q-text{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--cream);line-height:1.35;margin-bottom:1.2rem}
+
+.phoneme-display{text-align:center;margin:1.5rem 0;padding:1.5rem;background:var(--panel);border:1px solid var(--border);border-radius:6px}
+.phoneme-display .big{font-family:'JetBrains Mono',monospace;font-size:clamp(2.5rem,8vw,4rem);color:var(--gold);font-weight:700;letter-spacing:.15em}
+.phoneme-display .hint{font-size:.7rem;color:var(--cream-dim);margin-top:.5rem;letter-spacing:.05em}
+
+.audio-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;background:var(--gold-dim);border:1px solid rgba(212,168,67,.2);border-radius:4px;color:var(--gold);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:1.2rem}
+.audio-btn:hover{background:rgba(212,168,67,.2);border-color:var(--gold)}
+
+.options{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem}
+.option{padding:.85rem 1rem;border:2px solid var(--border);border-radius:4px;cursor:pointer;transition:all .2s;font-size:.88rem;line-height:1.4;background:var(--panel);color:var(--cream);text-align:left}
+.option:hover:not(.disabled){border-color:rgba(212,168,67,.3);background:rgba(212,168,67,.04)}
+.option.selected{border-color:var(--gold);background:var(--gold-dim)}
+.option.correct-answer{border-color:var(--correct);background:var(--correct-bg);color:#a8e6cf}
+.option.wrong-answer{border-color:var(--wrong);background:var(--wrong-bg);color:#f4a0a0}
+.option.disabled{cursor:default;opacity:.7}
+.option .letter{display:inline-block;width:24px;height:24px;border:1px solid var(--border);border-radius:3px;text-align:center;line-height:24px;font-size:.7rem;font-weight:700;color:var(--cream-dim);margin-right:.7rem;flex-shrink:0}
+
+.feedback{padding:1rem 1.2rem;border-radius:4px;margin-bottom:1rem;font-size:.85rem;line-height:1.6;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:var(--correct-bg);border:1px solid rgba(45,106,79,.3);color:#a8e6cf}
+.feedback.wrong{background:var(--wrong-bg);border:1px solid rgba(197,75,60,.2);color:#f4a0a0}
+.feedback strong{display:block;margin-bottom:.3rem;font-size:.9rem}
+
+.next-btn{width:100%;padding:.8rem;background:var(--gold);color:var(--bg);border:none;border-radius:3px;font-family:'Source Sans 3',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;display:none}
+.next-btn.show{display:block}
+.next-btn:hover{filter:brightness(1.15)}
+
+/* ============ RESULTS ============ */
+.results-screen{align-items:center;justify-content:center;padding:2rem;text-align:center;background:var(--bg)}
+.results-screen h2{font-family:'Cinzel',serif;font-size:1.8rem;margin-bottom:.5rem}
+.score-ring{width:140px;height:140px;border-radius:50%;border:4px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:1.5rem auto}
+.score-ring .pct{font-family:'Cinzel',serif;font-size:2.5rem;color:var(--gold);font-weight:900;line-height:1}
+.score-ring .of{font-size:.65rem;color:var(--cream-dim);letter-spacing:.08em;text-transform:uppercase}
+.results-msg{color:var(--cream-mid);max-width:440px;margin:0 auto 2rem;font-size:.9rem;line-height:1.6}
+.results-detail{display:flex;gap:2rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.results-detail .rd{text-align:center}.results-detail .rn{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700}.results-detail .rl{font-size:.55rem;color:var(--cream-dim);letter-spacing:.1em;text-transform:uppercase}
+.rd .rn.green{color:var(--correct)}.rd .rn.red{color:var(--wrong)}
+
+@media(max-width:600px){
+  .tcards{grid-template-columns:1fr 1fr}
+  .game-body{padding:1.5rem 1rem}
+  .phoneme-display .big{font-size:2.5rem}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ==================== TITLE SCREEN ==================== -->
+<div id="titleScreen" class="screen title-screen active">
+  <div class="icon-ring">🔊</div>
+  <h1>Phonics Protocol</h1>
+  <div class="sub">The Mississippi Method — Rebuilt</div>
+  <p class="desc">The phonics approach that took Mississippi from 49th to 9th in national reading scores — rebuilt from the ground up for adults who were never taught to decode. No login. No cost. No time limit.</p>
+  <div class="badges">
+    <span class="badge br">Bronze</span>
+    <span class="badge si">Silver</span>
+    <span class="badge go">Gold</span>
+    <span class="badge pl">Platinum</span>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="showScreen('tierScreen')">Start Game</button>
+    <button class="btn btn-outline" onclick="showScreen('howScreen')">How It Works</button>
+  </div>
+  <div class="stats-bar">
+    <div class="s"><div class="n">∞</div><div class="l">Questions</div></div>
+    <div class="s"><div class="n">4</div><div class="l">Tiers</div></div>
+    <div class="s"><div class="n">$0</div><div class="l">Cost</div></div>
+    <div class="s"><div class="n">0</div><div class="l">Logins</div></div>
+  </div>
+</div>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<div id="howScreen" class="screen tier-screen">
+  <h2>How It Works</h2>
+  <div class="tdesc" style="max-width:600px;text-align:left;line-height:1.8">
+    <p style="margin-bottom:1rem">The Phonics Protocol uses a <strong style="color:var(--gold)">combinatorial question engine</strong> — a small set of phonics rules generates an unlimited number of unique questions. You'll never see the same question twice.</p>
+    <p style="margin-bottom:1rem"><strong style="color:var(--bronze)">Bronze</strong> — Letter-sound basics. Single consonants, short vowels, CVC words. The foundation everything else builds on.</p>
+    <p style="margin-bottom:1rem"><strong style="color:var(--silver)">Silver</strong> — Consonant blends, digraphs (sh, ch, th), and long vowel patterns. You start decoding real words.</p>
+    <p style="margin-bottom:1rem"><strong style="color:var(--goldT)">Gold</strong> — R-controlled vowels, diphthongs, silent letters, and multi-syllable decoding. Real-world reading territory.</p>
+    <p style="margin-bottom:1rem"><strong style="color:var(--platinum)">Platinum</strong> — Greek and Latin roots, morpheme analysis, and advanced decoding. You don't just read — you reverse-engineer words.</p>
+    <p>Each tier: <strong style="color:var(--cream)">10 questions</strong>. Score <strong style="color:var(--gold)">80%+</strong> to unlock the next tier. Your progress is tracked in your browser.</p>
+  </div>
+  <div style="text-align:center">
+    <button class="btn btn-primary" onclick="showScreen('tierScreen')">Choose Your Tier</button>
+  </div>
+  <span class="back-link" onclick="showScreen('titleScreen')">← Back to title</span>
+</div>
+
+<!-- ==================== TIER SELECT ==================== -->
+<div id="tierScreen" class="screen tier-screen">
+  <h2>Choose Your Tier</h2>
+  <div class="tdesc">Each tier builds on the last. Score 80% to unlock the next level.</div>
+  <div class="tcards">
+    <div class="tcard tb" onclick="startGame('bronze')">
+      <h3>Bronze</h3>
+      <p>Letter-sound correspondence. Single consonants, short vowels, CVC decoding.</p>
+      <div class="req">Open — Start Here</div>
+    </div>
+    <div id="silverCard" class="tcard ts locked" onclick="startGame('silver')">
+      <h3>Silver</h3>
+      <p>Blends, digraphs, long vowel patterns. Real word decoding begins.</p>
+      <div class="req">Requires Bronze 80%</div>
+    </div>
+    <div id="goldCard" class="tcard tg locked" onclick="startGame('gold')">
+      <h3>Gold</h3>
+      <p>R-controlled vowels, diphthongs, silent letters, multi-syllable words.</p>
+      <div class="req">Requires Silver 80%</div>
+    </div>
+    <div id="platCard" class="tcard tp locked" onclick="startGame('platinum')">
+      <h3>Platinum</h3>
+      <p>Greek/Latin roots, morpheme analysis, advanced decoding strategy.</p>
+      <div class="req">Requires Gold 80%</div>
+    </div>
+  </div>
+  <span class="back-link" onclick="showScreen('titleScreen')">← Back to title</span>
+</div>
+
+<!-- ==================== GAME SCREEN ==================== -->
+<div id="gameScreen" class="screen game-screen">
+  <div class="game-hdr">
+    <div class="logo">Phonics Protocol</div>
+    <div id="tierLabel" class="tier-label b-bg">Bronze</div>
+    <span class="quit" onclick="quitGame()">Quit</span>
+  </div>
+  <div class="progress-strip"><div id="progressFill" class="progress-fill" style="width:0%"></div></div>
+  <div class="game-body">
+    <div id="qCounter" class="q-counter">Question 1 of 10</div>
+    <div id="qType" class="q-type">Letter-Sound</div>
+    <div id="qText" class="q-text">What sound does the letter make?</div>
+    <div id="phonemeBox" class="phoneme-display">
+      <div id="phonemeBig" class="big">B</div>
+      <div id="phonemeHint" class="hint">Say the sound out loud before choosing</div>
+    </div>
+    <button id="audioBtn" class="audio-btn" onclick="playSound()" style="display:none">🔊 Hear the Sound</button>
+    <div id="optionsBox" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+    <button id="nextBtn" class="next-btn" onclick="nextQuestion()">Next Question →</button>
+  </div>
+</div>
+
+<!-- ==================== RESULTS ==================== -->
+<div id="resultsScreen" class="screen results-screen">
+  <h2 id="resultsTitle">Tier Complete!</h2>
+  <div class="score-ring">
+    <div id="scorePct" class="pct">80%</div>
+    <div class="of">Score</div>
+  </div>
+  <p id="resultsMsg" class="results-msg"></p>
+  <div class="results-detail">
+    <div class="rd"><div id="rCorrect" class="rn green">8</div><div class="rl">Correct</div></div>
+    <div class="rd"><div id="rWrong" class="rn red">2</div><div class="rl">Wrong</div></div>
+    <div class="rd"><div id="rStreak" class="rn" style="color:var(--gold)">5</div><div class="rl">Best Streak</div></div>
+  </div>
+  <div class="btn-row">
+    <button id="retryBtn" class="btn btn-outline" onclick="retryTier()">Try Again</button>
+    <button id="nextTierBtn" class="btn btn-primary" onclick="goNextTier()" style="display:none">Next Tier →</button>
+    <button class="btn btn-outline" onclick="showScreen('tierScreen')">All Tiers</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+// ============================================================
+// PHONICS PROTOCOL — COMBINATORIAL QUESTION ENGINE
+// Infinite questions from finite phonics rules
+// ============================================================
+
+// --- STATE ---
+let currentTier = 'bronze';
+let questions = [];
+let currentQ = 0;
+let score = 0;
+let streak = 0;
+let bestStreak = 0;
+let answered = false;
+const QUESTIONS_PER_ROUND = 10;
+const PASS_THRESHOLD = 0.8;
+
+// --- PROGRESS STORAGE ---
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem('pp_progress') || '{}'); } catch { return {}; }
+}
+function saveProgress(tier, pct) {
+  const p = getProgress();
+  p[tier] = Math.max(p[tier] || 0, pct);
+  try { localStorage.setItem('pp_progress', JSON.stringify(p)); } catch {}
+}
+function unlockCheck() {
+  const p = getProgress();
+  const sc = document.getElementById('silverCard');
+  const gc = document.getElementById('goldCard');
+  const pc = document.getElementById('platCard');
+  if (p.bronze >= PASS_THRESHOLD) { sc.classList.remove('locked'); sc.querySelector('.req').textContent = 'Unlocked'; }
+  if (p.silver >= PASS_THRESHOLD) { gc.classList.remove('locked'); gc.querySelector('.req').textContent = 'Unlocked'; }
+  if (p.gold >= PASS_THRESHOLD) { pc.classList.remove('locked'); pc.querySelector('.req').textContent = 'Unlocked'; }
+}
+
+// --- SCREEN NAV ---
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'tierScreen') unlockCheck();
+}
+
+// --- PHONICS DATA (Rules, not questions — combinatorial) ---
+const CONSONANT_SOUNDS = {
+  'B': '/b/ as in ball', 'C': '/k/ as in cat', 'D': '/d/ as in dog', 'F': '/f/ as in fish',
+  'G': '/g/ as in go', 'H': '/h/ as in hat', 'J': '/j/ as in jump', 'K': '/k/ as in kite',
+  'L': '/l/ as in lamp', 'M': '/m/ as in moon', 'N': '/n/ as in net', 'P': '/p/ as in pen',
+  'Q': '/kw/ as in queen', 'R': '/r/ as in run', 'S': '/s/ as in sun', 'T': '/t/ as in top',
+  'V': '/v/ as in van', 'W': '/w/ as in win', 'X': '/ks/ as in box', 'Y': '/y/ as in yes', 'Z': '/z/ as in zip'
+};
+const SHORT_VOWELS = {
+  'A': { sound: '/ă/ — short A', example: 'cat, bat, ran', words: ['cat','bat','ran','map','tap','hat','fan','pan','sat','van'] },
+  'E': { sound: '/ĕ/ — short E', example: 'bed, pen, hen', words: ['bed','pen','hen','net','set','red','let','wet','jet','pet'] },
+  'I': { sound: '/ĭ/ — short I', example: 'sit, pin, big', words: ['sit','pin','big','hit','kit','lip','dip','fit','kid','wig'] },
+  'O': { sound: '/ŏ/ — short O', example: 'hot, pot, dog', words: ['hot','pot','dog','log','fog','top','hop','mop','cot','lot'] },
+  'U': { sound: '/ŭ/ — short U', example: 'cup, bug, run', words: ['cup','bug','run','sun','fun','hut','cut','nut','bus','mud'] }
+};
+const CVC_WORDS = [
+  { word: 'cat', sounds: ['k','ă','t'] }, { word: 'dog', sounds: ['d','ŏ','g'] },
+  { word: 'big', sounds: ['b','ĭ','g'] }, { word: 'run', sounds: ['r','ŭ','n'] },
+  { word: 'pen', sounds: ['p','ĕ','n'] }, { word: 'hat', sounds: ['h','ă','t'] },
+  { word: 'sit', sounds: ['s','ĭ','t'] }, { word: 'hop', sounds: ['h','ŏ','p'] },
+  { word: 'fun', sounds: ['f','ŭ','n'] }, { word: 'let', sounds: ['l','ĕ','t'] },
+  { word: 'map', sounds: ['m','ă','p'] }, { word: 'lip', sounds: ['l','ĭ','p'] },
+  { word: 'sun', sounds: ['s','ŭ','n'] }, { word: 'net', sounds: ['n','ĕ','t'] },
+  { word: 'pot', sounds: ['p','ŏ','t'] }, { word: 'rug', sounds: ['r','ŭ','g'] },
+  { word: 'jam', sounds: ['j','ă','m'] }, { word: 'vet', sounds: ['v','ĕ','t'] },
+  { word: 'win', sounds: ['w','ĭ','n'] }, { word: 'fog', sounds: ['f','ŏ','g'] },
+  { word: 'zip', sounds: ['z','ĭ','p'] }, { word: 'mud', sounds: ['m','ŭ','d'] },
+  { word: 'bun', sounds: ['b','ŭ','n'] }, { word: 'tap', sounds: ['t','ă','p'] },
+];
+
+// SILVER DATA
+const DIGRAPHS = {
+  'sh': { sound: '/sh/', examples: ['ship','shop','fish','shell','shut','shed','shin','shout'] },
+  'ch': { sound: '/ch/', examples: ['chip','chin','chop','chat','chest','chain','check','child'] },
+  'th': { sound: '/th/', examples: ['thin','thick','bath','math','path','this','that','them'] },
+  'wh': { sound: '/wh/', examples: ['when','what','white','wheel','whale','whip','where','while'] },
+  'ph': { sound: '/f/', examples: ['phone','photo','graph','phrase','phonic','phantom'] },
+  'ck': { sound: '/k/', examples: ['back','kick','duck','lock','neck','rock','sock','stick'] }
+};
+const BLENDS = {
+  'bl': ['blend','black','blue','block','blind'], 'br': ['bring','brown','bread','brick','brave'],
+  'cl': ['clap','clean','clock','class','close'], 'cr': ['crab','cry','cross','crowd','crash'],
+  'dr': ['drop','draw','drink','drive','drum'], 'fl': ['flag','fly','flat','flame','float'],
+  'fr': ['from','free','fresh','frog','front'], 'gl': ['glad','glass','glow','globe','glue'],
+  'gr': ['grab','green','grow','great','grip'], 'pl': ['plan','play','plate','plot','place'],
+  'pr': ['press','price','proud','print','prize'], 'sl': ['slip','slow','slide','sleep','slim'],
+  'sm': ['small','smart','smile','smell','smoke'], 'sn': ['snap','snow','snack','snake','snip'],
+  'sp': ['spin','spot','spell','space','speed'], 'st': ['stop','step','star','still','store'],
+  'sw': ['swim','sweet','swing','switch','swipe'], 'tr': ['trip','tree','train','track','trick']
+};
+const LONG_VOWELS = {
+  'a_e': { sound: '/ā/ — long A', pattern: 'a_e (silent e)', examples: ['cake','make','lake','tape','gate','name','game','late'] },
+  'i_e': { sound: '/ī/ — long I', pattern: 'i_e (silent e)', examples: ['bike','kite','like','time','five','mine','wine','line'] },
+  'o_e': { sound: '/ō/ — long O', pattern: 'o_e (silent e)', examples: ['home','bone','note','code','hope','rope','cone','hole'] },
+  'u_e': { sound: '/ū/ — long U', pattern: 'u_e (silent e)', examples: ['cute','mule','tube','rule','June','dune','fuse','huge'] },
+  'ee': { sound: '/ē/ — long E', pattern: 'ee', examples: ['tree','free','see','feet','keep','deep','seed','week'] },
+  'ea': { sound: '/ē/ — long E', pattern: 'ea', examples: ['read','team','clean','dream','beach','teach','reach','meal'] },
+  'ai': { sound: '/ā/ — long A', pattern: 'ai', examples: ['rain','train','wait','pain','tail','mail','paid','sail'] },
+  'oa': { sound: '/ō/ — long O', pattern: 'oa', examples: ['boat','coat','road','goal','soap','load','foam','toast'] }
+};
+
+// GOLD DATA
+const R_CONTROLLED = {
+  'ar': { sound: '/är/', examples: ['car','star','barn','park','card','dark','farm','hard'] },
+  'er': { sound: '/ər/', examples: ['her','fern','term','verb','were','clerk','merge','serve'] },
+  'ir': { sound: '/ər/', examples: ['bird','girl','dirt','firm','stir','first','skirt','third'] },
+  'or': { sound: '/ôr/', examples: ['for','corn','form','horn','port','sort','sport','storm'] },
+  'ur': { sound: '/ər/', examples: ['fur','burn','turn','hurt','curl','nurse','purse','curve'] }
+};
+const DIPHTHONGS = {
+  'oi/oy': { sound: '/oi/', examples: ['oil','coin','join','point','boy','toy','joy','enjoy'] },
+  'ou/ow': { sound: '/ou/', examples: ['out','house','cloud','found','cow','how','down','town'] },
+  'oo (long)': { sound: '/oo/', examples: ['moon','food','pool','cool','room','boot','tooth','spoon'] },
+  'oo (short)': { sound: '/ŏŏ/', examples: ['book','cook','look','good','wood','foot','hook','stood'] },
+  'aw/au': { sound: '/aw/', examples: ['saw','draw','law','paw','cause','pause','haunt','sauce'] }
+};
+const SILENT_LETTERS = [
+  { word: 'knife', silent: 'k', rule: 'Silent K before N' },
+  { word: 'write', silent: 'w', rule: 'Silent W before R' },
+  { word: 'lamb', silent: 'b', rule: 'Silent B after M' },
+  { word: 'gnaw', silent: 'g', rule: 'Silent G before N' },
+  { word: 'knight', silent: 'k', rule: 'Silent K before N' },
+  { word: 'wrap', silent: 'w', rule: 'Silent W before R' },
+  { word: 'climb', silent: 'b', rule: 'Silent B after M' },
+  { word: 'gnat', silent: 'g', rule: 'Silent G before N' },
+  { word: 'hour', silent: 'h', rule: 'Silent H' },
+  { word: 'doubt', silent: 'b', rule: 'Silent B' },
+  { word: 'psalm', silent: 'p', rule: 'Silent P before S' },
+  { word: 'knock', silent: 'k', rule: 'Silent K before N' },
+];
+
+// PLATINUM DATA
+const ROOTS = {
+  'aud': { meaning: 'hear', origin: 'Latin', examples: ['audience','audio','audible','auditorium'] },
+  'bene': { meaning: 'good/well', origin: 'Latin', examples: ['benefit','benevolent','benediction'] },
+  'chron': { meaning: 'time', origin: 'Greek', examples: ['chronic','chronicle','chronological','synchronize'] },
+  'dict': { meaning: 'speak/say', origin: 'Latin', examples: ['dictionary','predict','dictate','verdict'] },
+  'graph': { meaning: 'write', origin: 'Greek', examples: ['paragraph','autograph','biography','graphic'] },
+  'morph': { meaning: 'form/shape', origin: 'Greek', examples: ['morph','metamorphosis','amorphous'] },
+  'port': { meaning: 'carry', origin: 'Latin', examples: ['transport','portable','export','import','report'] },
+  'scrib/script': { meaning: 'write', origin: 'Latin', examples: ['describe','scripture','manuscript','prescribe'] },
+  'spec/spect': { meaning: 'look/see', origin: 'Latin', examples: ['inspect','spectacle','respect','perspective'] },
+  'struct': { meaning: 'build', origin: 'Latin', examples: ['structure','construct','instruct','destruct'] },
+  'terr': { meaning: 'earth/land', origin: 'Latin', examples: ['terrain','territory','terrace','terrestrial'] },
+  'vid/vis': { meaning: 'see', origin: 'Latin', examples: ['video','vision','visible','evidence','supervise'] },
+  'bio': { meaning: 'life', origin: 'Greek', examples: ['biology','biography','antibiotic','biodegradable'] },
+  'geo': { meaning: 'earth', origin: 'Greek', examples: ['geography','geology','geometry','geothermal'] },
+  'phon': { meaning: 'sound', origin: 'Greek', examples: ['phonics','telephone','microphone','symphony'] },
+  'auto': { meaning: 'self', origin: 'Greek', examples: ['automatic','automobile','autobiography','autonomy'] }
+};
+const PREFIXES = {
+  'un-': { meaning: 'not/opposite', examples: ['undo','unfair','unlock','unable'] },
+  're-': { meaning: 'again/back', examples: ['redo','return','rebuild','rewrite'] },
+  'pre-': { meaning: 'before', examples: ['preview','prevent','prefix','preschool'] },
+  'mis-': { meaning: 'wrong/badly', examples: ['mistake','mislead','misuse','misspell'] },
+  'dis-': { meaning: 'not/apart', examples: ['disagree','disappear','dislike','disconnect'] },
+  'inter-': { meaning: 'between', examples: ['interact','international','internet','interrupt'] },
+  'sub-': { meaning: 'under/below', examples: ['submarine','subway','subtitle','submerge'] },
+  'trans-': { meaning: 'across', examples: ['transport','transfer','transform','translate'] }
+};
+const SUFFIXES = {
+  '-tion/-sion': { meaning: 'act/state of', examples: ['nation','action','decision','tension'] },
+  '-ment': { meaning: 'state/result of', examples: ['movement','judgment','treatment','statement'] },
+  '-ness': { meaning: 'state of being', examples: ['kindness','darkness','happiness','sadness'] },
+  '-able/-ible': { meaning: 'capable of', examples: ['readable','visible','possible','flexible'] },
+  '-ful': { meaning: 'full of', examples: ['hopeful','careful','grateful','beautiful'] },
+  '-less': { meaning: 'without', examples: ['hopeless','careless','endless','fearless'] },
+  '-ous/-ious': { meaning: 'having quality of', examples: ['famous','curious','serious','nervous'] },
+  '-ist': { meaning: 'one who', examples: ['artist','scientist','pianist','cyclist'] }
+};
+
+// --- UTILITY ---
+function shuffle(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function pick(arr, n) { return shuffle(arr).slice(0, n); }
+function pickOne(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function makeDistractors(correct, pool, count) {
+  const d = pool.filter(x => x !== correct);
+  return pick(d, count);
+}
+
+// --- QUESTION GENERATORS (combinatorial — rules produce infinite questions) ---
+
+function genBronze() {
+  const qs = [];
+  const types = shuffle(['consonant','vowel','cvc_decode','cvc_blend','vowel_word','consonant_sound']);
+
+  for (let i = 0; i < QUESTIONS_PER_ROUND; i++) {
+    const type = types[i % types.length];
+
+    if (type === 'consonant') {
+      const letters = shuffle(Object.keys(CONSONANT_SOUNDS));
+      const letter = letters[i % letters.length];
+      const correct = CONSONANT_SOUNDS[letter];
+      const others = pick(Object.values(CONSONANT_SOUNDS).filter(v => v !== correct), 3);
+      qs.push({ qType:'Letter → Sound', text:'What sound does this letter make?', display:letter, correct, options:shuffle([correct,...others]), explain:`${letter} makes the sound ${correct}` });
+    }
+    else if (type === 'vowel') {
+      const vk = shuffle(Object.keys(SHORT_VOWELS));
+      const v = vk[i % vk.length];
+      const data = SHORT_VOWELS[v];
+      const correct = data.sound;
+      const others = pick(Object.values(SHORT_VOWELS).map(d => d.sound).filter(s => s !== correct), 3);
+      qs.push({ qType:'Short Vowel', text:`What is the short sound of the vowel ${v}?`, display:v, correct, options:shuffle([correct,...others]), explain:`Short ${v} says ${correct} — as in ${data.example}` });
+    }
+    else if (type === 'cvc_decode') {
+      const w = pickOne(CVC_WORDS);
+      const vowelInWord = w.sounds[1];
+      const vowelMap = {'ă':'Short A','ĕ':'Short E','ĭ':'Short I','ŏ':'Short O','ŭ':'Short U'};
+      const correct = vowelMap[vowelInWord] || vowelInWord;
+      const others = pick(Object.values(vowelMap).filter(v => v !== correct), 3);
+      qs.push({ qType:'CVC Decoding', text:`What vowel sound do you hear in this word?`, display:w.word.toUpperCase(), correct, options:shuffle([correct,...others]), explain:`"${w.word}" has the ${correct} sound: /${vowelInWord}/` });
+    }
+    else if (type === 'cvc_blend') {
+      const w = pickOne(CVC_WORDS);
+      const correct = `/${w.sounds.join('-')}/`;
+      const fakes = pick(CVC_WORDS.filter(x => x.word !== w.word), 3).map(f => `/${f.sounds.join('-')}/`);
+      qs.push({ qType:'Blending Sounds', text:'Blend these sounds together. Which word do they make?', display:`/${w.sounds.join('/ + /')}/ `, correct:w.word, options:shuffle([w.word, ...pick(CVC_WORDS.filter(x => x.word !== w.word), 3).map(f => f.word)]), explain:`/${w.sounds.join('-')}/ blends into "${w.word}"` });
+    }
+    else if (type === 'vowel_word') {
+      const vk = pickOne(Object.keys(SHORT_VOWELS));
+      const data = SHORT_VOWELS[vk];
+      const correct = pickOne(data.words);
+      const otherVowels = Object.keys(SHORT_VOWELS).filter(k => k !== vk);
+      const wrongs = otherVowels.slice(0,3).map(k => pickOne(SHORT_VOWELS[k].words));
+      qs.push({ qType:'Vowel Identification', text:`Which word contains the short ${vk} sound?`, display:`Short ${vk}`, correct, options:shuffle([correct,...wrongs]), explain:`"${correct}" contains the short ${vk} sound (${data.sound})` });
+    }
+    else {
+      const letter = pickOne(Object.keys(CONSONANT_SOUNDS));
+      const sound = CONSONANT_SOUNDS[letter];
+      const correct = letter;
+      const wrongs = pick(Object.keys(CONSONANT_SOUNDS).filter(l => l !== letter), 3);
+      qs.push({ qType:'Sound → Letter', text:`Which letter makes this sound?`, display:sound, correct, options:shuffle([correct,...wrongs]), explain:`The sound ${sound} is made by the letter ${letter}` });
+    }
+  }
+  return qs;
+}
+
+function genSilver() {
+  const qs = [];
+  const types = shuffle(['digraph_id','digraph_word','blend_id','blend_word','long_vowel_pattern','long_vowel_word']);
+  for (let i = 0; i < QUESTIONS_PER_ROUND; i++) {
+    const type = types[i % types.length];
+    if (type === 'digraph_id') {
+      const dk = pickOne(Object.keys(DIGRAPHS));
+      const d = DIGRAPHS[dk];
+      const correct = d.sound;
+      const others = pick(Object.values(DIGRAPHS).map(x => x.sound).filter(s => s !== correct), 3);
+      qs.push({ qType:'Digraph Sound', text:`What sound does the digraph "${dk}" make?`, display:dk.toUpperCase(), correct, options:shuffle([correct,...others]), explain:`"${dk}" makes the sound ${correct} — as in ${d.examples[0]}` });
+    }
+    else if (type === 'digraph_word') {
+      const dk = pickOne(Object.keys(DIGRAPHS));
+      const d = DIGRAPHS[dk];
+      const correct = pickOne(d.examples);
+      const otherKeys = Object.keys(DIGRAPHS).filter(k => k !== dk);
+      const wrongs = otherKeys.slice(0,3).map(k => pickOne(DIGRAPHS[k].examples));
+      qs.push({ qType:'Find the Digraph', text:`Which word contains the "${dk}" digraph?`, display:dk.toUpperCase(), correct, options:shuffle([correct,...wrongs]), explain:`"${correct}" contains the "${dk}" digraph` });
+    }
+    else if (type === 'blend_id') {
+      const bk = pickOne(Object.keys(BLENDS));
+      const correct = bk;
+      const word = pickOne(BLENDS[bk]);
+      const wrongs = pick(Object.keys(BLENDS).filter(k => k !== bk), 3);
+      qs.push({ qType:'Identify the Blend', text:`What consonant blend starts the word "${word}"?`, display:word.toUpperCase(), correct, options:shuffle([correct,...wrongs]), explain:`"${word}" starts with the blend "${bk}"` });
+    }
+    else if (type === 'blend_word') {
+      const bk = pickOne(Object.keys(BLENDS));
+      const correct = pickOne(BLENDS[bk]);
+      const otherKeys = Object.keys(BLENDS).filter(k => k !== bk);
+      const wrongs = otherKeys.slice(0,3).map(k => pickOne(BLENDS[k]));
+      qs.push({ qType:'Blend Matching', text:`Which word begins with the blend "${bk}"?`, display:bk.toUpperCase(), correct, options:shuffle([correct,...wrongs]), explain:`"${correct}" begins with the blend "${bk}"` });
+    }
+    else if (type === 'long_vowel_pattern') {
+      const lk = pickOne(Object.keys(LONG_VOWELS));
+      const lv = LONG_VOWELS[lk];
+      const correct = lv.pattern;
+      const others = pick(Object.values(LONG_VOWELS).map(x => x.pattern).filter(p => p !== correct), 3);
+      const word = pickOne(lv.examples);
+      qs.push({ qType:'Long Vowel Pattern', text:`What vowel pattern makes the long vowel sound in "${word}"?`, display:word.toUpperCase(), correct, options:shuffle([correct,...others]), explain:`"${word}" uses the ${correct} pattern (${lv.sound})` });
+    }
+    else {
+      const lk = pickOne(Object.keys(LONG_VOWELS));
+      const lv = LONG_VOWELS[lk];
+      const correct = pickOne(lv.examples);
+      const otherKeys = Object.keys(LONG_VOWELS).filter(k => LONG_VOWELS[k].sound !== lv.sound);
+      const wrongs = otherKeys.slice(0,3).map(k => pickOne(LONG_VOWELS[k].examples));
+      qs.push({ qType:'Long Vowel Word', text:`Which word has the ${lv.sound} sound?`, display:lv.sound, correct, options:shuffle([correct,...wrongs]), explain:`"${correct}" has the ${lv.sound} sound (pattern: ${lv.pattern})` });
+    }
+  }
+  return qs;
+}
+
+function genGold() {
+  const qs = [];
+  const types = shuffle(['r_controlled','r_word','diphthong','diphthong_word','silent_letter','multi_syllable']);
+  for (let i = 0; i < QUESTIONS_PER_ROUND; i++) {
+    const type = types[i % types.length];
+    if (type === 'r_controlled') {
+      const rk = pickOne(Object.keys(R_CONTROLLED));
+      const r = R_CONTROLLED[rk];
+      const correct = r.sound;
+      const others = pick(Object.values(R_CONTROLLED).map(x => x.sound).filter(s => s !== correct), 3);
+      if (others.length < 3) others.push('/ă/', '/ē/', '/ī/');
+      qs.push({ qType:'R-Controlled Vowel', text:`What sound does "${rk}" make?`, display:rk.toUpperCase(), correct, options:shuffle([correct,...others.slice(0,3)]), explain:`"${rk}" makes the ${correct} sound — as in ${r.examples[0]}` });
+    }
+    else if (type === 'r_word') {
+      const rk = pickOne(Object.keys(R_CONTROLLED));
+      const r = R_CONTROLLED[rk];
+      const correct = pickOne(r.examples);
+      const otherKeys = Object.keys(R_CONTROLLED).filter(k => k !== rk);
+      const wrongs = otherKeys.slice(0,3).map(k => pickOne(R_CONTROLLED[k].examples));
+      qs.push({ qType:'R-Controlled Match', text:`Which word contains the "${rk}" pattern?`, display:rk.toUpperCase(), correct, options:shuffle([correct,...wrongs]), explain:`"${correct}" contains the "${rk}" r-controlled vowel` });
+    }
+    else if (type === 'diphthong') {
+      const dk = pickOne(Object.keys(DIPHTHONGS));
+      const d = DIPHTHONGS[dk];
+      const correct = d.sound;
+      const others = pick(Object.values(DIPHTHONGS).map(x => x.sound).filter(s => s !== correct), 3);
+      qs.push({ qType:'Diphthong', text:`What sound does "${dk}" make?`, display:dk.toUpperCase(), correct, options:shuffle([correct,...others]), explain:`"${dk}" makes the ${correct} sound` });
+    }
+    else if (type === 'diphthong_word') {
+      const dk = pickOne(Object.keys(DIPHTHONGS));
+      const d = DIPHTHONGS[dk];
+      const correct = pickOne(d.examples);
+      const otherKeys = Object.keys(DIPHTHONGS).filter(k => k !== dk);
+      const wrongs = otherKeys.slice(0,3).map(k => pickOne(DIPHTHONGS[k].examples));
+      qs.push({ qType:'Diphthong Word', text:`Which word contains the "${dk}" sound?`, display:dk, correct, options:shuffle([correct,...wrongs]), explain:`"${correct}" contains the ${d.sound} sound` });
+    }
+    else if (type === 'silent_letter') {
+      const sl = pickOne(SILENT_LETTERS);
+      const correct = sl.silent.toUpperCase();
+      const allSilent = [...new Set(SILENT_LETTERS.map(s => s.silent.toUpperCase()))];
+      const wrongs = pick(allSilent.filter(l => l !== correct), 2);
+      const extra = pick('AEIOU'.split('').filter(l => l !== correct && !wrongs.includes(l)), 1);
+      qs.push({ qType:'Silent Letter', text:`Which letter is silent in the word "${sl.word}"?`, display:sl.word.toUpperCase(), correct, options:shuffle([correct,...wrongs,...extra]), explain:`${sl.rule}: the "${sl.silent}" in "${sl.word}" is silent` });
+    }
+    else {
+      const multiWords = [
+        { word:'basket', syllables:'bas-ket', count:2 }, { word:'rabbit', syllables:'rab-bit', count:2 },
+        { word:'sunset', syllables:'sun-set', count:2 }, { word:'kitten', syllables:'kit-ten', count:2 },
+        { word:'chapter', syllables:'chap-ter', count:2 }, { word:'pumpkin', syllables:'pump-kin', count:2 },
+        { word:'important', syllables:'im-por-tant', count:3 }, { word:'remember', syllables:'re-mem-ber', count:3 },
+        { word:'understand', syllables:'un-der-stand', count:3 }, { word:'together', syllables:'to-geth-er', count:3 },
+        { word:'butterfly', syllables:'but-ter-fly', count:3 }, { word:'wonderful', syllables:'won-der-ful', count:3 },
+      ];
+      const mw = pickOne(multiWords);
+      const correct = String(mw.count);
+      const wrongs = ['1','2','3','4'].filter(n => n !== correct).slice(0,3);
+      qs.push({ qType:'Syllable Count', text:`How many syllables are in the word "${mw.word}"?`, display:mw.word.toUpperCase(), correct, options:shuffle([correct,...wrongs]), explain:`"${mw.word}" has ${mw.count} syllables: ${mw.syllables}` });
+    }
+  }
+  return qs;
+}
+
+function genPlatinum() {
+  const qs = [];
+  const types = shuffle(['root_meaning','root_word','prefix_meaning','prefix_word','suffix_meaning','morpheme_analysis']);
+  for (let i = 0; i < QUESTIONS_PER_ROUND; i++) {
+    const type = types[i % types.length];
+    if (type === 'root_meaning') {
+      const rk = pickOne(Object.keys(ROOTS));
+      const r = ROOTS[rk];
+      const correct = r.meaning;
+      const others = pick(Object.values(ROOTS).map(x => x.meaning).filter(m => m !== correct), 3);
+      qs.push({ qType:'Root Meaning', text:`What does the ${r.origin} root "${rk}" mean?`, display:rk.toUpperCase(), correct, options:shuffle([correct,...others]), explain:`"${rk}" (${r.origin}) means "${r.meaning}" — as in ${r.examples.join(', ')}` });
+    }
+    else if (type === 'root_word') {
+      const rk = pickOne(Object.keys(ROOTS));
+      const r = ROOTS[rk];
+      const correct = pickOne(r.examples);
+      const otherKeys = Object.keys(ROOTS).filter(k => k !== rk);
+      const wrongs = otherKeys.slice(0,3).map(k => pickOne(ROOTS[k].examples));
+      qs.push({ qType:'Root in Action', text:`Which word contains the root "${rk}" (meaning: ${r.meaning})?`, display:rk.toUpperCase(), correct, options:shuffle([correct,...wrongs]), explain:`"${correct}" contains the root "${rk}" meaning "${r.meaning}"` });
+    }
+    else if (type === 'prefix_meaning') {
+      const pk = pickOne(Object.keys(PREFIXES));
+      const p = PREFIXES[pk];
+      const correct = p.meaning;
+      const others = pick(Object.values(PREFIXES).map(x => x.meaning).filter(m => m !== correct), 3);
+      qs.push({ qType:'Prefix Meaning', text:`What does the prefix "${pk}" mean?`, display:pk.toUpperCase(), correct, options:shuffle([correct,...others]), explain:`"${pk}" means "${p.meaning}" — as in ${p.examples.join(', ')}` });
+    }
+    else if (type === 'prefix_word') {
+      const pk = pickOne(Object.keys(PREFIXES));
+      const p = PREFIXES[pk];
+      const correct = pickOne(p.examples);
+      const otherKeys = Object.keys(PREFIXES).filter(k => k !== pk);
+      const wrongs = otherKeys.slice(0,3).map(k => pickOne(PREFIXES[k].examples));
+      qs.push({ qType:'Prefix Match', text:`Which word uses the prefix "${pk}" (${p.meaning})?`, display:pk, correct, options:shuffle([correct,...wrongs]), explain:`"${correct}" uses the prefix "${pk}" meaning "${p.meaning}"` });
+    }
+    else if (type === 'suffix_meaning') {
+      const sk = pickOne(Object.keys(SUFFIXES));
+      const s = SUFFIXES[sk];
+      const correct = s.meaning;
+      const others = pick(Object.values(SUFFIXES).map(x => x.meaning).filter(m => m !== correct), 3);
+      qs.push({ qType:'Suffix Meaning', text:`What does the suffix "${sk}" mean?`, display:sk.toUpperCase(), correct, options:shuffle([correct,...others]), explain:`"${sk}" means "${s.meaning}" — as in ${s.examples.join(', ')}` });
+    }
+    else {
+      const rk = pickOne(Object.keys(ROOTS));
+      const r = ROOTS[rk];
+      const word = pickOne(r.examples);
+      const correct = `${rk} = ${r.meaning}`;
+      const otherKeys = pick(Object.keys(ROOTS).filter(k => k !== rk), 3);
+      const wrongs = otherKeys.map(k => `${k} = ${ROOTS[k].meaning}`);
+      qs.push({ qType:'Morpheme Analysis', text:`Break down "${word}" — which root and meaning does it contain?`, display:word.toUpperCase(), correct, options:shuffle([correct,...wrongs]), explain:`"${word}" contains the root "${rk}" from ${r.origin}, meaning "${r.meaning}"` });
+    }
+  }
+  return qs;
+}
+
+// --- GAME ENGINE ---
+function startGame(tier) {
+  const p = getProgress();
+  if (tier === 'silver' && (!p.bronze || p.bronze < PASS_THRESHOLD)) return;
+  if (tier === 'gold' && (!p.silver || p.silver < PASS_THRESHOLD)) return;
+  if (tier === 'platinum' && (!p.gold || p.gold < PASS_THRESHOLD)) return;
+
+  currentTier = tier;
+  currentQ = 0; score = 0; streak = 0; bestStreak = 0; answered = false;
+
+  if (tier === 'bronze') questions = genBronze();
+  else if (tier === 'silver') questions = genSilver();
+  else if (tier === 'gold') questions = genGold();
+  else questions = genPlatinum();
+
+  const label = document.getElementById('tierLabel');
+  label.textContent = tier.charAt(0).toUpperCase() + tier.slice(1);
+  label.className = 'tier-label ' + ({bronze:'b-bg',silver:'s-bg',gold:'g-bg',platinum:'p-bg'}[tier]);
+
+  showScreen('gameScreen');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  answered = false;
+  document.getElementById('qCounter').textContent = `Question ${currentQ + 1} of ${QUESTIONS_PER_ROUND}`;
+  document.getElementById('qType').textContent = q.qType;
+  document.getElementById('qText').textContent = q.text;
+  document.getElementById('phonemeBig').textContent = q.display;
+  document.getElementById('phonemeHint').textContent = 'Say it out loud before choosing';
+  document.getElementById('progressFill').style.width = ((currentQ / QUESTIONS_PER_ROUND) * 100) + '%';
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback'; fb.style.display = 'none';
+  document.getElementById('nextBtn').className = 'next-btn';
+
+  const box = document.getElementById('optionsBox');
+  box.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<span class="letter">${letters[i]}</span>${opt}`;
+    div.onclick = () => selectAnswer(i);
+    box.appendChild(div);
+  });
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[currentQ];
+  const opts = document.querySelectorAll('#optionsBox .option');
+  const selected = q.options[idx];
+  const isCorrect = selected === q.correct;
+
+  opts.forEach((o, i) => {
+    o.classList.add('disabled');
+    if (q.options[i] === q.correct) o.classList.add('correct-answer');
+    if (i === idx && !isCorrect) o.classList.add('wrong-answer');
+  });
+
+  if (isCorrect) { score++; streak++; if (streak > bestStreak) bestStreak = streak; }
+  else { streak = 0; }
+
+  const fb = document.getElementById('feedback');
+  fb.className = `feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  fb.innerHTML = `<strong>${isCorrect ? '✓ Correct!' : '✗ Not quite'}</strong>${q.explain}`;
+
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= QUESTIONS_PER_ROUND) { showResults(); return; }
+  renderQuestion();
+}
+
+function showResults() {
+  const pct = score / QUESTIONS_PER_ROUND;
+  saveProgress(currentTier, pct);
+
+  document.getElementById('scorePct').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('rCorrect').textContent = score;
+  document.getElementById('rWrong').textContent = QUESTIONS_PER_ROUND - score;
+  document.getElementById('rStreak').textContent = bestStreak;
+
+  const passed = pct >= PASS_THRESHOLD;
+  const tierNames = {bronze:'Bronze',silver:'Silver',gold:'Gold',platinum:'Platinum'};
+  const nextTiers = {bronze:'silver',silver:'gold',gold:'platinum',platinum:null};
+
+  document.getElementById('resultsTitle').textContent = passed ? 'Tier Complete!' : 'Keep Practicing';
+  
+  if (passed && currentTier === 'platinum') {
+    document.getElementById('resultsMsg').textContent = 'You have completed all four tiers of the Phonics Protocol. You now possess the decoding skills to reverse-engineer any English word. Sovereign literacy achieved.';
+  } else if (passed) {
+    document.getElementById('resultsMsg').textContent = `You passed ${tierNames[currentTier]} tier! You've unlocked ${tierNames[nextTiers[currentTier]]}. The questions are generated fresh each time — replay anytime to sharpen your skills.`;
+  } else {
+    document.getElementById('resultsMsg').textContent = `You need 80% to advance. You scored ${Math.round(pct*100)}%. Every round generates new questions from the same rules — try again and the practice will build real decoding skill.`;
+  }
+
+  const nextBtn = document.getElementById('nextTierBtn');
+  if (passed && nextTiers[currentTier]) {
+    nextBtn.style.display = 'inline-block';
+    nextBtn.setAttribute('data-next', nextTiers[currentTier]);
+  } else {
+    nextBtn.style.display = 'none';
+  }
+
+  showScreen('resultsScreen');
+}
+
+function retryTier() { startGame(currentTier); }
+function goNextTier() { startGame(document.getElementById('nextTierBtn').getAttribute('data-next')); }
+function quitGame() { showScreen('tierScreen'); }
+
+// --- SPEECH SYNTHESIS (optional audio) ---
+function playSound() {
+  const text = document.getElementById('phonemeBig').textContent;
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.7; u.pitch = 1;
+    speechSynthesis.speak(u);
+  }
+}
+
+// --- INIT ---
+unlockCheck();
+</script>
+</body>
+</html>
