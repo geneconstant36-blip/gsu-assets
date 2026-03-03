@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GENO Language Lab — Free AI Language Practice | Global Sovereign University</title>
+<meta name="description" content="Practice speaking 10 languages free with GENO, your AI language partner. Real-world scenarios, pronunciation practice, vocabulary drills. No cost, no login, no limits.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080b10;--deep:#0c1018;--panel:#111820;--panel2:#161f2c;
+  --gold:#d4a843;--gold-dim:rgba(212,168,67,.10);
+  --teal:#1a9b7a;--teal-dim:rgba(26,155,122,.10);
+  --cream:#f5f0e6;--cream-mid:rgba(245,240,230,.7);--cream-dim:rgba(245,240,230,.4);
+  --correct:#2d6a4f;--correct-bg:rgba(45,106,79,.15);
+  --wrong:#c54b3c;--wrong-bg:rgba(197,75,60,.12);
+  --border:rgba(255,255,255,.05);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,.1);
+}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--cream);min-height:100vh;-webkit-font-smoothing:antialiased}
+.app{max-width:960px;margin:0 auto;min-height:100vh}
+
+/* Screens */
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+/* === TITLE === */
+.title-screen{align-items:center;justify-content:center;padding:2rem;text-align:center;position:relative;overflow:hidden}
+.title-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 30%,rgba(26,155,122,.04) 0%,transparent 60%)}
+.geno-avatar{width:100px;height:100px;border-radius:50%;border:3px solid var(--teal);overflow:hidden;margin:0 auto 1.2rem;box-shadow:0 0 30px rgba(26,155,122,.15)}
+.geno-avatar img{width:100%;height:100%;object-fit:cover}
+h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4.5vw,2.8rem);color:var(--cream);line-height:1.15;margin-bottom:.3rem}
+h1 .teal{color:var(--teal)}
+.tagline{font-size:.85rem;color:var(--gold);font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.3rem}
+.title-desc{color:var(--cream-dim);max-width:520px;font-size:.88rem;line-height:1.7;margin:0 auto 2rem}
+.title-stats{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.title-stats .s{text-align:center}
+.title-stats .n{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--teal);font-weight:700}
+.title-stats .l{font-size:.55rem;color:var(--cream-dim);letter-spacing:.1em;text-transform:uppercase}
+.btn{font-family:'Source Sans 3',sans-serif;padding:.8rem 2rem;border:none;cursor:pointer;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:all .25s;border-radius:3px}
+.btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,.15)}.btn-outline:hover{border-color:var(--teal);color:var(--teal)}
+.btn-row{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+
+/* === LANGUAGE SELECT === */
+.lang-screen{padding:2rem;background:var(--bg)}
+.lang-screen h2{font-family:'Cinzel',serif;font-size:1.5rem;text-align:center;margin-bottom:.4rem}
+.lang-screen .sub{text-align:center;color:var(--cream-dim);margin-bottom:2rem;font-size:.85rem}
+.lang-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.8rem;max-width:740px;margin:0 auto 2rem}
+.lang-card{background:var(--panel);border:2px solid var(--border);padding:1rem;cursor:pointer;transition:all .25s;border-radius:4px;text-align:center;position:relative;overflow:hidden}
+.lang-card:hover{transform:translateY(-3px);border-color:rgba(26,155,122,.25);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.lang-card .flag{font-size:2rem;margin-bottom:.4rem}
+.lang-card .name{font-size:.85rem;font-weight:700;color:var(--cream)}
+.lang-card .native{font-size:.7rem;color:var(--cream-dim);margin-top:.1rem}
+.back-link{display:block;text-align:center;color:var(--cream-dim);font-size:.8rem;cursor:pointer;text-decoration:underline;margin-top:1rem;transition:color .2s}.back-link:hover{color:var(--teal)}
+
+/* === MODE SELECT === */
+.mode-screen{padding:2rem;background:var(--bg)}
+.mode-screen h2{font-family:'Cinzel',serif;font-size:1.4rem;text-align:center;margin-bottom:.3rem}
+.mode-screen .sub{text-align:center;color:var(--cream-dim);margin-bottom:2rem;font-size:.85rem}
+.mode-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;max-width:740px;margin:0 auto}
+.mode-card{background:var(--panel);border:2px solid var(--border);padding:1.2rem;cursor:pointer;transition:all .25s;border-radius:4px;position:relative;overflow:hidden}
+.mode-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:4px 4px 0 0;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.mode-card:hover{transform:translateY(-3px);border-color:rgba(26,155,122,.2);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.mode-card:hover::before{transform:scaleX(1)}
+.mode-card .emoji{font-size:1.5rem;margin-bottom:.5rem}
+.mode-card h3{font-size:.9rem;font-weight:700;color:var(--cream);margin-bottom:.3rem}
+.mode-card p{font-size:.75rem;color:var(--cream-dim);line-height:1.5}
+
+/* === PRACTICE SCREEN === */
+.practice-screen{background:var(--bg)}
+.practice-hdr{background:var(--deep);padding:.7rem 1.5rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--border)}
+.practice-hdr .logo{font-family:'Cinzel',serif;color:var(--teal);font-size:.8rem;font-weight:700}
+.practice-hdr .lang-tag{padding:.2rem .6rem;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--teal);color:#fff;border-radius:2px;margin-left:auto}
+.practice-hdr .quit{font-size:.7rem;color:var(--cream-dim);cursor:pointer;text-decoration:underline}
+
+.practice-body{flex:1;padding:1.5rem;max-width:700px;margin:0 auto;width:100%}
+
+/* Chat bubbles */
+.chat-area{margin-bottom:1.5rem;max-height:50vh;overflow-y:auto;padding:.5rem 0}
+.bubble{margin-bottom:.8rem;max-width:85%;animation:slideUp .3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.bubble.geno{margin-right:auto}
+.bubble.user{margin-left:auto}
+.bubble-inner{padding:.8rem 1rem;border-radius:12px;font-size:.88rem;line-height:1.6}
+.bubble.geno .bubble-inner{background:var(--panel2);border:1px solid var(--border);color:var(--cream)}
+.bubble.user .bubble-inner{background:var(--teal-dim);border:1px solid rgba(26,155,122,.2);color:var(--cream)}
+.bubble .meta{font-size:.6rem;color:var(--cream-dim);margin-top:.3rem;letter-spacing:.05em}
+.bubble .translation{font-size:.75rem;color:var(--cream-dim);font-style:italic;margin-top:.4rem;padding-top:.4rem;border-top:1px solid var(--border)}
+.bubble .pronunciation{display:inline-block;margin-top:.3rem;padding:.2rem .5rem;background:var(--gold-dim);border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--gold);cursor:pointer}
+.bubble .pronunciation:hover{background:rgba(212,168,67,.2)}
+
+/* Input area */
+.input-area{display:flex;gap:.5rem;align-items:stretch;padding:1rem 0;border-top:1px solid var(--border)}
+.text-input{flex:1;padding:.7rem 1rem;background:var(--panel);border:1px solid var(--border);border-radius:4px;color:var(--cream);font-family:'Source Sans 3',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s}
+.text-input:focus{border-color:var(--teal)}
+.text-input::placeholder{color:var(--cream-dim)}
+.mic-btn{width:44px;height:44px;border-radius:50%;border:2px solid var(--teal);background:transparent;color:var(--teal);font-size:1.1rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mic-btn:hover{background:var(--teal-dim)}
+.mic-btn.recording{background:var(--wrong);border-color:var(--wrong);color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(197,75,60,.4)}50%{box-shadow:0 0 0 10px rgba(197,75,60,0)}}
+.send-btn{padding:.7rem 1.2rem;background:var(--teal);border:none;border-radius:4px;color:#fff;font-family:'Source Sans 3',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s}
+.send-btn:hover{filter:brightness(1.15)}
+
+/* Scenario prompt */
+.scenario-prompt{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:1rem 1.2rem;margin-bottom:1rem}
+.scenario-prompt .label{font-size:.6rem;color:var(--teal);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+.scenario-prompt .text{font-size:.85rem;color:var(--cream-mid);line-height:1.6}
+
+/* Vocab sidebar */
+.vocab-panel{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:1rem;margin-top:1rem}
+.vocab-panel h4{font-size:.7rem;color:var(--gold);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.vocab-word{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.8rem}
+.vocab-word:last-child{border-bottom:none}
+.vocab-word .foreign{color:var(--cream);font-weight:600;cursor:pointer}
+.vocab-word .foreign:hover{color:var(--teal)}
+.vocab-word .english{color:var(--cream-dim)}
+
+/* Phrase options */
+.phrase-options{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.phrase-opt{padding:.6rem .8rem;background:var(--panel);border:1px solid var(--border);border-radius:4px;cursor:pointer;font-size:.82rem;color:var(--cream);transition:all .2s;text-align:left}
+.phrase-opt:hover{border-color:var(--teal);background:var(--teal-dim)}
+.phrase-opt .hint{display:block;font-size:.68rem;color:var(--cream-dim);margin-top:.2rem;font-style:italic}
+
+/* Feedback toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);padding:.8rem 1.5rem;border-radius:6px;font-size:.82rem;font-weight:600;z-index:100;transition:transform .3s ease;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.good{background:var(--correct);color:#a8e6cf}
+.toast.bad{background:rgba(197,75,60,.9);color:#f4a0a0}
+
+/* Responsive */
+@media(max-width:600px){
+  .lang-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+  .mode-cards{grid-template-columns:1fr}
+  .practice-body{padding:1rem}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ===== TITLE ===== -->
+<div id="titleScreen" class="screen title-screen active">
+  <div class="geno-avatar"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"></div>
+  <h1>GENO <span class="teal">Language Lab</span></h1>
+  <div class="tagline">Your Free AI Language Partner</div>
+  <p class="title-desc">Practice real conversations in 10 languages with GENO. Speak, listen, and learn through real-world scenarios — at the airport, in a restaurant, at the doctor, on a job interview. No cost. No login. No time limit.</p>
+  <div class="title-stats">
+    <div class="s"><div class="n">10</div><div class="l">Languages</div></div>
+    <div class="s"><div class="n">5</div><div class="l">Scenarios</div></div>
+    <div class="s"><div class="n">∞</div><div class="l">Practice</div></div>
+    <div class="s"><div class="n">$0</div><div class="l">Cost</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-teal" onclick="showScreen('langScreen')">Choose a Language</button>
+  </div>
+</div>
+
+<!-- ===== LANGUAGE SELECT ===== -->
+<div id="langScreen" class="screen lang-screen">
+  <h2>Choose Your Language</h2>
+  <div class="sub">Select the language you want to practice speaking and listening.</div>
+  <div class="lang-grid" id="langGrid"></div>
+  <span class="back-link" onclick="showScreen('titleScreen')">← Back</span>
+</div>
+
+<!-- ===== MODE SELECT ===== -->
+<div id="modeScreen" class="screen mode-screen">
+  <h2 id="modeTitle">Practice Spanish</h2>
+  <div class="sub">Choose how you want to practice.</div>
+  <div class="mode-cards">
+    <div class="mode-card" onclick="startMode('scenario')">
+      <div class="emoji">🎭</div>
+      <h3>Scenario Practice</h3>
+      <p>Real-world situations: ordering food, asking directions, seeing a doctor, checking into a hotel, or a job interview. GENO plays the other person.</p>
+    </div>
+    <div class="mode-card" onclick="startMode('vocab')">
+      <div class="emoji">📚</div>
+      <h3>Vocabulary Builder</h3>
+      <p>Learn essential words and phrases for each scenario. Hear the pronunciation, repeat it, and build your working vocabulary.</p>
+    </div>
+    <div class="mode-card" onclick="startMode('phrase')">
+      <div class="emoji">💬</div>
+      <h3>Phrase Practice</h3>
+      <p>GENO speaks a phrase in your target language. You translate it. Then swap — GENO gives you English and you say it in the target language.</p>
+    </div>
+    <div class="mode-card" onclick="startMode('pronounce')">
+      <div class="emoji">🔊</div>
+      <h3>Pronunciation Drill</h3>
+      <p>Listen to a word or phrase, then repeat it using your microphone. GENO compares what you said to the target. Chrome or Edge recommended.</p>
+    </div>
+  </div>
+  <span class="back-link" onclick="showScreen('langScreen')">← Change language</span>
+</div>
+
+<!-- ===== PRACTICE ===== -->
+<div id="practiceScreen" class="screen practice-screen">
+  <div class="practice-hdr">
+    <div class="logo">GENO Language Lab</div>
+    <div id="practLangTag" class="lang-tag">Spanish</div>
+    <span class="quit" onclick="showScreen('modeScreen')">← Back</span>
+  </div>
+  <div class="practice-body">
+    <div id="scenarioPrompt" class="scenario-prompt" style="display:none">
+      <div class="label">Scenario</div>
+      <div class="text" id="scenarioText"></div>
+    </div>
+    <div id="scenarioSelect" style="display:none;margin-bottom:1rem">
+      <div style="font-size:.7rem;color:var(--teal);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem">Choose a Scenario</div>
+      <div id="scenarioOptions" class="phrase-options"></div>
+    </div>
+    <div class="chat-area" id="chatArea"></div>
+    <div id="phraseOpts" class="phrase-options" style="display:none"></div>
+    <div class="input-area" id="inputArea">
+      <input type="text" class="text-input" id="userInput" placeholder="Type your response..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button class="mic-btn" id="micBtn" onclick="toggleMic()" title="Speak">🎤</button>
+      <button class="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+    <div id="vocabPanel" class="vocab-panel" style="display:none">
+      <h4>Key Vocabulary</h4>
+      <div id="vocabList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+</div>
+
+<script>
+// ============================================================
+// GENO LANGUAGE LAB — Conversational Language Practice Engine
+// ============================================================
+
+// --- LANGUAGES ---
+const LANGUAGES = [
+  { code:'es', name:'Spanish',    native:'Español',    flag:'🇪🇸', voice:'es-ES' },
+  { code:'zh', name:'Chinese',    native:'中文',       flag:'🇨🇳', voice:'zh-CN' },
+  { code:'fr', name:'French',     native:'Français',   flag:'🇫🇷', voice:'fr-FR' },
+  { code:'de', name:'German',     native:'Deutsch',    flag:'🇩🇪', voice:'de-DE' },
+  { code:'ja', name:'Japanese',   native:'日本語',     flag:'🇯🇵', voice:'ja-JP' },
+  { code:'ko', name:'Korean',     native:'한국어',     flag:'🇰🇷', voice:'ko-KR' },
+  { code:'pt', name:'Portuguese', native:'Português',  flag:'🇧🇷', voice:'pt-BR' },
+  { code:'ar', name:'Arabic',     native:'العربية',    flag:'🇸🇦', voice:'ar-SA' },
+  { code:'hi', name:'Hindi',      native:'हिन्दी',     flag:'🇮🇳', voice:'hi-IN' },
+  { code:'it', name:'Italian',    native:'Italiano',   flag:'🇮🇹', voice:'it-IT' }
+];
+
+// --- SCENARIO & PHRASE DATA ---
+// Each language has scenarios with conversation turns, vocabulary, and phrases
+const SCENARIOS = {
+  restaurant: { emoji:'🍽️', name:'At the Restaurant', desc:'Order food, ask about the menu, handle the bill.' },
+  airport:    { emoji:'✈️', name:'At the Airport', desc:'Check in, go through security, find your gate, handle delays.' },
+  doctor:     { emoji:'🏥', name:'At the Doctor', desc:'Describe symptoms, understand instructions, ask about medication.' },
+  hotel:      { emoji:'🏨', name:'At the Hotel', desc:'Check in, ask about amenities, report a problem, check out.' },
+  interview:  { emoji:'💼', name:'Job Interview', desc:'Introduce yourself, discuss experience, ask questions.' }
+};
+
+// Conversation data per language per scenario
+const CONVERSATIONS = {
+  es: {
+    restaurant: {
+      vocab: [
+        { foreign:'La carta / el menú', english:'The menu' },
+        { foreign:'Quisiera...', english:'I would like...' },
+        { foreign:'La cuenta, por favor', english:'The check, please' },
+        { foreign:'¿Qué recomienda?', english:'What do you recommend?' },
+        { foreign:'Agua / Vino / Cerveza', english:'Water / Wine / Beer' },
+        { foreign:'De entrada / De segundo', english:'Appetizer / Main course' },
+        { foreign:'¿Tiene algo sin gluten?', english:'Do you have gluten-free options?' },
+        { foreign:'Está delicioso', english:'It\'s delicious' }
+      ],
+      turns: [
+        { geno:'¡Buenas noches! Bienvenido al restaurante. ¿Mesa para cuántas personas?', english:'Good evening! Welcome to the restaurant. Table for how many?', suggest:['Para dos, por favor.','Mesa para uno, por favor.','¿Tienen una mesa cerca de la ventana?'] },
+        { geno:'Perfecto. Aquí tiene la carta. ¿Le gustaría algo de beber mientras decide?', english:'Perfect. Here is the menu. Would you like something to drink while you decide?', suggest:['Un agua con gas, por favor.','Una copa de vino tinto, por favor.','¿Qué cervezas tienen?'] },
+        { geno:'Muy bien. ¿Ya sabe qué va a pedir?', english:'Very well. Do you know what you\'d like to order?', suggest:['¿Qué recomienda?','Quisiera la paella, por favor.','¿Tienen algo vegetariano?'] },
+        { geno:'Le recomiendo el pescado del día. Está muy fresco. ¿Le gustaría probarlo?', english:'I recommend the fish of the day. It\'s very fresh. Would you like to try it?', suggest:['Sí, suena perfecto.','No gracias, prefiero la carne.','¿Viene con ensalada?'] },
+        { geno:'¿Todo bien con la comida? ¿Necesita algo más?', english:'Is everything okay with the food? Do you need anything else?', suggest:['Está delicioso, gracias.','La cuenta, por favor.','¿Puedo ver el menú de postres?'] },
+        { geno:'Aquí tiene la cuenta. ¿Cómo desea pagar?', english:'Here is the check. How would you like to pay?', suggest:['Con tarjeta, por favor.','En efectivo.','¿Aceptan propina incluida?'] }
+      ]
+    },
+    airport: {
+      vocab: [
+        { foreign:'El pasaporte', english:'Passport' },
+        { foreign:'La tarjeta de embarque', english:'Boarding pass' },
+        { foreign:'La puerta de embarque', english:'Boarding gate' },
+        { foreign:'El vuelo está retrasado', english:'The flight is delayed' },
+        { foreign:'¿Dónde está...?', english:'Where is...?' },
+        { foreign:'Equipaje de mano', english:'Carry-on luggage' },
+        { foreign:'Facturar maletas', english:'Check in luggage' },
+        { foreign:'El control de seguridad', english:'Security checkpoint' }
+      ],
+      turns: [
+        { geno:'Buenos días. ¿Puedo ver su pasaporte y su reserva, por favor?', english:'Good morning. May I see your passport and reservation, please?', suggest:['Aquí tiene mi pasaporte.','Tengo la reserva en mi teléfono.','¿Puedo facturar dos maletas?'] },
+        { geno:'¿Tiene equipaje para facturar?', english:'Do you have luggage to check?', suggest:['Sí, una maleta grande.','Solo llevo equipaje de mano.','¿Cuánto cuesta facturar una maleta extra?'] },
+        { geno:'Su puerta de embarque es la B12. El embarque comienza a las 14:30.', english:'Your boarding gate is B12. Boarding begins at 2:30 PM.', suggest:['¿Dónde está la puerta B12?','¿Hay algún retraso?','Gracias. ¿Dónde está el control de seguridad?'] },
+        { geno:'El control de seguridad está a la derecha. Por favor, tenga lista su tarjeta de embarque.', english:'Security is to the right. Please have your boarding pass ready.', suggest:['Gracias por su ayuda.','¿Hay tiendas después del control?','¿Cuánto tiempo tarda el control?'] }
+      ]
+    },
+    doctor: {
+      vocab: [
+        { foreign:'Me duele...', english:'It hurts... / I have pain in...' },
+        { foreign:'Tengo fiebre', english:'I have a fever' },
+        { foreign:'La receta', english:'The prescription' },
+        { foreign:'¿Es grave?', english:'Is it serious?' },
+        { foreign:'Tomar medicamento', english:'Take medication' },
+        { foreign:'Tengo alergia a...', english:'I\'m allergic to...' }
+      ],
+      turns: [
+        { geno:'Buenos días. Soy el Doctor García. ¿Qué le trae por aquí hoy?', english:'Good morning. I\'m Dr. García. What brings you in today?', suggest:['Me duele la cabeza desde hace tres días.','Tengo tos y fiebre.','Me lastimé el brazo.'] },
+        { geno:'¿Desde cuándo tiene estos síntomas?', english:'How long have you had these symptoms?', suggest:['Desde el lunes.','Hace una semana.','Empezó ayer por la noche.'] },
+        { geno:'¿Tiene alguna alergia a medicamentos?', english:'Do you have any drug allergies?', suggest:['No, ninguna alergia.','Sí, soy alérgico a la penicilina.','No estoy seguro.'] },
+        { geno:'Voy a recetarle un medicamento. Tome una pastilla cada ocho horas con comida.', english:'I\'m going to prescribe a medication. Take one pill every eight hours with food.', suggest:['¿Tiene efectos secundarios?','¿Por cuántos días?','¿Es grave, doctor?'] }
+      ]
+    },
+    hotel: {
+      vocab: [
+        { foreign:'Tengo una reserva', english:'I have a reservation' },
+        { foreign:'La habitación', english:'The room' },
+        { foreign:'La llave / tarjeta', english:'The key / card' },
+        { foreign:'¿A qué hora es el desayuno?', english:'What time is breakfast?' },
+        { foreign:'El aire acondicionado no funciona', english:'The AC isn\'t working' },
+        { foreign:'¿Puede llamar un taxi?', english:'Can you call a taxi?' }
+      ],
+      turns: [
+        { geno:'Buenas tardes. Bienvenido al Hotel Sol. ¿Tiene una reserva?', english:'Good afternoon. Welcome to Hotel Sol. Do you have a reservation?', suggest:['Sí, a nombre de...','No, ¿tienen habitaciones disponibles?','Tengo una reserva para dos noches.'] },
+        { geno:'Su habitación es la 305, en el tercer piso. Aquí tiene su tarjeta.', english:'Your room is 305, on the third floor. Here is your card.', suggest:['¿A qué hora es el desayuno?','¿Tiene wifi gratuito?','¿Dónde está el ascensor?'] },
+        { geno:'El desayuno es de 7 a 10 en el primer piso. El wifi es gratuito, la contraseña está en la tarjeta.', english:'Breakfast is 7-10 on the first floor. WiFi is free, password is on the card.', suggest:['Perfecto, gracias.','¿Hay restaurantes cerca?','¿Pueden despertarme a las 7?'] }
+      ]
+    },
+    interview: {
+      vocab: [
+        { foreign:'Mi experiencia', english:'My experience' },
+        { foreign:'Trabajo en equipo', english:'Teamwork' },
+        { foreign:'Mis fortalezas', english:'My strengths' },
+        { foreign:'¿Cuál es el salario?', english:'What is the salary?' },
+        { foreign:'Estoy disponible', english:'I am available' },
+        { foreign:'Me apasiona...', english:'I am passionate about...' }
+      ],
+      turns: [
+        { geno:'Buenos días. Gracias por venir. Por favor, hábleme un poco de usted.', english:'Good morning. Thank you for coming. Please tell me a little about yourself.', suggest:['Soy ingeniero con cinco años de experiencia.','Estudié administración de empresas.','Actualmente trabajo en marketing digital.'] },
+        { geno:'Interesante. ¿Por qué quiere trabajar con nosotros?', english:'Interesting. Why do you want to work with us?', suggest:['Me apasiona la misión de su empresa.','Busco nuevos retos profesionales.','Admiro su trabajo en tecnología.'] },
+        { geno:'¿Cuáles considera que son sus principales fortalezas?', english:'What do you consider your main strengths?', suggest:['Soy muy organizado y trabajo bien en equipo.','Tengo experiencia en liderazgo de proyectos.','Aprendo rápido y me adapto fácilmente.'] },
+        { geno:'¿Tiene alguna pregunta para nosotros?', english:'Do you have any questions for us?', suggest:['¿Cuál es la cultura de trabajo aquí?','¿Hay oportunidades de crecimiento?','¿Cuándo esperan tomar una decisión?'] }
+      ]
+    }
+  }
+};
+
+// Generate basic data for other languages (simplified versions)
+function generateLangData(langCode, translations) {
+  const data = {};
+  Object.keys(SCENARIOS).forEach(sk => {
+    data[sk] = {
+      vocab: translations[sk]?.vocab || [
+        { foreign: '(Vocabulary coming soon)', english: 'Check back for updates' }
+      ],
+      turns: translations[sk]?.turns || [
+        { geno: translations.greeting || 'Hello!', english: 'Hello!', suggest: [translations.response || 'Hello, how are you?'] }
+      ]
+    };
+  });
+  return data;
+}
+
+// ==========================================
+// CHINESE — Full Conversation Data
+// ==========================================
+CONVERSATIONS.zh = {
+  restaurant: {
+    vocab: [
+      { foreign:'菜单', english:'Menu' },
+      { foreign:'我想要...', english:'I would like...' },
+      { foreign:'买单 / 结账', english:'The check / bill' },
+      { foreign:'推荐', english:'Recommend' },
+      { foreign:'水 / 茶 / 啤酒', english:'Water / Tea / Beer' },
+      { foreign:'前菜 / 主菜', english:'Appetizer / Main course' },
+      { foreign:'有没有素食的？', english:'Do you have vegetarian options?' },
+      { foreign:'很好吃', english:'It\'s delicious' }
+    ],
+    turns: [
+      { geno:'晚上好！欢迎光临。请问几位？', english:'Good evening! Welcome. How many guests?', suggest:['两位，谢谢。','一位，谢谢。','有没有靠窗的位子？'] },
+      { geno:'好的，请坐。这是菜单。要先喝点什么吗？', english:'Please have a seat. Here is the menu. Would you like a drink first?', suggest:['一杯茶，谢谢。','请给我一杯水。','你们有什么啤酒？'] },
+      { geno:'好的。请问您想点什么菜？', english:'Alright. What would you like to order?', suggest:['你有什么推荐？','我想要宫保鸡丁。','有没有素食的？'] },
+      { geno:'我推荐今天的红烧鱼，非常新鲜。您要试试吗？', english:'I recommend today\'s braised fish, very fresh. Would you like to try it?', suggest:['好的，来一份。','不了，我想要牛肉面。','这道菜辣不辣？'] },
+      { geno:'菜都上齐了。还需要什么吗？', english:'All the dishes are served. Do you need anything else?', suggest:['很好吃，谢谢！','请买单。','有甜点吗？'] },
+      { geno:'这是您的账单。怎么付款？', english:'Here is your bill. How would you like to pay?', suggest:['刷卡，谢谢。','付现金。','可以用微信支付吗？'] }
+    ]
+  },
+  airport: {
+    vocab: [
+      { foreign:'护照', english:'Passport' },
+      { foreign:'登机牌', english:'Boarding pass' },
+      { foreign:'登机口', english:'Boarding gate' },
+      { foreign:'航班延误了', english:'The flight is delayed' },
+      { foreign:'请问...在哪里？', english:'Excuse me, where is...?' },
+      { foreign:'随身行李', english:'Carry-on luggage' },
+      { foreign:'托运行李', english:'Checked luggage' },
+      { foreign:'安检', english:'Security checkpoint' }
+    ],
+    turns: [
+      { geno:'你好，请出示您的护照和预订信息。', english:'Hello, please show your passport and booking information.', suggest:['这是我的护照。','我的预订在手机上。','我可以托运两个行李箱吗？'] },
+      { geno:'您有托运行李吗？', english:'Do you have luggage to check?', suggest:['有，一个大箱子。','没有，只有随身行李。','多托运一个箱子要多少钱？'] },
+      { geno:'您的登机口是B12，下午两点半开始登机。', english:'Your boarding gate is B12. Boarding starts at 2:30 PM.', suggest:['请问B12登机口在哪里？','航班会延误吗？','谢谢。安检在哪里？'] },
+      { geno:'安检在右边。请准备好您的登机牌。', english:'Security is on the right. Please have your boarding pass ready.', suggest:['谢谢你的帮助。','安检之后有商店吗？','安检要多长时间？'] }
+    ]
+  },
+  doctor: {
+    vocab: [
+      { foreign:'我...疼', english:'My ... hurts' },
+      { foreign:'我发烧了', english:'I have a fever' },
+      { foreign:'处方 / 药方', english:'Prescription' },
+      { foreign:'严重吗？', english:'Is it serious?' },
+      { foreign:'吃药', english:'Take medicine' },
+      { foreign:'我对...过敏', english:'I\'m allergic to...' }
+    ],
+    turns: [
+      { geno:'你好，我是李医生。今天哪里不舒服？', english:'Hello, I\'m Dr. Li. What\'s bothering you today?', suggest:['我头疼了三天了。','我咳嗽，还发烧。','我的手臂受伤了。'] },
+      { geno:'这些症状有多久了？', english:'How long have you had these symptoms?', suggest:['从星期一开始。','大概一个星期了。','昨天晚上开始的。'] },
+      { geno:'你对什么药物过敏吗？', english:'Are you allergic to any medications?', suggest:['没有，不过敏。','对，我对青霉素过敏。','我不确定。'] },
+      { geno:'我给你开一些药。每八个小时吃一片，饭后服用。', english:'I\'ll prescribe some medicine. Take one pill every 8 hours, after meals.', suggest:['有副作用吗？','要吃几天？','严重吗，医生？'] }
+    ]
+  },
+  hotel: {
+    vocab: [
+      { foreign:'我有预订', english:'I have a reservation' },
+      { foreign:'房间', english:'Room' },
+      { foreign:'房卡 / 钥匙', english:'Room card / key' },
+      { foreign:'早餐几点？', english:'What time is breakfast?' },
+      { foreign:'空调坏了', english:'The AC is broken' },
+      { foreign:'可以叫出租车吗？', english:'Can you call a taxi?' }
+    ],
+    turns: [
+      { geno:'下午好！欢迎来到阳光酒店。请问您有预订吗？', english:'Good afternoon! Welcome to Sunshine Hotel. Do you have a reservation?', suggest:['有，名字是...','没有，还有空房间吗？','我预订了两个晚上。'] },
+      { geno:'您的房间是305号，三楼。这是您的房卡。', english:'Your room is 305, third floor. Here is your room card.', suggest:['早餐几点？','有免费wifi吗？','电梯在哪里？'] },
+      { geno:'早餐在一楼，七点到十点。wifi是免费的，密码在房卡上。', english:'Breakfast is on the first floor, 7-10. WiFi is free, password is on the card.', suggest:['好的，谢谢。','附近有餐厅吗？','可以七点叫我起床吗？'] }
+    ]
+  },
+  interview: {
+    vocab: [
+      { foreign:'工作经验', english:'Work experience' },
+      { foreign:'团队合作', english:'Teamwork' },
+      { foreign:'我的优点', english:'My strengths' },
+      { foreign:'薪水是多少？', english:'What is the salary?' },
+      { foreign:'我可以...', english:'I am available...' },
+      { foreign:'我热爱...', english:'I am passionate about...' }
+    ],
+    turns: [
+      { geno:'你好，感谢你来面试。请先自我介绍一下。', english:'Hello, thanks for coming to the interview. Please introduce yourself.', suggest:['我是工程师，有五年工作经验。','我学的是工商管理。','我现在做数字营销工作。'] },
+      { geno:'很好。你为什么想来我们公司工作？', english:'Great. Why do you want to work at our company?', suggest:['我很认同贵公司的理念。','我想寻找新的职业挑战。','我很欣赏你们在技术方面的工作。'] },
+      { geno:'你认为自己最大的优点是什么？', english:'What do you think your greatest strength is?', suggest:['我做事很有条理，善于团队合作。','我有丰富的项目管理经验。','我学东西很快，适应能力强。'] },
+      { geno:'你有什么问题想问我们吗？', english:'Do you have any questions for us?', suggest:['公司的工作文化是什么样的？','有晋升的机会吗？','你们预计什么时候做出决定？'] }
+    ]
+  }
+};
+
+// ==========================================
+// FRENCH — Full Conversation Data
+// ==========================================
+CONVERSATIONS.fr = {
+  restaurant: {
+    vocab: [
+      { foreign:'La carte / le menu', english:'The menu' },
+      { foreign:'Je voudrais...', english:'I would like...' },
+      { foreign:'L\'addition, s\'il vous plaît', english:'The check, please' },
+      { foreign:'Qu\'est-ce que vous recommandez ?', english:'What do you recommend?' },
+      { foreign:'Eau / Vin / Bière', english:'Water / Wine / Beer' },
+      { foreign:'En entrée / En plat principal', english:'As a starter / As a main course' },
+      { foreign:'Avez-vous des options sans gluten ?', english:'Do you have gluten-free options?' },
+      { foreign:'C\'est délicieux', english:'It\'s delicious' }
+    ],
+    turns: [
+      { geno:'Bonsoir ! Bienvenue au restaurant. Table pour combien de personnes ?', english:'Good evening! Welcome to the restaurant. Table for how many?', suggest:['Pour deux, s\'il vous plaît.','Une table pour une personne.','Avez-vous une table près de la fenêtre ?'] },
+      { geno:'Très bien. Voici la carte. Souhaitez-vous quelque chose à boire en attendant ?', english:'Very good. Here is the menu. Would you like something to drink while you wait?', suggest:['Une eau gazeuse, s\'il vous plaît.','Un verre de vin rouge, s\'il vous plaît.','Quelles bières avez-vous ?'] },
+      { geno:'Avez-vous choisi ? Êtes-vous prêt à commander ?', english:'Have you decided? Are you ready to order?', suggest:['Qu\'est-ce que vous recommandez ?','Je voudrais le poulet rôti.','Avez-vous des plats végétariens ?'] },
+      { geno:'Je vous recommande le poisson du jour. Il est très frais. Vous voulez essayer ?', english:'I recommend the fish of the day. It\'s very fresh. Would you like to try it?', suggest:['Oui, ça a l\'air parfait.','Non merci, je préfère la viande.','Est-ce que c\'est servi avec une salade ?'] },
+      { geno:'Tout se passe bien ? Avez-vous besoin d\'autre chose ?', english:'Is everything going well? Do you need anything else?', suggest:['C\'est délicieux, merci.','L\'addition, s\'il vous plaît.','Puis-je voir la carte des desserts ?'] },
+      { geno:'Voici l\'addition. Comment souhaitez-vous régler ?', english:'Here is the check. How would you like to pay?', suggest:['Par carte, s\'il vous plaît.','En espèces.','Le service est-il compris ?'] }
+    ]
+  },
+  airport: {
+    vocab: [
+      { foreign:'Le passeport', english:'Passport' },
+      { foreign:'La carte d\'embarquement', english:'Boarding pass' },
+      { foreign:'La porte d\'embarquement', english:'Boarding gate' },
+      { foreign:'Le vol est retardé', english:'The flight is delayed' },
+      { foreign:'Où se trouve... ?', english:'Where is...?' },
+      { foreign:'Bagage à main', english:'Carry-on luggage' },
+      { foreign:'Enregistrer les bagages', english:'Check in luggage' },
+      { foreign:'Le contrôle de sécurité', english:'Security checkpoint' }
+    ],
+    turns: [
+      { geno:'Bonjour. Puis-je voir votre passeport et votre réservation, s\'il vous plaît ?', english:'Good morning. May I see your passport and reservation, please?', suggest:['Voici mon passeport.','J\'ai ma réservation sur mon téléphone.','Puis-je enregistrer deux valises ?'] },
+      { geno:'Avez-vous des bagages à enregistrer ?', english:'Do you have luggage to check?', suggest:['Oui, une grande valise.','Non, j\'ai seulement un bagage à main.','Combien coûte un bagage supplémentaire ?'] },
+      { geno:'Votre porte d\'embarquement est la B12. L\'embarquement commence à 14h30.', english:'Your boarding gate is B12. Boarding begins at 2:30 PM.', suggest:['Où se trouve la porte B12 ?','Y a-t-il du retard ?','Merci. Où est le contrôle de sécurité ?'] },
+      { geno:'Le contrôle de sécurité est à droite. Veuillez préparer votre carte d\'embarquement.', english:'Security is to the right. Please have your boarding pass ready.', suggest:['Merci pour votre aide.','Y a-t-il des boutiques après le contrôle ?','Combien de temps dure le contrôle ?'] }
+    ]
+  },
+  doctor: {
+    vocab: [
+      { foreign:'J\'ai mal à...', english:'I have pain in...' },
+      { foreign:'J\'ai de la fièvre', english:'I have a fever' },
+      { foreign:'L\'ordonnance', english:'The prescription' },
+      { foreign:'C\'est grave ?', english:'Is it serious?' },
+      { foreign:'Prendre un médicament', english:'Take medication' },
+      { foreign:'Je suis allergique à...', english:'I\'m allergic to...' }
+    ],
+    turns: [
+      { geno:'Bonjour. Je suis le Docteur Dupont. Qu\'est-ce qui vous amène aujourd\'hui ?', english:'Good morning. I\'m Dr. Dupont. What brings you in today?', suggest:['J\'ai mal à la tête depuis trois jours.','J\'ai de la toux et de la fièvre.','Je me suis blessé au bras.'] },
+      { geno:'Depuis combien de temps avez-vous ces symptômes ?', english:'How long have you had these symptoms?', suggest:['Depuis lundi.','Environ une semaine.','Ça a commencé hier soir.'] },
+      { geno:'Êtes-vous allergique à des médicaments ?', english:'Are you allergic to any medications?', suggest:['Non, aucune allergie.','Oui, je suis allergique à la pénicilline.','Je ne suis pas sûr.'] },
+      { geno:'Je vais vous prescrire un médicament. Prenez un comprimé toutes les huit heures avec un repas.', english:'I\'m going to prescribe a medication. Take one tablet every eight hours with a meal.', suggest:['Y a-t-il des effets secondaires ?','Pendant combien de jours ?','C\'est grave, docteur ?'] }
+    ]
+  },
+  hotel: {
+    vocab: [
+      { foreign:'J\'ai une réservation', english:'I have a reservation' },
+      { foreign:'La chambre', english:'The room' },
+      { foreign:'La clé / la carte', english:'The key / card' },
+      { foreign:'À quelle heure est le petit-déjeuner ?', english:'What time is breakfast?' },
+      { foreign:'La climatisation ne marche pas', english:'The AC isn\'t working' },
+      { foreign:'Pouvez-vous appeler un taxi ?', english:'Can you call a taxi?' }
+    ],
+    turns: [
+      { geno:'Bonjour ! Bienvenue à l\'Hôtel Lumière. Avez-vous une réservation ?', english:'Hello! Welcome to Hotel Lumière. Do you have a reservation?', suggest:['Oui, au nom de...','Non, avez-vous des chambres disponibles ?','J\'ai une réservation pour deux nuits.'] },
+      { geno:'Votre chambre est la 305, au troisième étage. Voici votre carte.', english:'Your room is 305, on the third floor. Here is your card.', suggest:['À quelle heure est le petit-déjeuner ?','Avez-vous le wifi gratuit ?','Où est l\'ascenseur ?'] },
+      { geno:'Le petit-déjeuner est de 7h à 10h au premier étage. Le wifi est gratuit, le mot de passe est sur la carte.', english:'Breakfast is 7-10 on the first floor. WiFi is free, password is on the card.', suggest:['Parfait, merci.','Y a-t-il des restaurants à proximité ?','Pouvez-vous me réveiller à 7h ?'] }
+    ]
+  },
+  interview: {
+    vocab: [
+      { foreign:'Mon expérience', english:'My experience' },
+      { foreign:'Le travail d\'équipe', english:'Teamwork' },
+      { foreign:'Mes points forts', english:'My strengths' },
+      { foreign:'Quel est le salaire ?', english:'What is the salary?' },
+      { foreign:'Je suis disponible', english:'I am available' },
+      { foreign:'Je suis passionné par...', english:'I am passionate about...' }
+    ],
+    turns: [
+      { geno:'Bonjour. Merci d\'être venu. Pouvez-vous vous présenter ?', english:'Good morning. Thank you for coming. Can you introduce yourself?', suggest:['Je suis ingénieur avec cinq ans d\'expérience.','J\'ai étudié la gestion d\'entreprise.','Je travaille actuellement dans le marketing digital.'] },
+      { geno:'Intéressant. Pourquoi souhaitez-vous travailler chez nous ?', english:'Interesting. Why do you want to work with us?', suggest:['La mission de votre entreprise me passionne.','Je cherche de nouveaux défis professionnels.','J\'admire votre travail dans la technologie.'] },
+      { geno:'Quels sont vos principaux points forts ?', english:'What are your main strengths?', suggest:['Je suis très organisé et je travaille bien en équipe.','J\'ai de l\'expérience en gestion de projets.','J\'apprends vite et je m\'adapte facilement.'] },
+      { geno:'Avez-vous des questions pour nous ?', english:'Do you have any questions for us?', suggest:['Quelle est la culture de travail ici ?','Y a-t-il des possibilités d\'évolution ?','Quand pensez-vous prendre une décision ?'] }
+    ]
+  }
+};
+
+// ==========================================
+// HINDI — Full Conversation Data
+// ==========================================
+CONVERSATIONS.hi = {
+  restaurant: {
+    vocab: [
+      { foreign:'मेन्यू', english:'Menu' },
+      { foreign:'मुझे... चाहिए', english:'I would like...' },
+      { foreign:'बिल दीजिए', english:'The bill, please' },
+      { foreign:'आप क्या सुझाव देंगे?', english:'What do you recommend?' },
+      { foreign:'पानी / चाय / लस्सी', english:'Water / Tea / Lassi' },
+      { foreign:'शाकाहारी / माँसाहारी', english:'Vegetarian / Non-vegetarian' },
+      { foreign:'कम मसालेदार', english:'Less spicy' },
+      { foreign:'बहुत स्वादिष्ट है', english:'It\'s very delicious' }
+    ],
+    turns: [
+      { geno:'नमस्ते! रेस्तरां में आपका स्वागत है। कितने लोगों के लिए टेबल चाहिए?', english:'Hello! Welcome to the restaurant. Table for how many people?', suggest:['दो लोगों के लिए, कृपया।','एक के लिए, धन्यवाद।','क्या खिड़की के पास टेबल मिल सकती है?'] },
+      { geno:'बैठिए। यह रहा मेन्यू। पहले कुछ पीना चाहेंगे?', english:'Please sit. Here is the menu. Would you like something to drink first?', suggest:['एक चाय दीजिए।','एक गिलास पानी, कृपया।','क्या आपके पास लस्सी है?'] },
+      { geno:'जी, आपने क्या सोचा? क्या ऑर्डर करना चाहेंगे?', english:'So, have you decided? What would you like to order?', suggest:['आप क्या सुझाव देंगे?','मुझे बटर चिकन चाहिए।','कोई शाकाहारी विकल्प है?'] },
+      { geno:'आज की स्पेशल दाल मखनी है। बहुत अच्छी बनी है। आज़माएँगे?', english:'Today\'s special is dal makhani. It\'s very well made. Would you like to try?', suggest:['हाँ, यह अच्छा लगता है।','नहीं, मुझे पनीर टिक्का दीजिए।','यह कितना मसालेदार है?'] },
+      { geno:'खाना कैसा लगा? और कुछ चाहिए?', english:'How was the food? Do you need anything else?', suggest:['बहुत स्वादिष्ट था, धन्यवाद!','बिल दीजिए।','मिठाई का मेन्यू दिखाइए।'] },
+      { geno:'यह रहा आपका बिल। कैसे पेमेंट करेंगे?', english:'Here is your bill. How will you pay?', suggest:['कार्ड से, कृपया।','नकद में।','क्या UPI चलेगा?'] }
+    ]
+  },
+  airport: {
+    vocab: [
+      { foreign:'पासपोर्ट', english:'Passport' },
+      { foreign:'बोर्डिंग पास', english:'Boarding pass' },
+      { foreign:'गेट', english:'Gate' },
+      { foreign:'उड़ान में देरी है', english:'The flight is delayed' },
+      { foreign:'...कहाँ है?', english:'Where is...?' },
+      { foreign:'हाथ का सामान', english:'Hand luggage / carry-on' },
+      { foreign:'सामान चेक-इन करना', english:'Check in luggage' },
+      { foreign:'सुरक्षा जाँच', english:'Security check' }
+    ],
+    turns: [
+      { geno:'नमस्ते। कृपया अपना पासपोर्ट और बुकिंग दिखाइए।', english:'Hello. Please show your passport and booking.', suggest:['यह रहा मेरा पासपोर्ट।','मेरी बुकिंग फ़ोन पर है।','क्या मैं दो बैग चेक-इन कर सकता हूँ?'] },
+      { geno:'क्या आपके पास चेक-इन करने के लिए सामान है?', english:'Do you have luggage to check in?', suggest:['हाँ, एक बड़ा बैग।','नहीं, सिर्फ़ हाथ का सामान है।','एक और बैग चेक-इन करने में कितना ख़र्च आएगा?'] },
+      { geno:'आपका गेट B12 है। बोर्डिंग दोपहर 2:30 बजे शुरू होगी।', english:'Your gate is B12. Boarding starts at 2:30 PM.', suggest:['गेट B12 कहाँ है?','क्या कोई देरी है?','धन्यवाद। सुरक्षा जाँच कहाँ है?'] },
+      { geno:'सुरक्षा जाँच दाईं तरफ़ है। कृपया अपना बोर्डिंग पास तैयार रखें।', english:'Security check is on the right. Please keep your boarding pass ready.', suggest:['आपकी मदद के लिए धन्यवाद।','सुरक्षा जाँच के बाद दुकानें हैं?','जाँच में कितना समय लगता है?'] }
+    ]
+  },
+  doctor: {
+    vocab: [
+      { foreign:'मुझे...में दर्द है', english:'I have pain in...' },
+      { foreign:'मुझे बुख़ार है', english:'I have a fever' },
+      { foreign:'पर्ची / नुस्ख़ा', english:'Prescription' },
+      { foreign:'क्या यह गंभीर है?', english:'Is it serious?' },
+      { foreign:'दवाई लेना', english:'Take medicine' },
+      { foreign:'मुझे...से एलर्जी है', english:'I\'m allergic to...' }
+    ],
+    turns: [
+      { geno:'नमस्ते। मैं डॉक्टर शर्मा हूँ। आज क्या तकलीफ़ है?', english:'Hello. I\'m Dr. Sharma. What\'s the problem today?', suggest:['तीन दिन से सिर में दर्द है।','मुझे खाँसी और बुख़ार है।','मेरा हाथ चोटिल हो गया है।'] },
+      { geno:'ये लक्षण कब से हैं?', english:'How long have you had these symptoms?', suggest:['सोमवार से।','लगभग एक हफ़्ते से।','कल रात से शुरू हुआ।'] },
+      { geno:'क्या आपको किसी दवाई से एलर्जी है?', english:'Are you allergic to any medicine?', suggest:['नहीं, कोई एलर्जी नहीं।','हाँ, मुझे पेनिसिलिन से एलर्जी है।','मुझे पक्का नहीं पता।'] },
+      { geno:'मैं आपको दवाई लिख रहा हूँ। हर आठ घंटे में एक गोली खाना खाने के बाद लें।', english:'I\'m writing a prescription. Take one pill every 8 hours after eating.', suggest:['कोई साइड इफ़ेक्ट है?','कितने दिन तक लेनी है?','क्या यह गंभीर है, डॉक्टर?'] }
+    ]
+  },
+  hotel: {
+    vocab: [
+      { foreign:'मेरा रिज़र्वेशन है', english:'I have a reservation' },
+      { foreign:'कमरा', english:'Room' },
+      { foreign:'चाबी / कार्ड', english:'Key / Card' },
+      { foreign:'नाश्ता कितने बजे है?', english:'What time is breakfast?' },
+      { foreign:'AC काम नहीं कर रहा', english:'The AC isn\'t working' },
+      { foreign:'क्या आप टैक्सी बुला सकते हैं?', english:'Can you call a taxi?' }
+    ],
+    turns: [
+      { geno:'नमस्ते! सूर्य होटल में आपका स्वागत है। क्या आपका रिज़र्वेशन है?', english:'Hello! Welcome to Surya Hotel. Do you have a reservation?', suggest:['हाँ, नाम है...','नहीं, क्या कमरे ख़ाली हैं?','दो रातों के लिए बुकिंग है।'] },
+      { geno:'आपका कमरा 305 है, तीसरी मंज़िल पर। यह रहा आपका कार्ड।', english:'Your room is 305, on the third floor. Here is your card.', suggest:['नाश्ता कितने बजे है?','क्या मुफ़्त वाईफ़ाई है?','लिफ़्ट कहाँ है?'] },
+      { geno:'नाश्ता पहली मंज़िल पर 7 से 10 बजे तक है। वाईफ़ाई मुफ़्त है, पासवर्ड कार्ड पर है।', english:'Breakfast is on the first floor, 7-10 AM. WiFi is free, password is on the card.', suggest:['बहुत अच्छा, धन्यवाद।','पास में कोई रेस्तरां है?','क्या 7 बजे वेक-अप कॉल मिल सकती है?'] }
+    ]
+  },
+  interview: {
+    vocab: [
+      { foreign:'मेरा अनुभव', english:'My experience' },
+      { foreign:'टीम वर्क', english:'Teamwork' },
+      { foreign:'मेरी ख़ूबियाँ', english:'My strengths' },
+      { foreign:'वेतन कितना है?', english:'What is the salary?' },
+      { foreign:'मैं उपलब्ध हूँ', english:'I am available' },
+      { foreign:'मुझे...का शौक़ है', english:'I am passionate about...' }
+    ],
+    turns: [
+      { geno:'नमस्ते। इंटरव्यू के लिए आने का धन्यवाद। कृपया अपना परिचय दीजिए।', english:'Hello. Thank you for coming to the interview. Please introduce yourself.', suggest:['मैं इंजीनियर हूँ, पाँच साल का अनुभव है।','मैंने बिज़नेस मैनेजमेंट पढ़ा है।','मैं अभी डिजिटल मार्केटिंग में काम कर रहा हूँ।'] },
+      { geno:'अच्छा। आप हमारी कंपनी में क्यों काम करना चाहते हैं?', english:'Good. Why do you want to work at our company?', suggest:['मुझे आपकी कंपनी का मिशन पसंद है।','मैं नई चुनौतियाँ ढूँढ रहा हूँ।','मैं आपके तकनीकी काम की प्रशंसा करता हूँ।'] },
+      { geno:'आपकी सबसे बड़ी ख़ूबी क्या है?', english:'What is your greatest strength?', suggest:['मैं बहुत व्यवस्थित हूँ और टीम में अच्छा काम करता हूँ।','मुझे प्रोजेक्ट मैनेजमेंट का अनुभव है।','मैं जल्दी सीखता हूँ और आसानी से ढल जाता हूँ।'] },
+      { geno:'क्या आपका कोई सवाल है हमसे?', english:'Do you have any questions for us?', suggest:['यहाँ की कार्य संस्कृति कैसी है?','क्या आगे बढ़ने के मौक़े हैं?','आप कब तक फ़ैसला लेंगे?'] }
+    ]
+  }
+};
+
+// Basic greetings for remaining languages (starter data)
+const LANG_BASICS = {
+  de: { greeting: 'Guten Tag! Willkommen. Wie kann ich Ihnen helfen?', response: 'Guten Tag, ich möchte...' },
+  ja: { greeting: 'いらっしゃいませ！何かお手伝いできますか？', response: 'すみません、...' },
+  ko: { greeting: '안녕하세요! 어떻게 도와드릴까요?', response: '안녕하세요, ...' },
+  pt: { greeting: 'Bom dia! Bem-vindo. Como posso ajudá-lo?', response: 'Bom dia, eu gostaria...' },
+  ar: { greeting: 'مرحباً! أهلاً وسهلاً. كيف يمكنني مساعدتك؟', response: 'مرحباً، أريد...' },
+  it: { greeting: 'Buongiorno! Benvenuto. Come posso aiutarla?', response: 'Buongiorno, vorrei...' }
+};
+
+// Fill in remaining languages with basic data
+Object.keys(LANG_BASICS).forEach(code => {
+  if (!CONVERSATIONS[code]) {
+    CONVERSATIONS[code] = generateLangData(code, LANG_BASICS[code]);
+  }
+});
+
+// --- STATE ---
+let selectedLang = null;
+let currentMode = null;
+let currentScenario = null;
+let turnIndex = 0;
+let isRecording = false;
+let recognition = null;
+
+// --- SCREEN NAV ---
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// --- BUILD LANGUAGE GRID ---
+const langGrid = document.getElementById('langGrid');
+LANGUAGES.forEach(lang => {
+  const card = document.createElement('div');
+  card.className = 'lang-card';
+  card.onclick = () => selectLanguage(lang);
+  card.innerHTML = `<div class="flag">${lang.flag}</div><div class="name">${lang.name}</div><div class="native">${lang.native}</div>`;
+  langGrid.appendChild(card);
+});
+
+function selectLanguage(lang) {
+  selectedLang = lang;
+  document.getElementById('modeTitle').textContent = `Practice ${lang.name} ${lang.flag}`;
+  showScreen('modeScreen');
+}
+
+// --- START MODE ---
+function startMode(mode) {
+  currentMode = mode;
+  document.getElementById('practLangTag').textContent = selectedLang.name;
+  const chatArea = document.getElementById('chatArea');
+  chatArea.innerHTML = '';
+
+  // Hide all optional panels
+  document.getElementById('scenarioPrompt').style.display = 'none';
+  document.getElementById('scenarioSelect').style.display = 'none';
+  document.getElementById('phraseOpts').style.display = 'none';
+  document.getElementById('vocabPanel').style.display = 'none';
+  document.getElementById('inputArea').style.display = 'flex';
+
+  if (mode === 'scenario') {
+    // Show scenario selection
+    document.getElementById('inputArea').style.display = 'none';
+    document.getElementById('scenarioSelect').style.display = 'block';
+    const opts = document.getElementById('scenarioOptions');
+    opts.innerHTML = '';
+    Object.keys(SCENARIOS).forEach(sk => {
+      const s = SCENARIOS[sk];
+      const div = document.createElement('div');
+      div.className = 'phrase-opt';
+      div.innerHTML = `${s.emoji} <strong>${s.name}</strong><span class="hint">${s.desc}</span>`;
+      div.onclick = () => startScenario(sk);
+      opts.appendChild(div);
+    });
+  }
+  else if (mode === 'vocab') {
+    document.getElementById('inputArea').style.display = 'none';
+    showVocabMode();
+  }
+  else if (mode === 'phrase') {
+    startPhraseMode();
+  }
+  else if (mode === 'pronounce') {
+    startPronounceMode();
+  }
+
+  showScreen('practiceScreen');
+}
+
+// --- SCENARIO MODE ---
+function startScenario(scenarioKey) {
+  currentScenario = scenarioKey;
+  turnIndex = 0;
+  const s = SCENARIOS[scenarioKey];
+  const data = CONVERSATIONS[selectedLang.code]?.[scenarioKey];
+
+  document.getElementById('scenarioSelect').style.display = 'none';
+  document.getElementById('scenarioPrompt').style.display = 'block';
+  document.getElementById('scenarioText').textContent = `${s.emoji} ${s.name} — ${s.desc}`;
+  document.getElementById('inputArea').style.display = 'flex';
+
+  // Show vocab
+  if (data?.vocab?.length > 0 && data.vocab[0].foreign !== '(Vocabulary coming soon)') {
+    document.getElementById('vocabPanel').style.display = 'block';
+    const vl = document.getElementById('vocabList');
+    vl.innerHTML = '';
+    data.vocab.forEach(v => {
+      const div = document.createElement('div');
+      div.className = 'vocab-word';
+      div.innerHTML = `<span class="foreign" onclick="speakText('${v.foreign.replace(/'/g,"\\'")}')">${v.foreign}</span><span class="english">${v.english}</span>`;
+      vl.appendChild(div);
+    });
+  }
+
+  // First GENO turn
+  nextGenoTurn();
+}
+
+function nextGenoTurn() {
+  const data = CONVERSATIONS[selectedLang.code]?.[currentScenario];
+  if (!data || turnIndex >= data.turns.length) {
+    addBubble('geno', '¡Muy bien! You\'ve completed this scenario. Great practice! 🎉', 'Excellent work! Try another scenario or switch modes.');
+    document.getElementById('inputArea').style.display = 'none';
+    return;
+  }
+
+  const turn = data.turns[turnIndex];
+  addBubble('geno', turn.geno, turn.english);
+  speakText(turn.geno);
+
+  // Show suggested responses
+  if (turn.suggest) {
+    const opts = document.getElementById('phraseOpts');
+    opts.style.display = 'flex';
+    opts.innerHTML = '';
+    turn.suggest.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'phrase-opt';
+      div.textContent = s;
+      div.onclick = () => {
+        addBubble('user', s);
+        speakText(s);
+        opts.style.display = 'none';
+        turnIndex++;
+        setTimeout(nextGenoTurn, 1200);
+      };
+      opts.appendChild(div);
+    });
+  }
+}
+
+// --- VOCAB MODE ---
+function showVocabMode() {
+  const chatArea = document.getElementById('chatArea');
+  chatArea.innerHTML = '';
+
+  addBubble('geno', `Let's build your ${selectedLang.name} vocabulary! Click any word to hear it spoken. Choose a scenario to see relevant words.`, '');
+
+  const opts = document.getElementById('phraseOpts');
+  opts.style.display = 'flex';
+  opts.innerHTML = '';
+  Object.keys(SCENARIOS).forEach(sk => {
+    const s = SCENARIOS[sk];
+    const div = document.createElement('div');
+    div.className = 'phrase-opt';
+    div.innerHTML = `${s.emoji} ${s.name}`;
+    div.onclick = () => {
+      opts.style.display = 'none';
+      showVocabForScenario(sk);
+    };
+    opts.appendChild(div);
+  });
+}
+
+function showVocabForScenario(sk) {
+  const data = CONVERSATIONS[selectedLang.code]?.[sk];
+  if (!data) return;
+
+  document.getElementById('vocabPanel').style.display = 'block';
+  const vl = document.getElementById('vocabList');
+  vl.innerHTML = '';
+  data.vocab.forEach(v => {
+    const div = document.createElement('div');
+    div.className = 'vocab-word';
+    div.innerHTML = `<span class="foreign" onclick="speakText('${v.foreign.replace(/'/g,"\\'")}')">${v.foreign} 🔊</span><span class="english">${v.english}</span>`;
+    vl.appendChild(div);
+  });
+
+  addBubble('geno', `Here's the vocabulary for ${SCENARIOS[sk].name}. Click any word to hear it. Practice saying each one out loud!`, '');
+}
+
+// --- PHRASE MODE ---
+let phraseWords = [];
+let phraseIndex = 0;
+let phraseDirection = 'toEnglish'; // or 'fromEnglish'
+
+function startPhraseMode() {
+  // Collect all vocab from all scenarios
+  phraseWords = [];
+  Object.keys(CONVERSATIONS[selectedLang.code] || {}).forEach(sk => {
+    const data = CONVERSATIONS[selectedLang.code][sk];
+    if (data?.vocab) {
+      data.vocab.forEach(v => {
+        if (v.foreign !== '(Vocabulary coming soon)') phraseWords.push(v);
+      });
+    }
+  });
+  phraseWords = shuffle(phraseWords);
+  phraseIndex = 0;
+
+  if (phraseWords.length === 0) {
+    addBubble('geno', `Phrase data for ${selectedLang.name} is still being built. Try Spanish for the full experience!`, '');
+    return;
+  }
+
+  addBubble('geno', `I'll show you a ${selectedLang.name} phrase. Type or say the English translation. Let's go!`, '');
+  setTimeout(showNextPhrase, 800);
+}
+
+function showNextPhrase() {
+  if (phraseIndex >= phraseWords.length) {
+    addBubble('geno', 'Great work! You\'ve practiced all the phrases. 🎉', '');
+    return;
+  }
+  const w = phraseWords[phraseIndex];
+  addBubble('geno', w.foreign, `(What does this mean in English?)`);
+  speakText(w.foreign);
+  document.getElementById('userInput').placeholder = 'Type the English translation...';
+  currentMode = 'phrase_answer';
+}
+
+// --- PRONUNCIATION MODE ---
+let pronWords = [];
+let pronIndex = 0;
+
+function startPronounceMode() {
+  pronWords = [];
+  Object.keys(CONVERSATIONS[selectedLang.code] || {}).forEach(sk => {
+    const data = CONVERSATIONS[selectedLang.code][sk];
+    if (data?.vocab) {
+      data.vocab.forEach(v => {
+        if (v.foreign !== '(Vocabulary coming soon)') pronWords.push(v);
+      });
+    }
+  });
+  pronWords = shuffle(pronWords);
+  pronIndex = 0;
+
+  if (pronWords.length === 0) {
+    addBubble('geno', `Pronunciation data for ${selectedLang.name} is still being built. Try Spanish for the full experience!`, '');
+    return;
+  }
+
+  addBubble('geno', `Listen carefully, then press the 🎤 button and repeat what you hear. I'll compare your pronunciation!`, '');
+  setTimeout(showNextPronounce, 800);
+}
+
+function showNextPronounce() {
+  if (pronIndex >= pronWords.length) {
+    addBubble('geno', 'Excellent pronunciation practice! 🎉', '');
+    return;
+  }
+  const w = pronWords[pronIndex];
+  addBubble('geno', `🔊 Listen and repeat: <strong>${w.foreign}</strong>`, w.english);
+  speakText(w.foreign);
+  document.getElementById('userInput').placeholder = 'Press 🎤 and say the word...';
+  currentMode = 'pronounce_answer';
+}
+
+// --- SEND MESSAGE ---
+function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  if (currentMode === 'phrase_answer') {
+    addBubble('user', text);
+    const w = phraseWords[phraseIndex];
+    const correct = w.english.toLowerCase();
+    const attempt = text.toLowerCase();
+    if (correct.includes(attempt) || attempt.includes(correct.split('/')[0].trim().toLowerCase())) {
+      showToast('Correct! ✓', 'good');
+      addBubble('geno', `✓ Correct! "${w.foreign}" = "${w.english}"`, '');
+    } else {
+      showToast('Not quite — see the answer', 'bad');
+      addBubble('geno', `The answer is: "${w.english}". Let's keep going!`, '');
+    }
+    phraseIndex++;
+    setTimeout(showNextPhrase, 1000);
+    return;
+  }
+
+  if (currentMode === 'pronounce_answer') {
+    addBubble('user', text);
+    const w = pronWords[pronIndex];
+    addBubble('geno', `You said: "${text}". The target was: "${w.foreign}". Keep practicing — the more you speak, the better you get!`, '');
+    pronIndex++;
+    setTimeout(showNextPronounce, 1000);
+    return;
+  }
+
+  // Scenario free-text response
+  addBubble('user', text);
+  document.getElementById('phraseOpts').style.display = 'none';
+  turnIndex++;
+  setTimeout(nextGenoTurn, 1000);
+}
+
+// --- CHAT BUBBLES ---
+function addBubble(who, text, english) {
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div');
+  div.className = `bubble ${who}`;
+  let html = `<div class="bubble-inner">${text}</div>`;
+  if (english && who === 'geno') {
+    html += `<div class="bubble-inner translation">${english}</div>`;
+  }
+  if (who === 'geno' && text.length > 2 && !text.startsWith('Let') && !text.startsWith('Listen') && !text.startsWith('Great') && !text.startsWith('I\'ll') && !text.startsWith('Here') && !text.startsWith('✓') && !text.startsWith('The answer') && !text.startsWith('You said') && !text.startsWith('Excellent')) {
+    html += `<span class="pronunciation" onclick="speakText('${text.replace(/<[^>]*>/g,'').replace(/'/g,"\\'").substring(0,200)}')">🔊 Listen again</span>`;
+  }
+  div.innerHTML = html;
+  area.appendChild(div);
+  area.scrollTop = area.scrollHeight;
+}
+
+// --- SPEECH SYNTHESIS ---
+function speakText(text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/<[^>]*>/g,''));
+  u.lang = selectedLang?.voice || 'en-US';
+  u.rate = 0.85;
+  u.pitch = 1;
+  // Try to find matching voice
+  const voices = speechSynthesis.getVoices();
+  const match = voices.find(v => v.lang.startsWith(selectedLang?.code));
+  if (match) u.voice = match;
+  speechSynthesis.speak(u);
+}
+
+// --- SPEECH RECOGNITION ---
+function toggleMic() {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    showToast('Speech recognition requires Chrome or Edge', 'bad');
+    return;
+  }
+
+  const btn = document.getElementById('micBtn');
+
+  if (isRecording) {
+    recognition?.stop();
+    isRecording = false;
+    btn.classList.remove('recording');
+    return;
+  }
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.lang = (currentMode === 'phrase_answer') ? 'en-US' : (selectedLang?.voice || 'en-US');
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => { isRecording = true; btn.classList.add('recording'); };
+  recognition.onresult = (e) => {
+    const text = e.results[0][0].transcript;
+    document.getElementById('userInput').value = text;
+    sendMessage();
+  };
+  recognition.onerror = () => { isRecording = false; btn.classList.remove('recording'); };
+  recognition.onend = () => { isRecording = false; btn.classList.remove('recording'); };
+
+  recognition.start();
+}
+
+// --- UTILITIES ---
+function shuffle(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// Load voices
+if ('speechSynthesis' in window) {
+  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+  speechSynthesis.getVoices();
+}
+</script>
+</body>
+</html>
