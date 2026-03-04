@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal Decryption: Spanish — Linguification Hub BookGame</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0a1628;--deep:#162240;--teal:#1a6b5a;--mint:#2d9b7a;--bronze:#cd7f32;--silver:#8a8d8f;--gold:#daa520;--cream:#f8f5ef;--paper:#fdfcf9;--ink:#1a1a1a;--red:#9b2226;--green:#2d6a4f;--amber:#d4a017}
+body{font-family:'Source Sans 3',sans-serif;background:var(--navy);color:var(--ink);min-height:100vh}
+.app{max-width:900px;margin:0 auto;min-height:100vh}
+.screen{display:none;min-height:100vh}.screen.active{display:flex}
+
+.title-screen{flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;background:linear-gradient(160deg,#0a1628 0%,#0f2027 30%,#1a3a2a 100%);position:relative;overflow:hidden}
+.title-screen::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10' y='35' font-size='22' fill='rgba(45,155,122,0.04)' font-family='monospace'%3E01%3C/text%3E%3C/svg%3E") repeat}
+.icon-circle{width:110px;height:110px;border:3px solid var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:2.8rem;position:relative}
+.icon-circle::after{content:'';position:absolute;inset:-10px;border:1px solid rgba(45,155,122,.25);border-radius:50%}
+.title-screen h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--cream);line-height:1.1;margin-bottom:.4rem;position:relative}
+.title-screen .sub{font-size:1rem;color:var(--mint);font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.5rem;position:relative}
+.title-screen p{color:rgba(248,245,239,.65);max-width:540px;line-height:1.7;font-size:.95rem;margin-bottom:2rem;position:relative}
+.tier-badges{display:flex;gap:.8rem;margin-bottom:2rem;flex-wrap:wrap;justify-content:center;position:relative}
+.tier-badge{padding:.35rem .9rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:2px}
+.tier-badge.bronze{color:var(--bronze);border-color:var(--bronze)}.tier-badge.silver{color:var(--silver);border-color:var(--silver)}.tier-badge.gold{color:var(--gold);border-color:var(--gold)}
+.btn{font-family:'Source Sans 3',sans-serif;padding:.85rem 2.2rem;border:none;cursor:pointer;font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:all .25s;border-radius:3px;position:relative}
+.btn-primary{background:var(--mint);color:#fff}.btn-primary:hover{background:var(--teal);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--cream);border:1px solid rgba(248,245,239,.25)}.btn-outline:hover{border-color:var(--mint);color:var(--mint)}
+.stat-bar{display:flex;gap:2rem;margin-top:1.5rem;flex-wrap:wrap;justify-content:center;position:relative}
+.stat-item{text-align:center}.stat-item .num{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--mint)}.stat-item .label{font-size:.65rem;color:rgba(248,245,239,.45);letter-spacing:.1em;text-transform:uppercase}
+
+.tier-select{flex-direction:column;background:var(--paper);padding:2rem}
+.tier-select h2{font-family:'Playfair Display',serif;color:var(--navy);font-size:1.8rem;text-align:center;margin-bottom:.4rem}
+.tier-select .desc{text-align:center;color:#666;margin-bottom:.5rem;max-width:540px;margin-left:auto;margin-right:auto;font-size:.9rem}
+.tier-note{text-align:center;color:var(--teal);font-weight:600;font-size:.85rem;margin-bottom:2rem;background:rgba(45,155,122,.08);padding:.6rem 1rem;border-radius:4px;max-width:540px;margin-left:auto;margin-right:auto}
+.tier-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;max-width:740px;margin:0 auto 2rem}
+.tier-card{background:#fff;border:2px solid #e8e4dc;padding:1.4rem;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;border-radius:4px}
+.tier-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.07)}
+.tier-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:4px 4px 0 0}
+.tier-card.tc-bronze::before{background:var(--bronze)}.tier-card.tc-silver::before{background:var(--silver)}.tier-card.tc-gold::before{background:var(--gold)}
+.tier-card h3{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.3rem;color:var(--ink)}
+.tier-card p{font-size:.82rem;color:#666;line-height:1.5}
+.tier-card .qs{font-size:.65rem;color:var(--teal);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:.7rem}
+.back-link{display:block;text-align:center;color:#888;font-size:.85rem;cursor:pointer;text-decoration:none;margin-top:1rem;padding:.5rem}.back-link:hover{color:var(--teal)}
+
+.game-screen{flex-direction:column;background:var(--paper)}
+.game-header{background:var(--navy);padding:.9rem 1.5rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:10}
+.game-header .logo{font-family:'IBM Plex Mono',monospace;color:var(--mint);font-size:.9rem;font-weight:600}
+.game-header .tier-label{padding:.25rem .7rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;margin-left:auto;color:#fff}
+.tier-label.bronze-bg{background:var(--bronze)}.tier-label.silver-bg{background:var(--silver)}.tier-label.gold-bg{background:var(--gold);color:var(--navy)}
+.game-header .back-btn{color:rgba(248,245,239,.5);font-size:.8rem;cursor:pointer;text-decoration:none;border:1px solid rgba(248,245,239,.2);padding:.25rem .6rem;border-radius:3px;transition:all .2s}.game-header .back-btn:hover{color:var(--mint);border-color:var(--mint)}
+.progress-strip{height:3px;background:rgba(45,155,122,.12)}.progress-fill{height:100%;background:var(--mint);transition:width .5s}
+.game-body{flex:1;padding:2rem 1.5rem;max-width:720px;margin:0 auto;width:100%}
+.q-counter{font-size:.7rem;color:#888;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.q-text{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--navy);line-height:1.35;margin-bottom:1rem}
+
+.word-card{background:var(--navy);border-radius:8px;padding:1.5rem;text-align:center;margin-bottom:1.5rem}
+.word-card .spanish{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,2.8rem);color:var(--cream);margin-bottom:.5rem}
+.word-card .phonetic{font-family:'IBM Plex Mono',monospace;font-size:.9rem;color:var(--mint);margin-bottom:.8rem}
+.audio-controls{display:flex;gap:.5rem;justify-content:center;align-items:center}
+.audio-btn{background:rgba(45,155,122,.2);border:1px solid var(--mint);color:var(--mint);padding:.4rem .9rem;border-radius:20px;cursor:pointer;font-size:.8rem;font-weight:600;transition:all .2s;font-family:'Source Sans 3',sans-serif}
+.audio-btn:hover{background:var(--mint);color:#fff}
+.audio-btn.playing{background:var(--mint);color:#fff}
+
+.options{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.2rem}
+.option{padding:.9rem 1.1rem;border:2px solid #ddd;border-radius:4px;cursor:pointer;transition:all .2s;font-size:.92rem;line-height:1.4;background:#fff;position:relative;padding-left:2.8rem;color:var(--ink)}
+.option::before{content:attr(data-letter);position:absolute;left:.9rem;top:50%;transform:translateY(-50%);width:1.3rem;height:1.3rem;border:2px solid #ccc;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#999;transition:all .2s}
+.option:hover{border-color:var(--teal);background:rgba(45,155,122,.03)}.option:hover::before{border-color:var(--teal);color:var(--teal)}
+.option.correct{border-color:var(--green);background:rgba(45,106,79,.05)}.option.correct::before{background:var(--green);border-color:var(--green);color:#fff}
+.option.wrong{border-color:var(--red);background:rgba(155,34,38,.04)}.option.wrong::before{background:var(--red);border-color:var(--red);color:#fff}
+.option.disabled{pointer-events:none}
+.feedback{padding:.9rem 1.1rem;border-radius:4px;margin-bottom:1.2rem;line-height:1.5;font-size:.85rem;display:none}
+.feedback.correct-fb{background:rgba(45,106,79,.07);border-left:4px solid var(--green);color:#1b4332}
+.feedback.wrong-fb{background:rgba(155,34,38,.05);border-left:4px solid var(--red);color:#5c1a00}
+.action-row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn-game{padding:.65rem 1.4rem;font-size:.8rem}
+.score-display{margin-left:auto;font-size:.78rem;color:#888}.score-display strong{color:var(--navy)}
+
+.signal-meter{background:var(--navy);border-radius:6px;padding:1rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+.signal-meter .label{color:var(--cream);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.signal-bar{flex:1;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+.signal-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--amber),var(--green));transition:width .5s;border-radius:4px}
+.signal-pct{color:var(--mint);font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600}
+
+.results-screen{flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;background:linear-gradient(160deg,#0a1628,#0f2027,#1a3a2a)}
+.results-screen h2{font-family:'Playfair Display',serif;color:var(--cream);font-size:2rem;margin-bottom:.4rem}
+.results-screen .verdict{font-size:.95rem;color:var(--mint);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.8rem}
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2rem;max-width:420px}
+.result-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:1rem;border-radius:4px}
+.result-card .big{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--mint)}.result-card .sm{font-size:.65rem;color:rgba(248,245,239,.4);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem}
+.results-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.results-note{color:rgba(248,245,239,.5);font-size:.82rem;margin-top:1.5rem;max-width:400px}
+.decoded-msg{background:rgba(45,155,122,.1);border:1px solid var(--mint);padding:1rem;border-radius:4px;margin-bottom:1.5rem;max-width:480px}
+.decoded-msg .lbl{font-size:.65rem;color:var(--mint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.decoded-msg .msg{font-family:'IBM Plex Mono',monospace;color:var(--cream);font-size:.95rem;line-height:1.5}
+
+@media(max-width:600px){.tier-cards{grid-template-columns:1fr}.game-body{padding:1.5rem 1rem}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+<div class="screen active" id="titleScreen"><div class="title-screen">
+  <div class="icon-circle">📡</div>
+  <h1>Signal Decryption: Spanish</h1>
+  <div class="sub">Linguification Hub &bull; BookGame</div>
+  <p>You've intercepted a coded transmission — but it's in Spanish. Decrypt the signal by translating vocabulary correctly. Each right answer reveals a fragment of the hidden message. Audio-first: hear the sounds before you see the letters.</p>
+  <div class="tier-badges"><span class="tier-badge bronze">Bronze</span><span class="tier-badge silver">Silver</span><span class="tier-badge gold">Gold</span></div>
+  <button class="btn btn-primary" onclick="showScreen('tierSelect')">Begin Decryption</button>
+  <div class="stat-bar"><div class="stat-item"><div class="num">500+</div><div class="label">Spanish Words</div></div><div class="stat-item"><div class="num">3</div><div class="label">Difficulty Tiers</div></div><div class="stat-item"><div class="num">🔊</div><div class="label">Audio-First</div></div></div>
+</div></div>
+
+<div class="screen" id="tierSelect"><div class="tier-select">
+  <h2>Select Difficulty</h2>
+  <p class="desc">Each tier increases vocabulary complexity. Press the speaker button to hear each word — listen before you answer.</p>
+  <div class="tier-note">🔊 Audio controls: tap Play to hear the word. Tap again to replay. No autoplay — you control the pace.</div>
+  <div class="tier-cards">
+    <div class="tier-card tc-bronze" onclick="startGame('bronze')"><h3>Bronze</h3><p>Common greetings, numbers, colors, food. Essential survival vocabulary.</p><div class="qs">8 Words to Decrypt</div></div>
+    <div class="tier-card tc-silver" onclick="startGame('silver')"><h3>Silver</h3><p>Verbs, adjectives, directions, time. Conversational building blocks.</p><div class="qs">10 Words to Decrypt</div></div>
+    <div class="tier-card tc-gold" onclick="startGame('gold')"><h3>Gold</h3><p>Abstract concepts, professional terms, compound phrases. Advanced vocabulary.</p><div class="qs">12 Words to Decrypt</div></div>
+  </div>
+  <a class="back-link" onclick="showScreen('titleScreen')">← Back to Title</a>
+</div></div>
+
+<div class="screen" id="gameScreen"><div class="game-screen">
+  <div class="game-header"><a class="back-btn" onclick="showScreen('tierSelect')">← Back</a><span class="logo">SIGNAL://DECRYPT</span><span class="tier-label" id="tierLabel">BRONZE</span></div>
+  <div class="progress-strip"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="game-body">
+    <div class="signal-meter"><span class="label">Signal Strength</span><div class="signal-bar"><div class="signal-fill" id="signalFill" style="width:0%"></div></div><span class="signal-pct" id="signalPct">0%</span></div>
+    <div class="q-counter" id="qCounter"></div>
+    <div class="q-text" id="qText">Translate this intercepted word:</div>
+    <div class="word-card" id="wordCard">
+      <div class="spanish" id="spanishWord"></div>
+      <div class="phonetic" id="phoneticHint"></div>
+      <div class="audio-controls"><button class="audio-btn" id="playBtn" onclick="playAudio()">▶ Play</button><button class="audio-btn" id="replayBtn" onclick="playAudio()">🔄 Replay</button></div>
+    </div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="action-row"><button class="btn btn-primary btn-game" id="nextBtn" onclick="nextQuestion()" style="display:none">Next →</button><div class="score-display" id="scoreDisplay">Decrypted: <strong>0</strong> / 0</div></div>
+  </div>
+</div></div>
+
+<div class="screen" id="resultsScreen"><div class="results-screen">
+  <h2 id="resultsTitle">Decryption Complete</h2>
+  <div class="verdict" id="resultsVerdict"></div>
+  <div class="decoded-msg" id="decodedMsg"><div class="lbl">Decoded Transmission</div><div class="msg" id="decodedText"></div></div>
+  <div class="results-grid"><div class="result-card"><div class="big" id="rCorrect">0</div><div class="sm">Decrypted</div></div><div class="result-card"><div class="big" id="rTotal">0</div><div class="sm">Intercepted</div></div><div class="result-card"><div class="big" id="rPct">0%</div><div class="sm">Accuracy</div></div></div>
+  <div class="results-btns"><button class="btn btn-primary" onclick="showScreen('tierSelect')">New Mission</button><button class="btn btn-outline" onclick="showScreen('titleScreen')">Back to Base</button></div>
+  <div class="results-note" id="resultsNote"></div>
+</div></div>
+</div>
+
+<script>
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t}return b}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function showScreen(id){var all=document.querySelectorAll('.screen');for(var i=0;i<all.length;i++) all[i].classList.remove('active');document.getElementById(id).classList.add('active')}
+
+var vocab={
+bronze:[
+{es:"hola",en:"hello",ph:"OH-lah"},{es:"gracias",en:"thank you",ph:"GRAH-see-ahs"},{es:"agua",en:"water",ph:"AH-gwah"},{es:"comida",en:"food",ph:"koh-MEE-dah"},
+{es:"casa",en:"house",ph:"KAH-sah"},{es:"bueno",en:"good",ph:"BWEH-noh"},{es:"amigo",en:"friend",ph:"ah-MEE-goh"},{es:"leche",en:"milk",ph:"LEH-cheh"},
+{es:"pan",en:"bread",ph:"PAHN"},{es:"rojo",en:"red",ph:"ROH-hoh"},{es:"azul",en:"blue",ph:"ah-SOOL"},{es:"verde",en:"green",ph:"BEHR-deh"},
+{es:"uno",en:"one",ph:"OO-noh"},{es:"dos",en:"two",ph:"DOHS"},{es:"tres",en:"three",ph:"TREHS"},{es:"gato",en:"cat",ph:"GAH-toh"},
+{es:"perro",en:"dog",ph:"PEH-rroh"},{es:"sol",en:"sun",ph:"SOHL"},{es:"luna",en:"moon",ph:"LOO-nah"},{es:"libro",en:"book",ph:"LEE-broh"}
+],
+silver:[
+{es:"hablar",en:"to speak",ph:"ah-BLAHR"},{es:"comer",en:"to eat",ph:"koh-MEHR"},{es:"escribir",en:"to write",ph:"ehs-kree-BEER"},{es:"leer",en:"to read",ph:"leh-EHR"},
+{es:"izquierda",en:"left",ph:"ees-KYEHR-dah"},{es:"derecha",en:"right",ph:"deh-REH-chah"},{es:"siempre",en:"always",ph:"SYEHM-preh"},{es:"nunca",en:"never",ph:"NOON-kah"},
+{es:"trabajo",en:"work/job",ph:"trah-BAH-hoh"},{es:"dinero",en:"money",ph:"dee-NEH-roh"},{es:"tiempo",en:"time",ph:"TYEHM-poh"},{es:"persona",en:"person",ph:"pehr-SOH-nah"},
+{es:"grande",en:"big/large",ph:"GRAHN-deh"},{es:"peque\u00f1o",en:"small",ph:"peh-KEH-nyoh"},{es:"r\u00e1pido",en:"fast",ph:"RRAH-pee-doh"},{es:"lento",en:"slow",ph:"LEHN-toh"},
+{es:"bonito",en:"pretty",ph:"boh-NEE-toh"},{es:"fuerte",en:"strong",ph:"FWEHR-teh"},{es:"d\u00f3nde",en:"where",ph:"DOHN-deh"},{es:"cu\u00e1ndo",en:"when",ph:"KWAHN-doh"}
+],
+gold:[
+{es:"conocimiento",en:"knowledge",ph:"koh-noh-see-MYEHN-toh"},{es:"desarrollo",en:"development",ph:"deh-sah-RROH-yoh"},{es:"gobierno",en:"government",ph:"goh-BYEHR-noh"},{es:"educaci\u00f3n",en:"education",ph:"eh-doo-kah-SYOHN"},
+{es:"independencia",en:"independence",ph:"een-deh-pehn-DEHN-syah"},{es:"responsabilidad",en:"responsibility",ph:"rrehs-pohn-sah-bee-lee-DAHD"},{es:"oportunidad",en:"opportunity",ph:"oh-pohr-too-nee-DAHD"},{es:"comunicaci\u00f3n",en:"communication",ph:"koh-moo-nee-kah-SYOHN"},
+{es:"herramienta",en:"tool",ph:"eh-rrah-MYEHN-tah"},{es:"biblioteca",en:"library",ph:"bee-blyoh-TEH-kah"},{es:"aprendizaje",en:"learning",ph:"ah-prehn-dee-SAH-heh"},{es:"contrato",en:"contract",ph:"kohn-TRAH-toh"},
+{es:"presupuesto",en:"budget",ph:"preh-soo-PWEHS-toh"},{es:"ciudadano",en:"citizen",ph:"syoo-dah-DAH-noh"},{es:"entrevista",en:"interview",ph:"ehn-treh-VEES-tah"},{es:"investigaci\u00f3n",en:"research",ph:"een-vehs-tee-gah-SYOHN"}
+]};
+
+var messages={
+bronze:["THE SIGNAL IS CLEAR \u2014 First contact established. Welcome to the network.","TRANSMISSION RECEIVED \u2014 Basic frequencies decoded. You speak the language of freedom.","SIGNAL LOCKED \u2014 Your decoder ring is calibrated. The mission continues."],
+silver:["ENCRYPTED CHANNEL OPEN \u2014 Intermediate clearance granted. The network grows stronger.","FREQUENCY MATCHED \u2014 Your linguistic range is expanding. Field deployment authorized.","SIGNAL AMPLIFIED \u2014 Conversational protocols active. Continue the mission."],
+gold:["FULL DECRYPTION ACHIEVED \u2014 Advanced clearance confirmed. You are the signal now.","TOP SECRET DECODED \u2014 Professional-grade translation verified. Mission accomplished.","MAXIMUM SIGNAL \u2014 The transmission is yours. Sovereign communication unlocked."]
+};
+
+var letters=['A','B','C','D'];
+var tierConfig={bronze:{count:8,label:'BRONZE',cls:'bronze-bg'},silver:{count:10,label:'SILVER',cls:'silver-bg'},gold:{count:12,label:'GOLD',cls:'gold-bg'}};
+var state={tier:'bronze',questions:[],current:0,score:0,total:0,answered:false};
+
+function generateQuestions(tier){
+  var pool=shuffle(vocab[tier]);
+  var allWords=vocab.bronze.concat(vocab.silver).concat(vocab.gold);
+  var qs=[];
+  for(var i=0;i<tierConfig[tier].count;i++){
+    var w=pool[i%pool.length];
+    var wrongs=shuffle(allWords.filter(function(x){return x.en!==w.en})).slice(0,3);
+    qs.push({word:w,options:shuffle([{text:w.en,correct:true},{text:wrongs[0].en,correct:false},{text:wrongs[1].en,correct:false},{text:wrongs[2].en,correct:false}]).map(function(o,i){return{text:o.text,correct:o.correct,letter:letters[i]}})});
+  }
+  return qs;
+}
+
+function playAudio(){
+  var w=state.questions[state.current].word;
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(w.es);
+    u.lang='es-ES';u.rate=0.8;
+    var btn=document.getElementById('playBtn');
+    btn.classList.add('playing');btn.textContent='\u25A0 Playing...';
+    u.onend=function(){btn.classList.remove('playing');btn.textContent='\u25B6 Play'};
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function startGame(tier){
+  state={tier:tier,questions:generateQuestions(tier),current:0,score:0,total:tierConfig[tier].count,answered:false};
+  var lbl=document.getElementById('tierLabel');lbl.textContent=tierConfig[tier].label;lbl.className='tier-label '+tierConfig[tier].cls;
+  showScreen('gameScreen');renderQuestion();
+}
+
+function renderQuestion(){
+  var q=state.questions[state.current];state.answered=false;
+  document.getElementById('qCounter').textContent='WORD '+(state.current+1)+' OF '+state.total;
+  document.getElementById('spanishWord').textContent=q.word.es;
+  document.getElementById('phoneticHint').textContent=q.word.ph;
+  document.getElementById('progressFill').style.width=((state.current)/state.total*100)+'%';
+  document.getElementById('signalFill').style.width=(state.score/state.total*100)+'%';
+  document.getElementById('signalPct').textContent=Math.round(state.score/state.total*100)+'%';
+  document.getElementById('scoreDisplay').innerHTML='Decrypted: <strong>'+state.score+'</strong> / '+state.current;
+  document.getElementById('nextBtn').style.display='none';
+  document.getElementById('playBtn').textContent='\u25B6 Play';document.getElementById('playBtn').classList.remove('playing');
+  var fb=document.getElementById('feedback');fb.style.display='none';fb.className='feedback';
+  var c=document.getElementById('optionsContainer');c.innerHTML='';
+  q.options.forEach(function(opt,i){
+    var d=document.createElement('div');d.className='option';d.dataset.letter=opt.letter;d.textContent=opt.text;
+    d.onclick=function(){selectAnswer(i,opt.correct,q.word)};c.appendChild(d);
+  });
+}
+
+function selectAnswer(idx,correct,word){
+  if(state.answered)return;state.answered=true;
+  var opts=document.querySelectorAll('.option');
+  opts.forEach(function(o,i){o.classList.add('disabled');var ic=state.questions[state.current].options[i].correct;if(i===idx)o.classList.add(correct?'correct':'wrong');else if(ic)o.classList.add('correct')});
+  if(correct)state.score++;
+  document.getElementById('signalFill').style.width=(state.score/state.total*100)+'%';
+  document.getElementById('signalPct').textContent=Math.round(state.score/state.total*100)+'%';
+  var fb=document.getElementById('feedback');fb.style.display='block';fb.className='feedback '+(correct?'correct-fb':'wrong-fb');
+  fb.innerHTML='<strong>'+(correct?'DECRYPTED \u2014 Signal fragment recovered':'STATIC \u2014 Signal lost on this frequency')+'</strong><br><b>'+word.es+'</b> = '+word.en+' (pronounced: '+word.ph+')';
+  document.getElementById('nextBtn').style.display='inline-block';
+  document.getElementById('nextBtn').textContent=state.current<state.total-1?'Next Word \u2192':'Decode Message \u2192';
+  document.getElementById('scoreDisplay').innerHTML='Decrypted: <strong>'+state.score+'</strong> / '+(state.current+1);
+}
+
+function nextQuestion(){state.current++;if(state.current>=state.total){showResults();return}renderQuestion()}
+
+function showResults(){
+  window.speechSynthesis.cancel();
+  showScreen('resultsScreen');
+  var pct=Math.round(state.score/state.total*100);
+  document.getElementById('rCorrect').textContent=state.score;
+  document.getElementById('rTotal').textContent=state.total;
+  document.getElementById('rPct').textContent=pct+'%';
+  var v='',note='';
+  if(pct>=80){v='SIGNAL FULLY DECRYPTED';note='Excellent work. Try the next tier for harder vocabulary.';}
+  else if(pct>=60){v='PARTIAL DECRYPTION \u2014 Signal fragmented';note='You decoded most of the transmission. Replay to strengthen your frequency.';}
+  else{v='SIGNAL LOST \u2014 Too much static';note='The transmission was too garbled. Practice this tier again to build your vocabulary.';}
+  document.getElementById('resultsVerdict').textContent=v;
+  document.getElementById('resultsNote').textContent=note;
+  document.getElementById('decodedText').textContent=pick(messages[state.tier]);
+}
+</script>
+</body>
+</html>
