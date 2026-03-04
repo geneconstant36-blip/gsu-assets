@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fog Detection — Thinkification Hub BookGame</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#0a1628;--deep:#162240;--teal:#1a6b5a;--mint:#2d9b7a;--bronze:#cd7f32;--silver:#8a8d8f;--gold:#daa520;--platinum:#4a6670;--cream:#f8f5ef;--paper:#fdfcf9;--ink:#1a1a1a;--red:#9b2226;--green:#2d6a4f;--amber:#d4a017}
+body{font-family:'Source Sans 3',sans-serif;background:var(--navy);color:var(--ink);min-height:100vh;overflow-x:hidden}
+.app{max-width:900px;margin:0 auto;min-height:100vh}
+.screen{display:none;min-height:100vh}.screen.active{display:flex}
+
+.geno-row{display:flex;gap:.8rem;align-items:flex-start;margin-bottom:1.2rem}
+.geno-avatar{width:48px;height:48px;border-radius:50%;border:2px solid var(--mint);flex-shrink:0;overflow:hidden;background:var(--navy)}
+.geno-avatar img{width:100%;height:100%;object-fit:cover}
+.geno-bubble{background:var(--deep);border:1px solid rgba(45,155,122,.3);border-radius:4px 12px 12px 12px;padding:.7rem 1rem;color:var(--cream);font-size:.85rem;line-height:1.5;max-width:85%;position:relative}
+.geno-bubble .name{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--mint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
+.geno-bubble.paper-bg{background:rgba(45,155,122,.06);border:1px solid rgba(45,155,122,.15);color:var(--ink)}
+
+.title-screen{flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;background:linear-gradient(160deg,#0a1628 0%,#162240 30%,#1a3a4a 100%);position:relative;overflow:hidden}
+.title-screen::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='15' y='50' font-size='40' fill='rgba(45,155,122,0.03)' font-family='serif'%3E%3F%3C/text%3E%3C/svg%3E") repeat}
+.icon-circle{width:110px;height:110px;border:3px solid var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:2.8rem;position:relative}
+.icon-circle::after{content:'';position:absolute;inset:-10px;border:1px solid rgba(45,155,122,.25);border-radius:50%;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
+.title-screen h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5.5vw,3.6rem);color:var(--cream);line-height:1.1;margin-bottom:.4rem;position:relative}
+.title-screen .sub{font-size:1.1rem;color:var(--mint);font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.2rem;position:relative}
+.title-screen p{color:rgba(248,245,239,.65);max-width:560px;line-height:1.7;font-size:.95rem;margin-bottom:1.5rem;position:relative}
+.tier-badges{display:flex;gap:.8rem;margin-bottom:2rem;flex-wrap:wrap;justify-content:center;position:relative}
+.tier-badge{padding:.35rem .9rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:2px}
+.tier-badge.bronze{color:var(--bronze);border-color:var(--bronze)}.tier-badge.silver{color:var(--silver);border-color:var(--silver)}.tier-badge.gold{color:var(--gold);border-color:var(--gold)}.tier-badge.plat{color:var(--platinum);border-color:var(--platinum)}
+.btn{font-family:'Source Sans 3',sans-serif;padding:.85rem 2.2rem;border:none;cursor:pointer;font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:all .25s;border-radius:3px;position:relative}
+.btn-primary{background:var(--mint);color:#fff}.btn-primary:hover{background:var(--teal);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--cream);border:1px solid rgba(248,245,239,.25)}.btn-outline:hover{border-color:var(--mint);color:var(--mint)}
+.stat-bar{display:flex;gap:2rem;margin-top:1.5rem;flex-wrap:wrap;justify-content:center;position:relative}
+.stat-item{text-align:center}.stat-item .num{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--mint)}.stat-item .label{font-size:.65rem;color:rgba(248,245,239,.45);letter-spacing:.1em;text-transform:uppercase}
+
+.briefing-screen{flex-direction:column;background:var(--navy);padding:2rem}
+.briefing-inner{max-width:640px;margin:0 auto;width:100%}
+.briefing-header{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--mint);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5rem;border-bottom:1px solid rgba(45,155,122,.2);padding-bottom:.5rem}
+.briefing-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--cream);margin-bottom:1rem}
+.briefing-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:2rem}
+.b-stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:.8rem;border-radius:4px;text-align:center;cursor:pointer;transition:all .2s}
+.b-stat:hover{border-color:var(--mint);transform:translateY(-2px)}
+.b-stat .val{font-family:'Playfair Display',serif;font-size:1.1rem}.b-stat .lbl{font-size:.55rem;color:rgba(248,245,239,.4);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem}
+.back-link{display:block;text-align:center;color:rgba(248,245,239,.4);font-size:.85rem;cursor:pointer;text-decoration:none;margin-top:1rem;padding:.5rem}.back-link:hover{color:var(--mint)}
+
+.game-screen{flex-direction:column;background:var(--paper)}
+.game-header{background:var(--navy);padding:.7rem 1.2rem;display:flex;align-items:center;gap:.8rem;position:sticky;top:0;z-index:10}
+.game-header .logo{font-family:'IBM Plex Mono',monospace;color:var(--mint);font-size:.8rem;font-weight:600}
+.game-header .tier-label{padding:.2rem .6rem;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;color:#fff}
+.tier-label.bronze-bg{background:var(--bronze)}.tier-label.silver-bg{background:var(--silver)}.tier-label.gold-bg{background:var(--gold);color:var(--navy)}.tier-label.plat-bg{background:var(--platinum)}
+.game-header .back-btn{color:rgba(248,245,239,.5);font-size:.75rem;cursor:pointer;text-decoration:none;border:1px solid rgba(248,245,239,.2);padding:.2rem .5rem;border-radius:3px;transition:all .2s}.game-header .back-btn:hover{color:var(--mint);border-color:var(--mint)}
+.hud{display:flex;gap:1rem;align-items:center;margin-left:auto;flex-wrap:wrap}
+.hud-item{font-size:.7rem;color:var(--cream)}.hud-item strong{color:var(--mint)}
+.streak-badge{background:var(--amber);color:var(--navy);padding:.15rem .5rem;border-radius:10px;font-size:.65rem;font-weight:700;animation:streakPop .3s ease}
+@keyframes streakPop{0%{transform:scale(0.5)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.progress-strip{height:3px;background:rgba(45,155,122,.12)}.progress-fill{height:100%;background:var(--mint);transition:width .5s}
+
+.game-body{flex:1;padding:1.5rem;max-width:720px;margin:0 auto;width:100%}
+.clarity-meter{background:var(--navy);border-radius:6px;padding:.6rem 1rem;margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
+.clarity-meter .label{color:var(--cream);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.clarity-bar{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.clarity-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--amber),var(--green));transition:width .5s;border-radius:3px}
+.clarity-pct{color:var(--mint);font-family:'IBM Plex Mono',monospace;font-size:.75rem;font-weight:600;min-width:35px;text-align:right}
+
+.interlude{background:var(--navy);border:1px solid rgba(45,155,122,.2);border-radius:6px;padding:1rem;margin-bottom:1rem;text-align:center}
+.interlude .phase{font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--mint);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.3rem}
+.interlude .msg{color:var(--cream);font-size:.9rem;line-height:1.4}
+
+.q-counter{font-size:.7rem;color:#888;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.q-text{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--navy);line-height:1.35;margin-bottom:1rem}
+.passage-box{background:var(--cream);border-left:4px solid var(--teal);padding:1rem 1.2rem;margin-bottom:1.2rem;line-height:1.7;font-size:.88rem;color:var(--ink);border-radius:0 4px 4px 0;position:relative}
+.passage-box::before{content:'INTERCEPTED TEXT';position:absolute;top:-.6rem;left:1rem;font-size:.55rem;letter-spacing:.15em;color:var(--teal);background:var(--paper);padding:0 .4rem;font-weight:700}
+.domain-tag{display:inline-block;background:rgba(45,155,122,.1);color:var(--teal);font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:2px;margin-bottom:.8rem}
+
+.options{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1rem}
+.option{padding:.75rem 1rem;border:2px solid #ddd;border-radius:4px;cursor:pointer;transition:all .2s;font-size:.88rem;line-height:1.4;background:#fff;color:var(--ink)}
+.option:hover{border-color:var(--teal);background:rgba(45,155,122,.03)}
+.option.correct{border-color:var(--green);background:rgba(45,106,79,.08);color:var(--green);font-weight:600}
+.option.wrong{border-color:var(--red);background:rgba(155,34,38,.06);color:var(--red)}
+.option.reveal{border-color:var(--green);background:rgba(45,106,79,.04)}
+.option.disabled{pointer-events:none;opacity:.7}
+
+.feedback{padding:.7rem 1rem;border-radius:4px;margin-bottom:.8rem;line-height:1.4;font-size:.82rem;display:none}
+.feedback.correct-fb{background:rgba(45,106,79,.07);border-left:4px solid var(--green);color:#1b4332}
+.feedback.wrong-fb{background:rgba(155,34,38,.05);border-left:4px solid var(--red);color:#5c1a00}
+.action-row{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+.btn-game{padding:.6rem 1.2rem;font-size:.8rem}
+
+.combo-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--amber);text-shadow:0 0 30px rgba(212,160,23,.5);pointer-events:none;animation:comboFade 1s ease forwards;z-index:100}
+@keyframes comboFade{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-60%) scale(1)}}
+
+.results-screen{flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;background:linear-gradient(160deg,#0a1628,#162240,#1a3a4a)}
+.results-screen h2{font-family:'Playfair Display',serif;color:var(--cream);font-size:2rem;margin-bottom:.4rem}
+.results-screen .verdict{font-size:.95rem;color:var(--mint);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;max-width:520px}
+.result-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:.8rem;border-radius:4px}
+.result-card .big{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--mint)}.result-card .sm{font-size:.6rem;color:rgba(248,245,239,.4);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem}
+.results-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.results-note{color:rgba(248,245,239,.5);font-size:.82rem;margin-top:1.2rem;max-width:420px}
+.cleared-msg{background:rgba(45,155,122,.1);border:1px solid var(--mint);padding:1rem;border-radius:4px;margin-bottom:1.5rem;max-width:500px}
+.cleared-msg .lbl{font-size:.65rem;color:var(--mint);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.cleared-msg .msg{font-family:'IBM Plex Mono',monospace;color:var(--cream);font-size:.9rem;line-height:1.5}
+
+@media(max-width:600px){.briefing-stats{grid-template-columns:repeat(2,1fr)}.results-grid{grid-template-columns:repeat(2,1fr)}.game-body{padding:1rem}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<div class="screen active" id="titleScreen"><div class="title-screen">
+  <div class="icon-circle">🌫️</div>
+  <h1>Fog Detection</h1>
+  <div class="sub">Thinkification Hub &bull; BookGame</div>
+  <div class="geno-row" style="position:relative;max-width:520px">
+    <div class="geno-avatar"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO"></div>
+    <div class="geno-bubble"><div class="name">G.E.N.O.</div>Agent, foggy writing is everywhere — in leases, ads, political speeches, and privacy policies. It's designed to confuse you. I'm going to show you real-world text samples and you'll identify the manipulation. Build detection streaks for bonus intel. Ready to see through the fog?</div>
+  </div>
+  <div class="tier-badges"><span class="tier-badge bronze">Bronze</span><span class="tier-badge silver">Silver</span><span class="tier-badge gold">Gold</span><span class="tier-badge plat">Platinum</span></div>
+  <button class="btn btn-primary" onclick="showScreen('briefingScreen')">Begin Fog Training</button>
+  <div class="stat-bar"><div class="stat-item"><div class="num">54%</div><div class="label">Adults Low Literacy</div></div><div class="stat-item"><div class="num">5</div><div class="label">Domains Covered</div></div><div class="stat-item"><div class="num">∞</div><div class="label">Fresh Questions</div></div></div>
+</div></div>
+
+<div class="screen" id="briefingScreen"><div class="briefing-screen">
+  <div class="briefing-inner">
+    <div class="briefing-header">/// FOG DETECTION BRIEFING — CLASSIFIED</div>
+    <div class="briefing-title">Select Clearance Level</div>
+    <div class="geno-row">
+      <div class="geno-avatar"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO"></div>
+      <div class="geno-bubble"><div class="name">G.E.N.O.</div>Each mission has 20+ fog samples to analyze. Spot manipulation techniques, weasel words, and logical fallacies. Build streaks of 3+ correct detections for combo multipliers. I'll coach you through the hard ones. The fog gets thicker at higher levels.</div>
+    </div>
+    <div class="briefing-stats">
+      <div class="b-stat" onclick="startMission('bronze')" style="border-color:var(--bronze)"><div class="val" style="color:var(--bronze)">Bronze</div><div class="lbl">20 Samples • Spot the Fog</div></div>
+      <div class="b-stat" onclick="startMission('silver')" style="border-color:var(--silver)"><div class="val" style="color:var(--silver)">Silver</div><div class="lbl">22 Samples • Classify It</div></div>
+      <div class="b-stat" onclick="startMission('gold')" style="border-color:var(--gold)"><div class="val" style="color:var(--gold)">Gold</div><div class="lbl">24 Samples • Counter It</div></div>
+      <div class="b-stat" onclick="startMission('platinum')" style="border-color:var(--platinum)"><div class="val" style="color:var(--platinum)">Platinum</div><div class="lbl">26 Samples • Full Audit</div></div>
+    </div>
+    <div style="font-size:.78rem;color:rgba(248,245,239,.4);text-align:center;margin-bottom:1rem">All tiers are open. Score 70% or higher to prove mastery. Every replay generates fresh questions.</div>
+    <a class="back-link" onclick="showScreen('titleScreen')">← Back to Title</a>
+  </div>
+</div></div>
+
+<div class="screen" id="gameScreen"><div class="game-screen">
+  <div class="game-header">
+    <a class="back-btn" onclick="confirmQuit()">← Quit</a>
+    <span class="logo">FOG://DETECT</span>
+    <span class="tier-label" id="tierLabel">BRONZE</span>
+    <div class="hud">
+      <div class="hud-item">Score: <strong id="hudScore">0</strong></div>
+      <div class="hud-item" id="streakDisplay"></div>
+    </div>
+  </div>
+  <div class="progress-strip"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="game-body">
+    <div class="clarity-meter"><span class="label">Clarity</span><div class="clarity-bar"><div class="clarity-fill" id="clarityFill" style="width:0%"></div></div><span class="clarity-pct" id="clarityPct">0%</span></div>
+    <div id="interludeArea"></div>
+    <div id="genoCoach"></div>
+    <div class="q-counter" id="qCounter"></div>
+    <div id="domainTag"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="passage-box" id="passageBox"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="action-row"><button class="btn btn-primary btn-game" id="nextBtn" onclick="nextQuestion()" style="display:none">Next →</button></div>
+  </div>
+</div></div>
+
+<div class="screen" id="resultsScreen"><div class="results-screen">
+  <h2 id="resultsTitle">Fog Analysis Complete</h2>
+  <div class="verdict" id="resultsVerdict"></div>
+  <div class="geno-row" style="max-width:500px;margin-bottom:1.5rem" id="genoResults"></div>
+  <div class="cleared-msg"><div class="lbl">Cognitive Status</div><div class="msg" id="clearedText"></div></div>
+  <div class="results-grid">
+    <div class="result-card"><div class="big" id="rCorrect">0</div><div class="sm">Detected</div></div>
+    <div class="result-card"><div class="big" id="rTotal">0</div><div class="sm">Samples</div></div>
+    <div class="result-card"><div class="big" id="rScore">0</div><div class="sm">Score</div></div>
+    <div class="result-card"><div class="big" id="rStreak">0</div><div class="sm">Best Streak</div></div>
+  </div>
+  <div class="results-btns"><button class="btn btn-primary" onclick="showScreen('briefingScreen')">New Mission</button><button class="btn btn-outline" onclick="showScreen('titleScreen')">Back to Title</button></div>
+  <div class="results-note" id="resultsNote"></div>
+</div></div>
+</div>
+
+<script>
+var GENO_IMG='https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png';
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t}return b}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function showScreen(id){var all=document.querySelectorAll('.screen');for(var i=0;i<all.length;i++) all[i].classList.remove('active');document.getElementById(id).classList.add('active')}
+function confirmQuit(){if(state.current>2){if(confirm('Abort mission? Progress will be lost.'))showScreen('briefingScreen')}else showScreen('briefingScreen')}
+function showGenoCoach(msg){document.getElementById('genoCoach').innerHTML='<div class="geno-row"><div class="geno-avatar"><img src="'+GENO_IMG+'" alt="GENO"></div><div class="geno-bubble paper-bg"><div class="name">G.E.N.O.</div>'+msg+'</div></div>'}
+function clearGenoCoach(){document.getElementById('genoCoach').innerHTML=''}
+function showCombo(text){var d=document.createElement('div');d.className='combo-popup';d.textContent=text;document.body.appendChild(d);setTimeout(function(){d.remove()},1200)}
+
+var P=[
+{text:"Act now \u2014 this limited-time offer expires at midnight! Our premium investment package guarantees returns of up to 15% annually with zero risk. Thousands of smart investors have already secured their financial future. Don\u2019t be left behind.",fog:["guarantees returns","zero risk","limited-time","Don\u2019t be left behind"],type:"urgency + false guarantee",fact:"None \u2014 no verifiable facts",opinion:"The entire passage is marketing assertion",domain:"Financial"},
+{text:"Your current plan charges a standard industry processing fee. By upgrading to our Gold tier, you\u2019ll enjoy reduced fees and priority service. Most customers find the upgrade pays for itself within the first billing cycle.",fog:["standard industry","most customers","pays for itself"],type:"fog language + social proof",fact:"'Your plan charges a processing fee' is verifiable",opinion:"'pays for itself' is unverified",domain:"Financial"},
+{text:"This introductory rate of 2.9% applies to your first six months. After the promotional period, the variable rate adjusts based on market conditions. A one-time activation fee of $49 ensures your account remains in good standing.",fog:["variable rate adjusts based on market conditions","ensures good standing"],type:"buried cost + vague terms",fact:"2.9% for six months; $49 fee",opinion:"'ensures good standing' implies undefined consequences",domain:"Financial"},
+{text:"Over 2 million families trust SecureShield for their home protection needs. Our patented technology detects threats 3x faster than conventional systems. Why would you risk your family\u2019s safety with anything less?",fog:["patented technology","3x faster","anything less"],type:"emotional manipulation + unverified stats",fact:"No statistics cite a verifiable source",opinion:"'Risk your family\u2019s safety' is emotional coercion",domain:"Financial"},
+{text:"Consolidate your student loans today and save up to $300 per month. Our advisors have helped over 50,000 graduates reduce their debt burden. Simple application, fast approval, no hidden fees.",fog:["save up to","no hidden fees","fast approval"],type:"weasel words + false simplicity",fact:"'up to' means any amount including zero",opinion:"'no hidden fees' is unverifiable without the contract",domain:"Financial"},
+{text:"The tenant agrees to maintain the premises in good condition and shall be responsible for all repairs under $500. The landlord reserves the right to enter with reasonable notice. Any disputes shall be settled through binding arbitration.",fog:["good condition","reasonable notice","binding arbitration"],type:"undefined terms + rights asymmetry",fact:"Tenant responsible for repairs under $500",opinion:"'good condition' and 'reasonable notice' are undefined",domain:"Legal"},
+{text:"By clicking 'I Agree,' you consent to the collection, storage, and sharing of your personal data with our trusted partners for improving your experience. You may opt out at any time by contacting support.",fog:["trusted partners","improving your experience","at any time"],type:"consent bundling + vague data usage",fact:"Data will be collected, stored, and shared",opinion:"'trusted partners' names nobody specific",domain:"Legal"},
+{text:"This agreement automatically renews for successive one-year terms unless either party provides written notice no fewer than 60 days prior to renewal. Early termination fees may apply.",fog:["may apply","successive one-year terms"],type:"auto-renewal trap + hidden penalties",fact:"60-day written notice required to cancel",opinion:"'may apply' gives no amount for termination fee",domain:"Legal"},
+{text:"The Company reserves the right to modify these terms at any time without prior notice. Continued use of the service constitutes acceptance of modified terms.",fog:["at any time","without prior notice","constitutes acceptance"],type:"unilateral amendment + passive consent",fact:"Terms can be changed",opinion:"You agree to unknown future changes by continuing to use the service",domain:"Legal"},
+{text:"Our education initiative will invest in the future of every child. By strengthening community partnerships and empowering local leaders, we can build schools that work for everyone.",fog:["invest in the future","empowering local leaders","work for everyone"],type:"fog language + empty promises",fact:"No specific policy, dollar amount, or measurable outcome",opinion:"Every sentence is aspiration without mechanism",domain:"Political"},
+{text:"Studies show that our approach reduces costs while improving outcomes. Independent experts agree this is the most effective strategy. Opposition to this plan is based on outdated thinking and special interests.",fog:["studies show","independent experts","outdated thinking","special interests"],type:"false authority + ad hominem",fact:"No specific studies or experts cited",opinion:"'special interests' is an unverified characterization",domain:"Political"},
+{text:"We will fight for hardworking families and stand up to the powerful interests that have rigged the system against you. It\u2019s time for real change \u2014 and I\u2019m the only one who can deliver it.",fog:["hardworking families","powerful interests","rigged the system","the only one"],type:"populist fog + messianic framing",fact:"None \u2014 zero specific policies",opinion:"Every claim is emotional assertion",domain:"Political"},
+{text:"Clinical trials demonstrate that NeuroVita\u2122 supports healthy brain function and may enhance memory and focus. This physician-recommended supplement has helped millions feel sharper. Individual results may vary.",fog:["supports healthy brain function","may enhance","physician-recommended","millions"],type:"weasel words + false authority",fact:"'Individual results may vary' \u2014 the only honest statement",opinion:"Every other claim uses hedging language",domain:"Medical"},
+{text:"Our advanced diagnostic screening uses AI-powered technology to identify potential health risks before symptoms appear. Early detection saves lives. Schedule your assessment today \u2014 because waiting could cost you everything.",fog:["potential health risks","AI-powered","could cost you everything"],type:"fear-based urgency + tech mystification",fact:"No accuracy rates, false-positive data, or peer review cited",opinion:"'could cost you everything' is emotional coercion",domain:"Medical"},
+{text:"This all-natural formula has been used for centuries in traditional medicine. Unlike synthetic pharmaceuticals, our product works with your body\u2019s own healing mechanisms. No prescription needed.",fog:["all-natural","centuries","works with your body","no prescription needed"],type:"appeal to nature + false dichotomy",fact:"None \u2014 'centuries' and 'all-natural' are not evidence of efficacy",opinion:"'works with your body' is meaningless without clinical data",domain:"Medical"},
+{text:"We value your privacy. This app collects only the data necessary to provide you with a personalized experience. By continuing to use this service, you agree to our updated privacy policy.",fog:["value your privacy","only the data necessary","personalized experience"],type:"privacy theater + passive consent",fact:"Data is collected; policy exists",opinion:"'only necessary data' is undefined",domain:"Digital"},
+{text:"Join 10 million users who have transformed their productivity! Our free tier includes everything you need. Upgrade anytime for premium features. Cancel anytime \u2014 no questions asked.",fog:["transformed their productivity","everything you need","no questions asked"],type:"social proof inflation + hidden upsell",fact:"A free tier exists; paid upgrade available",opinion:"'10 million users transformed' is unverifiable marketing",domain:"Digital"},
+{text:"Our algorithm learns your preferences to deliver content you\u2019ll love. The more you use it, the smarter it gets. Your data helps us serve you better \u2014 and it\u2019s always protected by industry-standard encryption.",fog:["content you\u2019ll love","smarter it gets","serve you better","industry-standard"],type:"anthropomorphized tech + vague security claims",fact:"An algorithm processes your data",opinion:"'industry-standard' does not specify which standard or what\u2019s actually encrypted",domain:"Digital"},
+{text:"This property is a rare investment opportunity in a rapidly appreciating market. Similar homes in the area have sold for 20% above asking price. Don\u2019t wait \u2014 inventory is at historic lows.",fog:["rare opportunity","rapidly appreciating","historic lows"],type:"artificial scarcity + selection bias",fact:"None \u2014 'similar homes' data is cherry-picked without source",opinion:"'Don\u2019t wait' is urgency manipulation, not financial advice",domain:"Financial"},
+{text:"Our children deserve better. The current system has failed them. We need bold leadership and innovative solutions, not the same old tired ideas from career politicians who have never held a real job.",fog:["deserve better","bold leadership","innovative solutions","real job"],type:"emotional framing + ad hominem",fact:"None \u2014 no specific policy or measurable proposal",opinion:"'career politicians' and 'real job' are undefined attacks",domain:"Political"}
+];
+
+var genoCoaching={
+streak3:["Three clean detections! Your fog radar is warming up.","3x combo! You\u2019re seeing through the noise now.","Hat trick! The manipulation can\u2019t hide from you."],
+streak5:["Five-streak! Agent, your cognitive defenses are strong.","Impresionante! Five consecutive detections. The fog is clearing.","Five in a row \u2014 you\u2019re operating at analyst level."],
+streak8:["EIGHT straight! You\u2019re not just detecting fog \u2014 you\u2019re immune to it.","Legendary clarity! I\u2019ve never seen fog burned off this fast."],
+wrong:["The fog got through on that one. Study the highlighted answer \u2014 the pattern will click.","Missed detection. That\u2019s exactly how fog works \u2014 it\u2019s designed to slip past.","Static in your signal. The correct answer shows you what to watch for next time."],
+phase2:["Phase 2 \u2014 the fog gets thicker here. Multiple techniques per passage.","Deeper into the fog now. Watch for layered manipulation."],
+phase3:["Final phase. Expert-level fog. If you can see through this, nobody can fool you.","Last stretch, Agent. These are the passages that fool professionals."],
+missionStart:["Fog frequencies open. First sample incoming. Read carefully \u2014 the devil is in the details.","Mission active. Every passage contains real-world manipulation. Find it."]
+};
+
+var verdicts={
+bronze:["COGNITIVE CLARITY: BASIC \u2014 You can spot obvious fog. Keep training to detect subtle manipulation.","FOG AWARENESS: ACTIVATED \u2014 Your brain is learning to question what it reads."],
+silver:["COGNITIVE CLARITY: INTERMEDIATE \u2014 You can classify fog types. Contracts and ads are getting easier to read.","FOG CLASSIFICATION: ONLINE \u2014 You\u2019re not just detecting \u2014 you\u2019re categorizing."],
+gold:["COGNITIVE CLARITY: ADVANCED \u2014 You can counter manipulation strategies. Few documents will fool you.","FOG IMMUNITY: GROWING \u2014 You see what most readers miss."],
+platinum:["COGNITIVE CLARITY: SOVEREIGN \u2014 Full fog immunity achieved. You are thinking at the highest level.","FOG MASTERY: COMPLETE \u2014 No lease, no ad, no speech can manipulate you without your consent."]
+};
+
+var letters=['A','B','C','D'];
+
+function genQ(tier,p){
+  var fogPhrase=pick(p.fog);
+  var fc=p.fog.length;
+  if(tier==='bronze'){
+    var types=[
+      function(){return{q:"Identify the fog language \u2014 which phrase hides meaning behind vagueness?",opts:shuffle([{text:'\u201c'+fogPhrase+'\u201d',correct:true},{text:'\u201c'+p.text.split(' ').slice(0,4).join(' ')+'\u2026\u201d',correct:false},{text:"No fog language in this passage",correct:false},{text:"All phrases are equally clear",correct:false}]),ex:'\u201c'+fogPhrase+'\u201d is fog \u2014 sounds specific, defines nothing. Type: '+p.type+'.'}},
+      function(){return{q:"Which best describes the factual content of this passage?",opts:shuffle([{text:p.fact,correct:true},{text:"Every claim is backed by evidence",correct:false},{text:p.opinion,correct:false},{text:"Entirely neutral reporting",correct:false}]),ex:'Factual content: \u201c'+p.fact+'\u201d. The rest relies on '+p.type+'.'}},
+      function(){return{q:"What is this passage primarily trying to make you FEEL?",opts:shuffle([{text:"Urgency, fear, or pressure to act without thinking",correct:p.type.indexOf('urgency')>=0||p.type.indexOf('fear')>=0||p.type.indexOf('emotional')>=0},{text:"Trust through vague reassurance",correct:p.type.indexOf('fog')>=0||p.type.indexOf('privacy')>=0||p.type.indexOf('social proof')>=0},{text:"Nothing \u2014 it\u2019s purely informational",correct:false},{text:"Intellectual curiosity and critical engagement",correct:false}]),ex:'This passage uses '+p.type+' to bypass your critical thinking. Recognizing the emotional target is the first step to fog immunity.'}}
+    ];
+    return pick(types)();
+  }
+  if(tier==='silver'){
+    var types=[
+      function(){return{q:"How many fog phrases or manipulation techniques appear in this passage?",opts:shuffle([{text:fc+' \u2014 including \u201c'+p.fog.slice(0,2).join('\u201d, \u201c')+'\u201d',correct:true},{text:"1 \u2014 mostly transparent",correct:false},{text:(fc+3)+' \u2014 nearly every word',correct:false},{text:"0 \u2014 straightforward text",correct:false}]),ex:'Contains '+fc+' fog phrases: \u201c'+p.fog.join('\u201d, \u201c')+'\u201d. Type: '+p.type+'.'}},
+      function(){return{q:"Classify the primary manipulation strategy in this passage.",opts:shuffle([{text:p.type,correct:true},{text:"Straightforward persuasion \u2014 no manipulation",correct:false},{text:"Statistical fraud \u2014 fabricated numbers",correct:false},{text:"Subliminal messaging in sentence structure",correct:false}]),ex:'Primary manipulation: '+p.type+'. Fog phrases: \u201c'+p.fog.join('\u201d, \u201c')+'\u201d.'}},
+      function(){var fp2=p.fog.length>1?p.fog[1]:p.fog[0];return{q:"Which phrase in this passage creates a FALSE sense of authority or credibility?",opts:shuffle([{text:'\u201c'+fp2+'\u201d',correct:true},{text:'\u201c'+p.text.split('.')[0].split(' ').slice(-3).join(' ')+'\u201d',correct:false},{text:"No false authority \u2014 all claims are sourced",correct:false},{text:"The entire passage is authoritative",correct:false}]),ex:'\u201c'+fp2+'\u201d creates false authority. No source, no citation, no verifiable basis. Type: '+p.type+'.'};}
+    ];
+    return pick(types)();
+  }
+  if(tier==='gold'){
+    var types=[
+      function(){return{q:"What specific evidence is MISSING that would make this passage trustworthy?",opts:shuffle([{text:"Verifiable data, source citations, and defined terms",correct:true},{text:"Nothing \u2014 the passage provides all necessary evidence",correct:false},{text:"Only a bibliography is missing",correct:false},{text:"The writing style is the only issue",correct:false}]),ex:'Missing: verifiable data, named sources, defined terms. Fog phrases: \u201c'+p.fog.join('\u201d, \u201c')+'\u201d. Type: '+p.type+'.'}},
+      function(){return{q:"If you had to counter this passage in a debate, what would you challenge FIRST?",opts:shuffle([{text:"Demand the specific source or data behind \u201c"+fogPhrase+"\u201d",correct:true},{text:"Accept the premises and argue the conclusion",correct:false},{text:"Attack the author\u2019s character",correct:false},{text:"Present your own unsupported counter-claims",correct:false}]),ex:'The strongest counter is demanding evidence for \u201c'+fogPhrase+'\u201d. Without sources, the entire argument collapses. Never accept fog as a premise.'}},
+      function(){return{q:"Who BENEFITS from you accepting this passage uncritically?",opts:shuffle([{text:"The author/organization making the claim",correct:true},{text:"The general public",correct:false},{text:"Independent fact-checkers",correct:false},{text:"No one \u2014 it\u2019s neutral information",correct:false}]),ex:'The author benefits from your uncritical acceptance. '+p.type+' is designed to bypass your defenses. Always ask: who profits if I believe this?'};}
+    ];
+    return pick(types)();
+  }
+  // platinum
+  var types=[
+    function(){return{q:"Full Fog Audit: identify type, count fog phrases, state factual content, and determine if any claim survives scrutiny.",opts:shuffle([{text:"Type: "+p.type+". Fog: "+fc+" phrases. Fact: "+p.fact+". Claims do not survive.",correct:true},{text:"Manipulative but harmless \u2014 no action needed.",correct:false},{text:"All claims false. Classify as disinformation.",correct:false},{text:"Contains some fog but generally trustworthy.",correct:false}]),ex:'Full audit: Type: '+p.type+'. Fog: \u201c'+p.fog.join('\u201d, \u201c')+'\u201d. Fact: '+p.fact+'. '+p.opinion+'. No claim survives without independent verification.'}},
+    function(){return{q:"Rate the fog DENSITY of this passage on a scale. How much of the text is manipulation vs. information?",opts:shuffle([{text:"80%+ fog \u2014 nearly every sentence contains manipulation",correct:fc>=3},{text:"50% fog \u2014 mixed facts and manipulation",correct:fc===2},{text:"20% fog \u2014 mostly factual with minor fog",correct:false},{text:"0% fog \u2014 completely transparent text",correct:false}]),ex:'This passage has '+fc+' fog phrases across '+p.text.split('.').length+' sentences. Fog density is high. Type: '+p.type+'.'}},
+    function(){return{q:"If this passage appeared in a contract you were about to sign, what would you do?",opts:shuffle([{text:"Refuse to sign until every vague term is defined in writing",correct:true},{text:"Sign it \u2014 it uses standard legal language",correct:false},{text:"Ask a friend what they think",correct:false},{text:"Sign but keep a copy for your records",correct:false}]),ex:'Never sign a document with undefined terms like \u201c'+fogPhrase+'\u201d. Demand written definitions before committing. This is how sovereign thinkers protect themselves.'};}
+  ];
+  return pick(types)();
+}
+
+var tierConfig={bronze:{count:20,label:'BRONZE',cls:'bronze-bg'},silver:{count:22,label:'SILVER',cls:'silver-bg'},gold:{count:24,label:'GOLD',cls:'gold-bg'},platinum:{count:26,label:'PLATINUM',cls:'plat-bg'}};
+var state={tier:'bronze',questions:[],current:0,score:0,total:0,answered:false,streak:0,bestStreak:0,phase:1};
+
+function startMission(tier){
+  var pool=shuffle(P);
+  var qs=[];
+  var count=tierConfig[tier].count;
+  for(var i=0;i<count;i++){
+    var p=pool[i%pool.length];
+    var g=genQ(tier,p);
+    qs.push({question:g.q,passage:p.text,domain:p.domain,options:g.opts.map(function(o,j){return{text:o.text,correct:o.correct,letter:letters[j]}}),explanation:g.ex});
+  }
+  state={tier:tier,questions:qs,current:0,score:0,total:count,answered:false,streak:0,bestStreak:0,phase:1};
+  var lbl=document.getElementById('tierLabel');lbl.textContent=tierConfig[tier].label;lbl.className='tier-label '+tierConfig[tier].cls;
+  showScreen('gameScreen');
+  showGenoCoach(pick(genoCoaching.missionStart));
+  renderQuestion();
+}
+
+function getPhase(){var pct=state.current/state.total;if(pct<0.33)return 1;if(pct<0.66)return 2;return 3}
+
+function renderQuestion(){
+  var q=state.questions[state.current];state.answered=false;
+  var newPhase=getPhase();var il=document.getElementById('interludeArea');
+  if(newPhase!==state.phase&&state.current>0){state.phase=newPhase;var pm=newPhase===2?pick(genoCoaching.phase2):pick(genoCoaching.phase3);il.innerHTML='<div class="interlude"><div class="phase">/// Phase '+newPhase+' of 3</div><div class="msg">'+pm+'</div></div>';showGenoCoach(pm)}else if(state.current>0){il.innerHTML='';clearGenoCoach()}
+  document.getElementById('qCounter').textContent='SAMPLE '+(state.current+1)+' OF '+state.total+' \u2022 PHASE '+getPhase();
+  document.getElementById('domainTag').innerHTML='<span class="domain-tag">'+q.domain+'</span>';
+  document.getElementById('qText').textContent=q.question;
+  document.getElementById('passageBox').textContent=q.passage;
+  document.getElementById('progressFill').style.width=((state.current)/state.total*100)+'%';
+  document.getElementById('clarityFill').style.width=(Math.min(state.score,state.total)/state.total*100)+'%';
+  document.getElementById('clarityPct').textContent=Math.round(Math.min(state.score,state.total)/state.total*100)+'%';
+  document.getElementById('hudScore').textContent=state.score;
+  document.getElementById('streakDisplay').innerHTML=state.streak>=3?'<span class="streak-badge">\uD83D\uDD25 '+state.streak+'x</span>':'';
+  document.getElementById('nextBtn').style.display='none';
+  var fb=document.getElementById('feedback');fb.style.display='none';fb.className='feedback';
+  var c=document.getElementById('optionsContainer');c.innerHTML='';
+  q.options.forEach(function(opt,i){var d=document.createElement('div');d.className='option';d.textContent=opt.text;d.onclick=function(){selectAnswer(i,opt.correct,q.explanation)};c.appendChild(d)});
+}
+
+function selectAnswer(idx,correct,explanation){
+  if(state.answered)return;state.answered=true;
+  var opts=document.querySelectorAll('.option');
+  opts.forEach(function(o,i){o.classList.add('disabled');var ic=state.questions[state.current].options[i].correct;if(i===idx)o.classList.add(correct?'correct':'wrong');else if(ic)o.classList.add('reveal')});
+  var bonus=0;
+  if(correct){state.streak++;if(state.streak>state.bestStreak)state.bestStreak=state.streak;bonus=state.streak>=5?3:state.streak>=3?2:1;state.score+=bonus;
+    if(state.streak===3){showCombo('3x COMBO!');showGenoCoach(pick(genoCoaching.streak3))}
+    else if(state.streak===5){showCombo('5x STREAK!');showGenoCoach(pick(genoCoaching.streak5))}
+    else if(state.streak===8){showCombo('8x LEGENDARY!');showGenoCoach(pick(genoCoaching.streak8))}
+    else clearGenoCoach();
+  }else{state.streak=0;showGenoCoach(pick(genoCoaching.wrong))}
+  document.getElementById('clarityFill').style.width=(Math.min(state.score,state.total)/state.total*100)+'%';
+  document.getElementById('clarityPct').textContent=Math.round(Math.min(state.score,state.total)/state.total*100)+'%';
+  document.getElementById('hudScore').textContent=state.score;
+  document.getElementById('streakDisplay').innerHTML=state.streak>=3?'<span class="streak-badge">\uD83D\uDD25 '+state.streak+'x</span>':'';
+  var fb=document.getElementById('feedback');fb.style.display='block';fb.className='feedback '+(correct?'correct-fb':'wrong-fb');
+  var bt=bonus>1?' (+'+bonus+' combo bonus!)':'';
+  fb.innerHTML='<strong>'+(correct?'FOG DETECTED'+bt:'MISSED \u2014 Fog slipped through')+'</strong><br>'+explanation;
+  document.getElementById('nextBtn').style.display='inline-block';
+  document.getElementById('nextBtn').textContent=state.current<state.total-1?'Next Sample \u2192':'Final Report \u2192';
+}
+
+function nextQuestion(){state.current++;if(state.current>=state.total){showResults();return}renderQuestion()}
+
+function showResults(){
+  showScreen('resultsScreen');
+  var pct=Math.round(Math.min(state.score,state.total)/state.total*100);
+  document.getElementById('rCorrect').textContent=Math.min(state.score,state.total);
+  document.getElementById('rTotal').textContent=state.total;
+  document.getElementById('rScore').textContent=state.score;
+  document.getElementById('rStreak').textContent=state.bestStreak;
+  var v='',note='',geno='',cleared='';
+  if(pct>=80){v='FOG IMMUNITY CONFIRMED';note='Outstanding. Try the next tier for thicker fog.';geno='Agent, your cognitive defenses are exceptional. The fog cannot touch you at this level. Advance when ready.';cleared=pick(verdicts[state.tier])}
+  else if(pct>=60){v='PARTIAL CLARITY';note='Good detection but some fog got through. Replay to sharpen your skills.';geno='Solid work, Agent. You caught most of the fog, but a few techniques slipped past. Another round will lock it in.';cleared='Clarity rating: Developing. Additional training recommended before advancing.'}
+  else{v='FOG EXPOSURE DETECTED';note='The fog got through too often. Practice this tier to build immunity.';geno='Don\u2019t be discouraged, Agent. Fog is designed to fool smart people. Every detection you make rewires your brain. Try again.';cleared='Clarity rating: Vulnerable. Replay this tier to build foundational detection skills.'}
+  document.getElementById('resultsVerdict').textContent=v;
+  document.getElementById('resultsNote').textContent=note;
+  document.getElementById('clearedText').textContent=cleared;
+  document.getElementById('genoResults').innerHTML='<div class="geno-avatar"><img src="'+GENO_IMG+'" alt="GENO"></div><div class="geno-bubble"><div class="name">G.E.N.O.</div>'+geno+'</div>';
+}
+</script>
+</body>
+</html>
