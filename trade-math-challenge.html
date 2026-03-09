@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Math Challenge | GSU Tradification</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:linear-gradient(135deg,#0a192f 0%,#112240 60%,#0a192f 100%);min-height:100vh;color:#e2e8f0;display:flex;flex-direction:column;align-items:center;padding:20px}
+.game-header{text-align:center;margin-bottom:24px;width:100%;max-width:700px}
+.game-title{font-family:'Orbitron',monospace;font-size:clamp(1.4rem,4vw,2.2rem);color:#f97316;text-shadow:0 0 20px rgba(249,115,22,0.4);margin-bottom:6px}
+.game-subtitle{color:#06b6d4;font-size:.85rem;letter-spacing:2px;text-transform:uppercase}
+.badge-bar{display:flex;justify-content:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.badge{display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.35;transition:opacity .4s,transform .3s}
+.badge.earned{opacity:1;transform:scale(1.1)}
+.badge-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;border:2px solid}
+.badge-bronze .badge-icon{background:rgba(205,127,50,.2);border-color:#cd7f32}
+.badge-silver .badge-icon{background:rgba(192,192,192,.2);border-color:#c0c0c0}
+.badge-gold .badge-icon{background:rgba(249,115,22,.2);border-color:#f97316}
+.badge-plat .badge-icon{background:rgba(6,182,212,.2);border-color:#06b6d4}
+.badge-label{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#8892b0;text-align:center}
+.progress-row{width:100%;max-width:700px;display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.progress-track{flex:1;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#f97316,#06b6d4);border-radius:4px;transition:width .4s ease;width:0%}
+.progress-label{font-family:monospace;font-size:12px;color:#8892b0;white-space:nowrap}
+.score-row{display:flex;gap:24px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.score-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 20px;text-align:center}
+.score-num{font-family:'Orbitron',monospace;font-size:1.6rem;color:#f97316}
+.score-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#8892b0}
+.question-card{width:100%;max-width:700px;background:rgba(255,255,255,.04);border:1px solid rgba(249,115,22,.25);border-radius:16px;padding:32px 28px;margin-bottom:20px;text-align:center}
+.q-number{font-family:monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#f97316;margin-bottom:12px}
+.q-text{font-size:clamp(.95rem,3vw,1.25rem);font-weight:700;color:#fff;line-height:1.6;min-height:60px;display:flex;align-items:center;justify-content:center}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:700px;margin-bottom:20px}
+.ans-btn{background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 12px;font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:600;color:#e2e8f0;cursor:pointer;transition:all .2s;min-height:60px}
+.ans-btn:hover:not(:disabled){background:rgba(249,115,22,.15);border-color:#f97316;transform:translateY(-2px)}
+.ans-btn.correct{background:rgba(34,197,94,.2);border-color:#22c55e;color:#22c55e}
+.ans-btn.wrong{background:rgba(239,68,68,.15);border-color:#ef4444;color:#ef4444}
+.ans-btn:disabled{cursor:default}
+.feedback{width:100%;max-width:700px;background:rgba(255,255,255,.04);border-radius:12px;padding:16px 20px;margin-bottom:16px;font-size:.9rem;color:#cbd5e1;line-height:1.5;min-height:56px;display:flex;align-items:center;border-left:4px solid transparent;transition:border-color .3s}
+.feedback.show-correct{border-left-color:#22c55e}
+.feedback.show-wrong{border-left-color:#ef4444}
+.control-row{display:flex;gap:12px;justify-content:center;width:100%;max-width:700px;margin-bottom:24px;flex-wrap:wrap}
+.btn{padding:14px 28px;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:1px;cursor:pointer;border:none;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#f97316,#c2410c);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(249,115,22,.3)}
+.btn-secondary{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#e2e8f0}
+.btn-secondary:hover{background:rgba(255,255,255,.14)}
+.geno-bar{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(249,115,22,.2);border-radius:12px;padding:10px 16px;width:100%;max-width:700px;margin-bottom:24px;cursor:pointer;transition:background .2s}
+.geno-bar:hover{background:rgba(255,255,255,.08)}
+.geno-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #f97316}
+.geno-text{font-size:.82rem;color:#8892b0;flex:1}
+.geno-status{font-family:monospace;font-size:10px;color:#06b6d4;letter-spacing:1px;text-transform:uppercase}
+.summary{display:none;width:100%;max-width:700px;background:rgba(255,255,255,.04);border:1px solid rgba(249,115,22,.3);border-radius:20px;padding:40px 32px;text-align:center}
+.summary h2{font-family:'Orbitron',monospace;color:#f97316;font-size:1.8rem;margin-bottom:12px}
+.summary-score{font-size:3rem;font-weight:800;color:#06b6d4;margin:16px 0}
+.earned-badges{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:24px 0}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="game-header">
+  <div class="game-title">🔧 Trade Math Challenge</div>
+  <div class="game-subtitle">Tradification · GSU · Adult Level · 60 Questions</div>
+</div>
+<div class="badge-bar">
+  <div class="badge badge-bronze" id="badge-bronze"><div class="badge-icon">🥉</div><div class="badge-label">Bronze<br>Q15</div></div>
+  <div class="badge badge-silver" id="badge-silver"><div class="badge-icon">🥈</div><div class="badge-label">Silver<br>Q30</div></div>
+  <div class="badge badge-gold" id="badge-gold"><div class="badge-icon">🥇</div><div class="badge-label">Gold<br>Q45</div></div>
+  <div class="badge badge-plat" id="badge-plat"><div class="badge-icon">💎</div><div class="badge-label">Platinum<br>Q60</div></div>
+</div>
+<div class="progress-row">
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label">0 / 60</div>
+</div>
+<div class="score-row">
+  <div class="score-box"><div class="score-num" id="score-correct">0</div><div class="score-lbl">Correct</div></div>
+  <div class="score-box"><div class="score-num" id="score-streak">0</div><div class="score-lbl">Streak 🔥</div></div>
+  <div class="score-box"><div class="score-num" id="score-total">0</div><div class="score-lbl">Answered</div></div>
+</div>
+<div class="geno-bar" id="geno-bar" onclick="genoSpeak()">
+  <img class="geno-avatar" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+  <div class="geno-text" id="geno-text">Hi! I'm GENO. Click me to hear the question read aloud.</div>
+  <div class="geno-status" id="geno-status">🔊 Ready</div>
+</div>
+<div class="question-card" id="question-card">
+  <div class="q-number" id="q-number">Question 1 of 60</div>
+  <div class="q-text" id="q-text">Loading…</div>
+</div>
+<div class="answers" id="answers"></div>
+<div class="feedback" id="feedback"></div>
+<div class="control-row">
+  <button class="btn btn-primary hidden" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+  <button class="btn btn-secondary" onclick="restartGame()">↺ Restart</button>
+</div>
+<div class="summary" id="summary">
+  <div style="font-size:3rem">🎉</div>
+  <h2>Challenge Complete!</h2>
+  <div class="summary-score" id="final-score">0 / 60</div>
+  <div id="final-badges" class="earned-badges"></div>
+  <p style="color:#8892b0;margin-bottom:24px" id="final-msg"></p>
+  <button class="btn btn-primary" onclick="restartGame()">Play Again</button>
+</div>
+<script>
+const ALL_QUESTIONS=[
+  // Measurement & conversion
+  {q:"A plumber needs 3 sections of pipe, each 4.5 feet long. How many total feet?",a:"13.5 ft",c:["13.5 ft","12 ft","14 ft","13 ft"]},
+  {q:"How many inches are in 6.5 feet?",a:"78 inches",c:["78 inches","72 inches","76 inches","80 inches"]},
+  {q:"A room is 12 feet wide. How many inches is that?",a:"144 inches",c:["144 inches","120 inches","132 inches","148 inches"]},
+  {q:"You need 8 boards, each 2.25 feet. What is the total length?",a:"18 ft",c:["18 ft","16 ft","20 ft","17 ft"]},
+  {q:"Convert 36 inches to feet.",a:"3 feet",c:["3 feet","2.5 feet","4 feet","3.5 feet"]},
+  // Area
+  {q:"A wall is 10 ft wide and 8 ft tall. What is the area?",a:"80 sq ft",c:["80 sq ft","18 sq ft","72 sq ft","90 sq ft"]},
+  {q:"A floor is 15 ft × 12 ft. What is the area?",a:"180 sq ft",c:["180 sq ft","162 sq ft","200 sq ft","27 sq ft"]},
+  {q:"If tile costs $3.50 per sq ft and you need 80 sq ft, what is the cost?",a:"$280",c:["$280","$240","$300","$350"]},
+  {q:"A rectangular room is 9 ft × 11 ft. What is the area?",a:"99 sq ft",c:["99 sq ft","90 sq ft","20 sq ft","108 sq ft"]},
+  {q:"You need to paint a 12 ft × 9 ft wall. One gallon covers 400 sq ft. Do you need more than 1 gallon?",a:"No — 108 sq ft",c:["No — 108 sq ft","Yes — 108 sq ft","Yes — 216 sq ft","No — 216 sq ft"]},
+  // Perimeter & framing
+  {q:"A room is 14 ft × 10 ft. How many feet of baseboard do you need?",a:"48 ft",c:["48 ft","140 ft","44 ft","52 ft"]},
+  {q:"A fence surrounds a yard 30 ft × 20 ft. How many feet of fencing?",a:"100 ft",c:["100 ft","600 ft","50 ft","120 ft"]},
+  {q:"Door trim costs $2.25 per foot. A door needs 20 feet of trim. Total cost?",a:"$45",c:["$45","$40","$50","$42"]},
+  // Fractions in trades
+  {q:"A pipe is 5/8 inch diameter. A fitting needs 3/4 inch. Will the pipe fit?",a:"No — pipe is too small",c:["No — pipe is too small","Yes — it fits","Yes — with padding","Cannot determine"]},
+  {q:"You cut a 12-foot board into pieces of 1.5 feet each. How many pieces?",a:"8 pieces",c:["8 pieces","6 pieces","10 pieces","7 pieces"]},
+  {q:"A 10-foot pipe is cut in half. Each half is cut into thirds. How long is each piece?",a:"20 inches",c:["20 inches","24 inches","18 inches","15 inches"]},
+  // Electrical
+  {q:"A 20-amp circuit runs at 120 volts. What is the wattage? (W = A × V)",a:"2400 watts",c:["2400 watts","2000 watts","1200 watts","2600 watts"]},
+  {q:"A circuit is rated at 15 amps. At 80% load, what is the safe amperage?",a:"12 amps",c:["12 amps","13 amps","10 amps","15 amps"]},
+  {q:"Wire costs $0.45 per foot. You need 250 feet. What is the cost?",a:"$112.50",c:["$112.50","$100","$125","$115"]},
+  {q:"You have 3 outlets drawing 4 amps, 6 amps, and 8 amps. Total draw?",a:"18 amps",c:["18 amps","16 amps","20 amps","14 amps"]},
+  // Plumbing
+  {q:"A tank holds 50 gallons. It fills at 2.5 gallons per minute. How long to fill?",a:"20 minutes",c:["20 minutes","25 minutes","15 minutes","22 minutes"]},
+  {q:"A drain pipe has a slope of 1/4 inch per foot. Over 16 feet, what is the total drop?",a:"4 inches",c:["4 inches","3 inches","5 inches","6 inches"]},
+  {q:"Pipe costs $1.75 per foot. You need 36 feet. What is the material cost?",a:"$63",c:["$63","$54","$72","$70"]},
+  {q:"A toilet uses 1.6 gallons per flush. Used 10 times per day — gallons per month (30 days)?",a:"480 gallons",c:["480 gallons","160 gallons","320 gallons","500 gallons"]},
+  // HVAC
+  {q:"A room is 300 sq ft. HVAC rule: 20 BTU per sq ft. How many BTUs needed?",a:"6000 BTU",c:["6000 BTU","3000 BTU","9000 BTU","12000 BTU"]},
+  {q:"Ductwork costs $4.50 per linear foot. You need 80 feet. Total cost?",a:"$360",c:["$360","$320","$400","$380"]},
+  // Carpentry
+  {q:"You need to cut a 2×4 at a 45-degree angle for a corner. How many cuts for 4 corners?",a:"8 cuts",c:["8 cuts","4 cuts","6 cuts","10 cuts"]},
+  {q:"Lumber is priced at $0.65 per linear foot. You need ten 8-foot boards. Total cost?",a:"$52",c:["$52","$48","$56","$65"]},
+  {q:"A deck is 12 ft × 16 ft. Decking boards are 6 inches wide. How many boards for one row across 12 ft?",a:"24 boards",c:["24 boards","12 boards","16 boards","20 boards"]},
+  {q:"You nail every 8 inches along a 16-foot board. Starting at one end, how many nails?",a:"25 nails",c:["25 nails","24 nails","23 nails","26 nails"]},
+  // Welding
+  {q:"You weld at 6 inches per minute. A joint is 4.5 feet long. How many minutes?",a:"9 minutes",c:["9 minutes","8 minutes","10 minutes","7 minutes"]},
+  {q:"Welding rod costs $3.20 each. You use 15 rods per project. Cost per project?",a:"$48",c:["$48","$45","$52","$40"]},
+  // Estimation
+  {q:"Labor is $45/hour. A job takes 6.5 hours. Total labor cost?",a:"$292.50",c:["$292.50","$270","$315","$285"]},
+  {q:"Materials cost $380 and labor is $540. What is the total job cost?",a:"$920",c:["$920","$880","$940","$900"]},
+  {q:"You quote a job at $1,200. Materials cost $450. What is your gross profit?",a:"$750",c:["$750","$700","$800","$650"]},
+  {q:"A contractor adds 15% overhead to all jobs. A job costs $800. What is the overhead charge?",a:"$120",c:["$120","$80","$160","$100"]},
+  // Unit price & ordering
+  {q:"Concrete costs $120 per cubic yard. You need 4.5 cubic yards. Total cost?",a:"$540",c:["$540","$480","$600","$520"]},
+  {q:"Screws come in boxes of 100 for $4.80. You need 350 screws. How many boxes?",a:"4 boxes",c:["4 boxes","3 boxes","5 boxes","3.5 boxes"]},
+  {q:"Paint covers 350 sq ft per gallon. Your surface is 1,400 sq ft. How many gallons?",a:"4 gallons",c:["4 gallons","3 gallons","5 gallons","6 gallons"]},
+  {q:"Insulation covers 40 sq ft per bag. A wall area is 280 sq ft. How many bags?",a:"7 bags",c:["7 bags","6 bags","8 bags","10 bags"]},
+  // Safety
+  {q:"A ladder safety rule: the base should be 1 foot out for every 4 feet of height. For a 16-foot wall, how far out?",a:"4 feet",c:["4 feet","3 feet","5 feet","2 feet"]},
+  {q:"Load limit on a scaffold is 750 lbs. Two workers weigh 185 and 210 lbs with 280 lbs of tools. Is it safe?",a:"Yes — 675 lbs total",c:["Yes — 675 lbs total","No — 775 lbs total","Yes — 395 lbs total","No — 680 lbs total"]},
+  // Time & scheduling
+  {q:"A project needs 40 hours. You work 8 hours/day. How many days?",a:"5 days",c:["5 days","4 days","6 days","8 days"]},
+  {q:"You start a job Monday at 7:30 AM and finish Wednesday at 3:30 PM. How many hours?",a:"32 hours",c:["32 hours","28 hours","36 hours","40 hours"]},
+  // Mixed real-world
+  {q:"Concrete mix: 1 part cement, 2 parts sand, 3 parts gravel. For 12 cubic feet, how much gravel?",a:"6 cubic feet",c:["6 cubic feet","4 cubic feet","3 cubic feet","2 cubic feet"]},
+  {q:"Slope formula: Rise ÷ Run. Rise = 3 ft, Run = 12 ft. What is the slope?",a:"1/4 (25%)",c:["1/4 (25%)","1/3 (33%)","1/6 (17%)","3/12"]},
+  {q:"A rectangular slab is 20 ft × 15 ft × 4 inches thick. Volume in cubic feet?",a:"100 cubic feet",c:["100 cubic feet","1200 cubic feet","300 cubic feet","120 cubic feet"]},
+  {q:"You earn $22/hour and work 44 hours in a week (first 40 regular, 4 overtime at 1.5×). Total pay?",a:"$1,012",c:["$1,012","$968","$880","$1,100"]},
+  {q:"A roofing square = 100 sq ft. Your roof is 2,400 sq ft. How many squares?",a:"24 squares",c:["24 squares","20 squares","240 squares","12 squares"]},
+  {q:"Caulk tube covers 30 linear feet. You need 150 linear feet. How many tubes?",a:"5 tubes",c:["5 tubes","4 tubes","6 tubes","3 tubes"]},
+  {q:"A gas line pressure drops 0.5 PSI per 10 feet. Over 60 feet, total pressure drop?",a:"3 PSI",c:["3 PSI","5 PSI","6 PSI","2.5 PSI"]},
+  {q:"You install 12 outlets. Each needs 6 inches of wire stripped. Total inches stripped?",a:"72 inches (6 ft)",c:["72 inches (6 ft)","60 inches","84 inches","66 inches"]},
+  {q:"A circuit breaker trips at 20 amps. You add a 1,500-watt heater to a circuit already drawing 8 amps at 120 V. New total amps?",a:"20.5 amps — trips breaker",c:["20.5 amps — trips breaker","18.5 amps — safe","16.5 amps — safe","22.5 amps — trips breaker"]},
+  {q:"Shingles: 3 bundles per square. For a 24-square roof, how many bundles?",a:"72 bundles",c:["72 bundles","48 bundles","60 bundles","24 bundles"]},
+  {q:"Mortar coverage: 1 bag per 25 bricks. For 400 bricks, how many bags?",a:"16 bags",c:["16 bags","14 bags","20 bags","12 bags"]},
+  {q:"You charge $85/hour. A job takes 3.5 hours plus $125 in materials. Total invoice?",a:"$422.50",c:["$422.50","$382.50","$400","$450"]},
+  {q:"Voltage drop formula: V = I × R. Current (I) = 10 amps, Resistance (R) = 2.4 ohms. Voltage drop?",a:"24 volts",c:["24 volts","20 volts","12 volts","30 volts"]},
+  {q:"Pipe expansion: copper expands 0.00001 inch per inch per degree F. A 20-foot pipe heats 100°F. Expansion in inches?",a:"0.24 inches",c:["0.24 inches","0.12 inches","2.4 inches","0.024 inches"]}
+];
+const coaching=["Trades math is real math — every calculation protects someone's safety.","Always double-check measurements. Measure twice, cut once.","Unit conversion matters — inches vs feet vs yards can cost you a job.","Ohm's Law: V = I × R. Master it and you master electrical work.","Safety margins are math — never exceed 80% of rated capacity.","Estimation accuracy separates professionals from amateurs.","Area = Length × Width. That formula runs through every trade.","Profit = Revenue − Cost. Know your numbers, keep your business.","Slopes and grades are fractions in disguise.","Time is money in trades — accurate scheduling is a skill."]; 
+let questions=[],current=0,correct=0,streak=0,answered=false;
+let badges={bronze:false,silver:false,gold:false,plat:false};
+function shuffle(a){return[...a].sort(()=>Math.random()-.5)}
+function startGame(){
+  questions=shuffle(ALL_QUESTIONS).slice(0,60);
+  current=0;correct=0;streak=0;
+  badges={bronze:false,silver:false,gold:false,plat:false};
+  document.getElementById('summary').style.display='none';
+  document.getElementById('question-card').classList.remove('hidden');
+  document.querySelectorAll('.badge').forEach(b=>b.classList.remove('earned'));
+  updateScores();loadQuestion();
+}
+function loadQuestion(){
+  if(current>=questions.length){showSummary();return}
+  answered=false;
+  const q=questions[current];
+  document.getElementById('q-number').textContent=`Question ${current+1} of 60`;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('progress-fill').style.width=`${(current/60)*100}%`;
+  document.getElementById('progress-label').textContent=`${current} / 60`;
+  document.getElementById('feedback').textContent='';
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('btn-next').classList.add('hidden');
+  document.getElementById('geno-text').textContent=q.q;
+  document.getElementById('geno-status').textContent='🔊 Ready';
+  const ad=document.getElementById('answers');ad.innerHTML='';
+  shuffle(q.c).forEach(ch=>{
+    const btn=document.createElement('button');
+    btn.className='ans-btn';btn.textContent=ch;
+    btn.onclick=()=>checkAnswer(ch,q.a,btn);
+    ad.appendChild(btn);
+  });
+  checkMilestones();
+}
+function checkAnswer(chosen,correct_ans,btn){
+  if(answered)return;answered=true;
+  const isCorrect=chosen===correct_ans;
+  const fb=document.getElementById('feedback');
+  document.querySelectorAll('.ans-btn').forEach(b=>{b.disabled=true;if(b.textContent===correct_ans)b.classList.add('correct')});
+  if(isCorrect){correct++;streak++;btn.classList.add('correct');fb.textContent='✅ Correct! '+coaching[current%coaching.length];fb.className='feedback show-correct';}
+  else{streak=0;btn.classList.add('wrong');fb.textContent='❌ The answer is '+correct_ans+'. '+coaching[current%coaching.length];fb.className='feedback show-wrong';}
+  current++;updateScores();checkMilestones();
+  document.getElementById('btn-next').classList.remove('hidden');
+  if(current>=60)document.getElementById('btn-next').textContent='See Results 🏆';
+}
+function updateScores(){
+  document.getElementById('score-correct').textContent=correct;
+  document.getElementById('score-streak').textContent=streak;
+  document.getElementById('score-total').textContent=current;
+}
+function checkMilestones(){
+  if(current>=15&&!badges.bronze){badges.bronze=true;awardBadge('badge-bronze','Bronze Badge! You know your way around a job site!')}
+  if(current>=30&&!badges.silver){badges.silver=true;awardBadge('badge-silver','Silver Badge! Halfway to Trade Math Master!')}
+  if(current>=45&&!badges.gold){badges.gold=true;awardBadge('badge-gold','Gold Badge! A true tradesperson in the making!')}
+  if(current>=60&&!badges.plat){badges.plat=true;awardBadge('badge-plat','Platinum! You are a Trade Math Champion!')}
+}
+function awardBadge(id,msg){document.getElementById(id).classList.add('earned');genoAnnounce(msg);saveBadges()}
+function saveBadges(){localStorage.setItem('gsu_trademath_badges',JSON.stringify(badges))}
+function loadBadges(){
+  const s=localStorage.getItem('gsu_trademath_badges');
+  if(s){badges=JSON.parse(s);
+    if(badges.bronze)document.getElementById('badge-bronze').classList.add('earned');
+    if(badges.silver)document.getElementById('badge-silver').classList.add('earned');
+    if(badges.gold)document.getElementById('badge-gold').classList.add('earned');
+    if(badges.plat)document.getElementById('badge-plat').classList.add('earned');
+  }
+}
+function showSummary(){
+  document.getElementById('question-card').classList.add('hidden');
+  document.getElementById('answers').innerHTML='';
+  document.getElementById('feedback').textContent='';
+  document.getElementById('btn-next').classList.add('hidden');
+  const pct=Math.round((correct/60)*100);
+  document.getElementById('final-score').textContent=`${correct} / 60 (${pct}%)`;
+  const msgs=[[90,'🏆 Trade Math Master! Hire this person immediately.'],[70,'⭐ Strong performance — job site ready.'],[50,'👍 Solid foundation. Review and keep building.'],[0,'📚 Every pro started here. Keep at it!']];
+  document.getElementById('final-msg').textContent=msgs.find(m=>pct>=m[0])[1];
+  const bl=document.getElementById('final-badges');bl.innerHTML='';
+  if(badges.bronze)bl.innerHTML+='<span style="font-size:2rem">🥉</span>';
+  if(badges.silver)bl.innerHTML+='<span style="font-size:2rem">🥈</span>';
+  if(badges.gold)bl.innerHTML+='<span style="font-size:2rem">🥇</span>';
+  if(badges.plat)bl.innerHTML+='<span style="font-size:2.4rem">💎</span>';
+  document.getElementById('summary').style.display='block';
+  genoAnnounce(`Trade Math Challenge complete! You scored ${correct} out of 60.`);
+}
+function nextQuestion(){loadQuestion()}
+function restartGame(){startGame()}
+function genoSpeak(){speakText(document.getElementById('geno-text').textContent)}
+function genoAnnounce(text){document.getElementById('geno-text').textContent=text;speakText(text)}
+function speakText(text){
+  if(!('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=0.95;u.pitch=1.05;
+  document.getElementById('geno-status').textContent='🔊 Speaking…';
+  u.onend=()=>{document.getElementById('geno-status').textContent='🔊 Ready'};
+  window.speechSynthesis.speak(u);
+}
+loadBadges();startGame();
+</script>
+</body>
+</html>
