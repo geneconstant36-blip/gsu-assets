@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>High on AI | GSU Digitification</title>
+<style>
+:root{--navy:#0a192f;--mid:#112240;--gold:#d4af37;--bright:#f4d03f;--accent:#06b6d4;--green:#22c55e;--red:#ef4444;--text:#e2e8f0;--muted:#8892b0;}
+*{box-sizing:border-box;margin:0;padding:0;}body{background:var(--navy);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+.hdr{background:linear-gradient(135deg,#060e1c,#0d1f3c);padding:20px;text-align:center;border-bottom:2px solid rgba(6,182,212,0.4);}
+.hdr h1{font-size:clamp(1.4rem,4vw,2rem);color:var(--accent);font-weight:800;}
+.hdr p{color:var(--muted);font-size:.9rem;margin-top:4px;}
+.bb{display:flex;justify-content:center;gap:12px;padding:16px 20px;background:var(--mid);flex-wrap:wrap;}
+.bp{padding:6px 18px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:1px;border:2px solid;opacity:.4;transition:all .3s;}
+.bp.active,.bp.earned{opacity:1;}
+.br{border-color:#cd7f32;color:#cd7f32;}.br.active,.br.earned{background:rgba(205,127,50,.15);}
+.bs{border-color:#c0c0c0;color:#c0c0c0;}.bs.active,.bs.earned{background:rgba(192,192,192,.15);}
+.bg{border-color:var(--gold);color:var(--gold);}.bg.active,.bg.earned{background:rgba(212,175,55,.15);}
+.bpl{border-color:#e5e4e2;color:#e5e4e2;}.bpl.active,.bpl.earned{background:rgba(229,228,226,.15);}
+.pb{background:rgba(255,255,255,.05);height:6px;border-radius:3px;margin:0 20px;}
+.pf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .4s;}
+.pl{text-align:center;font-size:.8rem;color:var(--muted);padding:6px 0 12px;}
+.ss{display:flex;justify-content:center;gap:30px;padding:12px 20px;background:rgba(0,0,0,.2);}
+.si{text-align:center;}.si .v{font-size:1.3rem;font-weight:800;color:var(--accent);}.si .l{color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:1px;}
+.qa{max-width:700px;margin:30px auto;padding:0 20px;}
+.tl{font-family:monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.qc{background:var(--mid);border:1px solid rgba(6,182,212,.25);border-radius:16px;padding:32px;margin-bottom:20px;text-align:center;}
+.qt{font-size:clamp(1rem,2.5vw,1.2rem);color:var(--text);line-height:1.6;margin-bottom:8px;}
+.og{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.ob{background:rgba(255,255,255,.04);border:2px solid rgba(255,255,255,.1);border-radius:10px;padding:16px 12px;color:var(--text);font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.ob:hover:not(:disabled){border-color:var(--accent);background:rgba(6,182,212,.1);transform:translateY(-2px);}
+.ob.correct{border-color:var(--green);background:rgba(34,197,94,.15);color:var(--green);}
+.ob.wrong{border-color:var(--red);background:rgba(239,68,68,.1);color:#fca5a5;}
+.ob:disabled{cursor:not-allowed;}
+.fb{text-align:center;padding:14px;border-radius:10px;font-size:.95rem;font-weight:600;margin-bottom:16px;display:none;}
+.fb.correct{background:rgba(34,197,94,.15);border:1px solid var(--green);color:var(--green);}
+.fb.wrong{background:rgba(239,68,68,.1);border:1px solid var(--red);color:#fca5a5;}
+.nb{width:100%;padding:16px;background:linear-gradient(135deg,var(--accent),var(--gold));color:var(--navy);font-size:1rem;font-weight:800;border:none;border-radius:10px;cursor:pointer;display:none;transition:all .2s;letter-spacing:1px;}
+.nb:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(6,182,212,.4);}
+.gc{background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(6,182,212,.04));border:1px solid rgba(6,182,212,.25);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.ga{width:48px;height:48px;border-radius:50%;border:2px solid var(--accent);flex-shrink:0;object-fit:cover;}
+.gt{font-size:.9rem;color:rgba(255,255,255,.85);line-height:1.5;}
+.bs-screen{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;}
+.bs-screen.show{display:flex;}
+.bi{font-size:80px;margin-bottom:20px;animation:pop .5s cubic-bezier(.68,-.55,.27,1.55);}
+@keyframes pop{from{transform:scale(0) rotate(-20deg);}to{transform:scale(1) rotate(0);}}
+.bs-screen h2{font-size:2rem;color:var(--accent);margin-bottom:10px;}
+.bs-screen p{color:var(--muted);max-width:400px;margin-bottom:30px;}
+.bc{background:var(--accent);color:var(--navy);border:none;padding:14px 36px;border-radius:10px;font-size:1rem;font-weight:800;cursor:pointer;}
+.start{max-width:600px;margin:40px auto;padding:20px;text-align:center;}
+.start h2{font-size:1.8rem;color:var(--accent);margin-bottom:12px;}
+.start p{color:var(--muted);margin-bottom:24px;line-height:1.7;}
+.sb{background:linear-gradient(135deg,var(--accent),var(--gold));color:var(--navy);border:none;padding:16px 40px;border-radius:10px;font-size:1.1rem;font-weight:800;cursor:pointer;}
+.done{display:none;max-width:600px;margin:40px auto;padding:20px;text-align:center;}
+.done h2{font-size:2rem;color:var(--accent);margin-bottom:16px;}
+.done p{color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.rb{background:transparent;border:2px solid var(--accent);color:var(--accent);padding:12px 30px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;}
+</style></head><body>
+<div class="hdr"><h1>🤖 High on AI</h1><p>Cut through the hype · Understand the risks · Command the real future of AI</p></div>
+<div class="bb"><div class="bp br active" id="pill-bronze">🥉 Bronze</div><div class="bp bs" id="pill-silver">🥈 Silver</div><div class="bp bg" id="pill-gold">🥇 Gold</div><div class="bp bpl" id="pill-platinum">💎 Platinum</div></div>
+<div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+<div class="pl" id="pl">Question 1 of 60 · Bronze Level</div>
+<div class="ss"><div class="si"><div class="v" id="sc">0</div><div class="l">Correct</div></div><div class="si"><div class="v" id="st">0</div><div class="l">Streak</div></div><div class="si"><div class="v" id="sp">0%</div><div class="l">Accuracy</div></div></div>
+<div class="start" id="start"><h2>High on AI</h2><p>Everyone's talking about AI. Almost nobody is thinking clearly about what it means. This game cuts through the hype — covering how AI actually works, its real risks, what it can and can't do, and how to position yourself to thrive in the AI economy.</p><p style="color:var(--accent);font-weight:600;margin-bottom:24px;">Bronze: How AI Works · Silver: AI & Society · Gold: AI Economy · Platinum: AI Mastery</p><button class="sb" onclick="startGame()">🤖 Enter the AI Age!</button></div>
+<div class="qa" id="ga" style="display:none">
+<div class="gc"><img class="ga" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"><div class="gt" id="gt">AI isn't magic — it's math. Let's find out how much you really understand.</div></div>
+<div class="tl" id="tl">🥉 BRONZE — How AI Actually Works</div>
+<div class="qc"><div class="qt" id="qt">Loading...</div></div>
+<div class="og" id="og"></div><div class="fb" id="fb"></div><button class="nb" onclick="nextQ()">Next Question →</button></div>
+<div class="done" id="done"><div style="font-size:60px;margin-bottom:16px">💎</div><h2>AI Mastery Achieved!</h2><p>You've completed all four levels of High on AI. You now understand AI beyond the headlines — including how to use it, navigate its risks, and position yourself for the economy it's building.</p><button class="rb" onclick="restart()">Play Again</button></div>
+<div class="bs-screen" id="bss"><div class="bi" id="bsi">🥉</div><h2 id="bst">Bronze Earned!</h2><p id="bsm">You understand how AI works. Ready for AI and society?</p><button class="bc" onclick="contTier()">Continue →</button></div>
+<script>
+const T=[
+{n:'Bronze',l:'🥉 BRONZE — How AI Actually Works',i:'🥉',m:"AI fundamentals locked in. On to AI's impact on society!"},
+{n:'Silver',l:'🥈 SILVER — AI & Society',i:'🥈',m:"Society and AI explored. Time for the AI economy!"},
+{n:'Gold',l:'🥇 GOLD — The AI Economy',i:'🥇',m:"AI economy mastered. Final level: AI Mastery!"},
+{n:'Platinum',l:'💎 PLATINUM — AI Mastery & Strategy',i:'💎',m:"Full AI mastery! You're ready to command the AI age."}
+];
+const Q={
+Bronze:[
+{q:"What does AI stand for?",a:"Artificial Intelligence",opts:["Automated Integration","Artificial Intelligence","Advanced Internet","Algorithmic Instruction"]},
+{q:"What is machine learning?",a:"Training computers to learn from data without explicit programming",opts:["Programming computers step by step","Training computers to learn from data without explicit programming","Making computers faster","Teaching robots to walk"]},
+{q:"What is a neural network modeled after?",a:"The human brain",opts:["The internet","A computer chip","The human brain","A telephone network"]},
+{q:"What does 'training data' mean in AI?",a:"Examples used to teach an AI model",opts:["Data that exercises daily","Examples used to teach an AI model","Secret government data","Data stored in the cloud"]},
+{q:"What is ChatGPT an example of?",a:"A large language model",opts:["A search engine","A database","A large language model","A calculator"]},
+{q:"What does it mean when an AI 'hallucinates'?",a:"It generates confident but incorrect information",opts:["It creates visual art","It generates confident but incorrect information","It slows down","It overheats"]},
+{q:"What is the difference between AI and automation?",a:"AI learns and adapts; automation follows fixed rules",opts:["There is no difference","AI learns and adapts; automation follows fixed rules","Automation is smarter","AI requires the internet; automation does not"]},
+{q:"What is 'prompt engineering'?",a:"Crafting effective inputs to get better AI outputs",opts:["Building AI hardware","Crafting effective inputs to get better AI outputs","Deleting AI programs","Fixing AI errors"]},
+{q:"Which of these is NOT a current AI capability?",a:"Genuine human consciousness",opts:["Generating realistic images","Writing code","Genuine human consciousness","Translating languages"]},
+{q:"What does GPT stand for?",a:"Generative Pre-trained Transformer",opts:["General Purpose Technology","Generative Pre-trained Transformer","Global Processing Tool","Guided Program Technology"]},
+{q:"What is 'deep learning'?",a:"A type of machine learning using many neural network layers",opts:["Learning very slowly","A type of machine learning using many neural network layers","Studying AI textbooks","Programming at a deep level"]},
+{q:"What is a 'dataset' in AI?",a:"A collection of examples used to train a model",opts:["A type of computer","A collection of examples used to train a model","An AI's memory","A government database"]},
+{q:"What is 'natural language processing'?",a:"AI's ability to understand and generate human language",opts:["Teaching humans new languages","AI's ability to understand and generate human language","Voice-to-text software","A translation dictionary"]},
+{q:"What does 'supervised learning' mean?",a:"Training AI on labeled examples with known correct answers",opts:["A human watching the AI at all times","Training AI on labeled examples with known correct answers","AI learning from the internet","Random trial and error"]},
+{q:"What is 'bias' in an AI model?",a:"Systematic errors from skewed or incomplete training data",opts:["When the AI has a personal opinion","Systematic errors from skewed or incomplete training data","When the AI runs slowly","A feature that helps accuracy"]},
+],
+Silver:[
+{q:"Which jobs are MOST at risk from AI automation?",a:"Routine, repetitive cognitive tasks",opts:["Creative strategy roles","Physical outdoor trades","Routine, repetitive cognitive tasks","Leadership positions"]},
+{q:"What is 'algorithmic bias' in hiring software?",a:"AI that discriminates based on patterns in biased historical data",opts:["Software that favors engineers","AI that discriminates based on patterns in biased historical data","A bug in the program","Software that runs slowly"]},
+{q:"What is deepfake technology?",a:"AI-generated synthetic media that falsely depicts real people",opts:["A type of 3D printer","AI-generated synthetic media that falsely depicts real people","A new social network","A video editing filter"]},
+{q:"What is the main privacy concern with AI assistants?",a:"They collect and process vast amounts of personal data",opts:["They are too expensive","They collect and process vast amounts of personal data","They speak too loudly","They don't work offline"]},
+{q:"What is an 'AI black box' problem?",a:"We cannot explain why the AI made a specific decision",opts:["The AI requires a dark room","We cannot explain why the AI made a specific decision","The AI runs out of power","The AI won't connect to the internet"]},
+{q:"What does 'AI alignment' mean?",a:"Ensuring AI systems pursue goals beneficial to humans",opts:["Making AI politically neutral","Ensuring AI systems pursue goals beneficial to humans","Aligning AI code properly","Making AI servers stand straight"]},
+{q:"What is 'misinformation at scale' in the AI era?",a:"AI enabling rapid mass production of false content",opts:["Slow spreading of false news","AI enabling rapid mass production of false content","Errors in AI databases","Incorrect AI translations"]},
+{q:"What human skills are HARDEST for AI to replicate?",a:"Empathy, physical dexterity, and creative judgment",opts:["Data entry and filing","Simple calculations","Empathy, physical dexterity, and creative judgment","Answering common questions"]},
+{q:"What is a 'filter bubble' amplified by AI?",a:"AI algorithms showing only content that confirms existing beliefs",opts:["A water purification system","AI algorithms showing only content that confirms existing beliefs","A spam filter","A content warning system"]},
+{q:"What is 'automation anxiety'?",a:"Fear of job loss due to increasing machine capabilities",opts:["Anxiety about using technology","Fear of job loss due to increasing machine capabilities","A type of computer virus","Worry about robot safety"]},
+{q:"Who regulates AI in the United States?",a:"Regulation is fragmented — no single comprehensive AI law exists yet",opts:["The Department of AI","Regulation is fragmented — no single comprehensive AI law exists yet","The FCC","The Department of Education"]},
+{q:"What is 'consent' in AI data collection?",a:"Permission users give for their data to be used in AI training",opts:["AI agreeing to help you","Permission users give for their data to be used in AI training","A legal contract with a robot","An AI safety feature"]},
+{q:"What is 'AI-washing'?",a:"Companies falsely claiming AI capabilities to attract investment",opts:["Cleaning server equipment","Companies falsely claiming AI capabilities to attract investment","An AI laundry robot","Removing bias from AI"]},
+{q:"What is the 'last mile problem' in AI deployment?",a:"Getting AI to work reliably in messy real-world conditions",opts:["Delivering AI hardware","Getting AI to work reliably in messy real-world conditions","The final training step","AI server locations"]},
+{q:"What does 'explainable AI' (XAI) try to solve?",a:"Making AI decision-making understandable to humans",opts:["Making AI speak clearly","Making AI decision-making understandable to humans","Explaining AI to children","Writing AI documentation"]},
+],
+Gold:[
+{q:"What is the 'AI skills premium' in the job market?",a:"Higher wages for workers who can effectively use AI tools",opts:["Extra pay for AI engineers only","Higher wages for workers who can effectively use AI tools","A government bonus for AI training","Lower wages due to AI competition"]},
+{q:"What does 'AI augmentation' mean for workers?",a:"Using AI to enhance human productivity rather than replace workers",opts:["Replacing human workers entirely","Using AI to enhance human productivity rather than replace workers","Augmented reality training","Robotic physical enhancement"]},
+{q:"What is 'prompt literacy'?",a:"The skill of communicating effectively with AI systems",opts:["Reading AI code","The skill of communicating effectively with AI systems","Learning computer programming","Speed-reading documents"]},
+{q:"What is the most AI-resistant career characteristic?",a:"Requiring physical presence, human judgment, and interpersonal trust",opts:["Working at a computer","Requiring physical presence, human judgment, and interpersonal trust","Working in an office","Requiring a college degree"]},
+{q:"What is 'AI arbitrage' in business?",a:"Gaining competitive advantage by adopting AI before competitors",opts:["Trading AI company stocks","Gaining competitive advantage by adopting AI before competitors","Using AI to predict the stock market","Buying and selling AI tools"]},
+{q:"What does 'AI literacy' mean for a non-technical person?",a:"Understanding what AI can do, its limits, and how to use it effectively",opts:["Learning to code AI","Understanding what AI can do, its limits, and how to use it effectively","Reading AI research papers","Avoiding AI tools entirely"]},
+{q:"What is a 'human-in-the-loop' AI system?",a:"A system requiring human oversight and approval of AI decisions",opts:["AI that learns from one person","A system requiring human oversight and approval of AI decisions","A fitness tracking AI","AI that calls you by name"]},
+{q:"What is the 'AI productivity paradox'?",a:"AI investment increasing without corresponding productivity gains yet",opts:["AI making workers less productive","AI investment increasing without corresponding productivity gains yet","AI being too expensive for small businesses","Workers refusing to use AI"]},
+{q:"What business roles will GROW due to AI?",a:"AI trainers, prompt engineers, AI ethics reviewers, and human oversight roles",opts:["Data entry clerks","Factory assembly workers","AI trainers, prompt engineers, AI ethics reviewers, and human oversight roles","Basic customer service agents"]},
+{q:"What is 'competitive moat' in an AI economy?",a:"Unique human relationships, trust, and physical skills that AI cannot replicate",opts:["Building the fastest AI","Having the most data","Unique human relationships, trust, and physical skills that AI cannot replicate","Owning AI patents"]},
+{q:"What is 'AI democratization'?",a:"Making AI tools accessible to individuals and small businesses, not just corporations",opts:["Voting for AI regulations","Making AI tools accessible to individuals and small businesses, not just corporations","AI-run elections","Government-controlled AI"]},
+{q:"What is 'sovereign AI literacy'?",a:"Using AI as a tool while maintaining critical thinking and independent judgment",opts:["Government AI programs","Using AI as a tool while maintaining critical thinking and independent judgment","Only using domestic AI products","Refusing to use AI"]},
+{q:"What does 'AI in education' primarily threaten?",a:"The model of measuring learning through compliance and memorization",opts:["Physical school buildings","Teacher salaries","The model of measuring learning through compliance and memorization","School lunch programs"]},
+{q:"What is the 'robot-proof' career strategy?",a:"Building skills in creativity, judgment, empathy, and physical trades AI cannot automate",opts:["Learning to repair robots","Building skills in creativity, judgment, empathy, and physical trades AI cannot automate","Avoiding all technology","Working in government"]},
+{q:"What is a 'digital twin' in industrial AI?",a:"A virtual model of a physical system used to simulate and optimize it",opts:["A backup computer","A virtual model of a physical system used to simulate and optimize it","An AI copy of a person","A backup power supply"]},
+],
+Platinum:[
+{q:"What is AGI?",a:"Artificial General Intelligence — AI capable of any intellectual task a human can do",opts:["Advanced Graphics Interface","Artificial General Intelligence — AI capable of any intellectual task a human can do","Automated Government Interface","Augmented Global Internet"]},
+{q:"What distinguishes current AI from AGI?",a:"Current AI is narrow and task-specific; AGI would be general-purpose",opts:["Current AI is slower","Current AI is narrow and task-specific; AGI would be general-purpose","Current AI costs more","Current AI uses more energy"]},
+{q:"What is the 'paperclip maximizer' thought experiment?",a:"An AI optimizing for one goal that destroys everything else in pursuit of it",opts:["An AI that manufactures paperclips","An AI optimizing for one goal that destroys everything else in pursuit of it","A lesson in factory efficiency","An AI programming exercise"]},
+{q:"What is 'AI existential risk'?",a:"The possibility that advanced AI could pose a threat to human civilization",opts:["AI companies going bankrupt","The possibility that advanced AI could pose a threat to human civilization","AI making people lazy","Job losses from automation"]},
+{q:"What does 'AI sovereignty' mean for nations?",a:"A country's ability to develop and control its own AI infrastructure",opts:["AI-run governments","A country's ability to develop and control its own AI infrastructure","AI managing national borders","Countries sharing AI technology equally"]},
+{q:"What is 'model collapse' in AI development?",a:"AI trained on AI-generated data degrading in quality over generations",opts:["An AI server failure","AI trained on AI-generated data degrading in quality over generations","An AI going offline","A training error"]},
+{q:"What is the 'alignment tax'?",a:"The cost in capability or efficiency of making AI safe and aligned",opts:["A fee for AI companies","The cost in capability or efficiency of making AI safe and aligned","A government AI tax","The price of AI training data"]},
+{q:"What is 'AI interpretability research'?",a:"Understanding the internal mechanisms of AI models to predict their behavior",opts:["Teaching AI to explain itself","Understanding the internal mechanisms of AI models to predict their behavior","Writing AI instruction manuals","AI language translation research"]},
+{q:"What is a 'foundation model'?",a:"A large AI model trained broadly that can be adapted for many specific tasks",opts:["The first AI ever built","A large AI model trained broadly that can be adapted for many specific tasks","The infrastructure AI runs on","An AI used in construction"]},
+{q:"What is 'emergent behavior' in large AI models?",a:"Unexpected capabilities that appear as models scale beyond a certain size",opts:["AI malfunctioning","Unexpected capabilities that appear as models scale beyond a certain size","AI learning from mistakes","Planned features added during training"]},
+{q:"What is the 'sovereign individual' strategy in an AI economy?",a:"Building portable, unique skills and relationships that transcend any single employer or tool",opts:["Working for an AI company","Building portable, unique skills and relationships that transcend any single employer or tool","Owning AI stocks","Refusing to use AI tools"]},
+{q:"What is 'multimodal AI'?",a:"AI that processes and generates multiple types of data — text, image, audio, video",opts:["AI used in multiple countries","AI that processes and generates multiple types of data — text, image, audio, video","AI with multiple users","AI running on multiple devices"]},
+{q:"What is the core argument of 'Robot-Proof' education?",a:"Human skills like empathy, creativity, and physical judgment will remain irreplaceable",opts:["Humans should learn to build robots","Human skills like empathy, creativity, and physical judgment will remain irreplaceable","All jobs will eventually be automated","Students should study computer science"]},
+{q:"What does 'AI for sovereignty' mean at GSU?",a:"Using AI as a tool for individual capability without surrendering judgment to the machine",opts:["GSU building its own AI","Using AI as a tool for individual capability without surrendering judgment to the machine","Teaching government AI policy","AI-run universities"]},
+{q:"What is the ultimate 'High on AI' insight?",a:"The humans who understand AI will command it; those who don't will be commanded by it",opts:["AI will solve all human problems","Everyone should learn to code","The humans who understand AI will command it; those who don't will be commanded by it","AI is dangerous and should be avoided"]},
+]
+};
+const OK=["Exactly right — that's the thinking the AI age demands.","Correct! You're ahead of most people on this.","Sharp answer. That's sovereign AI literacy.","Right on. Understanding this is real competitive advantage.","Perfect — that's the kind of clarity that commands the new economy."];
+const BAD=["The AI age rewards clear thinking. Study the correct answer.","That's a common misconception — the right answer shows the reality.","AI literacy means knowing its limits. Review and continue.","Close, but precision matters here. The correct answer is shown."];
+let tier=0,qIdx=0,corr=0,tot=0,streak=0,ans=false,qs=[];
+function startGame(){document.getElementById('start').style.display='none';document.getElementById('ga').style.display='block';loadTier();}
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function loadTier(){qs=shuf([...Q[T[tier].n]]).slice(0,15);qIdx=0;updPills();showQ();}
+function showQ(){
+  ans=false;const q=qs[qIdx],tot2=(tier*15)+qIdx+1;
+  document.getElementById('tl').textContent=T[tier].l;
+  document.getElementById('qt').textContent=q.q;
+  document.getElementById('pf').style.width=((tot2-1)/60*100)+'%';
+  document.getElementById('pl').textContent=`Question ${tot2} of 60 · ${T[tier].n} Level`;
+  const og=document.getElementById('og');og.innerHTML='';
+  shuf([...q.opts]).forEach(o=>{const b=document.createElement('button');b.className='ob';b.textContent=o;b.onclick=()=>chk(b,o,q.a);og.appendChild(b);});
+  document.getElementById('fb').style.display='none';document.getElementById('nb').style.display='none';
+  document.getElementById('gt').textContent="What's your answer?";
+  speak(q.q);
+}
+function chk(btn,sel,a){
+  if(ans)return;ans=true;tot++;
+  const ok=sel===a;
+  document.querySelectorAll('.ob').forEach(b=>{b.disabled=true;if(b.textContent===a)b.classList.add('correct');});
+  const fb=document.getElementById('fb');
+  if(ok){btn.classList.add('correct');corr++;streak++;const m=OK[Math.floor(Math.random()*OK.length)];fb.className='fb correct';fb.textContent='✓ Correct! '+m;document.getElementById('gt').textContent=m;speak('Correct! '+m);}
+  else{btn.classList.add('wrong');streak=0;fb.className='fb wrong';fb.textContent='✗ Correct: '+a;const m=BAD[Math.floor(Math.random()*BAD.length)];document.getElementById('gt').textContent=m;speak(m);}
+  fb.style.display='block';document.getElementById('nb').style.display='block';updScore();
+}
+function nextQ(){qIdx++;if(qIdx>=15)showBadge();else showQ();}
+function showBadge(){
+  const t=T[tier];document.getElementById('bsi').textContent=t.i;document.getElementById('bst').textContent=t.n+' Badge Earned!';document.getElementById('bsm').textContent=t.m;
+  document.getElementById('bss').classList.add('show');localStorage.setItem('highOnAI_'+t.n.toLowerCase(),'earned');document.getElementById('pill-'+t.n.toLowerCase()).classList.add('earned');
+  speak('Congratulations! You earned the '+t.n+' badge!');
+}
+function contTier(){document.getElementById('bss').classList.remove('show');tier++;if(tier>=4){document.getElementById('ga').style.display='none';document.getElementById('done').style.display='block';}else loadTier();}
+function updPills(){T.forEach((t,i)=>{const p=document.getElementById('pill-'+t.n.toLowerCase());p.classList.remove('active');if(i===tier)p.classList.add('active');});}
+function updScore(){document.getElementById('sc').textContent=corr;document.getElementById('st').textContent=streak;document.getElementById('sp').textContent=tot>0?Math.round(corr/tot*100)+'%':'0%';}
+function restart(){tier=0;qIdx=0;corr=0;tot=0;streak=0;document.getElementById('done').style.display='none';document.getElementById('ga').style.display='block';updScore();loadTier();}
+function speak(t){if('speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.95;speechSynthesis.speak(u);}}
+window.onload=()=>{['bronze','silver','gold','platinum'].forEach(t=>{if(localStorage.getItem('highOnAI_'+t))document.getElementById('pill-'+t).classList.add('earned');});};
+</script></body></html>
