@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Day Without Words | Deaf World Immersion | Global Sovereign University</title>
+<meta name="description" content="Experience a full day from a deaf perspective. Navigate every situation using sign, writing, and visual communication. A text adventure that builds empathy and ASL fluency.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0d9488;--teal2:#0f766e;
+  --gold:#d4af37;--gold2:#b89020;
+  --amber:#f59e0b;
+  --purple:#7c3aed;
+  --bg:#05080a;--bg2:#0a0f12;--bg3:#0f1518;
+  --text:rgba(255,255,255,0.88);--muted:rgba(255,255,255,0.45);
+  --terminal:#00e5ff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 30% 20%,rgba(13,148,136,0.08),transparent 60%),radial-gradient(ellipse 50% 40% at 80% 80%,rgba(212,175,55,0.06),transparent 55%);pointer-events:none;z-index:0}
+
+.wrap{max-width:780px;margin:0 auto;padding:20px;position:relative;z-index:1}
+
+/* HEADER */
+.hdr{text-align:center;padding:40px 20px 28px}
+.hdr-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.35);color:var(--teal);padding:5px 16px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:20px}
+.hdr h1{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,5.5vw,3rem);font-weight:800;line-height:1.1;margin-bottom:12px}
+.hdr h1 em{font-style:normal;background:linear-gradient(135deg,var(--teal),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr-sub{color:var(--muted);font-size:0.95rem;max-width:520px;margin:0 auto;line-height:1.65}
+
+/* GENO */
+.geno-bar{background:var(--bg2);border:1px solid rgba(13,148,136,0.25);border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;margin:22px 0;flex-wrap:wrap}
+.geno-bar img{width:54px;height:54px;border-radius:50%;border:2px solid var(--teal);flex-shrink:0}
+.geno-bar img.talking{animation:glow 0.5s infinite alternate}
+@keyframes glow{from{box-shadow:0 0 0 0 rgba(13,148,136,0.5)}to{box-shadow:0 0 0 8px rgba(13,148,136,0)}}
+.geno-name{color:var(--teal);font-size:0.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px}
+#geno-speech{font-size:0.88rem;line-height:1.6;color:var(--text)}
+.geno-speak-btn{background:rgba(13,148,136,0.15);border:1px solid rgba(13,148,136,0.35);color:var(--teal);padding:5px 12px;border-radius:16px;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+
+/* CHAPTER INDICATOR */
+.chapter-ind{display:flex;gap:6px;justify-content:center;margin:18px 0}
+.ch-dot{width:28px;height:6px;border-radius:3px;background:rgba(255,255,255,0.1);transition:background 0.4s}
+.ch-dot.done{background:var(--teal)}
+.ch-dot.active{background:var(--gold);animation:dot-pulse 1.5s infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+/* ADVENTURE CARD */
+.adv-card{background:var(--bg2);border:1px solid rgba(255,255,255,0.08);border-radius:20px;overflow:hidden;margin-bottom:18px}
+.adv-header{padding:18px 24px 0;display:flex;align-items:center;gap:12px}
+.adv-icon{font-size:2rem}
+.adv-chapter{font-size:11px;color:var(--teal);font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.adv-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:#fff;margin-top:2px}
+.adv-scene{padding:20px 24px;font-size:0.95rem;line-height:1.75;color:var(--text);background:rgba(0,0,0,0.25);margin:16px 0 0;border-top:1px solid rgba(255,255,255,0.06)}
+
+/* DEAF POV CALLOUT */
+.deaf-pov{background:rgba(13,148,136,0.07);border-left:3px solid var(--teal);padding:12px 16px;margin:14px 24px;border-radius:0 10px 10px 0;font-size:0.85rem;color:rgba(255,255,255,0.75);line-height:1.6}
+.deaf-pov strong{color:var(--teal)}
+
+/* SIGN SPOTLIGHT */
+.sign-spot{background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:14px 18px;margin:14px 24px;display:flex;gap:14px;align-items:flex-start}
+.sign-hand{font-size:2rem;flex-shrink:0;margin-top:2px}
+.sign-name{font-family:'Syne',sans-serif;color:var(--gold);font-weight:700;font-size:0.95rem;margin-bottom:4px}
+.sign-desc{font-size:0.82rem;color:var(--muted);line-height:1.55}
+
+/* CHOICES */
+.choices{padding:18px 24px 24px;display:flex;flex-direction:column;gap:10px}
+.choice{background:var(--bg3);border:2px solid rgba(255,255,255,0.09);border-radius:12px;padding:14px 18px;cursor:pointer;font-size:0.9rem;line-height:1.5;text-align:left;color:var(--text);display:flex;gap:12px;align-items:flex-start;transition:all 0.2s}
+.choice:hover:not(:disabled){border-color:var(--teal);background:rgba(13,148,136,0.08);transform:translateX(4px)}
+.choice-num{background:rgba(255,255,255,0.1);border-radius:8px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;margin-top:1px}
+.choice.best{border-color:rgba(34,197,94,0.5);background:rgba(34,197,94,0.07)}
+.choice.best .choice-num{background:rgba(34,197,94,0.3);color:#22c55e}
+.choice.ok{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.05)}
+.choice.ok .choice-num{background:rgba(245,158,11,0.25);color:var(--amber)}
+.choice.poor{border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.05)}
+.choice.poor .choice-num{background:rgba(239,68,68,0.2);color:#ef4444}
+.choice:disabled{cursor:default}
+
+/* OUTCOME */
+.outcome{display:none;padding:16px 24px 20px;border-top:1px solid rgba(255,255,255,0.06);font-size:0.88rem;line-height:1.65}
+.outcome.show{display:block}
+.outcome-tag{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:8px}
+.outcome-tag.best{color:#22c55e}
+.outcome-tag.ok{color:var(--amber)}
+.outcome-tag.poor{color:#ef4444}
+
+/* CONTINUE */
+.continue-btn{display:none;margin:0 24px 24px;width:calc(100% - 48px);background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:opacity 0.2s}
+.continue-btn:hover{opacity:0.88}
+.continue-btn.show{display:block}
+
+/* SCORE STRIP */
+.score-strip{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0}
+.score-pill{background:var(--bg3);border:1px solid rgba(255,255,255,0.1);border-radius:50px;padding:7px 16px;font-size:0.8rem;display:flex;align-items:center;gap:6px}
+.score-pill strong{color:var(--teal);font-family:'Syne',sans-serif;font-size:1rem}
+
+/* COMPLETION */
+.completion{display:none;text-align:center;padding:50px 20px 30px}
+.completion.show{display:block}
+.comp-icon{font-size:4rem;display:block;margin-bottom:18px}
+.comp-title{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#fff;margin-bottom:10px}
+.comp-score{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:var(--teal)}
+.comp-label{font-size:0.78rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.comp-msg{color:var(--muted);font-size:0.95rem;max-width:500px;margin:0 auto 36px;line-height:1.7}
+
+/* READ THE ROOM PROMO */
+.rtr{background:linear-gradient(160deg,rgba(10,6,0,0.98),rgba(22,15,0,0.98));border:2px solid var(--gold);border-radius:20px;padding:26px;margin:30px 0;text-align:left}
+.rtr-label{font-size:10px;color:var(--gold);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.rtr-body{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.rtr-cover{width:82px;height:122px;border-radius:8px;border:2px solid var(--gold);background:linear-gradient(180deg,#080500,#120d00);display:flex;align-items:center;justify-content:center;font-size:2.4rem;flex-shrink:0;position:relative;overflow:hidden}
+.rtr-cover::after{content:'READ THE ROOM';position:absolute;bottom:7px;left:0;right:0;text-align:center;font-size:6.5px;font-weight:700;color:var(--gold);letter-spacing:1px;padding:0 4px;line-height:1.3}
+.rtr-meta{flex:1;min-width:200px}
+.rtr-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--gold);margin-bottom:4px;line-height:1.2}
+.rtr-author{font-size:0.78rem;color:var(--muted);margin-bottom:10px}
+.rtr-desc{font-size:0.87rem;color:var(--text);line-height:1.65;margin-bottom:14px}
+.rtr-btn{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;padding:12px 24px;border-radius:28px;text-decoration:none;font-family:'Syne',sans-serif;font-weight:700;font-size:0.87rem;transition:opacity 0.2s}
+.rtr-btn:hover{opacity:0.88}
+
+.back-link{display:inline-block;margin-top:18px;padding:11px 24px;border:1px solid rgba(255,255,255,0.15);border-radius:28px;color:var(--muted);text-decoration:none;font-size:0.85rem;transition:all 0.2s}
+.back-link:hover{border-color:var(--teal);color:var(--teal)}
+
+@media(max-width:580px){.rtr-body{flex-direction:column}.rtr-cover{width:72px;height:108px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-eyebrow">💎 Signification · Platinum Level</div>
+  <h1>A Day<br><em>Without Words</em></h1>
+  <p class="hdr-sub">You are Marcus, 34, deaf since birth. Today is a Tuesday. Navigate your day using sign, writing, and visual awareness. Every choice shapes your experience.</p>
+</div>
+
+<!-- GENO -->
+<div class="geno-bar">
+  <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO" id="geno-img">
+  <div style="flex:1;min-width:180px">
+    <div class="geno-name">GENO · Narrating Your Day</div>
+    <div id="geno-speech">You are Marcus. Every choice you make today reflects the real decisions deaf individuals navigate. I'll coach you through the signs and strategies that matter most.</div>
+  </div>
+  <button class="geno-speak-btn" onclick="speakGeno()">🔊 Hear</button>
+</div>
+
+<!-- CHAPTER DOTS -->
+<div class="chapter-ind" id="ch-dots"></div>
+
+<!-- SCORE -->
+<div class="score-strip">
+  <div class="score-pill"><strong id="score-disp">0</strong><span>Awareness Points</span></div>
+  <div class="score-pill"><strong id="ch-disp">1</strong><span>/ 7 Chapters</span></div>
+</div>
+
+<!-- GAME AREA -->
+<div id="game-area"></div>
+
+<!-- COMPLETION -->
+<div class="completion" id="completion">
+  <span class="comp-icon" id="comp-icon">💎</span>
+  <h2 class="comp-title" id="comp-title">Day Complete</h2>
+  <div class="comp-score" id="comp-score">0</div>
+  <div class="comp-label">Awareness Points</div>
+  <p class="comp-msg" id="comp-msg"></p>
+
+  <div class="rtr">
+    <div class="rtr-label">📖 The Book Behind This Experience</div>
+    <div class="rtr-body">
+      <div class="rtr-cover">🦅</div>
+      <div class="rtr-meta">
+        <div class="rtr-title">Read the Room</div>
+        <div class="rtr-author">Dr. Gene A. Constant · Global Sovereign University</div>
+        <div class="rtr-desc">Marcus's day is built on real science. The communication strategies you just practiced — visual attention, environmental scanning, written bridges, and nonverbal confidence — are documented in Dr. Constant's framework for communication intelligence. This book takes what you experienced today and gives you the tools to apply it in every interaction of your own life.</div>
+        <a href="https://www.amazon.com/dp/B0GS6VXDG7?tag=gsu2026-20" target="_blank" class="rtr-btn">📚 Get the Book on Amazon →</a>
+      </div>
+    </div>
+  </div>
+
+  <a href="/linguification" class="back-link">← Back to Linguification</a>
+</div>
+
+</div>
+
+<script>
+const chapters = [
+  {
+    icon:"☀️",
+    chapter:"Chapter 1 — Morning",
+    title:"The Alarm",
+    scene:"Marcus wakes at 6:45 AM. Not to sound — to light. A vibrating alarm pad under his pillow and a lamp that flashes three times. He checks his phone: two texts from his hearing coworker Sarah, a voicemail he can't hear, and a calendar notification for a 9 AM all-hands meeting.",
+    pov:"Deaf individuals rely on visual and tactile alerts for everything hearing people take for granted. Vibrating alarms, flashing doorbells, and visual smoke alarms are not accommodations — they are standard equipment for an accessible life.",
+    sign:{hand:"🤚", name:"MORNING", desc:"Bring your dominant hand from near your elbow, sweeping upward and forward like the sun rising. A simple, natural gesture that begins every signed conversation about the day."},
+    genoLine:"Marcus's morning looks different from yours. He reads his world instead of hearing it. What does he do about the voicemail?",
+    question:"The voicemail is from the building manager. It might be important. Marcus can't hear it. What does he do?",
+    choices:[
+      {text:"Call the building manager back and ask them to speak slowly so he can write down key words — he's learned to get enough from this method.", rating:"ok", outcome:"This works sometimes, but it's stressful and incomplete. Lip-reading over the phone is nearly impossible. Marcus gets fragments of the message."},
+      {text:"Use a transcription app (like Google Live Transcribe or InnoCaption) to get the voicemail transcribed automatically, then call back using a relay service if needed.", rating:"best", outcome:"Excellent. Transcription apps convert voicemail to text in seconds. Relay services (711) connect deaf callers through a trained operator who voices the conversation in real time. Marcus has full information before the workday starts."},
+      {text:"Ignore it — if it's truly urgent, they'll text or email.", rating:"poor", outcome:"Marcus misses that the building manager is turning off water for maintenance at 8 AM. He discovers this when he has shampoo in his hair."}
+    ],
+    points:{best:15, ok:8, poor:0}
+  },
+  {
+    icon:"🚌",
+    chapter:"Chapter 2 — Commute",
+    title:"The Bus",
+    scene:"Marcus takes the city bus to work. He boards, scans his card, and sits near the front. The bus driver makes an announcement over the intercom — passengers around Marcus start gathering their bags and looking confused. Marcus has no idea what was said.",
+    pov:"Public transit announcements are a daily barrier for deaf riders. Route changes, delays, and emergencies are communicated verbally over systems that have no visual equivalent in most cities. Deaf riders depend entirely on other passengers or their own observation.",
+    sign:{hand:"🤟", name:"HELP", desc:"Make a fist with your dominant hand, thumb up, and place it on your open non-dominant palm. Raise both hands together. HELP is one of the most important signs to know — and to recognize."},
+    genoLine:"Everyone around Marcus is reacting to something he didn't hear. This is a daily reality for deaf commuters.",
+    question:"Passengers are standing and looking uncertain. Marcus has no idea what the announcement said. What does he do?",
+    choices:[
+      {text:"Stay seated and watch. If the bus stops somewhere unusual, follow the crowd.", rating:"ok", outcome:"Passive but survivable. Marcus eventually figures out there's a route change, but he misses his stop and arrives late."},
+      {text:"Tap the shoulder of the person next to him, point to his ear and shake his head slightly (I can't hear), then point to the front with a questioning look.", rating:"best", outcome:"The universal deaf communication request: 'I'm deaf — what's happening?' Most people respond immediately. The passenger tells him the bus is skipping three stops due to an accident. Marcus adjusts his route. He's on time."},
+      {text:"Walk to the driver and ask them to repeat the announcement.", rating:"ok", outcome:"The driver repeats it, but Marcus can't follow the audio clearly in a moving bus. He catches 'detour' and guesses the rest. Partially effective."}
+    ],
+    points:{best:15, ok:8, poor:0}
+  },
+  {
+    icon:"🏢",
+    chapter:"Chapter 3 — Office",
+    title:"The All-Hands Meeting",
+    scene:"The 9 AM all-hands is in the large conference room. 40 employees. The CEO is presenting slides. There's no interpreter. Marcus requested one three days ago — HR said they'd 'look into it.' The presentation starts. Slides have some text but the CEO is adding significant verbal context to each one.",
+    pov:"The ADA requires employers to provide reasonable accommodations for deaf employees. 'We'll look into it' three days before a major meeting is not compliance. Marcus faces a daily choice between advocating loudly and being seen as 'difficult.'",
+    sign:{hand:"👐", name:"UNDERSTAND", desc:"Start with your index finger pointing at your temple. Flick it upward and outward — like a lightbulb turning on. UNDERSTAND is the checkpoint of every signed conversation: did we connect?"},
+    genoLine:"No interpreter. 40 people talking. Marcus has full professional capability and zero communication access right now. What does he do?",
+    question:"The meeting starts without an interpreter. Marcus has his phone. What is his best response?",
+    choices:[
+      {text:"Open Google Live Transcribe on his phone and prop it up to capture the CEO's speech in real time as text on his screen.", rating:"best", outcome:"Live Transcribe (free, from Google) captures speech to text in real time with approximately 80% accuracy. Marcus follows the key points. After the meeting, he also emails HR documenting the lack of interpreter — creating a paper trail of the accommodation failure."},
+      {text:"Sit quietly and read the slides, asking a coworker to fill him in afterward.", rating:"ok", outcome:"Marcus misses the Q&A, the tone, the humor, and half the content. He's technically present but professionally excluded. His coworker's summary takes 3 minutes and covers 20% of what happened."},
+      {text:"Stand up and tell the CEO the meeting needs to pause until an interpreter is provided.", rating:"ok", outcome:"Legally within his rights. Practically, this creates social friction that Marcus will feel for weeks. It is correct advocacy — but it comes with a real cost that hearing people rarely have to calculate."}
+    ],
+    points:{best:15, ok:8, poor:0}
+  },
+  {
+    icon:"☕",
+    chapter:"Chapter 4 — Coffee Shop",
+    title:"The Lunch Order",
+    scene:"Marcus walks to the coffee shop near his office. He's been here dozens of times. Today there's a new barista who doesn't know him. Marcus approaches the counter. He says his order in his own voice — he has clear speech from years of practice — but the barista doesn't understand and looks uncomfortable.",
+    pov:"Many deaf individuals have intelligible speech, some do not. The assumption that all deaf people either can't speak or speak 'normally' creates daily friction. Deaf voices can sound different — and that difference sometimes makes hearing people freeze.",
+    sign:{hand:"☕", name:"COFFEE", desc:"Stack both fists, then rotate the top fist like a coffee grinder. One of the most recognized ASL signs outside the deaf community — many baristas actually know this one."},
+    genoLine:"Marcus speaks clearly to him. The barista doesn't understand. This happens. What does Marcus do next?",
+    question:"The barista looks confused after Marcus speaks. What does Marcus do?",
+    choices:[
+      {text:"Get frustrated, sigh loudly, and point at the menu board to his order.", rating:"poor", outcome:"The order gets filled eventually, but the interaction ends with both people feeling bad. The barista avoids eye contact. Marcus leaves feeling the familiar weight of a world not built for him."},
+      {text:"Smile, hold up one finger (just a second), type his order into his phone's notes app, and show the screen to the barista.", rating:"best", outcome:"Clean, efficient, kind. The order is perfect. The barista smiles, nods, and the transaction costs ten extra seconds. Marcus has carried this solution his entire adult life — it works almost everywhere."},
+      {text:"Try speaking again, more slowly and carefully.", rating:"ok", outcome:"Sometimes this works. Today, the barista still struggles. Marcus eventually resorts to pointing at the menu. The order is close but not quite right."}
+    ],
+    points:{best:15, ok:8, poor:0}
+  },
+  {
+    icon:"🏥",
+    chapter:"Chapter 5 — The Doctor",
+    title:"Urgent Care",
+    scene:"Marcus's wrist has been hurting for a week. He stops at an urgent care clinic on his lunch break. At reception, he tells them he's deaf and requests an interpreter or written communication. The receptionist hands him a clipboard and says something Marcus doesn't catch. He fills out the forms and waits. When the nurse calls his name, she calls it three times before a patient in the waiting room taps his shoulder.",
+    pov:"Healthcare settings are the highest-stakes communication environments deaf people navigate. A missed instruction, a misunderstood symptom description, or a medication direction lost in translation can cause real harm.",
+    sign:{hand:"🤕", name:"PAIN/HURT", desc:"Point both index fingers toward each other near the location of pain, then twist them in opposite directions. This sign works anywhere on the body — point to the wrist, the head, the stomach. Context makes it universal."},
+    genoLine:"Marcus nearly missed being called. In a medical setting, that kind of miss can mean a delayed diagnosis. What matters most in his appointment?",
+    question:"During the exam, the doctor speaks while writing in a chart and not facing Marcus, making lip-reading impossible. What should Marcus do?",
+    choices:[
+      {text:"Say 'excuse me' and ask the doctor to face him when speaking, or to write key points on the exam table paper.",rating:"best",outcome:"A simple, direct request. Most doctors accommodate immediately when asked. Marcus gets clear information about his sprained wrist, the treatment plan, and the follow-up instructions. He asks the doctor to write the medication name — doctors' verbal medication instructions are one of the highest-risk communication moments."},
+      {text:"Try to follow along as best he can and look up what he missed later.", rating:"poor", outcome:"Marcus misses that the doctor is prescribing an anti-inflammatory and that he should not take it with ibuprofen — which he already takes for his back. He goes home with incomplete safety information."},
+      {text:"Open his transcription app to capture what the doctor is saying.", rating:"ok", outcome:"Works if the doctor is facing toward the phone. The app catches about 70% of the instructions. Marcus asks for a printed summary at checkout to fill the gaps — a smart backup habit."}
+    ],
+    points:{best:15, ok:8, poor:0}
+  },
+  {
+    icon:"🛒",
+    chapter:"Chapter 6 — Grocery Store",
+    title:"The Announcement",
+    scene:"Marcus stops at the grocery store after work. He's moving through the produce section when he notices several shoppers looking up and moving toward the exits quickly. There's an overhead announcement. Marcus hears nothing. He doesn't know if this is a fire alarm, a weather warning, a store closure, or just a sale announcement.",
+    pov:"Emergency announcements in public spaces are almost entirely audio-based. Most stores have no visual emergency alert systems. For deaf shoppers, the first indication of danger is other people's behavior — which requires constant environmental awareness.",
+    sign:{hand:"🚨", name:"EMERGENCY / DANGER", desc:"Both hands form the letter D (index finger up, thumb and middle finger touching). Move them rapidly back and forth in front of your chest. This is an urgent, attention-grabbing sign — large movements signal urgency in ASL."},
+    genoLine:"Something is happening. Marcus doesn't know what. He has about 30 seconds to read the room before the moment passes.",
+    question:"People are moving toward the exits with urgency. Marcus doesn't know why. What does he do?",
+    choices:[
+      {text:"Follow the crowd toward the exit calmly and quickly — if it's a real emergency, following people away from the store is the right move regardless.", rating:"best", outcome:"Marcus reaches the parking lot. It was a gas leak warning. The store is evacuated. By following visual cues — body language, movement direction, urgency level — he made the right call. Environmental reading is a survival skill that deaf individuals develop to a higher degree than most hearing people."},
+      {text:"Stay put and keep shopping — announcements in stores are usually about sales.", rating:"poor", outcome:"A store employee finds Marcus in produce five minutes later, gestures urgently toward the exit. Marcus evacuates, but he's the last person in the store during a gas leak. The five minutes he spent ignoring the social cues around him added real risk."},
+      {text:"Check his phone to see if there's a local emergency alert.", rating:"ok", outcome:"Smart instinct — FEMA's Wireless Emergency Alerts go to all phones. But this takes 45 seconds, which is slow for a real emergency. The combination of checking his phone AND following the crowd is the optimal approach."}
+    ],
+    points:{best:15, ok:8, poor:0}
+  },
+  {
+    icon:"🌙",
+    chapter:"Chapter 7 — Evening",
+    title:"The Neighbor",
+    scene:"Marcus is home, cooking dinner. He feels vibrations through the floor — unusual. He checks his video doorbell app: his neighbor, an elderly woman named Ruth, is at the door looking distressed. She's hearing and doesn't know ASL. Marcus has never needed to communicate with her beyond a wave.",
+    pov:"Home is supposed to be the one environment deaf individuals fully control. But communication barriers don't end at the front door. Improvised communication between neighbors can be the difference between a crisis managed and a crisis escalated.",
+    sign:{hand:"🤝", name:"FRIEND / NEIGHBOR", desc:"Hook your two index fingers together, then swap which is on top and hook again. The reciprocal gesture captures the mutual nature of friendship. It's one of the warmest signs in ASL."},
+    genoLine:"Ruth is distressed. Marcus doesn't know why. This is the last chapter of his day — and it might be the most important moment in it.",
+    question:"Ruth is upset about something. She's speaking but Marcus can't follow. What does Marcus do?",
+    choices:[
+      {text:"Open his phone's Live Transcribe app, hold it toward Ruth so her speech transcribes to text on his screen, and read what she's saying.", rating:"best", outcome:"Ruth is saying her cat is stuck in a tree and she can't reach her son. Marcus reads this in seconds. He goes outside, helps retrieve the cat with a ladder, and saves Ruth's evening. In this moment his phone is the most powerful communication tool in the neighborhood."},
+      {text:"Hand Ruth his phone with the Notes app open so she can type what she needs to say.", rating:"best", outcome:"Equally effective. Ruth types: 'Cat in tree, very scared, can you help?' Marcus smiles and goes to get his ladder. The solution took under a minute. Both of these approaches earn full points."},
+      {text:"Smile, shrug apologetically, and mime that he can't hear — gesture that she should call someone.", rating:"poor", outcome:"Ruth leaves, unsure if Marcus understood. She's visibly more distressed. Marcus closes the door feeling the particular loneliness of a barrier that took ten seconds to build and could have taken ten seconds to cross."}
+    ],
+    points:{best:15, ok:8, poor:0}
+  }
+];
+
+let ch = 0, totalScore = 0, answered = false;
+const synth = window.speechSynthesis;
+
+function speakGeno(txt){
+  if(!txt) txt = document.getElementById('geno-speech').textContent;
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(txt);
+  u.rate=0.91;u.pitch=1.02;
+  const voices=synth.getVoices();
+  const pref=voices.find(v=>v.name.includes('Google US English')||v.name.includes('Samantha')||v.lang==='en-US');
+  if(pref) u.voice=pref;
+  const img=document.getElementById('geno-img');
+  img.classList.add('talking');
+  u.onend=()=>img.classList.remove('talking');
+  synth.speak(u);
+}
+
+function buildDots(){
+  const c=document.getElementById('ch-dots');
+  c.innerHTML=chapters.map((_,i)=>`<div class="ch-dot ${i<ch?'done':i===ch?'active':''}" id="dot-${i}"></div>`).join('');
+}
+
+function renderChapter(){
+  if(ch>=chapters.length){showEnd();return;}
+  answered=false;
+  buildDots();
+  document.getElementById('ch-disp').textContent=ch+1;
+  const s=chapters[ch];
+  document.getElementById('geno-speech').textContent=s.genoLine;
+
+  const choiceHTML=s.choices.map((c,i)=>`
+    <button class="choice" onclick="choose(${i})" id="choice-${i}">
+      <span class="choice-num">${i+1}</span>
+      <span>${c.text}</span>
+    </button>`).join('');
+
+  document.getElementById('game-area').innerHTML=`
+    <div class="adv-card">
+      <div class="adv-header">
+        <span class="adv-icon">${s.icon}</span>
+        <div><div class="adv-chapter">${s.chapter}</div><div class="adv-title">${s.title}</div></div>
+      </div>
+      <div class="adv-scene">${s.scene}</div>
+      <div class="deaf-pov"><strong>🔵 Deaf Perspective:</strong> ${s.pov}</div>
+      <div class="sign-spot">
+        <span class="sign-hand">${s.sign.hand}</span>
+        <div><div class="sign-name">Sign of the Chapter: ${s.sign.name}</div><div class="sign-desc">${s.sign.desc}</div></div>
+      </div>
+      <div class="choices" id="choices-wrap">
+        <div style="font-size:0.82rem;color:var(--teal);font-weight:600;margin-bottom:6px;letter-spacing:0.5px">🤔 ${s.question}</div>
+        ${choiceHTML}
+      </div>
+      <div class="outcome" id="outcome"></div>
+      <button class="continue-btn" id="cont-btn" onclick="nextChapter()">${ch<chapters.length-1?'Continue to Chapter '+(ch+2)+' →':'See How Your Day Went →'}</button>
+    </div>`;
+}
+
+function choose(i){
+  if(answered)return;
+  answered=true;
+  const s=chapters[ch];
+  const c=s.choices[i];
+  const pts=s.points[c.rating]||0;
+  totalScore+=pts;
+  document.getElementById('score-disp').textContent=totalScore;
+
+  document.querySelectorAll('.choice').forEach(el=>el.disabled=true);
+  document.getElementById('choice-'+i).classList.add(c.rating==='best'?'best':c.rating==='ok'?'ok':'poor');
+
+  const tagText=c.rating==='best'?'✅ Strong Choice':c.rating==='ok'?'⚡ Partial Solution':'❌ This Creates Problems';
+  const out=document.getElementById('outcome');
+  out.innerHTML=`<div class="outcome-tag ${c.rating==='best'?'best':c.rating==='ok'?'ok':'poor'}">${tagText} +${pts} pts</div>${c.outcome}`;
+  out.classList.add('show');
+  document.getElementById('cont-btn').classList.add('show');
+
+  document.getElementById('geno-speech').textContent=c.outcome.substring(0,140)+'...';
+  speakGeno();
+}
+
+function nextChapter(){
+  ch++;
+  renderChapter();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showEnd(){
+  document.getElementById('game-area').style.display='none';
+  buildDots();
+  const maxScore=chapters.length*15;
+  const pct=Math.round((totalScore/maxScore)*100);
+  let icon,title,msg;
+  if(pct>=85){icon='💎';title='Platinum — Full Awareness';msg="You navigated Marcus's entire day with skill, empathy, and resourcefulness. You understand the systemic barriers deaf individuals face — and the elegant solutions they've built. That awareness changes how you'll move through the world.";}
+  else if(pct>=60){icon='🥇';title='Gold — Aware & Capable';msg="You made strong choices in most situations. The gaps show where hearing assumptions crept in. Play again with those chapters — the difference between good and best is often one piece of knowledge.";}
+  else{icon='🥈';title='Silver — Learning';msg="Marcus's day was harder than it needed to be. Review the chapters where points were lost — each one holds a specific tool or right that most people never learn. That knowledge is the whole point.";}
+
+  document.getElementById('comp-icon').textContent=icon;
+  document.getElementById('comp-title').textContent=title;
+  document.getElementById('comp-score').textContent=totalScore;
+  document.getElementById('comp-msg').textContent=msg;
+  document.getElementById('completion').classList.add('show');
+
+  document.getElementById('geno-speech').textContent=`Marcus's day is done. You scored ${totalScore} out of ${maxScore} awareness points. ${title}. Now go deeper with the book.`;
+  speakGeno();
+}
+
+window.addEventListener('load',()=>{
+  if(synth.getVoices().length===0) synth.addEventListener('voiceschanged',renderChapter);
+  else renderChapter();
+});
+</script>
+</body>
+</html>
