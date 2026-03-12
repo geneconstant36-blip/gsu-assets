@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Amnesty Protocol | GSU BookGame</title>
+<style>
+:root {
+  --navy: #0D0D1E;
+  --navy2: #1A1A3E;
+  --gold: #C9A84C;
+  --gold-light: #F5E6C0;
+  --teal: #0D7E8C;
+  --white: #FFFFFF;
+  --bronze: #CD7F32;
+  --silver: #A8A9AD;
+  --platinum: #00CED1;
+  --success: #1E7E34;
+  --fail: #8B1A1A;
+  --crimson: #8B0000;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Georgia', serif;
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse at 15% 40%, rgba(139,0,0,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 20%, rgba(201,168,76,0.07) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 90%, rgba(13,126,140,0.08) 0%, transparent 50%);
+  pointer-events:none; z-index:0;
+}
+
+.wrap { position:relative; z-index:1; max-width:800px; margin:0 auto; padding:20px 16px 80px; }
+
+/* ── SPLASH ── */
+.splash {
+  min-height:92vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; padding:40px 16px;
+}
+
+.splash-eyebrow {
+  font-family: Arial, sans-serif; font-size:10px; letter-spacing:5px;
+  color:var(--gold); opacity:0.6; margin-bottom:20px; text-transform:uppercase;
+}
+
+.splash-title {
+  font-family: Georgia, serif; font-size:clamp(14px,4vw,20px);
+  letter-spacing:6px; color:rgba(255,255,255,0.4);
+  text-transform:uppercase; margin-bottom:8px;
+}
+
+.splash-main {
+  font-family: Georgia, serif; font-size:clamp(44px,10vw,80px);
+  color:var(--white); line-height:0.9; margin-bottom:20px; font-style:italic;
+}
+
+.splash-main span { color:var(--gold); }
+
+.splash-rule { width:80px; height:2px; background:var(--gold); margin:0 auto 24px; opacity:0.5; }
+
+.splash-tagline {
+  font-size:17px; color:rgba(255,255,255,0.6); line-height:1.8;
+  max-width:500px; margin:0 auto 36px; font-style:italic;
+}
+
+.splash-manifesto {
+  font-family:Arial,sans-serif; font-size:13px; color:rgba(255,255,255,0.5);
+  line-height:1.9; max-width:460px; margin:0 auto 40px;
+}
+
+.splash-tiers {
+  display:flex; gap:20px; justify-content:center; margin-bottom:40px; flex-wrap:wrap;
+}
+
+.splash-tier { text-align:center; }
+.splash-tier-icon { font-size:28px; display:block; margin-bottom:4px; }
+.splash-tier-name {
+  font-family:Arial,sans-serif; font-size:9px; letter-spacing:2px;
+  color:rgba(255,255,255,0.35); text-transform:uppercase;
+}
+.splash-tier-sub { font-size:10px; color:rgba(255,255,255,0.25); margin-top:2px; }
+
+.btn-primary {
+  background:var(--gold); color:var(--navy2);
+  font-family:Arial,sans-serif; font-size:15px; font-weight:bold;
+  letter-spacing:3px; padding:16px 44px; border-radius:3px;
+  border:none; cursor:pointer; transition:all 0.2s; text-transform:uppercase;
+}
+.btn-primary:hover { background:var(--gold-light); transform:translateY(-2px); }
+
+.btn-ghost {
+  background:transparent; border:1px solid rgba(201,168,76,0.4); color:var(--gold);
+  font-family:Arial,sans-serif; font-size:13px; font-weight:bold;
+  letter-spacing:2px; padding:12px 28px; border-radius:3px;
+  cursor:pointer; transition:all 0.2s; text-transform:uppercase; margin-left:12px;
+}
+.btn-ghost:hover { border-color:var(--gold); background:rgba(201,168,76,0.1); }
+
+.splash-footer {
+  margin-top:44px; font-family:Arial,sans-serif; font-size:10px;
+  letter-spacing:2px; color:rgba(255,255,255,0.18);
+}
+.splash-footer a { color:var(--gold); text-decoration:none; opacity:0.5; }
+
+/* ── GAME HEADER ── */
+.game-header { text-align:center; padding:28px 0 20px; border-bottom:1px solid rgba(201,168,76,0.15); margin-bottom:24px; }
+.game-logo { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:14px; }
+.geno-avatar { width:46px; height:46px; border-radius:50%; border:2px solid var(--gold); object-fit:cover; }
+.game-brand { font-family:Arial,sans-serif; font-size:10px; letter-spacing:4px; color:var(--gold); opacity:0.6; }
+.game-title-small {
+  font-family:Georgia,serif; font-size:clamp(11px,3vw,14px);
+  letter-spacing:5px; color:rgba(255,255,255,0.35); text-transform:uppercase;
+}
+.game-title-main { font-family:Georgia,serif; font-size:clamp(28px,6vw,46px); font-style:italic; color:var(--white); }
+.game-title-main span { color:var(--gold); }
+
+/* ── BADGE TRACK ── */
+.badge-track { display:flex; justify-content:center; gap:6px; margin-bottom:24px; flex-wrap:wrap; }
+.badge-item { display:flex; flex-direction:column; align-items:center; gap:4px; opacity:0.25; transition:all 0.4s; }
+.badge-item.unlocked { opacity:1; }
+.badge-item.active { opacity:1; transform:scale(1.1); }
+.badge-circle { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; border:2px solid rgba(255,255,255,0.1); }
+.badge-circle.bronze { border-color:var(--bronze); background:rgba(205,127,50,0.12); }
+.badge-circle.silver { border-color:var(--silver); background:rgba(168,169,173,0.12); }
+.badge-circle.gold-b { border-color:var(--gold); background:rgba(201,168,76,0.12); }
+.badge-circle.platinum { border-color:var(--platinum); background:rgba(0,206,209,0.12); }
+.badge-label { font-family:Arial,sans-serif; font-size:9px; letter-spacing:2px; color:rgba(255,255,255,0.4); }
+.badge-item.unlocked .badge-label { color:var(--gold); }
+.badge-conn { width:36px; height:2px; background:rgba(255,255,255,0.08); align-self:center; margin-bottom:18px; }
+
+/* ── SCORE BAR ── */
+.score-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  background:rgba(26,26,62,0.6); border-radius:4px; padding:10px 18px;
+  margin-bottom:14px; font-family:Arial,sans-serif; letter-spacing:2px; font-size:12px;
+  color:rgba(255,255,255,0.4);
+}
+.score-val { color:var(--gold); font-size:18px; font-weight:bold; }
+.streak-val { color:var(--teal); font-size:18px; font-weight:bold; }
+
+/* ── TIER INTRO ── */
+.tier-intro {
+  background:rgba(26,26,62,0.85); border:1px solid rgba(201,168,76,0.2);
+  border-radius:6px; padding:36px 32px; text-align:center; margin-bottom:20px;
+}
+.tier-intro-icon { font-size:64px; margin-bottom:16px; }
+.tier-intro-name { font-family:Arial,sans-serif; font-size:11px; letter-spacing:4px; text-transform:uppercase; margin-bottom:8px; }
+.tier-intro-title { font-family:Georgia,serif; font-size:24px; font-style:italic; margin-bottom:16px; color:var(--white); }
+.tier-intro-desc { font-size:15px; color:rgba(255,255,255,0.6); line-height:1.8; max-width:500px; margin:0 auto 24px; }
+.tier-intro-meta { font-family:Arial,sans-serif; font-size:10px; letter-spacing:3px; color:rgba(255,255,255,0.25); margin-bottom:28px; text-transform:uppercase; }
+
+/* ── QUESTION CARD ── */
+.q-card {
+  background:rgba(26,26,62,0.9); border:1px solid rgba(201,168,76,0.15);
+  border-radius:6px; padding:26px; margin-bottom:14px;
+}
+.q-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.q-counter { font-family:Arial,sans-serif; font-size:11px; letter-spacing:3px; color:rgba(255,255,255,0.3); }
+.q-tier-pill { font-family:Arial,sans-serif; font-size:10px; letter-spacing:2px; padding:3px 10px; border-radius:2px; }
+.q-tier-pill.bronze { background:rgba(205,127,50,0.18); color:var(--bronze); border:1px solid rgba(205,127,50,0.25); }
+.q-tier-pill.silver { background:rgba(168,169,173,0.18); color:var(--silver); border:1px solid rgba(168,169,173,0.25); }
+.q-tier-pill.gold-b { background:rgba(201,168,76,0.18); color:var(--gold); border:1px solid rgba(201,168,76,0.25); }
+.q-tier-pill.platinum { background:rgba(0,206,209,0.12); color:var(--platinum); border:1px solid rgba(0,206,209,0.25); }
+
+.progress-wrap { background:rgba(255,255,255,0.06); border-radius:2px; height:2px; margin-bottom:22px; }
+.progress-fill { height:100%; background:var(--gold); border-radius:2px; transition:width 0.5s; }
+
+.q-text { font-family:Georgia,serif; font-size:19px; line-height:1.6; color:var(--white); margin-bottom:24px; font-style:italic; }
+
+.options { display:flex; flex-direction:column; gap:10px; }
+.opt-btn {
+  background:rgba(255,255,255,0.03); border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:5px; padding:14px 16px; text-align:left; cursor:pointer;
+  color:rgba(255,255,255,0.8); font-size:14px; font-family:Georgia,serif;
+  transition:all 0.2s; display:flex; align-items:center; gap:12px;
+}
+.opt-btn:hover:not(:disabled) { border-color:var(--gold); background:rgba(201,168,76,0.07); }
+.opt-btn.correct { border-color:#2E7D32; background:rgba(30,126,52,0.18); color:#81C784; }
+.opt-btn.wrong { border-color:#B71C1C; background:rgba(139,0,0,0.18); color:#EF9A9A; }
+.opt-letter {
+  width:26px; height:26px; border-radius:50%; border:1px solid rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center;
+  font-family:Arial,sans-serif; font-size:12px; font-weight:bold; flex-shrink:0;
+}
+
+/* ── GENO COACH ── */
+.geno-coach {
+  background:rgba(13,25,35,0.95); border:1px solid rgba(13,126,140,0.3);
+  border-radius:5px; padding:16px 18px; display:flex; gap:12px; align-items:flex-start;
+  margin-top:14px; animation:slideUp 0.3s ease;
+}
+@keyframes slideUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.geno-coach-img { width:38px; height:38px; border-radius:50%; border:1.5px solid var(--teal); flex-shrink:0; }
+.coach-text { font-family:Georgia,serif; font-size:13px; color:rgba(255,255,255,0.72); line-height:1.65; }
+.coach-text strong { color:var(--teal); font-family:Arial,sans-serif; font-size:12px; letter-spacing:1px; }
+.speak-btn { background:none; border:none; color:var(--teal); cursor:pointer; font-size:15px; margin-left:5px; vertical-align:middle; }
+
+/* ── NEXT BTN ── */
+.next-wrap { text-align:right; margin-top:14px; }
+.next-btn {
+  background:var(--teal); color:var(--white); font-family:Arial,sans-serif;
+  font-size:13px; font-weight:bold; letter-spacing:2px; padding:11px 26px;
+  border-radius:3px; border:none; cursor:pointer; transition:all 0.2s; display:none;
+}
+.next-btn.show { display:inline-block; }
+.next-btn:hover { background:#0D9BAB; }
+
+/* ── TIER COMPLETE ── */
+.tier-complete { text-align:center; padding:48px 28px; background:rgba(26,26,62,0.9); border:1px solid rgba(201,168,76,0.25); border-radius:6px; }
+.tier-complete-icon { font-size:72px; margin-bottom:14px; animation:badgePop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes badgePop { from{transform:scale(0) rotate(-15deg);opacity:0} to{transform:scale(1) rotate(0);opacity:1} }
+.tier-complete-name { font-family:Arial,sans-serif; font-size:11px; letter-spacing:4px; color:var(--gold); margin-bottom:6px; }
+.tier-complete-title { font-family:Georgia,serif; font-size:28px; font-style:italic; margin-bottom:16px; }
+.tier-complete-stats { font-size:15px; color:rgba(255,255,255,0.5); margin-bottom:28px; }
+.tier-complete-stats span { color:var(--gold); font-weight:bold; font-size:18px; }
+
+/* ── FINAL ── */
+.final-wrap { text-align:center; padding:40px 20px; }
+.final-title { font-family:Georgia,serif; font-size:clamp(32px,7vw,56px); font-style:italic; color:var(--gold); margin-bottom:12px; }
+.final-badges { display:flex; justify-content:center; gap:14px; font-size:44px; margin-bottom:24px; }
+.final-desc { font-family:Georgia,serif; font-size:16px; color:rgba(255,255,255,0.65); line-height:1.85; max-width:540px; margin:0 auto 36px; font-style:italic; }
+.book-promo {
+  background:linear-gradient(135deg,#1A1A3E 0%,#0D1A2E 100%);
+  border:1px solid rgba(201,168,76,0.3); border-radius:6px; padding:26px 28px;
+  display:flex; gap:20px; align-items:center; text-align:left; max-width:560px;
+  margin:0 auto 24px; flex-wrap:wrap;
+}
+.book-icon { font-size:48px; flex-shrink:0; }
+.book-tag { font-family:Arial,sans-serif; font-size:9px; letter-spacing:3px; color:var(--gold); opacity:0.7; margin-bottom:6px; text-transform:uppercase; }
+.book-title { font-family:Georgia,serif; font-size:20px; font-style:italic; margin-bottom:6px; }
+.book-desc { font-size:12px; color:rgba(255,255,255,0.45); line-height:1.6; margin-bottom:14px; }
+.book-btn {
+  display:inline-block; background:var(--gold); color:var(--navy2);
+  font-family:Arial,sans-serif; font-size:12px; font-weight:bold;
+  letter-spacing:2px; padding:10px 20px; border-radius:3px; text-decoration:none;
+  transition:all 0.2s; text-transform:uppercase;
+}
+.book-btn:hover { background:var(--gold-light); }
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+
+<!-- ══ SPLASH ══════════════════════════════════════════════════════ -->
+<div id="splash" class="splash">
+  <div class="splash-eyebrow">GSU BookGame · Play Before You Buy</div>
+  <div class="splash-title">The</div>
+  <div class="splash-main"><span>Amnesty</span><br>Protocol</div>
+  <div class="splash-rule"></div>
+  <div class="splash-tagline">"Reaching the Forgotten — one question at a time."</div>
+  <div class="splash-manifesto">
+    Fifty-four million American adults cannot read well enough to function.<br>
+    Ninety-six percent of what school teaches never transfers to real life.<br>
+    The system did not fail them by accident.<br><br>
+    This game asks you to understand how — and to decide what to do about it.
+  </div>
+  <div class="splash-tiers">
+    <div class="splash-tier"><span class="splash-tier-icon">🥉</span><span class="splash-tier-name">Bronze</span><span class="splash-tier-sub">The Forgotten</span></div>
+    <div class="splash-tier"><span class="splash-tier-icon">🥈</span><span class="splash-tier-name">Silver</span><span class="splash-tier-sub">The Diagnosis</span></div>
+    <div class="splash-tier"><span class="splash-tier-icon">🥇</span><span class="splash-tier-name">Gold</span><span class="splash-tier-sub">The Protocol</span></div>
+    <div class="splash-tier"><span class="splash-tier-icon">💎</span><span class="splash-tier-name">Platinum</span><span class="splash-tier-sub">The Architect</span></div>
+  </div>
+  <div>
+    <button class="btn-primary" onclick="startGame()">▶ BEGIN THE PROTOCOL</button>
+  </div>
+  <div class="splash-footer">
+    A <a href="https://www.globalsovereignuniversity.org">GlobalSovereignUniversity.org</a> BookGame · 100 Questions · Free · No Login · 100% Mission Funded
+  </div>
+</div>
+
+<!-- ══ GAME AREA ════════════════════════════════════════════════════ -->
+<div id="gameArea" style="display:none;">
+
+  <div class="game-header">
+    <div class="game-logo">
+      <img class="geno-avatar" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+      <div class="game-brand">GSU BOOKGAME</div>
+    </div>
+    <div class="game-title-small">The</div>
+    <div class="game-title-main"><span>Amnesty</span> Protocol</div>
+  </div>
+
+  <div class="badge-track" id="badgeTrack">
+    <div class="badge-item" id="badge-0"><div class="badge-circle bronze">🥉</div><div class="badge-label">BRONZE</div></div>
+    <div class="badge-conn"></div>
+    <div class="badge-item" id="badge-1"><div class="badge-circle silver">🥈</div><div class="badge-label">SILVER</div></div>
+    <div class="badge-conn"></div>
+    <div class="badge-item" id="badge-2"><div class="badge-circle gold-b">🥇</div><div class="badge-label">GOLD</div></div>
+    <div class="badge-conn"></div>
+    <div class="badge-item" id="badge-3"><div class="badge-circle platinum">💎</div><div class="badge-label">PLATINUM</div></div>
+  </div>
+
+  <div class="score-bar">
+    <div>SCORE: <span class="score-val" id="scoreDisplay">0</span></div>
+    <div>STREAK: <span class="streak-val" id="streakDisplay">0</span> 🔥</div>
+    <div>CORRECT: <span class="score-val" id="correctDisplay">0</span></div>
+  </div>
+
+  <div id="content"></div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const GENO = "https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png";
+const ASIN = "B0CK8XYZABC"; // Replace with actual Amnesty Protocol ASIN
+const BOOK_URL = "https://www.amazon.com/dp/" + ASIN + "?tag=gsu2026-20";
+
+const TIERS = [
+  { id:0, name:"BRONZE", cls:"bronze", icon:"🥉", color:"#CD7F32",
+    title:"The Forgotten",
+    desc:"Before we can build the bridge, we must see who is standing on the other side — and understand exactly why the system left them there. This tier names the forgotten and counts the cost of their abandonment." },
+  { id:1, name:"SILVER", cls:"silver", icon:"🥈", color:"#A8A9AD",
+    title:"The Diagnosis",
+    desc:"The failures of the traditional education system are not accidental. They are structural. This tier examines how educational failure compounds into life failure — and why the system continues to produce the same results." },
+  { id:2, name:"GOLD", cls:"gold-b", icon:"🥇", color:"#C9A84C",
+    title:"The Protocol",
+    desc:"A diagnosis without a prescription is just a verdict. This tier examines what sovereign education actually looks like in practice — the principles, the design, and the conviction that drives Global Sovereign University." },
+  { id:3, name:"PLATINUM", cls:"platinum", icon:"💎", color:"#00CED1",
+    title:"The Architect",
+    desc:"Platinum players do not just understand the protocol — they become it. These questions ask you to think as the designer of a new educational civilization. What would you build? Who would you reach? And why does it matter?" }
+];
+
+const Q = [
+// ─── BRONZE: THE FORGOTTEN ──────────────────────────────────────
+{t:0, q:"How many American adults are estimated to be functionally illiterate — unable to read well enough to navigate daily life?",
+ o:["About 10 million","About 54 million","About 25 million","About 5 million"], c:1,
+ coach:"54 million American adults — one in six — cannot read well enough to fill out a job application, read a prescription label, or understand a lease. This is not a statistic about distant people. It is the person at the bus stop, the parent at the school meeting, the worker whose wages stay low because the words on the page are beyond them."},
+
+{t:0, q:"What percentage of what is taught in traditional classrooms is estimated to transfer to real-world application?",
+ o:["About 75%","About 50%","About 25%","About 4%"], c:3,
+ coach:"Nobel Prize economists Banerjee and Duflo documented what teachers have long suspected: approximately 96% of classroom instruction does not transfer to real-world use. Children can pass the math test and still be unable to calculate change. The system is succeeding at producing grades — and failing at producing capability."},
+
+{t:0, q:"In GSU's language, who are 'the forgotten'?",
+ o:["Students who fail their exams","People who were processed by the education system and left without the skills they needed to thrive","Adults who choose not to attend college","Children in rural areas without internet access"], c:1,
+ coach:"The forgotten are not people who gave up. They are people the system gave up on — processed through years of schooling and delivered into adulthood without the literacy, numeracy, or practical knowledge they needed. The Amnesty Protocol is written for them, and about them, and because of them."},
+
+{t:0, q:"What does 'functional illiteracy' mean?",
+ o:["Being unable to read any words","Being able to read simple words but not well enough to function in modern daily and professional life","Having a diagnosed reading disability","Refusing to read voluntarily"], c:1,
+ coach:"Functional illiteracy is not the same as total illiteracy. Functionally illiterate adults can often read individual words — they cannot read a multi-step form, a medication insert, a rental agreement, or a paycheck stub well enough to act on it. This gap between basic reading and functional reading is where lives are derailed."},
+
+{t:0, q:"What is GSU's founding mission statement?",
+ o:["Free Education for the World","Building a Bridge to Freedom Through Education — Not Handouts","Every Learner Deserves a Chance","Knowledge is Power for the Forgotten"], c:1,
+ coach:"'Building a Bridge to Freedom Through Education — Not Handouts.' Every word is deliberate. A bridge requires structure, engineering, and a destination. Freedom is the destination. Education is the material. Not handouts — because dignity requires that learners build their own competence, not receive it as charity."},
+
+{t:0, q:"What is the estimated economic cost of low literacy in the United States annually?",
+ o:["$10 billion","$80 billion","$225 billion","$2 trillion"], c:2,
+ coach:"Low literacy costs the United States an estimated $225 billion per year in non-productivity, crime, lost tax revenue, and increased social services spending. The forgotten are not just a moral problem. They are the largest preventable economic drain in the nation — and nobody in power is treating it that way."},
+
+{t:0, q:"Which group is disproportionately represented among functionally illiterate adults?",
+ o:["College graduates who did not practice reading after school","Adults who immigrated to the United States as adults","Adults who attended school in the U.S. but were failed by the system","Adults who chose to leave school voluntarily"], c:2,
+ coach:"The majority of functionally illiterate American adults attended U.S. schools. They were not absent. They showed up — and the system processed them without equipping them. That distinction matters enormously. This is not a dropout problem. It is a delivery problem."},
+
+{t:0, q:"What does GSU mean when it says education should not be a 'handout'?",
+ o:["GSU opposes all forms of financial aid","GSU believes education should be earned through tuition payments","GSU believes that giving people knowledge passively without building their capacity to use it creates dependency, not freedom","GSU is opposed to government education programs"], c:2,
+ coach:"A handout gives someone a fish. GSU's model teaches them to fish — and then challenges them to teach the lesson to someone else. Dependency on systems that deliver without demanding is not liberation. The Amnesty Protocol is not an act of charity. It is an act of restoration."},
+
+{t:0, q:"What percentage of the U.S. prison population is estimated to have low literacy levels?",
+ o:["About 20%","About 40%","About 70%","About 85%"], c:2,
+ coach:"Studies consistently find that approximately 70% of inmates in American prisons have low literacy. This is not coincidence. The pipeline from educational failure to incarceration is well-documented — and almost entirely preventable. Every person GSU reaches is one fewer person in that pipeline."},
+
+{t:0, q:"What does The Amnesty Protocol offer to the forgotten?",
+ o:["A government grant application","A path back to learning, dignity, and competence — without punishment for the years the system failed them","A GED preparation course","A scholarship to a traditional college"], c:1,
+ coach:"Amnesty means releasing the penalty for a past failure — one the person did not choose and the system did not acknowledge. The Protocol does not ask the forgotten to apologize for being failed. It opens the door without conditions and says: come in, start here, your past is not your sentence."},
+
+{t:0, q:"What is GSU's primary delivery mechanism for free education?",
+ o:["Traditional classrooms","Text-based online courses","Gamified BookGames coached by GENO AI","Video lecture series"], c:2,
+ coach:"BookGames — interactive, gamified learning experiences built around real books — are GSU's primary educational delivery. Play before you buy. Learn before you commit. Challenge yourself before the course begins. The game is the curriculum, the GENO is the teacher, and the badge is the proof."},
+
+{t:0, q:"What is the Foundation for Global Instruction?",
+ o:["A government agency","The 501(c)(3) nonprofit that operates Global Sovereign University","A private investment fund for education technology","A university accreditation body"], c:1,
+ coach:"The Foundation for Global Instruction (EIN: 39-2716552) is the 501(c)(3) nonprofit that operates GSU. Every royalty from Dr. Constant's 177+ published titles flows into this foundation. The university charges no tuition because the author's work funds the mission. This is 100% mission funded."},
+
+{t:0, q:"What does it mean that GSU's education is '100% Mission Funded'?",
+ o:["GSU receives 100% government funding","All operating costs are covered by tuition","All royalties from Dr. Constant's published works go directly to fund GSU's free education mission","GSU has a large endowment fund"], c:2,
+ coach:"Every book Dr. Constant sells funds a student who pays nothing. The royalty becomes the tuition. The author becomes the foundation. This model turns the traditional publishing economy — which profits from knowledge — into a machine that distributes it freely. That is the inversion at the heart of GSU."},
+
+{t:0, q:"What is GENO?",
+ o:["A government education program","GSU's AI tutor who speaks 32 languages, coaches learners at every step, and is free forever","A reading assessment tool","A type of educational software subscription"], c:1,
+ coach:"GENO is GSU's AI tutor — always available, always patient, speaks 32 languages, coaches every answer, and costs the learner nothing. He is not a replacement for human mentors. He is the always-on presence that makes learning available at 3 a.m., in any language, anywhere on Earth."},
+
+{t:0, q:"What is the Civilization Builders program?",
+ o:["A history curriculum","A fundraising campaign","GSU's mentorship program that deploys retired professionals as sovereign teachers alongside GENO AI","A certification program for new teachers"], c:2,
+ coach:"Civilization Builders deploys — not volunteers, deploys — retired professionals whose decades of real-world mastery are civilization's most underused resource. Their knowledge is not a relic. It is the other half of what GENO cannot provide: the lived experience, the failure survived, the lesson earned the hard way."},
+
+{t:0, q:"What does GSU's slogan 'Play the Book Before You Buy the Book' mean?",
+ o:["GSU gives away free copies of all books","Every GSU book has an associated free BookGame that lets learners experience the book's ideas before purchasing","Students must complete a game before accessing course materials","GSU requires a quiz before any book purchase"], c:1,
+ coach:"'Play the Book Before You Buy the Book' is a publishing innovation: a free game built from a real book that lets any learner — anywhere, without registration — encounter the book's core ideas through challenge and coaching. If the game moves you, the book awaits. The game is the invitation. The book is the door."},
+
+{t:0, q:"How many published titles does Dr. Gene A. Constant have to his name?",
+ o:["About 30","About 75","177 or more","Over 500"], c:2,
+ coach:"177+ published titles — spanning education, civic knowledge, mental health, industrial training, mathematics, history, leadership, and more. Every royalty from every title funds the mission. The catalog is the endowment. The author is the foundation."},
+
+{t:0, q:"What military service did Dr. Constant complete before founding GSU?",
+ o:["U.S. Army and Air Force","U.S. Navy and Marine Corps","U.S. Coast Guard","U.S. Army only"], c:1,
+ coach:"Dr. Constant served in both the U.S. Navy and the U.S. Marine Corps. He describes his naval service as the transformation that turned a broken teenager into an enthusiastic young man. The military gave him the discipline and belief that education — real education — can change anyone. GSU is built on that conviction."},
+
+{t:0, q:"What academic honor did Dr. Constant receive in 1983?",
+ o:["A doctoral degree from Harvard","Induction into Phi Theta Kappa Honor Society","A National Book Award","A teaching fellowship"], c:1,
+ coach:"Dr. Constant was inducted into Phi Theta Kappa Honor Society in 1983 — the international honor society for community college students. He earned his GED first, then his ASBA, BSBA, MBA, and DBA. His own story is the Amnesty Protocol: a man the system nearly forgot who built a university for everyone it left behind."},
+
+{t:0, q:"What does it mean that GSU requires 'no login' for its BookGames?",
+ o:["GSU has not yet built login functionality","GSU deliberately removes all barriers to access — no account, no registration, no personal data required to begin learning","GSU stores all data in cookies instead","GSU only allows anonymous learning"], c:1,
+ coach:"No login means no barrier. The forgotten are often the most suspicious of systems that ask for their information before delivering anything. GSU removes the gate entirely. You do not register to learn. You learn. Period. The door is open. Come in."},
+
+{t:0, q:"In what city is GSU's Foundation for Global Instruction based?",
+ o:["Portland, Oregon","Springfield, Illinois","Eugene, Oregon","Seattle, Washington"], c:2,
+ coach:"The Foundation for Global Instruction is based in Eugene, Oregon. Dr. Constant was raised in Springfield, Illinois — blocks from the legacy of Abraham Lincoln, the self-educated president who believed that every person, given access to knowledge, could transform their own life. That belief is GSU's inheritance."},
+
+{t:0, q:"What does GSU's Honest Transcript credential represent?",
+ o:["A traditional academic transcript","A competence-based credential that proves what a learner can actually do — not what courses they sat through","A government-issued diploma","A certification for online learning completion"], c:1,
+ coach:"The Honest Transcript replaces the traditional credential with something more truthful: documented proof of what you can actually do. Built on the classical Trivium — Grammar, Logic, Rhetoric — it measures real competence, not seat time. In a world where AI can produce everything a degree once certified, what you can actually do is everything."},
+
+{t:0, q:"What is GSU's BookGames hub tagline?",
+ o:["Learn For Free Today","You Can Learn a Lot About a Book by Playing with It First","Games Make Learning Fun","The Future of Education is Play"], c:1,
+ coach:"'You Can Learn a Lot About a Book by Playing with It First.' This is not a marketing slogan. It is an epistemological statement: the best way to know whether a book's ideas are true is to test them — to apply them, struggle with them, and earn them through challenge rather than passive reading."},
+
+{t:0, q:"What is the core belief that drives The Amnesty Protocol?",
+ o:["Most people who fail the education system are not intelligent enough to succeed","The education system cannot be improved","Every person failed by the system deserves a second door — one with no penalty for the first failure","Education is only for those who seek it out independently"], c:2,
+ coach:"Every person failed by the system deserves a second door. Not a second chance at the same system that failed them — a genuinely different door, built on different principles, that opens without demanding an explanation of why the first one was closed. That is the amnesty. That is the protocol."},
+
+{t:0, q:"What is the significance of the word 'Amnesty' in The Amnesty Protocol?",
+ o:["It is a reference to international human rights law","It means releasing the penalty for the past failure of the system — forgiving the 'record' of educational failure without requiring the forgotten to explain or justify it","It refers to a government amnesty program for adult learners","It is a metaphor for financial forgiveness of student debt"], c:1,
+ coach:"Amnesty is the official release of a penalty without requiring confession or payment. The Amnesty Protocol applies this to educational failure: your record of struggle, dropout, or failure is not a life sentence. The protocol opens the door without a tribunal. You do not have to prove you deserve to learn. You already do."},
+
+// ─── SILVER: THE DIAGNOSIS ──────────────────────────────────────
+{t:1, q:"What is the 'School-to-Prison Pipeline'?",
+ o:["A government program linking schools to correctional training","The well-documented pattern by which educational failure — especially among disadvantaged youth — leads predictably to incarceration","A metaphor for strict school discipline","A federal initiative to reduce juvenile crime"], c:1,
+ coach:"The school-to-prison pipeline is one of the most thoroughly documented failures of the American education system. When a child is suspended, expelled, held back, or made to feel that school is not for them — the next institution that claims them is often the criminal justice system. The pipeline runs on failed education."},
+
+{t:1, q:"What does 'structural failure' mean when applied to the education system?",
+ o:["Individual teachers failing their students","Budget shortfalls in school districts","Failures built into the design of the system itself — not caused by bad actors but by incentives, measurements, and structures that produce predictable harmful outcomes","A collapse of school buildings"], c:2,
+ coach:"Structural failure means the system works exactly as designed — and the design is wrong. Schools are measured on test scores, not life outcomes. Teachers are trained to deliver curriculum, not to ensure transfer. The forgotten are not a bug. They are the predictable output of a system that was never built to reach them."},
+
+{t:1, q:"What does research show about the relationship between early literacy failure and long-term outcomes?",
+ o:["Children who struggle with reading in early grades almost always catch up by middle school","Early literacy failure has little correlation with adult outcomes","Children who cannot read proficiently by the end of third grade are four times more likely to drop out of high school","Reading difficulties only affect academic performance, not life outcomes"], c:2,
+ coach:"The Annie E. Casey Foundation found that children who cannot read proficiently by third grade are four times more likely to drop out of high school. Fourth times. Early literacy failure is not a speed bump. It is a fork in the road — and the wrong fork leads somewhere most people never recover from."},
+
+{t:1, q:"Why does the traditional classroom model often fail to produce transferable knowledge?",
+ o:["Teachers are not educated enough","Students do not study hard enough","The classroom abstracts knowledge from the context in which it will be used, making transfer to real-world application difficult by design","There is insufficient homework assigned"], c:2,
+ coach:"Banerjee and Duflo's Nobel Prize research confirmed what practitioners knew: knowledge learned in abstraction rarely transfers to application. A child who can solve a math problem on a test in a classroom cannot always use that same math at a market or in a trade. Context is not decoration. It is the delivery mechanism."},
+
+{t:1, q:"What is 'learned helplessness' in the context of education?",
+ o:["Students who refuse to do their homework","A psychological condition in which repeated failure causes a person to stop trying — believing that their effort cannot affect their outcome","Students who rely too heavily on teachers","A parenting style that prevents independence"], c:1,
+ coach:"Learned helplessness — identified by psychologist Martin Seligman — develops when a person experiences repeated failure with no clear path to success. Schools produce learned helplessness at scale: year after year of failure in the same subjects, with no alternative path, teaches millions of students that effort is futile. GSU exists to undo that teaching."},
+
+{t:1, q:"What does 'credential inflation' mean and how does it harm the forgotten?",
+ o:["College tuition rising faster than inflation","The rising requirement for formal credentials to access jobs that previously required experience — pricing out workers whose skills were never formally certified","The devaluation of high school diplomas","Grade inflation in universities"], c:1,
+ coach:"Credential inflation means jobs that once required demonstrated skill now require a degree — not because the job changed, but because a degree became the filter. This harms the forgotten doubly: first the system failed to educate them, then it requires a credential from that same system to access economic opportunity. GSU's Honest Transcript is a direct challenge to this gate."},
+
+{t:1, q:"What is the 'Matthew Effect' in reading education?",
+ o:["A biblical principle applied to classroom discipline","The phenomenon in which children who read well read more and get better, while those who struggle read less and fall further behind — widening the gap over time","A curriculum designed by Matthew Arnold","A theory about the relationship between poverty and school funding"], c:1,
+ coach:"'For unto every one that hath shall be given' — the Matthew Effect describes how early reading advantage compounds. Good readers read more, encounter more vocabulary, develop deeper comprehension, and accelerate. Poor readers avoid reading, fall further behind, and the gap grows exponentially with every passing year. Early intervention is not optional. It is civilization's responsibility."},
+
+{t:1, q:"What is 'deficit thinking' in education and why is it harmful?",
+ o:["Thinking about school budget shortfalls","The practice of attributing student failure to inherent deficiencies in the student — rather than to failures in how they were taught","A teaching method for struggling learners","Negative self-talk among students"], c:1,
+ coach:"Deficit thinking blames the student for what the system failed to deliver. When a child fails to read, deficit thinking says the child is the problem. GSU says the opposite: the child arrived ready to learn; the system failed to meet them. That inversion — from blaming the learner to holding the system accountable — is the beginning of the protocol."},
+
+{t:1, q:"Why do many adults who struggle with literacy hide it?",
+ o:["They are not aware they have a problem","Shame — the fear of being judged as unintelligent in a society that treats literacy as a basic expectation and illiteracy as a personal failure","They prefer not to read","Government programs discourage disclosure"], c:1,
+ coach:"Shame is the great silencer. Adults who cannot read have typically spent decades developing sophisticated strategies to hide it — avoiding forms, asking others to read for them, making excuses. The shame is not their fault. It is the product of a society that treats a systemic failure as a personal character flaw. GSU removes the shame by removing the judgment."},
+
+{t:1, q:"What does the research say about the effectiveness of traditional standardized testing?",
+ o:["Standardized tests reliably predict real-world success across all demographics","Standardized tests measure a narrow range of cognitive skills under artificial conditions and are poor predictors of real-world capability, especially for students from disadvantaged backgrounds","Standardized tests are the most accurate assessment tool available","Standardized tests have no effect on educational outcomes"], c:1,
+ coach:"Decades of research have found that standardized tests predict standardized test scores — and not much else. They systematically underperform for students from low-income backgrounds, non-native speakers, and learners whose intelligence expresses itself outside the test format. GSU's competence-based Honest Transcript measures what tests miss: what you can actually do."},
+
+{t:1, q:"What is the 'dropout factory' phenomenon in American high schools?",
+ o:["Schools with high student attrition due to poor facilities","High schools where fewer than 60% of students graduate — concentrated in low-income urban and rural communities — that have operated this way for decades","A documentary about dropout rates","A school reform movement"], c:1,
+ coach:"Johns Hopkins researchers identified approximately 2,000 'dropout factories' — high schools graduating fewer than 60% of their students — concentrated in the poorest communities. These schools have operated this way for decades. The children who attend them are not failing the schools. The schools are failing the children. Year after year. Generation after generation."},
+
+{t:1, q:"How does poverty compound educational failure?",
+ o:["Poverty has no relationship to educational outcomes when teachers are well-trained","Poverty reduces access to books, stability, nutrition, and the cognitive bandwidth required for learning — creating a compounding disadvantage that the classroom alone cannot compensate for","Poverty primarily affects college admission, not K-12 learning","Only extreme poverty affects educational outcomes"], c:1,
+ coach:"The child who arrives at school hungry, who moved three times this year, who has no books at home, who cannot focus because the environment at home is unstable — arrives at the same desk as the child with every advantage. Poverty does not lower intelligence. It consumes the cognitive resources that learning requires. GSU's free, gamified, device-accessible model reduces friction at every point."},
+
+{t:1, q:"What is 'educational redlining'?",
+ o:["A practice of marking failing students with red ink","The well-documented pattern by which the poorest-funded schools are concentrated in the lowest-income communities — creating a geography of educational deprivation that mirrors historical housing discrimination","A type of school boundary policy","A curriculum selection practice"], c:1,
+ coach:"Educational redlining maps almost perfectly onto historical housing redlining. The communities denied mortgages in the 1950s are the communities with underfunded schools today. The children in those schools are not less capable. They are less resourced. That distinction is moral — and it demands a different kind of response."},
+
+{t:1, q:"What does 'intergenerational poverty' have to do with educational failure?",
+ o:["Nothing — each generation starts fresh","Educational failure in one generation reduces the likelihood that the next generation will escape poverty — creating a cycle that compounds with each passing generation unless interrupted","Poverty is caused by educational failure alone","Intergenerational poverty only affects developing nations"], c:1,
+ coach:"When parents are functionally illiterate, children grow up in homes with fewer books, less help with homework, and fewer models of reading. Their children inherit the deficit. GSU does not just serve today's forgotten. It serves the children of the forgotten — by reaching the parents who shape the home environment that predicts a child's literacy before kindergarten."},
+
+{t:1, q:"What percentage of American adults read below a sixth-grade level?",
+ o:["About 5%","About 10%","About 21%","About 43%"], c:3,
+ coach:"Approximately 43% — nearly half of American adults — read below a sixth-grade level. This is not a marginal problem at the edges of society. It is a majority-adjacent reality at the center of the workforce, the electorate, and the parent population. The forgotten are not the exception. They are everywhere."},
+
+{t:1, q:"What is the cost of a single student dropping out of high school to the public?",
+ o:["About $5,000 over a lifetime","About $25,000 over a lifetime","About $75,000 over a lifetime","Approximately $300,000 over a lifetime in lost taxes, increased social services, and incarceration costs"], c:3,
+ coach:"Every student who drops out costs the public approximately $300,000 over a lifetime — in lost tax revenue, increased healthcare costs, higher social services use, and incarceration expenses. The case for reaching the forgotten is not just moral. It is the most cost-effective public investment available. GSU costs the public nothing. Its learners pay nothing. The mission pays for itself."},
+
+{t:1, q:"What is the Amnesty Protocol's central claim about who is responsible for educational failure?",
+ o:["Students who did not apply themselves","Parents who did not support their children's education","The education system, which was structured in ways that predictably failed certain populations — and which owes those populations a genuine alternative","Individual teachers who failed their students"], c:2,
+ coach:"The Protocol places responsibility where the evidence points: on the system. Individual teachers often work heroically within a structure that limits them. Individual parents often sacrifice enormously for children the system still fails. The failure is structural. The responsibility is collective. The response must be systemic — and GSU is the system's alternative."},
+
+{t:1, q:"What role does shame play in preventing adults from seeking help with literacy?",
+ o:["Shame has no effect on adult learning behavior","Shame is the primary barrier for most functionally illiterate adults — it prevents them from disclosing their struggles, seeking help, or entering programs that would require them to be seen as illiterate in front of others","Adults are generally not ashamed of literacy challenges","Only children experience educational shame"], c:1,
+ coach:"Shame is the lock on the door. Every program that requires adults to identify publicly as illiterate — to sit in a room labeled 'literacy class,' to tell an employer they need help reading — runs directly into this wall. GSU's no-login, gamified, private-by-design model removes the label. You play a game. The game is the education. Nobody knows but you."},
+
+{t:1, q:"What do Banerjee and Duflo's findings suggest about the design of effective education?",
+ o:["Larger class sizes improve outcomes","Learning must be connected to real-world context to transfer — abstract instruction produces knowledge that stays in the classroom","More standardized testing improves retention","Online education is always superior to classroom instruction"], c:1,
+ coach:"Banerjee and Duflo won the Nobel Prize for demonstrating that educational interventions must be context-connected to work. Teach math in the market. Teach reading through material the learner needs to navigate. Teach skills in the environment where they will be used. GSU's BookGames are built on this exact insight — every question is applied, every coaching note is real-world."},
+
+{t:1, q:"What does GSU mean by 'the Fog-Industrial Complex'?",
+ o:["Air pollution from industrial facilities","The network of economic interests — industries, institutions, media — that profit from keeping populations uneducated, cognitively passive, and dependent on systems that serve those interests","A type of weather phenomenon affecting industrial areas","A metaphor for bureaucratic confusion in government"], c:1,
+ coach:"The Fog-Industrial Complex profits from fog — from a population that cannot read the contract, cannot interpret the data, cannot evaluate the claim. Literacy, critical thinking, and sovereign education are threats to every system built on managing people rather than empowering them. GSU does not just teach reading. It dismantles the fog."},
+
+{t:1, q:"What is the 'summer slide' and what does it reveal about educational inequality?",
+ o:["A playground safety hazard","The well-documented loss of academic skills during summer break — which is far more severe for low-income students who lack access to books and learning opportunities during the summer months","A curriculum review process","A decline in teacher effectiveness over summer"], c:1,
+ coach:"Middle-income students typically gain or maintain reading skills over summer. Low-income students lose up to two months of reading progress — because they have no books at home, no enrichment programs, and no adult readers modeling literacy. By high school, the cumulative gap from summer slide alone can account for years of academic difference. Access is everything."},
+
+{t:1, q:"What does GSU's design philosophy say about where learning should happen?",
+ o:["In accredited physical classrooms only","Only online with a certified instructor","Anywhere the learner is — on any device, in any language, at any hour, without registration or cost — because barriers to access are barriers to freedom","Only in structured cohort programs with scheduled sessions"], c:2,
+ coach:"Learning happens where the learner is — or it doesn't happen at all. A mother studying at midnight after her children sleep. A factory worker on a lunch break. A veteran rebuilding after service. A retiree picking up a subject they never got to explore. GSU goes to them. That is the protocol."},
+
+// ─── GOLD: THE PROTOCOL ─────────────────────────────────────────
+{t:2, q:"What is the classical Trivium and why does GSU use it as its credentialing framework?",
+ o:["A three-part test for college admission","A Roman architectural style","The three foundational disciplines of Grammar, Logic, and Rhetoric — which together develop the ability to acquire knowledge accurately, reason about it soundly, and communicate it powerfully","A type of curriculum organization used only in private schools"], c:2,
+ coach:"Grammar: know what is true. Logic: know why it is true. Rhetoric: communicate it with power. The Trivium is the original sovereign education — built to produce thinkers who can navigate any domain, not just the subject they were tested in. GSU's Honest Transcript is built on this foundation because it measures the three capacities that make all other learning possible."},
+
+{t:2, q:"What is GSU's Bronze-Silver-Gold-Platinum badge architecture designed to produce?",
+ o:["A gamification gimmick to increase engagement","A progressive structure in which each tier deepens the learner's engagement — from foundational knowledge through application, strategy, and finally mastery — with verified proof of achievement at each stage","A simple certificate of completion","A social media sharing system"], c:1,
+ coach:"The four-tier architecture is a pedagogical design — not a game mechanic. Bronze establishes the foundation. Silver applies it. Gold tests it under pressure. Platinum demands that the learner teach it, design with it, and integrate it into their sovereign understanding. Each badge is proof of a deeper kind of knowing."},
+
+{t:2, q:"What is the 'Play Before You Buy' model and why is it a publishing innovation?",
+ o:["A book trial period offered by Amazon","A free chapter preview","A full game built from a real book that lets any learner experience the book's core ideas through challenge and coaching before purchasing — removing the barrier between curiosity and commitment","A library borrowing program"], c:2,
+ coach:"'Play Before You Buy' inverts the traditional transaction: instead of buying a book to see if you'll learn from it, you play a game built from the book and find out first. This is not a sample. It is a complete educational experience. The book is the deep dive. The game is the proof that the dive is worth taking."},
+
+{t:2, q:"How does GENO AI serve learners that human teachers cannot always reach?",
+ o:["GENO replaces human teachers entirely","GENO provides always-on, language-flexible, judgment-free coaching in 32 languages at any hour — reaching learners in moments and contexts where human teachers are unavailable","GENO is faster than human teachers","GENO is cheaper than human teachers"], c:1,
+ coach:"GENO reaches the learner at 2 a.m. in their language, without judgment, without impatience, without a waiting list. He does not tire, does not favor, does not shame. He is not better than a great human teacher — he is available when one is not. That availability is the difference between a learner who persists and one who gives up in the night."},
+
+{t:2, q:"What makes GSU's approach to mentorship different from traditional volunteer programs?",
+ o:["GSU pays its mentors","GSU requires mentors to have teaching credentials","GSU deploys retired professionals as sovereign teachers — not volunteers filling a need, but experts whose mastery is the irreplaceable complement to GENO AI's availability","GSU matches mentors only with learners of the same background"], c:2,
+ coach:"Deployment, not volunteerism. A volunteer fills a gap. A deployed professional brings a mission. The Civilization Builders program tells retired experts: your 40 years of mastery is the most dangerous educational resource in any room. We are not asking you to help. We are asking you to lead. That distinction changes who shows up — and how."},
+
+{t:2, q:"What is the 'contextual learning' principle that drives GSU's curriculum design?",
+ o:["Learning in a physical context — always in a classroom","Learning skills within the real-world situations where they will be applied — so that knowledge transfers instead of remaining abstract","Learning only from context, with no instruction","A learning style theory"], c:1,
+ coach:"Every GSU game is set in the world where the knowledge lives. Math is trade math, budget math, investment math. Literacy is the literacy of real documents, real situations, real stakes. Civics is the civics of the meeting you actually attend. Context is not decoration — it is the transfer mechanism that makes learning permanent."},
+
+{t:2, q:"What does GSU's 'Sovereign Stack' consist of?",
+ o:["A technology infrastructure product","A set of micro-tools that give learners discrete sovereign capabilities — each one a small act of empowerment that builds toward full educational independence","A financial planning curriculum","A series of leadership books"], c:1,
+ coach:"The Sovereign Stack is GSU's collection of micro-tools — small, targeted capabilities that a learner can acquire in a session and immediately apply. Each tool in the stack makes the learner slightly more independent of systems they currently depend on. Stack enough of them and you have a sovereign individual."},
+
+{t:2, q:"Why does GSU use gamification rather than traditional instruction?",
+ o:["Because games are easier to produce than courses","Because gamification is trendy in educational technology","Because challenge before instruction — the game mechanic — produces deeper encoding than passive consumption, as confirmed by decades of cognitive science research","Because learners prefer entertainment to education"], c:2,
+ coach:"The research is unambiguous: learners who struggle to retrieve information before they fully know it encode it more deeply than learners who read passively and are tested afterward. GSU's BookGames put the challenge first — not as a trick, but as the most effective delivery mechanism for knowledge that transfers. The game is the science."},
+
+{t:2, q:"What is the 'Honest Transcript' and how does it challenge the traditional credential system?",
+ o:["A more accurate academic grade report","A competence-based credential built on the classical Trivium that documents what a learner can actually do — not how many years they sat in a classroom or which institution stamped their record","A simplified diploma","A certificate of course completion"], c:1,
+ coach:"The Honest Transcript says: here is what this person can actually do. Not where they studied. Not how long. Not what grade they received on an exam they took under pressure in an artificial setting. What they can do. In a world where AI can produce the outputs that credentials once certified, what you can do is the only honest measure remaining."},
+
+{t:2, q:"What is the Voice of Sovereignty podcast and what role does it play in GSU's mission?",
+ o:["A political commentary show","A fundraising program","GSU's educational podcast that broadcasts in 10 languages — extending the mission to learners who are not yet ready to engage with written material or interactive games","A teacher training resource"], c:2,
+ coach:"Voice of Sovereignty broadcasts the mission in 10 languages — meeting learners at the audio level when written material is still a barrier. Literacy begins with sound. The podcast is the first rung: hear the ideas, feel their relevance, then enter the game. The protocol meets the learner wherever they are."},
+
+{t:2, q:"What are the '-ification' subjects in GSU's curriculum architecture?",
+ o:["A branding exercise","GSU's subject-specific naming convention — Readification, Mathification, Writification, Financification, Digitification, Tradification — that signals the transformation of a learner's relationship to each domain","A type of gamification mechanic","A reference to historical suffixes"], c:1,
+ coach:"Readification. Mathification. Writification. The '-ification' suffix signals transformation, not instruction. You are not just learning to read — you are being readified. The subject is not a course you take. It is a capacity you develop. The name is a mission statement: by the end, you are different than you were at the beginning."},
+
+{t:2, q:"How does GSU address learners whose native language is not English?",
+ o:["GSU requires all learners to work in English","GSU offers content in Spanish only in addition to English","GENO speaks and teaches in 32 languages — and GSU's design explicitly rejects the premise that English proficiency should be a prerequisite for quality education","GSU provides translation services for an additional cost"], c:2,
+ coach:"Thirty-two languages. The choice of languages is a political act: it says that the right to learn is not conditional on speaking the language of the dominant culture. A learner whose English is limited is not a lesser learner. They are a learner who deserves education in the language where they can actually receive it."},
+
+{t:2, q:"What is the role of the BookGames in GSU's 'Play Before You Buy' funnel?",
+ o:["The game is a free sample to increase book sales","The game is the primary educational experience — the book deepens what the game initiates. Together they form a complete learning journey that begins with challenge and ends with mastery","The game replaces the book entirely","The game is a marketing tool with no educational value"], c:1,
+ coach:"The game is not a preview. It is the beginning of the education. The book is not the product. It is the deepening. Together they form a sovereign learning journey: the game challenges and coaches; the book extends and enriches. The learner who finishes both has done something no passive reader can claim — they have earned the knowledge."},
+
+{t:2, q:"What is Dr. Constant's personal story and why is it inseparable from the Amnesty Protocol?",
+ o:["Dr. Constant grew up with every educational advantage","Dr. Constant's story is irrelevant to the mission","Dr. Constant skipped high school via GED, entered community college, was inducted into Phi Theta Kappa, and went on to earn a DBA — his life is the protocol he prescribes: the second door works if it is genuinely open","Dr. Constant was a professional educator before founding GSU"], c:2,
+ coach:"Dr. Constant is not an advocate for the forgotten who studies them from a distance. He is one of them — a man the traditional system nearly lost, who found a second door and walked through it, and then spent the rest of his life building that door wider and leaving it permanently open. The Amnesty Protocol is his autobiography translated into a university."},
+
+{t:2, q:"What does GSU's no-tuition model say about who education is for?",
+ o:["Education is only for those who can afford to invest in it","Education is a product to be sold at the best possible price","Education is a human right — and any model that prices it beyond the reach of those who need it most is not an educational model but a gatekeeping model","Education should be subsidized by government only"], c:2,
+ coach:"When education costs more than a family earns in a month, it is not education. It is a membership club. GSU's no-tuition model is not charity — it is the correct definition of what education is: a right, not a product; a bridge, not a toll road. The royalties pay the bridge. The learner walks across it free."},
+
+{t:2, q:"What is the 'second door' metaphor in The Amnesty Protocol?",
+ o:["A literal architectural feature of GSU's campus","A scholarship program","The alternative path — free, gamified, judgment-free, always open — that GSU offers to anyone the traditional system failed, shut out, or processed without equipping","A second chance at the same system that failed the learner the first time"], c:2,
+ coach:"The second door is not a re-entry into the same building through a different entrance. It is a different building entirely — built on different principles, by someone who remembered what it felt like when the first door was locked. The second door is always open. There is no waiting list. There is no application. There is only: come in."},
+
+{t:2, q:"What is the significance of GSU receiving YouTube nonprofit fundraising approval?",
+ o:["It allows GSU to run paid advertisements","It allows YouTube viewers to donate directly to GSU's mission while watching GSU content — turning the platform's vast reach into a funding mechanism for free education","It gives GSU free advertising credits","It allows GSU to monetize its videos"], c:1,
+ coach:"YouTube's nonprofit approval means viewers can fund the mission at the moment they are moved by it. Watch the mission video. Feel its weight. Give while the feeling is fresh. Every dollar that comes through YouTube becomes education for someone who pays nothing. The platform becomes the pipeline. The viewer becomes the patron."},
+
+{t:2, q:"What does GSU's Math Quiz Challenge teach beyond arithmetic?",
+ o:["Only arithmetic facts","Only multiplication tables","Mathematical confidence, strategic thinking under time pressure, and the transfer of numerical reasoning to real-world contexts — through gamified challenge that makes math feel like play","Advanced calculus"], c:2,
+ coach:"The Math Quiz Challenge is not a drill. It is a confidence-building experience designed to give learners the sensation of mathematical mastery — the feeling that numbers are not enemies but tools. That feeling is what traditional math education destroys in millions of children. GSU rebuilds it, one challenge at a time."},
+
+// ─── PLATINUM: THE ARCHITECT ────────────────────────────────────
+{t:3, q:"If you were designing a school for the forgotten from scratch, what single principle would govern every decision?",
+ o:["Standardized assessment at every level","No learner leaves without a skill they can use tomorrow","Maximum class size for efficiency","Credentialing as the primary outcome"], c:1,
+ coach:"'No learner leaves without a skill they can use tomorrow' — this is the Amnesty Protocol principle applied to design. Not a credential. Not a grade. Not a standardized score. A skill. Something that changes what a person can do in the real world the moment they walk out the door. Everything else is secondary."},
+
+{t:3, q:"What would a truly 'sovereign' education system look like, applied globally?",
+ o:["A single global curriculum standardized by international bodies","A system in which each nation controls its own curriculum entirely","A system in which individuals own their own learning — free from debt, credential gatekeeping, and cultural homogenization — powered by AI tutors in every language and human mentors who deploy their mastery freely","A purely digital system replacing all human teachers"], c:2,
+ coach:"Sovereign education is not nationalized and not globalized — it is individualized. The learner controls the pace, the language, the content, and the credential. The AI meets them where they are. The mentor brings what the AI cannot. The platform costs nothing. The learning belongs to the learner. Globally. Permanently. Free."},
+
+{t:3, q:"What is the relationship between information literacy and democratic self-governance?",
+ o:["Information literacy is a personal skill with no political implications","Citizens who cannot evaluate information critically cannot meaningfully govern themselves — making information literacy the foundation of functional democracy","Democracy only requires basic reading, not critical information evaluation","Political systems do not depend on educational levels"], c:1,
+ coach:"A democracy populated by people who cannot evaluate claims, recognize manipulation, or understand the policy documents that govern them is not a democracy in practice — it is a managed population. The Fog-Industrial Complex depends on this management. GSU's curriculum — especially Fog Detection and Signal Decryption — is a direct political act: it produces citizens who cannot be managed."},
+
+{t:3, q:"How should a sovereign educational institution measure its success?",
+ o:["By the number of degrees conferred","By standardized test scores","By the measurable change in what its learners can do — in their work, their families, their communities — after engaging with its curriculum","By the number of learners enrolled"], c:2,
+ coach:"Enrollment is a vanity metric. Degrees conferred are a credential factory metric. The Amnesty Protocol's metric is simpler and harder: did the learner leave able to do something they could not do before? Did their life change? Did their child's prospects change? Did they become a mentor for the next forgotten person they met? That is the measurement."},
+
+{t:3, q:"What is the moral argument for making education entirely free?",
+ o:["Free education reduces quality","Free education is only possible with government subsidy","If educational failure is not the fault of the learner — if the system produced the failure — then charging the learner to access the remedy is a moral contradiction. The system that failed them owes them the repair.","Free education creates dependency"], c:2,
+ coach:"The logic is airtight: if the child did not choose to fail, if the system produced the failure, if the poverty was inherited rather than earned — then charging that child's adult self to access the education they were denied is not a business model. It is extortion. GSU's free model is not generosity. It is the morally correct response to a system-produced debt."},
+
+{t:3, q:"What would the Amnesty Protocol look like if applied to an entire nation's education system?",
+ o:["Universal college funding","A mandatory national curriculum","An unconditional release of educational debt for every adult failed by the system, paired with a universally accessible, competence-based alternative pathway that costs nothing and requires no prior credential to enter","A standardized test waiver program"], c:2,
+ coach:"National amnesty for educational failure: release the penalty, open the door, fund the alternative pathway publicly, and measure success by competence rather than credential. This is not utopian. It is a policy choice. Every nation that has made it has seen measurable increases in workforce participation, civic engagement, and intergenerational mobility. The protocol scales."},
+
+{t:3, q:"How does the Civilization Builders program address the 'wisdom gap' that AI cannot close?",
+ o:["By providing AI with more training data from experienced professionals","By recording the experiences of retired professionals in video form","By creating direct human relationships between retired experts and learners — where the transmission is not information but wisdom: the lived understanding that comes from having made decisions with real consequences","By certifying retired professionals as online instructors"], c:2,
+ coach:"Wisdom is not information. It is information filtered through consequence. The retired engineer who made a $2 million mistake and rebuilt from it carries knowledge that no database holds. That knowledge — transmitted in relationship, through story, through the mentor's willingness to say 'I failed and here is what I learned' — is the Civilization Builders' irreplaceable gift."},
+
+{t:3, q:"What does it mean for a learner to become 'sovereign'?",
+ o:["To be financially independent","To distrust all institutions","To own your own learning, direct your own development, evaluate information independently, and no longer require permission from any external authority to grow, contribute, or lead","To achieve a specific credential level"], c:2,
+ coach:"Sovereignty in learning means you are never again at the mercy of a system for your growth. You know how to find what you need, evaluate what you find, apply what you learn, and teach what you know. You are not dependent on a credential to validate your competence. You are the competence. That is what GSU exists to produce."},
+
+{t:3, q:"What is the long-term civilizational argument for reaching the forgotten?",
+ o:["Reaching the forgotten reduces the cost of social programs","Reaching the forgotten is primarily a charitable act","Every person failed by the education system represents not just a lost individual but a lost contribution — to their family, community, economy, and civilization. Multiplied by 54 million, that loss is the largest preventable drain on human potential in modern history.","Reaching the forgotten improves national test score averages"], c:2,
+ coach:"Fifty-four million people, each carrying a contribution that was never made because the system took their potential and returned nothing. Imagine what one of them might have discovered, built, taught, or led. Multiply by 54 million. That is what educational failure costs civilization — not in dollars, but in unrealized human possibility. GSU exists to start recovering it."},
+
+{t:3, q:"What is the relationship between literacy and freedom?",
+ o:["Literacy improves job prospects — its connection to freedom is metaphorical","Literacy and freedom are unrelated beyond economic benefits","Literacy is the technical prerequisite for freedom in a text-governed society: without it, you cannot read the contract, understand your rights, evaluate the candidate, or navigate the systems that govern your life. Illiteracy is structural unfreedom.","Freedom is primarily a political concept with no relationship to education"], c:2,
+ coach:"In a society governed by text — laws, contracts, policies, ballots, medical instructions — the person who cannot read that text is not free. They are managed. They sign what they cannot read, agree to what they cannot understand, and vote for what they cannot evaluate. Literacy is not a skill. It is the technical infrastructure of self-determination."},
+
+{t:3, q:"What does The Amnesty Protocol ask of the reader who was not forgotten?",
+ o:["Nothing — the book is only for those who were failed by the system","To donate to GSU","To become a Civilization Builder — to recognize that privilege in education is not a personal achievement but a systemic advantage, and that returning it through mentorship, advocacy, or support is the appropriate response","To feel guilty about their educational advantages"], c:2,
+ coach:"The Amnesty Protocol does not ask the privileged reader to feel guilty. It asks them to act. Your education — the books in your home, the stability of your upbringing, the teachers who saw you — was an accident of birth as much as a product of effort. The proper response to unearned advantage is not shame. It is deployment. What you were given, give back."},
+
+{t:3, q:"What would GSU's vision of a fully realized educational civilization look like?",
+ o:["Every person holding a college degree","A global standardized curriculum","A world in which every person — regardless of birth, language, income, age, or past failure — has access to the knowledge they need to govern themselves, support their families, contribute to their communities, and develop their full human potential. Free. Always.","Universal access to online courses"], c:2,
+ coach:"This is the vision. Not a credential for everyone — a capability for everyone. Not access to the same system that failed half the world — access to a genuinely different system built on different principles. Free. In every language. At every hour. With human mentors for the wisdom AI cannot carry. That world is not utopia. It is a policy choice. GSU is building the proof of concept."},
+
+{t:3, q:"What does The Amnesty Protocol ultimately ask you to do?",
+ o:["Purchase all of Dr. Constant's books","Share the GSU website on social media","Choose: remain a witness to the largest preventable educational failure in modern history — or become part of the architecture of its solution. There is no neutral position.","Complete the full GSU curriculum"], c:2,
+ coach:"There is no neutral position. Knowing what you now know — that 54 million Americans cannot read, that the system failed them by design, that the remedy exists and costs nothing — silence is a choice. The Amnesty Protocol ends with an invitation: become the second door for someone. Teach something. Mentor someone. Share the game. Build the bridge. One person at a time. That is the protocol."},
+];
+
+// ── STATE ──
+let state = { tier:0, qIdx:0, score:0, streak:0, correct:0, unlocked:[], phase:'splash' };
+
+function qs(tier) { return Q.filter(q=>q.t===tier); }
+
+function startGame() {
+  document.getElementById('splash').style.display='none';
+  document.getElementById('gameArea').style.display='block';
+  try { const s=JSON.parse(localStorage.getItem('ap_badges')||'[]'); state.unlocked=s; } catch(e){}
+  showTierIntro(0);
+}
+
+function updateBadges() {
+  TIERS.forEach((t,i)=>{
+    const el=document.getElementById('badge-'+i);
+    el.classList.remove('unlocked','active');
+    if(state.unlocked.includes(i)) el.classList.add('unlocked');
+    if(i===state.tier && state.phase==='q') el.classList.add('active');
+  });
+}
+
+function updateScore() {
+  document.getElementById('scoreDisplay').textContent=state.score;
+  document.getElementById('streakDisplay').textContent=state.streak;
+  document.getElementById('correctDisplay').textContent=state.correct;
+}
+
+function showTierIntro(idx) {
+  state.tier=idx; state.qIdx=0; state.phase='intro';
+  const t=TIERS[idx]; updateBadges();
+  document.getElementById('content').innerHTML=`
+    <div class="tier-intro">
+      <div class="tier-intro-icon">${t.icon}</div>
+      <div class="tier-intro-name" style="color:${t.color}">${t.name} TIER</div>
+      <div class="tier-intro-title">${t.title}</div>
+      <div class="tier-intro-desc">${t.desc}</div>
+      <div class="tier-intro-meta">25 QUESTIONS · EARN THE ${t.name} BADGE</div>
+      <button class="btn-primary" onclick="startTier()">▶ BEGIN ${t.name}</button>
+    </div>`;
+}
+
+function startTier() { state.phase='q'; showQ(); }
+
+function showQ() {
+  const tierQs=qs(state.tier), q=tierQs[state.qIdx], total=tierQs.length;
+  const t=TIERS[state.tier], pct=(state.qIdx/total)*100;
+  updateBadges(); updateScore();
+  const letters=['A','B','C','D'];
+  document.getElementById('content').innerHTML=`
+    <div class="q-card">
+      <div class="q-meta">
+        <div class="q-counter">QUESTION ${state.qIdx+1} OF ${total}</div>
+        <div class="q-tier-pill ${t.cls}">${t.icon} ${t.name}</div>
+      </div>
+      <div class="progress-wrap"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts">
+        ${q.o.map((o,i)=>`
+          <button class="opt-btn" onclick="pick(${i})" id="opt${i}">
+            <span class="opt-letter">${letters[i]}</span>${o}
+          </button>`).join('')}
+      </div>
+    </div>
+    <div id="coachWrap"></div>
+    <div class="next-wrap"><button class="next-btn" id="nextBtn" onclick="nextQ()">NEXT →</button></div>`;
+}
+
+function pick(sel) {
+  const q=qs(state.tier)[state.qIdx], ok=sel===q.c;
+  document.querySelectorAll('.opt-btn').forEach((b,i)=>{
+    b.disabled=true; b.style.pointerEvents='none';
+    if(i===q.c) b.classList.add('correct');
+    else if(i===sel) b.classList.add('wrong');
+  });
+  if(ok){ state.score+=10+(state.streak*2); state.correct++; state.streak++; }
+  else { state.streak=0; }
+  updateScore();
+  const prefix=ok?'<strong style="color:#81C784">✓ Correct.</strong> ':'<strong style="color:#EF9A9A">✗ Not quite.</strong> ';
+  document.getElementById('coachWrap').innerHTML=`
+    <div class="geno-coach">
+      <img class="geno-coach-img" src="${GENO}" alt="GENO">
+      <div class="coach-text">${prefix}${q.coach}<button class="speak-btn" onclick="speak(this)">🔊</button></div>
+    </div>`;
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function speak(btn) {
+  if(!window.speechSynthesis) return;
+  const text=btn.parentElement.textContent.replace('🔊','').trim();
+  window.speechSynthesis.cancel();
+  const msg=new SpeechSynthesisUtterance(text);
+  msg.rate=0.88; msg.pitch=1.05;
+  window.speechSynthesis.speak(msg);
+}
+
+function nextQ() {
+  state.qIdx++;
+  if(state.qIdx>=qs(state.tier).length) finishTier();
+  else showQ();
+}
+
+function finishTier() {
+  state.unlocked.push(state.tier);
+  try { localStorage.setItem('ap_badges',JSON.stringify(state.unlocked)); } catch(e){}
+  state.phase='complete'; updateBadges();
+  const t=TIERS[state.tier], isLast=state.tier===3;
+  document.getElementById('content').innerHTML=`
+    <div class="tier-complete">
+      <div class="tier-complete-icon">${t.icon}</div>
+      <div class="tier-complete-name" style="color:${t.color}">${t.name} BADGE EARNED</div>
+      <div class="tier-complete-title">${t.title} — Complete</div>
+      <div class="tier-complete-stats">Score: <span>${state.score}</span> &nbsp;|&nbsp; Correct: <span>${state.correct}</span></div>
+      ${isLast
+        ? `<button class="btn-primary" onclick="showFinal()">🏆 SEE YOUR RESULTS</button>`
+        : `<button class="btn-primary" onclick="showTierIntro(${state.tier+1})">▶ CONTINUE TO ${TIERS[state.tier+1].name}</button>
+           <button class="btn-ghost" onclick="showFinal()">See Summary</button>`}
+    </div>`;
+}
+
+function showFinal() {
+  const earned=state.unlocked.map(i=>TIERS[i].icon).join(' ');
+  const full=state.unlocked.includes(3);
+  document.getElementById('content').innerHTML=`
+    <div class="final-wrap">
+      <div class="final-title">${full?'The Protocol Is Yours':'Well Played'}</div>
+      <div class="final-badges">${earned||'🎮'}</div>
+      <div class="final-desc">
+        ${full
+          ? `You have walked through all four tiers of The Amnesty Protocol. You understand who the forgotten are, why the system failed them, what sovereign education looks like in practice, and what it means to become part of the architecture of its solution. The book that began this game goes deeper still.`
+          : `You've earned ${state.unlocked.length} of 4 badges. Score: ${state.score}. The protocol continues — every tier you complete brings you closer to the question The Amnesty Protocol ultimately asks: what will you do with what you now know?`}
+      </div>
+      <div class="book-promo">
+        <div class="book-icon">📖</div>
+        <div>
+          <div class="book-tag">Play Before You Buy · GSU BookGame</div>
+          <div class="book-title">The Amnesty Protocol</div>
+          <div class="book-desc">By Dr. Gene A. Constant, DBA · Global Sovereign University<br>
+          GSU's founding manifesto — the full story of the forgotten and the bridge back to freedom.</div>
+          <a href="${BOOK_URL}" target="_blank" class="book-btn">GET THE BOOK ON AMAZON →</a>
+        </div>
+      </div>
+      <button class="btn-ghost" onclick="location.reload()">▶ PLAY AGAIN</button>
+      &nbsp;
+      <a href="/games" class="btn-ghost" style="text-decoration:none">ALL BOOKGAMES →</a>
+    </div>`;
+}
+</script>
+</body>
+</html>
