@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robot-Proof | GSU BookGame</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1A1A3E;
+  --gold: #C9A84C;
+  --gold-light: #F5E6C0;
+  --teal: #0D7E8C;
+  --teal-light: #D0F0F4;
+  --white: #FFFFFF;
+  --gray: #F4F5F7;
+  --dark: #0D0D1E;
+  --bronze: #CD7F32;
+  --silver: #A8A9AD;
+  --gold-badge: #C9A84C;
+  --platinum: #00CED1;
+  --success: #1E7E34;
+  --fail: #C0392B;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--dark);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── STARFIELD BACKGROUND ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(13,126,140,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at 60% 80%, rgba(26,26,62,0.8) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.game-wrap { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 20px 16px 60px; }
+
+/* ── HEADER ─── */
+.game-header {
+  text-align: center;
+  padding: 32px 0 24px;
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  margin-bottom: 28px;
+}
+
+.game-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.geno-avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  object-fit: cover;
+}
+
+.game-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+.game-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 8vw, 58px);
+  color: var(--white);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.game-title span { color: var(--gold); }
+
+.game-subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+/* ── BADGE TRACK ─── */
+.badge-track {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.3;
+  transition: opacity 0.4s, transform 0.3s;
+}
+
+.badge-item.unlocked { opacity: 1; }
+.badge-item.active { opacity: 1; transform: scale(1.1); }
+
+.badge-circle {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.badge-circle.bronze { border-color: var(--bronze); background: rgba(205,127,50,0.15); }
+.badge-circle.silver { border-color: var(--silver); background: rgba(168,169,173,0.15); }
+.badge-circle.gold-b { border-color: var(--gold-badge); background: rgba(201,168,76,0.15); }
+.badge-circle.platinum { border-color: var(--platinum); background: rgba(0,206,209,0.15); }
+
+.badge-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.5);
+}
+
+.badge-item.unlocked .badge-label { color: var(--gold); }
+
+.badge-connector {
+  width: 40px; height: 2px;
+  background: rgba(255,255,255,0.1);
+  align-self: center;
+  margin-bottom: 22px;
+}
+
+/* ── TIER INTRO ─── */
+.tier-intro {
+  background: rgba(26,26,62,0.8);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.tier-badge-display {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+}
+
+.tier-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.tier-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto 24px;
+}
+
+.tier-questions-info {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 24px;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 3px;
+  padding: 14px 40px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+.btn-ghost {
+  display: inline-block;
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  padding: 12px 32px;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: 12px;
+}
+
+.btn-ghost:hover { border-color: var(--gold); background: rgba(201,168,76,0.1); }
+
+/* ── QUESTION CARD ─── */
+.question-card {
+  background: rgba(26,26,62,0.9);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 8px;
+  padding: 28px;
+  margin-bottom: 16px;
+}
+
+.q-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.q-counter {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.35);
+}
+
+.q-tier-badge {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+.q-tier-badge.bronze { background: rgba(205,127,50,0.2); color: var(--bronze); border: 1px solid rgba(205,127,50,0.3); }
+.q-tier-badge.silver { background: rgba(168,169,173,0.2); color: var(--silver); border: 1px solid rgba(168,169,173,0.3); }
+.q-tier-badge.gold-b { background: rgba(201,168,76,0.2); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+.q-tier-badge.platinum { background: rgba(0,206,209,0.15); color: var(--platinum); border: 1px solid rgba(0,206,209,0.3); }
+
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  height: 3px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.question-text {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 14px 18px;
+  text-align: left;
+  cursor: pointer;
+  color: rgba(255,255,255,0.85);
+  font-size: 15px;
+  font-family: 'Source Sans 3', sans-serif;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.option-btn:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.08);
+  color: var(--white);
+}
+
+.option-btn.correct {
+  border-color: var(--success);
+  background: rgba(30,126,52,0.2);
+  color: #6FD98C;
+}
+
+.option-btn.wrong {
+  border-color: var(--fail);
+  background: rgba(192,57,43,0.2);
+  color: #F08070;
+}
+
+.option-letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+/* ── GENO COACHING ─── */
+.geno-coach {
+  background: rgba(13,31,44,0.9);
+  border: 1px solid rgba(13,126,140,0.35);
+  border-radius: 6px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-top: 16px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.geno-coach-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--teal);
+  flex-shrink: 0;
+}
+
+.geno-coach-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+}
+
+.geno-coach-text strong { color: var(--teal); }
+
+.coach-speak-btn {
+  background: none;
+  border: none;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* ── SCORE BAR ─── */
+.score-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(26,26,62,0.7);
+  border-radius: 4px;
+  padding: 12px 20px;
+  margin-bottom: 16px;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 2px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+}
+
+.score-val { color: var(--gold); font-size: 20px; }
+.streak-val { color: var(--teal); font-size: 20px; }
+
+/* ── TIER COMPLETE ─── */
+.tier-complete {
+  text-align: center;
+  padding: 48px 32px;
+  background: rgba(26,26,62,0.9);
+  border-radius: 8px;
+  border: 1px solid rgba(201,168,76,0.3);
+}
+
+.tier-complete-badge {
+  font-size: 72px;
+  margin-bottom: 16px;
+  animation: badgePop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes badgePop {
+  from { transform: scale(0) rotate(-20deg); opacity: 0; }
+  to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.tier-complete-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.tier-complete-score {
+  font-size: 18px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 24px;
+}
+
+.tier-complete-score span { color: var(--gold); font-weight: 700; font-size: 22px; }
+
+/* ── FINAL COMPLETE ─── */
+.final-complete {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.final-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 8vw, 64px);
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.final-badges {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 48px;
+  margin-bottom: 24px;
+}
+
+.final-desc {
+  font-size: 17px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 32px;
+}
+
+.book-promo {
+  background: linear-gradient(135deg, #1A1A3E 0%, #0D3340 100%);
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 8px;
+  padding: 28px 32px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  text-align: left;
+  max-width: 560px;
+  margin: 0 auto 24px;
+  flex-wrap: wrap;
+}
+
+.book-cover-placeholder {
+  width: 80px; height: 110px;
+  background: linear-gradient(135deg, var(--navy) 0%, #0D3340 100%);
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.book-promo-text {}
+.book-promo-tag {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.book-promo-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+
+.book-promo-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.book-buy-btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 10px 22px;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.book-buy-btn:hover { background: var(--gold-light); }
+
+/* ── NEXT BUTTON ─── */
+.next-btn-wrap {
+  text-align: right;
+  margin-top: 16px;
+}
+
+.next-btn {
+  background: var(--teal);
+  color: var(--white);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  padding: 12px 28px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: none;
+}
+
+.next-btn.show { display: inline-block; }
+.next-btn:hover { background: #0D9BAB; transform: translateY(-1px); }
+
+/* ── SPLASH SCREEN ─── */
+.splash {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.splash-book-tag {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  opacity: 0.6;
+  margin-bottom: 12px;
+}
+
+.splash-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 12vw, 88px);
+  color: var(--white);
+  letter-spacing: 3px;
+  line-height: 0.95;
+  margin-bottom: 8px;
+}
+
+.splash-title span { color: var(--gold); }
+
+.splash-subtitle {
+  font-size: 18px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+.splash-tagline {
+  font-size: 16px;
+  color: rgba(255,255,255,0.7);
+  max-width: 440px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+.splash-badges {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.splash-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.splash-badge-icon { font-size: 32px; }
+
+.splash-badge-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.4);
+}
+
+.splash-meta {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.splash-meta-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+}
+
+.splash-meta-item span { color: var(--teal); }
+
+.gsu-footer-badge {
+  margin-top: 40px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.2);
+}
+
+.gsu-footer-badge a { color: var(--gold); text-decoration: none; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div class="game-wrap" id="gameWrap">
+
+<!-- SPLASH -->
+<div id="splashScreen" class="splash">
+  <div class="splash-book-tag">GSU BOOKGAME · PLAY BEFORE YOU BUY</div>
+  <div class="splash-title">ROBOT<br><span>PROOF</span></div>
+  <div class="splash-subtitle">Teaching Humans to Thrive When Machines Think</div>
+  <div class="splash-tagline">
+    AI can write your emails, drive your car, and diagnose your illness. But can it replace <em>you</em>? 
+    This game challenges you to discover the human skills no machine can replicate — and why mastering them is the most important thing you can do right now.
+  </div>
+  <div class="splash-badges">
+    <div class="splash-badge-item"><span class="splash-badge-icon">🥉</span><span class="splash-badge-name">Bronze</span></div>
+    <div class="splash-badge-item"><span class="splash-badge-icon">🥈</span><span class="splash-badge-name">Silver</span></div>
+    <div class="splash-badge-item"><span class="splash-badge-icon">🥇</span><span class="splash-badge-name">Gold</span></div>
+    <div class="splash-badge-item"><span class="splash-badge-icon">💎</span><span class="splash-badge-name">Platinum</span></div>
+  </div>
+  <div class="splash-meta">
+    <div class="splash-meta-item"><span>100</span> QUESTIONS</div>
+    <div class="splash-meta-item"><span>4</span> TIERS</div>
+    <div class="splash-meta-item"><span>FREE</span> NO LOGIN</div>
+    <div class="splash-meta-item"><span>GENO</span> COACHED</div>
+  </div>
+  <button class="btn-primary" onclick="startGame()">▶ BEGIN THE CHALLENGE</button>
+  <div class="gsu-footer-badge">
+    A <a href="https://www.globalsovereignuniversity.org">GlobalSovereignUniversity.org</a> BookGame · 100% Mission Funded
+  </div>
+</div>
+
+<!-- GAME AREA (hidden initially) -->
+<div id="gameArea" style="display:none;">
+
+  <div class="game-header">
+    <div class="game-logo">
+      <img class="geno-avatar"
+        src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png"
+        alt="GENO">
+      <div>
+        <div class="game-brand">GSU BOOKGAME</div>
+      </div>
+    </div>
+    <div class="game-title">ROBOT<span>-PROOF</span></div>
+    <div class="game-subtitle">Teaching Humans to Thrive When Machines Think</div>
+  </div>
+
+  <!-- BADGE TRACK -->
+  <div class="badge-track" id="badgeTrack">
+    <div class="badge-item" id="badge-0">
+      <div class="badge-circle bronze">🥉</div>
+      <div class="badge-label">BRONZE</div>
+    </div>
+    <div class="badge-connector"></div>
+    <div class="badge-item" id="badge-1">
+      <div class="badge-circle silver">🥈</div>
+      <div class="badge-label">SILVER</div>
+    </div>
+    <div class="badge-connector"></div>
+    <div class="badge-item" id="badge-2">
+      <div class="badge-circle gold-b">🥇</div>
+      <div class="badge-label">GOLD</div>
+    </div>
+    <div class="badge-connector"></div>
+    <div class="badge-item" id="badge-3">
+      <div class="badge-circle platinum">💎</div>
+      <div class="badge-label">PLATINUM</div>
+    </div>
+  </div>
+
+  <!-- SCORE BAR -->
+  <div class="score-bar">
+    <div>SCORE: <span class="score-val" id="scoreDisplay">0</span></div>
+    <div>STREAK: <span class="streak-val" id="streakDisplay">0</span> 🔥</div>
+    <div>CORRECT: <span class="score-val" id="correctDisplay">0</span></div>
+  </div>
+
+  <!-- DYNAMIC CONTENT AREA -->
+  <div id="contentArea"></div>
+
+</div>
+</div>
+
+<script>
+const GENO_IMG = "https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png";
+const BOOK_ASIN = "B0FXYZ1234"; // Replace with actual Robot-Proof ASIN
+const BOOK_LINK = "https://www.amazon.com/dp/" + BOOK_ASIN + "?tag=gsu2026-20";
+
+const TIERS = [
+  {
+    id: 0, name: "BRONZE", cls: "bronze", icon: "🥉",
+    title: "AI Literacy Foundations",
+    desc: "Before you can be Robot-Proof, you need to understand what you're up against. This tier covers the basics of artificial intelligence — what it can do, what it can't, and why the difference matters for your future.",
+    color: "#CD7F32"
+  },
+  {
+    id: 1, name: "SILVER", cls: "silver", icon: "🥈",
+    title: "The Human Edge",
+    desc: "Machines are getting smarter every year. This tier identifies the irreplaceable human skills — creativity, empathy, judgment, and wisdom — that give you an edge no algorithm can match.",
+    color: "#A8A9AD"
+  },
+  {
+    id: 2, name: "GOLD", cls: "gold-b", icon: "🥇",
+    title: "Strategy & Adaptation",
+    desc: "Knowing your edge is only half the battle. This tier challenges you to apply sovereign thinking to career strategy, economic disruption, and the real-world decisions that separate survivors from casualties in the AI economy.",
+    color: "#C9A84C"
+  },
+  {
+    id: 3, name: "PLATINUM", cls: "platinum", icon: "💎",
+    title: "Sovereign Intelligence",
+    desc: "The highest tier. Platinum players don't just survive the AI revolution — they design it. These questions explore the intersection of ethics, creativity, civilization, and what it truly means to be irreplaceable.",
+    color: "#00CED1"
+  }
+];
+
+const ALL_QUESTIONS = [
+// ─── BRONZE: AI LITERACY FOUNDATIONS ────────────────────────────────────────
+{tier:0, q:"What does AI stand for?",
+ opts:["Automated Intelligence","Artificial Intelligence","Applied Integration","Algorithmic Interface"],
+ correct:1,
+ coach:"Artificial Intelligence refers to machines designed to simulate human cognitive functions like learning, reasoning, and problem-solving. The key word is 'simulate' — not replicate."},
+
+{tier:0, q:"Which of the following tasks can current AI do BETTER than most humans?",
+ opts:["Build genuine trust with a grieving person","Detect patterns in millions of data points","Navigate unexpected social situations","Inspire a team during a crisis"],
+ correct:1,
+ coach:"Pattern recognition at massive scale is AI's superpower. It can scan 10 million X-rays and spot anomalies a human radiologist would miss. But grief, trust, and inspiration? Still unmistakably human territory."},
+
+{tier:0, q:"What is 'machine learning'?",
+ opts:["Teaching robots to walk","Programming computers with fixed rules","A system that improves its performance by analyzing data","A type of computer memory"],
+ correct:2,
+ coach:"Machine learning means the system learns from experience — it gets better the more data it sees, without being explicitly reprogrammed. This is why AI improves so fast: it never stops studying."},
+
+{tier:0, q:"Which industry has been MOST disrupted by AI so far?",
+ opts:["Plumbing","Manufacturing and data processing","Professional sports","Interior design"],
+ correct:1,
+ coach:"Manufacturing and routine data work have seen massive AI displacement. Physical trades like plumbing still require human hands, judgment, and on-site problem-solving that robots handle poorly."},
+
+{tier:0, q:"What is a 'large language model' (LLM) like the one powering many AI chatbots?",
+ opts:["A robot that speaks many languages","An AI trained on vast amounts of text to predict and generate language","A translation program","A voice-to-text converter"],
+ correct:1,
+ coach:"LLMs like GPT-4 are trained on billions of words. They don't 'understand' — they predict what word comes next, with uncanny accuracy. That distinction matters enormously for knowing when to trust them."},
+
+{tier:0, q:"Can AI currently experience emotions?",
+ opts:["Yes, advanced AI feels basic emotions","No, AI simulates emotional language but does not feel","Only AI with quantum processors","Yes, but only negative emotions"],
+ correct:1,
+ coach:"AI can recognize and generate emotional-sounding language — but it experiences nothing. There is no inner life. This is one reason human emotional intelligence remains irreplaceable."},
+
+{tier:0, q:"What is the 'Turing Test'?",
+ opts:["A speed test for computers","A measure of computer storage","A test where a human tries to distinguish between a machine and a person in conversation","A programming certification"],
+ correct:2,
+ coach:"Alan Turing proposed that if a machine can converse indistinguishably from a human, it could be called 'intelligent.' Several AI systems have passed versions of it — which is why human depth matters more than ever."},
+
+{tier:0, q:"Which of the following is a LIMITATION of current AI?",
+ opts:["It can't store large amounts of data","It cannot process images","It lacks genuine understanding and common sense","It is too slow to be useful"],
+ correct:2,
+ coach:"AI can be confidently wrong in ways a child wouldn't be. It lacks the common sense that comes from living in a physical, social world. This gap is your opportunity."},
+
+{tier:0, q:"What does 'automation' mean in the context of jobs?",
+ opts:["Hiring more employees","Replacing human labor with machines or software","Sending jobs overseas","Giving employees more vacation time"],
+ correct:1,
+ coach:"Automation replaces repetitive, predictable tasks. The jobs most at risk follow clear rules and routines. The jobs least at risk require judgment, relationship, creativity, and physical adaptability."},
+
+{tier:0, q:"What percentage of current jobs are estimated to have tasks that could be automated?",
+ opts:["About 5%","About 15%","About 60%","About 100%"],
+ correct:2,
+ coach:"Research suggests roughly 60% of existing jobs have at least 30% of their tasks automatable. This doesn't mean 60% of jobs disappear — it means every job changes. Knowing which 30% is the question."},
+
+{tier:0, q:"What is 'prompt engineering'?",
+ opts:["Building AI hardware","The skill of writing effective instructions for AI systems","A type of computer networking","Software quality testing"],
+ correct:1,
+ coach:"How you ask AI a question determines the quality of its answer. Prompt engineering — knowing how to communicate with AI — is already one of the highest-value skills in the new economy."},
+
+{tier:0, q:"Which human skill does AI currently struggle with MOST?",
+ opts:["Arithmetic","Spelling","Contextual moral judgment in novel situations","Translating languages"],
+ correct:2,
+ coach:"AI can calculate and translate. But when faced with a truly novel ethical dilemma — one it hasn't been trained on — it either guesses or fails. Human moral reasoning in context is still uniquely ours."},
+
+{tier:0, q:"What does 'generative AI' create?",
+ opts:["Electricity","New content — text, images, audio, video — from prompts","Mechanical motion","Database structures"],
+ correct:1,
+ coach:"Generative AI produces original-seeming content on demand. It's why the creative industries are scrambling. But 'original-seeming' is not the same as 'original' — and that distinction is your competitive advantage."},
+
+{tier:0, q:"Why is data quality important for AI systems?",
+ opts:["AI uses data to power its batteries","Poor data leads to biased or inaccurate AI outputs","Data determines how fast AI processes","More data always makes AI more ethical"],
+ correct:1,
+ coach:"'Garbage in, garbage out.' AI learns from what it's fed. If the training data is biased, incomplete, or wrong, the AI inherits those flaws — sometimes invisibly. Human oversight remains essential."},
+
+{tier:0, q:"What is 'AI bias'?",
+ opts:["When AI prefers certain programming languages","When AI produces outputs that reflect unfair patterns from its training data","When AI runs faster on certain hardware","A technical setting in AI software"],
+ correct:1,
+ coach:"AI absorbs the biases embedded in historical data. If historical hiring data favored certain groups, an AI trained on it will too — unless humans actively correct it. This is a job only humans can do."},
+
+{tier:0, q:"Which of the following best describes the relationship between AI and human workers?",
+ opts:["AI will completely replace all human workers","AI and humans will always work separately","AI augments human capability in some areas while humans remain essential in others","Humans will become unnecessary within a decade"],
+ correct:2,
+ coach:"The most accurate picture is collaboration. AI handles volume and pattern recognition; humans handle judgment, relationship, ethics, and creativity. The workers who thrive will be those who learn to work WITH AI."},
+
+{tier:0, q:"What is the 'singularity' in AI discourse?",
+ opts:["The moment when all computers connect","A theoretical point where AI surpasses human intelligence and self-improves indefinitely","The world's fastest supercomputer","When AI becomes affordable for everyone"],
+ correct:1,
+ coach:"The singularity is a hypothetical future moment. It may or may not happen in your lifetime. What IS happening right now — today — is the AI-driven disruption of the labor market. That's what Robot-Proof addresses."},
+
+{tier:0, q:"What does GSU's Robot-Proof curriculum focus on?",
+ opts:["Teaching people to build robots","Helping humans develop the skills AI cannot replicate","Training programmers to write AI code","Predicting which jobs AI will eliminate"],
+ correct:1,
+ coach:"Robot-Proof isn't about fighting AI or hiding from it. It's about identifying and developing the irreplaceable human capacities that become MORE valuable as AI becomes more capable. That's sovereignty."},
+
+{tier:0, q:"Which sector is LEAST likely to be significantly automated in the near term?",
+ opts:["Data entry","Truck driving","Complex elder care and emotional support","Document processing"],
+ correct:2,
+ coach:"Elder care requires physical adaptability, emotional attunement, ethical judgment, and genuine human presence — in constantly changing, unpredictable environments. That combination is extraordinarily hard to automate."},
+
+{tier:0, q:"What is 'algorithmic decision-making'?",
+ opts:["Humans using calculators","Using AI or software to make decisions automatically based on data patterns","Teaching children math algorithms","Writing computer code manually"],
+ correct:1,
+ coach:"Algorithms now make decisions about your credit, your parole, your job application, and your news feed. Understanding this system — and knowing when to challenge it — is a crucial 21st-century skill."},
+
+{tier:0, q:"What is a 'neural network' in AI?",
+ opts:["A network connecting hospitals","A computer system loosely modeled on the structure of the human brain","A social network for scientists","A type of internet connection"],
+ correct:1,
+ coach:"Neural networks use layers of interconnected nodes — inspired by neurons — to recognize complex patterns. They're the foundation of most modern AI. The inspiration was human; the execution is machine."},
+
+{tier:0, q:"Which of the following is TRUE about AI creativity?",
+ opts:["AI is more creative than humans in all domains","AI can generate novel-seeming content but cannot experience the creative impulse","AI has no creative ability whatsoever","AI creativity is identical to human creativity"],
+ correct:1,
+ coach:"AI can recombine patterns in surprising ways — which can look like creativity. But it has no desire to create, no personal stake in the work, no life experience driving the expression. That's the difference."},
+
+{tier:0, q:"What skill becomes MORE valuable as AI becomes more capable?",
+ opts:["Typing speed","Memorization","The ability to ask better questions","Data storage management"],
+ correct:2,
+ coach:"As AI handles more answers, the quality of your questions becomes your competitive edge. Curiosity, critical framing, and knowing what to ask are human skills that AI amplifies rather than replaces."},
+
+{tier:0, q:"What does it mean to be 'Robot-Proof'?",
+ opts:["Being physically strong enough to fight robots","Avoiding all technology","Developing human capacities so distinctive that no machine can make you redundant","Working only in non-technical fields"],
+ correct:2,
+ coach:"Being Robot-Proof means investing in the parts of yourself that technology cannot reproduce: your empathy, your judgment, your creativity, your relationships, your wisdom. These are your moat."},
+
+{tier:0, q:"What is GSU's core belief about the future of human potential in the age of AI?",
+ opts:["Most people will become economically obsolete","Only programmers will thrive","Human beings have irreplaceable capacities that become more valuable, not less, as AI advances","AI will eventually match all human capabilities"],
+ correct:2,
+ coach:"GSU was built on this conviction. The answer to AI is not retreat — it's sovereignty. Develop what makes you distinctly human, and you don't compete with machines. You become incomparable."},
+
+// ─── SILVER: THE HUMAN EDGE ─────────────────────────────────────────────────
+{tier:1, q:"Which of the following is considered a uniquely human cognitive capacity?",
+ opts:["Calculating large numbers quickly","Storing vast amounts of information","Wisdom — applying experience to novel moral situations","Translating text between languages"],
+ correct:2,
+ coach:"Wisdom requires lived experience, moral weight, and the integration of a whole life. It cannot be downloaded or trained into a model. Every year you accumulate experience, your wisdom advantage compounds."},
+
+{tier:1, q:"Why is empathy difficult for AI to replicate?",
+ opts:["Empathy requires special hardware","Empathy involves genuinely feeling and responding to another person's emotional state — which requires consciousness","AI lacks the processing power","Empathy is not useful in professional settings"],
+ correct:1,
+ coach:"Empathy is not pattern-matching on emotional cues. It involves being genuinely moved by another person's reality. People can tell the difference between performed empathy and real presence. That difference is human."},
+
+{tier:1, q:"What is 'tacit knowledge'?",
+ opts:["Knowledge stored in databases","Knowledge that is difficult to articulate or transfer — learned through experience and practice","Classified government information","Knowledge that only experts possess"],
+ correct:1,
+ coach:"A master carpenter knows things about wood that no manual captures. A great teacher reads a classroom in real time. This embodied, experiential knowledge is extraordinarily hard to digitize — and enormously valuable."},
+
+{tier:1, q:"Which of the following requires the MOST distinctly human judgment?",
+ opts:["Calculating a sales commission","Sorting customer emails by topic","Deciding whether to keep a critically ill patient on life support","Scheduling a calendar"],
+ correct:2,
+ coach:"Medical ethics, end-of-life decisions, and situations where values conflict require human moral presence. These decisions carry weight precisely because a human being makes them and is accountable for them."},
+
+{tier:1, q:"What does 'emotional labor' mean in the workplace?",
+ opts:["Work that makes people cry","The effort required to manage one's emotions and others' emotional states as part of a job","Work done in emotional support industries only","Unpaid domestic work"],
+ correct:1,
+ coach:"Emotional labor — comforting a frightened patient, de-escalating a conflict, reading a room and adjusting — is exhausting for humans because it's real. That's also why robots can't fake it convincingly."},
+
+{tier:1, q:"Why is physical dexterity in unpredictable environments still a human advantage?",
+ opts:["Robots don't have fingers","Humans move faster than all robots","The human hand and brain together navigate unexpected physical challenges with a flexibility robots cannot match","Physical work is disappearing so this doesn't matter"],
+ correct:2,
+ coach:"A plumber navigating a 100-year-old building, an electrician troubleshooting a wiring surprise, a surgeon adapting mid-operation — these require physical judgment that robotics is still decades from matching."},
+
+{tier:1, q:"What is 'critical thinking'?",
+ opts:["Being negative about ideas","The ability to analyze, evaluate, and form a judgment about information","Thinking very carefully before acting","A type of reading comprehension"],
+ correct:1,
+ coach:"Critical thinking means examining evidence, recognizing logical fallacies, identifying bias, and forming well-reasoned conclusions. AI can summarize arguments — but evaluating them against your values and lived reality is yours."},
+
+{tier:1, q:"In what way does genuine creativity differ from AI content generation?",
+ opts:["Humans create faster","Human creativity emerges from personal experience, emotion, risk, and a stake in meaning-making that AI does not have","AI cannot make images","Human art requires physical tools"],
+ correct:1,
+ coach:"The best human creative work is an act of self-exposure. It carries risk. The artist has something to lose. AI has nothing at stake — which is why it can produce volume but rarely produces work that changes you."},
+
+{tier:1, q:"What makes human leadership irreplaceable?",
+ opts:["Leaders make decisions faster than AI","Leaders can access more data","Leaders inspire, carry moral accountability, and build trust through authentic human presence","Leadership is mostly administrative"],
+ correct:2,
+ coach:"People follow leaders, not algorithms. Accountability, inspiration, moral courage, and the willingness to be wrong publicly — these require a human being who can be held responsible. AI can advise but cannot lead."},
+
+{tier:1, q:"What is 'social intelligence'?",
+ opts:["Having many social media followers","The ability to navigate complex social situations, read people accurately, and build authentic relationships","Being popular","Knowing proper etiquette"],
+ correct:1,
+ coach:"Social intelligence is reading subtext, managing group dynamics, knowing when to speak and when to listen, building loyalty over time. It's learned through thousands of hours of human interaction — irreplaceable."},
+
+{tier:1, q:"Why is entrepreneurship considered Robot-Proof?",
+ opts:["Entrepreneurs don't use technology","Entrepreneurship requires the uniquely human combination of vision, risk tolerance, relationship-building, and creative problem-solving under uncertainty","AI can't start companies","Entrepreneurs work alone"],
+ correct:1,
+ coach:"Starting something from nothing requires a tolerance for ambiguity and failure, a vision others can't yet see, and the ability to persuade people to join you. No algorithm has ever bet its savings on an idea it believed in."},
+
+{tier:1, q:"What does research show about the relationship between human connection and wellbeing?",
+ opts:["Technology can fully replace human connection","Human relationships have no measurable effect on health","Genuine human connection is one of the strongest predictors of health, happiness, and longevity","Social media provides all necessary human connection"],
+ correct:2,
+ coach:"The Harvard Study of Adult Development — 85 years of data — found that relationships are the single greatest predictor of a long, happy life. Connection is not a luxury. It's a survival skill AI cannot provide."},
+
+{tier:1, q:"What is 'moral imagination'?",
+ opts:["Making up ethical rules","The capacity to envision the human consequences of decisions and feel the weight of those consequences","A type of creative writing","Religious belief"],
+ correct:1,
+ coach:"Moral imagination means being able to put yourself in someone else's position before making a decision that affects them. It's the foundation of justice, compassion, and ethical leadership — and it requires a human soul."},
+
+{tier:1, q:"Which skill is most transferable across multiple disrupted industries?",
+ opts:["Expertise in a single software program","The ability to communicate complex ideas clearly to diverse audiences","Speed typing","Filing and organization"],
+ correct:1,
+ coach:"Communication — especially the ability to make complex ideas accessible, compelling, and actionable — transfers everywhere. It's valued in every field, amplified by AI, and rooted in human understanding of other humans."},
+
+{tier:1, q:"What does it mean to develop your 'human edge'?",
+ opts:["To avoid using technology","To deliberately invest in the capacities that make you distinctly and irreplaceably human","To compete directly with AI","To specialize in a narrow technical skill"],
+ correct:1,
+ coach:"Your human edge is the portfolio of skills, experiences, and character qualities that make you incomparable — not competing with machines, but occupying territory they can never enter. That's Robot-Proof."},
+
+{tier:1, q:"Why is humor considered a distinctly human capacity?",
+ opts:["Robots cannot process language","True humor requires understanding incongruity, timing, social context, and shared human experience at a level of nuance AI hasn't mastered","Humor is not important professionally","AI has no sense of timing"],
+ correct:1,
+ coach:"The best humor is subversive, timely, contextual, and deeply human. AI can generate jokes — and they're often stiff. Real wit requires understanding what matters to people, what's sacred, what's absurd. That's a human library."},
+
+{tier:1, q:"What is 'cultural intelligence' (CQ)?",
+ opts:["Knowing facts about many countries","The ability to adapt effectively across different cultural contexts — understanding values, norms, and perspectives beyond your own","Speaking multiple languages","International travel experience"],
+ correct:1,
+ coach:"As AI shrinks the world, the ability to collaborate across cultural differences becomes more valuable. CQ — knowing how to listen, adapt, and build bridges across worldviews — is a deeply human and deeply marketable capacity."},
+
+{tier:1, q:"In an AI-augmented world, what becomes the scarcest resource?",
+ opts:["Data","Processing power","Trustworthy human judgment and genuine human presence","Speed"],
+ correct:2,
+ coach:"As AI handles more volume, human judgment becomes the bottleneck — and the premium asset. The decision-maker who combines AI insight with irreplaceable human wisdom will be the most sought-after person in any room."},
+
+{tier:1, q:"What does the concept of 'Robot-Proof work' suggest about education?",
+ opts:["Education should focus only on STEM","Education should prepare students to compete with machines on machine terms","Education should develop the full human — creativity, character, critical thinking, and relational capacity","Education is no longer relevant"],
+ correct:2,
+ coach:"Robot-Proof education doesn't drill students to outperform computers at computation. It develops the whole person — the parts that make you irreplaceable: curiosity, judgment, empathy, and the ability to create meaning."},
+
+{tier:1, q:"What is 'narrative intelligence'?",
+ opts:["Speed reading","The ability to construct, communicate, and interpret stories that create meaning and move people to action","Memorizing historical stories","Writing fiction"],
+ correct:1,
+ coach:"Humans live in story. We make decisions through narrative, not spreadsheets. The ability to tell a compelling story — about your company, your cause, your life — is one of the most powerful forces in human culture."},
+
+{tier:1, q:"Why do mentorship relationships remain valuable even in the AI age?",
+ opts:["Mentors provide information AI cannot","Mentorship provides wisdom, accountability, lived context, and human encouragement — none of which can be digitized","AI mentors are already better","Mentors are only useful for technical skills"],
+ correct:1,
+ coach:"A mentor doesn't just transfer knowledge — they transfer belief. They see something in you before you see it in yourself. That act of human witness and investment changes lives in ways no AI can replicate."},
+
+{tier:1, q:"Which of the following best describes a 'T-shaped' professional?",
+ opts:["Someone who works in T-shirt manufacturing","A person with deep expertise in one area AND broad knowledge across multiple domains","A person who changes careers frequently","A technical specialist"],
+ correct:1,
+ coach:"T-shaped professionals have the depth to be credible and the breadth to collaborate across disciplines. In an AI-augmented world, breadth enables you to use AI tools across domains while depth makes you indispensable."},
+
+{tier:1, q:"What is 'ethical reasoning'?",
+ opts:["Following a company's code of conduct","The process of using moral principles and judgment to navigate situations where values conflict","Knowing the laws of your country","Religious instruction"],
+ correct:1,
+ coach:"Ethical reasoning kicks in when the rules don't cover the situation — when you must decide what the right thing to do actually is, not just what's permitted. This is irreducibly human and increasingly critical."},
+
+{tier:1, q:"What human skill is amplified — not threatened — by AI tools?",
+ opts:["Routine data entry","Memorization of facts","Creative vision and strategic judgment, which AI can now execute faster","Following standardized procedures"],
+ correct:2,
+ coach:"A brilliant idea in the hands of someone who knows how to use AI tools is exponentially more powerful than that same idea was five years ago. AI doesn't replace vision — it gives vision rocket fuel."},
+
+{tier:1, q:"What does GSU's Civilization Builders program recognize about retired professionals?",
+ opts:["That their skills are outdated","That retirement means their working life is complete","That their decades of real-world mastery are among the most valuable human resources in society — and should be deployed, not shelved","That they should transition fully to leisure"],
+ correct:2,
+ coach:"The Civilization Builders program deploys retired experts as sovereign mentors — connecting their irreplaceable lived wisdom with learners who need it most. You don't age out of value. You age into it."},
+
+// ─── GOLD: STRATEGY & ADAPTATION ────────────────────────────────────────────
+{tier:2, q:"What is the most effective personal strategy in a labor market disrupted by AI?",
+ opts:["Master one technical skill and defend it","Avoid technology entirely","Continuously develop human capacities while learning to work WITH AI as a multiplier","Wait for government policy to protect your job"],
+ correct:2,
+ coach:"The workers who thrive are those who develop their human edge AND embrace AI as a force multiplier. Either alone is insufficient. Together, they create a career that no algorithm can foreclose."},
+
+{tier:2, q:"What is 'career resilience' in the context of AI disruption?",
+ opts:["Having job security in one company for life","The ability to adapt, reinvent, and transfer skills across changing roles and industries","Avoiding technology in your career","Working in government where AI has less impact"],
+ correct:1,
+ coach:"Career resilience is not job security — it's skill security. When your identity is your capacities rather than your title, disruption becomes an invitation rather than a threat."},
+
+{tier:2, q:"What does 'lifelong learning' mean in practice for a Robot-Proof professional?",
+ opts:["Taking online courses occasionally","Reading industry news","Treating every year as an opportunity to deliberately add new human and technical capacities — never assuming you're done","Earning an advanced degree"],
+ correct:2,
+ coach:"Lifelong learning is not a slogan — it's the operating system of the Robot-Proof professional. The world changes; your curriculum must change with it. GSU's entire architecture is built on this conviction."},
+
+{tier:2, q:"Which type of job role is GROWING as AI becomes more capable?",
+ opts:["Data entry specialists","Roles requiring complex human judgment, relationship management, and creative strategy","Assembly line workers","Routine customer service representatives"],
+ correct:1,
+ coach:"As AI handles the routine, demand surges for roles that are distinctly human. Therapists, strategic advisors, skilled tradespeople, educators, and creative directors are all seeing increased demand even as adjacent roles automate."},
+
+{tier:2, q:"What is the 'Last Mile Problem' in AI's impact on professions?",
+ opts:["AI can't be used in rural areas","The final step of many professional services — delivering judgment, empathy, and trust to a real human — remains stubbornly human-dependent","AI is only useful for short tasks","A logistics problem"],
+ correct:1,
+ coach:"AI can research, draft, and analyze — but the final moment of looking a client in the eye and saying 'here is what I recommend, and I stand behind it' requires a human being who can be held accountable."},
+
+{tier:2, q:"What does it mean to 'augment' your work with AI?",
+ opts:["Replace your work with AI","Use AI to handle the repetitive parts of your work so you can focus on the parts only you can do","Outsource all work to AI","Learn to program AI systems"],
+ correct:1,
+ coach:"Augmentation means using AI as your assistant, researcher, and executor — while you provide the judgment, creativity, and human presence it cannot. This multiplies your output without reducing your irreplaceability."},
+
+{tier:2, q:"Why is 'learning agility' particularly valuable in the AI age?",
+ opts:["Learning faster means you can program AI","The ability to pick up new skills quickly allows you to continuously redeploy your human capacities into new domains as old ones automate","Learning agility has always been valuable for the same reasons","It helps you avoid using technology"],
+ correct:1,
+ coach:"When your value is tied to what you can do — not just what you currently know — disruption becomes opportunity. Learning agility is the meta-skill that makes all other Robot-Proof skills self-renewing."},
+
+{tier:2, q:"What is 'personal brand' and why does it matter in an AI economy?",
+ opts:["Having a logo and website","A professional reputation that communicates your distinctive human value — the specific combination of expertise, character, and style that makes you the person someone calls","Social media follower count","A marketing technique for selling products"],
+ correct:1,
+ coach:"In an economy where AI can produce generic competence at scale, distinctiveness becomes the premium. A strong personal brand says: I'm not just qualified. I'm the specific person you want. That's Robot-Proof positioning."},
+
+{tier:2, q:"What is the economic risk of 'skill narrowness' in the age of AI?",
+ opts:["It makes you too expensive","Deep specialization always protects workers","When AI masters the specific narrow task you're known for, a single-skill worker has no adjacent territory to move into","Narrow skills are always safer than broad ones"],
+ correct:2,
+ coach:"Skill depth is valuable — but depth alone, without breadth, creates fragility. If your one skill automates, you're exposed. T-shaped professionals (deep AND broad) have adjacent territory to move into when disruption hits."},
+
+{tier:2, q:"What does the research show about college degrees and AI-era employment?",
+ opts:["Degrees are more valuable than ever","AI makes degrees completely obsolete","Degrees signal a floor, not a ceiling — employers increasingly value demonstrated competence and human capacity over credentials alone","Only STEM degrees retain value"],
+ correct:2,
+ coach:"The GSU Honest Transcript model reflects this reality. Credentials open doors — but demonstrated capacity is what keeps you employed. The question is no longer what you know, but what you can do with what you know."},
+
+{tier:2, q:"What is 'scenario planning' as a personal career strategy?",
+ opts:["Planning one ideal career path and committing to it","Imagining multiple possible futures and preparing skills that remain valuable across several of them","Making a five-year plan","Researching job listings"],
+ correct:1,
+ coach:"Because AI disruption is unpredictable, the Robot-Proof professional plans for multiple futures. Developing skills that transfer across scenarios — communication, judgment, leadership — makes you resilient regardless of which future arrives."},
+
+{tier:2, q:"Why is 'relationship capital' a Robot-Proof asset?",
+ opts:["Relationships give access to insider information","Networks of genuine human trust — built over years — cannot be replaced by an algorithm, and they're the foundation of opportunity, collaboration, and resilience","Having many LinkedIn connections","Being popular in your industry"],
+ correct:1,
+ coach:"Deep professional relationships are built on years of showing up, delivering, and caring. No AI can fake that history. The person who calls in a favor from someone they've trusted for a decade has an asset money cannot buy."},
+
+{tier:2, q:"What is the 'Frankenstein Methodology' in GSU's Sovereign Intelligence curriculum?",
+ opts:["A horror writing technique","Creating dangerous technology","A disruptive innovation strategy — assembling the best available components into something new that buries the old guard","A laboratory science approach"],
+ correct:2,
+ coach:"The Frankenstein Methodology — named after the novel's act of creative assembly — teaches you to combine existing elements in novel ways to outcompete entrenched systems. It's the strategy of the sovereign innovator."},
+
+{tier:2, q:"How should a professional respond when their industry is significantly disrupted by AI?",
+ opts:["Resist and lobby against AI adoption","Panic and retrain entirely from scratch","Identify which parts of their expertise remain human-essential, double down on those, and learn to use AI in the rest","Do nothing and hope for the best"],
+ correct:2,
+ coach:"Disruption rarely eliminates all human value in an industry — it relocates it. The question is: which parts of what I do require irreducibly human capacity? Protect and develop those. Let AI handle the rest."},
+
+{tier:2, q:"What does GSU's model of 'contextual learning' mean?",
+ opts:["Learning in a specific physical location","Learning facts in isolation","Learning skills in the real-world contexts where they are actually applied — so the knowledge transfers","Online learning"],
+ correct:2,
+ coach:"Nobel Prize research (Banerjee & Duflo) confirmed that classroom learning often doesn't transfer to real-world application. GSU's BookGames and gamified curriculum are built on this insight — learn it where you'll use it."},
+
+{tier:2, q:"What role should AI play in creative professions like design, writing, and music?",
+ opts:["AI should replace human creatives","AI should be banned from creative fields","AI can serve as a powerful generative tool — but human vision, taste, and meaning-making should direct the work","Creative fields are immune to AI impact"],
+ correct:2,
+ coach:"The best creative professionals are already using AI as a tool the way earlier generations used Photoshop or ProTools. The tool doesn't replace the artist — the artist who uses the tool well outcompetes the artist who doesn't."},
+
+{tier:2, q:"Why is 'ethical leadership' more valuable in an AI age?",
+ opts:["Ethics slows down AI adoption","As AI scales decision-making, the humans who set the ethical parameters of those decisions become more — not less — powerful and accountable","Ethics only matters in non-profit work","AI makes ethics easier"],
+ correct:1,
+ coach:"Someone has to decide what the algorithm optimizes for. Someone has to be accountable when it goes wrong. That person — the ethical leader — carries more weight in an AI world, not less. Their values become the system's values."},
+
+{tier:2, q:"What is the most important question a professional should ask about their work and AI?",
+ opts:["Will AI take my job?","How can I block AI from my industry?","Which specific tasks in my role require irreducibly human capacity — and how do I develop those while using AI to accelerate everything else?","What programming language should I learn?"],
+ correct:2,
+ coach:"This is the strategic question. Not 'will AI take my job' — which induces paralysis — but 'which parts of my work are irreplaceably mine' — which induces action. That question leads directly to a Robot-Proof career strategy."},
+
+{tier:2, q:"What does 'sovereign thinking' mean in the context of career and work?",
+ opts:["Working for the government","Political sovereignty","The capacity to define your own value, direct your own development, and make independent judgments about your career rather than outsourcing those decisions to employers, institutions, or trends","Financial independence"],
+ correct:2,
+ coach:"Sovereign thinking means you are the CEO of your own human capital. You don't wait to be told your value. You assess, develop, and communicate it on your own terms. This is the foundation of Robot-Proof professional identity."},
+
+{tier:2, q:"Which of the following best illustrates a 'Robot-Proof' professional move?",
+ opts:["Mastering a software that AI can now operate","Memorizing more industry facts","Building deep expertise in judgment-intensive human relationships AND learning to use AI tools to serve more clients at higher quality","Avoiding any role that uses technology"],
+ correct:2,
+ coach:"This is the formula: deepen what's human, amplify it with AI. A therapist who uses AI for note-taking and scheduling can see more clients with more focus on what matters — the irreplaceable human work of healing."},
+
+{tier:2, q:"What is GSU's vision of 'educational sovereignty'?",
+ opts:["Each state controlling its own curriculum","A world where individuals own and direct their own learning — free from gatekeeping, debt, and systems that profit from keeping people dependent","Homeschooling only","Private schools for all"],
+ correct:1,
+ coach:"Educational sovereignty means your learning belongs to you. Not to a credentialing system. Not to a lender. To you. GSU exists to make that real — free, gamified, mentor-supported education for anyone who wants it."},
+
+{tier:2, q:"In what way does AI INCREASE the value of wisdom?",
+ opts:["Wisdom helps you program AI better","As AI produces more information faster, the ability to interpret, prioritize, and make sound judgments about that information becomes exponentially more valuable","Wisdom is less relevant in a data-driven world","AI and wisdom are unrelated"],
+ correct:1,
+ coach:"We are drowning in information and starving for wisdom. AI can synthesize the former but cannot produce the latter. Wisdom — knowing what matters, what to trust, and what to do — is the scarcest commodity in the AI age."},
+
+// ─── PLATINUM: SOVEREIGN INTELLIGENCE ───────────────────────────────────────
+{tier:3, q:"What is the deepest threat AI poses to human civilization — beyond job displacement?",
+ opts:["AI will use too much electricity","The homogenization of thought and creativity as AI-generated content floods every channel, gradually narrowing the range of human imagination","AI will eliminate all privacy","Robots will develop feelings"],
+ correct:1,
+ coach:"When AI trains on human-created content and then produces content that humans consume and then AI trains on again — a narrowing loop begins. The Robot-Proof response is to produce genuinely original human thought. Radically, stubbornly original."},
+
+{tier:3, q:"What does the philosopher Hubert Dreyfus' critique of AI — based on the work of Heidegger — argue?",
+ opts:["AI will never be fast enough","AI lacks embodiment — the situated, physical, emotional experience of being-in-the-world that grounds all genuine understanding","AI needs better programming","Philosophy is irrelevant to technology"],
+ correct:1,
+ coach:"Dreyfus argued that true intelligence requires a body in a world — the felt sense of being somewhere, caring about something, being at risk. AI has none of this. Its 'intelligence' is symbol manipulation without existential stakes."},
+
+{tier:3, q:"What is the ethical responsibility of a 'sovereign thinker' in an AI-saturated world?",
+ opts:["Use AI to gain competitive advantage at any cost","Avoid AI entirely to protect human culture","Develop the critical capacity to evaluate AI outputs, resist algorithmic manipulation, and produce genuinely independent thought — then share it","Trust AI systems completely as they improve"],
+ correct:2,
+ coach:"Sovereign thinkers are civilization's immune system. They catch what algorithms miss, question what systems assume, and produce the genuinely original thought that culture needs to remain alive and self-correcting."},
+
+{tier:3, q:"What does GSU's concept of the 'Sovereign Spectrum' mean?",
+ opts:["A range of political opinions","The full arc of human development from dependency to sovereign capacity — and GSU's mission to move every learner along that spectrum","A type of radio frequency","Color theory in design"],
+ correct:1,
+ coach:"The Sovereign Spectrum maps the journey from the forgotten — those failed and abandoned by the system — to the fully sovereign individual who can learn, create, and contribute independently. GSU's entire architecture serves that journey."},
+
+{tier:3, q:"What is the relationship between creativity and moral courage in a Robot-Proof life?",
+ opts:["They are unrelated","Creativity is amoral","Genuine creativity — the kind that changes culture — almost always requires the moral courage to express something true before the world is ready to receive it","Moral courage only matters in political contexts"],
+ correct:2,
+ coach:"The work that endures — in art, science, education, leadership — almost always required someone to say something true before it was welcome. That combination of creative vision and moral nerve is irreplaceably human and civilization-defining."},
+
+{tier:3, q:"How does the classical Trivium (Grammar, Logic, Rhetoric) prepare a person to be Robot-Proof?",
+ opts:["It teaches Latin","It has no relevance to the modern world","It trains the mind to acquire knowledge accurately, reason about it soundly, and communicate it powerfully — the three capacities that make human thought both rigorous and irreplaceable","It is only useful for lawyers"],
+ correct:2,
+ coach:"The Trivium is the original Robot-Proof curriculum. Grammar: know what's true. Logic: know why it's true. Rhetoric: move others with that truth. Machines can approximate each step — but the integrated, living, accountable human who does all three is something else entirely."},
+
+{tier:3, q:"What is the 'Fog-Industrial Complex' and how does it relate to Robot-Proof education?",
+ opts:["An environmental issue","A military concept","The system of economic interests that profit from keeping populations uneducated, dependent, and cognitively passive — and which GSU's Robot-Proof curriculum directly dismantles","A weather phenomenon"],
+ correct:2,
+ coach:"The Fog-Industrial Complex profits from educational failure. Robot-Proof education is an act of resistance — giving people the cognitive tools to see through the fog, think for themselves, and refuse to be managed by systems that benefit from their confusion."},
+
+{tier:3, q:"What does it mean that Robot-Proof skills are 'antifragile'?",
+ opts:["They cannot be broken","They improve under stress and disruption rather than merely surviving it","They are resistant to change","They require no maintenance"],
+ correct:1,
+ coach:"Nassim Taleb coined 'antifragile' for systems that get stronger when stressed. Your empathy, judgment, creativity, and wisdom don't atrophy under AI pressure — they become more valuable. That's the deepest form of Robot-Proof."},
+
+{tier:3, q:"What is GSU's 'Honest Transcript' and why does it represent a civilizational shift?",
+ opts:["A truthful academic record","A document reporting financial honesty","A competence-based credential that replaces traditional degrees — proving what you can actually do rather than how many years you sat in a classroom","A legal document"],
+ correct:2,
+ coach:"The Honest Transcript is the future of credentialing. When AI can produce the outputs that college used to certify, the question becomes: can you actually do the thing? GSU's Trivium-based assessment answers that question directly."},
+
+{tier:3, q:"In the long arc of civilization, what has always determined which humans thrive through technological disruption?",
+ opts:["Physical strength","Financial resources","The capacity to adapt, create meaning, build community, and develop new skills faster than the disruption obsoletes old ones","Resistance to change"],
+ correct:2,
+ coach:"The printing press. The industrial revolution. The internet. Every time, the humans who thrived were those who asked: what does this enable me to do that I could not do before? Robot-Proof is that question, applied to AI."},
+
+{tier:3, q:"What is the 'Living Portfolio' concept from GSU's Synthetix curriculum?",
+ opts:["A financial investment strategy","A constantly evolving, curated demonstration of your real competencies — updated as you grow — that speaks louder than any degree or resume","A gardening metaphor","A type of art portfolio"],
+ correct:1,
+ coach:"The Living Portfolio is your sovereign answer to credentialing. It shows what you've actually built, decided, created, and solved — not what you once memorized for an exam. In an AI world, it's your most powerful professional document."},
+
+{tier:3, q:"Why is 'meaning-making' the ultimate Robot-Proof capacity?",
+ opts:["Meaning is a philosophical concept with no practical value","AI is close to achieving genuine meaning-making","The ability to determine what matters, why it matters, and how to communicate that in ways that move other humans — is the deepest expression of consciousness that no machine has yet approached","Meaning-making is a religious concept only"],
+ correct:2,
+ coach:"Viktor Frankl survived the Holocaust through meaning-making. Nelson Mandela endured 27 years of imprisonment through purpose. The human capacity to find and create meaning in suffering, in work, in relationship — this is irreducible. Guard it. Develop it. Share it."},
+
+{tier:3, q:"What is GSU's ultimate vision for the Civilization Builders program?",
+ opts:["To create a volunteer tutoring service","To recruit retired people to administrative roles","To deploy the accumulated wisdom of the 'forgotten' generation — those society has written off — as the sovereign architects of a new educational civilization","To provide activities for seniors"],
+ correct:2,
+ coach:"Civilization Builders is a deployment, not a program. It takes the people society told to sit down — and gives them a mission. Their mastery becomes civilization's inheritance. That's not charity. That's strategy."},
+
+{tier:3, q:"What does it mean that the Robot-Proof mind is 'the most dangerous thing in any room'?",
+ opts:["It is physically dangerous","Robot-Proof people are aggressive","A person who thinks independently, sees clearly, creates originally, and cannot be manipulated by algorithmic systems or institutional pressure — is a threat to every system built on keeping people manageable","It refers to military capacity"],
+ correct:2,
+ coach:"The sovereign thinker is dangerous to the Fog-Industrial Complex, to algorithmic manipulation, to systems of dependency. And that's exactly the point. GSU doesn't produce compliant graduates. It produces sovereign individuals. Those are very different things."},
+
+{tier:3, q:"What is the final message of Robot-Proof to every person who reads it?",
+ opts:["Fear AI and prepare for the worst","Accept that most people will be replaced","The future belongs not to those who compete with machines, but to those who become so distinctly, richly, irreversibly human that no machine would know where to begin","Trust institutions to solve the AI problem"],
+ correct:2,
+ coach:"This is the thesis. The answer to AI is not technical. It's human. Become more curious, more empathetic, more creative, more courageous, more connected. Develop what makes you unmistakably, irreplaceably you. That is Robot-Proof. That is sovereign. That is free."},
+];
+
+// ── GAME STATE ───────────────────────────────────────────────────────────────
+let state = {
+  currentTier: 0,
+  questionIndex: 0,
+  score: 0,
+  streak: 0,
+  correct: 0,
+  tierAnswered: false,
+  unlockedBadges: [],
+  phase: 'splash' // splash | tier-intro | question | tier-complete | final
+};
+
+function getQuestionsForTier(tier) {
+  return ALL_QUESTIONS.filter(q => q.tier === tier);
+}
+
+function startGame() {
+  document.getElementById('splashScreen').style.display = 'none';
+  document.getElementById('gameArea').style.display = 'block';
+  showTierIntro(0);
+}
+
+function updateBadgeTrack() {
+  TIERS.forEach((t, i) => {
+    const el = document.getElementById('badge-' + i);
+    el.classList.remove('unlocked', 'active');
+    if (state.unlockedBadges.includes(i)) el.classList.add('unlocked');
+    if (i === state.currentTier && state.phase === 'question') el.classList.add('active');
+  });
+}
+
+function updateScoreBar() {
+  document.getElementById('scoreDisplay').textContent = state.score;
+  document.getElementById('streakDisplay').textContent = state.streak;
+  document.getElementById('correctDisplay').textContent = state.correct;
+}
+
+function showTierIntro(tierIdx) {
+  state.currentTier = tierIdx;
+  state.questionIndex = 0;
+  state.phase = 'tier-intro';
+  const t = TIERS[tierIdx];
+  updateBadgeTrack();
+
+  const colorMap = { bronze: '#CD7F32', silver: '#A8A9AD', 'gold-b': '#C9A84C', platinum: '#00CED1' };
+  const col = colorMap[t.cls];
+
+  document.getElementById('contentArea').innerHTML = `
+    <div class="tier-intro">
+      <div class="tier-badge-display" style="border: 3px solid ${col}; background: ${col}22;">
+        ${t.icon}
+      </div>
+      <div class="tier-name" style="color:${col}">${t.name} TIER</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:rgba(255,255,255,0.6);letter-spacing:2px;margin-bottom:12px;">${t.title}</div>
+      <div class="tier-desc">${t.desc}</div>
+      <div class="tier-questions-info">25 QUESTIONS · EARN THE ${t.name} BADGE</div>
+      <button class="btn-primary" onclick="startTierQuestions()">▶ BEGIN ${t.name}</button>
+      ${tierIdx > 0 ? '' : ''}
+    </div>
+  `;
+}
+
+function startTierQuestions() {
+  state.phase = 'question';
+  state.questionIndex = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  const tierQs = getQuestionsForTier(state.currentTier);
+  const q = tierQs[state.questionIndex];
+  const total = tierQs.length;
+  const t = TIERS[state.currentTier];
+  const progress = ((state.questionIndex) / total) * 100;
+
+  updateBadgeTrack();
+  updateScoreBar();
+
+  const letters = ['A', 'B', 'C', 'D'];
+
+  document.getElementById('contentArea').innerHTML = `
+    <div class="question-card">
+      <div class="q-meta">
+        <div class="q-counter">QUESTION ${state.questionIndex + 1} OF ${total}</div>
+        <div class="q-tier-badge ${t.cls}">${t.icon} ${t.name}</div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width:${progress}%"></div>
+      </div>
+      <div class="question-text">${q.q}</div>
+      <div class="options-grid" id="optionsGrid">
+        ${q.opts.map((o, i) => `
+          <button class="option-btn" onclick="selectAnswer(${i})" id="opt-${i}">
+            <span class="option-letter">${letters[i]}</span>
+            ${o}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+    <div id="coachArea"></div>
+    <div class="next-btn-wrap">
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">NEXT →</button>
+    </div>
+  `;
+}
+
+function selectAnswer(selected) {
+  const tierQs = getQuestionsForTier(state.currentTier);
+  const q = tierQs[state.questionIndex];
+  const isCorrect = selected === q.correct;
+
+  // Disable all buttons
+  document.querySelectorAll('.option-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    btn.style.pointerEvents = 'none';
+    if (i === q.correct) btn.classList.add('correct');
+    else if (i === selected) btn.classList.add('wrong');
+  });
+
+  if (isCorrect) {
+    state.score += 10 + (state.streak * 2);
+    state.correct++;
+    state.streak++;
+  } else {
+    state.streak = 0;
+  }
+
+  updateScoreBar();
+  showCoach(q.coach, isCorrect);
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function showCoach(text, correct) {
+  const prefix = correct
+    ? '<strong>✓ Correct!</strong> '
+    : '<strong>✗ Not quite.</strong> ';
+
+  document.getElementById('coachArea').innerHTML = `
+    <div class="geno-coach">
+      <img class="geno-coach-avatar" src="${GENO_IMG}" alt="GENO">
+      <div class="geno-coach-text">
+        ${prefix}${text}
+        <button class="coach-speak-btn" onclick="speakCoach(this)" title="Hear GENO">🔊</button>
+      </div>
+    </div>
+  `;
+}
+
+function speakCoach(btn) {
+  if ('speechSynthesis' in window) {
+    const text = btn.parentElement.textContent.replace('🔊', '').trim();
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.rate = 0.92; msg.pitch = 1.05;
+    window.speechSynthesis.speak(msg);
+  }
+}
+
+function nextQuestion() {
+  state.questionIndex++;
+  const tierQs = getQuestionsForTier(state.currentTier);
+  if (state.questionIndex >= tierQs.length) {
+    completeTier();
+  } else {
+    showQuestion();
+  }
+}
+
+function completeTier() {
+  state.unlockedBadges.push(state.currentTier);
+  state.phase = 'tier-complete';
+  const t = TIERS[state.currentTier];
+  const tierQs = getQuestionsForTier(state.currentTier);
+  const pct = Math.round((state.correct / (state.unlockedBadges.length * tierQs.length)) * 100);
+
+  // Save to localStorage
+  try {
+    const saved = JSON.parse(localStorage.getItem('rp_badges') || '[]');
+    if (!saved.includes(state.currentTier)) saved.push(state.currentTier);
+    localStorage.setItem('rp_badges', JSON.stringify(saved));
+  } catch(e) {}
+
+  updateBadgeTrack();
+
+  const isLast = state.currentTier === TIERS.length - 1;
+
+  document.getElementById('contentArea').innerHTML = `
+    <div class="tier-complete">
+      <div class="tier-complete-badge">${t.icon}</div>
+      <div class="tier-complete-title" style="color:${t.id===0?'#CD7F32':t.id===1?'#A8A9AD':t.id===2?'#C9A84C':'#00CED1'}">
+        ${t.name} BADGE EARNED
+      </div>
+      <div class="tier-complete-score">
+        Score: <span>${state.score}</span> &nbsp;|&nbsp; Streak Best: <span>${state.streak}</span>
+      </div>
+      ${isLast
+        ? `<button class="btn-primary" onclick="showFinalComplete()">🏆 SEE YOUR RESULTS</button>`
+        : `<button class="btn-primary" onclick="showTierIntro(${state.currentTier + 1})">
+             ▶ CONTINUE TO ${TIERS[state.currentTier + 1].name}
+           </button>
+           <button class="btn-ghost" onclick="showFinalComplete()">See Summary</button>`
+      }
+    </div>
+  `;
+}
+
+function showFinalComplete() {
+  const earned = state.unlockedBadges.map(i => TIERS[i].icon).join(' ');
+  const isPlatinum = state.unlockedBadges.includes(3);
+
+  document.getElementById('contentArea').innerHTML = `
+    <div class="final-complete">
+      <div class="final-title">${isPlatinum ? 'SOVEREIGN ACHIEVED' : 'WELL PLAYED'}</div>
+      <div class="final-badges">${earned || '🎮'}</div>
+      <div class="final-desc">
+        ${isPlatinum
+          ? `You've completed all four tiers of the Robot-Proof BookGame. You understand not just what AI can do — but what it cannot. That knowledge, applied with discipline and courage, is your sovereign edge. Now read the book that started it all.`
+          : `You've earned ${state.unlockedBadges.length} of 4 badges. Score: ${state.score}. Every tier you complete deepens your understanding of what makes you irreplaceable. Keep going — Platinum awaits.`
+        }
+      </div>
+
+      <div class="book-promo">
+        <div class="book-cover-placeholder">🤖</div>
+        <div class="book-promo-text">
+          <div class="book-promo-tag">PLAY BEFORE YOU BUY · GSU BOOKGAME</div>
+          <div class="book-promo-title">ROBOT-PROOF<br>Teaching Humans to Thrive<br>When Machines Think</div>
+          <div class="book-promo-desc">
+            By Dr. Gene A. Constant · Global Sovereign University<br>
+            The complete guide to developing the human capacities no AI can replicate.
+          </div>
+          <a href="${BOOK_LINK}" target="_blank" class="book-buy-btn">GET THE BOOK ON AMAZON →</a>
+        </div>
+      </div>
+
+      <button class="btn-ghost" onclick="location.reload()">▶ PLAY AGAIN</button>
+      &nbsp;
+      <a href="/games" style="display:inline-block;margin-left:8px;" class="btn-ghost">ALL BOOKGAMES →</a>
+    </div>
+  `;
+}
+
+// Load saved badges
+try {
+  const saved = JSON.parse(localStorage.getItem('rp_badges') || '[]');
+  state.unlockedBadges = saved;
+} catch(e) {}
+</script>
+</body>
+</html>
