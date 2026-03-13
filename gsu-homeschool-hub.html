@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO META -->
+<title>Free Homeschool Curriculum & Resources | Global Sovereign University</title>
+<meta name="description" content="Free homeschool curriculum, games, and expert mentors for every subject. GENO AI teaches in 32 languages. Retired expert mentors fill every knowledge gap. No cost. No login. No limit.">
+<meta name="keywords" content="free homeschool curriculum, homeschool resources, homeschool burnout help, homeschool math games, homeschool foreign language free, homeschool STEM, homeschool special needs, retired mentor homeschool, homeschool advanced subjects">
+<meta property="og:title" content="The Free Homeschool Hub — Global Sovereign University">
+<meta property="og:description" content="You don't have to teach everything alone. GENO speaks 32 languages. Our Civilization Builders are retired experts ready to mentor your child. Everything free. No login.">
+<meta property="og:url" content="https://www.globalsovereignuniversity.org/homeschool">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink:     #0F0F14;
+  --ink2:    #1C1C28;
+  --paper:   #F7F5F0;
+  --paper2:  #EFECE4;
+  --gold:    #C9A84C;
+  --gold-lt: #E8D49A;
+  --teal:    #0D7E8C;
+  --teal-lt: #E0F4F5;
+  --rust:    #B85C38;
+  --rust-lt: #FDF0EB;
+  --sage:    #4A7C59;
+  --sage-lt: #EBF4EE;
+  --white:   #FFFFFF;
+  --border:  rgba(15,15,20,0.08);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* ── UTILITY ── */
+.container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+.gold { color: var(--gold); }
+.teal { color: var(--teal); }
+
+/* ── NAV STRIP ── */
+.nav-strip {
+  background: var(--ink);
+  padding: 10px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+}
+.nav-logo { color: var(--gold); text-decoration: none; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  padding: 80px 24px 72px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 100% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 0% 80%, rgba(13,126,140,0.07) 0%, transparent 50%);
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 1060px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: center;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px;
+  color: var(--gold); opacity: 0.7; margin-bottom: 20px; text-transform: uppercase;
+}
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  color: var(--white); line-height: 1.1; margin-bottom: 20px;
+  font-weight: 900;
+}
+.hero-h1 em { color: var(--gold); font-style: italic; }
+.hero-sub {
+  font-size: 18px; color: rgba(255,255,255,0.6);
+  line-height: 1.75; margin-bottom: 32px; max-width: 520px;
+}
+.hero-sub strong { color: rgba(255,255,255,0.9); }
+.hero-stats {
+  display: flex; gap: 32px; margin-bottom: 36px; flex-wrap: wrap;
+}
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 700; color: var(--gold); line-height: 1;
+}
+.hero-stat-label { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 1px; margin-top: 2px; }
+
+.btn-hero {
+  display: inline-block;
+  background: var(--gold); color: var(--ink);
+  font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+  letter-spacing: 2px; padding: 14px 32px; border-radius: 2px;
+  text-decoration: none; transition: all 0.2s; text-transform: uppercase;
+}
+.btn-hero:hover { background: var(--gold-lt); }
+.btn-ghost-hero {
+  display: inline-block;
+  border: 1px solid rgba(201,168,76,0.4); color: var(--gold);
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: 2px; padding: 14px 28px; border-radius: 2px;
+  text-decoration: none; transition: all 0.2s; margin-left: 12px; text-transform: uppercase;
+}
+.btn-ghost-hero:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+/* Hero right — pain card */
+.hero-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px; padding: 28px;
+}
+.hero-card-title {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  color: var(--gold); opacity: 0.6; margin-bottom: 16px; text-transform: uppercase;
+}
+.pain-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.pain-item:last-child { border-bottom: none; }
+.pain-pct {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700; color: var(--gold);
+  min-width: 52px; line-height: 1;
+}
+.pain-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.pain-text strong { color: rgba(255,255,255,0.8); }
+
+/* ── SECTION HEADERS ── */
+.section { padding: 80px 0; }
+.section-alt { background: var(--paper2); }
+.section-dark { background: var(--ink2); }
+.section-ink { background: var(--ink); }
+
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px;
+  text-transform: uppercase; margin-bottom: 10px; opacity: 0.5;
+}
+.section-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 48px); font-weight: 700; line-height: 1.2;
+  margin-bottom: 14px;
+}
+.section-sub {
+  font-size: 16px; line-height: 1.75; opacity: 0.6; max-width: 580px;
+}
+
+/* ── BURNOUT SECTION ── */
+.burnout-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  margin-top: 48px; border-radius: 6px; overflow: hidden;
+}
+.burnout-card {
+  background: var(--white); padding: 32px 28px;
+  position: relative; overflow: hidden;
+}
+.burnout-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+}
+.burnout-card.rust::before { background: var(--rust); }
+.burnout-card.teal::before { background: var(--teal); }
+.burnout-card.gold::before { background: var(--gold); }
+.burnout-card.sage::before { background: var(--sage); }
+
+.burnout-icon { font-size: 32px; margin-bottom: 12px; }
+.burnout-problem {
+  font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+  margin-bottom: 8px; color: var(--ink);
+}
+.burnout-pain { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 16px; }
+.burnout-solution {
+  font-size: 13px; line-height: 1.6; padding: 12px 14px; border-radius: 3px;
+}
+.burnout-card.rust .burnout-solution { background: var(--rust-lt); color: var(--rust); }
+.burnout-card.teal .burnout-solution { background: var(--teal-lt); color: var(--teal); }
+.burnout-card.gold .burnout-solution { background: rgba(201,168,76,0.1); color: #8a6d1a; }
+.burnout-card.sage .burnout-solution { background: var(--sage-lt); color: var(--sage); }
+.burnout-solution strong { display: block; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; margin-bottom: 4px; text-transform: uppercase; }
+
+/* ── GENO SECTION ── */
+.geno-wrap {
+  display: grid; grid-template-columns: 340px 1fr; gap: 64px; align-items: center;
+  margin-top: 0;
+}
+.geno-visual {
+  text-align: center; position: relative;
+}
+.geno-ring-outer {
+  width: 200px; height: 200px; border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+  position: relative;
+  animation: slowSpin 20s linear infinite;
+}
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.geno-ring-inner {
+  width: 160px; height: 160px; border-radius: 50%;
+  border: 1px solid rgba(13,126,140,0.3);
+  display: flex; align-items: center; justify-content: center;
+  animation: slowSpin 15s linear infinite reverse;
+}
+.geno-img {
+  width: 120px; height: 120px; border-radius: 50%;
+  object-fit: cover;
+  animation: slowSpin 15s linear infinite; /* counter-rotate to stay upright */
+}
+.geno-lang-pills {
+  display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 8px;
+}
+.lang-pill {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px;
+  background: rgba(13,126,140,0.1); color: var(--teal);
+  border: 1px solid rgba(13,126,140,0.2); padding: 3px 9px; border-radius: 2px;
+}
+
+.geno-features { display: flex; flex-direction: column; gap: 20px; }
+.geno-feature {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 4px;
+  transition: border-color 0.2s;
+}
+.geno-feature:hover { border-color: rgba(13,126,140,0.3); }
+.geno-feature-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.geno-feature-name {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+  color: var(--teal); margin-bottom: 4px; text-transform: uppercase;
+}
+.geno-feature-desc { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+/* ── SUBJECTS GRID ── */
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; margin-top: 48px;
+}
+.subject-card {
+  background: var(--white); border-radius: 4px; padding: 24px 20px;
+  border: 1px solid var(--border); transition: all 0.25s;
+  cursor: default; position: relative; overflow: hidden;
+  text-decoration: none; color: inherit; display: block;
+}
+.subject-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; transform: scaleX(0); transition: transform 0.25s;
+}
+.subject-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+.subject-card:hover::after { transform: scaleX(1); }
+
+.subject-card.math::after { background: var(--teal); }
+.subject-card.language::after { background: var(--gold); }
+.subject-card.science::after { background: var(--sage); }
+.subject-card.history::after { background: var(--rust); }
+.subject-card.finance::after { background: #6B5B95; }
+.subject-card.reading::after { background: #E84393; }
+.subject-card.writing::after { background: #00838F; }
+.subject-card.trades::after { background: #795548; }
+
+.subject-icon { font-size: 36px; margin-bottom: 12px; }
+.subject-name {
+  font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+  margin-bottom: 6px;
+}
+.subject-desc { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 12px; }
+.subject-geno {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px;
+  color: var(--teal); display: flex; align-items: center; gap: 4px;
+}
+.subject-free {
+  display: inline-block; background: rgba(201,168,76,0.1); color: #8a6d1a;
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+  padding: 2px 8px; border-radius: 2px; margin-top: 6px; text-transform: uppercase;
+}
+
+/* ── BOOKGAME STRIP ── */
+.bookgame-strip {
+  background: var(--gold);
+  padding: 48px 24px;
+}
+.bookgame-inner {
+  max-width: 1060px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 32px; flex-wrap: wrap;
+}
+.bookgame-text h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700; color: var(--ink); margin-bottom: 6px;
+}
+.bookgame-text p { font-size: 15px; color: rgba(15,15,20,0.65); max-width: 480px; line-height: 1.7; }
+.btn-dark {
+  display: inline-block; background: var(--ink); color: var(--gold);
+  font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+  letter-spacing: 2px; padding: 14px 30px; border-radius: 2px;
+  text-decoration: none; transition: all 0.2s; white-space: nowrap; text-transform: uppercase;
+}
+.btn-dark:hover { background: var(--ink2); }
+
+/* ── CIVILIZATION BUILDERS ── */
+.cb-hero {
+  display: grid; grid-template-columns: 1fr 400px; gap: 60px; align-items: center;
+}
+.cb-declaration {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 4.5vw, 52px); font-weight: 700;
+  color: var(--white); line-height: 1.1; margin-bottom: 20px;
+}
+.cb-declaration em { color: var(--gold); font-style: italic; }
+.cb-body { font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.8; margin-bottom: 28px; }
+.cb-body strong { color: rgba(255,255,255,0.85); }
+
+.cb-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px; padding: 28px;
+}
+.cb-card-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  color: var(--gold); opacity: 0.6; margin-bottom: 20px; text-transform: uppercase;
+}
+.expertise-row {
+  display: flex; gap: 10px; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.expertise-row:last-child { border-bottom: none; }
+.expertise-icon { font-size: 22px; width: 36px; flex-shrink: 0; text-align: center; }
+.expertise-name { font-size: 14px; color: rgba(255,255,255,0.75); font-weight: 500; }
+.expertise-years { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); margin-left: auto; opacity: 0.6; }
+
+.cb-deploy-btn {
+  display: block; margin-top: 24px; text-align: center;
+  background: var(--gold); color: var(--ink);
+  font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+  letter-spacing: 2px; padding: 14px; border-radius: 2px;
+  text-decoration: none; transition: all 0.2s; text-transform: uppercase;
+}
+.cb-deploy-btn:hover { background: var(--gold-lt); }
+
+/* ── EXPERTISE GRID ── */
+.expertise-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px; margin-top: 48px;
+}
+.exp-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px; padding: 24px; transition: all 0.2s;
+}
+.exp-card:hover { border-color: rgba(201,168,76,0.3); background: rgba(255,255,255,0.06); }
+.exp-icon { font-size: 32px; margin-bottom: 10px; }
+.exp-field {
+  font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+  color: var(--white); margin-bottom: 6px;
+}
+.exp-need { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; margin-bottom: 12px; }
+.exp-gsu { font-size: 13px; color: var(--gold); line-height: 1.5; }
+
+/* ── STAT BAR ── */
+.stat-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--paper2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.stat-item { padding: 36px 24px; text-align: center; border-right: 1px solid var(--border); }
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900;
+  color: var(--ink); line-height: 1;
+}
+.stat-number span { color: var(--gold); }
+.stat-label { font-size: 12px; color: #888; margin-top: 6px; letter-spacing: 1px; }
+
+/* ── SPECIAL NEEDS ── */
+.needs-split {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 48px;
+  border-radius: 6px; overflow: hidden;
+}
+.needs-card {
+  background: var(--white); padding: 36px 32px;
+}
+.needs-tag {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 14px; padding: 4px 10px;
+  border-radius: 2px; display: inline-block;
+}
+.needs-card.adhd .needs-tag { background: rgba(184,92,56,0.1); color: var(--rust); }
+.needs-card.dyslexia .needs-tag { background: var(--teal-lt); color: var(--teal); }
+.needs-h { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 10px; }
+.needs-body { font-size: 14px; color: #555; line-height: 1.75; margin-bottom: 18px; }
+.needs-gsu {
+  padding: 14px 16px; border-radius: 4px; font-size: 13px; line-height: 1.6;
+}
+.needs-card.adhd .needs-gsu { background: rgba(184,92,56,0.07); color: var(--rust); }
+.needs-card.dyslexia .needs-gsu { background: var(--teal-lt); color: var(--teal); }
+
+/* ── TESTIMONIAL STYLE ── */
+.pullquote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3vw, 34px); font-style: italic;
+  line-height: 1.4; color: var(--white);
+  border-left: 3px solid var(--gold); padding-left: 28px;
+  margin: 48px 0;
+}
+.pullquote-attr {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+  color: rgba(255,255,255,0.35); margin-top: 14px; font-style: normal;
+}
+
+/* ── FREE TOOLS ── */
+.tools-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px; margin-top: 40px;
+}
+.tool-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 4px;
+  padding: 24px; transition: all 0.2s;
+  text-decoration: none; color: inherit; display: block;
+}
+.tool-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.07); border-color: var(--gold); }
+.tool-emoji { font-size: 32px; margin-bottom: 12px; display: block; }
+.tool-name {
+  font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700;
+  margin-bottom: 6px;
+}
+.tool-desc { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 10px; }
+.tool-badge {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+  background: rgba(201,168,76,0.12); color: #8a6d1a;
+  padding: 3px 8px; border-radius: 2px; display: inline-block; text-transform: uppercase;
+}
+
+/* ── CTA FINAL ── */
+.final-cta {
+  background: var(--ink);
+  padding: 80px 24px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.final-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 65%);
+}
+.final-cta-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+.final-geno { width: 72px; height: 72px; border-radius: 50%; border: 2px solid rgba(201,168,76,0.3); margin: 0 auto 20px; }
+.final-h { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 52px); font-weight: 700; color: var(--white); margin-bottom: 14px; }
+.final-h em { color: var(--gold); font-style: italic; }
+.final-sub { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.75; margin-bottom: 36px; }
+.final-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.final-note {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px;
+  color: rgba(255,255,255,0.2); margin-top: 28px; text-transform: uppercase;
+}
+
+/* ── FOOTER ── */
+.page-footer {
+  background: #080810; padding: 28px 24px;
+  text-align: center; font-family: 'DM Mono', monospace;
+  font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 1px;
+}
+.page-footer a { color: var(--gold); text-decoration: none; opacity: 0.6; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-inner > * { animation: fadeUp 0.7s ease both; }
+.hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-inner > *:nth-child(2) { animation-delay: 0.25s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 820px) {
+  .hero-inner, .geno-wrap, .cb-hero, .needs-split { grid-template-columns: 1fr; }
+  .burnout-grid { grid-template-columns: 1fr; }
+  .stat-bar { grid-template-columns: 1fr 1fr; }
+  .stat-item { border-bottom: 1px solid var(--border); }
+  .hero-card { display: none; }
+  .bookgame-inner { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav-strip">
+  <a href="https://www.globalsovereignuniversity.org" class="nav-logo">GLOBAL SOVEREIGN UNIVERSITY</a>
+  <div class="nav-links">
+    <a href="/games">BookGames</a>
+    <a href="/homeschool">Homeschool</a>
+    <a href="/civilization-builders">Mentors</a>
+    <a href="/robot-proof">Robot-Proof</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">GSU Homeschool Hub · Free · No Login · No Limit</div>
+      <h1 class="hero-h1">You Don't Have to<br>Teach Everything <em>Alone.</em></h1>
+      <p class="hero-sub">
+        <strong>GENO teaches 32 languages.</strong> Retired experts mentor your child in subjects you can't. Every game, every lesson, every resource — free. No curriculum to buy. No burnout required.
+      </p>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">32</div>
+          <div class="hero-stat-label">Languages GENO teaches</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">50+</div>
+          <div class="hero-stat-label">Free subject games</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">$0</div>
+          <div class="hero-stat-label">Cost to families</div>
+        </div>
+      </div>
+      <a href="https://www.globalsovereignuniversity.org/games" class="btn-hero">▶ Explore Free Games</a>
+      <a href="/civilization-builders" class="btn-ghost-hero">Find a Mentor</a>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-card-title">Why Parents Choose Home Education</div>
+      <div class="pain-item">
+        <div class="pain-pct">83%</div>
+        <div class="pain-text"><strong>Safety & environment</strong> — bullying, school violence, emotional well-being</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-pct">75%</div>
+        <div class="pain-text"><strong>Values & character</strong> — moral development, family cohesion, identity</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-pct">72%</div>
+        <div class="pain-text"><strong>Individualization</strong> — rigid curricula can't meet each child's pace</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-pct">21%</div>
+        <div class="pain-text"><strong>Special needs</strong> — institutions failing neurodivergent learners</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STAT BAR ══════════════════════════════════════════════════════ -->
+<div class="stat-bar">
+  <div class="stat-item">
+    <div class="stat-number">4.2<span>M</span></div>
+    <div class="stat-label">U.S. children homeschooled</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">15<span>–25</span></div>
+    <div class="stat-label">Percentile points above peers on standardized tests</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">87<span>%</span></div>
+    <div class="stat-label">Of studies show superior social outcomes</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">96<span>%</span></div>
+    <div class="stat-label">Of homeschool grads use multiple study strategies vs 72% of peers</div>
+  </div>
+</div>
+
+<!-- ══ BURNOUT SECTION ════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">The Real Challenge</div>
+    <h2 class="section-h2">Homeschool Burnout Is Real.<br>GSU Is the Relief.</h2>
+    <p class="section-sub">The outcomes are extraordinary. The burden on the parent is immense. GSU was built to carry part of that weight — free, always available, never burning out.</p>
+
+    <div class="burnout-grid">
+      <div class="burnout-card rust">
+        <div class="burnout-icon">🧮</div>
+        <div class="burnout-problem">"I can't teach calculus. Or chemistry. Or Spanish."</div>
+        <div class="burnout-pain">As children advance, the knowledge gap grows. Parents feel profound anxiety about advanced subjects — and the system offers no backup.</div>
+        <div class="burnout-solution"><strong>GSU Answer</strong>GENO coaches advanced math, science, and foreign languages in 32 languages at any level. Civilization Builder mentors — retired professors, engineers, chemists — fill every gap.</div>
+      </div>
+
+      <div class="burnout-card teal">
+        <div class="burnout-icon">😮‍💨</div>
+        <div class="burnout-problem">"I am the teacher, parent, counselor, and curriculum designer — simultaneously."</div>
+        <div class="burnout-pain">The complete lack of boundary demarcation is the root of burnout. There is no natural end to the workday. When the child struggles, the parent feels it doubly.</div>
+        <div class="burnout-solution"><strong>GSU Answer</strong>Hand a subject to GENO. GENO coaches, corrects, explains, and encourages — while you breathe. No subscription. No setup. Just: open the game.</div>
+      </div>
+
+      <div class="burnout-card gold">
+        <div class="burnout-icon">💸</div>
+        <div class="burnout-problem">"There is no state funding. Every curriculum, co-op, and test comes out of pocket."</div>
+        <div class="burnout-pain">In Oregon and most states, homeschooling families receive zero direct financial support. Curricula, testing, co-op fees, and materials accumulate into a second mortgage.</div>
+        <div class="burnout-solution"><strong>GSU Answer</strong>Every GSU game is free. Every GENO coaching session is free. Every Civilization Builder mentorship is free. Always. This is 100% mission funded.</div>
+      </div>
+
+      <div class="burnout-card sage">
+        <div class="burnout-icon">🌐</div>
+        <div class="burnout-problem">"My child needs to learn a foreign language. I only speak English."</div>
+        <div class="burnout-pain">Foreign language instruction is among the most frequently cited parental knowledge gaps — and among the most expensive subjects to outsource to private tutors.</div>
+        <div class="burnout-solution"><strong>GSU Answer</strong>GENO speaks, teaches, and coaches in Spanish, Mandarin, French, Arabic, and 28 more languages. Your child starts today. For free.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GENO SECTION ════════════════════════════════════════════════ -->
+<section class="section section-ink">
+  <div class="container">
+    <div class="geno-wrap">
+      <div class="geno-visual">
+        <div class="geno-ring-outer">
+          <div class="geno-ring-inner">
+            <img class="geno-img" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO - GSU AI Tutor">
+          </div>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:12px;text-transform:uppercase;">GENO speaks</div>
+        <div class="geno-lang-pills">
+          <span class="lang-pill">English</span>
+          <span class="lang-pill">Spanish</span>
+          <span class="lang-pill">Mandarin</span>
+          <span class="lang-pill">French</span>
+          <span class="lang-pill">Arabic</span>
+          <span class="lang-pill">German</span>
+          <span class="lang-pill">Japanese</span>
+          <span class="lang-pill">+ 25 more</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="color:rgba(255,255,255,0.3);">Meet Your Backup Teacher</div>
+        <h2 class="section-h2" style="color:var(--white);">GENO Never Burns Out.<br><span style="color:var(--gold);">Never.</span></h2>
+        <div class="geno-features">
+          <div class="geno-feature">
+            <div class="geno-feature-icon">🌙</div>
+            <div>
+              <div class="geno-feature-name">Always Available</div>
+              <div class="geno-feature-desc">2 a.m. panic about tomorrow's math lesson? GENO is there. No appointment, no waitlist, no subscription. Open the game and start.</div>
+            </div>
+          </div>
+          <div class="geno-feature">
+            <div class="geno-feature-icon">🎮</div>
+            <div>
+              <div class="geno-feature-name">Gamified — Not Lectured</div>
+              <div class="geno-feature-desc">GENO teaches through challenge and coaching — Bronze, Silver, Gold, Platinum. Your child earns every badge. No passive video-watching.</div>
+            </div>
+          </div>
+          <div class="geno-feature">
+            <div class="geno-feature-icon">🧠</div>
+            <div>
+              <div class="geno-feature-name">Coaches Every Answer</div>
+              <div class="geno-feature-desc">Right or wrong, GENO explains why. Every question gets a full coaching note — in the learner's own language, at their own pace.</div>
+            </div>
+          </div>
+          <div class="geno-feature">
+            <div class="geno-feature-icon">📊</div>
+            <div>
+              <div class="geno-feature-name">Badge Progression = Portfolio</div>
+              <div class="geno-feature-desc">Bronze through Platinum badges document what your child can actually do — not which seat they occupied. A real competence record for transcripts and beyond.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SUBJECTS GRID ══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Free Curriculum Areas</div>
+    <h2 class="section-h2">Every Subject Your Child Needs.<br>Every One Free.</h2>
+    <p class="section-sub">GSU's BookGames cover the full homeschool curriculum spectrum — from early literacy and math fluency through financial sovereignty and real-world trades.</p>
+
+    <div class="subjects-grid">
+      <a href="https://www.globalsovereignuniversity.org/games" class="subject-card math">
+        <div class="subject-icon">🔢</div>
+        <div class="subject-name">Mathification</div>
+        <div class="subject-desc">Mental math, arithmetic fluency, number games, problem-solving. From foundations to challenge.</div>
+        <div class="subject-geno">🤖 GENO coaches every level</div>
+        <div class="subject-free">Free · No Login</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="subject-card reading">
+        <div class="subject-icon">📖</div>
+        <div class="subject-name">Readification</div>
+        <div class="subject-desc">Phonics Protocol, comprehension, vocabulary, reading fluency. Built for every learning style.</div>
+        <div class="subject-geno">🤖 GENO coaches every level</div>
+        <div class="subject-free">Free · No Login</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="subject-card language">
+        <div class="subject-icon">🌐</div>
+        <div class="subject-name">Linguification</div>
+        <div class="subject-desc">Foreign language through GENO Language Lab. Spanish, Mandarin, French and 29 more — coached by GENO.</div>
+        <div class="subject-geno">🤖 32 Languages Available</div>
+        <div class="subject-free">Free · No Login</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="subject-card writing">
+        <div class="subject-icon">✍️</div>
+        <div class="subject-name">Writification</div>
+        <div class="subject-desc">Grammar, logic, rhetoric. The classical Trivium as a sovereign thinking and writing framework.</div>
+        <div class="subject-geno">🤖 GENO coaches every level</div>
+        <div class="subject-free">Free · No Login</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="subject-card finance">
+        <div class="subject-icon">💰</div>
+        <div class="subject-name">Financification</div>
+        <div class="subject-desc">Interest rates, budgeting, compound growth, taxes, loans. The financial literacy every child needs before adulthood.</div>
+        <div class="subject-geno">🤖 GENO coaches every level</div>
+        <div class="subject-free">Free · No Login</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="subject-card science">
+        <div class="subject-icon">🔬</div>
+        <div class="subject-name">Digitification</div>
+        <div class="subject-desc">Technology, cybersecurity, digital literacy, AI awareness. Robot-proof your child for the future economy.</div>
+        <div class="subject-geno">🤖 GENO coaches every level</div>
+        <div class="subject-free">Free · No Login</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="subject-card history">
+        <div class="subject-icon">🏛️</div>
+        <div class="subject-name">Civics & History</div>
+        <div class="subject-desc">Constitutional principles, branches of government, rights vs. privileges. How a sovereign citizen thinks.</div>
+        <div class="subject-geno">🤖 GENO coaches every level</div>
+        <div class="subject-free">Free · No Login</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="subject-card trades">
+        <div class="subject-icon">🔧</div>
+        <div class="subject-name">Tradification</div>
+        <div class="subject-desc">Trade math, measurement, estimation. The practical skills plumbers, electricians, and builders actually use.</div>
+        <div class="subject-geno">🤖 GENO coaches every level</div>
+        <div class="subject-free">Free · No Login</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BOOKGAME STRIP ═════════════════════════════════════════════ -->
+<div class="bookgame-strip">
+  <div class="bookgame-inner">
+    <div class="bookgame-text">
+      <h3>The Publishing Innovation that makes Education Irresistible.</h3>
+      <p>Every GSU book comes with a free BookGame — a fully playable, GENO-coached challenge your child can complete before you decide to buy the book. Play the book before you buy the book. That's the innovation.</p>
+    </div>
+    <a href="https://www.globalsovereignuniversity.org/games" class="btn-dark">▶ Play Free Now</a>
+  </div>
+</div>
+
+<!-- ══ CIVILIZATION BUILDERS ══════════════════════════════════════ -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="cb-hero">
+      <div>
+        <div class="section-label" style="color:rgba(255,255,255,0.3);">The Mentor Program</div>
+        <h2 class="cb-declaration">The Subject You Can't Teach <em>Has Already Been Mastered</em> by Someone Who Retired Last Year.</h2>
+        <p class="cb-body">
+          GSU's <strong>Civilization Builders program</strong> deploys retired professionals — former engineers, nurses, chemists, tradespeople, attorneys, and educators — as sovereign mentors for homeschool families.
+        </p>
+        <p class="cb-body">
+          They are not volunteers filling a gap. They are experts who spent 30–40 years mastering something your child needs to learn. <strong>GENO handles availability. Civilization Builders handle wisdom.</strong> Together they cover every subject, at every level, for free.
+        </p>
+        <a href="/civilization-builders" class="btn-hero" style="display:inline-block;margin-top:8px;">Find a Mentor for Your Child →</a>
+      </div>
+
+      <div class="cb-card">
+        <div class="cb-card-label">Deployed Expertise — Examples</div>
+        <div class="expertise-row"><div class="expertise-icon">⚗️</div><div class="expertise-name">Chemistry & Biology</div><div class="expertise-years">34 yrs</div></div>
+        <div class="expertise-row"><div class="expertise-icon">⚡</div><div class="expertise-name">Electrical Engineering</div><div class="expertise-years">28 yrs</div></div>
+        <div class="expertise-row"><div class="expertise-icon">📐</div><div class="expertise-name">Advanced Mathematics</div><div class="expertise-years">22 yrs</div></div>
+        <div class="expertise-row"><div class="expertise-icon">⚖️</div><div class="expertise-name">Constitutional Law & Civics</div><div class="expertise-years">31 yrs</div></div>
+        <div class="expertise-row"><div class="expertise-icon">🌍</div><div class="expertise-name">World History & Geography</div><div class="expertise-years">19 yrs</div></div>
+        <div class="expertise-row"><div class="expertise-icon">🔧</div><div class="expertise-name">Trades & Applied Math</div><div class="expertise-years">26 yrs</div></div>
+        <a href="/civilization-builders" class="cb-deploy-btn">Request a Mentor — Free</a>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      "You didn't retire from expertise. You retired from a paycheck.<br>Your knowledge is what the next generation is missing."
+      <div class="pullquote-attr">— Dr. Gene A. Constant, DBA · Founder, Global Sovereign University</div>
+    </div>
+
+    <div class="expertise-grid">
+      <div class="exp-card">
+        <div class="exp-icon">🧪</div>
+        <div class="exp-field">Advanced Science</div>
+        <div class="exp-need">Lab equipment, chemistry, physics — prohibitively expensive for families to replicate at home</div>
+        <div class="exp-gsu">Retired scientists bring real-world context, virtual mentorship, and recommended free lab alternatives</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">📊</div>
+        <div class="exp-field">Higher Math</div>
+        <div class="exp-need">Calculus, statistics, trigonometry — 72% of parents cite advanced math as their #1 knowledge gap</div>
+        <div class="exp-gsu">Retired engineers and mathematicians mentor through the exact problems your child is solving</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">💼</div>
+        <div class="exp-field">Real-World Business</div>
+        <div class="exp-need">No school teaches negotiation, contracts, entrepreneurship, or how economies actually work</div>
+        <div class="exp-gsu">Retired business leaders, traders, and founders translate decades of real-world mastery into curriculum</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">🎖️</div>
+        <div class="exp-field">Leadership & Service</div>
+        <div class="exp-need">Character, discipline, and civic responsibility are caught, not taught — they require a model</div>
+        <div class="exp-gsu">Veterans and public servants bring the lived experience of leading under pressure and serving with purpose</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">🩺</div>
+        <div class="exp-field">Health & Anatomy</div>
+        <div class="exp-need">Medical and health literacy is among the most under-taught and highest-stakes subjects for life outcomes</div>
+        <div class="exp-gsu">Retired nurses, physicians, and health professionals bring real-world medical knowledge to your curriculum</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">🖥️</div>
+        <div class="exp-field">Technology & Coding</div>
+        <div class="exp-need">AI, coding, and digital literacy are the literacy of the next economy — few parents can teach it yet</div>
+        <div class="exp-gsu">Retired engineers and developers mentor your child in the technical skills that will define their generation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SPECIAL NEEDS ══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Neurodivergent Learners</div>
+    <h2 class="section-h2">21% of Homeschool Families Are Here<br>Because the System Failed Their Child.</h2>
+    <p class="section-sub">Homeschooling is often the last resort for families of special needs children — after years of watching their child struggle in a system not built for them. GSU is built differently.</p>
+
+    <div class="needs-split">
+      <div class="needs-card adhd">
+        <div class="needs-tag">ADHD & Executive Function</div>
+        <h3 class="needs-h">The classroom punished the way your child's brain works.</h3>
+        <p class="needs-body">Boys are diagnosed with ADHD at 2–10 times the rate of girls in institutional classrooms — and placed in special education at disproportionate rates. The energy, the curiosity, the inability to sit still for six hours — these are not defects. They are mismatches.</p>
+        <div class="needs-gsu"><strong>GSU's game-based model is self-paced, challenge-driven, and entirely free of the time pressure that compounds ADHD anxiety.</strong> GENO waits. There is no bell. There is no wrong way to pace a BookGame.</div>
+      </div>
+      <div class="needs-card dyslexia">
+        <div class="needs-tag">Dyslexia & Reading Differences</div>
+        <h3 class="needs-h">Your child is not behind. The method was wrong.</h3>
+        <p class="needs-body">Dyslexic learners require self-paced, multi-sensory instruction without the artificial time pressure of standardized classrooms. The Phonics Protocol — GSU's combinatorial reading engine — was built specifically for this. Infinite practice. No shame. No clock.</p>
+        <div class="needs-gsu"><strong>GENO reads aloud in 32 languages. Every coaching note can be spoken. The Phonics Protocol generates unlimited reading practice from finite phonetic rules — no two sessions are identical.</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FREE TOOLS ═════════════════════════════════════════════════ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label">Free Homeschool Resources</div>
+    <h2 class="section-h2">Your Curriculum Toolbox.<br>Everything Free. Everything Yours.</h2>
+    <p class="section-sub">GSU provides resources that address the highest-documented homeschool parent needs — without a subscription, a login, or a credit card.</p>
+
+    <div class="tools-grid">
+      <a href="https://www.globalsovereignuniversity.org/games" class="tool-card">
+        <span class="tool-emoji">🎮</span>
+        <div class="tool-name">50+ BookGames</div>
+        <div class="tool-desc">Play any subject, any level, any time. GENO coaches every question. Bronze through Platinum badges prove mastery.</div>
+        <div class="tool-badge">Free · No Login</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org" class="tool-card">
+        <span class="tool-emoji">🤖</span>
+        <div class="tool-name">GENO Language Lab</div>
+        <div class="tool-desc">Foreign language coaching in 32 languages. Speak, listen, comprehend. The foreign language tutor you couldn't afford is now free.</div>
+        <div class="tool-badge">32 Languages</div>
+      </a>
+      <a href="/civilization-builders" class="tool-card">
+        <span class="tool-emoji">👨‍🏫</span>
+        <div class="tool-name">Expert Mentors</div>
+        <div class="tool-desc">Retired professionals deployed to your family. Chemistry, engineering, law, medicine, trades — every gap covered.</div>
+        <div class="tool-badge">Free · No Cost</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="tool-card">
+        <span class="tool-emoji">📜</span>
+        <div class="tool-name">Honest Transcript</div>
+        <div class="tool-desc">Competence-based credentials built on the classical Trivium. What your child can actually do — documented, verifiable, portfolio-ready.</div>
+        <div class="tool-badge">College-Ready</div>
+      </a>
+      <a href="https://www.globalsovereignuniversity.org/games" class="tool-card">
+        <span class="tool-emoji">🔢</span>
+        <div class="tool-name">Phonics Protocol</div>
+        <div class="tool-desc">Infinite reading practice from finite phonetic rules. Self-paced. Multi-sensory. Ideal for dyslexic and struggling readers.</div>
+        <div class="tool-badge">Neurodivergent Friendly</div>
+      </a>
+      <a href="https://www.buzzsprout.com/2530740" class="tool-card">
+        <span class="tool-emoji">🎙️</span>
+        <div class="tool-name">Voice of Sovereignty</div>
+        <div class="tool-desc">GSU's podcast in 10 languages. Bring educational philosophy, sovereign thinking, and mission content into your homeschool day.</div>
+        <div class="tool-badge">10 Languages</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══════════════════════════════════════════════════ -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <img class="final-geno" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+    <h2 class="final-h">Your Homeschool Just Got<br>a <em>Backup Teacher.</em></h2>
+    <p class="final-sub">
+      GENO is ready right now. No setup. No account. No cost. Open a BookGame, pick a subject, and watch your child's eyes light up when learning feels like play.
+    </p>
+    <div class="final-btns">
+      <a href="https://www.globalsovereignuniversity.org/games" class="btn-hero">▶ Start Free Today</a>
+      <a href="/civilization-builders" class="btn-ghost-hero">Find an Expert Mentor</a>
+    </div>
+    <div class="final-note">No login · No subscription · No credit card · 100% Mission Funded · Foundation for Global Instruction · EIN 39-2716552</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  Global Sovereign University · <a href="https://www.globalsovereignuniversity.org">globalsovereignuniversity.org</a> · Building a Bridge to Freedom Through Education — Not Handouts · © 2026 Foundation for Global Instruction
+</footer>
+
+</body>
+</html>
