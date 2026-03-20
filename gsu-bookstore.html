@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSU Bookstore — 190 Titles | Global Sovereign University</title>
+<meta name="description" content="Browse 190 published titles by Dr. Gene A. Constant, DBA — all donated to the Foundation for Global Instruction. Free 501(c)(3) nonprofit. Every purchase supports sovereign education.">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Work+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0a1228;
+  --deep:   #0e1a30;
+  --surface:#162038;
+  --border: #1e3050;
+  --gold:   #c8a84b;
+  --gold2:  #e8c86b;
+  --teal:   #1a8b7f;
+  --teal2:  #22a898;
+  --text:   #ddeaf5;
+  --muted:  #7090a8;
+  --white:  #f0f6ff;
+  --radius: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:'Work Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* Blueprint grid bg */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(200,168,75,.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(200,168,75,.03) 1px,transparent 1px);
+  background-size:48px 48px}
+
+#store{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 24px 80px}
+
+/* ── HEADER ── */
+.store-header{padding:40px 0 28px;border-bottom:1px solid var(--border);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.store-eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px}
+.store-title{font-family:'Big Shoulders Display',sans-serif;font-size:clamp(36px,6vw,72px);font-weight:900;line-height:.95;color:var(--white)}
+.store-title span{color:var(--gold)}
+.store-sub{font-family:'IBM Plex Serif',serif;font-size:16px;color:var(--muted);font-style:italic;margin-top:10px;max-width:500px;line-height:1.6}
+.store-meta{text-align:right}
+.store-count{font-family:'Big Shoulders Display',sans-serif;font-size:48px;font-weight:900;color:var(--gold);line-height:1}
+.store-count-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.store-mission{margin-top:6px;font-size:12px;color:var(--muted);font-style:italic;max-width:220px;text-align:right;line-height:1.5}
+
+/* ── SEARCH ── */
+.search-wrap{margin:24px 0 0;position:relative;max-width:480px}
+.search-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 44px 12px 16px;color:var(--text);font-family:'Work Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s}
+.search-input::placeholder{color:var(--muted)}
+.search-input:focus{border-color:var(--gold)}
+.search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:16px}
+.search-results-count{font-size:12px;color:var(--muted);margin-top:8px;min-height:18px}
+
+/* ── SERIES NAV ── */
+.series-nav{position:sticky;top:0;z-index:100;background:rgba(10,18,40,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 0;margin:0 -24px;padding-left:24px;padding-right:24px}
+.series-nav-inner{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.series-nav-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-right:4px;font-weight:600;white-space:nowrap}
+.series-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;color:var(--text);background:var(--surface);border:1px solid var(--border);transition:all .2s;white-space:nowrap}
+.series-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(200,168,75,.08)}
+.series-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(200,168,75,.12)}
+.series-btn .count{background:rgba(200,168,75,.15);color:var(--gold);padding:1px 6px;border-radius:10px;font-size:10px}
+
+/* ── SERIES SECTIONS ── */
+.series-section{margin-top:52px}
+.series-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--border);position:relative}
+.series-header::after{content:'';position:absolute;bottom:-2px;left:0;width:60px;height:2px;background:var(--gold)}
+.series-title{font-family:'Big Shoulders Display',sans-serif;font-size:clamp(22px,3.5vw,32px);font-weight:900;color:var(--white)}
+.series-count{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+
+/* ── BOOK GRID ── */
+.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.book-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 18px 14px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s,transform .15s}
+.book-card:hover{border-color:rgba(200,168,75,.4);transform:translateY(-2px)}
+.book-card.hidden{display:none}
+.book-title{font-family:'IBM Plex Serif',serif;font-size:15px;font-weight:600;color:var(--white);line-height:1.45;flex:1}
+.book-series-tag{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.book-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn-kindle{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;background:rgba(200,168,75,.15);color:var(--gold);border:1px solid rgba(200,168,75,.3);transition:all .2s}
+.btn-kindle:hover{background:rgba(200,168,75,.25);border-color:var(--gold)}
+.btn-pb{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;background:rgba(26,139,127,.15);color:var(--teal2);border:1px solid rgba(26,139,127,.3);transition:all .2s}
+.btn-pb:hover{background:rgba(26,139,127,.25);border-color:var(--teal2)}
+
+/* ── FOOTER STRIP ── */
+.store-footer{margin-top:64px;padding-top:28px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--muted);line-height:2}
+.store-footer a{color:var(--gold);text-decoration:none}
+.store-footer a:hover{text-decoration:underline}
+
+/* ── NO RESULTS ── */
+.no-results{text-align:center;padding:60px 20px;color:var(--muted);font-family:'IBM Plex Serif',serif;font-style:italic;font-size:18px;display:none}
+
+@media(max-width:600px){
+  .store-header{flex-direction:column;align-items:flex-start}
+  .store-meta{text-align:left}
+  .store-mission{text-align:left}
+  .book-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="store">
+
+  <!-- HEADER -->
+  <header class="store-header">
+    <div>
+      <div class="store-eyebrow">Global Sovereign University · Foundation for Global Instruction · 501(c)(3)</div>
+      <h1 class="store-title">GSU <span>Bookstore</span></h1>
+      <p class="store-sub">190 published titles by Dr. Gene A. Constant, DBA — all donated to the Foundation. Every purchase supports free education for everyone.</p>
+      <div class="search-wrap">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search titles...">
+        <span class="search-icon">🔍</span>
+        <div class="search-results-count" id="searchCount"></div>
+      </div>
+    </div>
+    <div class="store-meta">
+      <div class="store-count">190</div>
+      <div class="store-count-label">Published Titles</div>
+      <div class="store-mission">All proceeds support free education through GlobalSovereignUniversity.org</div>
+    </div>
+  </header>
+
+  <!-- SERIES NAV -->
+  <nav class="series-nav" aria-label="Browse by series">
+    <div class="series-nav-inner">
+      <span class="series-nav-label">Browse:</span>
+      <a href="#sovereignty_and_critical_thinking" class="series-btn" data-series="Sovereignty & Critical Thinking">⚡ Sovereignty & Critical Thinking <span class="count">25</span></a>
+<a href="#personal_development" class="series-btn" data-series="Personal Development">🌱 Personal Development <span class="count">24</span></a>
+<a href="#emotional_intelligence_and_relationships" class="series-btn" data-series="Emotional Intelligence & Relationships">🤝 Emotional Intelligence & Relationships <span class="count">8</span></a>
+<a href="#financial_literacy" class="series-btn" data-series="Financial Literacy">💰 Financial Literacy <span class="count">5</span></a>
+<a href="#leadership" class="series-btn" data-series="Leadership">🧭 Leadership <span class="count">5</span></a>
+<a href="#history_and_civics" class="series-btn" data-series="History & Civics">🏛️ History & Civics <span class="count">21</span></a>
+<a href="#trades_and_practical_skills" class="series-btn" data-series="Trades & Practical Skills">🔧 Trades & Practical Skills <span class="count">12</span></a>
+<a href="#literacy_and_language" class="series-btn" data-series="Literacy & Language">📖 Literacy & Language <span class="count">12</span></a>
+<a href="#digitification_and_technology" class="series-btn" data-series="Digitification & Technology">💻 Digitification & Technology <span class="count">2</span></a>
+<a href="#children_and_homeschool" class="series-btn" data-series="Children & Homeschool">🎓 Children & Homeschool <span class="count">4</span></a>
+<a href="#arts_and_photography" class="series-btn" data-series="Arts & Photography">🎨 Arts & Photography <span class="count">5</span></a>
+<a href="#poetry_memoir_and_fiction" class="series-btn" data-series="Poetry, Memoir & Fiction">✍️ Poetry, Memoir & Fiction <span class="count">9</span></a>
+<a href="#general_nonfiction" class="series-btn" data-series="General Nonfiction">📚 General Nonfiction <span class="count">58</span></a>
+    </div>
+  </nav>
+
+  <!-- CATALOG SECTIONS -->
+  <main id="catalog">
+    <section class="series-section" id="sovereignty_and_critical_thinking">
+  <div class="series-header">
+    <h2 class="series-title">⚡ Sovereignty & Critical Thinking</h2>
+    <span class="series-count">25 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">EDUCATED INTO IGNORANCE: How 12 Years of Schooling Can Produce a Functionally Illiterate Adult</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GQ28SMQT?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GQT57S4Z?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">High on AI: The Hype, The Risks, and The Real Future</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GJTZZ56T?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GKG55RV2?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Robot-Proof: Teaching Humans to Thrive When Machines Think</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GKGFDQM7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GLN2C7FZ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Synthetix Teaching Guide. The Complete Instructor's Manual for a New Academic Discipline</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GMPX73C1?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GMSW5NV2?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Synthetix: Building the Sovereign Intellect</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GMW7CJ5Y?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">TEAR DOWN THESE WALLS: The Trivium, The Constitution, and The Case for Educational Sovereignty</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GNLYBC82?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GPB9DPLQ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE AI APEX: Mastering the Human-Machine Frontier to Dominate the New Economy [v1 — Kindle only]</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GM39Q4RD?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE AI APEX: Mastering the Human-Machine Frontier to Dominate the New Economy [v2 — Full Set]</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GMLS9SQ1?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GMQXDCSW?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE AMNESTY PROTOCOL: Reaching the Forgotten</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GQ3FV3P9?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GS6SP8KH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE BLASPHEMY OF TYRANNY. Why Oppression of Imago Dei Is Cosmic Treason Against God</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G51C5GGM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G56GF2ZY?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE SPARK: The Death of Hesitation: How to Stop Overthinking, Take Action at 70%...</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GKYJ5FZM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GPCSZ1TV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE TRIVIUM: Trivium Mastery and Education. The Ancient Operating System for the Sovereign Mind</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GNP46HWL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GNRY3Y7L?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE UNCHARTED PLAYBOOK. Navigating Tomorrow's Economy with Purpose and Power [Series Edition]</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GMY3P8W1?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GN1HTK67?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE UNCHARTED PLAYBOOK. Navigating Tomorrow's Economy with Purpose and Power [Standalone]</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GMD8CL2J?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Teach Them to Fish—Before the Pond Runs Dry: How Dependency Culture Is Bankrupting Freedom</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G8ZMGM13?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G94112FS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The 15-Minute EQ Blueprint: Master Your Emotional Landscape...</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GMDSRDXC?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GQNBK4YQ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Amnesty Protocol: Reaching the Forgotten. [v2 — 'The education system promised you a future. It lied.']</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GNLQ6N91?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GNMPS3GZ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Fog-Industrial Complex: How America Built an Economy That Profits from the People It Fails to Educate</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GQSLGQ86?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Frankenstein Methodology: Building Monsters That Bury the Old Guard - A Disruptive Innovation Strategy Guide</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GG67J1TP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GGJ64TNV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Sovereign Architect: Weaponizing Curiosity to Design the Future</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GG7Q1NVL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GG9BYSG6?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Sovereign Mind Junior: Think Like a Detective: Critical Thinking for Kids Ages 8–12</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GP1TSF7Y?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Sovereign Mind: Input, Process, Output: A 21st-Century Guide to the Trivium</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GNWGLX2C?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GR49RDR3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">VOLTAGE: THE WALL MUST FALL: The Declaration of Educational Sovereignty</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GNMFZ91B?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GNSVSYBV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">VOLTAGE: The Journal of Applied Asymmetry: Issue No. 1 — The Compliance Factory</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GN44NGB9?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GN8L89YM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Voltage Magazine — Cognitive Self-Defense: The 4 Laws of Cognitive Sovereignty</div>
+  <div class="book-series-tag">⚡ Sovereignty & Critical Thinking</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GNJDRDSX?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GNMLJ9Y5?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="personal_development">
+  <div class="series-header">
+    <h2 class="series-title">🌱 Personal Development</h2>
+    <span class="series-count">24 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">A Better Life Awaits: How to Create the Life You Want</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FQ3RR3P6?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FQ4RZNL4?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Anger Management: The Definitive CBT and Mindfulness Workbook for Emotional Regulation, Stress Relief, and Building Calmer Relationships</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D98W9SV9?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D9B58BK5?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Anxiety and Fear: A Practical Guide to Understanding and Overcoming Worry</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G2KJZXDS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G2LFCQHJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Are You Ready?: Wherever life takes you, are you prepared?</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DRZ8NT8Q?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DS1S31X4?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">BEHAVIOR: Understanding the Psychology of Human Actions.</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D4JS5DCK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D7THLPYR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">BETTER LIFE I DESERVE: Advanced Strategies for Sustaining and Elevating Your Transformation</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G1TNQW1T?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G1YBQD74?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Better Life I Want: A New Life Is Expecting You</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G1M5G38J?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G1MYDNJP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">EXTROVERSION: How to Be an Extrovert: The Essential Guide to Social Confidence, Communication Skills...</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0CW1892NT?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D42D5HKC?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">From Broken Beginnings: A Journey of Resilience and Purpose</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D22N5NMT?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FT8N3CNM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Fulfilling one's potential Can Better Your Life.: Unlocking Your Potential</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0CYH4G9TM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0CZXGLCDT?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">HOW CHILDREN THINK: Understanding Cognitive Development from Birth Through Adolescence</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G52NDRFL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G57NNG3M?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">I did not know what tomorrow might bring.</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FRR5J7K5?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Math Anxiety for Adults: Overcome Fear and Build Confidence with Numbers</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G2P4RFHX?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G2SBK6KN?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Predatory Human Behavior: The Psychology of Narcissism, Sociopathy, and Manipulation</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DHQBLQPV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DHQSMPG6?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Stalking: Persistent and unwanted attention.</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DKFPKZQX?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DKG864ZN?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE FEMALE MIND: How and Why Women Think</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G4XVH972?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G52C9SY6?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE MEANING OF LIFE: A GUIDE TO FINDING PURPOSE AND LIVING A MEANINGFUL LIFE</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GGQ8V9XC?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GGY432TG?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Rational Male Brain: How Do Men Think?</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G4SWFGWG?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G4VZMPJ3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Rumination Book: Break Free from Overthinking and Reclaim Your Mental Peace</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G3M98JZ2?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G3P5MXMW?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">What's in it for me?: What's in it for them?</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F3VM6T9G?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">YOU: Dare to Soar: A Practical How-To for Unleashing Your Potential.</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0CZ9XRZQS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0CZD5NXNK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">YOU: Infinite Possibilities that Can Better Your Life</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0CZ4WL3PC?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0CZ71HJG4?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Yet: The Power of the Unfinished Life</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GDVVZ2F9?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GFJFMHSX?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">You are What You Wear: Who do You Want to Be?</div>
+  <div class="book-series-tag">🌱 Personal Development</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D919V372?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D91TQLDJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="emotional_intelligence_and_relationships">
+  <div class="series-header">
+    <h2 class="series-title">🤝 Emotional Intelligence & Relationships</h2>
+    <span class="series-count">8 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">Conflict Resolution for Couples Workbook: 30-Day Program</div>
+  <div class="book-series-tag">🤝 Emotional Intelligence & Relationships</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FZXSPGQV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G1BVPJNB?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Couples Conflict Resolution: Transform Relationship Arguments into Deeper Connection</div>
+  <div class="book-series-tag">🤝 Emotional Intelligence & Relationships</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FZ23CDPK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FZB6R8HS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">EMOTIONAL INTELLIGENCE OVER IQ: Why EQ Beats IQ in Career Success</div>
+  <div class="book-series-tag">🤝 Emotional Intelligence & Relationships</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FYZ8MSJL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FZ2GB4HH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Emotional Intelligence for Leaders</div>
+  <div class="book-series-tag">🤝 Emotional Intelligence & Relationships</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FZ56JC8J?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FZ7TS453?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Relationship Conflict Resolution: Master Every Type of Relationship Conflict</div>
+  <div class="book-series-tag">🤝 Emotional Intelligence & Relationships</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FZH23GW7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FZHYGN2N?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The 90-Day Relationship Transformation - Advanced Conflict Resolution Strategies</div>
+  <div class="book-series-tag">🤝 Emotional Intelligence & Relationships</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G2HKVWFK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G2J7KJ8N?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The 90-Day Relationship Transformation: A Complete Couples System</div>
+  <div class="book-series-tag">🤝 Emotional Intelligence & Relationships</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G2B6R6ZL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G2CFDDW5?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Emotional Intelligence Quick Book: Master Self-Awareness, People Skills</div>
+  <div class="book-series-tag">🤝 Emotional Intelligence & Relationships</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FZ2TKFH1?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FZ3PHKTV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="financial_literacy">
+  <div class="series-header">
+    <h2 class="series-title">💰 Financial Literacy</h2>
+    <span class="series-count">5 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">Coming to America: The Great Melting Pot: The Untold History of Immigration</div>
+  <div class="book-series-tag">💰 Financial Literacy</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DHCZF7XQ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DHGD1B8V?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">FREEDOM: The Definitive Guide to Financial Independence, Creative Liberation, and Geographic Freedom</div>
+  <div class="book-series-tag">💰 Financial Literacy</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FWV8VR2F?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FWXL93DH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Financial Literacy Is For Everyone: The Complete Guide to Money Management</div>
+  <div class="book-series-tag">💰 Financial Literacy</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FYRNSF17?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FYW1KK7Z?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Financial Literacy for Teens: Master Money Before 20</div>
+  <div class="book-series-tag">💰 Financial Literacy</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FYP5Y5KQ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FYWX7NGM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Financial Literacy for Women: Take Control of Your Money</div>
+  <div class="book-series-tag">💰 Financial Literacy</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FNDDQXC5?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FYNPGT1K?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="leadership">
+  <div class="series-header">
+    <h2 class="series-title">🧭 Leadership</h2>
+    <span class="series-count">5 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">THE MOVEMENT OF MULTIPLICATION: Teach a Man to Fish</div>
+  <div class="book-series-tag">🧭 Leadership</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FV2R7W7H?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FV8KVTCK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE PHILOSOPHY OF THE ROD</div>
+  <div class="book-series-tag">🧭 Leadership</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FTWGSX1G?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FTXMXF2L?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Practice of Teaching: Teach a Man to Fish</div>
+  <div class="book-series-tag">🧭 Leadership</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FTYTH9FM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FV3KVGDS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Sovereign Spectrum: How the Silver Warrior Reclaims the Stolen Library...</div>
+  <div class="book-series-tag">🧭 Leadership</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GRNQ9QT8?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GS21QMVR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Wisdom Bridge</div>
+  <div class="book-series-tag">🧭 Leadership</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FSX1CCZJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FT1CZLPH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="history_and_civics">
+  <div class="series-header">
+    <h2 class="series-title">🏛️ History & Civics</h2>
+    <span class="series-count">21 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">A Nation's Call: America's Enduring Spirit of Courage, Vision, and Miracles</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GQ9ZKTBP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">An Iroquois Chief and a British Princess</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F61HSKJY?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F63SXXRC?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Civic Sacrifice & Individualism: Finding Peace in Public Life</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G11PL84S?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G1CD6PJV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Civic Virtue: The Foundation of a Healthy Political Order</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G15PCKFZ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G1BXY98M?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">History of The Americans II</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DKVJZ5M8?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FR47RSWC?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">History of The Americans IV: From WWII Victory to Digital Revolution</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPDL9KGQ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FT25S6NQ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">History of the Americans (Vol. 1 of 5)</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FP3SFQWR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FR3DWZG4?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">History of the Americans for Kids</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FSSR92XP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FSX8ZHH2?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">History of the Americans: Volume III - From Reconstruction Through World War II</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPBJZSTK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FXTW4LDM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Let This Not Be Our Alamo.</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FP2XVFQR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FSLBT3KP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Restoring Social Peace: A Response to the Crisis of Civic Virtue</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G1GM8XBY?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G1KRV3N9?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE GREAT LAWGIVERS - 4th & 5th Grade Edition: The True Story of the Peacemaker...</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GPL58BSH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GPQYCQ2D?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE TALENT OF SELF-RELIANCE: The promise of 'collective security' always ends in the spreading of misery</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GG5M184T?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GG76PYZG?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The American Cowboy: An Enduring Icon of Freedom, Frontier Spirit</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPLLZC5M?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FXTZB8YM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Escalation Code: Putin's Playbook and the Looming Shadow of WWIII</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GMBL1DWM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GMCJMH2G?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Great Lawgivers — Japanese 偉大な立法者たち</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FQJLL59Q?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="⚠️ PB Draft — needs Continue Setup; HC not supported in Japanese" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Great Lawgivers: How the Iroquois Confederacy Shaped Democracy, Governance, and the American Constitution</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPFHHL36?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FQP6NYGK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Last Horizon: A History of the American Cowboy</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FQ4ZYXK7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FQQCTNPY?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Second American Civil War (2024): An Essay on American Exceptionalism</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F3LY78KT?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F3PCNV3S?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Straw Man: Modern Authoritarianism and the History of Dictatorship</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GQTPTVB7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GR6MBG9L?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Undeclared War: NATO, Russia, and the Silent Struggle Shaping Our Future.</div>
+  <div class="book-series-tag">🏛️ History & Civics</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FK9SQRGS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FKCQWPJ6?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="trades_and_practical_skills">
+  <div class="series-header">
+    <h2 class="series-title">🔧 Trades & Practical Skills</h2>
+    <span class="series-count">12 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">Autonomous Maintenance (AM): Empower Your Operators, Maximize Equipment Reliability</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F92C7JV8?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Foundations of Repair: How the Sovereign Steward Reclaims Home Repair...</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GRTHD1GK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Office TPM (Total Productive Maintenance)</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F8SYMLWJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F8VZWTZB?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Risk-Based Thinking (RBT): Threats and Opportunities</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F38L8Q5Q?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F3DSPHXY?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Safety, Health, and Environment (SHE) TPM: The Complete Guide to Risk Management</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F412ZR6F?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">TPM Education and Training: Total Productive Manufacturing</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F8KCJJ9T?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F8NTVPGN?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Definitive Blueprint for Custom Logo Embroidered Clothing: Your Comprehensive Guide to Strategy, Production, and Profitable Growth</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FVTTZDNQ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FVVZF8X7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Total Productive Maintenance (TPM) - Book 3: Planned Maintenance (PM)</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F27Q8TNL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="⚠️ PB Draft — needs Continue Setup" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Total Productive Maintenance Book 7: ISO 9000</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F3NWWX7H?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Total Productive Maintenance QM Book 5: Quality Maintenance</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F2Q618RF?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Your Guide to Custom Embroidered Patches</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F8ZDC8ZG?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Your Guide to Custom Logo Embroidered Clothing</div>
+  <div class="book-series-tag">🔧 Trades & Practical Skills</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F8XK9L81?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="⚠️ PB Draft — needs Continue Setup" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="literacy_and_language">
+  <div class="series-header">
+    <h2 class="series-title">📖 Literacy & Language</h2>
+    <span class="series-count">12 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">Digital Farm Mandarin 普通话</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPMG6ZBD?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="N/A — PB not supported in Chinese Traditional" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm Portuguese Português</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPZBJCBK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm for Kids</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FS3ZZG4G?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm — Deutsch German</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FQ3W1HF4?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm — Español Spanish</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPNXRZML?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FPR7GHB7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm — Français French</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPQL7C2Z?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FPSQMBWR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm — العربية Arabic</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPR4YC24?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="N/A — PB not supported in Arabic" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm — हिन्दी Hindi</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FPQDNR46?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="N/A — PB not supported in Hindi" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm — 日本語 Japanese</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FQ3JSG3C?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digital Farm: A Modern Allegory of Digital Censorship, Algorithmic Control...</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FNP71PHJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FQ3RXWKM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Signal Decryption: The Adult Guide to Hearing the Code</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GQSG6MY2?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Reading Revolution: The Science of Reading Education Reform Field Manual</div>
+  <div class="book-series-tag">📖 Literacy & Language</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GQRJ93N7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div></div>
+</section><section class="series-section" id="digitification_and_technology">
+  <div class="series-header">
+    <h2 class="series-title">💻 Digitification & Technology</h2>
+    <span class="series-count">2 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">Computer Literacy Unlocked: The Complete Guide to Digital Confidence — From Absolute Beginner to Tech-Fluent in the Age of AI</div>
+  <div class="book-series-tag">💻 Digitification & Technology</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GPMLN32V?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GQGT1SFK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Digitification: The Security-First Computer Literacy Curriculum for Grades 4–8</div>
+  <div class="book-series-tag">💻 Digitification & Technology</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GGXTPFNS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div></div>
+</section><section class="series-section" id="children_and_homeschool">
+  <div class="series-header">
+    <h2 class="series-title">🎓 Children & Homeschool</h2>
+    <span class="series-count">4 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">BRAVE SPROUTS: A Parent's Guide to the Tween Years (Ages 8-12)</div>
+  <div class="book-series-tag">🎓 Children & Homeschool</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FVB9TZ95?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FVGGXD3P?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Brave Sprouts [children's picture book edition]</div>
+  <div class="book-series-tag">🎓 Children & Homeschool</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FTV7Q1LT?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FTW317BW?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Complete Homeschool Starter Guide: How to Start Homeschooling with Gamified Learning...</div>
+  <div class="book-series-tag">🎓 Children & Homeschool</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0GHR9SJ4S?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0GHS68YTF?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Whispers of the Heart: A Princess Adventure of Courage, Friendship, and Self-Discovery</div>
+  <div class="book-series-tag">🎓 Children & Homeschool</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F4L2YB2B?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F4MSMSZS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="arts_and_photography">
+  <div class="series-header">
+    <h2 class="series-title">🎨 Arts & Photography</h2>
+    <span class="series-count">5 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">All-in-One Fabric and Garment Features Dictionary.</div>
+  <div class="book-series-tag">🎨 Arts & Photography</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F8ZXK5KM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Capturing Grace: Wedding Photography Lens, Camera, Poses, Lighting</div>
+  <div class="book-series-tag">🎨 Arts & Photography</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FVHX8Z8S?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FVMNQLGK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Complete Wedding Guest Photography Guide: Essential Wedding Photography Tips, Camera Techniques, and Etiquette Rules</div>
+  <div class="book-series-tag">🎨 Arts & Photography</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FVNGZTLX?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FVT23VG3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Photographing Women in Oregon: 50+ Locations and Professional Techniques</div>
+  <div class="book-series-tag">🎨 Arts & Photography</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B01N2SMY17?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/1521054096?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Wedding Photography Lens and Gear Guide</div>
+  <div class="book-series-tag">🎨 Arts & Photography</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G76V6FXP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G7K5TYXW?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="poetry_memoir_and_fiction">
+  <div class="series-header">
+    <h2 class="series-title">✍️ Poetry, Memoir & Fiction</h2>
+    <span class="series-count">9 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">Alien Invasion</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FP2TB9VW?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FTXM9T3B?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">In the Line of Fire.: A Coast Guard Commander's Tale.</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F352VDT9?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F4PXS758?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">My Love, My Wife, I Love This Life.</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F2F6D4DN?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F2GFTJ2G?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">SELF-RELIANT Magazine</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FTK122R3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FTM8981H?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">SELF-RELIANT Magazine Issue 2 (Oct 2, 2025)</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FTJMN3RP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FTMV8TQV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">SELF-RELIANT Magazine Issue 3 (Oct 3, 2025)</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FTT4G269?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FTVL9XPH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Message in the Wind</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FSCHYF64?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Missing Glove.: The love of my life. I am lost without her.</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DTC2Z4Z1?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DTFBLHB6?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Under the Oregon Sky</div>
+  <div class="book-series-tag">✍️ Poetry, Memoir & Fiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F49H4R6J?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F4DVF3H2?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section><section class="series-section" id="general_nonfiction">
+  <div class="series-header">
+    <h2 class="series-title">📚 General Nonfiction</h2>
+    <span class="series-count">58 titles</span>
+  </div>
+  <div class="book-grid"><div class="book-card">
+  <div class="book-title">A Leader's Moral Compas.: Actions Based on Ethical and Moral Values</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D8Z28K77?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D8ZJBB4Q?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">A Purpose-Driven Life: The Philosophical and Psychological Roadmap</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DPRF6YXS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DPSSQBRB?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">A Real Good Life: The Second Calling Guide to Purpose, Legacy, and Living Well</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G4KRFY9V?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G4M1LS4X?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">A Well Lived Life: The Ancient Art of Living with Purpose, Wisdom, and Legacy</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G4NKSMGF?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G4RF3ZM6?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">AI and Business: Successful AI Business Stories and Real-World Strategies</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G4R3C3XG?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G4S7LL2K?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Are You a Baseball Bat or a Baseball?: Passive-Aggressive Behavior</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DWMMLL46?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DWNKJCG4?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">As I Stand, You Will Never Walk Alone.</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F21PMC47?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F2FR6TVJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">BUILDERS OF ETERNITY: Stories from the Bridge to Freedom</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G4JJH3P7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G4JQBBCX?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Being an Individualist: Neoliberalism</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F1JVM9YD?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F1KWYG28?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Breaking Free from Perfectionism: A CBT Practical Guide</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G5M7K2WL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G5LX9KKK?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Bullying: The Repeated Aggression to Harm or Control Others</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DHJ8WRKN?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DHKV387S?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">CATASTROPHIZING BOOK - A 30-Day Workbook to Break Free from Worst-Case Thinking</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F7Y8CQND?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G2YLY7PL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">CONFORMITY: The Psychology of Groupthink, Social Influence, and Cultural Conflict</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D3JLF8HF?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D3LFWXMR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">COURAGE: Cultivate the Moral, Creative, and Social Courage to Face Fear</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D3WMC8GJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D3XVZHYC?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">CRUEL SADISTIC BEHAVIOR: The terrible role cruelty plays in our lives.</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DNZC4SRZ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DP1WVXPZ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Charismatic Personality: The Definitive Guide to Charismatic Behavior</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DPVS1ZLR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DPX25TJX?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Conflict Behavior: The Definitive Guide to Conflict Management Styles</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D9DVRXPL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D9FS8GNG?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Critical Thinking for Kids: Unlocking Your Problem-Solving Superpowers</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FSYLC4RP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Curiosity is the Key That Unlocks the Door to Endless Knowledge</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D38QHQN3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D38PNRRT?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">DECEPTION: Liar, liar, pants on fire.</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DNJ1YGLV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DNK164K7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">DO THE MATH. 2+2=5: The Revolutionary Educational Alternative to Traditional High School</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D78W7DF9?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D799FQ4J?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Faith, Family, Freedom</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FQJ6NK69?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FQPJ4YWG?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Formality: The Enduring Rules of Etiquette, Decorum, and Respectful Social Conduct</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D4463VQR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D45B4YSP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Freedom: A Fundamental Human Right: A Philosophical and Legal Analysis</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DC1MMHZ5?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DC6MDYZP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Gambling Behavior: Understanding Addiction, Risk Psychology, and the Path to Recovery</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D9HWR2QP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D9JN8YQN?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Grinning Behavior: The Science of the Smile: Decoding Nonverbal Cues</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D92DV48Q?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D92LCCND?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Homeschooling Math Books for Kids: Grade 4</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G4HSF3GP?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G4LHR4CR?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Hunger and Poverty in America: Teach a man to fish</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DM8JGMN4?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DM8LWHJL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Is This Glass Half Empty or Half Full?: Transform Your Mindset from Pessimism to Optimism</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D8VJP4M6?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D8WCRTH8?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Jealous Behavior: The Psychology of Insecurity, Attachment, and Overcoming Jealousy</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DJG6R49Y?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DJGWD9KL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Judgemental Behavior: The Psychological Roots and Social Triggers of Bias</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D94YZWWS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D95MKB88?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Meritocracy: Meritocratic Behavior: The Pursuit of Individual Potential</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DV5HHWQS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DV8TLF63?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Modern Slavery: Human Trafficking, Forced Labor, and Exploitation in the Global Economy</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DHV5HYQB?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DJ2FZPDH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">My Son, Who Happened to be a Newfoundland.</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F5F1V9F7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F5HWWCVV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">PATIENCE: How to Develop Patience, Master Self-Control, and Build Resilience</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D4127ZNH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D45YVJ8W?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Paranoia: The Psychology of Fear, Suspicion, and Mistrust</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0D971K6ZX?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0D98BY51B?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Project Management Professional (PMP): Foundations and Process Groups - Book 1 of 4</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G6CM21HJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G6FM6Z27?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Puppy Training Newfoundland: Raising Puppies to be Gentle Giants</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0CLYXGR5J?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0CV5K1NH3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Respect: A Scholarly Guide to Psychological Safety, Ethical Leadership</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DGCLKCH1?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DGDVQSHB?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Synergetic Governance: A New Operating System for Civilization</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FP3Y3YW7?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FXLWLF13?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE COURAGE TO TRY: Teaching Children That Failure Is Part of Success</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G6W38PDN?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G6WMYKK3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE DECLARATION OF EDUCATIONAL INDEPENDENCE</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FWGQ3QQ4?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FWK24T4V?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">THE UNSCHOOLING HIGH SCHOOL HANDBOOK</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G5QFN3XS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G5Q2V9WH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Taking a Chance: Embracing Opportunity: The Ultimate Guide to Overcoming Fear</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DJL8LQNG?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DJLY8GPD?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">That Our Children May Live Without Fear: Rebuilding Civilization Through Education</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FXJC598F?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FXMRZJBV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Absence of Pain is Death.: Life Has Its Price.</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DVMHQB6R?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DVPTYCTV?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Burning Library - Wisdom of Age Lost</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0G7X15494?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0G83BNW7L?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Efficiency Classroom: The TPM Teaching Method Disrupting Traditional Education</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FYDH4T42?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FYG3DPRZ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Enduring Spirit: Self-Reliance, Community, and Americas Global Heart</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DPNMM8XJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FT111SF3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Math Revolution: Why Games Are Saving Mathematics Education</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0FW8P1D8B?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FWC4J2LM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Night of the Living Stuffed Animals: A Cozy Fantasy Story of Retirement</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F5NXDSVB?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F5PQYNK3?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Three Burrows: A Modern Guide to Strategic Preparedness</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DP5XXB2S?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0FY5H6PMM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">The Virtues of Endurance and Resilience.: The Ability to Endure Pain and Hardship</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DW4J6F1G?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DW8PYR51?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Things Are Not Always As They Seem: Unveiling Hidden Truths</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DGH1HB7W?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DGL3K5M8?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Total Productive Maintenance - Book 6: Total Quality Maintenance (TQM)</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F2SLV44H?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    
+  </div>
+</div><div class="book-card">
+  <div class="book-title">United States of America, A One-Off: As valuable and sought-after as gold, American citizenship</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DZVL7T1B?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DZX4DKQT?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Western Europe. Land of the Weak and Intolerant.</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0DZP5FGGH?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0DZT678KS?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div><div class="book-card">
+  <div class="book-title">Your Guide to Custom Logo Screen-Printed T-Shirts</div>
+  <div class="book-series-tag">📚 General Nonfiction</div>
+  <div class="book-actions">
+    <a href="https://www.amazon.com/dp/B0F8VY9BDM?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-kindle">📱 Kindle</a>
+    <a href="https://www.amazon.com/dp/B0F8Z98HXB?tag=gsu2026-20" target="_blank" rel="noopener" class="btn-pb">📖 Paperback</a>
+  </div>
+</div></div>
+</section>
+    <div class="no-results" id="noResults">No titles found matching your search.</div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="store-footer">
+    <div>All titles by Dr. Gene A. Constant, DBA · Donated to the Foundation for Global Instruction · EIN 39-2716552</div>
+    <div>Free BookGames at <a href="/bookgames">GlobalSovereignUniversity.org/bookgames</a> · 
+         <a href="https://www.amazon.com/stores/Dr.-Gene-A.-Constant/author/B0D3F2DPR7?tag=gsu2026-20" target="_blank" rel="noopener">View Full Amazon Author Page →</a></div>
+    <div style="margin-top:8px;font-size:11px">As an Amazon Associate, GSU earns from qualifying purchases. All affiliate revenue supports the Foundation's free educational programs.</div>
+  </footer>
+
+</div>
+
+<script>
+// ── Search ────────────────────────────────────────────────────────────────
+const searchInput = document.getElementById('searchInput');
+const searchCount = document.getElementById('searchCount');
+const noResults   = document.getElementById('noResults');
+const allCards    = document.querySelectorAll('.book-card');
+const allSections = document.querySelectorAll('.series-section');
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  let visible = 0;
+  allCards.forEach(card => {
+    const title = card.querySelector('.book-title').textContent.toLowerCase();
+    const series = card.querySelector('.book-series-tag').textContent.toLowerCase();
+    const match = !q || title.includes(q) || series.includes(q);
+    card.classList.toggle('hidden', !match);
+    if (match) visible++;
+  });
+  // Show/hide sections based on whether they have visible cards
+  allSections.forEach(sec => {
+    const hasVisible = sec.querySelectorAll('.book-card:not(.hidden)').length > 0;
+    sec.style.display = hasVisible ? '' : 'none';
+  });
+  noResults.style.display = visible === 0 ? 'block' : 'none';
+  searchCount.textContent = q ? `${visible} title${visible !== 1 ? 's' : ''} found` : '';
+});
+
+// ── Series button — clear search then jump ───────────────────────────────
+seriesBtns.forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    // Clear search and restore all sections/cards
+    searchInput.value = '';
+    searchCount.textContent = '';
+    noResults.style.display = 'none';
+    allCards.forEach(card => card.classList.remove('hidden'));
+    allSections.forEach(sec => sec.style.display = '');
+    // Now scroll to target section
+    const targetId = this.getAttribute('href').replace('#', '');
+    const target = document.getElementById(targetId);
+    if (target) {
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  });
+});
+
+// ── Active series highlight on scroll ────────────────────────────────────
+const seriesBtns = document.querySelectorAll('.series-btn');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      seriesBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+allSections.forEach(sec => observer.observe(sec));
+</script>
+</body>
+</html>
