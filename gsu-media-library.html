@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GSU Sovereign Library — Play · Hear · See · Shop Before You Buy</title>
+<meta name="description" content="Global Sovereign University's complete free learning hub. Library games, videos, podcast, and bookstore — all in one place. Free 501(c)(3) nonprofit. No login. No tuition.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow+Condensed:wght@300;400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════════
+   SOVEREIGN MEDIA LIBRARY — DESIGN SYSTEM
+   Aesthetic: Grand editorial cinema — dark, gold-lit, imperial
+════════════════════════════════════════════════════════════════ */
+:root {
+  --ink:    #07090f;
+  --deep:   #0b0f1a;
+  --navy:   #0e1628;
+  --slate:  #182238;
+  --border: #1e2f4a;
+  --gold:   #c8a84b;
+  --gold2:  #e8c86b;
+  --gold3:  #f5e0a0;
+  --teal:   #1a8b7f;
+  --teal2:  #22b5a4;
+  --ivory:  #f0ead8;
+  --fog:    #8a9ab5;
+  --text:   #dce6f5;
+  --ff-display: 'Playfair Display', Georgia, serif;
+  --ff-cond:    'Barlow Condensed', sans-serif;
+  --ff-mono:    'IBM Plex Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--ff-cond);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 1000; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HERO HEADER
+══════════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 40px 60px;
+  overflow: hidden;
+}
+
+/* Radial spotlight */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,168,75,.12) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(26,139,127,.08) 0%, transparent 60%);
+}
+
+/* Grid lines */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,168,75,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,168,75,.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 1000px; }
+
+.hero-kicker {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  animation: fadeUp .8s ease both;
+}
+
+.hero-kicker span {
+  display: inline-block;
+  width: 40px; height: 1px;
+  background: var(--gold);
+  vertical-align: middle;
+  margin: 0 12px;
+  opacity: .5;
+}
+
+.hero-title {
+  font-family: var(--ff-display);
+  font-size: clamp(52px, 9vw, 120px);
+  font-weight: 900;
+  line-height: .92;
+  color: var(--ivory);
+  margin-bottom: 8px;
+  animation: fadeUp .8s .1s ease both;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+  display: block;
+}
+
+.hero-subtitle {
+  font-family: var(--ff-cond);
+  font-size: clamp(18px, 2.5vw, 28px);
+  font-weight: 300;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin: 20px 0 36px;
+  animation: fadeUp .8s .2s ease both;
+}
+
+.hero-triple {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 48px;
+  animation: fadeUp .8s .3s ease both;
+}
+
+.triple-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ff-cond);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.triple-pill .pip {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+
+.pip-game { background: rgba(200,168,75,.2); border: 1px solid rgba(200,168,75,.5); }
+.pip-pod  { background: rgba(26,139,127,.2); border: 1px solid rgba(26,139,127,.5); }
+.pip-vid  { background: rgba(200,40,40,.2);  border: 1px solid rgba(200,40,40,.4); }
+
+.triple-div { color: var(--border); font-size: 20px; }
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  animation: fadeUp .8s .4s ease both;
+}
+
+.stat {
+  text-align: center;
+}
+.stat-n {
+  font-family: var(--ff-display);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-l {
+  font-size: 11px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin-top: 4px;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--fog);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  animation: fadeUp .8s .6s ease both;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: .3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CATEGORY CAROUSEL
+══════════════════════════════════════════════════════════════ */
+.carousel-section {
+  position: relative;
+  padding: 80px 0 40px;
+  overflow: hidden;
+}
+
+.section-label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.section-heading {
+  font-family: var(--ff-display);
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  color: var(--ivory);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-heading em { color: var(--gold); font-style: italic; }
+
+.carousel-track-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-track-wrap::before,
+.carousel-track-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  z-index: 10;
+  pointer-events: none;
+}
+.carousel-track-wrap::before { left: 0;  background: linear-gradient(to right, var(--ink), transparent); }
+.carousel-track-wrap::after  { right: 0; background: linear-gradient(to left, var(--ink), transparent); }
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  padding: 10px 60px 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.cat-card {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  width: 280px;
+  height: 380px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s;
+}
+
+.cat-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 40px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(200,168,75,.3);
+}
+
+.cat-card-bg {
+  position: absolute; inset: 0;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+.cat-card:hover .cat-card-bg { transform: scale(1.08); }
+
+.cat-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(7,9,15,.96) 0%, rgba(7,9,15,.4) 50%, rgba(7,9,15,.1) 100%);
+}
+
+.cat-card-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 24px 20px 20px;
+}
+
+.cat-emoji { font-size: 28px; margin-bottom: 8px; display: block; }
+
+.cat-name {
+  font-family: var(--ff-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ivory);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.cat-count {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: .1em;
+}
+
+.cat-badge {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: rgba(200,168,75,.15);
+  border: 1px solid rgba(200,168,75,.4);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.cat-badge.soon {
+  background: rgba(26,139,127,.15);
+  border-color: rgba(26,139,127,.4);
+  color: var(--teal2);
+}
+
+/* Gradient backgrounds for category cards */
+.bg-sovereignty  { background: linear-gradient(135deg, #0a1228 0%, #1a2a4a 40%, #0f2035 100%); }
+.bg-personal     { background: linear-gradient(135deg, #0f1a18 0%, #1a3028 40%, #112520 100%); }
+.bg-history      { background: linear-gradient(135deg, #1a1008 0%, #2a1a0a 40%, #1f1208 100%); }
+.bg-trades       { background: linear-gradient(135deg, #0a1010 0%, #101e1c 40%, #0c1814 100%); }
+.bg-literacy     { background: linear-gradient(135deg, #10080a 0%, #200f14 40%, #180a0e 100%); }
+.bg-emotion      { background: linear-gradient(135deg, #180818 0%, #2a1028 40%, #200818 100%); }
+.bg-finance      { background: linear-gradient(135deg, #181408 0%, #2a2010 40%, #201808 100%); }
+.bg-leadership   { background: linear-gradient(135deg, #081018 0%, #0f1e2e 40%, #081520 100%); }
+.bg-children     { background: linear-gradient(135deg, #080f08 0%, #101e10 40%, #081508 100%); }
+.bg-arts         { background: linear-gradient(135deg, #180808 0%, #2a1010 40%, #200808 100%); }
+.bg-coming       { background: linear-gradient(135deg, #0a0a14 0%, #141428 40%, #0c0c1e 100%); }
+
+/* Decorative pattern inside card backgrounds */
+.cat-card-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 30% 40%, rgba(255,255,255,.06) 0%, transparent 50%);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MEDIA LIBRARY SECTION
+══════════════════════════════════════════════════════════════ */
+.library-section {
+  padding: 80px 0;
+  position: relative;
+}
+
+.library-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 100% 50% at 50% 50%, rgba(200,168,75,.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.filter-btn {
+  font-family: var(--ff-cond);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fog);
+  cursor: pointer;
+  transition: all .25s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(200,168,75,.08);
+}
+
+/* Title cards grid */
+.titles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 2px;
+}
+
+/* Individual title card */
+.title-card {
+  position: relative;
+  background: var(--deep);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color .3s, transform .3s;
+  animation: fadeUp .6s ease both;
+}
+
+.title-card:hover {
+  border-color: rgba(200,168,75,.4);
+  transform: translateY(-3px);
+  z-index: 2;
+}
+
+.title-card.coming {
+  opacity: .65;
+}
+
+/* Gold accent bar */
+.title-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.title-card:hover::before { opacity: 1; }
+
+.card-inner { padding: 28px 28px 22px; }
+
+.card-subject {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--teal2);
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-family: var(--ff-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ivory);
+  line-height: 1.3;
+  margin-bottom: 16px;
+}
+
+/* Media trio */
+.media-trio {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.media-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background .2s, transform .15s;
+}
+
+.media-item:hover {
+  transform: translateX(4px);
+}
+
+.media-item.game  { background: rgba(200,168,75,.08); border: 1px solid rgba(200,168,75,.15); }
+.media-item.pod   { background: rgba(26,139,127,.08); border: 1px solid rgba(26,139,127,.15); }
+.media-item.vid   { background: rgba(200,40,40,.08);  border: 1px solid rgba(200,40,40,.12); }
+.media-item.soon-item { background: rgba(100,100,120,.06); border: 1px solid rgba(100,100,120,.15); cursor: default; }
+
+.media-item:hover.game  { background: rgba(200,168,75,.15); }
+.media-item:hover.pod   { background: rgba(26,139,127,.15); }
+.media-item:hover.vid   { background: rgba(200,40,40,.15); }
+
+.media-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.mi-game { background: rgba(200,168,75,.2); }
+.mi-pod  { background: rgba(26,139,127,.2); }
+.mi-vid  { background: rgba(200,40,40,.2); }
+.mi-soon { background: rgba(100,100,120,.15); }
+
+.media-text { flex: 1; }
+.media-label {
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-family: var(--ff-mono);
+  margin-bottom: 2px;
+}
+.media-item.game  .media-label { color: var(--gold); }
+.media-item.pod   .media-label { color: var(--teal2); }
+.media-item.vid   .media-label { color: #e06060; }
+.media-item.soon-item .media-label { color: var(--fog); }
+
+.media-desc {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.media-item.soon-item .media-desc { color: var(--fog); }
+
+.media-arrow {
+  color: var(--fog);
+  font-size: 14px;
+  transition: transform .2s, color .2s;
+}
+.media-item:hover .media-arrow { transform: translateX(3px); color: var(--gold); }
+.media-item.soon-item .media-arrow { display: none; }
+
+/* Amazon CTA */
+.card-cta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-amazon {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #c8a84b, #e8c86b);
+  color: #0a0800;
+  font-family: var(--ff-cond);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all .2s;
+  box-shadow: 0 4px 20px rgba(200,168,75,.25);
+}
+
+.btn-amazon:hover {
+  background: linear-gradient(135deg, #e8c86b, #f5e090);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(200,168,75,.35);
+}
+
+.btn-pb {
+  padding: 11px 14px;
+  border-radius: 8px;
+  background: rgba(200,168,75,.1);
+  border: 1px solid rgba(200,168,75,.3);
+  color: var(--gold);
+  font-family: var(--ff-cond);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.btn-pb:hover { background: rgba(200,168,75,.2); }
+
+.coming-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: rgba(26,139,127,.1);
+  border: 1px solid rgba(26,139,127,.25);
+  color: var(--teal2);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   COMING SOON TEASER STRIP
+══════════════════════════════════════════════════════════════ */
+.teaser-section {
+  padding: 80px 0;
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.teaser-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+
+.teaser-card {
+  background: var(--deep);
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: background .3s;
+}
+.teaser-card:hover { background: var(--slate); }
+
+.teaser-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(200,168,75,.06) 0%, transparent 70%);
+}
+
+.teaser-emoji { font-size: 32px; margin-bottom: 12px; display: block; }
+
+.teaser-title {
+  font-family: var(--ff-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ivory);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.teaser-series {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin-bottom: 14px;
+}
+
+.teaser-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.teaser-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.tp-game { background: rgba(200,168,75,.15); color: var(--gold); }
+.tp-pod  { background: rgba(26,139,127,.15); color: var(--teal2); }
+.tp-vid  { background: rgba(200,40,40,.12);  color: #e06060; }
+
+.teaser-soon {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: .15em;
+  color: var(--teal2);
+  text-transform: uppercase;
+  background: rgba(26,139,127,.15);
+  border: 1px solid rgba(26,139,127,.3);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MISSION FOOTER STRIP
+══════════════════════════════════════════════════════════════ */
+.mission-strip {
+  padding: 80px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-strip::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,168,75,.07) 0%, transparent 65%);
+}
+
+.mission-title {
+  font-family: var(--ff-display);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 900;
+  color: var(--ivory);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.mission-title em { color: var(--gold); font-style: italic; }
+
+.mission-sub {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--fog);
+  letter-spacing: .08em;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.mission-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary-lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #0a0800;
+  font-family: var(--ff-cond);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all .25s;
+  box-shadow: 0 8px 30px rgba(200,168,75,.3);
+}
+.btn-primary-lg:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(200,168,75,.4);
+}
+
+.btn-ghost-lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--ff-cond);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all .25s;
+}
+.btn-ghost-lg:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(200,168,75,.06);
+}
+
+.mission-meta {
+  margin-top: 40px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .15em;
+  color: var(--fog);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Animate cards on scroll */
+.title-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .5s ease, transform .5s ease, border-color .3s;
+}
+.title-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.title-card.coming.visible {
+  opacity: .65;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero-triple { flex-direction: column; gap: 16px; }
+  .triple-div { display: none; }
+  .hero-stats { gap: 24px; }
+  .titles-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 20px; }
+  .mission-strip { padding: 60px 24px; }
+}
+
+/* ══ STICKY SECTION NAV ═══════════════════════════════════════════ */
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(7,9,15,.97);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 20px;
+}
+.snav-btn {
+  font-family: var(--ff-cond);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 9px 22px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fog);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.snav-btn:hover, .snav-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(200,168,75,.08);
+}
+@media (max-width: 600px) {
+  .section-nav { flex-wrap: wrap; gap: 4px; }
+  .snav-btn { font-size: 11px; padding: 7px 12px; }
+}
+
+/* ══ VIDEOS SECTION ═══════════════════════════════════════════════ */
+.videos-section { padding: 80px 0; background: var(--navy); border-top: 1px solid var(--border); }
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+.video-card {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .3s, transform .3s;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .5s ease, transform .5s ease, border-color .3s;
+}
+.video-card.visible { opacity: 1; transform: translateY(0); }
+.video-card:hover { border-color: rgba(200,168,75,.4); transform: translateY(-4px); }
+.video-thumb {
+  position: relative;
+  padding-bottom: 56.25%;
+  background: var(--slate);
+  overflow: hidden;
+}
+.video-thumb iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; border: none;
+}
+.video-thumb .vt-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.3);
+  transition: background .2s;
+  cursor: pointer;
+}
+.video-thumb:hover .vt-overlay { background: rgba(0,0,0,.1); }
+.play-btn {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(200,168,75,.9);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: #0a0800;
+  transition: transform .2s, background .2s;
+}
+.vt-overlay:hover .play-btn { transform: scale(1.1); background: var(--gold2); }
+.video-info { padding: 18px 20px 16px; }
+.video-subject {
+  font-family: var(--ff-mono);
+  font-size: 10px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--teal2);
+  margin-bottom: 8px;
+}
+.video-title {
+  font-family: var(--ff-display);
+  font-size: 17px; font-weight: 700;
+  color: var(--ivory); line-height: 1.3;
+  margin-bottom: 12px;
+}
+.video-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.vlink {
+  font-family: var(--ff-cond);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 6px;
+  text-decoration: none; transition: all .2s;
+}
+.vlink-game { background: rgba(200,168,75,.15); border: 1px solid rgba(200,168,75,.3); color: var(--gold); }
+.vlink-game:hover { background: rgba(200,168,75,.25); }
+.vlink-book { background: rgba(26,139,127,.15); border: 1px solid rgba(26,139,127,.3); color: var(--teal2); }
+.vlink-book:hover { background: rgba(26,139,127,.25); }
+
+/* ══ BOOKSTORE SECTION ════════════════════════════════════════════ */
+.bookstore-section { padding: 80px 0; border-top: 1px solid var(--border); }
+.series-block { margin-bottom: 60px; }
+.series-title {
+  font-family: var(--ff-display);
+  font-size: 28px; font-weight: 700;
+  color: var(--ivory); margin-bottom: 8px;
+}
+.series-title em { color: var(--gold); font-style: italic; }
+.series-count {
+  font-family: var(--ff-mono);
+  font-size: 11px; letter-spacing: .15em;
+  color: var(--fog); text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.books-row {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.book-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px;
+  background: var(--deep); border: 1px solid var(--border);
+  border-radius: 8px; text-decoration: none;
+  transition: all .2s;
+}
+.book-pill:hover { border-color: var(--gold); background: rgba(200,168,75,.06); }
+.book-pill-title {
+  font-family: var(--ff-cond);
+  font-size: 14px; font-weight: 600;
+  color: var(--text);
+}
+.book-pill-asin {
+  font-family: var(--ff-mono);
+  font-size: 10px; color: var(--fog);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══ GSU HOME BAR ═══════════════════════════════════════════════════ -->
+<div style="background:#07090f;border-bottom:1px solid #1e2f4a;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1000;">
+  <a href="https://www.globalsovereignuniversity.org" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/690a547e01ec40e410599b5f_GSU%20Global%20Sovereign%20University%20logo%201%20(1).jpg"
+         style="height:32px;border-radius:4px;" alt="GSU">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8a9ab5;">← Back to GSU</span>
+  </a>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:#c8a84b;text-transform:uppercase;">Building a Bridge to Freedom Through Education</span>
+</div>
+
+<!-- ══ STICKY NAV ══════════════════════════════════════════════════════ -->
+<nav class="section-nav">
+  <a href="#library" class="snav-btn active">🎮 Library</a>
+  <a href="#videos" class="snav-btn">▶ Videos</a>
+  <a href="#bookstore" class="snav-btn">📚 Bookstore</a>
+  <a href="https://www.buzzsprout.com/2530740" target="_blank" class="snav-btn">🎙 Podcast</a>
+  <a href="https://www.globalsovereignuniversity.org/donate" target="_blank" class="snav-btn">❤️ Donate</a>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════ -->
+<section class="hero" id="library">
+  <div class="hero-inner">
+    <p class="hero-kicker">
+      <span></span>
+      Global Sovereign University · Free 501(c)(3) Nonprofit
+      <span></span>
+    </p>
+    <h1 class="hero-title">
+      Sovereign
+      <em>Media Library</em>
+    </h1>
+    <p class="hero-subtitle">Play · Hear · See — Before You Buy</p>
+    <div class="hero-triple">
+      <div class="triple-pill">
+        <div class="pip pip-game">🎮</div>
+        Free BookGame
+      </div>
+      <div class="triple-div">·</div>
+      <div class="triple-pill">
+        <div class="pip pip-pod">🎙</div>
+        Podcast Episode
+      </div>
+      <div class="triple-div">·</div>
+      <div class="triple-pill">
+        <div class="pip pip-vid">▶</div>
+        Video
+      </div>
+      <div class="triple-div">·</div>
+      <div class="triple-pill">
+        <div class="pip" style="background:rgba(255,153,0,.2);border:1px solid rgba(255,153,0,.4);">📦</div>
+        Amazon Book
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-n">190</div>
+        <div class="stat-l">Published Titles</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">41</div>
+        <div class="stat-l">BookGames</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">215</div>
+        <div class="stat-l">Podcast Episodes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">$0</div>
+        <div class="stat-l">Tuition · Forever</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    Explore
+  </div>
+</section>
+
+<!-- ══ CATEGORY CAROUSEL ═════════════════════════════════════════════ -->
+<section class="carousel-section">
+  <p class="section-label">Browse by Series</p>
+  <h2 class="section-heading">Every Series. <em>Every Format.</em></h2>
+  <div class="carousel-track-wrap">
+    <div class="carousel-track" id="catTrack">
+
+      <div class="cat-card" onclick="filterCards('sovereignty')">
+        <div class="cat-card-bg bg-sovereignty">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">⚡</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">⚡</span>
+          <div class="cat-name">Sovereignty &amp; Critical Thinking</div>
+          <div class="cat-count">25 titles · Games · Podcast · Video</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('personal')">
+        <div class="cat-card-bg bg-personal">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">🌱</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">🌱</span>
+          <div class="cat-name">Personal Development</div>
+          <div class="cat-count">24 titles · Games · Podcast · Video</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('history')">
+        <div class="cat-card-bg bg-history">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">🏛️</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">🏛️</span>
+          <div class="cat-name">History &amp; Civics</div>
+          <div class="cat-count">21 titles · Games · Podcast</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('trades')">
+        <div class="cat-card-bg bg-trades">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">🔧</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">🔧</span>
+          <div class="cat-name">Trades &amp; Practical Skills</div>
+          <div class="cat-count">12 titles · Games · Podcast · Video</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('literacy')">
+        <div class="cat-card-bg bg-literacy">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">📖</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">📖</span>
+          <div class="cat-name">Literacy &amp; Language</div>
+          <div class="cat-count">12 titles · Games · Podcast · Video</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('emotion')">
+        <div class="cat-card-bg bg-emotion">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">🤝</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">🤝</span>
+          <div class="cat-name">Emotional Intelligence</div>
+          <div class="cat-count">8 titles · Games · Podcast</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('finance')">
+        <div class="cat-card-bg bg-finance">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">💰</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">💰</span>
+          <div class="cat-name">Financial Literacy</div>
+          <div class="cat-count">5 titles · Games · Podcast</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('leadership')">
+        <div class="cat-card-bg bg-leadership">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">🧭</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">🧭</span>
+          <div class="cat-name">Leadership</div>
+          <div class="cat-count">5 titles · Games · Podcast</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('children')">
+        <div class="cat-card-bg bg-children">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">🎓</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">🎓</span>
+          <div class="cat-name">Children &amp; Homeschool</div>
+          <div class="cat-count">4 titles · Games · Podcast</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card" onclick="filterCards('arts')">
+        <div class="cat-card-bg bg-arts">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;">🎨</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">🎨</span>
+          <div class="cat-name">Arts &amp; Photography</div>
+          <div class="cat-count">5 titles · Podcast</div>
+        </div>
+        <div class="cat-badge">Live</div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-card-bg bg-coming">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:100px;opacity:.06;">🔜</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">📐</span>
+          <div class="cat-name">Mathematics</div>
+          <div class="cat-count">Full series · Publishing weekly</div>
+        </div>
+        <div class="cat-badge soon">Coming</div>
+      </div>
+
+      <div class="cat-card">
+        <div class="cat-card-bg bg-coming">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:100px;opacity:.06;">🔜</div>
+        </div>
+        <div class="cat-card-overlay"></div>
+        <div class="cat-card-content">
+          <span class="cat-emoji">✍️</span>
+          <div class="cat-name">Poetry, Memoir &amp; Fiction</div>
+          <div class="cat-count">9 titles · Media expanding</div>
+        </div>
+        <div class="cat-badge soon">Expanding</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ MEDIA LIBRARY GRID ════════════════════════════════════════════ -->
+<section class="library-section">
+  <div class="container">
+    <p class="section-label" style="text-align:center;margin-bottom:16px;">Full Media Library</p>
+    <h2 class="section-heading" style="text-align:center;margin-bottom:40px;">
+      Three Formats. <em>Every Title.</em>
+    </h2>
+
+    <!-- Filter bar -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" onclick="filterCards('all')">All Titles</button>
+      <button class="filter-btn" onclick="filterCards('sovereignty')">⚡ Sovereignty</button>
+      <button class="filter-btn" onclick="filterCards('personal')">🌱 Personal Dev</button>
+      <button class="filter-btn" onclick="filterCards('history')">🏛️ History</button>
+      <button class="filter-btn" onclick="filterCards('trades')">🔧 Trades</button>
+      <button class="filter-btn" onclick="filterCards('literacy')">📖 Literacy</button>
+      <button class="filter-btn" onclick="filterCards('emotion')">🤝 EQ</button>
+      <button class="filter-btn" onclick="filterCards('finance')">💰 Finance</button>
+      <button class="filter-btn" onclick="filterCards('coming')">🔜 Coming Soon</button>
+    </div>
+
+    <!-- TITLE CARDS GRID -->
+    <div class="titles-grid" id="titlesGrid">
+
+      <!-- ── LIVE TITLES WITH FULL MEDIA ── -->
+
+      <div class="title-card" data-cat="sovereignty">
+        <div class="card-inner">
+          <div class="card-subject">Sovereignty · Critical Thinking</div>
+          <div class="card-title">The Fog-Industrial Complex</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/the-fog-industrial-complex" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free — Test Your Knowledge</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18849981" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=qY-ah4rYJ90" target="_blank" class="media-item vid">
+              <div class="media-icon mi-vid">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">Watch Before You Play</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.amazon.com/dp/B0GQSLGQ86?tag=gsu2026-20" target="_blank" class="btn-amazon">📦 Get the Book on Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card" data-cat="sovereignty">
+        <div class="card-inner">
+          <div class="card-subject">Sovereignty · Education Reform</div>
+          <div class="card-title">Educated Into Ignorance</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/educated-into-ignorance" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free — Test Your Knowledge</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18846208" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=vdcEtXzUCcI" target="_blank" class="media-item vid">
+              <div class="media-icon mi-vid">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">Watch Before You Play</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.amazon.com/dp/B0GQ28SMQT?tag=gsu2026-20" target="_blank" class="btn-amazon">📦 Get the Book on Amazon</a>
+            <a href="https://www.amazon.com/dp/B0GQT57S4Z?tag=gsu2026-20" target="_blank" class="btn-pb">PB</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card" data-cat="sovereignty">
+        <div class="card-inner">
+          <div class="card-subject">Sovereignty · Education</div>
+          <div class="card-title">The Amnesty Protocol</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/the-amnesty-protocol" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free — Test Your Knowledge</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18845360" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=IiMUaXo0Yos" target="_blank" class="media-item vid">
+              <div class="media-icon mi-vid">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">Watch Before You Play</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.amazon.com/dp/B0GQ3FV3P9?tag=gsu2026-20" target="_blank" class="btn-amazon">📦 Get the Book on Amazon</a>
+            <a href="https://www.amazon.com/dp/B0GS6SP8KH?tag=gsu2026-20" target="_blank" class="btn-pb">PB</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card" data-cat="personal">
+        <div class="card-inner">
+          <div class="card-subject">Personal Development · Mental Health</div>
+          <div class="card-title">The Rumination Book</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/the-rumination-book" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free — 30 Questions, 4 Badges</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18868161" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=0vTIVucvn9A" target="_blank" class="media-item vid">
+              <div class="media-icon mi-vid">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">Watch Before You Play</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.amazon.com/dp/B0G3M98JZ2?tag=gsu2026-20" target="_blank" class="btn-amazon">📦 Get the Book on Amazon</a>
+            <a href="https://www.amazon.com/dp/B0G3P5MXMW?tag=gsu2026-20" target="_blank" class="btn-pb">PB</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card" data-cat="trades">
+        <div class="card-inner">
+          <div class="card-subject">Trades · Practical Skills · Sovereignty</div>
+          <div class="card-title">Foundations of Repair</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/foundations-of-repair" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free — The Sovereign Steward</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18876602" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=QTVAXs2G4ac" target="_blank" class="media-item vid">
+              <div class="media-icon mi-vid">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">They Told You Not to Open It</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.amazon.com/dp/B0GRTHD1GK?tag=gsu2026-20" target="_blank" class="btn-amazon">📦 Get the Book on Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card" data-cat="trades">
+        <div class="card-inner">
+          <div class="card-subject">Trades · Industrial Excellence</div>
+          <div class="card-title">TPM Education and Training</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/tpm-education-and-training" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free — 8 Pillars, 30 Questions</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18869461" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=zXvLj6ZJIDA" target="_blank" class="media-item vid">
+              <div class="media-icon mi-vid">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">Watch Before You Play</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.amazon.com/dp/B0F8KCJJ9T?tag=gsu2026-20" target="_blank" class="btn-amazon">📦 Get the Book on Amazon</a>
+            <a href="https://www.amazon.com/dp/B0F8NTVPGN?tag=gsu2026-20" target="_blank" class="btn-pb">PB</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card" data-cat="literacy">
+        <div class="card-inner">
+          <div class="card-subject">Literacy · Language · Critical Thinking</div>
+          <div class="card-title">Grammar for the Real World — Ch. 1</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/grammar-for-the-real-world-ch-1" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free — Grammar as a Tool</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18852061" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=QaIZW889-60" target="_blank" class="media-item vid">
+              <div class="media-icon mi-vid">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">Grammar Is Not a Test</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.globalsovereignuniversity.org/bookstore" target="_blank" class="btn-amazon" style="background:linear-gradient(135deg,#1a8b7f,#22b5a4);color:#fff;">🎓 Free at GSU — No Login</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card" data-cat="personal">
+        <div class="card-inner">
+          <div class="card-subject">Personal Development · Mathematics</div>
+          <div class="card-title">Make 24 Game</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/make-24-game" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free — Bold Math Thinking</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18868604" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=uWmOiEujaD8" target="_blank" class="media-item vid">
+              <div class="media-icon mi-vid">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">Why Your Daughter Falls Behind</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.amazon.com/dp/B0GBB6J44M?tag=gsu2026-20" target="_blank" class="btn-amazon">📦 Get the Book on Amazon</a>
+            <a href="https://www.amazon.com/dp/B0GBSGLS2G?tag=gsu2026-20" target="_blank" class="btn-pb">PB</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── COMING SOON CARDS ── -->
+
+      <div class="title-card coming" data-cat="coming">
+        <div class="card-inner">
+          <div class="card-subject">Sovereignty · Education</div>
+          <div class="card-title">Signal Decryption: The Adult Guide to Hearing the Code</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/signal-decryption" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free Now</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Episode Coming Soon</div></div>
+            </div>
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">In Production</div></div>
+            </div>
+          </div>
+          <div class="card-cta">
+            <a href="https://www.amazon.com/dp/B0GQSG6MY2?tag=gsu2026-20" target="_blank" class="btn-amazon">📦 Get the Book on Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card coming" data-cat="coming">
+        <div class="card-inner">
+          <div class="card-subject">Sovereignty · Critical Thinking</div>
+          <div class="card-title">Robot-Proof BookGame</div>
+          <div class="media-trio">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/robot-proof-bookgame" target="_blank" class="media-item game">
+              <div class="media-icon mi-game">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">Play Free Now</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18631153" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">In Production</div></div>
+            </div>
+          </div>
+          <div class="card-cta">
+            <div class="coming-badge">🔜 Video Publishing Soon</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card coming" data-cat="coming">
+        <div class="card-inner">
+          <div class="card-subject">Personal Development · Mathematics</div>
+          <div class="card-title">The Math Revolution</div>
+          <div class="media-trio">
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">In Development</div></div>
+            </div>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18007674" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty — Live</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">In Production</div></div>
+            </div>
+          </div>
+          <div class="card-cta">
+            <div class="coming-badge">🔜 Full Media — Coming Weekly</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card coming" data-cat="coming">
+        <div class="card-inner">
+          <div class="card-subject">Personal Development · Resilience</div>
+          <div class="card-title">From Broken Beginnings</div>
+          <div class="media-trio">
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">In Development</div></div>
+            </div>
+            <a href="https://www.buzzsprout.com/2530740/episodes/17929062" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty — Live</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">In Production</div></div>
+            </div>
+          </div>
+          <div class="card-cta">
+            <div class="coming-badge">🔜 Full Media — Coming Weekly</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card coming" data-cat="coming">
+        <div class="card-inner">
+          <div class="card-subject">Sovereignty · Wisdom</div>
+          <div class="card-title">The Wisdom Bridge</div>
+          <div class="media-trio">
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">In Development</div></div>
+            </div>
+            <a href="https://www.buzzsprout.com/2530740/episodes/17918701" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty — Live</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">In Production</div></div>
+            </div>
+          </div>
+          <div class="card-cta">
+            <div class="coming-badge">🔜 Full Media — Coming Weekly</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="title-card coming" data-cat="coming">
+        <div class="card-inner">
+          <div class="card-subject">Digitification · Technology</div>
+          <div class="card-title">High on AI</div>
+          <div class="media-trio">
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">🎮</div>
+              <div class="media-text"><div class="media-label">BookGame</div><div class="media-desc">In Development</div></div>
+            </div>
+            <a href="https://www.buzzsprout.com/2530740/episodes/18598312" target="_blank" class="media-item pod">
+              <div class="media-icon mi-pod">🎙</div>
+              <div class="media-text"><div class="media-label">Podcast</div><div class="media-desc">Voice of Sovereignty — Live</div></div>
+              <div class="media-arrow">→</div>
+            </a>
+            <div class="media-item soon-item">
+              <div class="media-icon mi-soon">▶</div>
+              <div class="media-text"><div class="media-label">Video</div><div class="media-desc">In Production</div></div>
+            </div>
+          </div>
+          <div class="card-cta">
+            <div class="coming-badge">🔜 Full Media — Coming Weekly</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /titles-grid -->
+  </div>
+</section>
+
+<!-- ══ COMING SOON TEASER ════════════════════════════════════════════ -->
+<section class="teaser-section">
+  <div class="container">
+    <p class="section-label" style="text-align:center;margin-bottom:12px;">Publishing Every Week</p>
+    <h2 class="section-heading" style="text-align:center;">
+      The Library Is <em>Growing.</em>
+    </h2>
+    <p style="text-align:center;color:var(--fog);font-size:17px;font-weight:300;max-width:600px;margin:0 auto;line-height:1.7;">
+      190 books. 215 podcast episodes. A new title enters the full media circuit every week — BookGame, podcast, video, Amazon. Bookmark this page. Come back.
+    </p>
+    <div class="teaser-grid">
+
+      <div class="teaser-card">
+        <span class="teaser-soon">Next Up</span>
+        <span class="teaser-emoji">⚡</span>
+        <div class="teaser-title">Synthetix: Building the Sovereign Intellect</div>
+        <div class="teaser-series">Sovereign Intelligence Series · Book 5</div>
+        <div class="teaser-pills">
+          <span class="teaser-pill tp-game">🎮 Game</span>
+          <span class="teaser-pill tp-pod">🎙 Pod</span>
+          <span class="teaser-pill tp-vid">▶ Video</span>
+        </div>
+      </div>
+
+      <div class="teaser-card">
+        <span class="teaser-soon">Coming</span>
+        <span class="teaser-emoji">🔧</span>
+        <div class="teaser-title">Home Electrical Basics</div>
+        <div class="teaser-series">Sovereign Trades Series</div>
+        <div class="teaser-pills">
+          <span class="teaser-pill tp-game">🎮 Game</span>
+          <span class="teaser-pill tp-pod">🎙 Pod</span>
+          <span class="teaser-pill tp-vid">▶ Video</span>
+        </div>
+      </div>
+
+      <div class="teaser-card">
+        <span class="teaser-soon">Coming</span>
+        <span class="teaser-emoji">🔧</span>
+        <div class="teaser-title">Plumbing Without the Plumber</div>
+        <div class="teaser-series">Sovereign Trades Series</div>
+        <div class="teaser-pills">
+          <span class="teaser-pill tp-game">🎮 Game</span>
+          <span class="teaser-pill tp-pod">🎙 Pod</span>
+          <span class="teaser-pill tp-vid">▶ Video</span>
+        </div>
+      </div>
+
+      <div class="teaser-card">
+        <span class="teaser-soon">Coming</span>
+        <span class="teaser-emoji">📐</span>
+        <div class="teaser-title">The Math Trap</div>
+        <div class="teaser-series">Sovereignty Exposé Series · Book 2</div>
+        <div class="teaser-pills">
+          <span class="teaser-pill tp-game">🎮 Game</span>
+          <span class="teaser-pill tp-pod">🎙 Pod</span>
+          <span class="teaser-pill tp-vid">▶ Video</span>
+        </div>
+      </div>
+
+      <div class="teaser-card">
+        <span class="teaser-soon">Coming</span>
+        <span class="teaser-emoji">⚖️</span>
+        <div class="teaser-title">The Weight-Bearing Life</div>
+        <div class="teaser-series">Sovereign Intelligence Series · Book 5</div>
+        <div class="teaser-pills">
+          <span class="teaser-pill tp-game">🎮 Game</span>
+          <span class="teaser-pill tp-pod">🎙 Pod</span>
+          <span class="teaser-pill tp-vid">▶ Video</span>
+        </div>
+      </div>
+
+      <div class="teaser-card">
+        <span class="teaser-soon">Coming</span>
+        <span class="teaser-emoji">🔧</span>
+        <div class="teaser-title">Basic Automotive Knowledge</div>
+        <div class="teaser-series">Sovereign Trades Series</div>
+        <div class="teaser-pills">
+          <span class="teaser-pill tp-game">🎮 Game</span>
+          <span class="teaser-pill tp-pod">🎙 Pod</span>
+          <span class="teaser-pill tp-vid">▶ Video</span>
+        </div>
+      </div>
+
+      <div class="teaser-card">
+        <span class="teaser-soon">Coming</span>
+        <span class="teaser-emoji">🏛️</span>
+        <div class="teaser-title">History of the Americans</div>
+        <div class="teaser-series">History of the Americans Series · 11 volumes</div>
+        <div class="teaser-pills">
+          <span class="teaser-pill tp-game">🎮 Game</span>
+          <span class="teaser-pill tp-pod">🎙 Pod</span>
+          <span class="teaser-pill tp-vid">▶ Video</span>
+        </div>
+      </div>
+
+      <div class="teaser-card">
+        <span class="teaser-soon">Expanding</span>
+        <span class="teaser-emoji">🌍</span>
+        <div class="teaser-title">Digital Farm Series</div>
+        <div class="teaser-series">Literacy & Language · 10 Languages</div>
+        <div class="teaser-pills">
+          <span class="teaser-pill tp-game">🎮 Game</span>
+          <span class="teaser-pill tp-pod">🎙 Pod</span>
+          <span class="teaser-pill tp-vid">▶ Video</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ VIDEOS SECTION ════════════════════════════════════════════════ -->
+<section class="videos-section" id="videos">
+  <div class="container">
+    <p class="section-label" style="text-align:center;margin-bottom:16px;">GSU Video Library</p>
+    <h2 class="section-heading" style="text-align:center;margin-bottom:12px;">
+      See It. <em>Before You Buy It.</em>
+    </h2>
+    <p style="text-align:center;color:var(--fog);font-size:17px;max-width:580px;margin:0 auto 0;line-height:1.7;">Every title has a short video overview. Watch before you play, listen, or buy.</p>
+
+    <div class="videos-grid">
+
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/0vTIVucvn9A" title="The Rumination Book" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-subject">Personal Development</div>
+          <div class="video-title">The Rumination Book</div>
+          <div class="video-links">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/the-rumination-book" target="_blank" class="vlink vlink-game">🎮 Play Free</a>
+            <a href="https://www.amazon.com/dp/B0G3M98JZ2?tag=gsu2026-20" target="_blank" class="vlink vlink-book">📦 Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/uWmOiEujaD8" title="Make 24 Game" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-subject">Mathematics</div>
+          <div class="video-title">Make 24 — The Card Game That Builds Math Fluency</div>
+          <div class="video-links">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/make-24-game" target="_blank" class="vlink vlink-game">🎮 Play Free</a>
+            <a href="https://www.amazon.com/dp/B0GBB6J44M?tag=gsu2026-20" target="_blank" class="vlink vlink-book">📦 Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/zXvLj6ZJIDA" title="TPM Education and Training" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-subject">Trades · Industrial Excellence</div>
+          <div class="video-title">TPM Education and Training</div>
+          <div class="video-links">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/tpm-education-and-training" target="_blank" class="vlink vlink-game">🎮 Play Free</a>
+            <a href="https://www.amazon.com/dp/B0F8KCJJ9T?tag=gsu2026-20" target="_blank" class="vlink vlink-book">📦 Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/QaIZW889-60" title="Grammar for the Real World" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-subject">Literacy · Language</div>
+          <div class="video-title">Grammar for the Real World — Ch. 1</div>
+          <div class="video-links">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/grammar-for-the-real-world-ch-1" target="_blank" class="vlink vlink-game">🎮 Play Free</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/qY-ah4rYJ90" title="The Fog-Industrial Complex" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-subject">Sovereignty · Critical Thinking</div>
+          <div class="video-title">The Fog-Industrial Complex</div>
+          <div class="video-links">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/the-fog-industrial-complex" target="_blank" class="vlink vlink-game">🎮 Play Free</a>
+            <a href="https://www.amazon.com/dp/B0GQSLGQ86?tag=gsu2026-20" target="_blank" class="vlink vlink-book">📦 Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/vdcEtXzUCcI" title="Educated Into Ignorance" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-subject">Sovereignty · Education Reform</div>
+          <div class="video-title">Educated Into Ignorance</div>
+          <div class="video-links">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/educated-into-ignorance" target="_blank" class="vlink vlink-game">🎮 Play Free</a>
+            <a href="https://www.amazon.com/dp/B0GQ28SMQT?tag=gsu2026-20" target="_blank" class="vlink vlink-book">📦 Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/IiMUaXo0Yos" title="The Amnesty Protocol" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-subject">Sovereignty · Education</div>
+          <div class="video-title">The Amnesty Protocol</div>
+          <div class="video-links">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/the-amnesty-protocol" target="_blank" class="vlink vlink-game">🎮 Play Free</a>
+            <a href="https://www.amazon.com/dp/B0GQ3FV3P9?tag=gsu2026-20" target="_blank" class="vlink vlink-book">📦 Amazon</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/QTVAXs2G4ac" title="Foundations of Repair" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-subject">Trades · Sovereign Steward</div>
+          <div class="video-title">Foundations of Repair</div>
+          <div class="video-links">
+            <a href="https://www.globalsovereignuniversity.org/bookgames/foundations-of-repair" target="_blank" class="vlink vlink-game">🎮 Play Free</a>
+            <a href="https://www.amazon.com/dp/B0GRTHD1GK?tag=gsu2026-20" target="_blank" class="vlink vlink-book">📦 Amazon</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="text-align:center;margin-top:40px;">
+      <a href="https://www.youtube.com/@GSUGlobal" target="_blank" class="btn-ghost-lg">▶ Full YouTube Channel →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ══ BOOKSTORE SECTION ══════════════════════════════════════════════ -->
+<section class="bookstore-section" id="bookstore">
+  <div class="container">
+    <p class="section-label" style="text-align:center;margin-bottom:16px;">Full Catalog</p>
+    <h2 class="section-heading" style="text-align:center;margin-bottom:12px;">
+      190 Titles. <em>Every One Free to the Foundation.</em>
+    </h2>
+    <p style="text-align:center;color:var(--fog);font-size:17px;max-width:600px;margin:0 auto 48px;line-height:1.7;">Every title was donated by Dr. Gene A. Constant to the Foundation for Global Instruction. 100% of royalties fund the mission. Browse by series below or visit the full Bookstore.</p>
+
+    <!-- Sovereign Trades Series -->
+    <div class="series-block">
+      <div class="series-title">🔧 Sovereign Trades Series — <em>Books 1–7</em></div>
+      <div class="series-count">7 titles · All published · All with free PDF giveaway</div>
+      <div class="books-row">
+        <a href="https://www.amazon.com/dp/B0GT6PH7MW?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Home Electrical Basics</span><span class="book-pill-asin">B0GT6PH7MW</span></a>
+        <a href="https://www.amazon.com/dp/B0GTCPTR61?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Plumbing Without the Plumber</span><span class="book-pill-asin">B0GTCPTR61</span></a>
+        <a href="https://www.amazon.com/dp/B0GTGHDDM7?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Lawn and Garden Equipment</span><span class="book-pill-asin">B0GTGHDDM7</span></a>
+        <a href="https://www.amazon.com/dp/B0GTGKGDZF?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Basic Appliance Repair</span><span class="book-pill-asin">B0GTGKGDZF</span></a>
+        <a href="https://www.amazon.com/dp/B0GTGJHS2R?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">The Home Safety Inspection</span><span class="book-pill-asin">B0GTGJHS2R</span></a>
+        <a href="https://www.amazon.com/dp/B0GRTHD1GK?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Foundations of Repair</span><span class="book-pill-asin">B0GRTHD1GK</span></a>
+        <a href="https://www.amazon.com/dp/B0GSP2R5XC?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Basic Automotive Knowledge</span><span class="book-pill-asin">B0GSP2R5XC</span></a>
+      </div>
+    </div>
+
+    <!-- Sovereign Intelligence Series -->
+    <div class="series-block">
+      <div class="series-title">⚡ Sovereign Intelligence Series — <em>Books 1–5</em></div>
+      <div class="series-count">5 titles · Critical thinking · Personal sovereignty</div>
+      <div class="books-row">
+        <a href="https://www.amazon.com/dp/B0GQSLGQ86?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">The Fog-Industrial Complex</span><span class="book-pill-asin">B0GQSLGQ86</span></a>
+        <a href="https://www.amazon.com/dp/B0GQ28SMQT?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Educated Into Ignorance</span><span class="book-pill-asin">B0GQ28SMQT</span></a>
+        <a href="https://www.amazon.com/dp/B0GQ3FV3P9?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">The Amnesty Protocol</span><span class="book-pill-asin">B0GQ3FV3P9</span></a>
+        <a href="https://www.amazon.com/dp/B0GMW7CJ5Y?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Synthetix: Building the Sovereign Intellect</span><span class="book-pill-asin">B0GMW7CJ5Y</span></a>
+        <a href="https://www.amazon.com/dp/B0GBB6J44M?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">The Weight-Bearing Life</span><span class="book-pill-asin">Pending</span></a>
+      </div>
+    </div>
+
+    <!-- Personal Development -->
+    <div class="series-block">
+      <div class="series-title">🌱 Personal Development</div>
+      <div class="series-count">Featured titles</div>
+      <div class="books-row">
+        <a href="https://www.amazon.com/dp/B0G3M98JZ2?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">The Rumination Book</span><span class="book-pill-asin">B0G3M98JZ2</span></a>
+        <a href="https://www.amazon.com/dp/B0GBB6J44M?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">Make 24 Game</span><span class="book-pill-asin">B0GBB6J44M</span></a>
+        <a href="https://www.amazon.com/dp/B0F8KCJJ9T?tag=gsu2026-20" target="_blank" class="book-pill"><span class="book-pill-title">TPM Education and Training</span><span class="book-pill-asin">B0F8KCJJ9T</span></a>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:20px;">
+      <a href="https://geneconstant36-blip.github.io/gsu-assets/gsu-bookstore.html" target="_blank" class="btn-primary-lg">📚 Browse All 190 Titles →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ══ MISSION STRIP ════════════════════════════════════════════════ -->
+<section class="mission-strip">
+  <div style="position:relative;z-index:2">
+    <h2 class="mission-title">
+      Building a Bridge to Freedom<br>
+      <em>Through Education — Not Handouts</em>
+    </h2>
+    <p class="mission-sub">
+      Every book. Every game. Every podcast episode. Every video.
+      Free. Forever. For everyone on earth who is willing to learn.
+    </p>
+    <div class="mission-btns">
+      <a href="https://www.globalsovereignuniversity.org/bookgames" class="btn-primary-lg">🎮 Play All BookGames Free</a>
+      <a href="https://www.globalsovereignuniversity.org/bookstore" class="btn-ghost-lg">📚 Full Bookstore →</a>
+    </div>
+    <div class="mission-meta">
+      Global Sovereign University · Foundation for Global Instruction · Free 501(c)(3) Nonprofit · EIN 39-2716552 · Eugene, Oregon<br>
+      Dr. Gene A. Constant, DBA — Founder · 190 Published Titles, All Donated to the Foundation
+    </div>
+  </div>
+</section>
+
+<script>
+// ── FILTER ────────────────────────────────────────────────────────
+function filterCards(cat) {
+  const cards = document.querySelectorAll('.title-card');
+  const btns  = document.querySelectorAll('.filter-btn');
+
+  btns.forEach(b => b.classList.remove('active'));
+  const activeBtn = [...btns].find(b => b.onclick?.toString().includes(`'${cat}'`));
+  if (activeBtn) activeBtn.classList.add('active');
+
+  cards.forEach(card => {
+    const match = cat === 'all' || card.dataset.cat === cat;
+    card.style.display = match ? '' : 'none';
+  });
+}
+
+// ── INTERSECTION OBSERVER — card + video reveals ──────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.title-card, .video-card').forEach(c => revealObserver.observe(c));
+
+// ── STICKY NAV SCROLL SPY ─────────────────────────────────────────
+const sections = ['library','videos','bookstore'];
+const navBtns  = document.querySelectorAll('.snav-btn[href^="#"]');
+
+const spyObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navBtns.forEach(b => b.classList.remove('active'));
+      const active = document.querySelector(`.snav-btn[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) spyObserver.observe(el);
+});
+
+// ── CAROUSEL AUTO-ADVANCE ─────────────────────────────────────────
+const track = document.getElementById('catTrack');
+let isDragging = false, startX, scrollLeft;
+
+track.addEventListener('mousedown', e => {
+  isDragging = true;
+  startX = e.pageX - track.offsetLeft;
+  scrollLeft = track.scrollLeft;
+  track.style.cursor = 'grabbing';
+});
+track.addEventListener('mouseleave', () => { isDragging = false; track.style.cursor = ''; });
+track.addEventListener('mouseup', () => { isDragging = false; track.style.cursor = ''; });
+track.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  e.preventDefault();
+  const x = e.pageX - track.offsetLeft;
+  track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+});
+</script>
+
+</body>
+</html>
