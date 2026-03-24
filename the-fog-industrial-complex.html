@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fog-Industrial Complex | BookGame | Global Sovereign University</title>
+<meta name="description" content="Play Before You Buy — 30 questions based on The Fog-Industrial Complex by Dr. Gene A. Constant. Test your knowledge of manufactured confusion, media manipulation, and sovereign thinking. Free from GSU.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow+Condensed:wght@300;400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #07090f;
+  --deep:   #0b0f1a;
+  --navy:   #0e1628;
+  --slate:  #182238;
+  --border: #1e2f4a;
+  --gold:   #c8a84b;
+  --gold2:  #e8c86b;
+  --gold3:  #f5e0a0;
+  --teal:   #1a8b7f;
+  --teal2:  #22b5a4;
+  --ivory:  #f0ead8;
+  --fog:    #8a9ab5;
+  --text:   #dce6f5;
+  --ff-display: 'Playfair Display', Georgia, serif;
+  --ff-cond:    'Barlow Condensed', sans-serif;
+  --ff-mono:    'IBM Plex Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--ff-cond);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(200,168,75,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(26,139,127,.05) 0%, transparent 50%);
+}
+.page-header {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 48px 24px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.gsu-tag {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.game-title {
+  font-family: var(--ff-display);
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 900;
+  color: var(--ivory);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.game-title em { color: var(--gold); font-style: italic; }
+.game-subtitle {
+  font-family: var(--ff-cond);
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin-bottom: 20px;
+}
+.pbybadge {
+  display: inline-block;
+  background: rgba(200,168,75,.1);
+  border: 1px solid rgba(200,168,75,.3);
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.badge-bar {
+  position: relative; z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 24px;
+  flex-wrap: wrap;
+}
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  border: 1px solid var(--border);
+  background: var(--deep);
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--fog);
+  transition: all .4s;
+}
+.badge.earned { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,.1); }
+.badge-icon { font-size: 16px; filter: grayscale(1) opacity(.4); transition: filter .4s; }
+.badge.earned .badge-icon { filter: none; }
+.stats-bar {
+  position: relative; z-index: 2;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stat-block {
+  flex: 1;
+  max-width: 160px;
+  text-align: center;
+  padding: 14px 12px;
+  border-right: 1px solid var(--border);
+}
+.stat-block:last-child { border-right: none; }
+.stat-val {
+  font-family: var(--ff-display);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-lbl {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin-top: 3px;
+}
+.progress-wrap {
+  position: relative; z-index: 2;
+  padding: 12px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--fog);
+  letter-spacing: .1em;
+  margin-bottom: 6px;
+}
+.progress-track { height: 3px; background: var(--slate); border-radius: 2px; overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--teal), var(--gold));
+  border-radius: 2px;
+  transition: width .4s ease;
+}
+.game-area {
+  position: relative; z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+.geno-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+}
+.geno-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), #0a5048);
+  border: 1px solid rgba(26,139,127,.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.geno-content { flex: 1; }
+.geno-name {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: .2em;
+  color: var(--teal2);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.geno-msg { font-size: 15px; line-height: 1.6; color: var(--text); }
+.geno-speak-btn {
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid rgba(26,139,127,.35);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--teal2);
+  cursor: pointer;
+  transition: all .2s;
+}
+.geno-speak-btn:hover { background: rgba(26,139,127,.1); border-color: var(--teal2); }
+.question-card {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  margin-bottom: 20px;
+}
+.q-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.q-category { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--teal2); }
+.q-number { font-family: var(--ff-mono); font-size: 10px; color: var(--fog); }
+.q-text {
+  font-family: var(--ff-display);
+  font-size: clamp(17px, 2.5vw, 22px);
+  font-weight: 700;
+  color: var(--ivory);
+  line-height: 1.45;
+}
+.answers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+@media(max-width:560px){ .answers-grid { grid-template-columns: 1fr; } }
+.answer-btn {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: var(--ff-cond);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: all .2s;
+  line-height: 1.35;
+}
+.answer-btn:hover { border-color: rgba(200,168,75,.4); background: rgba(200,168,75,.05); color: var(--ivory); }
+.answer-btn.selected { border-color: var(--gold); background: rgba(200,168,75,.1); color: var(--gold); }
+.answer-btn.correct { border-color: var(--teal2); background: rgba(26,139,127,.15); color: var(--teal2); pointer-events: none; }
+.answer-btn.wrong { border-color: #c04040; background: rgba(192,64,64,.1); color: #c04040; pointer-events: none; }
+.answer-btn:disabled { pointer-events: none; }
+.action-row {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.btn-check {
+  padding: 12px 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #0a0800;
+  font-family: var(--ff-cond);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-check:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,168,75,.3); }
+.btn-check:disabled { opacity: .4; cursor: default; transform: none; box-shadow: none; }
+.btn-next {
+  padding: 12px 28px;
+  border-radius: 8px;
+  background: rgba(26,139,127,.15);
+  border: 1px solid rgba(26,139,127,.4);
+  color: var(--teal2);
+  font-family: var(--ff-cond);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+  display: none;
+}
+.btn-next:hover { background: rgba(26,139,127,.25); }
+.screen { display: none; }
+.screen.active { display: block; }
+.intro-screen { text-align: center; padding: 20px 0 32px; }
+.intro-desc { font-size: 17px; line-height: 1.7; color: var(--fog); max-width: 580px; margin: 0 auto 28px; }
+.badge-preview { display: flex; justify-content: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+.bp-item { text-align: center; background: var(--deep); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; min-width: 90px; }
+.bp-icon { font-size: 24px; margin-bottom: 4px; }
+.bp-name { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .12em; color: var(--fog); text-transform: uppercase; }
+.bp-score { font-size: 12px; color: var(--gold); font-weight: 700; margin-top: 2px; }
+.btn-start {
+  padding: 16px 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #0a0800;
+  font-family: var(--ff-cond);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all .25s;
+  box-shadow: 0 4px 24px rgba(200,168,75,.25);
+}
+.btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,168,75,.35); }
+.results-screen { text-align: center; padding: 20px 0 40px; }
+.results-badge-big { font-size: 72px; margin-bottom: 12px; }
+.results-score-big { font-family: var(--ff-display); font-size: 64px; font-weight: 900; color: var(--gold); line-height: 1; }
+.results-of { font-family: var(--ff-mono); font-size: 12px; color: var(--fog); letter-spacing: .15em; margin: 6px 0 16px; }
+.results-badge-name { font-family: var(--ff-display); font-size: 28px; font-weight: 700; color: var(--ivory); margin-bottom: 8px; }
+.results-msg { font-size: 16px; color: var(--fog); max-width: 500px; margin: 0 auto 28px; line-height: 1.6; }
+.btn-replay {
+  padding: 13px 36px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(200,168,75,.4);
+  color: var(--gold);
+  font-family: var(--ff-cond);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-replay:hover { background: rgba(200,168,75,.1); }
+.resource-dock {
+  position: relative; z-index: 2;
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  padding: 40px 24px;
+}
+.dock-inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:600px){ .dock-inner { grid-template-columns: 1fr; } }
+.dock-label { grid-column: 1/-1; font-family: var(--ff-mono); font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 8px; }
+.dock-card { background: var(--navy); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; text-decoration: none; display: block; transition: border-color .2s, transform .2s; }
+.dock-card:hover { border-color: rgba(200,168,75,.35); transform: translateY(-2px); }
+.dock-card-label { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--teal2); margin-bottom: 6px; }
+.dock-card-title { font-family: var(--ff-display); font-size: 17px; font-weight: 700; color: var(--ivory); margin-bottom: 4px; }
+.dock-card-sub { font-size: 13px; color: var(--fog); line-height: 1.5; }
+.dock-card.amazon { border-left: 3px solid var(--gold); }
+.dock-card.pdf    { border-left: 3px solid var(--teal); }
+.dock-card.video  { border-left: 3px solid #c04040; }
+.dock-card.pod    { border-left: 3px solid var(--teal2); }
+.game-footer { position: relative; z-index: 2; text-align: center; padding: 20px 24px 32px; border-top: 1px solid var(--border); }
+.footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.footer-link { font-family: var(--ff-mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--fog); text-decoration: none; transition: color .2s; }
+.footer-link:hover { color: var(--gold); }
+.footer-copy { font-size: 11px; color: var(--border); margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="gsu-tag">Global Sovereign University &nbsp;·&nbsp; Library &nbsp;·&nbsp; Play Before You Buy</div>
+  <h1 class="game-title">The Fog-Industrial <em>Complex</em></h1>
+  <div class="game-subtitle">Sovereignty · Critical Thinking · 30 Questions</div>
+  <div class="pbybadge">Play Before You Buy</div>
+</div>
+
+<div class="badge-bar">
+  <div class="badge" id="badge-bronze"><span class="badge-icon">🥉</span> Bronze</div>
+  <div class="badge" id="badge-silver"><span class="badge-icon">🥈</span> Silver</div>
+  <div class="badge" id="badge-gold"><span class="badge-icon">🥇</span> Gold</div>
+  <div class="badge" id="badge-platinum"><span class="badge-icon">💎</span> Platinum</div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-block"><div class="stat-val" id="scoreVal">0</div><div class="stat-lbl">Score</div></div>
+  <div class="stat-block"><div class="stat-val" id="streakVal">0</div><div class="stat-lbl">Streak 🔥</div></div>
+  <div class="stat-block"><div class="stat-val" id="qVal">0/30</div><div class="stat-lbl">Progress</div></div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span id="progressLabel">Ready</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<div class="game-area">
+
+  <div class="geno-panel">
+    <div class="geno-avatar">🤖</div>
+    <div class="geno-content">
+      <div class="geno-name">G.E.N.O. — GSU Education Navigator Online</div>
+      <div class="geno-msg" id="genoMsg">Welcome. I'm GENO. This game is built on The Fog-Industrial Complex by Dr. Gene A. Constant — 30 questions about manufactured confusion, institutional manipulation, and the systems designed to keep you from thinking clearly. The fog is real. Let's find out how much of it you can already see through.</div>
+      <button class="geno-speak-btn" onclick="genoSpeak()">🔊 Hear GENO</button>
+    </div>
+  </div>
+
+  <div class="screen active" id="screen-intro">
+    <div class="intro-screen">
+      <p class="intro-desc">30 scenario-based questions drawn from the book's core arguments about the systems — media, institutions, language, and culture — that profit from keeping people confused, distracted, and dependent.</p>
+      <div class="badge-preview">
+        <div class="bp-item"><div class="bp-icon">🥉</div><div class="bp-name">Bronze</div><div class="bp-score">10+ correct</div></div>
+        <div class="bp-item"><div class="bp-icon">🥈</div><div class="bp-name">Silver</div><div class="bp-score">16+ correct</div></div>
+        <div class="bp-item"><div class="bp-icon">🥇</div><div class="bp-name">Gold</div><div class="bp-score">22+ correct</div></div>
+        <div class="bp-item"><div class="bp-icon">💎</div><div class="bp-name">Platinum</div><div class="bp-score">28–30 correct</div></div>
+      </div>
+      <button class="btn-start" onclick="startGame()">▶ Start the Game</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-quiz">
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-category" id="qCategory">Critical Thinking</span>
+        <span class="q-number">Q <span id="qNum">1</span> / 30</span>
+      </div>
+      <div class="q-text" id="qText"></div>
+    </div>
+    <div class="answers-grid" id="answersGrid"></div>
+    <div class="action-row">
+      <button class="btn-check" id="btnCheck" onclick="checkAnswer()">Check Answer</button>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Next Question →</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-results">
+    <div class="results-screen">
+      <div class="results-badge-big" id="resultsBadge">🎓</div>
+      <div class="results-score-big" id="resultsScore">0</div>
+      <div class="results-of">out of 30 correct</div>
+      <div class="results-badge-name" id="resultsBadgeName">Well played</div>
+      <div class="results-msg" id="resultsMsg">Every question in this game comes from ideas in the book. Ready to go deeper?</div>
+      <button class="btn-replay" onclick="resetGame()">↺ Play Again</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="resource-dock">
+  <div class="dock-inner">
+    <div class="dock-label">Hear It · Watch It · Read It · Own It</div>
+    <a href="https://www.amazon.com/dp/B0GQSLGQ86?tag=gsu2026-20" target="_blank" class="dock-card amazon">
+      <div class="dock-card-label">📦 Get the Book</div>
+      <div class="dock-card-title">The Fog-Industrial Complex</div>
+      <div class="dock-card-sub">Kindle &amp; Paperback on Amazon — Dr. Gene A. Constant</div>
+    </a>
+    <a href="https://youtu.be/Jm7RwveXDPs" target="_blank" class="dock-card video">
+      <div class="dock-card-label">▶ Watch</div>
+      <div class="dock-card-title">Watch Before You Buy</div>
+      <div class="dock-card-sub">Official video — The Fog-Industrial Complex — GSU YouTube</div>
+    </a>
+    <div class="dock-card pod" style="grid-column:1/-1;">
+      <div class="dock-card-label">🎙 Listen — Voice of Sovereignty Podcast</div>
+      <div class="dock-card-title" style="margin-bottom:12px;">The Fog-Industrial Complex — Full Episode</div>
+      <audio controls style="width:100%;height:36px;accent-color:#1a8b7f;">
+        <source src="https://www.buzzsprout.com/2530740/episodes/18849981-the-fog-industrial-complex.mp3?download=true" type="audio/mpeg">
+      </audio>
+    </div>
+    <a href="https://www.globalsovereignuniversity.org/bookgames" target="_blank" class="dock-card pdf" style="grid-column:1/-1;">
+      <div class="dock-card-label">🎮 GSU Library</div>
+      <div class="dock-card-title">Play More Games Free</div>
+      <div class="dock-card-sub">30+ titles across sovereignty, trades, literacy, and more</div>
+    </a>
+  </div>
+</div>
+
+<div class="game-footer">
+  <div class="footer-links">
+    <a href="https://www.globalsovereignuniversity.org" class="footer-link">GSU Home</a>
+    <a href="https://www.globalsovereignuniversity.org/bookgames" class="footer-link">Library</a>
+    <a href="https://www.amazon.com/author/geneconstant" class="footer-link">All Books</a>
+  </div>
+  <div class="footer-copy">Global Sovereign University · Foundation for Global Instruction · Free 501(c)(3) Nonprofit · EIN 39-2716552</div>
+</div>
+
+<script>
+const questions = [
+  { cat:"The Fog Defined", q:"The book defines 'the fog' as:", a:["Natural confusion caused by information overload","A deliberate system of manufactured uncertainty that serves powerful institutions","The psychological result of trauma and stress","Cognitive decline caused by technology addiction"], c:1 },
+  { cat:"Who Benefits", q:"According to the book, the Fog-Industrial Complex primarily benefits:", a:["The average citizen seeking clarity","Institutions, media, and systems that profit from public confusion and dependency","Independent journalists and truth-seekers","Technology companies building AI tools"], c:1 },
+  { cat:"Media Manipulation", q:"The book argues that mainstream media's primary function is:", a:["To inform the public with objective, verifiable facts","To generate profit by managing public attention and emotional response","To hold government and corporations accountable","To preserve the historical record for future generations"], c:1 },
+  { cat:"Language as Fog", q:"Which tactic does the book identify as a primary tool of the Fog-Industrial Complex?", a:["Plain language designed to make ideas accessible","Complexity and jargon used to exclude ordinary people from understanding","Visual media replacing written communication","Shortened content designed for mobile consumption"], c:1 },
+  { cat:"Outrage Economy", q:"The book describes the 'outrage economy' as a system that:", a:["Channels public anger into productive civic action","Profits from keeping people emotionally activated and intellectually disengaged","Results naturally from political polarization","Was created by social media platforms in the 2010s"], c:1 },
+  { cat:"Dependency by Design", q:"The Fog-Industrial Complex, according to the book, is most successful when citizens:", a:["Are highly educated and credentialed","Rely on approved institutions to interpret reality for them","Engage critically with multiple independent sources","Participate actively in local government"], c:1 },
+  { cat:"Clarity as Resistance", q:"The book frames intellectual clarity as:", a:["A natural state that requires no effort to maintain","An act of sovereign resistance against systems designed to obscure","A privilege available only to the formally educated","A product that can be purchased through premium media subscriptions"], c:1 },
+  { cat:"The Narrative Machine", q:"Narratives, according to the book, are most dangerous when they:", a:["Are told by governments without media oversight","Replace facts with emotional frameworks that feel more real than evidence","Are shared rapidly across social media platforms","Originate from anonymous or unverified sources"], c:1 },
+  { cat:"Institutional Trust", q:"The book argues that blind trust in institutions:", a:["Is the foundation of a functional and stable society","Is a manufactured disposition that serves the institution more than the individual","Reflects appropriate deference to expertise and credentialed knowledge","Declines naturally as citizens become more educated"], c:1 },
+  { cat:"Fear as Tool", q:"Fear, in the context of the Fog-Industrial Complex, is described as:", a:["A natural human response to genuine threats","The fog's most effective raw material — manufactured to produce compliance","A temporary emotion that rational analysis quickly overcomes","A response limited to vulnerable or uninformed populations"], c:1 },
+  { cat:"The Sovereign Mind", q:"A sovereign mind, as described in the book, responds to the fog by:", a:["Consuming more information from a wider range of sources","Refusing to engage with any media or institutional communication","Developing the internal capacity to evaluate claims independent of authority","Trusting only peer-reviewed academic research"], c:2 },
+  { cat:"Complexity Theater", q:"'Complexity theater' in the book refers to:", a:["Dramatic media coverage of genuinely complex issues","The deliberate use of unnecessary complexity to make power unaccountable","Academic debates that have no real-world application","The entertainment industry's portrayal of government and science"], c:1 },
+  { cat:"The Fog Economy", q:"Which industry does the book NOT identify as a primary participant in the Fog-Industrial Complex?", a:["Pharmaceutical advertising","Independent skilled trades and craftwork","Political consulting and campaign management","Corporate public relations"], c:1 },
+  { cat:"Attention as Currency", q:"The book describes human attention as:", a:["A renewable resource that expands with education","The primary raw material harvested by the Fog-Industrial Complex","Something that declines naturally with age and information overload","A measurable cognitive capacity that varies by intelligence"], c:1 },
+  { cat:"Breaking Free", q:"According to the book, the first step toward clearing the fog is:", a:["Consuming less media and more books","Recognizing that the fog exists and was deliberately constructed","Joining community organizations that promote civic engagement","Pursuing higher education and professional credentials"], c:1 },
+  { cat:"Consensus Manufacturing", q:"Manufactured consensus, as described in the book, works by:", a:["Bringing diverse viewpoints together to find genuine agreement","Repeating a preferred narrative until disagreement seems fringe or dangerous","Using scientific research to establish verified factual baselines","Crowdsourcing public opinion through digital platforms"], c:1 },
+  { cat:"The Expert Class", q:"The book's view of expert authority is best described as:", a:["Experts should always be trusted because credentialing filters out bias","Expertise is valuable but should never substitute for your own independent reasoning","Expert consensus is the most reliable guide to sovereign decision-making","Experts are always working on behalf of powerful institutional interests"], c:1 },
+  { cat:"Distraction by Design", q:"The book argues that entertainment culture primarily functions to:", a:["Enrich human experience and build community","Occupy attention that might otherwise be directed at understanding power","Transmit cultural values across generations","Generate economic activity through creative industries"], c:1 },
+  { cat:"The Language of Crisis", q:"Perpetual crisis framing in media, according to the book, produces:", a:["Informed citizens who demand accountability from leaders","Chronic anxiety that makes populations easier to manage and manipulate","Accurate public understanding of genuine systemic risks","Collective action that leads to meaningful institutional reform"], c:1 },
+  { cat:"Sovereign Information", q:"The book recommends which approach to information gathering?", a:["Trust the most widely cited and shared sources","Consume primary sources and develop personal frameworks for evaluating claims","Defer to credentialed experts in each relevant field","Limit information consumption to reduce cognitive overload"], c:1 },
+  { cat:"The Fog and Identity", q:"The book argues that identity politics, as practiced institutionally, primarily serves to:", a:["Build genuine solidarity among historically marginalized groups","Fragment potential opposition and redirect energy away from systemic analysis","Raise public consciousness about structural inequality","Produce more representative institutions and leadership"], c:1 },
+  { cat:"Corporate Fog", q:"Corporate communication, according to the book, is most accurately described as:", a:["Transparent disclosure required by law and shareholder obligation","Managed narrative designed to protect brand value and institutional power","Neutral information transfer between company and consumer","An evolving practice increasingly held accountable by social media"], c:1 },
+  { cat:"Political Theater", q:"The book characterizes partisan political conflict as:", a:["A genuine battle between fundamentally different visions for society","Managed theater that preserves the illusion of choice while protecting elite consensus","A necessary feature of democratic accountability","A temporary phase that resolves as societies become more educated"], c:1 },
+  { cat:"The Sovereign Community", q:"The antidote to the Fog-Industrial Complex, according to the book, begins with:", a:["Organized political movements demanding media reform","Individual sovereign thinking that spreads person to person","Government regulation of information platforms","A return to traditional religious and cultural institutions"], c:1 },
+  { cat:"Data as Fog", q:"The book warns that data, when used by the Fog-Industrial Complex, can:", a:["Always be trusted because numbers are objective","Be selectively curated and framed to produce any desired conclusion","Only be manipulated when presented without proper citations","Be verified quickly by cross-referencing multiple news sources"], c:1 },
+  { cat:"Education and the Fog", q:"The book argues that formal education, as currently structured, primarily teaches students to:", a:["Question institutional authority and develop independent frameworks","Accept the fog as reality and distrust information outside official channels","Develop practical skills for navigating complex real-world problems","Think critically about media, government, and corporate communication"], c:1 },
+  { cat:"The Clarity Standard", q:"The book's 'clarity standard' asks individuals to evaluate information by:", a:["Who produced it and what credentials they hold","What purpose the information serves and who benefits from your believing it","How widely the information has been shared and cited","Whether it aligns with your prior beliefs and value system"], c:1 },
+  { cat:"Fog and Freedom", q:"According to the book, personal freedom is impossible without:", a:["Financial independence and material security","Institutional protections guaranteed by government","The capacity to think clearly and evaluate reality without institutional mediation","Community support and social connection"], c:2 },
+  { cat:"The Dissenter", q:"The book describes the person who publicly questions the dominant narrative as:", a:["A dangerous source of misinformation who threatens social cohesion","A sovereign thinker performing the most important civic function available","An outlier whose views should be considered but not amplified","A contrarian whose skepticism undermines constructive dialogue"], c:1 },
+  { cat:"Final Question", q:"The central call to action in The Fog-Industrial Complex is:", a:["Demand that governments regulate media and information platforms","Reject all institutional authority and build parallel systems","Develop your own sovereign mind — because no institution will clear the fog for you","Return to local community structures that predate mass media"], c:2 }
+];
+
+let qOrder=[], currentQ=0, score=0, streak=0, selected=null, answered=false;
+
+const genoMessages = {
+  welcome: "Welcome. I'm GENO. This game is built on The Fog-Industrial Complex — 30 questions about the systems designed to keep you confused. Let's find out how much of the fog you can already see through.",
+  correct: ["Correct. You can see the structure. Most people never look for it.","Exactly right. That's sovereign thinking.","Right. The fog only works when you don't name it.","Correct. Clarity is a choice — and you just made it.","That's it. The book was written for people who already suspect this."],
+  wrong: ["Not quite. The answer reveals how the system actually works beneath the surface.","Close — but the fog runs deeper than that.","That's the answer the system wants you to give. The book challenges that assumption.","Incorrect — but this is precisely why this book exists.","The right answer is uncomfortable. That discomfort is the fog lifting."],
+  bronze: "🥉 Bronze earned. You're beginning to see the architecture of confusion. Keep going.",
+  silver: "🥈 Silver. The fog is lifting. You think more clearly than most.",
+  gold: "🥇 Gold. Outstanding. You see the machine and refuse to be managed by it.",
+  platinum: "💎 PLATINUM. Perfect. The fog has no power over a mind this clear."
+};
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startGame(){
+  qOrder=shuffle([...Array(questions.length).keys()]);
+  currentQ=0; score=0; streak=0;
+  showScreen('screen-quiz');
+  loadQuestion();
+  updateStats();
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function loadQuestion(){
+  if(currentQ>=30){showResults();return;}
+  const q=questions[qOrder[currentQ]];
+  document.getElementById('qCategory').textContent=q.cat;
+  document.getElementById('qNum').textContent=currentQ+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('answersGrid').innerHTML=q.a.map((a,i)=>`<button class="answer-btn" onclick="selectAnswer(${i})">${a}</button>`).join('');
+  document.getElementById('btnCheck').style.display='';
+  document.getElementById('btnCheck').disabled=true;
+  document.getElementById('btnNext').style.display='none';
+  selected=null; answered=false;
+  updateProgress();
+  setGeno(genoMessages.welcome);
+}
+
+function selectAnswer(i){
+  if(answered)return;
+  selected=i;
+  document.querySelectorAll('.answer-btn').forEach((b,j)=>b.classList.toggle('selected',j===i));
+  document.getElementById('btnCheck').disabled=false;
+}
+
+function checkAnswer(){
+  if(selected===null||answered)return;
+  answered=true;
+  const q=questions[qOrder[currentQ]];
+  const btns=document.querySelectorAll('.answer-btn');
+  if(selected===q.c){
+    score++;streak++;
+    btns[selected].classList.add('correct');
+    const msgs=genoMessages.correct;
+    setGeno(msgs[Math.floor(Math.random()*msgs.length)]);
+    updateBadges();
+  } else {
+    streak=0;
+    btns[selected].classList.add('wrong');
+    btns[q.c].classList.add('correct');
+    const msgs=genoMessages.wrong;
+    setGeno(msgs[Math.floor(Math.random()*msgs.length)]);
+  }
+  btns.forEach(b=>b.disabled=true);
+  document.getElementById('btnCheck').style.display='none';
+  document.getElementById('btnNext').style.display='';
+  updateStats();
+}
+
+function nextQuestion(){currentQ++;loadQuestion();}
+
+function updateStats(){
+  document.getElementById('scoreVal').textContent=score;
+  document.getElementById('streakVal').textContent=streak;
+  document.getElementById('qVal').textContent=currentQ+'/30';
+}
+
+function updateProgress(){
+  const pct=Math.round((currentQ/30)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent='Question '+(currentQ+1)+' of 30';
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('qVal').textContent=currentQ+'/30';
+}
+
+function updateBadges(){
+  if(score>=10){document.getElementById('badge-bronze').classList.add('earned');if(score===10)setGeno(genoMessages.bronze);}
+  if(score>=16){document.getElementById('badge-silver').classList.add('earned');if(score===16)setGeno(genoMessages.silver);}
+  if(score>=22){document.getElementById('badge-gold').classList.add('earned');if(score===22)setGeno(genoMessages.gold);}
+  if(score>=28){document.getElementById('badge-platinum').classList.add('earned');if(score===28)setGeno(genoMessages.platinum);}
+}
+
+function showResults(){
+  showScreen('screen-results');
+  let badge='🎓', name='Participant', msg='Every question in this game comes from ideas in the book. Ready to go deeper?';
+  if(score>=28){badge='💎';name='Platinum — Perfect Clarity';msg='Flawless. The fog has no grip on a mind this clear. Dr. Constant wrote this book for exactly the thinker you are.';}
+  else if(score>=22){badge='🥇';name='Gold — Sharp Mind';msg='Exceptional. You see the machine clearly and refuse to be managed by it. The book will sharpen you further.';}
+  else if(score>=16){badge='🥈';name='Silver — Emerging Clarity';msg='Strong performance. You are already thinking past the fog. The book will take you the rest of the way.';}
+  else if(score>=10){badge='🥉';name='Bronze — Awakening';msg='Good start. The fog is real and it is thick. The book will show you exactly how it was built — and how to walk out of it.';}
+  else{badge='📖';name='Keep Going';msg='The fog wins when we do not know it exists. Start with the book — it names what most people spend a lifetime inside without ever questioning.';}
+  document.getElementById('resultsBadge').textContent=badge;
+  document.getElementById('resultsScore').textContent=score;
+  document.getElementById('resultsBadgeName').textContent=name;
+  document.getElementById('resultsMsg').textContent=msg;
+  setGeno('You scored '+score+' out of 30. '+msg);
+}
+
+function resetGame(){
+  document.querySelectorAll('.badge').forEach(b=>b.classList.remove('earned'));
+  document.getElementById('progressFill').style.width='0%';
+  document.getElementById('progressLabel').textContent='Ready';
+  document.getElementById('progressPct').textContent='0%';
+  startGame();
+}
+
+function setGeno(msg){ document.getElementById('genoMsg').innerHTML=msg; }
+
+function genoSpeak(){
+  const txt=document.getElementById('genoMsg').textContent;
+  if('speechSynthesis' in window){
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(txt);
+    u.rate=0.92; u.pitch=1;
+    speechSynthesis.speak(u);
+  }
+}
+</script>
+</body>
+</html>

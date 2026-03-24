@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Amnesty Protocol | BookGame | Global Sovereign University</title>
+<meta name="description" content="Play Before You Buy — 30 questions based on The Amnesty Protocol by Dr. Gene A. Constant. Test your knowledge of clean-slate learning, sovereign education, and the power to start over. Free from GSU.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow+Condensed:wght@300;400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #07090f;
+  --deep:   #0b0f1a;
+  --navy:   #0e1628;
+  --slate:  #182238;
+  --border: #1e2f4a;
+  --gold:   #c8a84b;
+  --gold2:  #e8c86b;
+  --gold3:  #f5e0a0;
+  --teal:   #1a8b7f;
+  --teal2:  #22b5a4;
+  --ivory:  #f0ead8;
+  --fog:    #8a9ab5;
+  --text:   #dce6f5;
+  --ff-display: 'Playfair Display', Georgia, serif;
+  --ff-cond:    'Barlow Condensed', sans-serif;
+  --ff-mono:    'IBM Plex Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--ff-cond);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(200,168,75,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(26,139,127,.05) 0%, transparent 50%);
+}
+.page-header {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 48px 24px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.gsu-tag {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.game-title {
+  font-family: var(--ff-display);
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 900;
+  color: var(--ivory);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.game-title em { color: var(--gold); font-style: italic; }
+.game-subtitle {
+  font-family: var(--ff-cond);
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin-bottom: 20px;
+}
+.pbybadge {
+  display: inline-block;
+  background: rgba(200,168,75,.1);
+  border: 1px solid rgba(200,168,75,.3);
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.badge-bar {
+  position: relative; z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 24px;
+  flex-wrap: wrap;
+}
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  border: 1px solid var(--border);
+  background: var(--deep);
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--fog);
+  transition: all .4s;
+}
+.badge.earned { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,.1); }
+.badge-icon { font-size: 16px; filter: grayscale(1) opacity(.4); transition: filter .4s; }
+.badge.earned .badge-icon { filter: none; }
+.stats-bar {
+  position: relative; z-index: 2;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stat-block {
+  flex: 1; max-width: 160px; text-align: center;
+  padding: 14px 12px;
+  border-right: 1px solid var(--border);
+}
+.stat-block:last-child { border-right: none; }
+.stat-val {
+  font-family: var(--ff-display);
+  font-size: 28px; font-weight: 900;
+  color: var(--gold); line-height: 1;
+}
+.stat-lbl {
+  font-family: var(--ff-mono);
+  font-size: 9px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--fog); margin-top: 3px;
+}
+.progress-wrap {
+  position: relative; z-index: 2;
+  padding: 12px 32px;
+  border-bottom: 1px solid var(--border);
+}
+.progress-meta {
+  display: flex; justify-content: space-between;
+  font-family: var(--ff-mono); font-size: 10px;
+  color: var(--fog); letter-spacing: .1em; margin-bottom: 6px;
+}
+.progress-track { height: 3px; background: var(--slate); border-radius: 2px; overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--teal), var(--gold));
+  border-radius: 2px; transition: width .4s ease;
+}
+.game-area {
+  position: relative; z-index: 2;
+  max-width: 800px; margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+.geno-panel {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: 12px; padding: 18px 20px; margin-bottom: 28px;
+}
+.geno-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), #0a5048);
+  border: 1px solid rgba(26,139,127,.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.geno-content { flex: 1; }
+.geno-name {
+  font-family: var(--ff-mono); font-size: 9px;
+  letter-spacing: .2em; color: var(--teal2);
+  text-transform: uppercase; margin-bottom: 5px;
+}
+.geno-msg { font-size: 15px; line-height: 1.6; color: var(--text); }
+.geno-speak-btn {
+  margin-top: 10px; background: transparent;
+  border: 1px solid rgba(26,139,127,.35); border-radius: 20px;
+  padding: 5px 14px; font-family: var(--ff-mono); font-size: 10px;
+  letter-spacing: .1em; color: var(--teal2); cursor: pointer; transition: all .2s;
+}
+.geno-speak-btn:hover { background: rgba(26,139,127,.1); border-color: var(--teal2); }
+.question-card {
+  background: var(--deep); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px 28px 24px; margin-bottom: 20px;
+}
+.q-meta {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 16px;
+}
+.q-category { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--teal2); }
+.q-number { font-family: var(--ff-mono); font-size: 10px; color: var(--fog); }
+.q-text {
+  font-family: var(--ff-display);
+  font-size: clamp(17px, 2.5vw, 22px);
+  font-weight: 700; color: var(--ivory); line-height: 1.45;
+}
+.answers-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 20px;
+}
+@media(max-width:560px){ .answers-grid { grid-template-columns: 1fr; } }
+.answer-btn {
+  background: var(--deep); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 18px;
+  font-family: var(--ff-cond); font-size: 15px; font-weight: 600;
+  color: var(--text); text-align: left; cursor: pointer;
+  transition: all .2s; line-height: 1.35;
+}
+.answer-btn:hover { border-color: rgba(200,168,75,.4); background: rgba(200,168,75,.05); color: var(--ivory); }
+.answer-btn.selected { border-color: var(--gold); background: rgba(200,168,75,.1); color: var(--gold); }
+.answer-btn.correct { border-color: var(--teal2); background: rgba(26,139,127,.15); color: var(--teal2); pointer-events: none; }
+.answer-btn.wrong { border-color: #c04040; background: rgba(192,64,64,.1); color: #c04040; pointer-events: none; }
+.answer-btn:disabled { pointer-events: none; }
+.action-row {
+  display: flex; gap: 10px;
+  justify-content: flex-end; margin-bottom: 20px;
+}
+.btn-check {
+  padding: 12px 28px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #0a0800; font-family: var(--ff-cond); font-size: 14px;
+  font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  border: none; cursor: pointer; transition: all .2s;
+}
+.btn-check:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,168,75,.3); }
+.btn-check:disabled { opacity: .4; cursor: default; transform: none; box-shadow: none; }
+.btn-next {
+  padding: 12px 28px; border-radius: 8px;
+  background: rgba(26,139,127,.15);
+  border: 1px solid rgba(26,139,127,.4);
+  color: var(--teal2); font-family: var(--ff-cond); font-size: 14px;
+  font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  cursor: pointer; transition: all .2s; display: none;
+}
+.btn-next:hover { background: rgba(26,139,127,.25); }
+.screen { display: none; }
+.screen.active { display: block; }
+.intro-screen { text-align: center; padding: 20px 0 32px; }
+.intro-desc { font-size: 17px; line-height: 1.7; color: var(--fog); max-width: 580px; margin: 0 auto 28px; }
+.badge-preview { display: flex; justify-content: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+.bp-item { text-align: center; background: var(--deep); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; min-width: 90px; }
+.bp-icon { font-size: 24px; margin-bottom: 4px; }
+.bp-name { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .12em; color: var(--fog); text-transform: uppercase; }
+.bp-score { font-size: 12px; color: var(--gold); font-weight: 700; margin-top: 2px; }
+.btn-start {
+  padding: 16px 48px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #0a0800; font-family: var(--ff-cond); font-size: 16px;
+  font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  border: none; cursor: pointer; transition: all .25s;
+  box-shadow: 0 4px 24px rgba(200,168,75,.25);
+}
+.btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,168,75,.35); }
+.results-screen { text-align: center; padding: 20px 0 40px; }
+.results-badge-big { font-size: 72px; margin-bottom: 12px; }
+.results-score-big { font-family: var(--ff-display); font-size: 64px; font-weight: 900; color: var(--gold); line-height: 1; }
+.results-of { font-family: var(--ff-mono); font-size: 12px; color: var(--fog); letter-spacing: .15em; margin: 6px 0 16px; }
+.results-badge-name { font-family: var(--ff-display); font-size: 28px; font-weight: 700; color: var(--ivory); margin-bottom: 8px; }
+.results-msg { font-size: 16px; color: var(--fog); max-width: 500px; margin: 0 auto 28px; line-height: 1.6; }
+.btn-replay {
+  padding: 13px 36px; border-radius: 8px; background: transparent;
+  border: 1px solid rgba(200,168,75,.4); color: var(--gold);
+  font-family: var(--ff-cond); font-size: 14px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: all .2s;
+}
+.btn-replay:hover { background: rgba(200,168,75,.1); }
+.resource-dock {
+  position: relative; z-index: 2;
+  background: var(--deep); border-top: 1px solid var(--border);
+  padding: 40px 24px;
+}
+.dock-inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:600px){ .dock-inner { grid-template-columns: 1fr; } }
+.dock-label { grid-column: 1/-1; font-family: var(--ff-mono); font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 8px; }
+.dock-card { background: var(--navy); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; text-decoration: none; display: block; transition: border-color .2s, transform .2s; }
+.dock-card:hover { border-color: rgba(200,168,75,.35); transform: translateY(-2px); }
+.dock-card-label { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--teal2); margin-bottom: 6px; }
+.dock-card-title { font-family: var(--ff-display); font-size: 17px; font-weight: 700; color: var(--ivory); margin-bottom: 4px; }
+.dock-card-sub { font-size: 13px; color: var(--fog); line-height: 1.5; }
+.dock-card.amazon { border-left: 3px solid var(--gold); }
+.dock-card.pdf    { border-left: 3px solid var(--teal); }
+.dock-card.video  { border-left: 3px solid #c04040; }
+.dock-card.pod    { border-left: 3px solid var(--teal2); }
+.game-footer { position: relative; z-index: 2; text-align: center; padding: 20px 24px 32px; border-top: 1px solid var(--border); }
+.footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.footer-link { font-family: var(--ff-mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--fog); text-decoration: none; transition: color .2s; }
+.footer-link:hover { color: var(--gold); }
+.footer-copy { font-size: 11px; color: var(--border); margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="gsu-tag">Global Sovereign University &nbsp;·&nbsp; Library &nbsp;·&nbsp; Play Before You Buy</div>
+  <h1 class="game-title">The Amnesty <em>Protocol</em></h1>
+  <div class="game-subtitle">Sovereignty · Education · Clean Slate · 30 Questions</div>
+  <div class="pbybadge">Play Before You Buy</div>
+</div>
+
+<div class="badge-bar">
+  <div class="badge" id="badge-bronze"><span class="badge-icon">🥉</span> Bronze</div>
+  <div class="badge" id="badge-silver"><span class="badge-icon">🥈</span> Silver</div>
+  <div class="badge" id="badge-gold"><span class="badge-icon">🥇</span> Gold</div>
+  <div class="badge" id="badge-platinum"><span class="badge-icon">💎</span> Platinum</div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-block"><div class="stat-val" id="scoreVal">0</div><div class="stat-lbl">Score</div></div>
+  <div class="stat-block"><div class="stat-val" id="streakVal">0</div><div class="stat-lbl">Streak 🔥</div></div>
+  <div class="stat-block"><div class="stat-val" id="qVal">0/30</div><div class="stat-lbl">Progress</div></div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span id="progressLabel">Ready</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<div class="game-area">
+
+  <div class="geno-panel">
+    <div class="geno-avatar">🤖</div>
+    <div class="geno-content">
+      <div class="geno-name">G.E.N.O. — GSU Education Navigator Online</div>
+      <div class="geno-msg" id="genoMsg">Welcome. I'm GENO. This game is built on The Amnesty Protocol by Dr. Gene A. Constant — 30 questions about the philosophy that no past failure, no old transcript, and no institutional rejection has the power to define what you are capable of becoming. The slate is clean. Let's begin.</div>
+      <button class="geno-speak-btn" onclick="genoSpeak()">🔊 Hear GENO</button>
+    </div>
+  </div>
+
+  <div class="screen active" id="screen-intro">
+    <div class="intro-screen">
+      <p class="intro-desc">30 scenario-based questions drawn from the book's core philosophy — the belief that every person deserves a clean slate, that past academic failure is not permanent, and that sovereign learning begins the moment you decide it does.</p>
+      <div class="badge-preview">
+        <div class="bp-item"><div class="bp-icon">🥉</div><div class="bp-name">Bronze</div><div class="bp-score">10+ correct</div></div>
+        <div class="bp-item"><div class="bp-icon">🥈</div><div class="bp-name">Silver</div><div class="bp-score">16+ correct</div></div>
+        <div class="bp-item"><div class="bp-icon">🥇</div><div class="bp-name">Gold</div><div class="bp-score">22+ correct</div></div>
+        <div class="bp-item"><div class="bp-icon">💎</div><div class="bp-name">Platinum</div><div class="bp-score">28–30 correct</div></div>
+      </div>
+      <button class="btn-start" onclick="startGame()">▶ Start the Game</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-quiz">
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-category" id="qCategory">The Amnesty Protocol</span>
+        <span class="q-number">Q <span id="qNum">1</span> / 30</span>
+      </div>
+      <div class="q-text" id="qText"></div>
+    </div>
+    <div class="answers-grid" id="answersGrid"></div>
+    <div class="action-row">
+      <button class="btn-check" id="btnCheck" onclick="checkAnswer()">Check Answer</button>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Next Question →</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-results">
+    <div class="results-screen">
+      <div class="results-badge-big" id="resultsBadge">🎓</div>
+      <div class="results-score-big" id="resultsScore">0</div>
+      <div class="results-of">out of 30 correct</div>
+      <div class="results-badge-name" id="resultsBadgeName">Well played</div>
+      <div class="results-msg" id="resultsMsg">Every question in this game comes from ideas in the book. Ready to go deeper?</div>
+      <button class="btn-replay" onclick="resetGame()">↺ Play Again</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="resource-dock">
+  <div class="dock-inner">
+    <div class="dock-label">Hear It · Watch It · Read It · Own It</div>
+    <a href="https://www.amazon.com/dp/B0GQ3FV3P9?tag=gsu2026-20" target="_blank" class="dock-card amazon">
+      <div class="dock-card-label">📦 Get the Book</div>
+      <div class="dock-card-title">The Amnesty Protocol</div>
+      <div class="dock-card-sub">Kindle &amp; Paperback on Amazon — Dr. Gene A. Constant</div>
+    </a>
+    <a href="https://youtu.be/IiMUaXo0Yos" target="_blank" class="dock-card video">
+      <div class="dock-card-label">▶ Watch</div>
+      <div class="dock-card-title">Watch Before You Buy</div>
+      <div class="dock-card-sub">Official video — The Amnesty Protocol — GSU YouTube</div>
+    </a>
+    <div class="dock-card pod" style="grid-column:1/-1;">
+      <div class="dock-card-label">🎙 Listen — Voice of Sovereignty Podcast</div>
+      <div class="dock-card-title" style="margin-bottom:12px;">The Amnesty Protocol — Full Episode</div>
+      <audio controls style="width:100%;height:36px;accent-color:#1a8b7f;">
+        <source src="https://www.buzzsprout.com/2530740/episodes/18845360-the-amnesty-protocol.mp3?download=true" type="audio/mpeg">
+      </audio>
+    </div>
+    <a href="https://www.globalsovereignuniversity.org/bookgames" target="_blank" class="dock-card pdf" style="grid-column:1/-1;">
+      <div class="dock-card-label">🎮 GSU Library</div>
+      <div class="dock-card-title">Play More Games Free</div>
+      <div class="dock-card-sub">30+ titles across sovereignty, trades, literacy, and more</div>
+    </a>
+  </div>
+</div>
+
+<div class="game-footer">
+  <div class="footer-links">
+    <a href="https://www.globalsovereignuniversity.org" class="footer-link">GSU Home</a>
+    <a href="https://www.globalsovereignuniversity.org/bookgames" class="footer-link">Library</a>
+    <a href="https://www.amazon.com/author/geneconstant" class="footer-link">All Books</a>
+  </div>
+  <div class="footer-copy">Global Sovereign University · Foundation for Global Instruction · Free 501(c)(3) Nonprofit · EIN 39-2716552</div>
+</div>
+
+<script>
+const questions = [
+  { cat:"The Clean Slate", q:"The Amnesty Protocol is best defined as:", a:["A government program offering debt forgiveness for student loans","A philosophy that declares past academic failure irrelevant to future learning potential","A legal process for expunging educational records","A second-chance degree program for adult learners"], c:1 },
+  { cat:"Who It Is For", q:"According to the book, the Amnesty Protocol is designed for:", a:["Only students who failed due to circumstances beyond their control","Anyone who was told by the system that they were not college material","High school graduates who chose trades over university","Adults returning to education after a career break"], c:1 },
+  { cat:"Past Transcripts", q:"The book's position on past transcripts and grades is:", a:["They are valuable records that inform future learning strategy","They are irrelevant — they measure compliance, not capability","They should be reviewed and addressed before new learning begins","They can be redeemed through remedial coursework"], c:1 },
+  { cat:"GSU's Philosophy", q:"GSU's Amnesty Protocol reflects which foundational belief?", a:["Education is a privilege earned through demonstrated academic performance","Every person has the sovereign right to pursue knowledge regardless of their history","Formal credentials are the only legitimate measure of educational achievement","Past performance is the most reliable predictor of future potential"], c:1 },
+  { cat:"The Founder's Journey", q:"The author's personal educational path — from GED to Doctor of Business Administration — is cited in the book as evidence that:", a:["The traditional academic path is the most reliable route to success","Any credential can be achieved with enough time and tuition","The clean slate is not a theory — it is a lived reality","Higher education institutions are willing to overlook prior failure"], c:2 },
+  { cat:"Institutional Gatekeeping", q:"The book argues that institutional admission requirements primarily function to:", a:["Ensure students are prepared for the rigor of advanced coursework","Protect institutional prestige and filter for compliance, not capability","Guarantee quality outcomes for graduates","Match student ability to appropriate program difficulty"], c:1 },
+  { cat:"Sovereign Learning", q:"Under the Amnesty Protocol, learning is initiated by:", a:["An admissions committee reviewing your qualifications","A counselor determining your appropriate academic level","The individual — no permission from any institution required","A placement test establishing your foundational knowledge baseline"], c:2 },
+  { cat:"The Phi Theta Kappa Lesson", q:"The book references Phi Theta Kappa Honor Society membership to illustrate:", a:["The value of community college as a pathway to university transfer","That academic excellence can emerge from any starting point after a clean slate","The importance of extracurricular achievement in educational records","That honor societies are more accessible than four-year university honors programs"], c:1 },
+  { cat:"Capability vs. Credential", q:"The book distinguishes capability from credential by arguing that:", a:["Credentials verify capability and are therefore equivalent","Capability is what you can actually do — credentials are what institutions say about you","Credentials are a more reliable signal because they are independently verified","Capability without credentials has no value in the modern economy"], c:1 },
+  { cat:"The Frankenstein Methodology", q:"GSU's Frankenstein Methodology, referenced in the book, refers to:", a:["Combining unrelated subjects into a single interdisciplinary program","Assembling a personalized education from the best available pieces regardless of source","Using technology to simulate laboratory and field experience","Rebuilding failed students through intensive remediation programs"], c:1 },
+  { cat:"Age and Learning", q:"The book's position on age as a barrier to learning is:", a:["Cognitive decline after 40 makes advanced learning significantly more difficult","Age is a barrier constructed by institutions, not by biology or capability","Older learners face legitimate disadvantages that must be addressed with support","The optimal learning window closes by the mid-twenties for most people"], c:1 },
+  { cat:"The Living Portfolio", q:"The Living Portfolio system described in the book replaces:", a:["The traditional resume with a dynamic record of real-world achievement","Standardized testing with project-based assessment","Letter grades with competency-based performance ratings","Academic transcripts with employer-verified skill records"], c:0 },
+  { cat:"Failure Redefined", q:"In the context of the Amnesty Protocol, failure is redefined as:", a:["A permanent indicator of limited academic potential","Information — a signal about method, not about the person","Something to be overcome through remedial intervention","A result of insufficient effort that must be acknowledged before moving forward"], c:1 },
+  { cat:"The Permission Problem", q:"The book argues that waiting for institutional permission to learn:", a:["Is a reasonable precaution that prevents wasted effort","Is the single most costly mistake a sovereign learner can make","Ensures that learning is properly sequenced and scaffolded","Protects the learner from attempting material beyond their current level"], c:1 },
+  { cat:"Self-Assessment", q:"Under the Amnesty Protocol, the most important evaluator of your learning is:", a:["An accredited instructor who can verify your competency","A standardized assessment instrument with validated norms","Yourself — through honest application of knowledge to real problems","An employer who can confirm your practical skills"], c:2 },
+  { cat:"The Dropout", q:"The book's view of the person who dropped out of school is:", a:["Someone who needs to return and complete what they started","A sovereign learner who may have rejected an institution that was failing them","A cautionary example of what happens without educational persistence","Someone whose path forward requires remediation before advanced study"], c:1 },
+  { cat:"Curiosity as Capital", q:"The book identifies curiosity as:", a:["A pleasant personality trait that supports but does not drive learning","The primary engine of sovereign education — more valuable than any credential","Something that formal education cultivates in its best students","A natural quality that declines without institutional reinforcement"], c:1 },
+  { cat:"The Bridge", q:"GSU describes itself as a bridge. According to the book, the bridge leads from:", a:["Community college to four-year university","Where you are right now to where your capability can take you","Failed academic history to corrected academic record","Informal self-study to accredited formal qualification"], c:1 },
+  { cat:"No Tuition", q:"The book ties GSU's free model directly to the Amnesty Protocol by arguing that:", a:["Free education is less rigorous and therefore more accessible to struggling learners","Cost has been used as a gatekeeping tool — removing it removes one more barrier","Nonprofit status requires that all educational content be provided at no charge","Free access attracts more learners, creating better community and peer learning"], c:1 },
+  { cat:"The Real Transcript", q:"The book argues that the most honest transcript a person carries is:", a:["Their official academic record, which cannot be falsified","The record of what they have actually learned to do in the real world","The portfolio of credentials accumulated across their lifetime","The references and endorsements of credentialed mentors"], c:1 },
+  { cat:"Reconnecting Generations", q:"The Civilization Builders program referenced in the book connects:", a:["High school students with university admission counselors","Retired professionals with learners — transferring sovereign knowledge across generations","Military veterans with civilian employment pathways","Former educators with adult learners seeking credentials"], c:1 },
+  { cat:"The Handshake", q:"The Sovereign Handshake described in the book is:", a:["A formal mentorship contract between GSU and corporate partners","A mutual commitment between a mentor and a learner built on capability, not credentials","A financial agreement covering tuition and learning materials","A verification system confirming learner competency to employers"], c:1 },
+  { cat:"What School Measures", q:"The book argues that what most schools actually measure is:", a:["Genuine comprehension and the ability to apply knowledge","Memorization, compliance, and tolerance for institutional process","Creative thinking and problem-solving under realistic conditions","The learner's potential for future academic and professional success"], c:1 },
+  { cat:"Starting Over", q:"The Amnesty Protocol's invitation to 'start over' means:", a:["Erasing your history and pretending prior learning never happened","Acknowledging your past and choosing to no longer let it define your ceiling","Returning to the beginning of a subject and relearning from scratch","Applying to an institution that accepts non-traditional students"], c:1 },
+  { cat:"The Mission Statement", q:"GSU's mission — Building a Bridge to Freedom Through Education, Not Handouts — reflects the Amnesty Protocol's belief that:", a:["Financial support is the most important resource for struggling learners","Capability, not dependency, is the destination of sovereign education","Institutions owe learners a debt for years of gatekeeping and exclusion","Access to information alone is sufficient to close the education gap"], c:1 },
+  { cat:"Knowledge vs. Degree", q:"The book's position on the difference between knowledge and a degree is:", a:["A degree certifies knowledge and the two should be treated as equivalent","Knowledge is what you possess — a degree is what an institution agrees to say about you","Degrees are becoming obsolete as employers shift to skill-based hiring","Knowledge without a degree has limited practical value in credentialed economies"], c:1 },
+  { cat:"The Sovereign Student", q:"A sovereign student, under the Amnesty Protocol, is defined by:", a:["Exceptional academic performance in self-directed learning environments","The decision to take personal responsibility for the direction and quality of their education","Rejection of all institutional learning in favor of independent study","A documented history of self-education verified by recognized authorities"], c:1 },
+  { cat:"No Prerequisites", q:"The book argues that most prerequisites exist primarily to:", a:["Ensure learners have the foundation required for success in advanced material","Control enrollment, protect departmental budgets, and extend institutional timelines","Protect learners from attempting material that will damage their confidence","Standardize the learning sequence across diverse student populations"], c:1 },
+  { cat:"The Invitation", q:"At its core, the Amnesty Protocol is an invitation to:", a:["Apply to GSU and begin working toward an accredited credential","Stop waiting for permission and start building the education you were always capable of earning","Forgive the institutions that failed you and re-engage with formal learning","Document your self-directed learning for recognition by mainstream employers"], c:1 },
+  { cat:"Final Question", q:"The ultimate message of The Amnesty Protocol is best captured by:", a:["The system failed you — and it owes you a second chance","No institution can give you what you already have the power to build yourself","Credentials will eventually catch up to reflect real-world capability","Education reform is the only path to genuine equality of opportunity"], c:1 }
+];
+
+let qOrder=[], currentQ=0, score=0, streak=0, selected=null, answered=false;
+
+const genoMessages = {
+  welcome: "Welcome. I'm GENO. This game is built on The Amnesty Protocol — 30 questions about the clean slate, sovereign learning, and the belief that your past does not determine your ceiling. The slate is clean. Let's begin.",
+  correct: ["Correct. That is exactly what the Protocol stands for.","Right. The clean slate is not a courtesy — it is a right.","Exactly. Capability has never required institutional permission.","Correct. That is sovereign thinking in action.","That's it. The book was written for people who already know this, even if no one told them."],
+  wrong: ["Not quite. The Protocol goes deeper than that — it challenges what you were taught to believe about yourself.","Close — but the clean slate means something more radical than that.","That is the institutional answer. The book asks you to question it.","Incorrect — but this is precisely why the Protocol was written.","The right answer is the one the system never wanted you to hear."],
+  bronze: "🥉 Bronze earned. You are beginning to understand what a clean slate actually means.",
+  silver: "🥈 Silver. You think like someone ready to claim their sovereign education.",
+  gold: "🥇 Gold. Outstanding. You have internalized the Protocol. The ceiling is gone.",
+  platinum: "💎 PLATINUM. Perfect. You have mastered every principle in this book. The slate was never dirty."
+};
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startGame(){
+  qOrder=shuffle([...Array(questions.length).keys()]);
+  currentQ=0; score=0; streak=0;
+  showScreen('screen-quiz');
+  loadQuestion();
+  updateStats();
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function loadQuestion(){
+  if(currentQ>=30){showResults();return;}
+  const q=questions[qOrder[currentQ]];
+  document.getElementById('qCategory').textContent=q.cat;
+  document.getElementById('qNum').textContent=currentQ+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('answersGrid').innerHTML=q.a.map((a,i)=>`<button class="answer-btn" onclick="selectAnswer(${i})">${a}</button>`).join('');
+  document.getElementById('btnCheck').style.display='';
+  document.getElementById('btnCheck').disabled=true;
+  document.getElementById('btnNext').style.display='none';
+  selected=null; answered=false;
+  updateProgress();
+  setGeno(genoMessages.welcome);
+}
+
+function selectAnswer(i){
+  if(answered)return;
+  selected=i;
+  document.querySelectorAll('.answer-btn').forEach((b,j)=>b.classList.toggle('selected',j===i));
+  document.getElementById('btnCheck').disabled=false;
+}
+
+function checkAnswer(){
+  if(selected===null||answered)return;
+  answered=true;
+  const q=questions[qOrder[currentQ]];
+  const btns=document.querySelectorAll('.answer-btn');
+  if(selected===q.c){
+    score++;streak++;
+    btns[selected].classList.add('correct');
+    setGeno(genoMessages.correct[Math.floor(Math.random()*genoMessages.correct.length)]);
+    updateBadges();
+  } else {
+    streak=0;
+    btns[selected].classList.add('wrong');
+    btns[q.c].classList.add('correct');
+    setGeno(genoMessages.wrong[Math.floor(Math.random()*genoMessages.wrong.length)]);
+  }
+  btns.forEach(b=>b.disabled=true);
+  document.getElementById('btnCheck').style.display='none';
+  document.getElementById('btnNext').style.display='';
+  updateStats();
+}
+
+function nextQuestion(){currentQ++;loadQuestion();}
+
+function updateStats(){
+  document.getElementById('scoreVal').textContent=score;
+  document.getElementById('streakVal').textContent=streak;
+  document.getElementById('qVal').textContent=currentQ+'/30';
+}
+
+function updateProgress(){
+  const pct=Math.round((currentQ/30)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent='Question '+(currentQ+1)+' of 30';
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('qVal').textContent=currentQ+'/30';
+}
+
+function updateBadges(){
+  if(score>=10){document.getElementById('badge-bronze').classList.add('earned');if(score===10)setGeno(genoMessages.bronze);}
+  if(score>=16){document.getElementById('badge-silver').classList.add('earned');if(score===16)setGeno(genoMessages.silver);}
+  if(score>=22){document.getElementById('badge-gold').classList.add('earned');if(score===22)setGeno(genoMessages.gold);}
+  if(score>=28){document.getElementById('badge-platinum').classList.add('earned');if(score===28)setGeno(genoMessages.platinum);}
+}
+
+function showResults(){
+  showScreen('screen-results');
+  let badge='🎓', name='Participant', msg='Every question in this game comes from ideas in the book. Ready to go deeper?';
+  if(score>=28){badge='💎';name='Platinum — The Slate Is Clear';msg='Flawless. You have internalized every principle in this book. The ceiling is gone — it was never real to begin with.';}
+  else if(score>=22){badge='🥇';name='Gold — Sovereign Learner';msg='Outstanding. You think like someone who has already claimed their clean slate. The book will confirm everything you already know.';}
+  else if(score>=16){badge='🥈';name='Silver — Emerging';msg='Strong. You understand the core of the Protocol. The book will take you the rest of the way.';}
+  else if(score>=10){badge='🥉';name='Bronze — Beginning';msg='Good start. The clean slate is a more radical idea than most people realize. The book will show you exactly how far it goes.';}
+  else{badge='📖';name='Keep Going';msg='The Protocol is for you. Especially if you have been told the door is closed. Pick up the book — it opens the door.';}
+  document.getElementById('resultsBadge').textContent=badge;
+  document.getElementById('resultsScore').textContent=score;
+  document.getElementById('resultsBadgeName').textContent=name;
+  document.getElementById('resultsMsg').textContent=msg;
+  setGeno('You scored '+score+' out of 30. '+msg);
+}
+
+function resetGame(){
+  document.querySelectorAll('.badge').forEach(b=>b.classList.remove('earned'));
+  document.getElementById('progressFill').style.width='0%';
+  document.getElementById('progressLabel').textContent='Ready';
+  document.getElementById('progressPct').textContent='0%';
+  startGame();
+}
+
+function setGeno(msg){ document.getElementById('genoMsg').innerHTML=msg; }
+
+function genoSpeak(){
+  const txt=document.getElementById('genoMsg').textContent;
+  if('speechSynthesis' in window){
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(txt);
+    u.rate=0.92; u.pitch=1;
+    speechSynthesis.speak(u);
+  }
+}
+</script>
+</body>
+</html>
