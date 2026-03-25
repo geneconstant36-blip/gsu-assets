@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html data-wf-domain="www.globalsovereignuniversity.org" lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Electrical Fundamentals | 100-Question Mastery Track</title>
+<meta content="The ultimate trade simulation. Test your knowledge on Safety, Ohm's Law, NEC Code, Grounding, and Troubleshooting. 100 Questions." name="description"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="facc15" name="theme-color">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:'Rajdhani', sans-serif;
+    /* PLATINUM THEME: High Voltage Blue & Safety Yellow */
+    background:linear-gradient(135deg,#020617 0%,#1e293b 50%,#0f172a 100%);
+    min-height:100vh;
+    color:#e2e8f0;
+    padding:20px
+}
+.gc{max-width:900px;margin:0 auto}
+.gh{text-align:center;padding:30px 0;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:30px}
+.gt{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+.gt .icon{font-size:2.5rem; text-shadow: 0 0 20px rgba(250, 204, 21, 0.8);}
+.gt h1{font-size:2.8rem;font-weight:800;color:#facc15; text-transform: uppercase; letter-spacing: 3px;} 
+.gs{color:#94a3b8;font-size:1.1rem; font-family: 'Roboto Mono', monospace;}
+
+/* Geno Box Styling */
+.geno{
+    background:rgba(15, 23, 42, 0.9);
+    border: 1px solid #facc15;
+    border-left: 6px solid #facc15;
+    border-radius:12px;
+    padding:20px 25px;
+    margin-bottom:25px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    box-shadow: 0 0 30px rgba(250, 204, 21, 0.15);
+}
+.ga{width:70px;height:70px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #facc15;flex-shrink:0;overflow:hidden}
+.ga img{width:60px;height:auto}
+.gm{flex:1}
+.gl{color:#facc15;font-weight:700;font-size:0.9rem;margin-bottom:4px; text-transform:uppercase;}
+.gtx{color:#fff;font-size:1.1rem;line-height:1.5;}
+
+.hg{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:transparent;border:2px solid #facc15;color:#facc15;border-radius:4px;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.3s;margin-bottom:20px; font-family: 'Roboto Mono', monospace;}
+.hg:hover{background:rgba(250, 204, 21, 0.2); box-shadow: 0 0 15px rgba(250, 204, 21, 0.4);}
+.bl{display:inline-block;color:#94a3b8;text-decoration:none;font-size:0.95rem;margin-bottom:25px; border-bottom: 1px dashed #94a3b8;}
+.bl:hover{color:#fff; border-color: #fff;}
+
+.sr{display:flex;justify-content:space-between;background:rgba(0,0,0,0.4);border-radius:8px;padding:15px 20px;margin-bottom:25px; border: 1px solid #334155;}
+.si{text-align:center}
+.sl{font-size:0.8rem;color:#94a3b8;margin-bottom:4px; text-transform: uppercase;}
+.sv{font-size:1.5rem;font-weight:700;color:#38bdf8; font-family: 'Roboto Mono', monospace;}
+
+.cl{display:inline-block;background:rgba(56, 189, 248, 0.2);color:#38bdf8;padding:6px 16px;border-radius:4px;font-size:0.9rem;font-weight:700;margin-bottom:15px; border: 1px solid rgba(56, 189, 248, 0.4);}
+
+.qc{background:rgba(15, 23, 42, 0.8);border: 1px solid #334155; border-radius:12px;padding:30px;margin-bottom:25px; position: relative; overflow: hidden;}
+.qc::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; background: linear-gradient(90deg, #facc15, #38bdf8); }
+
+.qt{font-size:1.4rem;font-weight:600;line-height:1.4;margin-bottom:25px;}
+.ag{display:grid;grid-template-columns:1fr;gap:12px}
+
+.ab{padding:18px 25px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#fff;font-size:1.1rem;text-align:left;cursor:pointer;transition:all 0.2s; font-family: 'Rajdhani', sans-serif; font-weight: 500;}
+.ab:hover{border-color:#facc15;background:rgba(250, 204, 21, 0.1); transform: translateX(5px);}
+.ab.sel{border-color:#facc15;background:rgba(250, 204, 21, 0.2); box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);}
+.ab.cor{border-color:#22c55e;background:rgba(34, 197, 94, 0.2); color: #4ade80;}
+.ab.inc{border-color:#ef4444;background:rgba(239, 68, 68, 0.2); color: #f87171;}
+
+.sub{display:block;width:100%;padding:18px;background:linear-gradient(135deg,#eab308,#facc15);border:none;border-radius:6px;color:#000;font-size:1.2rem;font-weight:800;cursor:pointer;margin-top:25px;transition:all 0.3s; text-transform: uppercase; letter-spacing: 1px;}
+.sub:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(234, 179, 8, 0.6);}
+
+.bs{background:rgba(0,0,0,0.2);border-radius:16px;padding:25px;margin-top:30px;text-align:center; border: 1px solid #334155;}
+.bst{color:#facc15;font-size:1.1rem;margin-bottom:20px; text-transform: uppercase; letter-spacing: 1px;}
+.br{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.bd{width:80px;height:80px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.2rem;opacity:0.3;transition:all 0.4s; background: #1e293b; border: 2px solid #475569;}
+.bd.e{opacity:1;transform:scale(1.1); border-color: #facc15; box-shadow: 0 0 20px rgba(250, 204, 21, 0.4); color: #fff; background: #0f172a;}
+.bla{font-size:0.7rem;margin-top:2px;color:#94a3b8; font-weight: 700;}
+.gf{text-align:center;padding:30px 0;margin-top:40px;border-top:1px solid rgba(255,255,255,0.1);color:#64748b;font-size:0.9rem}
+.geno-launcher{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:#0f172a;border:2px solid #facc15;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(250,204,21,0.3);z-index:999;padding:0;overflow:hidden;}
+.geno-launcher img{width:48px;height:auto;}
+.geno-launcher .badge{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;border-radius:50%;width:20px;height:20px;font-size:0.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+</style>
+</head>
+<body>
+
+<button class="geno-launcher" onclick="genoToggle()" id="genoLauncher"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO"><span class="badge" id="genoBadge" style="display:none">1</span></button>
+
+<div class="gc">
+    <a href="/tradification" class="bl">← Back to Trades Hub</a>
+    <div class="gh">
+        <div class="gt"><span class="icon">⚡</span><h1>Electrical Fundamentals</h1></div>
+        <p class="gs">100 Question Mastery Track • Bronze to Platinum</p>
+    </div>
+
+    <div class="geno">
+        <div class="ga"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO"></div>
+        <div class="gm">
+            <div class="gl">GENO says:</div>
+            <div class="gtx" id="gT">Welcome to the Gauntlet. 100 questions. 10 Categories. From basic safety to complex code. Let's see if you're grounded.</div>
+        </div>
+    </div>
+    <button class="hg" onclick="spk()">🔊 Hear GENO</button>
+
+    <div class="sr">
+        <div class="si"><div class="sl">Question</div><div class="sv" id="qN">1/100</div></div>
+        <div class="si"><div class="sl">Score</div><div class="sv" id="sc">0</div></div>
+        <div class="si"><div class="sl">Streak</div><div class="sv" id="st">0</div></div>
+    </div>
+
+    <div class="cl" id="cL">Safety & PPE</div>
+    <div class="qc">
+        <div class="qt" id="qT">Loading...</div>
+        <div class="ag" id="aG"></div>
+        <button class="sub" onclick="sub()">Energize (Submit)</button>
+    </div>
+
+    <div class="bs">
+        <div class="bst">🏆 Mastery Ranks</div>
+        <div class="br">
+            <div class="bd" id="b1">🥉<span class="bla">Bronze<br>(25)</span></div>
+            <div class="bd" id="b2">🥈<span class="bla">Silver<br>(50)</span></div>
+            <div class="bd" id="b3">🥇<span class="bla">Gold<br>(75)</span></div>
+            <div class="bd" id="b4">💎<span class="bla">Platinum<br>(95)</span></div>
+        </div>
+    </div>
+
+    <div class="gf">Global Sovereign University — "No Swiss Cheese Training"</div>
+</div>
+
+<script>
+// 100 QUESTIONS - 10 CATEGORIES (10 Questions Each)
+const Q = [
+    // 1. SAFETY & PPE
+    {q: "The most important safety step before working on a circuit is:", a: ["Lockout / Tagout (LOTO) & Verify Dead", "Wear gloves", "Put tape on the breaker", "Work quickly"], c: 0, cat: "Safety & PPE"},
+    {q: "LOTO stands for:", a: ["Lights Out Tools Out", "Lockout Tagout", "Line On Terminal Off", "Low Ohm Test Only"], c: 1, cat: "Safety & PPE"},
+    {q: "Class 'C' fire extinguishers are designed for:", a: ["Wood/Paper", "Flammable Liquids", "Electrical Equipment", "Metals"], c: 2, cat: "Safety & PPE"},
+    {q: "A GFCI outlet is designed primarily to protect:", a: ["The wiring from overheating", "People from electrical shock", "Equipment from surges", "The utility company"], c: 1, cat: "Safety & PPE"},
+    {q: "What voltage is considered 'High Voltage' by OSHA standards generally?", a: ["Over 120V", "Over 600V", "Over 50V", "Over 240V"], c: 1, cat: "Safety & PPE"},
+    {q: "Arc Flash PPE categories range from:", a: ["1 to 4", "A to Z", "Low to High", "Red to Green"], c: 0, cat: "Safety & PPE"},
+    {q: "Metal ladders should NEVER be used for electrical work because:", a: ["They are heavy", "They conduct electricity", "They rust", "They are expensive"], c: 1, cat: "Safety & PPE"},
+    {q: "Current passing through the heart can kill at levels as low as:", a: ["5 Amps", "1 Amp", "50-100 Milliamps", "1000 Amps"], c: 2, cat: "Safety & PPE"},
+    {q: "Before touching a wire you believe is dead, you must:", a: ["Touch it with the back of your hand", "Test with a meter (Live-Dead-Live)", "Ask your boss", "Assume it is safe"], c: 1, cat: "Safety & PPE"},
+    {q: "Confined spaces often require:", a: ["Air monitoring and an attendant", "Flashlights only", "No special rules", "Running shoes"], c: 0, cat: "Safety & PPE"},
+
+    // 2. TOOLS & EQUIPMENT
+    {q: "A multimeter measures:", a: ["Voltage, Current, Resistance", "Speed, Weight, Heat", "Only Voltage", "Distance"], c: 0, cat: "Tools & Equipment"},
+    {q: "A clamp meter measures current by:", a: ["Cutting the wire", "Sensing the magnetic field around a wire", "Touching the copper", "Using a battery"], c: 1, cat: "Tools & Equipment"},
+    {q: "To bend EMT conduit, you use a:", a: ["Hickey or Hand Bender", "Hammer", "Blowtorch", "Wrench"], c: 0, cat: "Tools & Equipment"},
+    {q: "A 'Fish Tape' is used to:", a: ["Measure fish", "Pull wires through conduit", "Tape connections", "Insulate wires"], c: 1, cat: "Tools & Equipment"},
+    {q: "Which tool checks for voltage without metal contact?", a: ["Non-Contact Voltage Tester (Tick Tracer)", "Screwdriver", "Pliers", "Hammer"], c: 0, cat: "Tools & Equipment"},
+    {q: "Diagonal cutters (Dikes) are primarily used for:", a: ["Turning screws", "Cutting wire", "Stripping insulation", "Crimping"], c: 1, cat: "Tools & Equipment"},
+    {q: "A 'Reamer' is used to:", a: ["Remove sharp burrs from cut conduit", "Drill holes", "Tighten nuts", "Measure length"], c: 0, cat: "Tools & Equipment"},
+    {q: "The 'Linesman Pliers' are versatile because they can:", a: ["Cut, twist, and grip wire", "Measure voltage", "Strip wire perfectly", "Drive screws"], c: 0, cat: "Tools & Equipment"},
+    {q: "A torque screwdriver ensures:", a: ["Screws are stripped", "Connections are tightened to spec", "Screws are loose", "Faster installation"], c: 1, cat: "Tools & Equipment"},
+    {q: "When using a wire stripper, you must match the hole to:", a: ["Any size works", "The wire gauge (AWG)", "The wire color", "The wire length"], c: 1, cat: "Tools & Equipment"},
+
+    // 3. OHM'S LAW & CIRCUITS
+    {q: "Ohm's Law Formula:", a: ["E = I / R", "E = I x R", "I = R x E", "R = E x I"], c: 1, cat: "Ohm's Law & Circuits"},
+    {q: "In a Series circuit, resistance:", a: ["Adds up (increases)", "Decreases", "Stays the same", "Becomes zero"], c: 0, cat: "Ohm's Law & Circuits"},
+    {q: "In a Parallel circuit, voltage is:", a: ["Different at every load", "The same across each branch", "Zero", "Divided by 2"], c: 1, cat: "Ohm's Law & Circuits"},
+    {q: "Power (Watts) formula:", a: ["P = E x I", "P = E / I", "P = I / R", "P = R x R"], c: 0, cat: "Ohm's Law & Circuits"},
+    {q: "AC current in the US oscillates at:", a: ["50 Hz", "60 Hz", "100 Hz", "120 Hz"], c: 1, cat: "Ohm's Law & Circuits"},
+    {q: "If resistance stays the same and voltage increases, current will:", a: ["Decrease", "Increase", "Stay the same", "Stop"], c: 1, cat: "Ohm's Law & Circuits"},
+    {q: "A 'Short Circuit' has:", a: ["High resistance", "Very low resistance (near zero)", "No current", "Low voltage"], c: 1, cat: "Ohm's Law & Circuits"},
+    {q: "An 'Open Circuit' means:", a: ["Current is flowing", "The path is broken (No flow)", "The breaker is on", "The light is on"], c: 1, cat: "Ohm's Law & Circuits"},
+    {q: "Total resistance of two 10-ohm resistors in SERIES is:", a: ["5 Ohms", "10 Ohms", "20 Ohms", "100 Ohms"], c: 2, cat: "Ohm's Law & Circuits"},
+    {q: "Total resistance of two 10-ohm resistors in PARALLEL is:", a: ["5 Ohms", "10 Ohms", "20 Ohms", "100 Ohms"], c: 0, cat: "Ohm's Law & Circuits"},
+
+    // 4. WIRE SIZING & AMPACITY
+    {q: "14 AWG Copper wire is typically rated for:", a: ["15 Amps", "20 Amps", "30 Amps", "50 Amps"], c: 0, cat: "Wire Sizing"},
+    {q: "12 AWG Copper wire is typically rated for:", a: ["15 Amps", "20 Amps", "30 Amps", "40 Amps"], c: 1, cat: "Wire Sizing"},
+    {q: "10 AWG Copper wire is typically rated for:", a: ["20 Amps", "30 Amps", "40 Amps", "60 Amps"], c: 1, cat: "Wire Sizing"},
+    {q: "Which wire is THICKER?", a: ["12 AWG", "14 AWG", "10 AWG", "8 AWG"], c: 3, cat: "Wire Sizing"},
+    {q: "THHN stands for a type of:", a: ["Conduit", "Insulation on wire", "Breaker", "Fuse"], c: 1, cat: "Wire Sizing"},
+    {q: "Aluminum wire generally requires ___ than copper for the same amps.", a: ["A smaller gauge", "A larger gauge", "The same gauge", "Less insulation"], c: 1, cat: "Wire Sizing"},
+    {q: "Ampacity decreases when ambient temperature:", a: ["Decreases", "Increases (Gets hotter)", "Stays the same", "Reaches freezing"], c: 1, cat: "Wire Sizing"},
+    {q: "The larger the AWG number, the ___ the wire.", a: ["Smaller", "Larger", "Stronger", "Longer"], c: 0, cat: "Wire Sizing"},
+    {q: "Neutral wires are typically colored:", a: ["Black", "Green", "White or Grey", "Red"], c: 2, cat: "Wire Sizing"},
+    {q: "Equipment Grounding Conductors are colored:", a: ["White", "Green or Bare", "Black", "Blue"], c: 1, cat: "Wire Sizing"},
+
+    // 5. VOLTAGE DROP
+    {q: "Voltage drop is caused by:", a: ["Wire resistance over distance", "Too much insulation", "New breakers", "AC frequency"], c: 0, cat: "Voltage Drop"},
+    {q: "The NEC recommends limiting voltage drop to:", a: ["3%", "10%", "15%", "50%"], c: 0, cat: "Voltage Drop"},
+    {q: "To reduce voltage drop on a long run, you should:", a: ["Use a smaller wire", "Increase wire size (Upsize)", "Add more tape", "Use a bigger breaker"], c: 1, cat: "Voltage Drop"},
+    {q: "High voltage drop can cause motors to:", a: ["Run faster", "Overheat and burn out", "Use less power", "Run cooler"], c: 1, cat: "Voltage Drop"},
+    {q: "Voltage drop formula essentially calculates the energy lost as:", a: ["Light", "Heat", "Sound", "Motion"], c: 1, cat: "Voltage Drop"},
+    {q: "Which voltage suffers more from drop over distance?", a: ["Higher Voltage (480V)", "Lower Voltage (12V)", "They are the same", "AC only"], c: 1, cat: "Voltage Drop"},
+    {q: "Dimming lights when a vacuum starts is a sign of:", a: ["Voltage Drop", "Good wiring", "Surge protection", "Frequency shift"], c: 0, cat: "Voltage Drop"},
+    {q: "VD = 2KIL / CM. 'L' stands for:", a: ["Load", "Length (one way)", "Loss", "Line"], c: 1, cat: "Voltage Drop"},
+    {q: "Using a wire too small for the distance results in:", a: ["Higher voltage at load", "Lower voltage at load", "No change", "Faster current"], c: 1, cat: "Voltage Drop"},
+    {q: "Excessive voltage drop is a waste of:", a: ["Energy/Money", "Time only", "Insulation", "Conduit"], c: 0, cat: "Voltage Drop"},
+
+    // 6. CIRCUIT PROTECTION
+    {q: "A Circuit Breaker protects the:", a: ["Appliance", "Wire/Insulation", "Utility", "Ground"], c: 1, cat: "Circuit Protection"},
+    {q: "Fuses work by:", a: ["Melting a metal link", "Tripping a switch", "Sensing wifi", "Cooling down"], c: 0, cat: "Circuit Protection"},
+    {q: "AFCI stands for:", a: ["Arc Fault Circuit Interrupter", "Amp Fault Current Indicator", "Always Free Current", "Auto Fuse Control"], c: 0, cat: "Circuit Protection"},
+    {q: "A standard breaker trips via:", a: ["Thermal and Magnetic mechanisms", "Wifi signal", "Timer", "Voice command"], c: 0, cat: "Circuit Protection"},
+    {q: "AIC stands for:", a: ["Ampere Interrupting Capacity", "All In Circuit", "Auto Interupt Control", "Arc Indicator Class"], c: 0, cat: "Circuit Protection"},
+    {q: "Which breaker protects against fire causing arcs?", a: ["GFCI", "AFCI", "Standard", "Fuse"], c: 1, cat: "Circuit Protection"},
+    {q: "Which breaker protects against shock in wet locations?", a: ["GFCI", "AFCI", "Standard", "Main"], c: 0, cat: "Circuit Protection"},
+    {q: "A breaker should generally not be loaded continuously more than:", a: ["50%", "80%", "100%", "125%"], c: 1, cat: "Circuit Protection"},
+    {q: "A 'Single Pole' breaker supplies:", a: ["120V", "240V", "480V", "12V"], c: 0, cat: "Circuit Protection"},
+    {q: "If a breaker trips immediately after resetting, it likely indicates a:", a: ["Dead Short", "Small overload", "Loose wire", "Bad bulb"], c: 0, cat: "Circuit Protection"},
+
+    // 7. GROUNDING & BONDING
+    {q: "Grounding connects the electrical system to:", a: ["The Earth", "The Neutral", "The Hot", "The Switch"], c: 0, cat: "Grounding & Bonding"},
+    {q: "Bonding creates a path for fault current to ensure:", a: ["The breaker trips", "The lights stay on", "Electricity is saved", "Nothing happens"], c: 0, cat: "Grounding & Bonding"},
+    {q: "GEC stands for:", a: ["Grounding Electrode Conductor", "Green Electric Cable", "Ground Earth Circuit", "Global Electric Code"], c: 0, cat: "Grounding & Bonding"},
+    {q: "A 'Ufer' ground uses:", a: ["Concrete-encased electrode", "A water pipe", "A gas pipe", "A plate"], c: 0, cat: "Grounding & Bonding"},
+    {q: "Ground rods must typically be driven:", a: ["2 feet", "4 feet", "8 feet", "10 feet"], c: 2, cat: "Grounding & Bonding"},
+    {q: "Neutral and Ground are bonded together ONLY at:", a: ["The Main Disconnect/Panel", "Every subpanel", "Every outlet", "Light switches"], c: 0, cat: "Grounding & Bonding"},
+    {q: "In a subpanel, Neutrals and Grounds must be:", a: ["Bonded together", "Separated (Floating Neutral)", "Cut", "Twisted"], c: 1, cat: "Grounding & Bonding"},
+    {q: "Metal water pipes must be:", a: ["Bonded to the grounding system", "Ignored", "Painted", "Replaced with PVC"], c: 0, cat: "Grounding & Bonding"},
+    {q: "The 'System Ground' protects against:", a: ["Lightning and surges", "Short circuits", "Overloads", "Loose screws"], c: 0, cat: "Grounding & Bonding"},
+    {q: "EGC (Equipment Grounding Conductor) is the:", a: ["Green/Bare wire", "White wire", "Black wire", "Ground rod"], c: 0, cat: "Grounding & Bonding"},
+
+    // 8. NEC CODE BASICS
+    {q: "NEC stands for:", a: ["National Electrical Code", "New Electric Company", "National Energy Council", "Neutral Electric Code"], c: 0, cat: "NEC Code"},
+    {q: "Standard wall outlets must be spaced no more than:", a: ["6 feet apart", "10 feet apart", "12 feet apart", "20 feet apart"], c: 2, cat: "NEC Code"},
+    {q: "Kitchen countertop outlets must be served by:", a: ["Two 20A small appliance circuits", "One 15A circuit", "Lighting circuit", "Extension cords"], c: 0, cat: "NEC Code"},
+    {q: "Bathroom receptacles must be within ___ of the sink.", a: ["36 inches", "12 inches", "6 feet", "5 feet"], c: 0, cat: "NEC Code"},
+    {q: "Required working space width in front of a panel is:", a: ["30 inches", "20 inches", "10 inches", "48 inches"], c: 0, cat: "NEC Code"},
+    {q: "Direct burial cable (UF) typically requires a depth of:", a: ["6 inches", "12 inches", "24 inches", "36 inches"], c: 2, cat: "NEC Code"},
+    {q: "Outdoor outlets must be:", a: ["GFCI & Weather Resistant (WR)", "Standard", "AFCI only", "Ungrounded"], c: 0, cat: "NEC Code"},
+    {q: "Box fill calculations prevent:", a: ["Overcrowding/Heat", "Water leaks", "Dust", "Loose wires"], c: 0, cat: "NEC Code"},
+    {q: "Garage outlets generally require:", a: ["GFCI protection", "AFCI only", "No protection", "240V"], c: 0, cat: "NEC Code"},
+    {q: "Tamper-Resistant (TR) outlets are required in:", a: ["Dwelling units/Homes", "Factories only", "Garages only", "Attics"], c: 0, cat: "NEC Code"},
+
+    // 9. RESIDENTIAL WIRING
+    {q: "Common 14/2 Romex contains:", a: ["Black, White, Bare", "Black, Red, White", "Red, Blue, Green", "Black only"], c: 0, cat: "Residential Wiring"},
+    {q: "A 3-Way switch requires:", a: ["2 Traveler wires", "1 Traveler", "No Travelers", "4 Travelers"], c: 0, cat: "Residential Wiring"},
+    {q: "When using a white wire as a hot (Switch Loop), you must:", a: ["Re-identify it (Tape it black/red)", "Leave it white", "Cut it", "Use it as neutral"], c: 0, cat: "Residential Wiring"},
+    {q: "On a receptacle, the Silver screw is for:", a: ["Neutral (White)", "Hot (Black)", "Ground", "Red"], c: 0, cat: "Residential Wiring"},
+    {q: "On a receptacle, the Brass/Gold screw is for:", a: ["Hot (Black)", "Neutral (White)", "Ground", "Blue"], c: 0, cat: "Residential Wiring"},
+    {q: "Smoke detectors should be:", a: ["Interconnected", "Independent", "Battery only", "In the kitchen only"], c: 0, cat: "Residential Wiring"},
+    {q: "A typical electric range (stove) outlet is:", a: ["120V", "240V / 50 Amp", "240V / 20 Amp", "120V / 15 Amp"], c: 1, cat: "Residential Wiring"},
+    {q: "Modern dryer outlets utilize:", a: ["4 Wires (H-H-N-G)", "3 Wires", "2 Wires", "5 Wires"], c: 0, cat: "Residential Wiring"},
+    {q: "Pigtailing is a method used to:", a: ["Connect multiple wires to one device screw", "Extend wire length", "Make wires messy", "Color code"], c: 0, cat: "Residential Wiring"},
+    {q: "NM-B cable should be supported (stapled) within ___ of a box.", a: ["12 inches", "8 inches", "24 inches", "36 inches"], c: 0, cat: "Residential Wiring"},
+
+    // 10. TROUBLESHOOTING
+    {q: "An 'Open Neutral' can cause:", a: ["Voltage to float (High/Low) and damage electronics", "Breaker trip immediately", "Everything works fine", "Lights to dim only"], c: 0, cat: "Troubleshooting"},
+    {q: "If a GFCI won't reset, it might mean:", a: ["There is a ground fault downstream", "The power is off", "The button is stuck", "All of the above"], c: 3, cat: "Troubleshooting"},
+    {q: "Phantom/Ghost voltage is usually caused by:", a: ["Induction from nearby wires", "A short circuit", "A bad battery", "Lightning"], c: 0, cat: "Troubleshooting"},
+    {q: "Continuity testing must be done with power:", a: ["OFF", "ON", "Doesn't matter", "Half on"], c: 0, cat: "Troubleshooting"},
+    {q: "A burning smell near the panel usually indicates:", a: ["Loose connection/Arcing", "Good current flow", "New breakers", "Dust"], c: 0, cat: "Troubleshooting"},
+    {q: "If a light flickers, check:", a: ["Loose connections", "The bulb", "The switch", "All of the above"], c: 3, cat: "Troubleshooting"},
+    {q: "To trace a circuit breaker, you can use a:", a: ["Circuit Tracer/Finder", "Hammer", "Phone", "Compass"], c: 0, cat: "Troubleshooting"},
+    {q: "Half power (60V) at an outlet usually indicates:", a: ["Lost leg or bad neutral", "Bad breaker", "Good wiring", "Surge"], c: 0, cat: "Troubleshooting"},
+    {q: "If a breaker hums loudly, it might be:", a: ["Overloaded or faulty", "Working perfectly", "A smart breaker", "Cooling down"], c: 0, cat: "Troubleshooting"},
+    {q: "Series Arc faults are hard to detect because:", a: ["Current is not high enough to trip standard breaker", "They are invisible", "They are silent", "They are cold"], c: 0, cat: "Troubleshooting"}
+];
+
+let cq=0, sc=0, sk=0, sel=null, sQ=[];
+
+// GENO'S FEEDBACK
+const cR = [
+    "Solid connection! You nailed it.",
+    "Circuit complete. Logic is flowing.",
+    "Green light. You're up to code.",
+    "Energized! Perfect answer."
+];
+const iR = [
+    "Short circuit! Check your logic.",
+    "Arc fault detected. Try again.",
+    "Code violation! Review the rules.",
+    "Breaker tripped. Reset and focus."
+];
+
+function shuf(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+
+function init(){
+    sQ=shuf(Q);
+    ld();
+}
+
+function ld(){
+    if(cq>=sQ.length){fin();return}
+    sel=null;
+    const q=sQ[cq];
+    document.getElementById('qN').textContent=`${cq+1}/${sQ.length}`;
+    document.getElementById('cL').textContent=q.cat;
+    document.getElementById('qT').textContent=q.q;
+    document.getElementById('aG').innerHTML=q.a.map((a,i)=>`<button class="ab" onclick="sA(${i})">${a}</button>`).join('');
+}
+
+function sA(i){
+    sel=i;
+    document.querySelectorAll('.ab').forEach((b,j)=>{
+        b.classList.remove('sel');
+        if(j===i)b.classList.add('sel');
+    });
+}
+
+function sub(){
+    if(sel===null){uG("Wait! Circuit is open. Select an answer.");return}
+    const q=sQ[cq],btns=document.querySelectorAll('.ab');
+    btns.forEach((b,i)=>{
+        b.style.pointerEvents='none';
+        if(i===q.c)b.classList.add('cor');
+        if(i===sel&&sel!==q.c)b.classList.add('inc');
+    });
+    
+    if(sel===q.c){
+        sc++;sk++;
+        uG(cR[Math.floor(Math.random()*cR.length)]);
+    }else{
+        sk=0;
+        uG(iR[Math.floor(Math.random()*iR.length)]);
+    }
+    
+    document.getElementById('sc').textContent=sc;
+    document.getElementById('st').textContent=`${sk} Streak`;
+    cB();
+    setTimeout(()=>{cq++;ld()},1500);
+}
+
+// BADGE LOGIC: BRONZE(25) SILVER(50) GOLD(75) PLATINUM(95)
+function cB(){
+    if(sc>=25)document.getElementById('b1').classList.add('e');
+    if(sc>=50)document.getElementById('b2').classList.add('e');
+    if(sc>=75)document.getElementById('b3').classList.add('e');
+    if(sc>=95)document.getElementById('b4').classList.add('e');
+}
+
+function uG(t){
+    document.getElementById('gT').textContent=t;
+}
+
+function spk(){
+    const t=document.getElementById('gT').textContent;
+    const u=new SpeechSynthesisUtterance(t);
+    u.rate=0.9;
+    u.pitch=1; 
+    speechSynthesis.speak(u);
+}
+
+function fin(){
+    const p=Math.round((sc/sQ.length)*100);
+    let m="";
+    if(p>=95)m="PLATINUM STATUS! You are a Master Electrician.";
+    else if(p>=75)m="GOLD STATUS. Journeyman level excellence.";
+    else if(p>=50)m="SILVER STATUS. Solid Apprentice skills.";
+    else if(p>=25)m="BRONZE STATUS. You know the basics.";
+    else m="Helper Level. Back to the books!";
+    
+    document.querySelector('.qc').innerHTML=`<div style="text-align:center;padding:40px"><h2 style="color:#facc15;margin-bottom:20px">⚡ Job Complete!</h2><p style="font-size:3rem;margin-bottom:10px;font-weight:700;">${sc}/${sQ.length}</p><p style="font-size:1.5rem;margin-bottom:20px;color:#38bdf8;">${p}% Accuracy</p><p style="color:#94a3b8;margin-bottom:30px;font-size:1.1rem;">${m}</p><button onclick="location.reload()" class="sub">Re-Wire (Play Again)</button></div>`;
+    uG(m);
+}
+
+init();
+</script>
+</body>
+</html>
