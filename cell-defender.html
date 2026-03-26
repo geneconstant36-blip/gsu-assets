@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cell Defender | GSU Library</title>
+<meta name="description" content="Master cell organelles and biology. Free from Global Sovereign University.">
+</head>
+<body style="margin:0;padding:0;">
+<nav style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.07);font-family:'Segoe UI',system-ui,sans-serif;">
+  <a href="https://www.globalsovereignuniversity.org" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.55);text-decoration:none;letter-spacing:.04em;">Global Sovereign University</a>
+  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;">
+    <a href="https://www.globalsovereignuniversity.org" style="font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;padding:6px 12px;border-radius:6px;" onmouseover="this.style.background='rgba(255,255,255,.06)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,.45)'">Home</a>
+    <a href="https://www.globalsovereignuniversity.org/bookgames" style="font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;padding:6px 12px;border-radius:6px;" onmouseover="this.style.background='rgba(255,255,255,.06)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,.45)'">Library</a>
+    <a href="https://www.globalsovereignuniversity.org/comprehension-bridge" style="font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;padding:6px 12px;border-radius:6px;" onmouseover="this.style.background='rgba(255,255,255,.06)';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='rgba(255,255,255,.45)'">Comprehension Bridge</a>
+    <a href="https://geneconstant36-blip.github.io/gsu-assets/gsu-bookstore.html" target="_blank" style="font-size:12px;font-weight:700;color:#000;background:#C9A84C;text-decoration:none;padding:7px 18px;border-radius:7px;" onmouseover="this.style.background='#d4b655'" onmouseout="this.style.background='#C9A84C'">Bookstore</a>
+  </div>
+</nav>
+<div style="height:57px;"></div>
+<style>
+.cd{max-width:900px;margin:0 auto;padding:30px 20px;font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#065f46,#10b981);min-height:100vh;color:#fff}.sh{text-align:center;margin-bottom:30px}.sh h1{font-size:2.4rem;color:#6ee7b7;margin-bottom:8px}.sh p{font-size:1.1rem;color:#a7f3d0}.sb{display:flex;justify-content:center;gap:15px;margin-bottom:20px;flex-wrap:wrap}.si{text-align:center;background:rgba(16,185,129,0.3);padding:12px 20px;border-radius:10px}.si .l{font-size:10px;color:#a7f3d0;text-transform:uppercase}.si .v{font-size:1.5rem;font-weight:bold;color:#6ee7b7}.gb{background:rgba(0,0,0,0.25);border-radius:15px;padding:30px;text-align:center}.qt{font-size:1.3rem;color:#fff;margin-bottom:20px;min-height:60px}.ao{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:500px;margin:0 auto 20px}.ab{padding:14px;font-size:1rem;background:rgba(255,255,255,0.1);color:#fff;border:2px solid rgba(110,231,183,0.3);border-radius:8px;cursor:pointer;transition:all 0.3s}.ab:hover{border-color:#6ee7b7}.ab.s{border-color:#6ee7b7;background:rgba(110,231,183,0.25)}.ab.c{border-color:#22c55e;background:rgba(34,197,94,0.3)}.ab.i{border-color:#ef4444;background:rgba(239,68,68,0.3)}.bt{margin-top:15px}.btn{padding:12px 30px;font-size:1rem;background:#10b981;color:#fff;border:none;border-radius:8px;cursor:pointer;margin:5px}.fb{margin-top:15px;padding:12px;border-radius:8px;display:none}.fb.c{display:block;background:rgba(34,197,94,0.2);color:#22c55e}.fb.i{display:block;background:rgba(239,68,68,0.2);color:#ef4444}.bd{display:flex;justify-content:center;gap:15px;margin-top:20px}.bg{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;opacity:0.3}.bg.e{opacity:1;box-shadow:0 0 15px rgba(16,185,129,0.6)}.b1{background:linear-gradient(135deg,#cd7f32,#8b4513)}.b2{background:linear-gradient(135deg,#c0c0c0,#808080)}.b3{background:linear-gradient(135deg,#ffd700,#daa520)}.b4{background:linear-gradient(135deg,#e5e4e2,#a8a8a8)}
+</style>
+<div class="cd">
+<div class="sh"><h1>🦠 Cell Defender</h1><p>Protect the cell! Know your organelles!</p></div>
+<div class="sb">
+<div class="si"><div class="l">Score</div><div class="v" id="sc">0</div></div>
+<div class="si"><div class="l">Streak</div><div class="v" id="st">0🔥</div></div>
+</div>
+<div class="gb">
+<div class="qt" id="qt">Loading...</div>
+<div class="ao" id="ao"></div>
+<div class="bt"><button class="btn" onclick="ck()">🛡️ Defend!</button><button class="btn" onclick="nx()">Next →</button></div>
+<div class="fb" id="fb"></div>
+</div>
+<div class="bd">
+<div class="bg b1" id="b1">🥉</div>
+<div class="bg b2" id="b2">🥈</div>
+<div class="bg b3" id="b3">🥇</div>
+<div class="bg b4" id="b4">💎</div>
+</div>
+</div>
+<script>
+const Q=[
+["The 'brain' of the cell that controls all activities is the:","Nucleus|Mitochondria|Ribosome|Cell membrane",0],
+["The powerhouse of the cell that makes energy (ATP) is the:","Nucleus|Mitochondria|Ribosome|Vacuole",1],
+["Protein factories of the cell are called:","Nucleus|Mitochondria|Ribosomes|Vacuoles",2],
+["The cell's outer boundary that controls what enters/exits is the:","Nucleus|Cell wall|Cell membrane|Cytoplasm",2],
+["The jelly-like fluid filling the cell is called:","Nucleus|Cytoplasm|Vacuole|Chloroplast",1],
+["Storage containers in the cell are called:","Vacuoles|Ribosomes|Nuclei|Mitochondria",0],
+["Plant cells make food in the:","Mitochondria|Chloroplasts|Ribosomes|Vacuoles",1],
+["Chloroplasts contain this green pigment:","Hemoglobin|Chlorophyll|Melanin|Cytoplasm",1],
+["Plant cells have this rigid outer layer that animal cells lack:","Cell membrane|Cell wall|Cytoplasm|Vacuole",1],
+["The process of making food from sunlight is:","Respiration|Photosynthesis|Digestion|Fermentation",1],
+["The process cells use to release energy from food is:","Photosynthesis|Cellular respiration|Digestion|Osmosis",1],
+["DNA is found in the:","Cytoplasm|Nucleus|Ribosome|Vacuole",1],
+["The endoplasmic reticulum (ER) helps with:","Energy production|Transport within cell|Photosynthesis|Storage",1],
+["Rough ER has these attached to it:","Mitochondria|Ribosomes|Vacuoles|Chloroplasts",1],
+["The Golgi body packages and ships:","DNA|Proteins|Chlorophyll|Water",1],
+["Lysosomes break down:","Food|Waste and worn-out parts|DNA|ATP",1],
+["Which is found ONLY in plant cells?","Nucleus|Mitochondria|Cell wall|Ribosome",2],
+["Which is found ONLY in animal cells?","Vacuole|Centrioles|Ribosome|Cytoplasm",1],
+["Which is found in BOTH plant and animal cells?","Cell wall|Chloroplast|Mitochondria|Centrioles",2],
+["Vacuoles in plant cells are usually:","Small and many|One large central vacuole|Absent|Same as animal cells",1],
+["Osmosis is the movement of:","Food|Water across a membrane|DNA|Proteins",1],
+["Diffusion moves particles from:","Low to high concentration|High to low concentration|Inside to outside only|Outside to inside only",1],
+["Active transport requires:","Energy|No energy|Sunlight|Water",0],
+["Passive transport requires:","Energy|No energy|ATP|Glucose",1],
+["The cell cycle includes growth and:","Sleep|Division|Photosynthesis|Respiration",1],
+["Mitosis produces:","1 cell|2 identical cells|4 cells|8 cells",1],
+["Meiosis produces:","1 cell|2 cells|4 sex cells|8 cells",2],
+["Chromosomes carry:","Water|Genetic information (DNA)|Proteins|Energy",1],
+["Prokaryotic cells (like bacteria) lack a:","Cell membrane|Nucleus|Ribosome|Cytoplasm",1],
+["Eukaryotic cells have a:","No nucleus|True nucleus|No membrane|No ribosomes",1],
+["Animal cells are:","Prokaryotic|Eukaryotic|Both|Neither",1],
+["Bacteria are:","Prokaryotic|Eukaryotic|Both|Neither",0],
+["Plant cells are:","Prokaryotic|Eukaryotic|Both|Neither",1],
+["Single-celled organisms are called:","Multicellular|Unicellular|Acellular|Bicellular",1],
+["Organisms with many cells are:","Unicellular|Multicellular|Acellular|Nocellular",1],
+["What gives plants their green color?","Vacuole|Chlorophyll|Cytoplasm|Nucleus",1],
+["Plants release this gas during photosynthesis:","Carbon dioxide|Oxygen|Nitrogen|Hydrogen",1],
+["Plants take in this gas for photosynthesis:","Oxygen|Carbon dioxide|Nitrogen|Hydrogen",1],
+["Cellular respiration produces:","Glucose|ATP (energy)|Chlorophyll|DNA",1],
+["Cellular respiration uses:","Sunlight|Glucose and oxygen|Carbon dioxide and water|Chlorophyll",1],
+["The equation for photosynthesis involves:","Sunlight + CO2 + H2O → Glucose + O2|Glucose + O2 → CO2 + H2O + ATP|Neither|Both are wrong",0],
+["The equation for respiration involves:","Sunlight + CO2 + H2O → Glucose + O2|Glucose + O2 → CO2 + H2O + ATP|Neither|Both are wrong",1],
+["Mitochondria are found in:","Plant cells only|Animal cells only|Both plant and animal cells|Neither",2],
+["Without mitochondria, a cell couldn't:","Make proteins|Produce energy (ATP)|Store water|Make DNA",1],
+["Without a nucleus, a cell couldn't:","Move|Control its activities|Have cytoplasm|Have a membrane",1],
+["Without ribosomes, a cell couldn't:","Move|Make proteins|Store water|Divide",1],
+["Selectively permeable means:","Nothing can pass|Everything can pass|Only some things can pass|Only water can pass",2],
+["The cell membrane is:","Rigid|Selectively permeable|Made of cellulose|Found only in plants",1],
+["Cytoskeleton gives the cell:","Color|Shape and support|Energy|DNA",1],
+["Vesicles are small:","Storage/transport sacs|Energy producers|Protein makers|DNA holders",0],
+["Red blood cells carry:","Carbon dioxide|Oxygen|Proteins|DNA",1],
+["Nerve cells transmit:","Blood|Oxygen|Electrical signals|Food",2],
+["Muscle cells can:","Photosynthesize|Contract and relax|Produce offspring|Think",1],
+["Stem cells can become:","Only one cell type|Many different cell types|No other cell types|Dead cells",1],
+["Tissues are made of:","One cell|Similar cells working together|Different organisms|Organs",1],
+["Organs are made of:","One cell|One tissue|Different tissues|Organisms",2],
+["Organ systems are made of:","Cells|Tissues|Organs working together|One organ",2],
+["Smallest to largest: Cell, Tissue, Organ, Organ System, Organism","Correct order|Wrong order|Missing levels|Backwards",0],
+["The human body has approximately:","Thousands of cells|Millions of cells|Trillions of cells|Hundreds of cells",2]
+];
+let sc=0,st=0,ca=0,sl=null;
+function ld(){const q=Q[Math.floor(Math.random()*Q.length)],p=q[1].split('|');ca=q[2];sl=null;document.getElementById('qt').textContent=q[0];document.getElementById('ao').innerHTML=p.map((o,i)=>`<button class="ab" onclick="sel(${i})">${o}</button>`).join('');document.getElementById('fb').className='fb';}
+function sel(i){sl=i;document.querySelectorAll('.ab').forEach((b,j)=>{b.classList.remove('s');if(j===i)b.classList.add('s');});}
+function ck(){if(sl===null)return;const bs=document.querySelectorAll('.ab'),fb=document.getElementById('fb');if(sl===ca){sc++;st++;fb.textContent='🛡️ DEFENDED!';fb.className='fb c';bs[sl].classList.add('c');ub();}else{st=0;fb.textContent='❌ Cell breach!';fb.className='fb i';bs[sl].classList.add('i');bs[ca].classList.add('c');}document.getElementById('sc').textContent=sc;document.getElementById('st').textContent=st+'🔥';}
+function nx(){ld();}
+function ub(){if(sc>=5)document.getElementById('b1').classList.add('e');if(sc>=15)document.getElementById('b2').classList.add('e');if(sc>=30)document.getElementById('b3').classList.add('e');if(sc>=50)document.getElementById('b4').classList.add('e');}
+ld();
+</script>
+</body>
+</html>
