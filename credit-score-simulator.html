@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Score Simulator | Financial Literacy Game | GSU</title>
+<meta name="description" content="Learn how credit scores work, what factors affect them, and how to build good credit. Free financial literacy game from Global Sovereign University.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;background:#0a192f;">
+
+<!-- GSU Credit Score Simulator - Webflow Isolated Version -->
+<div id="gsu-credit-score">
+<style>
+#gsu-credit-score,#gsu-credit-score *{margin:0;padding:0;box-sizing:border-box;float:none!important;columns:auto!important;column-count:auto!important}
+#gsu-credit-score{font-family:'Inter',sans-serif!important;background:linear-gradient(135deg,#0a192f 0%,#0d2818 50%,#0a192f 100%)!important;min-height:100vh!important;color:#fff!important;display:block!important;width:100%!important}
+#gsu-credit-score .cs-container{max-width:900px!important;margin:0 auto!important;padding:20px!important}
+#gsu-credit-score .cs-header{text-align:center!important;padding:30px 20px!important;border-bottom:1px solid rgba(34,197,94,0.2)!important}
+#gsu-credit-score .cs-header h1{font-size:1.8rem!important;color:#22c55e!important;margin-bottom:10px!important}
+#gsu-credit-score .cs-header p{color:rgba(255,255,255,0.7)!important;font-size:0.95rem!important}
+#gsu-credit-score .cs-geno{display:flex!important;align-items:center!important;gap:20px!important;background:rgba(34,197,94,0.1)!important;border:1px solid rgba(34,197,94,0.3)!important;border-radius:16px!important;padding:20px!important;margin:20px 0!important}
+#gsu-credit-score .cs-geno-img{width:80px!important;height:80px!important;border-radius:50%!important;border:3px solid #22c55e!important;flex-shrink:0!important}
+#gsu-credit-score .cs-geno-bubble{flex:1!important;background:rgba(0,0,0,0.3)!important;border-radius:12px!important;padding:15px!important;font-size:0.95rem!important;line-height:1.6!important}
+#gsu-credit-score .cs-geno-name{color:#22c55e!important;font-weight:700!important;margin-bottom:5px!important;display:block!important}
+#gsu-credit-score .cs-btn{display:inline-block!important;padding:14px 28px!important;border-radius:30px!important;text-decoration:none!important;font-weight:600!important;font-size:1rem!important;cursor:pointer!important;border:none!important;transition:all 0.3s!important}
+#gsu-credit-score .cs-btn-green{background:linear-gradient(135deg,#22c55e,#16a34a)!important;color:#fff!important}
+#gsu-credit-score .cs-btn-outline{background:transparent!important;border:2px solid #22c55e!important;color:#22c55e!important}
+#gsu-credit-score .cs-menu{text-align:center!important;padding:40px 20px!important}
+#gsu-credit-score .cs-menu-title{font-size:2rem!important;color:#22c55e!important;margin-bottom:10px!important}
+#gsu-credit-score .cs-menu-sub{color:rgba(255,255,255,0.6)!important;margin-bottom:30px!important}
+#gsu-credit-score .cs-mode-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:20px!important;margin-bottom:30px!important}
+#gsu-credit-score .cs-mode-card{background:rgba(255,255,255,0.05)!important;border:2px solid rgba(34,197,94,0.3)!important;border-radius:16px!important;padding:25px!important;cursor:pointer!important;transition:all 0.3s!important;text-align:center!important}
+#gsu-credit-score .cs-mode-card:hover{border-color:#22c55e!important;background:rgba(34,197,94,0.1)!important;transform:translateY(-3px)!important}
+#gsu-credit-score .cs-mode-icon{font-size:3rem!important;margin-bottom:15px!important}
+#gsu-credit-score .cs-mode-name{color:#22c55e!important;font-size:1.1rem!important;font-weight:700!important;margin-bottom:8px!important}
+#gsu-credit-score .cs-mode-desc{color:rgba(255,255,255,0.6)!important;font-size:0.85rem!important;line-height:1.5!important}
+#gsu-credit-score .cs-game{display:none!important;padding:20px!important}
+#gsu-credit-score .cs-game.active{display:block!important}
+#gsu-credit-score .cs-progress{background:rgba(255,255,255,0.1)!important;border-radius:10px!important;height:8px!important;margin-bottom:20px!important;overflow:hidden!important}
+#gsu-credit-score .cs-progress-fill{background:linear-gradient(90deg,#22c55e,#4ade80)!important;height:100%!important;border-radius:10px!important;transition:width 0.3s!important}
+#gsu-credit-score .cs-score-bar{display:flex!important;justify-content:space-between!important;margin-bottom:20px!important;font-size:0.9rem!important}
+#gsu-credit-score .cs-score-item{color:rgba(255,255,255,0.7)!important}
+#gsu-credit-score .cs-score-item span{color:#22c55e!important;font-weight:700!important}
+#gsu-credit-score .cs-question-box{background:rgba(255,255,255,0.05)!important;border:1px solid rgba(34,197,94,0.2)!important;border-radius:16px!important;padding:30px!important;margin-bottom:20px!important}
+#gsu-credit-score .cs-question-num{color:#22c55e!important;font-size:0.85rem!important;margin-bottom:10px!important}
+#gsu-credit-score .cs-question-text{font-size:1.2rem!important;line-height:1.6!important}
+#gsu-credit-score .cs-answers{display:grid!important;gap:12px!important}
+#gsu-credit-score .cs-answer-btn{background:rgba(255,255,255,0.05)!important;border:2px solid rgba(255,255,255,0.2)!important;border-radius:12px!important;padding:16px 20px!important;text-align:left!important;color:#fff!important;font-size:1rem!important;cursor:pointer!important;transition:all 0.3s!important;width:100%!important}
+#gsu-credit-score .cs-answer-btn:hover{border-color:#22c55e!important;background:rgba(34,197,94,0.1)!important}
+#gsu-credit-score .cs-answer-btn.correct{border-color:#22c55e!important;background:rgba(34,197,94,0.2)!important}
+#gsu-credit-score .cs-answer-btn.incorrect{border-color:#ef4444!important;background:rgba(239,68,68,0.2)!important}
+#gsu-credit-score .cs-answer-btn.disabled{pointer-events:none!important;opacity:0.7!important}
+#gsu-credit-score .cs-feedback{padding:20px!important;border-radius:12px!important;margin-top:20px!important;display:none!important}
+#gsu-credit-score .cs-feedback.correct{background:rgba(34,197,94,0.15)!important;border:1px solid rgba(34,197,94,0.3)!important}
+#gsu-credit-score .cs-feedback.incorrect{background:rgba(239,68,68,0.15)!important;border:1px solid rgba(239,68,68,0.3)!important}
+#gsu-credit-score .cs-feedback.show{display:block!important}
+#gsu-credit-score .cs-feedback-title{font-weight:700!important;margin-bottom:8px!important}
+#gsu-credit-score .cs-feedback-text{color:rgba(255,255,255,0.8)!important;font-size:0.95rem!important;line-height:1.6!important}
+#gsu-credit-score .cs-next-btn{margin-top:20px!important;width:100%!important}
+#gsu-credit-score .cs-results{display:none!important;text-align:center!important;padding:40px 20px!important}
+#gsu-credit-score .cs-results.active{display:block!important}
+#gsu-credit-score .cs-results-icon{font-size:5rem!important;margin-bottom:20px!important}
+#gsu-credit-score .cs-results-title{font-size:2rem!important;color:#22c55e!important;margin-bottom:10px!important}
+#gsu-credit-score .cs-results-score{font-size:1.2rem!important;color:rgba(255,255,255,0.8)!important;margin-bottom:30px!important}
+#gsu-credit-score .cs-badge{background:rgba(34,197,94,0.15)!important;border:2px solid #22c55e!important;border-radius:16px!important;padding:20px!important;margin-bottom:30px!important;display:inline-block!important}
+#gsu-credit-score .cs-badge-icon{font-size:3rem!important;margin-bottom:10px!important}
+#gsu-credit-score .cs-badge-name{color:#22c55e!important;font-weight:700!important}
+#gsu-credit-score .cs-learn{background:rgba(34,197,94,0.08)!important;border:1px solid rgba(34,197,94,0.2)!important;border-radius:16px!important;padding:25px!important;margin:20px 0!important;text-align:left!important}
+#gsu-credit-score .cs-learn-title{color:#22c55e!important;font-size:1.1rem!important;font-weight:700!important;margin-bottom:15px!important}
+#gsu-credit-score .cs-learn-content{color:rgba(255,255,255,0.85)!important;font-size:0.95rem!important;line-height:1.7!important}
+#gsu-credit-score .cs-learn-content strong{color:#22c55e!important}
+#gsu-credit-score .cs-footer{text-align:center!important;padding:30px 20px!important;border-top:1px solid rgba(34,197,94,0.2)!important;margin-top:40px!important}
+#gsu-credit-score .cs-footer p{color:rgba(255,255,255,0.5)!important;font-size:0.85rem!important}
+#gsu-credit-score .cs-back{background:transparent!important;border:none!important;color:#22c55e!important;cursor:pointer!important;font-size:0.95rem!important;margin-bottom:20px!important}
+@media(max-width:768px){#gsu-credit-score .cs-mode-grid{grid-template-columns:1fr!important}#gsu-credit-score .cs-geno{flex-direction:column!important;text-align:center!important}}
+</style>
+
+<div class="cs-container">
+<header class="cs-header">
+<h1>📊 Credit Score Simulator</h1>
+<p>Understand the Number That Shapes Your Financial Life</p>
+</header>
+
+<div class="cs-geno">
+<img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO" class="cs-geno-img" id="genoImg">
+<div class="cs-geno-bubble">
+<span class="cs-geno-name">GENO says:</span>
+<span id="genoText">Welcome to Credit Score Simulator! Your credit score affects interest rates on loans, ability to rent apartments, and even job opportunities. Understanding credit isn't just smart—it's essential for modern life. Let's demystify this powerful number!</span>
+</div>
+</div>
+<button class="cs-btn cs-btn-outline" onclick="speakGeno()" style="margin-bottom:20px">🔊 Hear GENO</button>
+
+<div id="menuScreen" class="cs-menu">
+<h2 class="cs-menu-title">Choose Your Challenge</h2>
+<p class="cs-menu-sub">Select a credit topic to master</p>
+
+<div class="cs-mode-grid">
+<div class="cs-mode-card" onclick="startGame('basics')">
+<div class="cs-mode-icon">📊</div>
+<div class="cs-mode-name">Credit Basics</div>
+<div class="cs-mode-desc">What is credit and how does it work?</div>
+</div>
+<div class="cs-mode-card" onclick="startGame('factors')">
+<div class="cs-mode-icon">🎯</div>
+<div class="cs-mode-name">Score Factors</div>
+<div class="cs-mode-desc">The 5 things that determine your score</div>
+</div>
+<div class="cs-mode-card" onclick="startGame('building')">
+<div class="cs-mode-icon">📈</div>
+<div class="cs-mode-name">Building Credit</div>
+<div class="cs-mode-desc">How to improve and maintain good credit</div>
+</div>
+</div>
+
+<div class="cs-learn">
+<div class="cs-learn-title">📊 The 5 Factors of Your Credit Score</div>
+<div class="cs-learn-content">
+<p>• <strong>Payment History (35%)</strong> — Do you pay on time? This is the biggest factor. One late payment can drop your score significantly.</p>
+<p style="margin-top:10px">• <strong>Credit Utilization (30%)</strong> — How much of your available credit are you using? Keep it under 30%, ideally under 10%.</p>
+<p style="margin-top:10px">• <strong>Length of Credit History (15%)</strong> — How long have you had credit? Older accounts help your score.</p>
+<p style="margin-top:10px">• <strong>Credit Mix (10%)</strong> — Having different types of credit (cards, loans, mortgage) helps slightly.</p>
+<p style="margin-top:10px">• <strong>New Credit (10%)</strong> — Too many new accounts or inquiries can hurt your score temporarily.</p>
+</div>
+</div>
+</div>
+
+<div id="gameScreen" class="cs-game">
+<button class="cs-back" onclick="backToMenu()">← Back to Menu</button>
+<div class="cs-progress"><div class="cs-progress-fill" id="progressFill" style="width:0%"></div></div>
+<div class="cs-score-bar">
+<div class="cs-score-item">Question: <span id="questionNum">1</span>/<span id="totalQuestions">5</span></div>
+<div class="cs-score-item">Score: <span id="currentScore">0</span></div>
+<div class="cs-score-item">Streak: <span id="currentStreak">0</span>🔥</div>
+</div>
+<div class="cs-question-box">
+<div class="cs-question-num" id="questionCategory">Credit Basics</div>
+<div class="cs-question-text" id="questionText">Loading...</div>
+</div>
+<div class="cs-answers" id="answersGrid"></div>
+<div class="cs-feedback" id="feedbackBox">
+<div class="cs-feedback-title" id="feedbackTitle"></div>
+<div class="cs-feedback-text" id="feedbackText"></div>
+</div>
+<button class="cs-btn cs-btn-green cs-next-btn" id="nextBtn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+</div>
+
+<div id="resultsScreen" class="cs-results">
+<div class="cs-results-icon" id="resultsIcon">📊</div>
+<div class="cs-results-title" id="resultsTitle">Simulation Complete!</div>
+<div class="cs-results-score" id="resultsScore">You scored 0 out of 5</div>
+<div class="cs-badge" id="badgeEarned" style="display:none">
+<div class="cs-badge-icon" id="badgeIcon">🥉</div>
+<div class="cs-badge-name" id="badgeName">Badge Earned!</div>
+</div>
+<div style="margin-top:30px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap">
+<button class="cs-btn cs-btn-green" onclick="restartGame()">Play Again</button>
+<button class="cs-btn cs-btn-outline" onclick="backToMenu()">Choose Another Topic</button>
+</div>
+</div>
+
+<footer class="cs-footer">
+<p><strong>GLOBAL SOVEREIGN UNIVERSITY</strong></p>
+<p>"Building a Bridge to Freedom Through Education—Not Handouts"</p>
+</footer>
+</div>
+
+<script>
+const questions={
+basics:[
+{q:"What is a credit score?",a:["Your bank account balance","A number representing your creditworthiness","Your income level","Your net worth"],c:1,e:"A credit score is a three-digit number (300-850) that represents how likely you are to repay borrowed money based on your credit history."},
+{q:"What is the most common credit score range?",a:["0-100","100-500","300-850","500-1000"],c:2,e:"FICO scores range from 300-850. Above 700 is generally considered good; above 750 is excellent; below 650 may make borrowing difficult."},
+{q:"Who creates credit scores?",a:["Banks","The government","Credit bureaus like Equifax, Experian, TransUnion","Your employer"],c:2,e:"Credit bureaus (Equifax, Experian, TransUnion) collect your credit data and calculate scores. FICO and VantageScore are common scoring models."},
+{q:"What is a credit report?",a:["A summary of your income","A detailed record of your credit history","Your bank statement","A list of your assets"],c:1,e:"A credit report is a detailed document showing your credit accounts, payment history, inquiries, and public records. Your score is calculated from this."},
+{q:"How often can you get a free credit report?",a:["Never","Once per decade","Once per year from each bureau","Only when denied credit"],c:2,e:"By law (AnnualCreditReport.com), you can get one free report per year from each of the three major bureaus—that's three free reports annually."},
+{q:"What is a 'hard inquiry'?",a:["A question you can't answer","When a lender checks your credit for a loan decision","Checking your own credit score","A credit bureau error"],c:1,e:"Hard inquiries occur when lenders check your credit for lending decisions. They can slightly lower your score temporarily (about 5 points)."}
+],
+factors:[
+{q:"Which factor has the BIGGEST impact on your credit score?",a:["Credit utilization","Length of credit history","Payment history","Credit mix"],c:2,e:"Payment history is 35% of your score—the biggest factor. Paying on time, every time, is the most important thing you can do for your credit."},
+{q:"What is 'credit utilization'?",a:["How often you use credit cards","The percentage of available credit you're using","The number of credit cards you have","Your credit limit"],c:1,e:"Credit utilization is your balance divided by your credit limit. If you have $3,000 limit and $900 balance, that's 30% utilization."},
+{q:"What credit utilization percentage should you aim for?",a:["100%","Under 30%, ideally under 10%","Exactly 50%","Over 75%"],c:1,e:"Keep utilization under 30% for good scores, under 10% for excellent scores. High utilization signals potential financial stress to lenders."},
+{q:"Does closing old credit cards help your score?",a:["Yes, always","No, it can actually hurt your score","It has no effect","Only if the card has fees"],c:1,e:"Closing old cards can hurt your score by reducing available credit (raising utilization) and shortening credit history. Keep old accounts open when possible."},
+{q:"How long does a late payment stay on your credit report?",a:["30 days","1 year","7 years","Forever"],c:2,e:"Late payments stay on your report for 7 years from the date of the missed payment, though their impact decreases over time."},
+{q:"What percentage of your credit score is based on length of credit history?",a:["35%","30%","15%","10%"],c:2,e:"Length of credit history is 15% of your score. This includes the age of your oldest account, newest account, and average age of all accounts."}
+],
+building:[
+{q:"What's the best way to start building credit with no history?",a:["Take out a large loan","Get a secured credit card","Ignore credit entirely","Wait until you're 30"],c:1,e:"A secured credit card (backed by a deposit) is ideal for beginners. Use it responsibly for 6-12 months to establish positive history."},
+{q:"Should you pay your full credit card balance each month?",a:["No, carry a small balance","Yes, pay in full to avoid interest","Only pay the minimum","It doesn't matter"],c:1,e:"Yes! Pay in full every month. Carrying a balance costs you interest and doesn't help your score. The myth that you need to carry a balance is false."},
+{q:"What is a 'secured credit card'?",a:["A card that's locked in a safe","A card backed by a cash deposit you provide","A card with extra security features","A card that can't be stolen"],c:1,e:"A secured card requires a cash deposit (usually $200-500) that becomes your credit limit. It's a safe way for lenders to extend credit to beginners."},
+{q:"How can you become an 'authorized user' to build credit?",a:["Ask a bank to authorize you","Be added to someone else's credit card account","Apply for authorization online","You can't become one"],c:1,e:"Being added as an authorized user on someone else's account (like a parent's) lets their positive history appear on your report, boosting your score."},
+{q:"What's the fastest way to lower your credit utilization?",a:["Close credit cards","Pay down balances","Stop using credit","Request a credit limit increase"],c:1,e:"Paying down balances directly reduces utilization. A limit increase also works, but paying debt is better for overall financial health."},
+{q:"How long does it take to build good credit from scratch?",a:["1 week","1 month","6-12 months of responsible use","10 years"],c:2,e:"With responsible use, you can build a decent credit score in 6-12 months. Building excellent credit (750+) typically takes several years."}
+]
+};
+
+let currentMode='',currentQuestions=[],currentIndex=0,score=0,streak=0,answered=false;
+function startGame(mode){currentMode=mode;currentQuestions=shuffleArray([...questions[mode]]).slice(0,5);currentIndex=0;score=0;streak=0;answered=false;document.getElementById('menuScreen').style.display='none';document.getElementById('gameScreen').classList.add('active');document.getElementById('resultsScreen').classList.remove('active');document.getElementById('totalQuestions').textContent=currentQuestions.length;updateGenoText("Excellent! Understanding credit is crucial. A good credit score can save you tens of thousands over your lifetime.");loadQuestion();}
+function loadQuestion(){answered=false;const q=currentQuestions[currentIndex];const names={basics:'Credit Basics',factors:'Score Factors',building:'Building Credit'};document.getElementById('questionCategory').textContent=names[currentMode]||'Question';document.getElementById('questionNum').textContent=currentIndex+1;document.getElementById('currentScore').textContent=score;document.getElementById('currentStreak').textContent=streak;document.getElementById('progressFill').style.width=((currentIndex/currentQuestions.length)*100)+'%';document.getElementById('questionText').textContent=q.q;const grid=document.getElementById('answersGrid');grid.innerHTML='';q.a.forEach((answer,i)=>{const btn=document.createElement('button');btn.className='cs-answer-btn';btn.textContent=answer;btn.onclick=()=>checkAnswer(i);grid.appendChild(btn);});document.getElementById('feedbackBox').classList.remove('show','correct','incorrect');document.getElementById('nextBtn').style.display='none';}
+function checkAnswer(selected){if(answered)return;answered=true;const q=currentQuestions[currentIndex];const buttons=document.querySelectorAll('.cs-answer-btn');const feedback=document.getElementById('feedbackBox');const isCorrect=selected===q.c;buttons.forEach((btn,i)=>{btn.classList.add('disabled');if(i===q.c)btn.classList.add('correct');if(i===selected&&!isCorrect)btn.classList.add('incorrect');});if(isCorrect){score++;streak++;document.getElementById('currentScore').textContent=score;document.getElementById('currentStreak').textContent=streak;document.getElementById('feedbackTitle').textContent='✓ Correct!';feedback.classList.add('correct');updateGenoText("Excellent! Your credit knowledge is improving!");}else{streak=0;document.getElementById('currentStreak').textContent=streak;document.getElementById('feedbackTitle').textContent='✗ Not quite';feedback.classList.add('incorrect');updateGenoText("Not quite, but understanding credit is worth the effort!");}document.getElementById('feedbackText').textContent=q.e;feedback.classList.add('show');document.getElementById('nextBtn').style.display='block';document.getElementById('nextBtn').textContent=currentIndex<currentQuestions.length-1?'Next Question →':'See Results →';}
+function nextQuestion(){currentIndex++;if(currentIndex<currentQuestions.length){loadQuestion();}else{showResults();}}
+function showResults(){document.getElementById('gameScreen').classList.remove('active');document.getElementById('resultsScreen').classList.add('active');const total=currentQuestions.length;const percent=Math.round((score/total)*100);document.getElementById('resultsScore').textContent='You scored '+score+' out of '+total+' ('+percent+'%)';let icon='📊',title='Simulation Complete!',badge=null;if(percent>=90){icon='🏆';title='Credit Expert!';badge={icon:'🥇',name:'Gold Badge - Credit Master'};}else if(percent>=70){icon='⭐';title='Great Work!';badge={icon:'🥈',name:'Silver Badge - Credit Savvy'};}else if(percent>=50){icon='📊';title='Good Progress!';badge={icon:'🥉',name:'Bronze Badge - Credit Learner'};}document.getElementById('resultsIcon').textContent=icon;document.getElementById('resultsTitle').textContent=title;if(badge){document.getElementById('badgeEarned').style.display='inline-block';document.getElementById('badgeIcon').textContent=badge.icon;document.getElementById('badgeName').textContent=badge.name;}else{document.getElementById('badgeEarned').style.display='none';}updateGenoText(percent>=70?"Outstanding! Understanding credit puts you ahead of most adults!":"Keep learning! Credit knowledge is essential for financial success.");}
+function restartGame(){startGame(currentMode);}
+function backToMenu(){document.getElementById('gameScreen').classList.remove('active');document.getElementById('resultsScreen').classList.remove('active');document.getElementById('menuScreen').style.display='block';updateGenoText("Welcome back! Choose another credit topic to master.");}
+function shuffleArray(array){for(let i=array.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[array[i],array[j]]=[array[j],array[i]];}return array;}
+function updateGenoText(text){document.getElementById('genoText').textContent=text;}
+function speakGeno(){const text=document.getElementById('genoText').textContent;if('speechSynthesis' in window){window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.rate=0.95;const img=document.getElementById('genoImg');img.style.boxShadow='0 0 20px #22c55e';utterance.onend=function(){img.style.boxShadow='none';};window.speechSynthesis.speak(utterance);}}
+</script>
+</div>
+
+</body>
+</html>
