@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Herring Hunter | Critical Thinking Game | GSU</title>
+<meta name="description" content="Spot diversionary tactics that derail real discussions. Hunt whataboutism, topic shifting, and personal attacks. Free critical thinking game from Global Sovereign University.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="margin:0;padding:0;background:#0a0a0a;">
+
+<!-- GSU Red Herring Hunter - Webflow Isolated Version -->
+<div id="gsu-red-herring">
+<style>
+#gsu-red-herring,#gsu-red-herring *{margin:0;padding:0;box-sizing:border-box;float:none!important;columns:auto!important}
+#gsu-red-herring{font-family:'Inter',sans-serif!important;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a0a 50%,#0a0a0a 100%)!important;min-height:100vh!important;color:#fff!important;display:block!important;width:100%!important}
+#gsu-red-herring .rh-container{max-width:900px!important;margin:0 auto!important;padding:20px!important}
+#gsu-red-herring .rh-header{text-align:center!important;padding:30px 20px!important;border-bottom:1px solid rgba(245,158,11,0.2)!important}
+#gsu-red-herring .rh-header h1{font-size:1.8rem!important;color:#f59e0b!important;margin-bottom:10px!important}
+#gsu-red-herring .rh-header p{color:rgba(255,255,255,0.7)!important;font-size:0.95rem!important}
+#gsu-red-herring .rh-geno{display:flex!important;align-items:center!important;gap:20px!important;background:rgba(245,158,11,0.1)!important;border:1px solid rgba(245,158,11,0.3)!important;border-radius:16px!important;padding:20px!important;margin:20px 0!important}
+#gsu-red-herring .rh-geno-img{width:80px!important;height:80px!important;border-radius:50%!important;border:3px solid #f59e0b!important;flex-shrink:0!important}
+#gsu-red-herring .rh-geno-bubble{flex:1!important;background:rgba(0,0,0,0.3)!important;border-radius:12px!important;padding:15px!important;font-size:0.95rem!important;line-height:1.6!important}
+#gsu-red-herring .rh-geno-name{color:#f59e0b!important;font-weight:700!important;margin-bottom:5px!important;display:block!important}
+#gsu-red-herring .rh-btn{display:inline-block!important;padding:14px 28px!important;border-radius:30px!important;font-weight:600!important;font-size:1rem!important;cursor:pointer!important;border:none!important;transition:all 0.3s!important}
+#gsu-red-herring .rh-btn-orange{background:linear-gradient(135deg,#f59e0b,#d97706)!important;color:#fff!important}
+#gsu-red-herring .rh-btn-outline{background:transparent!important;border:2px solid #f59e0b!important;color:#f59e0b!important}
+#gsu-red-herring .rh-menu{text-align:center!important;padding:40px 20px!important}
+#gsu-red-herring .rh-menu-title{font-size:2rem!important;color:#f59e0b!important;margin-bottom:10px!important}
+#gsu-red-herring .rh-menu-sub{color:rgba(255,255,255,0.6)!important;margin-bottom:30px!important}
+#gsu-red-herring .rh-mode-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:20px!important;margin-bottom:30px!important}
+#gsu-red-herring .rh-mode-card{background:rgba(255,255,255,0.05)!important;border:2px solid rgba(245,158,11,0.3)!important;border-radius:16px!important;padding:25px!important;cursor:pointer!important;transition:all 0.3s!important;text-align:center!important}
+#gsu-red-herring .rh-mode-card:hover{border-color:#f59e0b!important;background:rgba(245,158,11,0.1)!important;transform:translateY(-3px)!important}
+#gsu-red-herring .rh-mode-icon{font-size:3rem!important;margin-bottom:15px!important}
+#gsu-red-herring .rh-mode-name{color:#f59e0b!important;font-size:1.1rem!important;font-weight:700!important;margin-bottom:8px!important}
+#gsu-red-herring .rh-mode-desc{color:rgba(255,255,255,0.6)!important;font-size:0.85rem!important;line-height:1.5!important}
+#gsu-red-herring .rh-game{display:none!important;padding:20px!important}
+#gsu-red-herring .rh-game.active{display:block!important}
+#gsu-red-herring .rh-progress{background:rgba(255,255,255,0.1)!important;border-radius:10px!important;height:8px!important;margin-bottom:20px!important;overflow:hidden!important}
+#gsu-red-herring .rh-progress-fill{background:linear-gradient(90deg,#f59e0b,#fcd34d)!important;height:100%!important;border-radius:10px!important;transition:width 0.3s!important}
+#gsu-red-herring .rh-score-bar{display:flex!important;justify-content:space-between!important;margin-bottom:20px!important;font-size:0.9rem!important}
+#gsu-red-herring .rh-score-item{color:rgba(255,255,255,0.7)!important}
+#gsu-red-herring .rh-score-item span{color:#f59e0b!important;font-weight:700!important}
+#gsu-red-herring .rh-question-box{background:rgba(255,255,255,0.05)!important;border:1px solid rgba(245,158,11,0.2)!important;border-radius:16px!important;padding:30px!important;margin-bottom:20px!important}
+#gsu-red-herring .rh-question-num{color:#f59e0b!important;font-size:0.85rem!important;margin-bottom:10px!important}
+#gsu-red-herring .rh-question-text{font-size:1.2rem!important;line-height:1.6!important}
+#gsu-red-herring .rh-scenario{background:rgba(245,158,11,0.1)!important;border-left:4px solid #f59e0b!important;padding:15px!important;margin:15px 0!important;border-radius:0 8px 8px 0!important;font-style:italic!important}
+#gsu-red-herring .rh-answers{display:grid!important;gap:12px!important}
+#gsu-red-herring .rh-answer-btn{background:rgba(255,255,255,0.05)!important;border:2px solid rgba(255,255,255,0.2)!important;border-radius:12px!important;padding:16px 20px!important;text-align:left!important;color:#fff!important;font-size:1rem!important;cursor:pointer!important;transition:all 0.3s!important;width:100%!important}
+#gsu-red-herring .rh-answer-btn:hover{border-color:#f59e0b!important;background:rgba(245,158,11,0.1)!important}
+#gsu-red-herring .rh-answer-btn.correct{border-color:#22c55e!important;background:rgba(34,197,94,0.2)!important}
+#gsu-red-herring .rh-answer-btn.incorrect{border-color:#ef4444!important;background:rgba(239,68,68,0.2)!important}
+#gsu-red-herring .rh-answer-btn.disabled{pointer-events:none!important;opacity:0.7!important}
+#gsu-red-herring .rh-feedback{padding:20px!important;border-radius:12px!important;margin-top:20px!important;display:none!important}
+#gsu-red-herring .rh-feedback.correct{background:rgba(34,197,94,0.15)!important;border:1px solid rgba(34,197,94,0.3)!important}
+#gsu-red-herring .rh-feedback.incorrect{background:rgba(239,68,68,0.15)!important;border:1px solid rgba(239,68,68,0.3)!important}
+#gsu-red-herring .rh-feedback.show{display:block!important}
+#gsu-red-herring .rh-feedback-title{font-weight:700!important;margin-bottom:8px!important}
+#gsu-red-herring .rh-feedback-text{color:rgba(255,255,255,0.8)!important;font-size:0.95rem!important;line-height:1.6!important}
+#gsu-red-herring .rh-next-btn{margin-top:20px!important;width:100%!important}
+#gsu-red-herring .rh-results{display:none!important;text-align:center!important;padding:40px 20px!important}
+#gsu-red-herring .rh-results.active{display:block!important}
+#gsu-red-herring .rh-results-icon{font-size:5rem!important;margin-bottom:20px!important}
+#gsu-red-herring .rh-results-title{font-size:2rem!important;color:#f59e0b!important;margin-bottom:10px!important}
+#gsu-red-herring .rh-results-score{font-size:1.2rem!important;color:rgba(255,255,255,0.8)!important;margin-bottom:30px!important}
+#gsu-red-herring .rh-badge{background:rgba(245,158,11,0.15)!important;border:2px solid #f59e0b!important;border-radius:16px!important;padding:20px!important;margin-bottom:30px!important;display:inline-block!important}
+#gsu-red-herring .rh-badge-icon{font-size:3rem!important;margin-bottom:10px!important}
+#gsu-red-herring .rh-badge-name{color:#f59e0b!important;font-weight:700!important}
+#gsu-red-herring .rh-learn{background:rgba(245,158,11,0.08)!important;border:1px solid rgba(245,158,11,0.2)!important;border-radius:16px!important;padding:25px!important;margin:20px 0!important;text-align:left!important}
+#gsu-red-herring .rh-learn-title{color:#f59e0b!important;font-size:1.1rem!important;font-weight:700!important;margin-bottom:15px!important}
+#gsu-red-herring .rh-learn-content{color:rgba(255,255,255,0.85)!important;font-size:0.95rem!important;line-height:1.7!important}
+#gsu-red-herring .rh-learn-content strong{color:#f59e0b!important}
+#gsu-red-herring .rh-footer{text-align:center!important;padding:30px 20px!important;border-top:1px solid rgba(245,158,11,0.2)!important;margin-top:40px!important}
+#gsu-red-herring .rh-footer p{color:rgba(255,255,255,0.5)!important;font-size:0.85rem!important}
+#gsu-red-herring .rh-back{background:transparent!important;border:none!important;color:#f59e0b!important;cursor:pointer!important;font-size:0.95rem!important;margin-bottom:20px!important}
+@media(max-width:768px){#gsu-red-herring .rh-mode-grid{grid-template-columns:1fr!important}#gsu-red-herring .rh-geno{flex-direction:column!important;text-align:center!important}}
+</style>
+
+<div class="rh-container">
+<header class="rh-header">
+<h1>🐟 Red Herring Hunter</h1>
+<p>Spot Diversionary Tactics That Derail Discussions</p>
+</header>
+
+<div class="rh-geno">
+<img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO" class="rh-geno-img" id="genoImg">
+<div class="rh-geno-bubble">
+<span class="rh-geno-name">GENO says:</span>
+<span id="genoText">Welcome to Red Herring Hunter! A 'red herring' is anything that distracts from the main issue. Politicians, debaters, and even friends use these tactics to avoid tough questions. Learn to spot diversions and keep discussions on track!</span>
+</div>
+</div>
+<button class="rh-btn rh-btn-outline" onclick="speakGeno()" style="margin-bottom:20px">🔊 Hear GENO</button>
+
+<div id="menuScreen" class="rh-menu">
+<h2 class="rh-menu-title">Choose Your Hunt</h2>
+<p class="rh-menu-sub">Select a diversion tactic to study</p>
+
+<div class="rh-mode-grid">
+<div class="rh-mode-card" onclick="startGame('whatabout')">
+<div class="rh-mode-icon">🔄</div>
+<div class="rh-mode-name">Whataboutism</div>
+<div class="rh-mode-desc">"But what about..." deflections</div>
+</div>
+<div class="rh-mode-card" onclick="startGame('shifting')">
+<div class="rh-mode-icon">🎯</div>
+<div class="rh-mode-name">Topic Shifting</div>
+<div class="rh-mode-desc">Changing subjects to avoid the issue</div>
+</div>
+<div class="rh-mode-card" onclick="startGame('attack')">
+<div class="rh-mode-icon">👤</div>
+<div class="rh-mode-name">Personal Attacks</div>
+<div class="rh-mode-desc">Attacking the person, not the argument</div>
+</div>
+</div>
+
+<div class="rh-learn">
+<div class="rh-learn-title">🐟 What Is a Red Herring?</div>
+<div class="rh-learn-content">
+<p>• <strong>Red herring:</strong> Any argument or topic that distracts from the main issue.</p>
+<p style="margin-top:10px">• <strong>Origin:</strong> The term comes from using smelly fish to distract hunting dogs from a scent trail.</p>
+<p style="margin-top:10px">• <strong>Purpose:</strong> To avoid answering difficult questions or admitting fault.</p>
+<p style="margin-top:10px">• <strong>Counter:</strong> "That's interesting, but let's get back to the original question..."</p>
+</div>
+</div>
+</div>
+
+<div id="gameScreen" class="rh-game">
+<button class="rh-back" onclick="backToMenu()">← Back to Menu</button>
+<div class="rh-progress"><div class="rh-progress-fill" id="progressFill" style="width:0%"></div></div>
+<div class="rh-score-bar">
+<div class="rh-score-item">Question: <span id="questionNum">1</span>/<span id="totalQuestions">5</span></div>
+<div class="rh-score-item">Score: <span id="currentScore">0</span></div>
+<div class="rh-score-item">Streak: <span id="currentStreak">0</span>🔥</div>
+</div>
+<div class="rh-question-box">
+<div class="rh-question-num" id="questionCategory">Whataboutism</div>
+<div class="rh-scenario" id="scenarioText"></div>
+<div class="rh-question-text" id="questionText">Loading...</div>
+</div>
+<div class="rh-answers" id="answersGrid"></div>
+<div class="rh-feedback" id="feedbackBox">
+<div class="rh-feedback-title" id="feedbackTitle"></div>
+<div class="rh-feedback-text" id="feedbackText"></div>
+</div>
+<button class="rh-btn rh-btn-orange rh-next-btn" id="nextBtn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+</div>
+
+<div id="resultsScreen" class="rh-results">
+<div class="rh-results-icon" id="resultsIcon">🐟</div>
+<div class="rh-results-title" id="resultsTitle">Hunt Complete!</div>
+<div class="rh-results-score" id="resultsScore">You scored 0 out of 5</div>
+<div class="rh-badge" id="badgeEarned" style="display:none">
+<div class="rh-badge-icon" id="badgeIcon">🥉</div>
+<div class="rh-badge-name" id="badgeName">Badge Earned!</div>
+</div>
+<div style="margin-top:30px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap">
+<button class="rh-btn rh-btn-orange" onclick="restartGame()">Play Again</button>
+<button class="rh-btn rh-btn-outline" onclick="backToMenu()">Choose Another Topic</button>
+</div>
+</div>
+
+<footer class="rh-footer">
+<p><strong>GLOBAL SOVEREIGN UNIVERSITY</strong></p>
+<p>"Building a Bridge to Freedom Through Education—Not Handouts"</p>
+</footer>
+</div>
+
+<script>
+const questions={
+whatabout:[
+{q:"What diversionary tactic is being used?",s:"Question: 'Why did your company dump chemicals in the river?' Answer: 'But what about Company X? They dump even MORE chemicals!'",a:["Legitimate comparison","Whataboutism—deflecting by pointing to others' wrongs","Scientific argument","Expert testimony"],c:1,e:"Whataboutism deflects criticism by pointing to others' wrongdoing. Company X's behavior doesn't justify or address the original question about their own actions."},
+{q:"Identify the red herring:",s:"Reporter: 'Senator, you missed 50 votes this year.' Senator: 'What about Senator Jones? He missed 60 votes!'",a:["Valid defense","Whataboutism—avoiding accountability by pointing fingers","Statistical evidence","Comparison shopping"],c:1,e:"Pointing to someone else's worse record doesn't explain or justify the Senator's absences. It's deflection, not defense. The question was about THEIR record."},
+{q:"What tactic is this person using?",s:"Child: 'You said I couldn't have cookies before dinner!' Parent: 'Well, what about the time YOU took extra cookies?'",a:["Teaching a lesson","Whataboutism—deflecting by bringing up past behavior","Setting a good example","Making a fair point"],c:1,e:"The parent is deflecting the child's valid point by bringing up unrelated past behavior. Two wrongs don't make a right, and past mistakes don't justify current ones."},
+{q:"Spot the diversionary tactic:",s:"Criticism: 'This phone has battery problems.' Response: 'But iPhones have battery problems too!'",a:["Product comparison","Whataboutism—deflecting valid criticism by pointing to competitors","Consumer research","Market analysis"],c:1,e:"Other phones having problems doesn't address the battery issues in THIS phone. It's a deflection tactic companies use to avoid addressing legitimate complaints."},
+{q:"What logical fallacy is this?",s:"'Sure, our politician lied, but ALL politicians lie!'",a:["Accurate observation","Tu quoque / Whataboutism—justifying wrongdoing by claiming everyone does it","Historical fact","Political analysis"],c:1,e:"'Everyone does it' is the tu quoque fallacy—attempting to justify wrongdoing by claiming it's universal. Even if true, it doesn't make the lying acceptable."},
+{q:"Identify the deflection:",s:"Activist: 'Your factory pollutes the air.' CEO: 'What about cars? They pollute way more than we do!'",a:["Scientific comparison","Whataboutism—avoiding responsibility by blaming other polluters","Environmental analysis","Fair point"],c:1,e:"Cars polluting doesn't excuse factory pollution. Each polluter is responsible for their own emissions. This deflection attempts to shift blame elsewhere."},
+{q:"What red herring is being used?",s:"'You're criticizing my country's human rights record? But what about YOUR country's history!'",a:["Fair comparison of countries","Whataboutism—deflecting criticism by attacking the critic's country","Historical accuracy","International relations"],c:1,e:"Every country has problems, but that doesn't immunize any country from criticism. This tactic attempts to delegitimize criticism by attacking the critic's background."}
+],
+shifting:[
+{q:"What diversion tactic is this?",s:"Reporter: 'Did you accept illegal donations?' Politician: 'Let me tell you about all the good things I've done for education...'",a:["Answering the question","Topic shifting—avoiding the question by changing subjects","Providing context","Legitimate response"],c:1,e:"Listing accomplishments doesn't address the question about donations. This is topic shifting—a common tactic politicians use to avoid directly answering tough questions."},
+{q:"Identify the red herring:",s:"Debate: 'Should we raise the minimum wage?' Response: 'The real issue is automation taking jobs!'",a:["Related point","Topic shift—introducing a different issue to avoid the question","Economic analysis","Expert insight"],c:1,e:"While automation is important, it's a separate topic from minimum wage. Introducing it derails the original discussion without addressing the actual question."},
+{q:"What tactic avoids the issue?",s:"Question: 'Why were you late to work?' Answer: 'You know, traffic in this city has really gotten terrible over the years...'",a:["Explaining the situation","Topic shifting from personal accountability to general complaints","Valid excuse","Complete answer"],c:1,e:"Discussing city traffic in general doesn't explain THIS instance of being late. It's a shift from specific accountability to vague, general complaints."},
+{q:"Spot the diversion:",s:"Interviewer: 'Your product failed safety tests.' CEO: 'Let me tell you about our exciting new product line!'",a:["Forward-looking vision","Topic shift—avoiding the safety question by promoting new products","Good marketing","Addressing concerns"],c:1,e:"New products don't address the safety failures of current products. This is a classic corporate topic shift to avoid negative discussions."},
+{q:"What red herring is being used?",s:"'You didn't do your homework.' 'Did you see the game last night? It was incredible!'",a:["Starting a conversation","Topic shift—changing subjects to avoid accountability","Sharing excitement","Social bonding"],c:1,e:"Bringing up an exciting but unrelated topic is a classic avoidance technique. The sports discussion distracts from the homework accountability."},
+{q:"Identify the deflection technique:",s:"Spouse: 'You forgot our anniversary.' Response: 'Remember that amazing trip we took two years ago?'",a:["Reminiscing together","Topic shift—using a positive memory to deflect from a current failure","Romantic gesture","Good save"],c:1,e:"Bringing up a past positive experience doesn't address forgetting the current anniversary. It's an attempt to shift emotions away from the present failure."},
+{q:"What avoidance tactic is this?",s:"Teacher: 'Why didn't you study?' Student: 'Do you think there will be a snow day tomorrow?'",a:["Weather curiosity","Topic shift—introducing an unrelated subject to avoid the question","Planning ahead","Legitimate question"],c:1,e:"The weather question is completely unrelated and designed to change the subject. It's a transparent attempt to avoid discussing the study failure."}
+],
+attack:[
+{q:"What fallacy is being used?",s:"'Your argument about climate policy is wrong because you drive a big SUV.'",a:["Valid criticism","Ad hominem—attacking the person instead of their argument","Environmental concern","Hypocrisy callout"],c:1,e:"Even hypocrites can make valid arguments. Attacking personal behavior doesn't address whether the climate policy argument is correct. Judge arguments, not people."},
+{q:"Identify the red herring:",s:"Scientist: 'The data shows...' Critic: 'This scientist was divorced twice! Can we really trust them?'",a:["Character assessment","Ad hominem—attacking personal life instead of scientific findings","Due diligence","Fair question"],c:1,e:"A scientist's personal life is irrelevant to whether their data and methodology are sound. This attack on character diverts from evaluating the actual science."},
+{q:"What diversionary tactic is this?",s:"'Your healthcare proposal is interesting, but I heard you were a terrible student in college.'",a:["Background check","Ad hominem—attacking past history instead of current argument","Relevant context","Fair criticism"],c:1,e:"College performance decades ago doesn't determine whether a healthcare proposal is good today. This diverts from evaluating the proposal on its merits."},
+{q:"Spot the fallacy:",s:"'Of course she supports this policy—she's just a young person who doesn't understand the real world.'",a:["Generational wisdom","Ad hominem—dismissing based on age rather than argument quality","Life experience","Fair point"],c:1,e:"Dismissing someone's argument because of their age (young OR old) is ageist ad hominem. Arguments should be evaluated on their logic and evidence, not the speaker's age."},
+{q:"What red herring is being used?",s:"'Your business plan has some issues.' 'Well, YOU'VE never started a successful business!'",a:["Valid defense","Tu quoque—attacking the critic instead of addressing the criticism","Fair comparison","Experience matters"],c:1,e:"The critic's business history doesn't make the plan's issues disappear. A non-expert can still identify valid problems. This attacks the messenger, not the message."},
+{q:"Identify the diversion:",s:"Debater A: 'Your policy would increase debt.' Debater B: 'You're just saying that because your donors want you to!'",a:["Following the money","Ad hominem—attacking motives instead of addressing the debt argument","Political analysis","Good comeback"],c:1,e:"Even if Debater A has donors, the debt argument might still be valid. Attacking motives doesn't address whether the policy would actually increase debt. Evaluate claims, not motives."},
+{q:"What tactic avoids the argument?",s:"'Your research methodology is flawed.' 'You're just jealous of my success!'",a:["Self-defense","Ad hominem—attacking the critic's emotions instead of addressing the criticism","Confidence","Standing ground"],c:1,e:"Accusing the critic of jealousy doesn't address whether the methodology is actually flawed. It's an emotional attack to deflect legitimate academic criticism."}
+]
+};
+
+let currentMode='',currentQuestions=[],currentIndex=0,score=0,streak=0,answered=false;
+function startGame(mode){currentMode=mode;currentQuestions=shuffleArray([...questions[mode]]).slice(0,5);currentIndex=0;score=0;streak=0;answered=false;document.getElementById('menuScreen').style.display='none';document.getElementById('gameScreen').classList.add('active');document.getElementById('resultsScreen').classList.remove('active');document.getElementById('totalQuestions').textContent=currentQuestions.length;updateGenoText("Let's hunt some red herrings! Once you spot these diversions, you'll see them everywhere.");loadQuestion();}
+function loadQuestion(){answered=false;const q=currentQuestions[currentIndex];const names={whatabout:'Whataboutism',shifting:'Topic Shifting',attack:'Personal Attacks'};document.getElementById('questionCategory').textContent=names[currentMode]||'Question';document.getElementById('questionNum').textContent=currentIndex+1;document.getElementById('currentScore').textContent=score;document.getElementById('currentStreak').textContent=streak;document.getElementById('progressFill').style.width=((currentIndex/currentQuestions.length)*100)+'%';document.getElementById('scenarioText').textContent=q.s;document.getElementById('questionText').textContent=q.q;const grid=document.getElementById('answersGrid');grid.innerHTML='';q.a.forEach((answer,i)=>{const btn=document.createElement('button');btn.className='rh-answer-btn';btn.textContent=answer;btn.onclick=()=>checkAnswer(i);grid.appendChild(btn);});document.getElementById('feedbackBox').classList.remove('show','correct','incorrect');document.getElementById('nextBtn').style.display='none';}
+function checkAnswer(selected){if(answered)return;answered=true;const q=currentQuestions[currentIndex];const buttons=document.querySelectorAll('.rh-answer-btn');const feedback=document.getElementById('feedbackBox');const isCorrect=selected===q.c;buttons.forEach((btn,i)=>{btn.classList.add('disabled');if(i===q.c)btn.classList.add('correct');if(i===selected&&!isCorrect)btn.classList.add('incorrect');});if(isCorrect){score++;streak++;document.getElementById('currentScore').textContent=score;document.getElementById('currentStreak').textContent=streak;document.getElementById('feedbackTitle').textContent='✓ Correct!';feedback.classList.add('correct');updateGenoText("You caught that red herring!");}else{streak=0;document.getElementById('currentStreak').textContent=streak;document.getElementById('feedbackTitle').textContent='✗ Not quite';feedback.classList.add('incorrect');updateGenoText("These diversions are sneaky—keep practicing!");}document.getElementById('feedbackText').textContent=q.e;feedback.classList.add('show');document.getElementById('nextBtn').style.display='block';document.getElementById('nextBtn').textContent=currentIndex<currentQuestions.length-1?'Next Question →':'See Results →';}
+function nextQuestion(){currentIndex++;if(currentIndex<currentQuestions.length){loadQuestion();}else{showResults();}}
+function showResults(){document.getElementById('gameScreen').classList.remove('active');document.getElementById('resultsScreen').classList.add('active');const total=currentQuestions.length;const percent=Math.round((score/total)*100);document.getElementById('resultsScore').textContent='You scored '+score+' out of '+total+' ('+percent+'%)';let icon='🐟',title='Hunt Complete!',badge=null;if(percent>=90){icon='🏆';title='Master Hunter!';badge={icon:'🥇',name:'Gold Badge - Diversion Expert'};}else if(percent>=70){icon='⭐';title='Great Work!';badge={icon:'🥈',name:'Silver Badge - Red Herring Hunter'};}else if(percent>=50){icon='🐟';title='Good Progress!';badge={icon:'🥉',name:'Bronze Badge - Diversion Learner'};}document.getElementById('resultsIcon').textContent=icon;document.getElementById('resultsTitle').textContent=title;if(badge){document.getElementById('badgeEarned').style.display='inline-block';document.getElementById('badgeIcon').textContent=badge.icon;document.getElementById('badgeName').textContent=badge.name;}else{document.getElementById('badgeEarned').style.display='none';}updateGenoText(percent>=70?"Outstanding! You won't be distracted by diversionary tactics!":"Keep hunting—these tactics are used constantly in debates and politics!");}
+function restartGame(){startGame(currentMode);}
+function backToMenu(){document.getElementById('gameScreen').classList.remove('active');document.getElementById('resultsScreen').classList.remove('active');document.getElementById('menuScreen').style.display='block';updateGenoText("Choose another diversion type to continue sharpening your focus!");}
+function shuffleArray(array){for(let i=array.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[array[i],array[j]]=[array[j],array[i]];}return array;}
+function updateGenoText(text){document.getElementById('genoText').textContent=text;}
+function speakGeno(){const text=document.getElementById('genoText').textContent;if('speechSynthesis' in window){window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.rate=0.95;const img=document.getElementById('genoImg');img.style.boxShadow='0 0 20px #f59e0b';utterance.onend=function(){img.style.boxShadow='none';};window.speechSynthesis.speak(utterance);}}
+</script>
+</div>
+
+</body>
+</html>
