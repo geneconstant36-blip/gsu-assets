@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Comprehension Bridge | Free AI-Guided Reading Quest | GSU</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#000;color:#fff;font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;max-width:100vw;}
+html{overflow-x:hidden;}
+/* Hide scrollbar — keep scroll functionality */
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;}
+html,body{-ms-overflow-style:none;scrollbar-width:none;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:64px;}
+@media(max-width:768px){.hero{grid-template-columns:1fr;}.hero-image-col{display:none;}}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:60px 48px 60px 56px;max-width:620px;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(107,79,187,.25);border:1px solid rgba(107,79,187,.5);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:#9b7fe8;margin-bottom:28px;width:fit-content;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:#9b7fe8;}
+.hero-title{font-size:clamp(36px,4vw,56px);font-weight:800;line-height:1.1;color:#fff;margin-bottom:16px;letter-spacing:-.02em;}
+.hero-title span{color:#c8a84b;}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.5);line-height:1.65;margin-bottom:36px;max-width:440px;}
+.choice-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;}
+.guide-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.guide-btn{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:14px;font-weight:500;cursor:pointer;transition:all .25s;text-align:left;width:100%;}
+.guide-btn.geno-btn:hover{border-color:rgba(26,139,127,.6);background:rgba(26,139,127,.08);}
+.guide-btn.aeye-btn:hover{border-color:rgba(107,79,187,.6);background:rgba(107,79,187,.08);}
+.guide-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.geno-icon{background:rgba(26,139,127,.2);border:1px solid rgba(26,139,127,.35);}
+.aeye-icon{background:rgba(107,79,187,.2);border:1px solid rgba(107,79,187,.35);}
+.guide-btn-name{font-size:14px;font-weight:600;color:#fff;display:block;margin-bottom:2px;}
+.guide-btn-role{font-size:11px;color:rgba(255,255,255,.4);display:block;}
+.divider-row{display:flex;align-items:center;gap:12px;margin:14px 0;}
+.divider-line{flex:1;height:1px;background:rgba(255,255,255,.08);}
+.divider-txt{font-size:11px;color:rgba(255,255,255,.25);}
+.road-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;}
+.road-btn{padding:12px 8px;border-radius:9px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.03);color:#fff;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;}
+.road-btn.good:hover{border-color:rgba(200,168,75,.6);background:rgba(200,168,75,.08);color:#c8a84b;}
+.road-btn.better:hover{border-color:rgba(26,139,127,.6);background:rgba(26,139,127,.08);color:#22b5a4;}
+.road-btn.best:hover{border-color:rgba(107,79,187,.6);background:rgba(107,79,187,.08);color:#9b7fe8;}
+.road-label{display:block;font-size:10px;color:rgba(255,255,255,.3);font-weight:400;margin-top:3px;}
+.cta-btn{width:100%;padding:15px 24px;border-radius:10px;background:linear-gradient(135deg,#6b4fbb,#9b7fe8);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(107,79,187,.4);}
+.cta-sub{text-align:center;font-size:11px;color:rgba(255,255,255,.28);margin-bottom:28px;}
+.cta-sub span{margin:0 6px;}
+.free-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(26,139,127,.15);border:1px solid rgba(26,139,127,.3);border-radius:8px;padding:8px 14px;font-size:12px;color:rgba(255,255,255,.5);}
+.free-badge strong{color:#22b5a4;}
+.hero-image-col{position:relative;display:flex;align-items:center;justify-content:center;padding:48px 40px 48px 20px;}
+.image-frame{width:100%;max-width:540px;aspect-ratio:4/5;border-radius:20px;overflow:hidden;position:relative;background:#0a0a14;border:1px solid rgba(255,255,255,.08);}
+.image-frame img{width:100%;height:100%;object-fit:cover;opacity:.9;}
+.image-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.7) 100%);}
+.image-caption{position:absolute;bottom:24px;left:24px;right:24px;}
+.image-caption-text{font-size:15px;font-weight:600;color:#fff;line-height:1.4;text-shadow:0 2px 8px rgba(0,0,0,.8);}
+.image-caption-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px;}
+.floating-stat{position:absolute;background:rgba(10,10,20,.9);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px;backdrop-filter:blur(10px);}
+.floating-stat.stat-1{bottom:120px;left:-24px;}
+.floating-stat.stat-2{bottom:44px;left:-24px;}
+.stat-num{font-size:22px;font-weight:800;color:#c8a84b;line-height:1;}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.4);margin-top:3px;}
+
+/* ── BOOK CARDS SECTION ── */
+.books-section{background:#000;padding:56px 24px;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
+.books-section-inner{max-width:960px;margin:0 auto;}
+.books-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:4px;color:#C9A84C;text-transform:uppercase;text-align:center;margin-bottom:12px;}
+.books-title{font-family:'Cinzel',serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;color:#fff;text-align:center;margin-bottom:8px;}
+.books-sub{font-size:14px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:40px;}
+.books-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.books-grid a{display:block;border-radius:12px;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+.books-grid a:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.5);}
+.books-grid img{width:100%;height:auto;display:block;}
+@media(max-width:680px){.books-grid{grid-template-columns:1fr 1fr;gap:12px;}}
+
+/* ── PANELS & BELOW ── */
+.panels{padding:60px 0 80px;display:flex;flex-direction:column;gap:32px;max-width:960px;margin:0 auto;padding-left:24px;padding-right:24px;}
+.panel{display:grid;grid-template-columns:1fr 1fr;background:#111827;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);transition:border-color .3s,transform .3s;position:relative;}
+.panel:hover{border-color:rgba(255,255,255,.12);transform:translateY(-3px);}
+.panel.reverse{direction:rtl;}
+.panel.reverse>*{direction:ltr;}
+@media(max-width:700px){.panel,.panel.reverse{grid-template-columns:1fr;}.panel-image{aspect-ratio:16/9;min-height:unset;}}
+.panel-image{position:relative;min-height:380px;background:#0a0f1e;overflow:hidden;}
+.panel-image-inner{width:100%;height:100%;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.panel-image-inner img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+.panel-content{padding:40px 44px;display:flex;flex-direction:column;justify-content:center;}
+.panel-badge{display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:5px 14px;font-size:11px;font-weight:600;margin-bottom:18px;width:fit-content;}
+.pb-teal{background:rgba(26,139,127,.2);border:1px solid rgba(26,139,127,.4);color:#22b5a4;}
+.pb-gold{background:rgba(200,168,75,.2);border:1px solid rgba(200,168,75,.4);color:#c8a84b;}
+.pb-purple{background:rgba(107,79,187,.2);border:1px solid rgba(107,79,187,.4);color:#9b7fe8;}
+.pb-red{background:rgba(192,64,58,.2);border:1px solid rgba(192,64,58,.4);color:#e07070;}
+.panel-title{font-size:clamp(22px,2.5vw,30px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:14px;letter-spacing:-.02em;}
+.panel-desc{font-size:14px;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:20px;}
+.panel-bullets{list-style:none;margin-bottom:24px;}
+.panel-bullets li{font-size:13px;color:rgba(255,255,255,.5);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:12px;line-height:1.5;}
+.panel-bullets li:last-child{border-bottom:none;}
+.panel-bullet-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.dot-teal{background:#1a8b7f;}
+.dot-gold{background:#c8a84b;}
+.dot-purple{background:#6b4fbb;}
+.dot-red{background:#c0403a;}
+.panel-cta{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .2s;text-decoration:none;width:fit-content;}
+.pc-teal{background:#1a8b7f;color:#fff;}
+.pc-teal:hover{background:#158070;}
+.pc-gold{background:#c8a84b;color:#0a0800;}
+.pc-gold:hover{background:#d4b655;}
+.pc-purple{background:#6b4fbb;color:#fff;}
+.pc-purple:hover{background:#7d5fd4;}
+.pc-red{background:#c0403a;color:#fff;}
+.pc-red:hover{background:#d44844;}
+.bottom-cta{padding:80px 56px;text-align:center;border-top:1px solid rgba(255,255,255,.06);}
+.bottom-cta h2{font-size:clamp(28px,3vw,42px);font-weight:800;color:#fff;margin-bottom:12px;letter-spacing:-.02em;}
+.bottom-cta p{font-size:15px;color:rgba(255,255,255,.4);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-left>*{animation:fadeUp .7s ease both;}
+.hero-left>*:nth-child(1){animation-delay:.05s}.hero-left>*:nth-child(2){animation-delay:.12s}.hero-left>*:nth-child(3){animation-delay:.18s}.hero-left>*:nth-child(4){animation-delay:.24s}.hero-left>*:nth-child(5){animation-delay:.30s}.hero-left>*:nth-child(6){animation-delay:.36s}.hero-left>*:nth-child(7){animation-delay:.40s}.hero-left>*:nth-child(8){animation-delay:.44s}.hero-left>*:nth-child(9){animation-delay:.48s}
+</style>
+</head>
+<body>
+
+<!-- HERO — original approved design -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><span class="badge-dot"></span>The Comprehension Bridge</div>
+    <h1 class="hero-title">You Were Never Bad<br>at <span>Reading.</span></h1>
+    <p class="hero-sub">You were simply worn out. Your guide is ready. The road is laid out. Now it is your moment to take that thrilling first step onto the Bridge.</p>
+    <div class="choice-label">Step 1 — Choose your guide</div>
+    <div class="guide-btns">
+      <button class="guide-btn geno-btn" onclick="selectGuide('geno',this)">
+        <div class="guide-icon geno-icon">🤖</div>
+        <div class="guide-btn-text"><span class="guide-btn-name">GENO</span><span class="guide-btn-role">Field Navigator · Everyday Learner</span></div>
+        <span style="margin-left:auto;color:rgba(255,255,255,.3);">→</span>
+      </button>
+      <button class="guide-btn aeye-btn" onclick="selectGuide('aeye',this)">
+        <div class="guide-icon aeye-icon">✦</div>
+        <div class="guide-btn-text"><span class="guide-btn-name">A-Eye</span><span class="guide-btn-role">Cosmic Guide · Advanced Explorer</span></div>
+        <span style="margin-left:auto;color:rgba(255,255,255,.3);">→</span>
+      </button>
+    </div>
+    <div class="divider-row"><div class="divider-line"></div><span class="divider-txt">Step 2 — Pick your road</span><div class="divider-line"></div></div>
+    <div class="road-btns">
+      <button class="road-btn good" onclick="selectRoad('good',this)">🌱 Good<span class="road-label">Build confidence</span></button>
+      <button class="road-btn better" onclick="selectRoad('better',this)">⚡ Better<span class="road-label">Rebuild focus</span></button>
+      <button class="road-btn best" onclick="selectRoad('best',this)">🌌 Best<span class="road-label">Achieve mastery</span></button>
+    </div>
+    <div class="free-badge"><span>🎁</span><span>Free 501(c)(3) · <strong>Foundation for Global Instruction</strong> · EIN 39-2716552</span></div>
+  </div>
+  <div class="hero-image-col">
+    <div class="image-frame">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c2c1ae845d44fbca2dc159_GENO%20Mindset%20Hub.png" alt="GENO">
+      <div class="image-overlay"></div>
+      <div class="image-caption">
+        <div class="image-caption-text">GENO — GSU Education Navigator Online</div>
+        <div class="image-caption-sub">Your Field Guide on the Comprehension Bridge</div>
+      </div>
+    </div>
+    <div class="floating-stat stat-1"><div class="stat-num">46%</div><div class="stat-lbl">of U.S. adults read<br>zero books in 2023</div></div>
+    <div class="floating-stat stat-2"><div class="stat-num">Free</div><div class="stat-lbl">Always. Forever.<br>For everyone.</div></div>
+  </div>
+</section>
+
+<!-- DEEP RESEARCH SERIES CARDS -->
+<section class="books-section">
+  <div class="books-section-inner">
+    <div class="books-eyebrow">GSU Deep Research Series</div>
+    <h2 class="books-title">The Science Behind The Bridge</h2>
+    <p class="books-sub">Four peer-reviewed research reports — free, fully cited, and written for anyone ready to understand why the world works the way it does.</p>
+    <div class="books-grid">
+      <a href="https://www.globalsovereignuniversity.org/how-your-brain-learns"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c5b01e550af53c048d85ea_11.png" alt="Book 1"></a>
+      <a href="https://www.globalsovereignuniversity.org/collapse-critical-thinking"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c5affebeb06176a9637a5b_22.png" alt="Book 2"></a>
+      <a href="https://www.globalsovereignuniversity.org/discovering-self"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c5b03e00780edd5f823c06_33.png" alt="Book 3"></a>
+      <a href="https://www.globalsovereignuniversity.org/financial-literacy-research"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c5b0630abcfb98a3609201_44.png" alt="Book 4"></a>
+    </div>
+  </div>
+</section>
+
+<section class="panels">
+
+  <!-- PANEL 1 — The Reading Crisis -->
+  <div class="panel">
+    <div class="panel-image">
+      <div class="panel-image-inner"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c2d1c70907af8c570a1c1c_book-modified.png" alt="The reading crisis" loading="lazy"></div>
+    </div>
+    <div class="panel-content">
+      <div class="panel-badge pb-red">⚡ Core Problem</div>
+      <div class="panel-title">46% of Adults Read Zero Books Last Year</div>
+      <p class="panel-desc">The reading crisis is real, documented, and accelerating. The bottom 40% of Americans read nothing. The top 4% read 50+ books and account for 46% of all consumption. We are splitting into two cognitive classes — and most people do not know which one they are in.</p>
+      <ul class="panel-bullets">
+        <li><span class="panel-bullet-dot dot-red"></span>13-year-olds reading daily: 27% in 2012 → 14% in 2023</li>
+        <li><span class="panel-bullet-dot dot-red"></span>Fiction reading at its lowest rate in three decades</li>
+        <li><span class="panel-bullet-dot dot-red"></span>37% of 4th graders reading below basic proficiency</li>
+      </ul>
+      <a href="/comprehension-bridge" class="panel-cta pc-red">See the research →</a>
+    </div>
+  </div>
+
+  <!-- PANEL 2 — GENO & A-Eye -->
+  <div class="panel reverse">
+    <div class="panel-image">
+      <div class="panel-image-inner"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c2d1bb1a4fcedb4fadcccf_A-Eye%20avatar-modified.png" alt="A-Eye — Cosmic Guide" loading="lazy" style="object-fit:contain;background:#07090f;padding:8px;"></div>
+    </div>
+    <div class="panel-content">
+      <div class="panel-badge pb-teal">🤖 Your Guides</div>
+      <div class="panel-title">Chat with GENO or A-Eye Before You Read a Word</div>
+      <p class="panel-desc">Two AI guides, two distinct voices, one mission. GENO is the warm, patient field navigator for everyday learners. A-Eye is the cosmic guide for readers who want mastery. Both are voiced by ElevenLabs. Both are free. Choose the one that feels right.</p>
+      <ul class="panel-bullets">
+        <li><span class="panel-bullet-dot dot-teal"></span>ElevenLabs voice — real audio, not text-to-speech robot</li>
+        <li><span class="panel-bullet-dot dot-teal"></span>Your guide reads every passage aloud on request</li>
+        <li><span class="panel-bullet-dot dot-teal"></span>Guide choice persists across every road and session</li>
+      </ul>
+      <a href="/comprehension-bridge" class="panel-cta pc-teal">Choose your guide →</a>
+    </div>
+  </div>
+
+  <!-- PANEL 3 — Trifurcation Road -->
+  <div class="panel" style="grid-template-columns:1fr;display:flex;flex-direction:column;">
+    <div style="position:relative;width:100%;overflow:hidden;border-radius:20px 20px 0 0;">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c2e7f1d356b730e0c3da9e_good-better-best-modified.png" alt="Trifurcation Road — Good, Better, Best" loading="lazy" style="width:100%;height:auto;display:block;">
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 60%);padding:28px 32px 24px;">
+        <div style="font-size:clamp(24px,3vw,36px);font-weight:800;color:#c8a84b;letter-spacing:-.01em;">Pick Your Road</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(255,255,255,.06);background:#111827;border-radius:0 0 20px 20px;">
+      <div style="padding:28px 32px;border-right:1px solid rgba(255,255,255,.06);">
+        <p class="panel-desc" style="margin-bottom:0;">Three roads diverge from one origin point. Each one is calibrated to a specific reader — not where they wish they were, but exactly where they are right now. The road that meets you there walks with you as far as you want to go. The quest has no fixed end.</p>
+      </div>
+      <div style="padding:28px 32px;display:flex;flex-direction:column;justify-content:space-between;">
+        <ul class="panel-bullets" style="margin-bottom:20px;">
+          <li><span class="panel-bullet-dot dot-gold"></span>Good — the two-minute rule. One page. One habit. Psyche +1.</li>
+          <li><span class="panel-bullet-dot dot-gold"></span>Better — timed bursts, habit stacking, three comprehension pillars</li>
+          <li><span class="panel-bullet-dot dot-gold"></span>Best — all five pillars, active engagement, the infinite road</li>
+        </ul>
+        <a href="/comprehension-bridge" class="panel-cta pc-gold" style="align-self:flex-start;">Pick your road →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 4 — Full graphic, no text -->
+  <div style="width:100%;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c2ddaebc4fd44d60e833ac_graphic%20for%20new%20board%20game%20page.-modified.jpg" alt="Scan a Page — Your Guide Appears — The Quest Begins" style="width:100%;height:auto;display:block;">
+  </div>
+
+  <!-- PANEL 5 — The Science — UPDATED: links to live research page -->
+  <div class="panel">
+    <div class="panel-image">
+      <div class="panel-image-inner"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c2be6db8747389ca4b4759_brain%20-%20no%20wm.png" alt="The science of deep reading" loading="lazy" style="object-fit:cover;object-position:center;"></div>
+    </div>
+    <div class="panel-content">
+      <div class="panel-badge pb-teal">🔬 The Science</div>
+      <div class="panel-title">Follow the Science. Read the Research. Build the Bridge.</div>
+      <p class="panel-desc">The Comprehension Bridge is not theory. It is the direct application of 20 years of reading science — neural recycling, the five pillars of comprehension, the bi-literate brain, and the Reading Habit Restoration Framework. The research is published. The bridge is open. The road is yours.</p>
+      <ul class="panel-bullets">
+        <li><span class="panel-bullet-dot dot-teal"></span>Based on 170,000+ participant Stavanger Declaration meta-analysis</li>
+        <li><span class="panel-bullet-dot dot-teal"></span>Five comprehension pillars — never named, always experienced as play</li>
+        <li><span class="panel-bullet-dot dot-teal"></span>Read the full Deep Research series — always free</li>
+      </ul>
+      <a href="https://www.globalsovereignuniversity.org/how-your-brain-learns" target="_blank" class="panel-cta pc-teal">Read the research →</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- DEEP RESEARCH HEADER — UPDATED: Book 2 is now a live link -->
+<section style="background:#000;padding:64px 48px 0;border-top:1px solid rgba(255,255,255,.08);max-width:860px;margin:0 auto;">
+  <div style="font-size:11px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#c8a84b;margin-bottom:12px;">Deep Research — Book 1</div>
+  <h2 style="font-size:clamp(28px,3.5vw,44px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:8px;letter-spacing:-.02em;">The Extinction of Deep Reading</h2>
+  <div style="font-size:18px;color:rgba(255,255,255,.4);font-style:italic;margin-bottom:20px;">Exploring the Shift from Written Comprehension to Digital Consumption</div>
+  <div style="height:3px;width:80px;background:#c8a84b;margin-bottom:24px;border-radius:2px;"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:0;">
+    <a href="https://www.amazon.com/author/geneconstant?tag=gsu2026-20" target="_blank" style="padding:11px 22px;border-radius:9px;background:#c8a84b;color:#0a0800;font-size:13px;font-weight:800;text-decoration:none;">📦 Get on Amazon →</a>
+    <a href="https://www.globalsovereignuniversity.org/how-your-brain-learns" target="_blank" style="padding:11px 22px;border-radius:9px;border:1px solid rgba(26,139,127,.5);color:#22b5a4;font-size:13px;font-weight:700;text-decoration:none;">⬇ Read Free Online</a>
+    <a href="https://www.globalsovereignuniversity.org/collapse-critical-thinking" target="_blank" style="display:inline-flex;align-items:center;padding:11px 16px;border-radius:9px;border:1px solid rgba(26,139,127,.4);color:#22b5a4;font-size:12px;font-weight:700;text-decoration:none;">Book 2: The Collapse of Critical Thinking →</a>
+  </div>
+</section>
+
+<!-- DEEP RESEARCH FULL TEXT -->
+<section id="research" style="background:#000;padding:64px 0 80px;">
+  <div style="max-width:860px;margin:0 auto;padding:0 48px;">
+    <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;">The Epidemiology of Literacy: Quantifying the Stratification of Reading Habits</h3>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">The decline of reading as a habitual behavior is well-documented, systemic, and accelerating. Longitudinal analyses of time-use data, publishing metrics, and literacy assessments reveal a stark bifurcation in modern society. We are witnessing the emergence of a shrinking minority of individuals who engage in sustained reading, contrasted against a vast, growing majority who consume virtually no long-form textual information.</p>
+    <h4 style="font-size:20px;font-weight:700;color:#c8a84b;margin-bottom:14px;">The Severe Inequality of Book Consumption</h4>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">In the United States, survey data indicates that a staggering 46% of adults did not read a single book in 2023. Data from 2025 further corroborates this trend, showing that the bottom 40% of the U.S. adult population read zero books. The middle 40% of the population accounts for a mere 18% of all books read. The top 19% of U.S. adults are responsible for an overwhelming 82% of all book consumption. Within this upper quintile, a hyper-literate 4% reads 50 or more books annually, single-handedly accounting for 46% of all books consumed nationwide.</p>
+    <div style="overflow-x:auto;margin:32px 0 40px;">
+      <table style="width:100%;border-collapse:collapse;font-size:15px;color:#fff;">
+        <thead><tr style="border-bottom:2px solid #c8a84b;">
+          <th style="text-align:left;padding:12px 16px;color:#c8a84b;font-weight:700;">Reading Volume (Books/Year)</th>
+          <th style="text-align:left;padding:12px 16px;color:#c8a84b;font-weight:700;">Share of U.S. Population (2025)</th>
+          <th style="text-align:left;padding:12px 16px;color:#c8a84b;font-weight:700;">Share of Total Books Consumed</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);"><td style="padding:11px 16px;">0 Books</td><td style="padding:11px 16px;">40%</td><td style="padding:11px 16px;">0%</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);"><td style="padding:11px 16px;">1 to 4 Books</td><td style="padding:11px 16px;">27%</td><td style="padding:11px 16px;">~9%</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);"><td style="padding:11px 16px;">5 to 9 Books</td><td style="padding:11px 16px;">13%</td><td style="padding:11px 16px;">~9%</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);"><td style="padding:11px 16px;">10 to 19 Books</td><td style="padding:11px 16px;">9%</td><td style="padding:11px 16px;">~12%</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);"><td style="padding:11px 16px;">20 to 49 Books</td><td style="padding:11px 16px;">6%</td><td style="padding:11px 16px;">~24%</td></tr>
+          <tr style="background:rgba(200,168,75,.08);"><td style="padding:11px 16px;font-weight:700;color:#c8a84b;">50+ Books</td><td style="padding:11px 16px;font-weight:700;color:#c8a84b;">4%</td><td style="padding:11px 16px;font-weight:700;color:#c8a84b;">46%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:8px;font-style:italic;">Table 1: The Stratification of Book Consumption Among U.S. Adults (2025)</p>
+    </div>
+    <h4 style="font-size:20px;font-weight:700;color:#c8a84b;margin-bottom:14px;">The Longitudinal Atrophy of Leisure Reading</h4>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">Time-series analyses leveraging the American Time Use Survey (encompassing over 236,270 participants from 2004 to 2024) document a compounding annual decrease of 3% in daily reading for pleasure. Between 2017 and 2023, the average time Americans aged 15 and older spent reading for personal interest stagnated at roughly 15 to 16 minutes per day, down from over 19 minutes daily between 2013 and 2015. In stark contrast, television and digital screen consumption averages between 160 and 171 minutes per day.</p>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">Only 48.5% of adults reported reading at least one book for pleasure in the past year, down from 52.7% in 2017 and 54.6% in 2012. In 2022, just 37.6% of adults reported reading a novel or short story — the lowest rate recorded in the survey's three-decade history.</p>
+    <div style="overflow-x:auto;margin:32px 0 40px;">
+      <table style="width:100%;border-collapse:collapse;font-size:15px;color:#fff;">
+        <thead><tr style="border-bottom:2px solid #22b5a4;">
+          <th style="text-align:left;padding:12px 16px;color:#22b5a4;font-weight:700;">Metric / Demographic</th>
+          <th style="text-align:left;padding:12px 16px;color:#22b5a4;font-weight:700;">Historical Benchmark (Year)</th>
+          <th style="text-align:left;padding:12px 16px;color:#22b5a4;font-weight:700;">Recent Measurement (Year)</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);"><td style="padding:11px 16px;">Adults reading at least one book</td><td style="padding:11px 16px;">54.6% (2012)</td><td style="padding:11px 16px;">48.5% (2022)</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);"><td style="padding:11px 16px;">Adults reading fiction/novels</td><td style="padding:11px 16px;">45.2% (2012)</td><td style="padding:11px 16px;">37.6% (2022)</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);"><td style="padding:11px 16px;">13-year-olds reading for fun daily</td><td style="padding:11px 16px;">27% (2012)</td><td style="padding:11px 16px;">14% (2023)</td></tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);"><td style="padding:11px 16px;">9-year-olds reading for fun daily</td><td style="padding:11px 16px;">53% (2012)</td><td style="padding:11px 16px;">39% (2022)</td></tr>
+          <tr><td style="padding:11px 16px;">9-year-olds "never" reading for fun</td><td style="padding:11px 16px;">N/A (Historic low)</td><td style="padding:11px 16px;">16% (2022)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:8px;font-style:italic;">Table 2: Longitudinal Declines in U.S. Leisure Reading Habits</p>
+    </div>
+    <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;">The Global Context</h3>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:48px;">The 2023 PIAAC Cycle 2 data reveals that across most OECD countries, adult literacy and numeracy proficiency have either stagnated or declined between 2012 and 2023. Approximately 18% of adults in these participating developed countries lack the most basic levels of proficiency in literacy, numeracy, and adaptive problem-solving. For adults aged 35–55, participation in education fell to an average of 43%, and for older adults (55–65), participation in job-related learning dropped to just 26%.</p>
+    <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;">The Neurobiology of the Reading Brain</h3>
+    <h4 style="font-size:20px;font-weight:700;color:#c8a84b;margin-bottom:14px;">Neural Recycling and the Bi-Literate Brain</h4>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">Reading is not an innate, genetically pre-programmed human capacity. It is a cultural invention requiring the brain to dynamically rewire its own structures through "neural recycling" — repurposing networks that evolved for object recognition and auditory processing to identify abstract symbols and extract linguistic meaning. When a reader engages deeply with a text, they activate complex cognitive scaffolding enabling analogical reasoning, perspective-taking, critical analysis, and the generation of novel insight.</p>
+    <h4 style="font-size:20px;font-weight:700;color:#c8a84b;margin-bottom:14px;">Deep Processing vs. Shallow Scanning</h4>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:48px;">Digital screens deliver rapid, hyper-stimulating, constantly updating information streams. The brain adapts by prioritizing speed over depth. The habit of skimming actively hinders memory consolidation. Digital ubiquity has also triggered the "Google Effect" — the externalization of memory — leaving the individual entirely dependent on the parameters set by the search algorithm.</p>
+    <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;">Print Superiority and the Illusion of Comprehension</h3>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">The Stavanger Declaration — a meta-analysis of 54 studies encompassing over 170,000 participants — unequivocally demonstrated that comprehension of long-form informational text is significantly stronger on paper than on screens. The materiality of print provides spatial and tactile landmarks that anchor memory. For primary and middle school learners, the relationship between digital leisure reading and text comprehension has been shown to be actively negative.</p>
+    <h4 style="font-size:20px;font-weight:700;color:#c8a84b;margin-bottom:14px;">Metacognitive Overconfidence</h4>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:48px;">Reading from screens causes poorly calibrated, overconfident predictions of performance. Readers experience an illusion of fluency — the speed at which they scroll is unconsciously conflated with deep understanding. Students believe they have absorbed the material, terminate their study prematurely, and score lower on assessments as a result.</p>
+    <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;">The Neuro-Behavioral Pathology of Short-Form Video</h3>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">Viewing personalized algorithmic short-form videos is associated with significantly reduced activation in the Dorsolateral Prefrontal Cortex (DLPFC) and the Anterior Cingulate Cortex (ACC) — the neurological command centers for executive control, sustained attention, and complex decision-making. A meta-study encompassing nearly 100,000 individuals confirmed that frequent users of short-form platforms score consistently lower in inhibitory control, attention, and working memory.</p>
+    <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;">Misinformation Susceptibility</h3>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">When misinformation is presented via short-form video, processing shifts from systematic evaluation to heuristic evaluation. Viewers focus on peripheral cues — the speaker's appearance, voice, production quality — rather than the substance of the claim. Users exposed to video-based misinformation consistently judge the source as more credible than those exposed to identical text-based misinformation.</p>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:48px;">Populations that rely heavily on short-form video for news are structurally incapable of processing retractions, leaving them permanently anchored to the initial false narratives they encounter.</p>
+    <h3 style="font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;">Conclusion</h3>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:24px;">The transition from a print-based, literate society to a digital, short-form video-dominated culture represents a critical, perilous bottleneck in human cognitive evolution. A society that cannot read deeply fundamentally loses the ability to think deeply.</p>
+    <p style="font-size:17px;color:#fff;line-height:1.85;margin-bottom:48px;">Without immediate, multi-sector intervention, the continued atrophy of the reading brain will ensure the stratification of society — a small, hyper-literate elite capable of critical thought, overseeing a vast majority perpetually captive to algorithmic stimulus and engineered misinformation.</p>
+
+    <!-- DEEP RESEARCH SERIES NAV — Book 1 and Book 2 both live -->
+    <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:32px;margin-bottom:48px;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#c8a84b;margin-bottom:16px;">Deep Research Series</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.2);border-radius:10px;padding:20px;">
+          <div style="font-size:10px;color:#c8a84b;letter-spacing:2px;font-weight:700;margin-bottom:8px;">BOOK 1 — YOU ARE HERE</div>
+          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:12px;">The Extinction of Deep Reading</div>
+          <a href="https://www.globalsovereignuniversity.org/how-your-brain-learns" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;background:#c8a84b;color:#0a0800;font-size:12px;font-weight:700;text-decoration:none;">Read Now →</a>
+        </div>
+        <div style="background:rgba(26,139,127,.06);border:1px solid rgba(26,139,127,.2);border-radius:10px;padding:20px;">
+          <div style="font-size:10px;color:#22b5a4;letter-spacing:2px;font-weight:700;margin-bottom:8px;">BOOK 2 — NOW LIVE</div>
+          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:12px;">The Collapse of Critical Thinking</div>
+          <a href="https://www.globalsovereignuniversity.org/collapse-critical-thinking" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;background:#1a8b7f;color:#fff;font-size:12px;font-weight:700;text-decoration:none;">Read Now →</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div style="font-size:13px;color:rgba(255,255,255,.3);">Global Sovereign University · Foundation for Global Instruction · EIN 39-2716552 · Free 501(c)(3) Nonprofit</div>
+      <a href="https://www.globalsovereignuniversity.org/how-your-brain-learns" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:9px;background:#1a8b7f;color:#fff;font-size:13px;font-weight:700;text-decoration:none;">⬇ Read Full Research Free →</a>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<script>
+let selectedGuide=null,selectedRoad=null;
+setTimeout(()=>genoGreet(),2000);
+function genoGreet(){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const msg="Hello! I'm GENO — your guide on the Comprehension Bridge. You were never bad at reading. You were simply worn out. I'm here to change that. Choose me as your guide, pick your road, and let's begin. The bridge is open. It is always free.";
+  const u=new SpeechSynthesisUtterance(msg);
+  u.rate=0.92;u.pitch=1.05;u.volume=1;
+  speechSynthesis.speak(u);
+}
+function selectGuide(guide,btn){
+  selectedGuide=guide;
+  document.querySelectorAll('.guide-btn').forEach(b=>{b.style.borderColor='';b.style.background='';});
+  if(guide==='geno'){btn.style.borderColor='rgba(26,139,127,.7)';btn.style.background='rgba(26,139,127,.12)';}
+  else{btn.style.borderColor='rgba(107,79,187,.7)';btn.style.background='rgba(107,79,187,.12)';}
+  if('speechSynthesis' in window){
+    speechSynthesis.cancel();
+    const msgs={geno:"Hello. I'm GENO. I'm glad you're here. Pick your road — and let's begin.",aeye:"I am A-Eye. The cosmos of meaning is waiting. Choose your road."};
+    const u=new SpeechSynthesisUtterance(msgs[guide]);
+    u.rate=guide==='aeye'?0.88:0.92;u.pitch=guide==='aeye'?0.9:1;
+    speechSynthesis.speak(u);
+  }
+}
+function selectRoad(road,btn){
+  selectedRoad=road;
+  document.querySelectorAll('.road-btn').forEach(b=>{b.style.borderColor='';b.style.background='';b.style.color='';});
+  const colors={good:['rgba(200,168,75,.7)','rgba(200,168,75,.12)','#c8a84b'],better:['rgba(26,139,127,.7)','rgba(26,139,127,.12)','#22b5a4'],best:['rgba(107,79,187,.7)','rgba(107,79,187,.12)','#9b7fe8']};
+  const[bc,bg,tc]=colors[road];btn.style.borderColor=bc;btn.style.background=bg;btn.style.color=tc;
+}
+
+function enterBridge(){
+  const road=selectedRoad||'good';
+  if('speechSynthesis' in window){
+    speechSynthesis.cancel();
+    const msgs={good:"The Good road. One page today. That is the whole assignment. Let's go.",better:"The Better road. Your focus tools are ready. The quest begins now.",best:"The Best road. Mastery awaits. The cosmos is ready for you."};
+    const u=new SpeechSynthesisUtterance(msgs[road]);u.rate=0.92;speechSynthesis.speak(u);
+  }
+  setTimeout(()=>{window.location.href='https://www.globalsovereignuniversity.org/comprehension-bridge';},2200);
+}
+</script>
+
+<script>
+let selectedGuide=null,selectedRoad=null;
+setTimeout(()=>genoGreet(),2000);
+function genoGreet(){
+  if(!window.speechSynthesis)return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(document.getElementById('genoText').textContent);
+  u.rate=0.92;u.pitch=1.05;u.volume=1;
+  speechSynthesis.speak(u);
+}
+function selectGuide(guide,btn){
+  selectedGuide=guide;
+  document.querySelectorAll('.guide-btn').forEach(b=>{b.style.borderColor='';b.style.background='';});
+  if(guide==='geno'){btn.style.borderColor='rgba(26,139,127,.7)';btn.style.background='rgba(26,139,127,.12)';}
+  else{btn.style.borderColor='rgba(107,79,187,.7)';btn.style.background='rgba(107,79,187,.12)';}
+  if(window.speechSynthesis){
+    speechSynthesis.cancel();
+    const msgs={geno:"Hello. I'm GENO. I'm glad you're here. Pick your road and let's begin.",aeye:"I am A-Eye. The cosmos of meaning is waiting. Choose your road."};
+    const u=new SpeechSynthesisUtterance(msgs[guide]);
+    u.rate=guide==='aeye'?0.85:0.92;u.pitch=guide==='aeye'?1.2:1.05;
+    if(guide==='aeye'){const voices=speechSynthesis.getVoices();const f=voices.find(v=>/female|zira|victoria|samantha|karen|moira|fiona|tessa/i.test(v.name));if(f)u.voice=f;}
+    speechSynthesis.speak(u);
+  }
+}
+function selectRoad(road,btn){
+  selectedRoad=road;
+  document.querySelectorAll('.road-btn').forEach(b=>{b.style.borderColor='';b.style.background='';b.style.color='';});
+  const c={good:['rgba(200,168,75,.7)','rgba(200,168,75,.12)','#c8a84b'],better:['rgba(26,139,127,.7)','rgba(26,139,127,.12)','#22b5a4'],best:['rgba(107,79,187,.7)','rgba(107,79,187,.12)','#9b7fe8']};
+  const[bc,bg,tc]=c[road];btn.style.borderColor=bc;btn.style.background=bg;btn.style.color=tc;
+}
+function enterBridge(){
+  const road=selectedRoad||'good';
+  if(window.speechSynthesis){
+    speechSynthesis.cancel();
+    const msgs={good:"The Good road. One page today. That is the whole assignment. Let's go.",better:"The Better road. Your focus tools are ready. The quest begins now.",best:"The Best road. Mastery awaits. The cosmos is ready for you."};
+    const u=new SpeechSynthesisUtterance(msgs[road]);u.rate=0.92;speechSynthesis.speak(u);
+  }
+  setTimeout(()=>{window.location.href='https://www.globalsovereignuniversity.org/comprehension-bridge';},2200);
+}
+</script>
+
+<script>
+let selectedGuide=null,selectedRoad=null;
+setTimeout(()=>genoGreet(),2000);
+function genoGreet(){
+  if(!window.speechSynthesis)return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance("Hello. I am GENO. You were never bad at reading. You were simply never given a quest worth finishing. Choose your guide, pick your road, and let's begin. The bridge is open. It is always free.");
+  u.rate=0.92;u.pitch=1.05;u.volume=1;
+  speechSynthesis.speak(u);
+}
+function selectGuide(guide,btn){
+  selectedGuide=guide;
+  document.querySelectorAll('.guide-btn').forEach(b=>{b.style.borderColor='';b.style.background='';});
+  if(guide==='geno'){btn.style.borderColor='rgba(26,139,127,.7)';btn.style.background='rgba(26,139,127,.12)';}
+  else{btn.style.borderColor='rgba(107,79,187,.7)';btn.style.background='rgba(107,79,187,.12)';}
+  if(window.speechSynthesis){
+    speechSynthesis.cancel();
+    const msgs={geno:"Hello. I'm GENO. I'm glad you're here. Pick your road and let's begin.",aeye:"I am A-Eye. The cosmos of meaning is waiting. Choose your road."};
+    const u=new SpeechSynthesisUtterance(msgs[guide]);
+    u.rate=guide==='aeye'?0.85:0.92;u.pitch=guide==='aeye'?1.2:1.05;
+    if(guide==='aeye'){
+      function speakAEye(voices){
+        const f=voices.find(v=>/samantha|victoria|karen|zira|moira|fiona|tessa|veena|allison|female/i.test(v.name));
+        if(f)u.voice=f;
+        speechSynthesis.speak(u);
+      }
+      const voices=speechSynthesis.getVoices();
+      if(voices.length){speakAEye(voices);}
+      else{speechSynthesis.addEventListener('voiceschanged',()=>speakAEye(speechSynthesis.getVoices()),{once:true});}
+    } else {
+      speechSynthesis.speak(u);
+    }
+  }
+}
+function selectRoad(road,btn){
+  selectedRoad=road;
+  document.querySelectorAll('.road-btn').forEach(b=>{b.style.borderColor='';b.style.background='';b.style.color='';});
+  const c={good:['rgba(200,168,75,.7)','rgba(200,168,75,.12)','#c8a84b'],better:['rgba(26,139,127,.7)','rgba(26,139,127,.12)','#22b5a4'],best:['rgba(107,79,187,.7)','rgba(107,79,187,.12)','#9b7fe8']};
+  const[bc,bg,tc]=c[road];btn.style.borderColor=bc;btn.style.background=bg;btn.style.color=tc;
+}
+function enterBridge(){
+  const road=selectedRoad||'good';
+  if(window.speechSynthesis){
+    speechSynthesis.cancel();
+    const msgs={good:"The Good road. One page today. That is the whole assignment. Let's go.",better:"The Better road. Your focus tools are ready. The quest begins now.",best:"The Best road. Mastery awaits. The cosmos is ready for you."};
+    const u=new SpeechSynthesisUtterance(msgs[road]);u.rate=0.92;speechSynthesis.speak(u);
+  }
+  setTimeout(()=>{window.location.href='https://www.globalsovereignuniversity.org/comprehension-bridge';},2200);
+}
+</script>
+
+<footer style="background:#000;padding:60px 40px 24px;border-top:1px solid rgba(255,255,255,.07);font-family:'Segoe UI',Arial,sans-serif;">
+  <div style="max-width:900px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:#C9A84C;font-weight:700;text-transform:uppercase;margin-bottom:8px;">Global Sovereign University</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.45);font-style:italic;">Building a Bridge to Freedom Through Education — Not Handouts</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-bottom:40px;">
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:16px;">Learn</div>
+        <a href="https://www.globalsovereignuniversity.org/learning-center" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Learning Center</a>
+        <a href="https://www.globalsovereignuniversity.org/bookgames" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Games</a>
+        <a href="https://geneconstant36-blip.github.io/gsu-assets/gsu-bookstore.html" target="_blank" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Bookstore</a>
+        <a href="https://www.globalsovereignuniversity.org/homeschool" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Homeschool</a>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:16px;">About</div>
+        <a href="https://www.globalsovereignuniversity.org/our-mission" style="display:block;font-size:13px;color:#C9A84C;text-decoration:none;margin-bottom:10px;">★ Mission Video</a>
+        <a href="https://www.globalsovereignuniversity.org/about-gsu" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">About GSU</a>
+        <a href="https://www.globalsovereignuniversity.org/civilization-builders" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Civilization Builders</a>
+        <a href="https://www.globalsovereignuniversity.org/podcast" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Podcast</a>
+        <a href="https://www.globalsovereignuniversity.org/books/the-amnesty-protocol" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Amnesty Protocol</a>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:16px;">Join</div>
+        <a href="https://www.globalsovereignuniversity.org/sovereign-handshake" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Sovereign Handshake</a>
+        <a href="https://www.globalsovereignuniversity.org/zombie-diagnosis" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Zombie Diagnosis</a>
+        <a href="https://www.globalsovereignuniversity.org/honest-transcript" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Honest Transcript</a>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:16px;">Support</div>
+        <a href="https://www.globalsovereignuniversity.org/donate" style="display:block;font-size:13px;color:#C9A84C;text-decoration:none;margin-bottom:10px;">♥ Donate</a>
+        <a href="https://www.youtube.com/@GSUGlobalSovereignUniversity" target="_blank" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">► YouTube</a>
+        <a href="https://www.globalsovereignuniversity.org/free-posters" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Free Posters</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:20px;text-align:center;">
+      <div style="margin-bottom:10px;">
+        <a href="https://www.globalsovereignuniversity.org/privacy" style="font-size:11px;color:rgba(255,255,255,.3);text-decoration:none;margin:0 10px;">Privacy</a>
+        <a href="https://www.globalsovereignuniversity.org/terms" style="font-size:11px;color:rgba(255,255,255,.3);text-decoration:none;margin:0 10px;">Terms</a>
+        <a href="https://www.globalsovereignuniversity.org/accessibility" style="font-size:11px;color:rgba(255,255,255,.3);text-decoration:none;margin:0 10px;">Accessibility</a>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,.25);line-height:1.6;">© 2026 The Foundation for Global Instruction, operating as Global Sovereign University • 501(c)(3) • Eugene, Oregon</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
