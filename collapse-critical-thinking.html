@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Collapse of Critical Thinking | GSU Deep Research</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#000;
+  --accent:#1A8B7F;
+  --accent-dim:rgba(26,139,127,0.15);
+  --gold:#C9A84C;
+  --white:#fff;
+  --muted:rgba(255,255,255,0.5);
+  --cream:rgba(255,255,255,0.88);
+  --off:rgba(255,255,255,0.75);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--white);font-family:'Source Sans 3',sans-serif;overflow-x:hidden;}
+
+/* ── HERO ── */
+.hero-wrapper{
+  display:grid;
+  grid-template-columns:1fr 1.6fr 0.85fr;
+  min-height:100vh;
+  align-items:center;
+  padding:80px 60px 60px;
+  gap:48px;
+}
+.col-left{display:flex;flex-direction:column;justify-content:center;}
+.series-tag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:20px;}
+.hero-title{font-family:'Cinzel',serif;font-size:clamp(2rem,3.5vw,3.2rem);font-weight:700;line-height:1.1;margin:0 0 20px;}
+.hero-title span{color:var(--accent);}
+.hero-desc{font-size:1.05rem;color:var(--muted);font-style:italic;margin-bottom:36px;line-height:1.7;max-width:420px;}
+.hero-desc b{color:var(--white);font-style:normal;}
+.btn-hear{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:10px 20px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;cursor:pointer;width:fit-content;margin-bottom:28px;display:flex;align-items:center;gap:8px;transition:background .2s;}
+.btn-hear:hover{background:var(--accent-dim);}
+.btn-main-cta{background:var(--accent);color:#fff;text-decoration:none;font-family:'Cinzel',serif;font-weight:700;font-size:12px;padding:16px 28px;text-align:center;border-radius:4px;letter-spacing:1px;transition:transform .2s,box-shadow .2s;display:inline-block;}
+.btn-main-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.4);}
+
+/* ── BOOK CARDS ── */
+
+.book-card{background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .3s,transform .2s;}
+.book-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.25);}
+.book-card-active{border-color:var(--accent)!important;box-shadow:0 0 20px rgba(255,255,255,.05);}
+.card-img{width:100%;height:160px;object-fit:cover;display:block;}
+.card-inner{padding:16px;display:flex;flex-direction:column;flex:1;}
+.card-num{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;margin-bottom:8px;}
+.card-title{font-family:'Cinzel',serif;font-size:.9rem;margin-bottom:10px;line-height:1.3;color:var(--white);}
+.card-text{font-size:.82rem;color:var(--muted);line-height:1.55;margin-bottom:16px;flex-grow:1;}
+.btn-read{text-decoration:none;font-size:11px;font-weight:700;padding:9px 18px;border-radius:4px;width:fit-content;font-family:'Cinzel',serif;letter-spacing:1px;}
+
+/* ── GUIDE COL ── */
+.col-right{display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;}
+.guide-avatar{width:160px;height:160px;border-radius:50%;border:2px solid var(--accent);box-shadow:0 0 30px rgba(255,255,255,.08);object-fit:cover;}
+.guide-name{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:#f0c84a;text-transform:uppercase;}
+.speech-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;font-style:italic;font-size:.9rem;color:var(--muted);line-height:1.65;}
+
+/* ── BELOW HERO ── */
+.stat-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:hidden;max-width:960px;margin:0 auto 80px;}
+.stat-item{background:#000;padding:28px 20px;text-align:center;}
+.stat-num{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;color:var(--accent);display:block;line-height:1;}
+.stat-label{font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:6px;display:block;}
+.content-wrap{max-width:820px;margin:0 auto;padding:0 24px 60px;}
+.section-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--accent);opacity:.6;text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:600;color:var(--white);line-height:1.25;margin-bottom:22px;}
+.body-text{font-size:1.05rem;color:var(--off);line-height:1.85;margin-bottom:24px;}
+.body-text strong{color:var(--white);font-weight:600;}
+.body-text em{color:var(--accent);font-style:italic;}
+.pull-quote{border-left:4px solid var(--accent);padding:20px 28px;background:var(--accent-dim);border-radius:0 8px 8px 0;margin:36px 0;font-family:'Cinzel',serif;font-size:1.2rem;font-style:italic;color:var(--cream);line-height:1.55;}
+.sub-heading{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--accent);margin:32px 0 14px;letter-spacing:1px;}
+.chapter-divider{display:flex;align-items:center;gap:20px;margin:52px 0 44px;}
+.chapter-divider::before,.chapter-divider::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.08),transparent);}
+.chapter-divider span{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;white-space:nowrap;}
+.data-table{width:100%;border-collapse:collapse;margin:28px 0;font-size:.9rem;}
+.data-table th{background:var(--accent-dim);color:var(--accent);font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;text-align:left;border-bottom:1px solid var(--accent);opacity:1;}
+.data-table td{padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--off);}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table td:first-child{color:var(--white);font-weight:600;}
+.table-caption{font-size:.78rem;color:var(--muted);margin-top:10px;font-style:italic;}
+.insight-card{background:var(--accent-dim);border:1px solid var(--accent);border-radius:10px;padding:24px 28px;margin:32px 0;opacity:.9;}
+.insight-card-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--accent);margin-bottom:10px;opacity:1;}
+.insight-card-text{font-size:1rem;color:var(--cream);line-height:1.75;}
+.framework-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:32px 0;}
+.framework-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:20px 22px;}
+.framework-card-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--accent);margin-bottom:10px;}
+.framework-card-text{font-size:.9rem;color:var(--off);line-height:1.7;}
+.gate{background:var(--accent-dim);border:1px solid var(--accent);border-radius:12px;padding:60px 48px;text-align:center;margin:80px auto;max-width:820px;position:relative;overflow:hidden;}
+.gate::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--accent),transparent);}
+.gate-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--accent);opacity:.7;margin-bottom:16px;}
+.gate-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:600;color:var(--white);line-height:1.3;margin-bottom:16px;}
+.gate-text{font-size:1rem;color:var(--off);line-height:1.75;max-width:560px;margin:0 auto 32px;}
+.gate-text strong{color:var(--accent);}
+.gate-cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;font-weight:700;padding:18px 40px;border-radius:3px;text-decoration:none;transition:all .25s;margin-bottom:20px;}
+.gate-cta:hover{opacity:.9;transform:translateY(-2px);}
+.gate-note{font-size:.8rem;color:var(--muted);}
+.series-nav{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:32px;margin:60px 0 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.series-nav-card{padding:20px;border-radius:8px;border:1px solid rgba(255,255,255,.07);}
+.series-nav-card.active{border-color:var(--accent);background:var(--accent-dim);}
+.series-nav-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:8px;}
+.series-nav-label.accent{color:var(--accent);}
+.series-nav-title{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:10px;line-height:1.3;}
+.series-nav-link{display:inline-flex;align-items:center;gap:6px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;color:var(--accent);text-decoration:none;padding:7px 14px;border:1px solid var(--accent);border-radius:3px;transition:all .2s;}
+.series-nav-link:hover{background:var(--accent-dim);}
+
+@media(max-width:1100px){
+  .hero-wrapper{grid-template-columns:1fr;padding:60px 24px;text-align:center;gap:40px;}
+  .col-left{align-items:center;}
+  .hero-desc{margin:0 auto 36px;}
+  
+  .col-right{order:3;}
+  .framework-grid{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  
+  .stat-bar{grid-template-columns:1fr 1fr;}
+  .gate{padding:40px 24px;}
+}
+.col-center{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
+.col-center a{display:block;border-radius:12px;overflow:hidden;}
+</style>
+</head>
+<body>
+<div style="width:100%;line-height:0;">
+  <img src="https://geneconstant36-blip.github.io/gsu-assets/deep-research-banner.jpg" 
+       alt="Deep Research — Global Sovereign University" 
+       style="width:100%;height:auto;display:block;">
+</div>
+
+
+<section class="hero-wrapper">
+  <div class="col-left">
+    <div class="series-tag">Deep Research Series · Book 2</div>
+    <h1 class="hero-title">The Collapse of<br><span>Critical Thinking</span></h1>
+    <p class="hero-desc">How algorithms, short-form video, and a broken education system destroyed <b>the one skill that makes you dangerous to manipulate.</b></p>
+    <button class="btn-hear" onclick="aEyeSpeak()">✦ HEAR A-EYE</button>
+    <a href="https://www.globalsovereignuniversity.org/collapse-critical-thinking" class="btn-main-cta">Read The Full Research — Free</a>
+  </div>
+
+    <div class="col-center">
+    <a href="https://www.globalsovereignuniversity.org/how-your-brain-learns"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c5b01e550af53c048d85ea_11.png" alt="Book 1" style="width:100%;height:auto;display:block;border-radius:12px;transition:transform .2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform=''"></a>
+    <a href="https://www.globalsovereignuniversity.org/collapse-critical-thinking"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c5affebeb06176a9637a5b_22.png" alt="Book 2" style="width:100%;height:auto;display:block;border-radius:12px;transition:transform .2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform=''"></a>
+    <a href="https://www.globalsovereignuniversity.org/discovering-self"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c5b03e00780edd5f823c06_33.png" alt="Book 3" style="width:100%;height:auto;display:block;border-radius:12px;transition:transform .2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform=''"></a>
+    <a href="https://www.globalsovereignuniversity.org/financial-literacy-research"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c5b0630abcfb98a3609201_44.png" alt="Book 4" style="width:100%;height:auto;display:block;border-radius:12px;transition:transform .2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform=''"></a>
+    <a href="https://www.globalsovereignuniversity.org/you-are-what-you-read"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c7593fe2a45944a647f717_you%20are%20what%20you%20read%20card.png" alt="Book 6 — You Are What You Read" style="width:100%;height:auto;display:block;border-radius:12px;transition:transform .2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform=''"></a>
+  </div>
+      <div class="library-card">
+        <a href="https://www.globalsovereignuniversity.org/the-sound-before-the-letter">
+          <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c97acfd085d65da75a4951_book7-card.jpeg" alt="Book 7 — The Sound Before the Letter">
+        </a>
+      </div>
+
+  <div class="col-right">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c56efaab142d731987a78f_AI%20head-sharp%20(1).png" alt="A-Eye" class="guide-avatar">
+    <div class="guide-name">A-EYE · COSMIC GUIDE</div>
+    <div class="speech-box" id="aEyeText">"The ability to think critically is not a luxury. It is the last line of cognitive defense between you and a system engineered to think for you."</div>
+  </div>
+</section>
+
+
+<!-- STAT BAR -->
+<div class="stat-bar" style="padding:0 24px;max-width:960px;margin:0 auto 80px;">
+  <div class="stat-item"><span class="stat-num">70%</span><span class="stat-label">Employers pivoting to skills-based hiring</span></div>
+  <div class="stat-item"><span class="stat-num">50%+</span><span class="stat-label">Middle management roles eliminated by AI by 2026</span></div>
+  <div class="stat-item"><span class="stat-num">100K</span><span class="stat-label">Individuals in meta-study linking SFV to cognitive decline</span></div>
+  <div class="stat-item"><span class="stat-num">3%</span><span class="stat-label">Annual compounding decline in daily reading for pleasure</span></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content-wrap">
+
+  <div class="section-eyebrow">Chapter I</div>
+  <h2 class="section-title">Understanding Critical Thinking and Its Utility</h2>
+  <p class="body-text">Critical thinking is the disciplined cognitive process of actively analyzing assumptions, evaluating arguments, seeking evidence, and drawing logical, unbiased conclusions. Rather than passively absorbing information or relying on rote memorization, critical thinkers strive to look beneath the surface, applying intellectual standards such as clarity, accuracy, precision, and fairness to their reasoning.</p>
+  <p class="body-text">Its utility today is profound. On a personal level, empirical studies show that higher critical thinking abilities act as a protective barrier against digital manipulation — high critical thinking scores are strongly correlated with lower levels of short-form video addiction and escapism. Economically, as artificial intelligence automates routine tasks and data processing, <strong>the ability to conceptualize, synthesize, and apply deep human judgment has become an indispensable skill that machines cannot easily replicate.</strong></p>
+
+  <div class="pull-quote">"The systemic decline in critical thinking benefits large technology corporations, advertisers, and political actors. When the public loses the capacity for deep reading and logical reasoning, they default to emotion-based processing — leaving populations vulnerable to cognitive capture."</div>
+
+  <div class="chapter-divider"><span>Chapter II</span></div>
+
+  <div class="section-eyebrow">Chapter II</div>
+  <h2 class="section-title">How to Learn and Master Critical Thinking</h2>
+  <p class="body-text">Mastering this skill requires deliberate practice and a shift away from reactive, emotion-driven decision-making toward structured logic. Several proven frameworks can help individuals build these mental muscles:</p>
+
+  <div class="framework-grid">
+    <div class="framework-card">
+      <div class="framework-card-title">The Socratic Method</div>
+      <div class="framework-card-text">This ancient pedagogical tool fosters learning through disciplined, open-ended questioning rather than direct instruction. By constantly asking "Why?" and exploring ethical implications of different viewpoints, individuals can uncover hidden biases and build intellectual humility.</div>
+    </div>
+    <div class="framework-card">
+      <div class="framework-card-title">The Paul-Elder Framework</div>
+      <div class="framework-card-text">Developed for practical application, this system trains you to scrutinize the "elements of thought" — your purpose, underlying questions, and assumptions — and evaluate them against strict intellectual standards to ensure fairness and logic in everyday decision-making.</div>
+    </div>
+    <div class="framework-card">
+      <div class="framework-card-title">Bloom's Taxonomy</div>
+      <div class="framework-card-text">A hierarchical model that guides learners to move beyond simply remembering and understanding facts, pushing them toward analyzing relationships, evaluating the reliability of sources, and creating novel solutions from what they know.</div>
+    </div>
+    <div class="framework-card">
+      <div class="framework-card-title">Practical Application</div>
+      <div class="framework-card-text">Adults can master these skills by deliberately separating emotion from evaluation, learning to detect logical fallacies, and avoiding the "Google Effect" — actively engaging with and synthesizing complex, long-form information rather than outsourcing it to search engines.</div>
+    </div>
+  </div>
+
+  <div class="chapter-divider"><span>Chapter III</span></div>
+
+  <div class="section-eyebrow">Chapter III</div>
+  <h2 class="section-title">Why Critical Thinking Is Rarely Taught in Public Education</h2>
+  <p class="body-text">Public education systems frequently fail to teach critical thinking due to structural, pedagogical, and cultural barriers. Over the past several decades, the demand for measurable academic excellence has led to a heavy emphasis on standardized testing, which inherently prioritizes rote memorization over complex analysis.</p>
+  <p class="body-text">Furthermore, many educational frameworks are heavily teacher-centered and exam-oriented, leaving little room for the slow, dialogue-driven exploration required by methods like Socratic questioning. <strong>Critical thinking also inherently disrupts traditional authority structures in the classroom</strong> — teaching students to rigorously question assumptions and beliefs can lead to pushback from community, political, or religious institutions that rely on ideological conformity. Finally, educators often struggle to teach it simply because it is highly complex to quantify and grade on standardized rubrics.</p>
+
+  <div class="insight-card">
+    <div class="insight-card-label">Key Finding</div>
+    <div class="insight-card-text">The very design of the modern education system — built to produce compliant, measurable, standardized outputs — is structurally incompatible with the cultivation of independent thought. You cannot mass-produce critical thinkers from an assembly line built for obedience.</div>
+  </div>
+
+  <div class="chapter-divider"><span>Chapter IV</span></div>
+
+  <div class="section-eyebrow">Chapter IV</div>
+  <h2 class="section-title">Who Has the Most to Gain from a Distracted Populace</h2>
+  <p class="body-text">The current cultural and economic landscape — defined by the devaluation of traditional degrees and the reshaping of the workforce — creates two distinct groups of beneficiaries when it comes to the collapse of critical thinking.</p>
+
+  <div class="sub-heading">The Beneficiaries of a Distracted Populace</div>
+  <p class="body-text">The systemic decline in critical thinking heavily benefits large technology corporations, advertisers, and political actors in a system often termed "surveillance capitalism." When the public loses the capacity for deep reading and logical reasoning, they default to heuristic, emotion-based processing. This leaves populations vulnerable to <em>cognitive capture</em> — an environment where user behavior, consumption habits, and political polarization are easily engineered and monetized by algorithms. Authoritarian actors and corporations gain immense power and profit when they face a populace that lacks the cognitive stamina to question sources or demand accountability.</p>
+
+  <div class="sub-heading">The Beneficiaries of Mastery — The Individual Professional</div>
+  <p class="body-text">For the individual, mastering critical thinking offers an unprecedented economic advantage. We are currently witnessing a major labor market shift where traditional college degrees are losing their signaling value, prompting up to 70% of employers to pivot toward skills-based hiring.</p>
+  <p class="body-text">Concurrently, AI is aggressively automating administrative tasks, which analysts predict will flatten organizational structures and eliminate over half of current middle management positions by 2026. However, this "hollowing out" is actually a redesign. As AI handles routine oversight and codified knowledge, companies are desperate for leaders who possess <strong>"tacit knowledge"</strong> — the human empathy, strategic foresight, and complex critical thinking required to translate high-level vision into execution. In an era where technical and administrative skills are commodified by machines, the human capacity for deep, critical reasoning has become the ultimate competitive advantage.</p>
+
+  <div class="chapter-divider"><span>Chapter V</span></div>
+
+  <div class="section-eyebrow">Chapter V</div>
+  <h2 class="section-title">The Cognitive and Societal Implications of the Shift from Deep Reading to Digital Consumption</h2>
+  <p class="body-text">The fundamental architecture of human information processing is undergoing a rapid, unprecedented evolutionary shift. Driven by the ubiquitous adoption of digital screens, algorithmic content delivery, and short-form video formats, the global populace is transitioning away from the sustained, linear cognitive engagement required by deep reading. This transition is not merely a cultural shift in entertainment preferences — it represents a profound neurobiological rewiring of the brain circuits that govern executive attention, critical thinking, empathy, and metacognition.</p>
+
+  <div class="sub-heading">The Epidemiology of Literacy</div>
+  <p class="body-text">The decline of reading as a habitual behavior is well-documented, systemic, and accelerating. In the United States, 46% of adults did not read a single book in 2023. Data from 2025 shows that the bottom 40% of the U.S. adult population read zero books. The middle 40% accounts for a mere 18% of all books read. The top 4% of the population reads 50 or more books annually, accounting for 46% of all books consumed nationwide.</p>
+
+  <table class="data-table">
+    <thead><tr>
+      <th>Reading Volume (Books/Year)</th>
+      <th>Share of U.S. Population (2025)</th>
+      <th>Share of Total Books Consumed</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>0 Books</td><td>40%</td><td>0%</td></tr>
+      <tr style="background:rgba(255,255,255,.03)"><td>1 to 4 Books</td><td>27%</td><td>~9%</td></tr>
+      <tr><td>5 to 9 Books</td><td>13%</td><td>~9%</td></tr>
+      <tr style="background:rgba(255,255,255,.03)"><td>10 to 19 Books</td><td>9%</td><td>~12%</td></tr>
+      <tr><td>20 to 49 Books</td><td>6%</td><td>~24%</td></tr>
+      <tr style="background:rgba(26,139,127,.08)"><td><strong style="color:var(--teal)">50+ Books</strong></td><td><strong style="color:var(--teal)">4%</strong></td><td><strong style="color:var(--teal)">46%</strong></td></tr>
+    </tbody>
+  </table>
+  <p class="table-caption">Table 1: The Stratification of Book Consumption Among U.S. Adults (2025)</p>
+
+  <p class="body-text" style="margin-top:28px;">This severe stratification suggests that reading is no longer a universal cultural baseline. Reading just three books in 2025 placed someone ahead of 57% of Americans. Reading ten books placed an individual in the top 19% of the population.</p>
+
+  <table class="data-table">
+    <thead><tr>
+      <th>Metric / Demographic</th>
+      <th>Historical Benchmark</th>
+      <th>Recent Measurement</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>Adults reading at least one book</td><td>54.6% (2012)</td><td>48.5% (2022)</td></tr>
+      <tr style="background:rgba(255,255,255,.03)"><td>Adults reading fiction/novels</td><td>45.2% (2012)</td><td>37.6% (2022)</td></tr>
+      <tr><td>13-year-olds reading for fun daily</td><td>27% (2012)</td><td>14% (2023)</td></tr>
+      <tr style="background:rgba(255,255,255,.03)"><td>9-year-olds reading for fun daily</td><td>53% (2012)</td><td>39% (2022)</td></tr>
+      <tr><td>9-year-olds "never" reading for fun</td><td>Historic low (2012)</td><td>16% (2022)</td></tr>
+    </tbody>
+  </table>
+  <p class="table-caption">Table 2: Longitudinal Declines in U.S. Leisure Reading Habits</p>
+
+  <div class="chapter-divider"><span>Chapter VI</span></div>
+
+  <div class="section-eyebrow">Chapter VI</div>
+  <h2 class="section-title">The Neurobiology of the Reading Brain</h2>
+
+  <div class="sub-heading">Neural Recycling and the Bi-Literate Brain</div>
+  <p class="body-text">Reading is not an innate, genetically pre-programmed human capacity. It is a cultural invention requiring the brain to dynamically rewire its own structures through "neural recycling" — repurposing networks that evolved for object recognition and auditory processing to identify abstract symbols and extract linguistic meaning. This intricate neuronal circuit, which began evolving approximately 6,000 years ago, requires highly orchestrated, coordinated activation across multiple cortical regions.</p>
+  <p class="body-text">When a reader engages deeply with a text, they activate complex cognitive scaffolding enabling analogical reasoning, perspective-taking, critical analysis, and the generation of novel insight. However, <strong>the plasticity of the human brain dictates a relentless "use it or lose it" reality.</strong> The neurological circuits dedicated to deep reading are highly sensitive to the medium of consumption and the frequency of use. Without sustained practice, the physiological pathways that enable deep comprehension begin to atrophy.</p>
+
+  <div class="sub-heading">Deep Processing vs. Shallow Scanning</div>
+  <p class="body-text">Researchers distinguish between shallow and deep processing as fundamental architectures of learning. Shallow processing involves rote memorization, keyword spotting, and rapid scanning — creating weak, quickly fading memory traces. Deep processing requires making sense of material by connecting new information to existing knowledge, exploring implications, and engaging in structural analysis — processes that forge strong, durable memory pathways.</p>
+  <p class="body-text">Because digital screens deliver rapid, hyper-stimulating, and constantly updating information streams, the brain adapts by prioritizing speed over depth. The habit of skimming through digital content actively hinders memory consolidation. When the reading brain defaults to skimming, it physiologically lacks the time required to grasp complexity, synthesize novel thoughts, or perceive nuanced emotional states.</p>
+  <p class="body-text">Digital ubiquity has also triggered the "Google Effect" — the externalization of memory. Excessive reliance on digital devices for immediate information retrieval reduces the necessity for internal cognitive processing. Individuals become less likely to commit information to long-term memory if they know it can be easily accessed via search engines. <strong>Without a robust internal repository of facts and concepts, the brain lacks the foundational prerequisites to make complex analogies or draw independent inferences.</strong></p>
+
+  <div class="chapter-divider"><span>Chapter VII</span></div>
+
+  <div class="section-eyebrow">Chapter VII</div>
+  <h2 class="section-title">Print Superiority and the Illusion of Comprehension</h2>
+  <p class="body-text">The physical medium through which text is consumed significantly alters both the objective comprehension of the material and the reader's subjective assessment of their own understanding. The assumption that digital text is cognitively equivalent to printed text is demonstrably false, particularly for complex, long-form informational content.</p>
+
+  <div class="sub-heading">The Stavanger Declaration</div>
+  <p class="body-text">The E-READ (Evolution of Reading in the Age of Digitisation) COST Action brought together nearly 200 scholars from 33 countries across psychology, neuroscience, literary studies, and education. The culmination of this initiative — the Stavanger Declaration — presented findings from a meta-analysis of 54 studies encompassing over 170,000 participants. The results unequivocally demonstrated that comprehension of long-form informational text is significantly stronger when read on paper compared to screens.</p>
+  <p class="body-text">The researchers highlighted the "medium-specific" nature of reading processes, noting that reading is an embodied, physical activity. The materiality of print provides spatial and tactile landmarks that anchor the reader's memory, supporting concentration and structural understanding. Digital screens foster fragmented attention. Continuous scrolling disrupts spatial memory, and the multi-purpose nature of digital devices introduces a continuous, extraneous cognitive load.</p>
+
+  <div class="pull-quote">"For primary and middle school learners, the relationship between digital leisure reading and text comprehension has been shown to be actively negative. Digital reading does not merely fail to help — it causes measurable harm."</div>
+
+  <div class="sub-heading">Metacognitive Overconfidence</div>
+  <p class="body-text">Perhaps the most insidious effect of digital reading is its impact on metacognition — the ability of an individual to accurately judge their own learning and comprehension. Research consistently indicates that reading text from screens causes poorly calibrated, overconfident predictions of performance.</p>
+  <p class="body-text">When reading digitally, readers experience an illusion of fluency. The speed at which they can scroll and skim is unconsciously conflated with deep understanding. Screen learning is accompanied by systemic overconfidence — students believe they have absorbed the material, prompting them to terminate their study efforts prematurely, which ultimately results in lower actual comprehension scores. In contrast, students reading from print demonstrate much more accurate metacognitive calibration, allowing them to optimize their study behaviors effectively.</p>
+
+  <div class="chapter-divider"><span>Chapter VIII</span></div>
+
+  <div class="section-eyebrow">Chapter VIII</div>
+  <h2 class="section-title">The Neuro-Behavioral Pathology of Short-Form Video Consumption</h2>
+  <p class="body-text">As the habit of deep reading declines, the resulting void in time and attention is overwhelmingly filled by Short-Form Video (SFV) on platforms such as TikTok, Instagram Reels, and YouTube Shorts. These platforms deliver high-density, multi-modal stimulation in rapid bursts — typically 15 to 60 seconds — engineered by highly sophisticated algorithmic systems optimized solely for continuous behavioral engagement. The shift from text to SFV represents a transition from an active, self-paced cognitive process to a passive, externally paced, hyper-stimulating dopamine loop.</p>
+
+  <div class="sub-heading">Downregulation of Executive Control Networks</div>
+  <p class="body-text">Viewing personalized, algorithmic short-form videos is associated with significantly reduced activation in the Dorsolateral Prefrontal Cortex (DLPFC) and the Anterior Cingulate Cortex (ACC). These specific cortical regions serve as the neurological command centers for executive control, sustained attention, impulse inhibition, and complex decision-making. The downregulation of these areas suggests a severe impairment in the brain's ability to self-regulate.</p>
+  <p class="body-text">In standardized cognitive assessments measuring executive function and the ability to resolve conflicting stimuli, <strong>heavy SFV consumers exhibit significantly slower reaction times, lower accuracy, and increased fixation durations</strong>. This reflects a highly fragmented, unstable attentional state and an impaired ability to filter out distractions. Higher TikTok usage is strongly correlated with greater reaction time variability — a recognized marker of attention lapsing — and diminished incidental memory encoding.</p>
+
+  <div class="sub-heading">Digital Fatigue and Attentional Fragmentation</div>
+  <p class="body-text">Because SFV content is fast, visually surprising, and contextually erratic, the user's brain rapidly adapts to expect continuous, high-intensity stimulation. This "novelty bias" trains the neural circuitry to switch contexts incessantly, severely fragmenting attention and eroding the capacity for sustained focus. Tasks that are slower and non-stimulating — such as reading a long-form article, studying for an exam, or engaging in complex problem-solving — become excruciatingly difficult because they fail to meet the brain's newly elevated threshold for dopaminergic reward.</p>
+  <p class="body-text">A massive meta-study encompassing nearly 100,000 individuals confirmed that frequent users of short-form platforms score consistently lower in inhibitory control, attention, and working memory — the precise cognitive faculties required for academic and professional success. Furthermore, heavy SFV use is correlated with academic procrastination, where diminished attentional control directly mediates the relationship between digital addiction and the inability to complete necessary tasks.</p>
+
+  <div class="insight-card">
+    <div class="insight-card-label">Neuroimaging Finding</div>
+    <div class="insight-card-text">fMRI studies show that the same regions of the brain responsible for skepticism and critical evaluation — the DLPFC and ACC — are actively suppressed during short-form video consumption. You are literally watching yourself become less capable of questioning what you are watching.</div>
+  </div>
+
+  <div class="chapter-divider"><span>Chapter IX</span></div>
+
+  <div class="section-eyebrow">Chapter IX</div>
+  <h2 class="section-title">Algorithmic Flow, Parasocial Attachment, and Compulsive Consumption</h2>
+  <p class="body-text">The architecture of SFV platforms does not merely capture attention — it is highly optimized to generate behavioral addiction through sophisticated psychological mechanisms. The average daily user time on platforms like TikTok has doubled in recent years, driven by engagement rates that vastly exceed competing digital formats.</p>
+
+  <div class="sub-heading">The Stimulus-Organism-Response Model and Flow Theory</div>
+  <p class="body-text">Through the lens of the Stimulus-Organism-Response (S-O-R) model and Flow theory, researchers have identified how algorithmic curation induces a state of deep immersion and time distortion in users. The algorithm acts as a highly effective stimulus, constantly presenting the organism (the user) with hyper-personalized content that precisely matches their psychological profile and viewing history. This creates a state of "flow" — a psychological condition where the user loses self-consciousness and a sense of passing time, becoming entirely absorbed in the medium. This algorithmic flow transforms voluntary viewing into compulsive, automated behavior.</p>
+
+  <div class="sub-heading">Calibrated Amateurism and Parasocial Relationships</div>
+  <p class="body-text">Content creators and influencers frequently utilize "calibrated amateurism" — a highly crafted yet seemingly unvarnished, authentic aesthetic — to forge intimate, one-sided relationships with viewers. By appearing to be speaking directly to the viewer from their bedrooms or cars, creators bypass the skepticism usually reserved for highly produced media, fostering an illusion of personal connection and trust.</p>
+  <p class="body-text">These parasocial bonds position creators as psychological attachment figures for the user. The user's emotional attachment to the vlogger intensifies, triggering a severe Fear of Missing Out regarding the creator's life updates or opinions. This parasocial dynamic is fundamentally different from reading a book: <strong>while an author communicates ideas, the SFV creator communicates persona — requiring far less cognitive processing from the viewer while generating a much higher emotional dependency.</strong></p>
+
+  <div class="chapter-divider"><span>Chapter X</span></div>
+
+  <div class="section-eyebrow">Chapter X</div>
+  <h2 class="section-title">The Heuristics of Trust and Misinformation Susceptibility</h2>
+  <p class="body-text">The intersection of declining deep reading skills, impaired executive function via SFV consumption, and algorithmic content delivery has engineered a societal environment exquisitely vulnerable to misinformation. When the brain's capacity for critical analysis, sustained attention, and logical inference is diminished, it invariably defaults to heuristic (shortcut-based) processing to evaluate truth claims.</p>
+
+  <div class="sub-heading">Modality and Message Elaboration: Video vs. Text</div>
+  <p class="body-text">The medium through which a claim is presented fundamentally alters how the human brain evaluates its credibility. Empirical studies demonstrate that video modalities inherently suppress message elaboration compared to text. When misinformation is presented via text, readers are forced to engage in a degree of cognitive elaboration — they must process the linguistic structure, evaluate the logical coherence of the argument, and actively synthesize the information.</p>
+  <p class="body-text">Conversely, when the exact same misinformation is presented via a TikTok-style video, the modality shifts the user's cognitive processing from systematic evaluation to heuristic evaluation. <strong>Viewers become hyper-focused on peripheral, non-verbal cues — the speaker's attractiveness, the visual production value, and auditory characteristics — rather than the actual substance or empirical validity of the claim.</strong> Users exposed to video-based misinformation consistently judge the source as more credible than those exposed to text-based misinformation covering identical claims.</p>
+
+  <div class="sub-heading">Acoustic Heuristics and the Illusion of Authority</div>
+  <p class="body-text">Humans are biologically hardwired to infer personality traits and trustworthiness from speech patterns. Features such as pitch, speech rate, and the average spectral centroid heavily dictate whether a speaker is perceived as an authority. SFV creators, either intuitively or guided by algorithmic feedback, optimize these variables. Utilizing confident cadences, specific spectral frequencies, and passionate authenticity management, they foster immediate parasocial trust.</p>
+  <p class="body-text">When a visually appealing individual looks directly into the camera and speaks with vocal authority, the viewer's brain heuristically codes the information as reliable. Because the viewer's DLPFC — responsible for skepticism and critical thought — is already downregulated by the rapid scrolling environment, they accept the information passively. They rarely question the source's actual credentials, verify the data against established guidelines, or evaluate the scientific validity of the information.</p>
+
+  <div class="sub-heading">The Illusory Truth Effect and Retraction Failures</div>
+  <p class="body-text">The speed and volume of short-form content introduce a continuous state of high cognitive load. Psychological research indicates that the retraction or correction of a false claim requires full cognitive resources at the time of encoding to be effective. If a user encounters a correction while under high cognitive load — such as scrolling quickly through a highly stimulating, fragmented video feed — the retraction completely fails to overwrite the original misinformation.</p>
+  <p class="body-text">Worse still, the mere repetition of false claims in a high-load algorithmic environment increases the "illusory truth effect." As misinformation is repeated, it becomes familiar, and the overloaded brain equates fluency and familiarity with factual truth. <strong>Populations that rely heavily on SFV for news and information are structurally incapable of processing retractions, leaving them permanently anchored to the initial, false narratives they encounter.</strong></p>
+
+  <div class="chapter-divider"><span>Chapter XI</span></div>
+
+  <div class="section-eyebrow">Chapter XI</div>
+  <h2 class="section-title">Systemic Interventions — Restoring Cognitive Resilience</h2>
+  <p class="body-text">The empirical data indicates that the decline in reading and the concomitant rise of cognitive fragmentation via SFV is not a self-correcting phenomenon. The architectural incentives of the digital economy are misaligned with human cognitive health. Addressing this crisis requires structured, systemic interventions that target neuroplasticity, educational methodology, and broad public policy.</p>
+
+  <div class="sub-heading">The Reading Habit Restoration Framework (RHRF)</div>
+  <p class="body-text">Researchers have proposed the Reading Habit Restoration Framework (RHRF), a multi-level, evidence-based intervention strategy. The core tenet of the RHRF is that the collapse of reading literacy must no longer be treated merely as an educational deficit, but must be officially declared a severe public health priority, comparable in scope and societal impact to obesity or substance abuse epidemics.</p>
+  <p class="body-text">At the institutional and societal levels, the RHRF advocates for targeted approaches tailored to the demographics experiencing the steepest cognitive declines: low-income communities, Black and Hispanic populations, and young adults (particularly males) aged 13 to 30. Mathematical modeling using differential equations within the RHRF quantifies the threat precisely: <strong>limiting screen time exposure (e.g., to under an hour) while mandating structured reading interventions is mathematically necessary to reverse the current trajectory of reading comprehension deterioration.</strong></p>
+
+  <div class="sub-heading">Redefining Early Literacy and Pedagogical Policy</div>
+  <p class="body-text">A critical component of societal remediation involves correcting modern pedagogical errors regarding the implementation of educational technology. Over the past decade, schools have rapidly introduced digital learning games and tablets into early childhood education under the unverified assumption that digital fluency equates to literacy. Empirical evidence fundamentally contradicts this approach.</p>
+  <p class="body-text">Recent studies on preschoolers reveal that children who spend more time on digital literacy games actually score lower on early reading assessments. Instead, the most significant literacy gains are observed in children who engage in traditional, hands-on print activities — writing physical letters, pointing out words in their physical environment, and engaging in shared physical book reading with adults.</p>
+  <p class="body-text">For older students, implementing the Response to Intervention (RTI) framework is vital — relying on the early detection of struggling readers before third grade, moving them away from digital distraction and providing targeted, scientifically based instructional methods. Programs that place physical books directly into classrooms and utilize literacy coaches to cultivate a habit of reading for pleasure have demonstrated massive efficacy, with effect sizes nearly ten times greater than average educational interventions.</p>
+
+  <div class="chapter-divider"><span>Conclusion</span></div>
+
+  <div class="section-eyebrow">Conclusion</div>
+  <h2 class="section-title">The Cognitive Arms Race — and Who Is Winning</h2>
+  <p class="body-text">The transition from a print-based, literate society to a digital, short-form video-dominated culture represents a critical bottleneck in human cognitive evolution. A society that cannot read deeply fundamentally loses the ability to think deeply. The two are not separate skills — they are the same neurological act.</p>
+  <p class="body-text">Without immediate, multi-sector intervention, the continued atrophy of the reading brain will ensure the stratification of society into a small, hyper-literate elite capable of critical thought and a vast majority perpetually captive to algorithmic stimulus and engineered misinformation.</p>
+  <p class="body-text"><strong>The critical thinker is not merely a better student. They are a harder target, a more effective professional, and a more sovereign human being.</strong> In a world engineered to exploit cognitive laziness, developing this skill is not self-improvement — it is self-defense.</p>
+
+  <!-- SERIES NAV -->
+  <div class="series-nav-title">The Extinction of Deep Reading</div>
+      <a href="https://www.globalsovereignuniversity.org/how-your-brain-learns" target="_blank" class="series-nav-link gold">Read Now →</a>
+    </div>
+    <div class="series-nav-card active">
+      <div class="series-nav-label teal">Book 2 — You Are Here</div>
+      <div class="series-nav-title">The Collapse of Critical Thinking</div>
+      <span style="font-family:'Cinzel',serif;font-size:10px;color:var(--teal);letter-spacing:1px;">Currently Reading</span>
+    </div>
+    <div class="series-nav-card">
+      <div class="series-nav-label">Book 3</div>
+      <div class="series-nav-title">Discovering Self Beyond External Influence</div>
+      <a href="https://www.globalsovereignuniversity.org/discovering-self" target="_blank" class="series-nav-link">Read Now →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- GATE -->
+<div class="gate">
+  <div class="gate-label">Global Sovereign University · Free 501(c)(3)</div>
+  <div class="gate-title">The Bridge Is Built From<br>Research Like This</div>
+  <div class="gate-text">The Comprehension Bridge is the direct application of everything documented in this series. The science is here. The quest is there. <strong>Both are free. Forever.</strong></div>
+  <a href="https://www.globalsovereignuniversity.org/comprehension-bridge" class="gate-cta">Enter The Comprehension Bridge →</a>
+  <div class="gate-note">No login · No cost · No wrong roads · Global Sovereign University · EIN 39-2716552</div>
+</div>
+
+<script>
+function aEyeSpeak(){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const text=document.getElementById('aEyeText').textContent;
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=0.85;u.pitch=1.2;u.volume=1;
+  function speak(voices){
+    const female=voices.find(v=>/samantha|victoria|karen|zira|moira|fiona|tessa|veena|allison|female/i.test(v.name));
+    if(female)u.voice=female;
+    window.speechSynthesis.speak(u);
+  }
+  const voices=window.speechSynthesis.getVoices();
+  if(voices.length){speak(voices);}
+  else{window.speechSynthesis.addEventListener('voiceschanged',()=>speak(window.speechSynthesis.getVoices()),{once:true});}
+}
+</script>
+<script>
+</script>
+
+<footer style="background:#000;padding:60px 40px 24px;border-top:1px solid rgba(255,255,255,.07);font-family:'Segoe UI',Arial,sans-serif;margin-top:0;">
+  <div style="max-width:900px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;color:#C9A84C;font-weight:700;text-transform:uppercase;margin-bottom:8px;">Global Sovereign University</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.45);font-style:italic;">Building a Bridge to Freedom Through Education — Not Handouts</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-bottom:40px;">
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:16px;">Learn</div>
+        <a href="https://www.globalsovereignuniversity.org/learning-center" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Learning Center</a>
+        <a href="https://www.globalsovereignuniversity.org/bookgames" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Games</a>
+        <a href="https://geneconstant36-blip.github.io/gsu-assets/gsu-bookstore.html" target="_blank" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Bookstore</a>
+        <a href="https://www.globalsovereignuniversity.org/homeschool" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Homeschool</a>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:16px;">About</div>
+        <a href="https://www.globalsovereignuniversity.org/our-mission" style="display:block;font-size:13px;color:#C9A84C;text-decoration:none;margin-bottom:10px;">★ Mission Video</a>
+        <a href="https://www.globalsovereignuniversity.org/about-gsu" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">About GSU</a>
+        <a href="https://www.globalsovereignuniversity.org/civilization-builders" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Civilization Builders</a>
+        <a href="https://www.globalsovereignuniversity.org/podcast" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Podcast</a>
+        <a href="https://www.globalsovereignuniversity.org/books/the-amnesty-protocol" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Amnesty Protocol</a>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:16px;">Join</div>
+        <a href="https://www.globalsovereignuniversity.org/sovereign-handshake" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Sovereign Handshake</a>
+        <a href="https://www.globalsovereignuniversity.org/zombie-diagnosis" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Zombie Diagnosis</a>
+        <a href="https://www.globalsovereignuniversity.org/honest-transcript" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Honest Transcript</a>
+      </div>
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:16px;">Support</div>
+        <a href="https://www.globalsovereignuniversity.org/donate" style="display:block;font-size:13px;color:#C9A84C;text-decoration:none;margin-bottom:10px;">♥ Donate</a>
+        <a href="https://www.youtube.com/@GSUGlobalSovereignUniversity" target="_blank" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">► YouTube</a>
+        <a href="https://www.globalsovereignuniversity.org/free-posters" style="display:block;font-size:13px;color:#9aafcc;text-decoration:none;margin-bottom:10px;">Free Posters</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:20px;text-align:center;">
+      <div style="margin-bottom:10px;">
+        <a href="https://www.globalsovereignuniversity.org/privacy" style="font-size:11px;color:rgba(255,255,255,.3);text-decoration:none;margin:0 10px;">Privacy</a>
+        <a href="https://www.globalsovereignuniversity.org/terms" style="font-size:11px;color:rgba(255,255,255,.3);text-decoration:none;margin:0 10px;">Terms</a>
+        <a href="https://www.globalsovereignuniversity.org/accessibility" style="font-size:11px;color:rgba(255,255,255,.3);text-decoration:none;margin:0 10px;">Accessibility</a>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,.25);line-height:1.6;">© 2026 The Foundation for Global Instruction, operating as Global Sovereign University • 501(c)(3) • Eugene, Oregon</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

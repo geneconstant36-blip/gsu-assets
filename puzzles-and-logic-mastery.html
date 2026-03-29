@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzles & Logic Mastery | Train Your Diamond Mind | Global Sovereign University</title>
+<meta name="description" content="Free brain training through puzzles, logic games, and critical thinking challenges. Sudoku, word puzzles, pattern recognition, and more. AI-assisted learning with GENO. No cost, no signup.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:#000;color:#fff;font-family:'Open Sans',sans-serif;overflow-x:hidden;scrollbar-width:none;}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;}
+
+.scroll-reveal{opacity:0;transform:translateY(50px);}
+.fade-in-up{opacity:0;transform:translateY(30px);}
+.scale-in{opacity:0;transform:scale(0.8);}
+.slide-left{opacity:0;transform:translateX(-50px);}
+.slide-right{opacity:0;transform:translateX(50px);}
+
+/* ── HERO ── */
+.diamond-hero{
+  position:relative;min-height:400px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:60px 20px 40px;overflow:hidden;
+}
+.diamond-hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse at center,rgba(212,175,55,0.1) 0%,transparent 60%);
+  animation:heroGlow 4s ease-in-out infinite alternate;
+}
+@keyframes heroGlow{
+  0%{opacity:0.5;transform:scale(1);}
+  100%{opacity:1;transform:scale(1.2);}
+}
+
+.diamond-stage{
+  position:relative;width:320px;height:320px;
+  display:flex;align-items:center;justify-content:center;
+}
+.diamond-orbit{
+  position:absolute;width:280px;height:280px;
+  border:2px solid rgba(212,175,55,0.2);border-radius:50%;
+  animation:orbitSpin 20s linear infinite;
+}
+.diamond-orbit::before,.diamond-orbit::after{
+  content:'✦';position:absolute;font-size:1rem;color:#d4af37;
+  animation:orbitGlow 2s ease-in-out infinite;
+}
+.diamond-orbit::before{top:-8px;left:50%;transform:translateX(-50%);}
+.diamond-orbit::after{bottom:-8px;left:50%;transform:translateX(-50%);animation-delay:1s;}
+@keyframes orbitSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes orbitGlow{
+  0%,100%{opacity:0.4;transform:translateX(-50%) scale(1);}
+  50%{opacity:1;transform:translateX(-50%) scale(1.5);}
+}
+
+.diamond-rays{position:absolute;width:100%;height:100%;animation:raysSpin 30s linear infinite;}
+.ray{
+  position:absolute;top:50%;left:50%;width:150px;height:2px;
+  background:linear-gradient(90deg,rgba(212,175,55,0.6),transparent);
+  transform-origin:left center;animation:rayPulse 3s ease-in-out infinite;
+}
+.ray:nth-child(1){transform:rotate(0deg);animation-delay:0s;}
+.ray:nth-child(2){transform:rotate(45deg);animation-delay:0.4s;}
+.ray:nth-child(3){transform:rotate(90deg);animation-delay:0.8s;}
+.ray:nth-child(4){transform:rotate(135deg);animation-delay:1.2s;}
+.ray:nth-child(5){transform:rotate(180deg);animation-delay:1.6s;}
+.ray:nth-child(6){transform:rotate(225deg);animation-delay:2s;}
+.ray:nth-child(7){transform:rotate(270deg);animation-delay:2.4s;}
+.ray:nth-child(8){transform:rotate(315deg);animation-delay:2.8s;}
+@keyframes raysSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes rayPulse{
+  0%,100%{opacity:0.3;width:100px;}
+  50%{opacity:0.8;width:180px;}
+}
+
+.diamond-image-wrapper{position:relative;z-index:10;animation:diamondFloat 4s ease-in-out infinite;}
+@keyframes diamondFloat{
+  0%,100%{transform:translateY(0) rotate(-2deg);}
+  50%{transform:translateY(-15px) rotate(2deg);}
+}
+.diamond-image{
+  width:220px;height:220px;object-fit:contain;border-radius:16px;
+  filter:drop-shadow(0 0 30px rgba(212,175,55,0.5));
+  animation:diamondGlow 3s ease-in-out infinite alternate;
+}
+@keyframes diamondGlow{
+  0%{filter:drop-shadow(0 0 20px rgba(212,175,55,0.4)) drop-shadow(0 0 40px rgba(6,182,212,0.2));}
+  100%{filter:drop-shadow(0 0 40px rgba(212,175,55,0.8)) drop-shadow(0 0 80px rgba(6,182,212,0.4));}
+}
+.diamond-stage:hover .diamond-image{animation:diamondPop 0.5s ease-out;}
+@keyframes diamondPop{
+  0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}
+}
+
+.sparkle{position:absolute;font-size:1.5rem;animation:sparkleFloat 5s ease-in-out infinite;opacity:0;pointer-events:none;}
+.sparkle-1{top:10%;left:15%;animation-delay:0s;}
+.sparkle-2{top:20%;right:20%;animation-delay:1s;}
+.sparkle-3{top:60%;left:10%;animation-delay:2s;}
+.sparkle-4{top:70%;right:15%;animation-delay:0.5s;}
+.sparkle-5{top:40%;left:5%;animation-delay:1.5s;}
+.sparkle-6{top:30%;right:10%;animation-delay:2.5s;}
+.sparkle-7{bottom:20%;left:20%;animation-delay:3s;}
+.sparkle-8{bottom:30%;right:25%;animation-delay:3.5s;}
+@keyframes sparkleFloat{
+  0%{opacity:0;transform:translateY(20px) scale(0.5) rotate(0deg);}
+  20%{opacity:1;}80%{opacity:1;}
+  100%{opacity:0;transform:translateY(-30px) scale(1.2) rotate(180deg);}
+}
+
+.aura-ring{position:absolute;border:2px solid rgba(6,182,212,0.3);border-radius:50%;animation:auraExpand 3s ease-out infinite;}
+.aura-ring-1{width:200px;height:200px;animation-delay:0s;}
+.aura-ring-2{width:200px;height:200px;animation-delay:1s;}
+.aura-ring-3{width:200px;height:200px;animation-delay:2s;}
+@keyframes auraExpand{
+  0%{transform:scale(1);opacity:0.6;}
+  100%{transform:scale(2);opacity:0;}
+}
+
+.diamond-stats{display:flex;justify-content:center;gap:50px;margin-top:30px;position:relative;z-index:20;}
+.diamond-stat{text-align:center;animation:statFadeIn 0.8s ease-out forwards;opacity:0;}
+.diamond-stat:nth-child(1){animation-delay:0.2s;}
+.diamond-stat:nth-child(2){animation-delay:0.4s;}
+.diamond-stat:nth-child(3){animation-delay:0.6s;}
+@keyframes statFadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.diamond-stat-value{font-family:'Montserrat',sans-serif;font-size:2.5rem;font-weight:800;color:#d4af37;text-shadow:0 0 20px rgba(212,175,55,0.5);}
+.diamond-stat-label{font-size:0.85rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:2px;}
+
+/* ── PUZZLE CARDS ── */
+.puzzle-card{
+  background:rgba(6,182,212,0.05);border:2px solid rgba(6,182,212,0.3);
+  border-radius:16px;padding:25px;text-align:center;
+  transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);height:100%;
+}
+.puzzle-card:hover{
+  transform:translateY(-10px) scale(1.02);
+  border-color:#d4af37;box-shadow:0 20px 40px rgba(212,175,55,0.2);
+}
+.puzzle-card-icon{font-size:48px;margin-bottom:15px;display:block;}
+.puzzle-card h3{font-family:'Montserrat',sans-serif;font-size:1.2rem;color:#06b6d4;margin:0 0 10px;}
+.puzzle-card p{color:rgba(255,255,255,0.7);font-size:0.9rem;margin:0 0 15px;line-height:1.6;}
+.puzzle-card .play-btn{
+  display:inline-block;background:linear-gradient(135deg,#d4af37,#f7c531);
+  color:#1a1a2e;padding:10px 24px;border-radius:25px;font-weight:700;
+  text-decoration:none;font-size:0.9rem;transition:all 0.3s;
+}
+.puzzle-card .play-btn:hover{transform:scale(1.05);box-shadow:0 8px 25px rgba(212,175,55,0.4);}
+
+.difficulty-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.difficulty-bronze{background:rgba(205,127,50,0.2);color:#cd7f32;border:1px solid rgba(205,127,50,0.4);}
+.difficulty-silver{background:rgba(192,192,192,0.2);color:#c0c0c0;border:1px solid rgba(192,192,192,0.4);}
+.difficulty-gold{background:rgba(212,175,55,0.2);color:#d4af37;border:1px solid rgba(212,175,55,0.4);}
+.difficulty-platinum{background:rgba(229,228,226,0.2);color:#e5e4e2;border:1px solid rgba(229,228,226,0.4);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .diamond-stats{gap:24px;}
+  .diamond-stat-value{font-size:1.8rem;}
+  .diamond-stage{width:260px;height:260px;}
+  .diamond-image{width:160px;height:160px;}
+  .diamond-orbit{width:220px;height:220px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="diamond-hero">
+
+  <span class="sparkle sparkle-1">✨</span>
+  <span class="sparkle sparkle-2">💫</span>
+  <span class="sparkle sparkle-3">⭐</span>
+  <span class="sparkle sparkle-4">✨</span>
+  <span class="sparkle sparkle-5">💎</span>
+  <span class="sparkle sparkle-6">✦</span>
+  <span class="sparkle sparkle-7">💫</span>
+  <span class="sparkle sparkle-8">⭐</span>
+
+  <div class="diamond-stage">
+    <div class="aura-ring aura-ring-1"></div>
+    <div class="aura-ring aura-ring-2"></div>
+    <div class="aura-ring aura-ring-3"></div>
+    <div class="diamond-orbit"></div>
+    <div class="diamond-rays">
+      <div class="ray"></div><div class="ray"></div><div class="ray"></div><div class="ray"></div>
+      <div class="ray"></div><div class="ray"></div><div class="ray"></div><div class="ray"></div>
+    </div>
+    <div class="diamond-image-wrapper">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69711c9f0fc4a1a3ed5f3b71_a_museum_setting_a_brilliant_diamond_showcased.jpeg"
+           alt="Diamond Mind - Puzzles & Logic Mastery" class="diamond-image" id="diamondHero">
+    </div>
+  </div>
+
+  <h1 style="font-family:'Montserrat',sans-serif;font-size:clamp(2.2rem,6vw,3.5rem);font-weight:800;color:#06b6d4;margin:25px 0 10px;letter-spacing:2px;text-align:center;position:relative;z-index:20;">
+    PUZZLES &amp; LOGIC MASTERY
+  </h1>
+  <p style="font-family:'Montserrat',sans-serif;font-size:1.3rem;color:#d4af37;font-weight:700;margin:0 0 20px;position:relative;z-index:20;">
+    💎 Forge Your Diamond Mind 💎
+  </p>
+  <p style="font-family:'Open Sans',sans-serif;font-size:1.1rem;color:rgba(255,255,255,0.85);max-width:750px;margin:0 auto 10px;line-height:1.8;text-align:center;position:relative;z-index:20;">
+    A diamond is just carbon — until pressure and time transform it into something <strong style="color:#d4af37;">brilliant</strong>.
+    Your mind works the same way. These puzzles apply the right pressure to forge <strong style="color:#06b6d4;">crystal-clear thinking</strong>.
+  </p>
+
+  <div class="diamond-stats">
+    <div class="diamond-stat">
+      <div class="diamond-stat-value">8+</div>
+      <div class="diamond-stat-label">Puzzle Types</div>
+    </div>
+    <div class="diamond-stat">
+      <div class="diamond-stat-value">$0</div>
+      <div class="diamond-stat-label">Cost to Play</div>
+    </div>
+    <div class="diamond-stat">
+      <div class="diamond-stat-value">∞</div>
+      <div class="diamond-stat-label">Brain Power</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- DIAMOND MIND PHILOSOPHY -->
+<div style="max-width:900px;margin:0 auto 50px;padding:0 20px;">
+  <div class="scroll-reveal" style="background:linear-gradient(135deg,rgba(212,175,55,0.15),rgba(6,182,212,0.1));border:2px solid rgba(212,175,55,0.4);border-radius:20px;padding:35px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:10px;left:15px;font-size:1.5rem;opacity:0.2;">💎</div>
+    <div style="position:absolute;bottom:10px;right:15px;font-size:1.5rem;opacity:0.2;">💎</div>
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:1.6rem;color:#d4af37;text-align:center;margin:0 0 20px;">
+      Why Puzzles Build Sovereign Minds
+    </h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:25px;text-align:center;">
+      <div class="fade-in-up">
+        <div style="font-size:2.5rem;margin-bottom:10px;">🧠</div>
+        <h4 style="color:#06b6d4;margin:0 0 8px;font-size:1rem;">Pattern Recognition</h4>
+        <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin:0;line-height:1.5;">See connections others miss. Spot opportunities before they are obvious.</p>
+      </div>
+      <div class="fade-in-up">
+        <div style="font-size:2.5rem;margin-bottom:10px;">⚡</div>
+        <h4 style="color:#06b6d4;margin:0 0 8px;font-size:1rem;">Processing Speed</h4>
+        <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin:0;line-height:1.5;">Think faster under pressure. Make decisions with confidence.</p>
+      </div>
+      <div class="fade-in-up">
+        <div style="font-size:2.5rem;margin-bottom:10px;">🎯</div>
+        <h4 style="color:#06b6d4;margin:0 0 8px;font-size:1rem;">Strategic Thinking</h4>
+        <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin:0;line-height:1.5;">Plan multiple moves ahead. Anticipate consequences before acting.</p>
+      </div>
+      <div class="fade-in-up">
+        <div style="font-size:2.5rem;margin-bottom:10px;">💪</div>
+        <h4 style="color:#06b6d4;margin:0 0 8px;font-size:1rem;">Mental Resilience</h4>
+        <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin:0;line-height:1.5;">Embrace challenge. Turn frustration into determination.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PUZZLE CATEGORIES -->
+<div style="max-width:1100px;margin:0 auto 50px;padding:0 20px;">
+  <h2 class="fade-in-up" style="font-family:'Montserrat',sans-serif;font-size:1.8rem;color:#06b6d4;text-align:center;margin-bottom:10px;">
+    🧩 Choose Your Challenge
+  </h2>
+  <p style="text-align:center;color:rgba(255,255,255,0.6);margin-bottom:35px;font-size:0.95rem;">
+    Every puzzle type targets different cognitive muscles. Train them all for a complete Diamond Mind.
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;">
+
+    <div class="scale-in"><div class="puzzle-card">
+      <span class="difficulty-badge difficulty-bronze">All Levels</span>
+      <span class="puzzle-card-icon">🔢</span>
+      <h3>SUDOKU MASTER</h3>
+      <p>The classic number puzzle that builds logical deduction. Start with 4x4 grids, advance to killer sudoku variants.</p>
+      <a href="https://www.globalsovereignuniversity.org/sudoku" class="play-btn">Play Now →</a>
+    </div></div>
+
+    <div class="scale-in"><div class="puzzle-card">
+      <span class="difficulty-badge difficulty-bronze">Bronze–Gold</span>
+      <span class="puzzle-card-icon">🔤</span>
+      <h3>WORD HUNTER</h3>
+      <p>Find hidden words in letter grids. Builds vocabulary, pattern recognition, and visual scanning speed.</p>
+      <a href="https://www.globalsovereignuniversity.org/word-hunter" class="play-btn">Play Now →</a>
+    </div></div>
+
+    <div class="scale-in"><div class="puzzle-card">
+      <span class="difficulty-badge difficulty-silver">Silver–Platinum</span>
+      <span class="puzzle-card-icon">🔷</span>
+      <h3>PATTERN QUEST</h3>
+      <p>Identify the rule governing a sequence. What comes next? Trains abstract reasoning and IQ-test skills.</p>
+      <a href="https://www.globalsovereignuniversity.org/pattern-quest" class="play-btn">Play Now →</a>
+    </div></div>
+
+    <div class="scale-in"><div class="puzzle-card">
+      <span class="difficulty-badge difficulty-gold">Gold–Platinum</span>
+      <span class="puzzle-card-icon">📊</span>
+      <h3>LOGIC GRID</h3>
+      <p>"Einstein's Riddle" style puzzles. Use clues to deduce who owns what, lives where, and does which job.</p>
+      <a href="https://www.globalsovereignuniversity.org/logic-grid" class="play-btn">Play Now →</a>
+    </div></div>
+
+    <div class="scale-in"><div class="puzzle-card">
+      <span class="difficulty-badge difficulty-bronze">Bronze–Silver</span>
+      <span class="puzzle-card-icon">✍️</span>
+      <h3>SENTENCE BUILDER</h3>
+      <p>Arrange scrambled words into grammatically correct sentences. Strengthens syntax and language structure.</p>
+      <a href="https://www.globalsovereignuniversity.org/sentence-builder" class="play-btn">Play Now →</a>
+    </div></div>
+
+    <div class="scale-in"><div class="puzzle-card">
+      <span class="difficulty-badge difficulty-bronze">Bronze</span>
+      <span class="puzzle-card-icon">🔗</span>
+      <h3>NUMBER BONDS</h3>
+      <p>Connect numbers that sum to targets. Builds mental math fluency and number sense foundations.</p>
+      <a href="https://www.globalsovereignuniversity.org/number-bonds" class="play-btn">Play Now →</a>
+    </div></div>
+
+    <div class="scale-in"><div class="puzzle-card">
+      <span class="difficulty-badge difficulty-silver">Silver–Gold</span>
+      <span class="puzzle-card-icon">🧠</span>
+      <h3>MEMORY MATRIX</h3>
+      <p>Remember and recreate increasingly complex patterns. Expands working memory capacity.</p>
+      <a href="https://www.globalsovereignuniversity.org/memory-matrix" class="play-btn">Play Now →</a>
+    </div></div>
+
+    <div class="scale-in"><div class="puzzle-card">
+      <span class="difficulty-badge difficulty-gold">Gold–Platinum</span>
+      <span class="puzzle-card-icon">🔐</span>
+      <h3>CRYPTOGRAMS</h3>
+      <p>Decode encrypted quotes by finding letter substitutions. Combines language skills with deductive logic.</p>
+      <a href="https://www.globalsovereignuniversity.org/cryptograms" class="play-btn">Play Now →</a>
+    </div></div>
+
+  </div>
+</div>
+
+<!-- MASTERY BADGE SYSTEM -->
+<div style="max-width:900px;margin:0 auto 50px;padding:0 20px;">
+  <h2 class="fade-in-up" style="font-family:'Montserrat',sans-serif;font-size:1.5rem;color:#d4af37;text-align:center;margin-bottom:25px;">
+    🏆 Earn Your Diamond Mind Badges
+  </h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
+
+    <div class="scale-in" style="text-align:center;padding:25px;background:rgba(205,127,50,0.1);border:2px solid rgba(205,127,50,0.3);border-radius:16px;">
+      <div style="width:60px;height:60px;margin:0 auto 15px;background:linear-gradient(135deg,#cd7f32,#a0522d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🥉</div>
+      <h4 style="color:#cd7f32;margin:0 0 8px;font-size:1.1rem;">BRONZE</h4>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin:0;">Complete 10 puzzles in any category</p>
+    </div>
+
+    <div class="scale-in" style="text-align:center;padding:25px;background:rgba(192,192,192,0.1);border:2px solid rgba(192,192,192,0.3);border-radius:16px;">
+      <div style="width:60px;height:60px;margin:0 auto 15px;background:linear-gradient(135deg,#c0c0c0,#a8a8a8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🥈</div>
+      <h4 style="color:#c0c0c0;margin:0 0 8px;font-size:1.1rem;">SILVER</h4>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin:0;">Complete 50 puzzles with 80%+ accuracy</p>
+    </div>
+
+    <div class="scale-in" style="text-align:center;padding:25px;background:rgba(212,175,55,0.1);border:2px solid rgba(212,175,55,0.3);border-radius:16px;">
+      <div style="width:60px;height:60px;margin:0 auto 15px;background:linear-gradient(135deg,#d4af37,#f7c531);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🥇</div>
+      <h4 style="color:#d4af37;margin:0 0 8px;font-size:1.1rem;">GOLD</h4>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin:0;">Complete 100 puzzles across 4+ categories</p>
+    </div>
+
+    <div class="scale-in" style="text-align:center;padding:25px;background:rgba(229,228,226,0.1);border:2px solid rgba(229,228,226,0.3);border-radius:16px;">
+      <div style="width:60px;height:60px;margin:0 auto 15px;background:linear-gradient(135deg,#e5e4e2,#bfc1c2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">💎</div>
+      <h4 style="color:#e5e4e2;margin:0 0 8px;font-size:1.1rem;">PLATINUM</h4>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin:0;">Master all categories with 90%+ accuracy</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- DIAMOND MIND QUOTE -->
+<div class="scroll-reveal" style="max-width:800px;margin:0 auto 50px;padding:35px;background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(212,175,55,0.1));border-left:4px solid #d4af37;border-radius:0 20px 20px 0;">
+  <p style="font-family:'Open Sans',sans-serif;font-size:1.2rem;color:rgba(255,255,255,0.9);line-height:1.8;margin:0 0 15px;font-style:italic;">
+    "A diamond doesn't start as a diamond. It starts as carbon under pressure. Your mind is the same — these puzzles are the pressure that creates brilliance. Every solved puzzle is one step closer to a Diamond Mind."
+  </p>
+  <p style="color:#d4af37;font-weight:600;margin:0;">— Gene Constant, Founder of Global Sovereign University</p>
+</div>
+
+<!-- GENO INTEGRATION -->
+<div class="scroll-reveal" style="max-width:900px;margin:0 auto 50px;padding:30px;border:3px solid #06b6d4;border-radius:20px;background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(212,175,55,0.1));">
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
+    <div style="flex-shrink:0;text-align:center;">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png"
+           alt="GENO AI Tutor"
+           style="width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid #06b6d4;cursor:pointer;">
+    </div>
+    <div style="flex:1;min-width:280px;">
+      <h3 style="font-family:'Montserrat',sans-serif;font-size:1.2rem;color:#06b6d4;margin:0 0 10px;">Need a Hint? Ask GENO!</h3>
+      <p style="font-family:'Open Sans',sans-serif;font-size:0.95rem;color:rgba(255,255,255,0.85);margin:0;line-height:1.6;">
+        Stuck on a puzzle? GENO can guide you through the logic without giving away the answer.
+        Visit <a href="https://www.globalsovereignuniversity.org/geno" style="color:#d4af37;font-weight:700;text-decoration:none;">GlobalSovereignUniversity.org/geno</a> to chat with your AI learning companion.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- CALL TO ACTION -->
+<div class="scale-in" style="max-width:800px;margin:0 auto 50px;padding:40px;background:linear-gradient(135deg,#d4af37,#f7c531);border-radius:24px;text-align:center;">
+  <h2 style="font-family:'Montserrat',sans-serif;font-size:1.8rem;color:#1a1a2e;margin:0 0 15px;">Ready to Forge Your Diamond Mind?</h2>
+  <p style="font-family:'Open Sans',sans-serif;font-size:1.05rem;color:rgba(26,26,46,0.85);margin:0 0 25px;line-height:1.6;">
+    No signup required. No cost. Just pick a puzzle and start sharpening your thinking.
+  </p>
+  <div style="display:flex;justify-content:center;gap:15px;flex-wrap:wrap;">
+    <a href="https://www.globalsovereignuniversity.org/sudoku" style="display:inline-block;background:#1a1a2e;color:#d4af37;padding:14px 30px;border-radius:25px;font-weight:700;text-decoration:none;font-size:1rem;">Start with Sudoku</a>
+    <a href="https://www.globalsovereignuniversity.org/bookgames" style="display:inline-block;background:transparent;color:#1a1a2e;border:2px solid #1a1a2e;padding:12px 28px;border-radius:25px;font-weight:700;text-decoration:none;font-size:1rem;">Browse All Games</a>
+  </div>
+</div>
+
+<!-- RELATED RESOURCES -->
+<div style="max-width:900px;margin:0 auto 50px;padding:0 20px;">
+  <h2 class="fade-in-up" style="font-family:'Montserrat',sans-serif;font-size:1.5rem;color:#06b6d4;text-align:center;margin-bottom:25px;">🔗 Related Resources</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+
+    <div class="scale-in" style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:20px;">
+      <h4 style="color:#d4af37;margin:0 0 10px;">📋 GED Information</h4>
+      <p style="color:rgba(255,255,255,0.7);font-size:0.9rem;margin:0 0 10px;">Official GED testing requirements, study materials, and testing center locations by state.</p>
+      <a href="https://www.ged.com/" target="_blank" style="color:#06b6d4;font-weight:600;text-decoration:none;">Visit GED.com →</a>
+    </div>
+
+    <div class="scale-in" style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:20px;">
+      <h4 style="color:#d4af37;margin:0 0 10px;">🎓 Critical Thinking</h4>
+      <p style="color:rgba(255,255,255,0.7);font-size:0.9rem;margin:0 0 10px;">Puzzles sharpen logic; critical thinking applies it to real-world decisions and arguments.</p>
+      <a href="https://www.globalsovereignuniversity.org/critical-thinking" style="color:#06b6d4;font-weight:600;text-decoration:none;">Explore Critical Thinking →</a>
+    </div>
+
+    <div class="scale-in" style="background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:20px;">
+      <h4 style="color:#d4af37;margin:0 0 10px;">📐 Mathification</h4>
+      <p style="color:rgba(255,255,255,0.7);font-size:0.9rem;margin:0 0 10px;">Ready to apply your sharpened logic to mathematics? Our visual math program awaits.</p>
+      <a href="https://www.globalsovereignuniversity.org/mathification" style="color:#06b6d4;font-weight:600;text-decoration:none;">Start Mathification →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- MISSION STATEMENT -->
+<div class="scroll-reveal" style="max-width:800px;margin:0 auto 60px;padding:25px;border:2px solid #d4af37;border-radius:16px;text-align:center;">
+  <p style="font-family:'Open Sans',sans-serif;font-size:1.2rem;color:#d4af37;margin:0;font-style:italic;font-weight:600;">
+    "Building a Bridge to Freedom Through Education — Not Handouts"
+  </p>
+</div>
+
+<!-- GSAP ANIMATIONS -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.fade-in-up').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:0.8,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 85%",toggleActions:"play none none none"}});
+});
+gsap.utils.toArray('.scroll-reveal').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 80%",toggleActions:"play none none none"}});
+});
+gsap.utils.toArray('.scale-in').forEach((el,i)=>{
+  gsap.to(el,{opacity:1,scale:1,duration:0.6,delay:i*0.08,ease:"back.out(1.7)",scrollTrigger:{trigger:el,start:"top 85%",toggleActions:"play none none none"}});
+});
+</script>
+
+</body>
+</html>
