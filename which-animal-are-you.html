@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Digital Farm Animal Are You? | Personality Quiz | Global Sovereign University</title>
+<meta name="description" content="Are you a Snowflake who questions everything? An Echo who repeats the Feed? Take the quiz and find out which Digital Farm animal matches your digital habits!">
+<style>
+html,body{margin:0;padding:0;scrollbar-width:none;}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+.wa-wrap{font-family:'Inter',sans-serif;background:linear-gradient(180deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);min-height:100vh;color:#fff;padding:20px}
+.wa-container{max-width:700px;margin:0 auto}
+.wa-header{text-align:center;padding:30px 0;border-bottom:2px solid rgba(0,255,0,0.2)}
+.wa-logo{font-family:'Share Tech Mono',monospace;font-size:1.6rem;color:#00ff00;text-shadow:0 0 20px rgba(0,255,0,0.5);letter-spacing:2px;margin-bottom:8px}
+.wa-logo span{color:#ff0000}
+.wa-title{font-size:2rem;font-weight:800;color:#fff;margin-bottom:10px}
+.wa-subtitle{color:rgba(255,255,255,0.6);font-size:1rem}
+.wa-progress{margin:30px 0}
+.wa-progress-bar{height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden}
+.wa-progress-fill{height:100%;background:linear-gradient(90deg,#00ff00,#00cc00);border-radius:4px;transition:width 0.3s}
+.wa-progress-text{text-align:center;margin-top:10px;font-size:0.85rem;color:rgba(255,255,255,0.5)}
+.wa-question{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:30px;margin-bottom:25px}
+.wa-question-num{font-family:'Share Tech Mono',monospace;font-size:0.8rem;color:#00ff00;margin-bottom:10px}
+.wa-question-text{font-size:1.3rem;font-weight:600;color:#fff;line-height:1.5;margin-bottom:25px}
+.wa-answers{display:flex;flex-direction:column;gap:12px}
+.wa-answer{background:rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.15);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all 0.2s}
+.wa-answer:hover{border-color:rgba(0,255,0,0.5);background:rgba(0,255,0,0.05);transform:translateX(8px)}
+.wa-answer-text{color:#fff;font-size:1rem;line-height:1.5}
+.wa-result{display:none;text-align:center;padding:40px 20px}
+.wa-result-animal{font-size:100px;margin-bottom:20px}
+.wa-result-name{font-family:'Share Tech Mono',monospace;font-size:2.5rem;margin-bottom:10px}
+.wa-result-name.snowflake{color:#87ceeb}
+.wa-result-name.echo{color:#ff6600}
+.wa-result-name.byte{color:#000;text-shadow:0 0 10px #fff,0 0 20px #fff}
+.wa-result-name.hashtag{color:#00ff00}
+.wa-result-name.sheep{color:#f5f5dc}
+.wa-result-tagline{font-size:1.2rem;color:rgba(255,255,255,0.7);margin-bottom:25px;font-style:italic}
+.wa-result-desc{color:rgba(255,255,255,0.85);font-size:1.05rem;line-height:1.8;margin-bottom:30px;text-align:left;background:rgba(255,255,255,0.03);border-radius:12px;padding:25px}
+.wa-result-traits{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-bottom:30px}
+.wa-trait{background:rgba(0,255,0,0.1);border:1px solid rgba(0,255,0,0.3);border-radius:25px;padding:8px 18px;font-size:0.9rem;color:#00ff00}
+.wa-share{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:25px;margin-bottom:30px}
+.wa-share-title{font-size:1rem;color:rgba(255,255,255,0.6);margin-bottom:15px}
+.wa-share-card{background:linear-gradient(135deg,#1a1a2e 0%,#0a0a0a 100%);border:2px solid rgba(0,255,0,0.3);border-radius:12px;padding:25px;margin-bottom:20px}
+.wa-share-card-animal{font-size:50px;margin-bottom:10px}
+.wa-share-card-text{font-family:'Share Tech Mono',monospace;font-size:1.1rem;color:#00ff00}
+.wa-share-card-tag{font-size:0.85rem;color:rgba(255,255,255,0.5);margin-top:10px}
+.wa-share-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.wa-share-btn{padding:12px 24px;border-radius:8px;font-weight:600;font-size:0.9rem;text-decoration:none;transition:all 0.2s;border:none;cursor:pointer}
+.wa-share-btn.twitter{background:#1da1f2;color:#fff}
+.wa-share-btn.facebook{background:#4267b2;color:#fff}
+.wa-share-btn.copy{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2)}
+.wa-share-btn:hover{transform:scale(1.05);opacity:0.9}
+.wa-book{background:linear-gradient(180deg,rgba(255,0,0,0.1) 0%,rgba(0,0,0,0.8) 100%);border:2px solid #ff0000;border-radius:16px;padding:30px;margin:30px 0;text-align:center}
+.wa-book-title{font-family:'Share Tech Mono',monospace;font-size:1.5rem;color:#ff0000;margin-bottom:10px}
+.wa-book-subtitle{color:rgba(255,255,255,0.7);font-size:0.95rem;line-height:1.6;margin-bottom:20px}
+.wa-book-btn{display:inline-block;background:linear-gradient(180deg,#ff0000 0%,#aa0000 100%);color:#fff;padding:15px 40px;border-radius:8px;text-decoration:none;font-family:'Share Tech Mono',monospace;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;transition:all 0.3s}
+.wa-book-btn:hover{background:#ff3333;box-shadow:0 0 30px rgba(255,0,0,0.5);transform:scale(1.05)}
+.wa-restart{background:linear-gradient(180deg,#004400 0%,#002200 100%);color:#00ff00;border:2px solid #00ff00;padding:15px 40px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:1rem;cursor:pointer;transition:all 0.3s;text-transform:uppercase;letter-spacing:2px}
+.wa-restart:hover{background:#006600;box-shadow:0 0 30px rgba(0,255,0,0.4)}
+.wa-footer{text-align:center;padding:30px 0;font-size:0.85rem;color:rgba(255,255,255,0.4);border-top:1px solid rgba(255,255,255,0.1);margin-top:30px}
+.wa-footer a{color:rgba(0,255,0,0.6)}
+.wa-hidden{display:none !important}
+</style>
+</head>
+<body>
+<div class="wa-wrap">
+<div class="wa-container">
+<div class="wa-header">
+<div class="wa-logo">DIGITAL <span>FARM</span></div>
+<div class="wa-title">Which Animal Are You?</div>
+<div class="wa-subtitle">Discover your role in the Feed...</div>
+</div>
+<div id="waQuiz">
+<div class="wa-progress">
+<div class="wa-progress-bar"><div class="wa-progress-fill" id="waProgressFill" style="width:0%"></div></div>
+<div class="wa-progress-text"><span id="waProgressText">Question 1 of 7</span></div>
+</div>
+<div class="wa-question" id="waQuestion">
+<div class="wa-question-num" id="waQuestionNum">QUESTION 1</div>
+<div class="wa-question-text" id="waQuestionText">Loading...</div>
+<div class="wa-answers" id="waAnswers"></div>
+</div>
+</div>
+<div class="wa-result wa-hidden" id="waResult">
+<div class="wa-result-animal" id="waResultAnimal">🐑</div>
+<div class="wa-result-name" id="waResultName">RESULT</div>
+<div class="wa-result-tagline" id="waResultTagline">Tagline</div>
+<div class="wa-result-desc" id="waResultDesc">Description</div>
+<div class="wa-result-traits" id="waResultTraits"></div>
+<div class="wa-share">
+<div class="wa-share-title">Share your result!</div>
+<div class="wa-share-card">
+<div class="wa-share-card-animal" id="waShareAnimal">🐑</div>
+<div class="wa-share-card-text" id="waShareText">I'm a SNOWFLAKE!</div>
+<div class="wa-share-card-tag">#DigitalFarm #WhichAnimalAreYou</div>
+</div>
+<div class="wa-share-buttons">
+<a class="wa-share-btn twitter" id="waTwitter" href="#" target="_blank">Share on X</a>
+<a class="wa-share-btn facebook" id="waFacebook" href="#" target="_blank">Share on Facebook</a>
+<button class="wa-share-btn copy" onclick="waCopyResult()">📋 Copy Result</button>
+</div>
+</div>
+<div class="wa-book">
+<div class="wa-book-title">DIGITAL FARM</div>
+<div class="wa-book-subtitle">A Modern Allegory of Digital Censorship, and the Battle for Free Speech in a Hyper-Connected Surveillance State<br><br><em>Discover the full story behind the animals...</em></div>
+<a href="https://www.amazon.com/Digital-Farm-Censorship-Algorithmic-Surveillance-ebook/dp/B0FNP71PHJ?&tag=gsu2026-20" target="_blank" class="wa-book-btn">📖 READ THE BOOK</a>
+</div>
+<button class="wa-restart" onclick="waRestart()">TAKE QUIZ AGAIN</button>
+</div>
+<div class="wa-footer">
+<strong>GLOBAL SOVEREIGN UNIVERSITY</strong><br>
+"Building a Bridge to Freedom Through Education—Not Handouts"<br>
+<a href="https://www.globalsovereignuniversity.org">www.globalsovereignuniversity.org</a>
+</div>
+</div>
+</div>
+<script>
+const waQuestions=[
+{text:"You see a trending hashtag on your feed. What do you do?",answers:[{text:"Repost it immediately—if everyone's talking about it, it must be important!",type:'echo'},{text:"Investigate where it came from before engaging",type:'snowflake'},{text:"Report it as potentially misleading",type:'byte'},{text:"Ignore it and keep scrolling",type:'sheep'},{text:"Create a counter-hashtag questioning the narrative",type:'hashtag'}]},
+{text:"A friend shares an article with a shocking headline. Your first thought?",answers:[{text:"Share it to my network right away!",type:'echo'},{text:"Check if other sources confirm it",type:'snowflake'},{text:"Flag it for review—could be misinformation",type:'byte'},{text:"Like it and move on without reading",type:'sheep'},{text:"Look up who funds the publication",type:'hashtag'}]},
+{text:"The Algorithm suggests content you disagree with. What do you do?",answers:[{text:"Trust it—The Algorithm knows what's best for me",type:'sheep'},{text:"Click 'Not Interested' and move on",type:'echo'},{text:"Report it as harmful content",type:'byte'},{text:"Watch it anyway to understand different perspectives",type:'snowflake'},{text:"Try to figure out WHY it was recommended",type:'hashtag'}]},
+{text:"You discover that a popular influencer is spreading false information. Your response?",answers:[{text:"They have millions of followers—they must know something I don't",type:'sheep'},{text:"Unfollow them quietly",type:'echo'},{text:"Report their account immediately",type:'byte'},{text:"Comment with corrections and sources",type:'snowflake'},{text:"Document everything and share your findings",type:'hashtag'}]},
+{text:"A new 'community guideline' is announced that restricts certain speech. Your reaction?",answers:[{text:"If it keeps the community safe, I support it",type:'sheep'},{text:"I'll adapt my speech to follow the rules",type:'echo'},{text:"Finally! These rules should have existed sooner",type:'byte'},{text:"I'm concerned—who decides what's 'harmful'?",type:'snowflake'},{text:"Time to find alternative platforms",type:'hashtag'}]},
+{text:"You notice your posts are getting less engagement than before. What do you think?",answers:[{text:"I must be posting boring content",type:'sheep'},{text:"Time to post what The Algorithm wants to see",type:'echo'},{text:"The system is working—low-quality content should be suppressed",type:'byte'},{text:"Am I being shadow-banned? I should investigate",type:'snowflake'},{text:"The Algorithm is manipulating what people see",type:'hashtag'}]},
+{text:"If you could change one thing about social media, it would be...",answers:[{text:"More filters to remove negativity",type:'sheep'},{text:"Better trending features so I know what's popular",type:'echo'},{text:"Stricter moderation to remove bad actors",type:'byte'},{text:"More transparency about how algorithms work",type:'snowflake'},{text:"Decentralization—no single entity should control information",type:'hashtag'}]}
+];
+const waResults={
+snowflake:{animal:'❄️',name:'SNOWFLAKE',nameClass:'snowflake',tagline:'"I dare to question the Feed"',desc:`You're a <strong>critical thinker</strong> in a world that rewards conformity. While others scroll mindlessly, you ask "why?" and "who benefits?"<br><br>In Digital Farm, Snowflake is the sheep who noticed the pigs never actually worked. She's the one who remembers life before The Algorithm.<br><br>You're not naive—you're <em>awake</em>. And that makes you dangerous to those who profit from sleeping masses.`,traits:['Critical Thinker','Questions Authority','Seeks Truth','Independent Mind']},
+echo:{animal:'🦜',name:'ECHO',nameClass:'echo',tagline:'"If it\'s trending, it must be true"',desc:`You're an <strong>amplifier</strong>—when something catches fire, you help spread it. You trust the wisdom of crowds and believe popular opinion reflects truth.<br><br>In Digital Farm, Echo the parrot repeats everything The Algorithm promotes. He's not malicious—he genuinely believes he's helping.<br><br>The question is: are you spreading signal... or noise?`,traits:['Social Connector','Trend Follower','Community Minded','Influential']},
+byte:{animal:'🐦‍⬛',name:'BYTE',nameClass:'byte',tagline:'"I am the gatekeeper of truth"',desc:`You believe in <strong>order and protection</strong>. Someone has to keep the community safe from harmful content, and you've taken up that responsibility.<br><br>In Digital Farm, Byte the crow is the moderator—camera-eyes always watching, always judging. He believes he's protecting the animals from themselves.<br><br>But who watches the watchmen?`,traits:['Rule Enforcer','Guardian','Dutiful','Authoritarian Tendency']},
+hashtag:{animal:'🐭',name:'HASHTAG',nameClass:'hashtag',tagline:'"They can censor me, but they can\'t stop the signal"',desc:`You're a <strong>digital resistance fighter</strong>. You've seen behind the curtain and you're not going back to sleep.<br><br>In Digital Farm, Hashtag the mouse discovered the hidden server room beneath the barn—the original code before it was corrupted. He risks everything to expose the truth.<br><br>You know that freedom isn't free. And you're willing to pay the price.`,traits:['Truth Seeker','Rebel','Courageous','Underground Network']},
+sheep:{animal:'🐑',name:'SHEEP #47291',nameClass:'sheep',tagline:'"The Algorithm provides. The Algorithm protects."',desc:`You're <strong>comfortable</strong>. The Feed gives you what you need. Why question a system that works?<br><br>In Digital Farm, the sheep are content. They have their screens, their daily ration of approved content, and the warm glow of community approval.<br><br>But sometimes, late at night, do you ever wonder... is this all there is?`,traits:['Compliant','Trusting','Community Oriented','Comfortable']}
+};
+let waState={current:0,scores:{snowflake:0,echo:0,byte:0,hashtag:0,sheep:0}};
+function waRender(){
+const q=waQuestions[waState.current];
+document.getElementById('waQuestionNum').textContent=`QUESTION ${waState.current+1}`;
+document.getElementById('waQuestionText').textContent=q.text;
+document.getElementById('waProgressFill').style.width=((waState.current)/waQuestions.length*100)+'%';
+document.getElementById('waProgressText').textContent=`Question ${waState.current+1} of ${waQuestions.length}`;
+let html='';
+const shuffled=[...q.answers].sort(()=>Math.random()-0.5);
+shuffled.forEach(a=>{html+=`<div class="wa-answer" onclick="waAnswer('${a.type}')"><div class="wa-answer-text">${a.text}</div></div>`;});
+document.getElementById('waAnswers').innerHTML=html;
+}
+function waAnswer(type){
+waState.scores[type]++;waState.current++;
+if(waState.current>=waQuestions.length){waShowResult();}else{waRender();}
+}
+function waShowResult(){
+let maxType='sheep',maxScore=0;
+for(let type in waState.scores){if(waState.scores[type]>maxScore){maxScore=waState.scores[type];maxType=type;}}
+const result=waResults[maxType];
+document.getElementById('waQuiz').classList.add('wa-hidden');
+document.getElementById('waResult').classList.remove('wa-hidden');
+document.getElementById('waResult').style.display='block';
+document.getElementById('waResultAnimal').textContent=result.animal;
+document.getElementById('waResultName').textContent=result.name;
+document.getElementById('waResultName').className='wa-result-name '+result.nameClass;
+document.getElementById('waResultTagline').textContent=result.tagline;
+document.getElementById('waResultDesc').innerHTML=result.desc;
+let traitsHtml='';result.traits.forEach(t=>{traitsHtml+=`<div class="wa-trait">${t}</div>`;});
+document.getElementById('waResultTraits').innerHTML=traitsHtml;
+document.getElementById('waShareAnimal').textContent=result.animal;
+document.getElementById('waShareText').textContent=`I'm a ${result.name}!`;
+const shareText=encodeURIComponent(`I'm a ${result.name} in Digital Farm! ${result.tagline} Take the quiz:`);
+const shareUrl=encodeURIComponent('https://www.globalsovereignuniversity.org/which-animal-are-you');
+document.getElementById('waTwitter').href=`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+document.getElementById('waFacebook').href=`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&quote=${shareText}`;
+}
+function waCopyResult(){
+const result=document.getElementById('waResultName').textContent;
+const tagline=document.getElementById('waResultTagline').textContent;
+const text=`I'm a ${result} in Digital Farm! ${tagline}\n\nTake the quiz: https://www.globalsovereignuniversity.org/which-animal-are-you\n\n#DigitalFarm #WhichAnimalAreYou`;
+navigator.clipboard.writeText(text).then(()=>{alert('Result copied to clipboard!');});
+}
+function waRestart(){
+waState={current:0,scores:{snowflake:0,echo:0,byte:0,hashtag:0,sheep:0}};
+document.getElementById('waQuiz').classList.remove('wa-hidden');
+document.getElementById('waResult').classList.add('wa-hidden');
+document.getElementById('waResult').style.display='none';
+waRender();
+}
+waRender();
+</script>
+</body>
+</html>

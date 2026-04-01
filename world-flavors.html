@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Flavors | Food Geography Game | Global Sovereign University</title>
+<meta name="description" content="Discover where your favorite foods come from! Match dishes to their countries of origin and learn culinary geography. Free food culture game with GENO AI tutor.">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;scrollbar-width:none;}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;}
+*{margin:0;padding:0;box-sizing:border-box}
+.wf-wrap{font-family:'Nunito',sans-serif;background:linear-gradient(180deg,#3e2723 0%,#5d4037 50%,#3e2723 100%);min-height:100vh;color:#fff;padding:20px}
+.wf-container{max-width:900px;margin:0 auto;border:3px solid #ff7043;border-radius:20px;background:rgba(0,0,0,0.4);overflow:hidden}
+.wf-header{background:linear-gradient(135deg,#d84315 0%,#ff7043 100%);padding:20px 25px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+.wf-title{font-size:1.5rem;font-weight:800;color:#fff;text-shadow:2px 2px 0 #bf360c;letter-spacing:1px}
+.wf-stats{display:flex;gap:20px}
+.wf-stat{background:rgba(0,0,0,0.3);padding:8px 16px;border-radius:25px;text-align:center}
+.wf-stat-label{font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1px}
+.wf-stat-value{font-size:1.3rem;font-weight:700;color:#ffd700}
+.wf-geno{background:linear-gradient(135deg,rgba(255,112,67,0.2) 0%,rgba(216,67,21,0.2) 100%);padding:15px 25px;display:flex;align-items:center;gap:15px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.wf-geno-face{width:50px;height:50px;border-radius:50%;border:2px solid #ffd700;overflow:hidden;flex-shrink:0}
+.wf-geno-face img{width:100%;height:100%;object-fit:cover}
+.wf-geno-text{color:#fff;font-size:1rem;line-height:1.5}
+.wf-geno-text strong{color:#ffd700}
+.wf-main{padding:30px}
+.wf-dish-display{background:linear-gradient(180deg,rgba(255,112,67,0.15) 0%,rgba(0,0,0,0.3) 100%);border:2px solid rgba(255,112,67,0.5);border-radius:16px;padding:30px;text-align:center;margin-bottom:25px}
+.wf-dish-label{font-size:12px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:2px;margin-bottom:15px}
+.wf-dish-icon{font-size:80px;margin-bottom:15px}
+.wf-dish-name{font-size:2.2rem;font-weight:800;color:#fff;margin-bottom:10px;text-shadow:0 0 20px rgba(255,112,67,0.5)}
+.wf-dish-desc{color:rgba(255,255,255,0.7);font-size:1rem;max-width:500px;margin:0 auto}
+.wf-question{background:rgba(0,0,0,0.3);border-radius:12px;padding:20px;margin-bottom:25px;text-align:center}
+.wf-question-text{font-size:1.2rem;color:#fff;line-height:1.6}
+.wf-choices{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.wf-choice{background:linear-gradient(135deg,rgba(255,112,67,0.15) 0%,rgba(216,67,21,0.15) 100%);border:2px solid rgba(255,112,67,0.4);border-radius:12px;padding:20px;cursor:pointer;transition:all 0.3s;text-align:center}
+.wf-choice:hover{background:linear-gradient(135deg,rgba(255,112,67,0.3) 0%,rgba(216,67,21,0.3) 100%);border-color:#ff7043;transform:translateY(-3px)}
+.wf-choice-flag{font-size:2.5rem;margin-bottom:8px}
+.wf-choice-country{font-size:1.1rem;font-weight:700;color:#fff}
+.wf-choice.correct{background:linear-gradient(135deg,#2e7d32 0%,#43a047 100%)!important;border-color:#4caf50!important}
+.wf-choice.wrong{background:linear-gradient(135deg,#c62828 0%,#e53935 100%)!important;border-color:#f44336!important}
+.wf-explain{background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:20px;margin-top:20px;display:none}
+.wf-explain-header{display:flex;align-items:center;gap:15px;margin-bottom:15px;justify-content:center}
+.wf-explain-flag{font-size:40px}
+.wf-explain-country{font-size:1.3rem;font-weight:700;color:#ffd700}
+.wf-explain-text{color:rgba(255,255,255,0.9);line-height:1.7;text-align:center}
+.wf-explain-tip{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);color:#ffab91;font-size:0.9rem;text-align:center}
+.wf-controls{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:25px}
+.wf-btn{background:linear-gradient(135deg,#ffd700 0%,#ffeb3b 100%);color:#1a1a2e;border:none;padding:14px 28px;border-radius:25px;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.3s}
+.wf-btn:hover{transform:scale(1.05);box-shadow:0 4px 20px rgba(255,215,0,0.4)}
+.wf-btn-secondary{background:linear-gradient(135deg,#d84315 0%,#ff7043 100%);color:#fff}
+.wf-badges{display:flex;justify-content:center;gap:15px;padding:20px;background:rgba(0,0,0,0.2);border-top:1px solid rgba(255,255,255,0.1);flex-wrap:wrap}
+.wf-badge{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;opacity:0.4}
+.wf-badge.earned{opacity:1}
+.wf-badge-bronze{background:#cd7f32;color:#fff}
+.wf-badge-silver{background:#c0c0c0;color:#333}
+.wf-badge-gold{background:#ffd700;color:#333}
+.wf-badge-platinum{background:linear-gradient(135deg,#e5e4e2,#a0a0a0);color:#333}
+.wf-victory{display:none;text-align:center;padding:40px}
+.wf-victory-icon{font-size:80px;margin-bottom:20px}
+.wf-victory-title{font-size:2.5rem;font-weight:800;color:#ffd700;margin-bottom:15px}
+.wf-victory-stats{color:rgba(255,255,255,0.8);font-size:1.1rem;margin-bottom:25px}
+.wf-footer{text-align:center;padding:15px;border-top:1px solid rgba(255,255,255,0.1);font-size:0.85rem;color:rgba(255,255,255,0.5)}
+.wf-footer a{color:#ff7043}
+@media(max-width:600px){.wf-dish-name{font-size:1.6rem}.wf-choices{grid-template-columns:1fr}.wf-title{font-size:1.2rem}}
+</style>
+</head>
+<body>
+<div class="wf-wrap">
+<div class="wf-container">
+<div class="wf-header">
+<div class="wf-title">🍽️ WORLD FLAVORS</div>
+<div class="wf-stats">
+<div class="wf-stat"><div class="wf-stat-label">Score</div><div class="wf-stat-value" id="wfScore">0</div></div>
+<div class="wf-stat"><div class="wf-stat-label">Streak</div><div class="wf-stat-value" id="wfStreak">0</div></div>
+<div class="wf-stat"><div class="wf-stat-label">Dishes</div><div class="wf-stat-value" id="wfDishes">0/15</div></div>
+</div>
+</div>
+<div class="wf-geno">
+<div class="wf-geno-face"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6958183c01f7dfdad3fdb32b_Geno%20head.png" alt="GENO"></div>
+<div class="wf-geno-text" id="wfGenoText"><strong>GENO:</strong> Every dish tells the story of a culture! Let's explore the world through its flavors.</div>
+</div>
+<div class="wf-main">
+<div id="wfGame">
+<div class="wf-dish-display">
+<div class="wf-dish-label">🌍 Where Is This Dish From?</div>
+<div class="wf-dish-icon" id="wfIcon">🍣</div>
+<div class="wf-dish-name" id="wfDish">SUSHI</div>
+<div class="wf-dish-desc" id="wfDesc">Vinegared rice with raw fish, vegetables, or egg</div>
+</div>
+<div class="wf-question"><div class="wf-question-text">Which country did this dish originate from?</div></div>
+<div class="wf-choices" id="wfChoices"></div>
+<div class="wf-explain" id="wfExplain">
+<div class="wf-explain-header">
+<div class="wf-explain-flag" id="wfExplainFlag">🇯🇵</div>
+<div class="wf-explain-country" id="wfExplainCountry">JAPAN</div>
+</div>
+<div class="wf-explain-text" id="wfExplainText">Sushi originated in Southeast Asia as a preservation method, but Japan perfected it into the artform we know today.</div>
+<div class="wf-explain-tip" id="wfTip">🍴 Fun fact: The word "sushi" refers to the vinegared rice, not the fish!</div>
+</div>
+<div class="wf-controls">
+<button class="wf-btn wf-btn-secondary" onclick="wfHear()">🔊 Hear Dish Name</button>
+<button class="wf-btn" onclick="wfNewGame()">🔄 New Game</button>
+</div>
+</div>
+<div class="wf-victory" id="wfVictory">
+<div class="wf-victory-icon">👨‍🍳</div>
+<div class="wf-victory-title">WORLD FOODIE!</div>
+<div class="wf-victory-stats">You identified 15 dishes!<br>Final Score: <span id="wfFinalScore">0</span></div>
+<button class="wf-btn" onclick="wfNewGame()">🍽️ Play Again</button>
+</div>
+</div>
+<div class="wf-badges">
+<span class="wf-badge wf-badge-bronze" id="wfBadgeBronze">🥉 Bronze (5+)</span>
+<span class="wf-badge wf-badge-silver" id="wfBadgeSilver">🥈 Silver (10+)</span>
+<span class="wf-badge wf-badge-gold" id="wfBadgeGold">🥇 Gold (15)</span>
+<span class="wf-badge wf-badge-platinum" id="wfBadgePlat">💎 Platinum (5 streak)</span>
+</div>
+<div class="wf-footer"><strong>Global Sovereign University</strong> — Building a Bridge to Freedom Through Education<br><a href="https://www.globalsovereignuniversity.org">www.globalsovereignuniversity.org</a></div>
+</div>
+</div>
+<script>
+const wfData=[
+{icon:"🍣",dish:"SUSHI",desc:"Vinegared rice with raw fish, vegetables, or egg",ans:{flag:"🇯🇵",country:"Japan"},wrong:[{flag:"🇨🇳",country:"China"},{flag:"🇰🇷",country:"South Korea"},{flag:"🇹🇭",country:"Thailand"}],exp:"Sushi originated as a preservation method in Southeast Asia, but Japan transformed it into the refined cuisine we know today. The first modern sushi appeared in Tokyo in the 1820s.",tip:"The word 'sushi' refers to the vinegared rice, not the fish!"},
+{icon:"🍕",dish:"PIZZA",desc:"Flatbread with tomato sauce, cheese, and toppings",ans:{flag:"🇮🇹",country:"Italy"},wrong:[{flag:"🇺🇸",country:"United States"},{flag:"🇬🇷",country:"Greece"},{flag:"🇹🇷",country:"Turkey"}],exp:"Modern pizza was born in Naples, Italy, in the 18th century. The Margherita pizza was created for Queen Margherita in 1889.",tip:"Neapolitan pizza is UNESCO-protected as an Intangible Cultural Heritage!"},
+{icon:"🌮",dish:"TACOS",desc:"Folded tortilla filled with meat, vegetables, and salsa",ans:{flag:"🇲🇽",country:"Mexico"},wrong:[{flag:"🇪🇸",country:"Spain"},{flag:"🇺🇸",country:"United States"},{flag:"🇬🇹",country:"Guatemala"}],exp:"Tacos date back to pre-Colombian Mexico. The word 'taco' may come from the Nahuatl word 'tlahco' meaning 'half' or 'in the middle.'",tip:"Street tacos in Mexico are usually served on two small corn tortillas stacked together!"},
+{icon:"🍜",dish:"PHO",desc:"Aromatic beef or chicken soup with rice noodles",ans:{flag:"🇻🇳",country:"Vietnam"},wrong:[{flag:"🇹🇭",country:"Thailand"},{flag:"🇨🇳",country:"China"},{flag:"🇯🇵",country:"Japan"}],exp:"Pho originated in northern Vietnam in the early 20th century. The broth is simmered for hours with star anise, cinnamon, and other spices.",tip:"Pronounce it 'fuh' (rhymes with 'duh'), not 'foe'!"},
+{icon:"🥘",dish:"PAELLA",desc:"Saffron rice with seafood, meat, and vegetables",ans:{flag:"🇪🇸",country:"Spain"},wrong:[{flag:"🇵🇹",country:"Portugal"},{flag:"🇮🇹",country:"Italy"},{flag:"🇲🇽",country:"Mexico"}],exp:"Paella comes from Valencia, Spain. Traditional paella uses rabbit and snails, not just seafood!",tip:"The crispy rice at the bottom of the pan is called 'socarrat' and is considered the best part!"},
+{icon:"🍛",dish:"CURRY",desc:"Spiced sauce with meat or vegetables, served with rice",ans:{flag:"🇮🇳",country:"India"},wrong:[{flag:"🇹🇭",country:"Thailand"},{flag:"🇯🇵",country:"Japan"},{flag:"🇬🇧",country:"United Kingdom"}],exp:"Curry originated in the Indian subcontinent over 4,000 years ago. The word 'curry' likely comes from the Tamil word 'kari' meaning sauce.",tip:"Indian curries vary dramatically by region—from creamy Korma to fiery Vindaloo!"},
+{icon:"🥟",dish:"DUMPLINGS",desc:"Filled dough parcels, steamed or pan-fried",ans:{flag:"🇨🇳",country:"China"},wrong:[{flag:"🇯🇵",country:"Japan"},{flag:"🇰🇷",country:"South Korea"},{flag:"🇵🇱",country:"Poland"}],exp:"Chinese dumplings date back over 1,800 years, invented by a doctor to treat frostbitten ears. They're traditionally eaten during Chinese New Year for good luck.",tip:"The crescent shape symbolizes ancient Chinese gold ingots, representing wealth!"},
+{icon:"🍔",dish:"HAMBURGER",desc:"Ground beef patty in a bun with various toppings",ans:{flag:"🇺🇸",country:"United States"},wrong:[{flag:"🇩🇪",country:"Germany"},{flag:"🇬🇧",country:"United Kingdom"},{flag:"🇦🇺",country:"Australia"}],exp:"While ground beef dishes existed in Hamburg, Germany, the hamburger sandwich was perfected in America in the late 1800s.",tip:"Americans eat about 50 billion burgers per year—that's 3 per person per week!"},
+{icon:"🥐",dish:"CROISSANT",desc:"Flaky, buttery crescent-shaped pastry",ans:{flag:"🇫🇷",country:"France"},wrong:[{flag:"🇦🇹",country:"Austria"},{flag:"🇧🇪",country:"Belgium"},{flag:"🇨🇭",country:"Switzerland"}],exp:"Though inspired by Austrian 'kipferl,' the modern croissant was perfected in Paris using laminated dough with butter.",tip:"A proper croissant has 27 layers of butter and dough!"},
+{icon:"🍝",dish:"PASTA CARBONARA",desc:"Pasta with egg, cheese, pancetta, and black pepper",ans:{flag:"🇮🇹",country:"Italy"},wrong:[{flag:"🇫🇷",country:"France"},{flag:"🇬🇷",country:"Greece"},{flag:"🇺🇸",country:"United States"}],exp:"Carbonara originated in Rome, possibly created for coal miners. The creamy sauce comes from egg yolks and Pecorino Romano cheese—never cream!",tip:"Adding cream to carbonara is considered a culinary crime in Italy!"},
+{icon:"🍱",dish:"BIBIMBAP",desc:"Rice bowl with vegetables, meat, egg, and spicy sauce",ans:{flag:"🇰🇷",country:"South Korea"},wrong:[{flag:"🇯🇵",country:"Japan"},{flag:"🇨🇳",country:"China"},{flag:"🇻🇳",country:"Vietnam"}],exp:"Bibimbap means 'mixed rice' in Korean. It evolved from royal court cuisine and the tradition of mixing leftovers before the new year.",tip:"Mix everything together thoroughly before eating—that's where the flavor magic happens!"},
+{icon:"🧆",dish:"FALAFEL",desc:"Deep-fried balls of ground chickpeas and herbs",ans:{flag:"🇪🇬",country:"Egypt"},wrong:[{flag:"🇮🇱",country:"Israel"},{flag:"🇱🇧",country:"Lebanon"},{flag:"🇸🇾",country:"Syria"}],exp:"Falafel likely originated in Egypt, possibly created by Coptic Christians as a meat substitute during Lent.",tip:"In Egypt, falafel is called 'ta'ameya' and is made with fava beans instead of chickpeas!"},
+{icon:"🍲",dish:"TOM YUM",desc:"Hot and sour soup with shrimp, lemongrass, and galangal",ans:{flag:"🇹🇭",country:"Thailand"},wrong:[{flag:"🇻🇳",country:"Vietnam"},{flag:"🇮🇩",country:"Indonesia"},{flag:"🇲🇾",country:"Malaysia"}],exp:"Tom Yum is Thailand's most famous soup. 'Tom' means boiling and 'yum' refers to the sour and spicy Thai salad style.",tip:"The soup base has medicinal properties—lemongrass and galangal help fight colds!"},
+{icon:"🥙",dish:"SHAWARMA",desc:"Spiced meat roasted on a vertical spit, served in pita",ans:{flag:"🇱🇧",country:"Lebanon"},wrong:[{flag:"🇹🇷",country:"Turkey"},{flag:"🇬🇷",country:"Greece"},{flag:"🇸🇦",country:"Saudi Arabia"}],exp:"Shawarma evolved from the Ottoman doner kebab but developed its distinctive flavors in Lebanon.",tip:"The vertical rotisserie was invented in 19th century Ottoman Turkey!"},
+{icon:"🍰",dish:"TIRAMISU",desc:"Coffee-soaked ladyfingers layered with mascarpone cream",ans:{flag:"🇮🇹",country:"Italy"},wrong:[{flag:"🇫🇷",country:"France"},{flag:"🇦🇹",country:"Austria"},{flag:"🇨🇭",country:"Switzerland"}],exp:"Tiramisu was invented in the Veneto region of Italy in the 1960s. The name means 'pick me up,' referring to the coffee and sugar content.",tip:"Traditional tiramisu contains raw eggs—pregnant women in Italy eat a cooked version!"}
+];
+let wfState={score:0,streak:0,dishes:0,total:15,current:null,queue:[],answered:false};
+function wfInit(){
+wfState={score:0,streak:0,dishes:0,total:15,current:null,queue:[...wfData].sort(()=>Math.random()-0.5).slice(0,15),answered:false};
+wfUpdateUI();wfNext();
+document.getElementById('wfGame').style.display='block';
+document.getElementById('wfVictory').style.display='none';
+document.getElementById('wfExplain').style.display='none';
+}
+function wfNext(){
+if(wfState.queue.length===0){wfVictory();return}
+wfState.current=wfState.queue.shift();wfState.answered=false;
+document.getElementById('wfIcon').textContent=wfState.current.icon;
+document.getElementById('wfDish').textContent=wfState.current.dish;
+document.getElementById('wfDesc').textContent=wfState.current.desc;
+document.getElementById('wfExplain').style.display='none';
+const allChoices=[wfState.current.ans,...wfState.current.wrong].sort(()=>Math.random()-0.5);
+let chh='';
+allChoices.forEach(c=>{chh+=`<div class="wf-choice" data-answer="${c.country}"><div class="wf-choice-flag">${c.flag}</div><div class="wf-choice-country">${c.country}</div></div>`;});
+document.getElementById('wfChoices').innerHTML=chh;
+document.querySelectorAll('.wf-choice').forEach(c=>c.addEventListener('click',()=>wfAnswer(c.dataset.answer)));
+wfSpeak(`Where does ${wfState.current.dish} come from?`);
+}
+function wfAnswer(answer){
+if(wfState.answered)return;wfState.answered=true;
+const correct=answer===wfState.current.ans.country;
+document.querySelectorAll('.wf-choice').forEach(c=>{
+if(c.dataset.answer===wfState.current.ans.country)c.classList.add('correct');
+else if(c.dataset.answer===answer&&!correct)c.classList.add('wrong');
+});
+document.getElementById('wfExplain').style.display='block';
+document.getElementById('wfExplainFlag').textContent=wfState.current.ans.flag;
+document.getElementById('wfExplainCountry').textContent=wfState.current.ans.country.toUpperCase();
+document.getElementById('wfExplainText').textContent=wfState.current.exp;
+document.getElementById('wfTip').textContent=`🍴 Fun fact: ${wfState.current.tip}`;
+if(correct){
+wfState.score+=100+(wfState.streak*15);wfState.streak++;wfState.dishes++;
+wfSpeak(`Correct! ${wfState.current.dish} is from ${wfState.current.ans.country}! ${wfState.current.exp}`);
+document.getElementById('wfGenoText').innerHTML=`<strong>GENO:</strong> ✓ Delicious! ${wfState.current.dish} is from ${wfState.current.ans.country}!`;
+}else{
+wfState.streak=0;
+wfSpeak(`${wfState.current.dish} is from ${wfState.current.ans.country}. ${wfState.current.exp}`);
+document.getElementById('wfGenoText').innerHTML=`<strong>GENO:</strong> ${wfState.current.dish} comes from <strong>${wfState.current.ans.country}</strong>.`;
+}
+wfUpdateUI();
+setTimeout(()=>{if(wfState.dishes>=wfState.total)wfVictory();else wfNext();},4500);
+}
+function wfUpdateUI(){
+document.getElementById('wfScore').textContent=wfState.score;
+document.getElementById('wfStreak').textContent=wfState.streak;
+document.getElementById('wfDishes').textContent=`${wfState.dishes}/${wfState.total}`;
+document.getElementById('wfBadgeBronze').classList.toggle('earned',wfState.dishes>=5);
+document.getElementById('wfBadgeSilver').classList.toggle('earned',wfState.dishes>=10);
+document.getElementById('wfBadgeGold').classList.toggle('earned',wfState.dishes>=15);
+document.getElementById('wfBadgePlat').classList.toggle('earned',wfState.streak>=5);
+}
+function wfVictory(){
+document.getElementById('wfGame').style.display='none';
+document.getElementById('wfVictory').style.display='block';
+document.getElementById('wfFinalScore').textContent=wfState.score;
+wfSpeak(`Congratulations! You identified the origins of ${wfState.dishes} dishes with a score of ${wfState.score}!`);
+}
+function wfNewGame(){wfInit()}
+function wfHear(){if(wfState.current)wfSpeak(wfState.current.dish)}
+function wfSpeak(t){if('speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=0.9;speechSynthesis.speak(u)}}
+wfInit();
+</script>
+</body>
+</html>
