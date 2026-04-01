@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Digital Farm Animal Are You? | Personality Quiz | Global Sovereign University</title>
+<meta name="description" content="Are you a Snowflake who questions everything? An Echo who repeats the Feed? Take the quiz — infinite rounds, cumulative personality profile.">
+<style>
+html,body{margin:0;padding:0;scrollbar-width:none;}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',Arial,sans-serif;background:linear-gradient(180deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);min-height:100vh;color:#fff;padding:20px;}
+.container{max-width:700px;margin:0 auto;}
+.hdr{text-align:center;padding:28px 0;border-bottom:2px solid rgba(0,255,0,0.2);}
+.hdr-logo{font-family:'Courier New',monospace;font-size:1.5rem;color:#00ff00;letter-spacing:2px;margin-bottom:8px;}
+.hdr-logo span{color:#ff0000;}
+.hdr-title{font-size:1.9rem;font-weight:800;margin-bottom:8px;}
+.hdr-sub{color:rgba(255,255,255,0.5);font-size:.9rem;}
+.session{display:flex;justify-content:center;gap:32px;padding:14px 0;border-bottom:1px solid rgba(0,255,0,0.1);margin-bottom:4px;}
+.s-stat{text-align:center;}
+.s-val{font-family:'Courier New',monospace;font-size:1.4rem;color:#00ff00;display:block;}
+.s-lbl{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase;}
+.progress{margin:18px 0;}
+.pb{height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+.pb-fill{height:100%;background:linear-gradient(90deg,#00ff00,#00aa00);border-radius:4px;transition:width .35s;}
+.pt{text-align:center;margin-top:8px;font-size:.8rem;color:rgba(255,255,255,0.4);}
+.qcard{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px;margin-bottom:20px;}
+.qnum{font-family:'Courier New',monospace;font-size:.78rem;color:#00ff00;margin-bottom:10px;}
+.qtext{font-size:1.25rem;font-weight:600;line-height:1.5;margin-bottom:22px;}
+.answers{display:flex;flex-direction:column;gap:11px;}
+.ans{background:rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.12);border-radius:11px;padding:16px 18px;cursor:pointer;transition:all .2s;font-size:.95rem;line-height:1.5;color:#fff;}
+.ans:hover{border-color:rgba(0,255,0,0.5);background:rgba(0,255,0,0.05);transform:translateX(7px);}
+/* RESULT */
+.result{display:none;text-align:center;padding:24px 0;}
+.r-animal{font-size:80px;margin-bottom:14px;}
+.r-name{font-family:'Courier New',monospace;font-size:1.9rem;margin-bottom:8px;}
+.snowflake{color:#87ceeb;}.echo{color:#ff6600;}.byte{color:#fff;text-shadow:0 0 12px #fff;}.hashtag{color:#00ff00;}.sheep{color:#f5f5dc;}
+.r-tagline{font-size:1.05rem;color:rgba(255,255,255,0.65);font-style:italic;margin-bottom:18px;}
+.r-desc{color:rgba(255,255,255,0.85);font-size:.97rem;line-height:1.75;margin-bottom:20px;text-align:left;background:rgba(255,255,255,0.03);border-radius:12px;padding:18px;}
+.r-traits{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+.trait{background:rgba(0,255,0,0.1);border:1px solid rgba(0,255,0,0.3);border-radius:20px;padding:6px 14px;font-size:.82rem;color:#00ff00;}
+.tally{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:18px;margin-bottom:22px;}
+.tally-hdr{font-family:'Courier New',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.35);margin-bottom:12px;}
+.trow{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.trow-icon{font-size:1.1rem;width:26px;text-align:center;}
+.trow-wrap{flex:1;height:9px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;}
+.trow-bar{height:100%;border-radius:4px;transition:width .7s;}
+.trow-ct{font-family:'Courier New',monospace;font-size:.8rem;color:rgba(255,255,255,0.5);width:22px;text-align:right;}
+.r-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;}
+.btn-next{background:linear-gradient(135deg,#003800,#005500);color:#00ff00;border:2px solid #00ff00;padding:13px 30px;border-radius:8px;font-family:'Courier New',monospace;font-size:.9rem;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.btn-next:hover{background:#005500;box-shadow:0 0 18px rgba(0,255,0,0.3);}
+.btn-copy{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);color:#fff;padding:13px 22px;border-radius:8px;font-size:.88rem;cursor:pointer;transition:all .2s;}
+.btn-copy:hover{background:rgba(255,255,255,0.12);}
+.bookbox{background:linear-gradient(180deg,rgba(255,0,0,0.1),rgba(0,0,0,0.8));border:2px solid #ff0000;border-radius:14px;padding:24px;margin-bottom:18px;text-align:center;}
+.book-title{font-family:'Courier New',monospace;font-size:1.3rem;color:#ff0000;margin-bottom:8px;}
+.book-sub{color:rgba(255,255,255,0.65);font-size:.88rem;line-height:1.6;margin-bottom:16px;}
+.book-btn{display:inline-block;background:linear-gradient(180deg,#ff0000,#aa0000);color:#fff;padding:12px 32px;border-radius:8px;text-decoration:none;font-family:'Courier New',monospace;font-size:.88rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;transition:all .3s;}
+.book-btn:hover{background:#ff3333;box-shadow:0 0 24px rgba(255,0,0,0.4);}
+.footer{text-align:center;padding:24px 0;font-size:.82rem;color:rgba(255,255,255,0.35);border-top:1px solid rgba(255,255,255,0.08);margin-top:20px;}
+.footer a{color:rgba(0,255,0,0.55);}
+.hidden{display:none!important;}
+@media(max-width:440px){.session{gap:18px;}.r-btns{flex-direction:column;align-items:center;}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hdr">
+  <div class="hdr-logo">DIGITAL <span>FARM</span></div>
+  <div class="hdr-title">Which Animal Are You?</div>
+  <div class="hdr-sub">Infinite rounds. Evolving profile. Discover your role in the Feed.</div>
+</div>
+
+<div class="session">
+  <div class="s-stat"><span class="s-val" id="sRound">1</span><span class="s-lbl">Round</span></div>
+  <div class="s-stat"><span class="s-val" id="sTotal">0</span><span class="s-lbl">Questions</span></div>
+  <div class="s-stat"><span class="s-val" id="sDom">—</span><span class="s-lbl">Your Type</span></div>
+</div>
+
+<div id="quizSection">
+  <div class="progress">
+    <div class="pb"><div class="pb-fill" id="pbFill" style="width:0%"></div></div>
+    <div class="pt" id="pbText">Question 1 of 7 · Round 1</div>
+  </div>
+  <div class="qcard">
+    <div class="qnum" id="qNum">ROUND 1 · QUESTION 1</div>
+    <div class="qtext" id="qText">Loading...</div>
+    <div class="answers" id="qAnswers"></div>
+  </div>
+</div>
+
+<div class="result hidden" id="resultSection">
+  <div class="r-animal" id="rAnimal">🐑</div>
+  <div class="r-name" id="rName">RESULT</div>
+  <div class="r-tagline" id="rTagline">tagline</div>
+  <div class="r-desc" id="rDesc">desc</div>
+  <div class="r-traits" id="rTraits"></div>
+  <div class="tally">
+    <div class="tally-hdr">CUMULATIVE PERSONALITY PROFILE</div>
+    <div id="tallyBars"></div>
+  </div>
+  <div class="r-btns">
+    <button class="btn-next" onclick="nextRound()">▶ NEXT ROUND</button>
+    <button class="btn-copy" onclick="copyResult()">📋 COPY RESULT</button>
+  </div>
+  <div class="bookbox">
+    <div class="book-title">DIGITAL FARM</div>
+    <div class="book-sub">A Modern Allegory of Digital Censorship, and the Battle for Free Speech in a Hyper-Connected Surveillance State</div>
+    <a href="https://www.amazon.com/Digital-Farm-Censorship-Algorithmic-Surveillance-ebook/dp/B0FNP71PHJ?&tag=gsu2026-20" target="_blank" class="book-btn">📖 READ THE BOOK</a>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>GLOBAL SOVEREIGN UNIVERSITY</strong><br>
+  "Building a Bridge to Freedom Through Education—Not Handouts"<br>
+  <a href="https://www.globalsovereignuniversity.org">www.globalsovereignuniversity.org</a>
+</div>
+
+</div>
+<script>
+const QS=[
+  {t:"You see a trending hashtag on your feed. What do you do?",a:[{x:"Repost immediately — if everyone's talking about it, it must matter!",y:'echo'},{x:"Investigate where it came from before engaging",y:'snowflake'},{x:"Report it as potentially misleading",y:'byte'},{x:"Ignore it and keep scrolling",y:'sheep'},{x:"Create a counter-hashtag questioning the narrative",y:'hashtag'}]},
+  {t:"A friend shares an article with a shocking headline. Your first thought?",a:[{x:"Share it to my network right away!",y:'echo'},{x:"Check if other sources confirm it",y:'snowflake'},{x:"Flag it for review — could be misinformation",y:'byte'},{x:"Like it and move on without reading",y:'sheep'},{x:"Look up who funds the publication",y:'hashtag'}]},
+  {t:"The Algorithm suggests content you disagree with. What do you do?",a:[{x:"Trust it — The Algorithm knows what's best for me",y:'sheep'},{x:"Click 'Not Interested' and move on",y:'echo'},{x:"Report it as harmful content",y:'byte'},{x:"Watch it to understand different perspectives",y:'snowflake'},{x:"Try to figure out WHY it was recommended",y:'hashtag'}]},
+  {t:"You discover a popular influencer is spreading false information. Your response?",a:[{x:"They have millions of followers — they must know something",y:'sheep'},{x:"Unfollow them quietly",y:'echo'},{x:"Report their account immediately",y:'byte'},{x:"Comment with corrections and sources",y:'snowflake'},{x:"Document everything and share your findings",y:'hashtag'}]},
+  {t:"A new 'community guideline' restricts certain speech. Your reaction?",a:[{x:"If it keeps the community safe, I support it",y:'sheep'},{x:"I'll adapt my speech to follow the rules",y:'echo'},{x:"Finally! These rules should have existed sooner",y:'byte'},{x:"I'm concerned — who decides what's 'harmful'?",y:'snowflake'},{x:"Time to find alternative platforms",y:'hashtag'}]},
+  {t:"You notice your posts are getting less engagement. What do you think?",a:[{x:"I must be posting boring content",y:'sheep'},{x:"Time to post what The Algorithm wants",y:'echo'},{x:"The system is working — low quality should be suppressed",y:'byte'},{x:"Am I being shadow-banned? I should investigate",y:'snowflake'},{x:"The Algorithm is manipulating what people see",y:'hashtag'}]},
+  {t:"If you could change one thing about social media, it would be...",a:[{x:"More filters to remove negativity",y:'sheep'},{x:"Better trending features so I know what's popular",y:'echo'},{x:"Stricter moderation to remove bad actors",y:'byte'},{x:"More transparency about how algorithms work",y:'snowflake'},{x:"Decentralization — no single entity should control information",y:'hashtag'}]},
+  {t:"Someone posts an opinion you strongly disagree with. You...",a:[{x:"Scroll past — not worth the drama",y:'sheep'},{x:"React with a sad or angry emoji",y:'echo'},{x:"Report it if it violates guidelines",y:'byte'},{x:"Reply calmly with reasoning and evidence",y:'snowflake'},{x:"Screenshot it in case it gets deleted",y:'hashtag'}]},
+  {t:"A government agency asks a platform to remove 'dangerous misinformation.' You think...",a:[{x:"They're protecting us — sounds right",y:'sheep'},{x:"It depends on what the misinformation actually is",y:'echo'},{x:"Good. Platforms should cooperate with authorities",y:'byte'},{x:"Who defines 'dangerous'? That's the real question",y:'snowflake'},{x:"This is exactly how censorship starts",y:'hashtag'}]},
+  {t:"Your favorite account gets suspended without explanation. You...",a:[{x:"They must have done something wrong",y:'sheep'},{x:"Look for them on other platforms",y:'echo'},{x:"Trust the platform's moderation process",y:'byte'},{x:"Research the terms to understand why",y:'snowflake'},{x:"Post about it immediately and demand transparency",y:'hashtag'}]},
+  {t:"You read that an algorithm curates your news feed. How do you feel?",a:[{x:"Convenient — I get content I like",y:'sheep'},{x:"Fine, as long as the content is high quality",y:'echo'},{x:"Good — it filters out harmful content",y:'byte'},{x:"Concerned — it could create an echo chamber",y:'snowflake'},{x:"Manipulated — someone else is controlling what I see",y:'hashtag'}]},
+  {t:"A viral post turns out to be false. You had shared it. What do you do?",a:[{x:"Quietly delete your share and move on",y:'sheep'},{x:"Post that you made a mistake and correct it",y:'echo'},{x:"Report the original poster for misinformation",y:'byte'},{x:"Publicly acknowledge the error and explain what misled you",y:'snowflake'},{x:"Investigate who created the false post and why",y:'hashtag'}]},
+  {t:"How often do you read past a headline before forming an opinion?",a:[{x:"Rarely — the headline usually says it all",y:'sheep'},{x:"Sometimes — if the topic interests me",y:'echo'},{x:"Always — I need to verify accuracy",y:'byte'},{x:"Always — I want full context",y:'snowflake'},{x:"I read the article then trace the primary sources",y:'hashtag'}]},
+  {t:"Someone tells you to 'just trust the experts.' You respond...",a:[{x:"Okay — experts know best",y:'sheep'},{x:"Which experts? There are experts on both sides",y:'echo'},{x:"Yes — we need authoritative guidance",y:'byte'},{x:"Which experts, and what is their conflict of interest?",y:'snowflake'},{x:"'Trust' is earned. Show me the methodology",y:'hashtag'}]}
+];
+const RD={
+  snowflake:{a:'❄️',n:'SNOWFLAKE',c:'snowflake',tg:'"I dare to question the Feed"',d:`You're a <strong>critical thinker</strong> in a world that rewards conformity. While others scroll mindlessly, you ask "why?" and "who benefits?"<br><br>In Digital Farm, Snowflake is the sheep who noticed the pigs never actually worked. She's the one who remembers life before The Algorithm.<br><br>You're not naive — you're <em>awake</em>. And that makes you dangerous to those who profit from sleeping masses.`,tr:['Critical Thinker','Questions Authority','Seeks Truth','Independent Mind'],col:'#87ceeb'},
+  echo:{a:'🦜',n:'ECHO',c:'echo',tg:'"If it\'s trending, it must be true"',d:`You're an <strong>amplifier</strong> — when something catches fire, you help spread it. You trust the wisdom of crowds and believe popular opinion reflects truth.<br><br>In Digital Farm, Echo the parrot repeats everything The Algorithm promotes. He's not malicious — he genuinely believes he's helping.<br><br>The question is: are you spreading signal... or noise?`,tr:['Social Connector','Trend Follower','Community Minded','Influential'],col:'#ff6600'},
+  byte:{a:'🐦‍⬛',n:'BYTE',c:'byte',tg:'"I am the gatekeeper of truth"',d:`You believe in <strong>order and protection</strong>. Someone has to keep the community safe from harmful content, and you've taken up that responsibility.<br><br>In Digital Farm, Byte the crow is the moderator — camera-eyes always watching, always judging. He believes he's protecting the animals from themselves.<br><br>But who watches the watchmen?`,tr:['Rule Enforcer','Guardian','Dutiful','Authoritarian Tendency'],col:'#ffffff'},
+  hashtag:{a:'🐭',n:'HASHTAG',c:'hashtag',tg:'"They can censor me, but they can\'t stop the signal"',d:`You're a <strong>digital resistance fighter</strong>. You've seen behind the curtain and you're not going back to sleep.<br><br>In Digital Farm, Hashtag the mouse discovered the hidden server room beneath the barn — the original code before it was corrupted. He risks everything to expose the truth.<br><br>You know that freedom isn't free. And you're willing to pay the price.`,tr:['Truth Seeker','Rebel','Courageous','Underground Network'],col:'#00ff00'},
+  sheep:{a:'🐑',n:'SHEEP #47291',c:'sheep',tg:'"The Algorithm provides. The Algorithm protects."',d:`You're <strong>comfortable</strong>. The Feed gives you what you need. Why question a system that works?<br><br>In Digital Farm, the sheep are content. They have their screens, their daily ration of approved content, and the warm glow of community approval.<br><br>But sometimes, late at night, do you ever wonder... is this all there is?`,tr:['Compliant','Trusting','Community Oriented','Comfortable'],col:'#f5f5dc'}
+};
+const TYPES=['snowflake','echo','byte','hashtag','sheep'];
+let st={round:1,total:0,qi:0,queue:[],cum:{snowflake:0,echo:0,byte:0,hashtag:0,sheep:0},rs:{snowflake:0,echo:0,byte:0,hashtag:0,sheep:0}};
+function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
+function buildQ(){return shuffle(QS).slice(0,7);}
+function domType(){let m='—',mv=0;TYPES.forEach(t=>{if(st.cum[t]>mv){mv=st.cum[t];m=RD[t].a;}});return m;}
+function render(){
+  const q=st.queue[st.qi],n=st.qi+1;
+  document.getElementById('qNum').textContent=`ROUND ${st.round} · QUESTION ${n}`;
+  document.getElementById('qText').textContent=q.t;
+  document.getElementById('pbFill').style.width=((n-1)/7*100)+'%';
+  document.getElementById('pbText').textContent=`Question ${n} of 7 · Round ${st.round}`;
+  document.getElementById('qAnswers').innerHTML=shuffle(q.a).map(a=>`<div class="ans" onclick="answer('${a.y}')">${a.x}</div>`).join('');
+}
+function answer(t){
+  st.rs[t]++;st.cum[t]++;st.total++;st.qi++;
+  document.getElementById('sTotal').textContent=st.total;
+  document.getElementById('sDom').textContent=domType();
+  if(st.qi>=7)showResult();else render();
+}
+function showResult(){
+  let mx='sheep',mv=0;TYPES.forEach(t=>{if(st.rs[t]>mv){mv=st.rs[t];mx=t;}});
+  const r=RD[mx];
+  document.getElementById('quizSection').classList.add('hidden');
+  const rs=document.getElementById('resultSection');rs.classList.remove('hidden');rs.style.display='block';
+  document.getElementById('rAnimal').textContent=r.a;
+  document.getElementById('rName').textContent=r.n;
+  document.getElementById('rName').className='r-name '+r.c;
+  document.getElementById('rTagline').textContent=r.tg;
+  document.getElementById('rDesc').innerHTML=r.d;
+  document.getElementById('rTraits').innerHTML=r.tr.map(x=>`<div class="trait">${x}</div>`).join('');
+  document.getElementById('sRound').textContent=st.round;
+  const tot=Object.values(st.cum).reduce((a,b)=>a+b,0)||1;
+  document.getElementById('tallyBars').innerHTML=TYPES.map(t=>{
+    const rd=RD[t];const pct=Math.round(st.cum[t]/tot*100);
+    return `<div class="trow"><div class="trow-icon">${rd.a}</div><div class="trow-wrap"><div class="trow-bar" style="width:${pct}%;background:${rd.col};"></div></div><div class="trow-ct">${st.cum[t]}</div></div>`;
+  }).join('');
+}
+function nextRound(){
+  st.round++;st.qi=0;st.rs={snowflake:0,echo:0,byte:0,hashtag:0,sheep:0};st.queue=buildQ();
+  document.getElementById('resultSection').classList.add('hidden');document.getElementById('resultSection').style.display='none';
+  document.getElementById('quizSection').classList.remove('hidden');
+  document.getElementById('sRound').textContent=st.round;render();
+}
+function copyResult(){
+  const n=document.getElementById('rName').textContent,tg=document.getElementById('rTagline').textContent;
+  const txt=`Round ${st.round}: I'm a ${n} in Digital Farm!\n${tg}\n\nTotal questions: ${st.total}\nTake the quiz: https://www.globalsovereignuniversity.org/which-animal-are-you\n\n#DigitalFarm #WhichAnimalAreYou`;
+  navigator.clipboard.writeText(txt).then(()=>alert('Copied!'));
+}
+st.queue=buildQ();render();
+</script>
+</body>
+</html>
