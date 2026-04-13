@@ -3,152 +3,669 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>The Trifurcation Road: Choose Your Path | Global Sovereign University</title>
-<meta name="description" content="The choice between the Compliance Factory, the Digital Farm, and the Sovereign Bridge. Escape the trades crisis and gradeflation through GSU's 13,000-year history and practical trade education.">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SpecialAnnouncement",
-  "name": "The Trifurcation Road Manifesto",
-  "author": {
-    "@type": "Person",
-    "name": "Dr. Gene A. Constant, DBA"
-  },
-  "publisher": {
-    "@type": "NonprofitOrganization",
-    "name": "Global Sovereign University",
-    "location": "Eugene, Oregon"
-  },
-  "about": [
-    {"@type": "Thing", "name": "Total Productive Maintenance"},
-    {"@type": "Thing", "name": "Iroquois Confederacy"},
-    {"@type": "Thing", "name": "Sovereign Trades"},
-    {"@type": "Thing", "name": "Synergetic Math"}
-  ]
-}
-</script>
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+<title>Trifurcation Road — Choose Your Path | GSU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --black: #000000;
-  --navy: #1B2A4A;
-  --teal: #1A8B7F;
-  --gold: #C9A84C;
-  --white: #ffffff;
-  --red: #8B1A1A;
-}
+  :root {
+    --navy:       #0d1421;
+    --navy-mid:   #1B2A4A;
+    --navy-card:  #162236;
+    --teal:       #1A8B7F;
+    --teal-light: #22b5a6;
+    --gold:       #C49A2C;
+    --gold-light: #e0b93a;
+    --cream:      #f0e9d8;
+    --cream-dim:  #b8ad9a;
 
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--black);color:var(--white);font-family:'Source Sans 3',sans-serif;line-height:1.6;}
+    --good-a:   #1a3d1a;
+    --good-b:   #2d6e2d;
+    --good-c:   #4a9e4a;
+    --good-glow:rgba(74,158,74,0.25);
 
-/* HERO SECTION */
-.hero{padding:100px 60px; text-align:center; border-bottom:3px solid var(--navy); background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/uploaded:Trifurcation%20Road.png'); background-size: cover;}
-.hero-tag{font-family:'Cinzel',serif; color:var(--gold); letter-spacing:5px; font-size:12px; margin-bottom:20px;}
-.hero-title{font-family:'Cinzel',serif; font-size:clamp(2.5rem,6vw,4.5rem); line-height:1; margin-bottom:24px;}
-.hero-title span{color:var(--gold);}
-.hero-subtitle{max-width:800px; margin:0 auto; font-size:1.4rem; color:var(--white); font-style:italic;}
+    --better-a: #0d2d3d;
+    --better-b: #1A8B7F;
+    --better-c: #22b5a6;
+    --better-glow:rgba(26,139,127,0.28);
 
-/* THE THREE PATHS GRID */
-.road-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px; padding:60px 24px; max-width:1200px; margin:0 auto;}
-.path-card{padding:40px; border-radius:15px; border: 2px solid var(--navy); display:flex; flex-direction:column; gap:20px; position:relative; overflow:hidden;}
-.path-card.compliance{border-color: var(--red);}
-.path-card.farm{border-color: #444;}
-.path-card.bridge{border-color: var(--teal); background: rgba(26, 139, 127, 0.05);}
+    --best-a:   #2d1f00;
+    --best-b:   #C49A2C;
+    --best-c:   #e0b93a;
+    --best-glow:rgba(196,154,44,0.28);
+  }
 
-.path-label{font-family:'Cinzel',serif; font-weight:900; font-size:1.2rem; margin-bottom:10px;}
-.compliance .path-label{color:var(--red);}
-.farm .path-label{color:#aaa;}
-.bridge .path-label{color:var(--teal);}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.path-desc{font-size:1.05rem; color:rgba(255,255,255,0.8); flex:1;}
-.path-stats{font-family:'Cinzel',serif; font-size:0.8rem; color:var(--gold); margin-top:15px;}
+  body {
+    background: var(--navy);
+    font-family: 'Lora', Georgia, serif;
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 32px 16px 40px;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(26,139,127,0.06) 0%, transparent 55%);
+  }
 
-/* TRADES & MATH SECTION */
-.section-dark{background:var(--navy); padding:80px 24px;}
-.content-max{max-width:1000px; margin:0 auto;}
-.section-title{font-family:'Cinzel',serif; font-size:2.2rem; color:var(--gold); margin-bottom:30px; text-align:center;}
-.trade-grid{display:grid; grid-template-columns: 1fr 1fr; gap:40px;}
-@media(max-width:768px){.trade-grid{grid-template-columns:1fr;}}
+  /* ── HEADER ── */
+  #header {
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s ease forwards;
+  }
 
-.feature-box{background:rgba(0,0,0,0.3); padding:30px; border-left:4px solid var(--teal); border-radius:0 10px 10px 0;}
-.feature-title{font-family:'Cinzel',serif; color:var(--teal); margin-bottom:10px;}
+  .section-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    color: var(--teal-light);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+  }
 
-/* CTAs */
-.cta-group{display:flex; gap:20px; justify-content:center; margin-top:40px; flex-wrap:wrap;}
-.btn{padding:16px 32px; font-family:'Cinzel',serif; font-weight:bold; text-decoration:none; border-radius:5px; transition:0.3s; text-align:center;}
-.btn-gold{background:var(--gold); color:var(--black);}
-.btn-teal{background:var(--teal); color:var(--white);}
-.btn:hover{transform:translateY(-3px); box-shadow:0 10px 20px rgba(0,0,0,0.4);}
+  #header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
 
-footer{padding:80px 24px; text-align:center; border-top:2px solid var(--navy);}
+  #header h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  #header p {
+    font-size: 14px;
+    color: var(--cream-dim);
+    font-style: italic;
+    max-width: 460px;
+    line-height: 1.7;
+  }
+
+  /* ── ROAD FORK VISUAL ── */
+  #fork-visual {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 28px;
+    width: 100%;
+    max-width: 640px;
+    height: 40px;
+    position: relative;
+  }
+
+  .fork-stem {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(196,154,44,0.6), rgba(196,154,44,0.15));
+  }
+
+  .fork-branch {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(196,154,44,0.4), transparent);
+    transform-origin: left center;
+  }
+
+  .fork-branch.left  { left: 50%; width: 30%; transform: rotate(-35deg) translateY(50%); }
+  .fork-branch.mid   { left: 50%; width: 20%; transform: translateX(-50%); }
+  .fork-branch.right { right: 50%; width: 30%; transform: rotate(35deg) translateY(50%) scaleX(-1); }
+
+  /* ── ROADS GRID ── */
+  #roads {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 860px;
+    margin-bottom: 28px;
+  }
+
+  /* ── ROAD CARD ── */
+  .road-card {
+    background: var(--navy-card);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.07);
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+                border-color 0.3s,
+                box-shadow 0.3s;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .road-card:nth-child(1) { animation-delay: 0.15s; }
+  .road-card:nth-child(2) { animation-delay: 0.28s; }
+  .road-card:nth-child(3) { animation-delay: 0.41s; }
+
+  .road-card.good:hover,   .road-card.good.active   { border-color: var(--good-c);   box-shadow: 0 8px 40px var(--good-glow);   transform: translateY(-6px); }
+  .road-card.better:hover, .road-card.better.active { border-color: var(--better-c); box-shadow: 0 8px 40px var(--better-glow); transform: translateY(-6px); }
+  .road-card.best:hover,   .road-card.best.active   { border-color: var(--best-c);   box-shadow: 0 8px 40px var(--best-glow);   transform: translateY(-6px); }
+
+  /* ── CARD CROWN ── */
+  .card-crown {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 4px;
+  }
+
+  .road-card.good   .card-crown { background: linear-gradient(180deg, var(--good-a), var(--navy-card)); }
+  .road-card.better .card-crown { background: linear-gradient(180deg, var(--better-a), var(--navy-card)); }
+  .road-card.best   .card-crown { background: linear-gradient(180deg, var(--best-a), var(--navy-card)); }
+
+  .road-icon {
+    font-size: 28px;
+    margin-bottom: 4px;
+    transition: transform 0.3s;
+  }
+
+  .road-card:hover .road-icon { transform: scale(1.18); }
+
+  .road-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .road-card.good   .road-label { color: var(--good-c); }
+  .road-card.better .road-label { color: var(--better-c); }
+  .road-card.best   .road-label { color: var(--best-c); }
+
+  /* ── CARD BODY ── */
+  .card-body { padding: 16px 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+  .road-name {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* ── NARRATIVE BOX ── */
+  .narrative-box {
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    padding: 12px 14px;
+    min-height: 80px;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--cream-dim);
+    font-style: italic;
+    position: relative;
+  }
+
+  .narrative-text { display: inline; }
+
+  .type-cursor {
+    display: inline-block;
+    width: 1.5px;
+    height: 0.9em;
+    background: var(--teal-light);
+    margin-left: 1px;
+    vertical-align: text-bottom;
+    animation: blink 0.75s step-end infinite;
+  }
+
+  /* ── STATS ── */
+  .stats-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .road-card:hover .stats-row,
+  .road-card.active .stats-row {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+  }
+
+  .stat-bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .stat-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.22,1,0.36,1);
+    width: 0%;
+  }
+
+  .road-card:hover .stat-fill,
+  .road-card.active .stat-fill { width: var(--fill-w); }
+
+  .road-card.good   .stat-fill { background: var(--good-c); }
+  .road-card.better .stat-fill { background: var(--better-c); }
+  .road-card.best   .stat-fill { background: var(--best-c); }
+
+  .stat-val {
+    font-size: 9px;
+    white-space: nowrap;
+  }
+
+  /* ── CHOOSE BTN ── */
+  .choose-btn {
+    width: 100%;
+    padding: 11px 0;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    cursor: pointer;
+    transition: all 0.25s;
+    margin-top: auto;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: background 0.25s, border-color 0.25s, color 0.25s,
+                opacity 0.4s 0.1s, transform 0.4s 0.1s;
+  }
+
+  .road-card:hover .choose-btn,
+  .road-card.active .choose-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .road-card.good   .choose-btn:hover { background: rgba(74,158,74,0.18);   border-color: var(--good-c);   color: var(--good-c); }
+  .road-card.better .choose-btn:hover { background: rgba(26,139,127,0.18);  border-color: var(--better-c); color: var(--better-c); }
+  .road-card.best   .choose-btn:hover { background: rgba(196,154,44,0.15);  border-color: var(--best-c);   color: var(--best-c); }
+
+  /* ── CHOSEN STATE ── */
+  .road-card.chosen { transform: translateY(-8px) scale(1.02); }
+  .road-card.chosen .choose-btn { opacity: 1; transform: translateY(0); }
+  .road-card.good.chosen   { border-color: var(--good-c);   box-shadow: 0 12px 60px var(--good-glow); }
+  .road-card.better.chosen { border-color: var(--better-c); box-shadow: 0 12px 60px var(--better-glow); }
+  .road-card.best.chosen   { border-color: var(--best-c);   box-shadow: 0 12px 60px var(--best-glow); }
+
+  .road-card:not(.chosen).dimmed { opacity: 0.35; filter: grayscale(0.5); transform: none !important; }
+
+  /* ── CHOSEN BANNER ── */
+  #chosen-banner {
+    text-align: center;
+    padding: 20px 24px;
+    background: var(--navy-card);
+    border: 1px solid rgba(196,154,44,0.25);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 860px;
+    display: none;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  #chosen-banner p {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  #chosen-banner strong {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  #begin-btn {
+    background: linear-gradient(135deg, var(--teal), #145f57);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 13px 40px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(26,139,127,0.3);
+  }
+
+  #begin-btn:hover {
+    box-shadow: 0 6px 30px rgba(26,139,127,0.5);
+    transform: translateY(-2px);
+  }
+
+  /* ── GENO ── */
+  #geno-corner {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    z-index: 50;
+  }
+
+  #geno-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--teal);
+    box-shadow: 0 0 14px rgba(26,139,127,0.4);
+  }
+
+  #geno-label {
+    font-family: 'Cinzel', serif;
+    font-size: 7px;
+    letter-spacing: 0.1em;
+    color: var(--teal-light);
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0; }
+  }
+
+  @keyframes shimmer {
+    0%   { opacity: 0.4; }
+    50%  { opacity: 1; }
+    100% { opacity: 0.4; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    #roads {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+    }
+    .fork-branch.left,
+    .fork-branch.right { display: none; }
+    .stats-row { opacity: 1; transform: none; }
+    .choose-btn { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body>
 
-<section class="hero">
-  <div class="hero-tag">The Moonshot for Self-Reliance</div>
-  <h1 class="hero-title">The <span>Trifurcation</span> Road</h1>
-  <p class="hero-subtitle">"One road leads to compliance, one to digital capture, and one to the Sovereign Bridge. Where does your journey end?"</p>
-</section>
-
-<div class="road-grid">
-  <div class="path-card compliance">
-    <div class="path-label">I. The Compliance Factory</div>
-    <p class="path-desc">Four years of high-school gradeflation and rote memorization. The result is a diploma with no market value and a mindset trained for dependency.</p>
-    <div class="path-stats">Exit Status: Functional Illiteracy</div>
-  </div>
-
-  <div class="path-card farm">
-    <div class="path-label">II. The Digital Farm</div>
-    <p class="path-desc">A life lived in the algorithmic loop. Short-form video and social media engineered to erode critical thinking and control human speech.</p>
-    <div class="path-stats">Exit Status: Cognitive Capture</div>
-  </div>
-
-  <div class="path-card bridge">
-    <div class="path-label">III. The Sovereign Bridge</div>
-    <p class="path-desc">Mastery of the Sovereign Trades, 13,000 years of history, and the 2+2=5 math shortcut to skip the wasted years of public instruction.</p>
-    <div class="path-stats">Exit Status: Self-Reliance</div>
-  </div>
+<!-- GENO -->
+<div id="geno-corner">
+  <img id="geno-img"
+    src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png"
+    alt="GENO"
+    onerror="this.style.display='none'">
+  <span id="geno-label">GENO</span>
 </div>
 
-<section class="section-dark">
-  <div class="content-max">
-    <h2 class="section-title">The Moonshot Solutions</h2>
-    <div class="trade-grid">
-      <div class="feature-box">
-        <h3 class="feature-title">2 + 2 = 5 Synergetic Math</h3>
-        <p>Why waste four years? Get your GED at 14, enter community college, and graduate with a trade certification and an Associate's Degree by age 18.</p>
-      </div>
-      <div class="feature-box">
-        <h3 class="feature-title">The Sovereign Trades</h3>
-        <p>Master Plumbing, Electrical, and Tool Repair through our DIY series. Tacit knowledge is the ultimate insurance against economic instability.</p>
-      </div>
-      <div class="feature-box">
-        <h3 class="feature-title">The Great Lawgivers</h3>
-        <p>Indigenous North American governance established equal rights 700 years before European settlement. Learn the true roots of American sovereignty.</p>
-      </div>
-      <div class="feature-box">
-        <h3 class="feature-title">G.E.N.O. AI Tutor</h3>
-        <p>A multilingual AI mentor that comprehends 32 languages, providing "Play Before You Buy" book games and 1-on-1 guidance.</p>
-      </div>
-    </div>
+<!-- HEADER -->
+<div id="header">
+  <span class="section-tag">Step 2 — The Trifurcation Road</span>
+  <h1>Three Roads.<br>One <em>Bridge.</em></h1>
+  <p>Each road meets you exactly where you are right now. Choose the one that is honest — not the one that sounds impressive.</p>
+</div>
 
-    <div class="cta-group">
-      <a href="https://www.globalsovereignuniversity.org/comprehension-bridge" class="btn btn-teal">Enter the Bridge</a>
-      <a href="https://www.amazon.com/stores/Dr.-Gene-A.-Constant/author/B0D3F2DPR7" class="btn btn-gold">View Trade Series</a>
+<!-- FORK VISUAL -->
+<div id="fork-visual">
+  <div class="fork-stem"></div>
+  <div class="fork-branch left"></div>
+  <div class="fork-branch mid"></div>
+  <div class="fork-branch right"></div>
+</div>
+
+<!-- ROAD CARDS -->
+<div id="roads">
+
+  <!-- GOOD -->
+  <div class="road-card good" data-road="good" data-name="The Two-Minute Road">
+    <div class="card-crown">
+      <div class="road-icon">🌱</div>
+      <div class="road-label">Good</div>
+    </div>
+    <div class="card-body">
+      <div class="road-name">Build Confidence</div>
+      <div class="narrative-box">
+        <span class="narrative-text" data-full="Two minutes. One page. One habit formed at the edge of what feels possible. The most important thing isn't how far you go — it's that you begin."></span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-line">
+          <span>Difficulty</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:28%"></div></div>
+          <span class="stat-val" style="color:var(--good-c)">★☆☆</span>
+        </div>
+        <div class="stat-line">
+          <span>XP Potential</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:33%"></div></div>
+          <span class="stat-val">+300</span>
+        </div>
+        <div class="stat-line">
+          <span>Daily Time</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:15%"></div></div>
+          <span class="stat-val">2 min</span>
+        </div>
+      </div>
+      <button class="choose-btn" onclick="chooseRoad(event,'good','The Two-Minute Road')">Begin this road →</button>
     </div>
   </div>
-</section>
 
-<footer>
-  <div style="font-family:'Cinzel',serif; color:var(--gold); margin-bottom:20px;">Global Sovereign University · 501(c)(3)</div>
-  <p style="font-size:0.9rem; color:rgba(255,255,255,0.4);">A Moonshot to reclaim the "Forgotten Generation" through the wisdom of the "Golden Age."</p>
-  <p style="font-size:0.8rem; margin-top:20px;">© 2026 Dr. Gene A. Constant, DBA · Eugene, Oregon</p>
-</footer>
+  <!-- BETTER -->
+  <div class="road-card better" data-road="better" data-name="The Focus Road">
+    <div class="card-crown">
+      <div class="road-icon">⚡</div>
+      <div class="road-label">Better</div>
+    </div>
+    <div class="card-body">
+      <div class="road-name">Rebuild Focus</div>
+      <div class="narrative-box">
+        <span class="narrative-text" data-full="Timed reading bursts. Habit stacking. Three of the five comprehension pillars working in tandem. You are not rebuilding from scratch — you are rebuilding from within."></span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-line">
+          <span>Difficulty</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:58%"></div></div>
+          <span class="stat-val" style="color:var(--better-c)">★★☆</span>
+        </div>
+        <div class="stat-line">
+          <span>XP Potential</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:60%"></div></div>
+          <span class="stat-val">+750</span>
+        </div>
+        <div class="stat-line">
+          <span>Daily Time</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:42%"></div></div>
+          <span class="stat-val">15–20 min</span>
+        </div>
+      </div>
+      <button class="choose-btn" onclick="chooseRoad(event,'better','The Focus Road')">Begin this road →</button>
+    </div>
+  </div>
 
+  <!-- BEST -->
+  <div class="road-card best" data-road="best" data-name="The Mastery Road">
+    <div class="card-crown">
+      <div class="road-icon">🌌</div>
+      <div class="road-label">Best</div>
+    </div>
+    <div class="card-body">
+      <div class="road-name">Achieve Mastery</div>
+      <div class="narrative-box">
+        <span class="narrative-text" data-full="All five pillars. Active engagement. The infinite road — because the sovereign reader never stops. This is not a course. This is a way of being."></span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-line">
+          <span>Difficulty</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:92%"></div></div>
+          <span class="stat-val" style="color:var(--best-c)">★★★</span>
+        </div>
+        <div class="stat-line">
+          <span>XP Potential</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:100%"></div></div>
+          <span class="stat-val">+1500</span>
+        </div>
+        <div class="stat-line">
+          <span>Daily Time</span>
+          <div class="stat-bar"><div class="stat-fill" style="--fill-w:80%"></div></div>
+          <span class="stat-val">30+ min</span>
+        </div>
+      </div>
+      <button class="choose-btn" onclick="chooseRoad(event,'best','The Mastery Road')">Begin this road →</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- CHOSEN BANNER -->
+<div id="chosen-banner">
+  <p>Your road is chosen</p>
+  <strong id="chosen-road-name">—</strong>
+  <button id="begin-btn" onclick="beginQuest()">Begin the Quest ↓</button>
+</div>
+
+<script>
+const NARRATIVES = {
+  good:   "Two minutes. One page. One habit formed at the edge of what feels possible. The most important thing isn't how far you go — it's that you begin.",
+  better: "Timed reading bursts. Habit stacking. Three of the five comprehension pillars working in tandem. You are not rebuilding from scratch — you are rebuilding from within.",
+  best:   "All five pillars. Active engagement. The infinite road — because the sovereign reader never stops. This is not a course. This is a way of being."
+};
+
+let typeTimers = {};
+let activeCard = null;
+let chosenRoad = null;
+
+function typeText(el, text, speed = 28) {
+  const id = el.closest('.road-card').dataset.road;
+  if (typeTimers[id]) clearInterval(typeTimers[id]);
+  el.innerHTML = '';
+  let i = 0;
+  const cursor = '<span class="type-cursor"></span>';
+  typeTimers[id] = setInterval(() => {
+    if (i < text.length) {
+      el.innerHTML = text.slice(0, ++i) + cursor;
+    } else {
+      clearInterval(typeTimers[id]);
+      el.innerHTML = text;
+    }
+  }, speed);
+}
+
+function clearType(el) {
+  const id = el.closest('.road-card').dataset.road;
+  if (typeTimers[id]) clearInterval(typeTimers[id]);
+  el.innerHTML = '';
+}
+
+document.querySelectorAll('.road-card').forEach(card => {
+  const road = card.dataset.road;
+  const textEl = card.querySelector('.narrative-text');
+
+  card.addEventListener('mouseenter', () => {
+    if (chosenRoad) return;
+    card.classList.add('active');
+    typeText(textEl, NARRATIVES[road]);
+  });
+
+  card.addEventListener('mouseleave', () => {
+    if (chosenRoad) return;
+    card.classList.remove('active');
+    clearType(textEl);
+  });
+});
+
+function chooseRoad(e, road, name) {
+  e.stopPropagation();
+  chosenRoad = road;
+
+  document.querySelectorAll('.road-card').forEach(c => {
+    c.classList.remove('active', 'chosen', 'dimmed');
+    if (typeTimers[c.dataset.road]) clearInterval(typeTimers[c.dataset.road]);
+  });
+
+  const chosen = document.querySelector(`.road-card[data-road="${road}"]`);
+  chosen.classList.add('chosen');
+  const textEl = chosen.querySelector('.narrative-text');
+  typeText(textEl, NARRATIVES[road], 18);
+
+  document.querySelectorAll('.road-card:not(.chosen)').forEach(c => {
+    c.classList.add('dimmed');
+    c.querySelector('.narrative-text').innerHTML = '';
+  });
+
+  document.getElementById('chosen-road-name').textContent = name;
+  const banner = document.getElementById('chosen-banner');
+  banner.style.display = 'block';
+  banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  try {
+    window.parent.postMessage({ action: 'roadChosen', road, name }, '*');
+  } catch(err) {}
+}
+
+function beginQuest() {
+  try {
+    window.parent.postMessage({ action: 'scrollToQuest' }, '*');
+  } catch(err) {}
+  document.getElementById('begin-btn').textContent = 'Scrolling to quest...';
+  document.getElementById('begin-btn').disabled = true;
+}
+
+document.querySelectorAll('.road-card').forEach(card => {
+  card.addEventListener('click', () => {
+    if (chosenRoad) return;
+    const road = card.dataset.road;
+    const name = card.dataset.name;
+    chooseRoad({ stopPropagation: () => {} }, road, name);
+  });
+});
+</script>
 </body>
 </html>
