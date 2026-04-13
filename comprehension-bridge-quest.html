@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Road You Walk — GSU Comprehension Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1421;
+    --navy-mid: #1B2A4A;
+    --navy-card: #162236;
+    --teal: #1A8B7F;
+    --teal-light: #22b5a6;
+    --gold: #C49A2C;
+    --gold-light: #e0b93a;
+    --cream: #f0e9d8;
+    --cream-dim: #b8ad9a;
+    --white: #ffffff;
+    --danger: #c0392b;
+    --success: #27ae60;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--navy);
+    color: var(--cream);
+    font-family: 'Lora', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(26,139,127,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 90%, rgba(196,154,44,0.05) 0%, transparent 60%);
+  }
+
+  /* ───── LAYOUT ───── */
+  #app {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 16px 80px;
+    position: relative;
+  }
+
+  /* ───── TOP BAR ───── */
+  #top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, var(--navy) 85%, transparent);
+    padding: 14px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  #xp-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  #xp-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--teal-light);
+    text-transform: uppercase;
+  }
+
+  #xp-bar-track {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  #xp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    width: 0%;
+  }
+
+  #xp-count {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+
+  #badge-btn {
+    background: none;
+    border: 1px solid rgba(196,154,44,0.3);
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  #badge-btn:hover {
+    border-color: var(--gold);
+    background: rgba(196,154,44,0.08);
+  }
+
+  #badge-btn .badge-icon { font-size: 16px; }
+  #badge-count-display { font-size: 11px; }
+
+  #nodes-explored {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--cream-dim);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  /* ───── GENO AVATAR ───── */
+  #geno-corner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  #geno-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--teal);
+    box-shadow: 0 0 16px rgba(26,139,127,0.4);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  #geno-img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 24px rgba(26,139,127,0.6);
+  }
+
+  #geno-label {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: var(--teal-light);
+    text-transform: uppercase;
+  }
+
+  /* ───── TITLE SCREEN ───── */
+  #title-screen {
+    text-align: center;
+    padding: 60px 0 40px;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .gsu-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  #title-screen h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  #title-screen h1 span { color: var(--gold); }
+
+  .title-sub {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    color: var(--cream-dim);
+    font-style: italic;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .divider-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 24px auto;
+  }
+
+  .intro-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 24px 0 40px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-lbl {
+    font-size: 11px;
+    color: var(--cream-dim);
+    letter-spacing: 0.08em;
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+  }
+
+  #start-btn {
+    background: linear-gradient(135deg, var(--teal), #145f57);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    padding: 16px 48px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 24px rgba(26,139,127,0.3);
+  }
+
+  #start-btn:hover {
+    background: linear-gradient(135deg, var(--teal-light), var(--teal));
+    box-shadow: 0 6px 32px rgba(26,139,127,0.5);
+    transform: translateY(-2px);
+  }
+
+  .warning-note {
+    font-size: 11px;
+    color: var(--cream-dim);
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  /* ───── GAME SCENE ───── */
+  #game-scene {
+    display: none;
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  #scene-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #scene-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--teal);
+  }
+
+  #story-card {
+    background: var(--navy-card);
+    border: 1px solid rgba(196,154,44,0.2);
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #story-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  #story-text {
+    font-size: clamp(15px, 2.2vw, 17px);
+    line-height: 1.85;
+    color: var(--cream);
+    min-height: 80px;
+  }
+
+  #story-text .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--teal-light);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.8s step-end infinite;
+  }
+
+  /* ───── CHOICES ───── */
+  #choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  #choices-container.visible { opacity: 1; }
+
+  .choice-btn {
+    background: rgba(27,42,74,0.6);
+    border: 1px solid rgba(196,154,44,0.25);
+    border-radius: 8px;
+    padding: 18px 24px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--cream);
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .choice-btn:hover {
+    background: rgba(26,139,127,0.15);
+    border-color: var(--teal);
+    transform: translateX(4px);
+    box-shadow: 0 0 20px rgba(26,139,127,0.15);
+  }
+
+  .choice-letter {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    background: rgba(196,154,44,0.12);
+    border: 1px solid rgba(196,154,44,0.3);
+    border-radius: 4px;
+    padding: 4px 8px;
+    flex-shrink: 0;
+    min-width: 32px;
+    text-align: center;
+  }
+
+  .choice-xp {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--teal-light);
+    letter-spacing: 0.1em;
+    margin-left: auto;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ───── ENDING CARD ───── */
+  #ending-card {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    background: var(--navy-card);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  #ending-card .ending-crown {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  #ending-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+
+  #ending-type-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  #ending-summary {
+    font-size: 13px;
+    color: var(--cream-dim);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+  }
+
+  /* ───── BADGE PANEL ───── */
+  #badge-panel {
+    position: fixed;
+    top: 0; right: -340px;
+    width: 320px;
+    height: 100vh;
+    background: var(--navy-mid);
+    border-left: 1px solid rgba(196,154,44,0.3);
+    z-index: 300;
+    transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  #badge-panel.open { right: 0; }
+
+  #badge-panel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  #badge-panel-sub {
+    font-size: 12px;
+    color: var(--cream-dim);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  #close-badge-panel {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    color: var(--cream-dim);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+
+  #close-badge-panel:hover { border-color: var(--gold); color: var(--gold); }
+
+  #badge-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .badge-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(196,154,44,0.15);
+    border-radius: 10px;
+    padding: 16px 12px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .badge-item.earned {
+    background: rgba(196,154,44,0.08);
+    border-color: rgba(196,154,44,0.4);
+  }
+
+  .badge-item .b-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+  .badge-item .b-name {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .badge-item.earned .b-name { color: var(--gold); }
+  .badge-item .b-xp {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: var(--teal-light);
+    margin-top: 4px;
+    display: block;
+  }
+  .badge-item:not(.earned) { opacity: 0.35; filter: grayscale(0.8); }
+
+  /* ───── BADGE UNLOCK OVERLAY ───── */
+  #badge-unlock {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    background: var(--navy-card);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 40px 48px;
+    text-align: center;
+    z-index: 500;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    box-shadow: 0 0 60px rgba(196,154,44,0.3);
+    max-width: 320px;
+    width: 90%;
+  }
+
+  #badge-unlock.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  #badge-unlock .unlock-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  #badge-unlock .unlock-icon { font-size: 52px; margin-bottom: 10px; display: block; }
+
+  #badge-unlock .unlock-name {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+
+  #badge-unlock .unlock-xp {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--teal-light);
+    letter-spacing: 0.1em;
+  }
+
+  #overlay-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 400;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+
+  #overlay-bg.show { opacity: 1; pointer-events: all; }
+
+  /* ───── TRANSITION OVERLAY ───── */
+  #scene-transition {
+    position: fixed;
+    inset: 0;
+    background: var(--navy);
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  #scene-transition.flash { opacity: 1; }
+
+  /* ───── ANIMATIONS ───── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @keyframes xpPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); color: var(--gold-light); }
+    100% { transform: scale(1); }
+  }
+
+  .xp-pop { animation: xpPop 0.5s ease; }
+
+  /* ───── ROADS EXPLORED BAR ───── */
+  #roads-bar {
+    background: var(--navy-card);
+    border: 1px solid rgba(26,139,127,0.2);
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--cream-dim);
+  }
+
+  .road-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+
+  .road-dot.visited { background: var(--teal); }
+  .road-dot.current { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+
+  #roads-label { margin-right: auto; }
+
+  /* ───── MOBILE ───── */
+  @media (max-width: 600px) {
+    #story-card { padding: 24px 20px; }
+    .choice-btn { padding: 14px 16px; font-size: 14px; }
+    #badge-panel { width: 100%; right: -100%; }
+    #badge-panel.open { right: 0; }
+    #geno-corner { bottom: 12px; right: 12px; }
+    #geno-img { width: 44px; height: 44px; }
+    .intro-stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Scene flash transition -->
+<div id="scene-transition"></div>
+
+<!-- Overlay bg for badge popup -->
+<div id="overlay-bg"></div>
+
+<!-- Badge unlock popup -->
+<div id="badge-unlock">
+  <div class="unlock-tag">Badge Unlocked</div>
+  <span class="unlock-icon" id="unlock-icon">🎯</span>
+  <div class="unlock-name" id="unlock-name">INTEGRITY</div>
+  <div class="unlock-xp" id="unlock-xp">+100 XP</div>
+</div>
+
+<!-- Badge collection panel -->
+<div id="badge-panel">
+  <button id="close-badge-panel" onclick="closeBadgePanel()">✕</button>
+  <div id="badge-panel-title">Your Badges</div>
+  <div id="badge-panel-sub">Earned across all roads walked</div>
+  <div id="badge-grid"></div>
+</div>
+
+<!-- GENO corner avatar -->
+<div id="geno-corner">
+  <img id="geno-img"
+    src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png"
+    alt="GENO"
+    onclick="toggleBadgePanel()"
+    title="View your badges"
+    onerror="this.style.display='none'">
+  <span id="geno-label">Badges</span>
+</div>
+
+<div id="app">
+  <!-- TOP BAR -->
+  <div id="top-bar">
+    <div id="xp-section">
+      <div id="xp-label">Comprehension XP</div>
+      <div id="xp-bar-track"><div id="xp-bar-fill"></div></div>
+    </div>
+    <div id="xp-count">0 XP</div>
+    <button id="badge-btn" onclick="toggleBadgePanel()">
+      <span class="badge-icon">🏅</span>
+      <span id="badge-count-display">0 / 12</span>
+    </button>
+    <div id="nodes-explored">0 roads</div>
+  </div>
+
+  <!-- TITLE SCREEN -->
+  <div id="title-screen">
+    <div class="gsu-tag">Global Sovereign University · Comprehension Bridge</div>
+    <h1>The Road<br><span>You Walk</span></h1>
+    <div class="title-sub">Every choice you make reveals who you are — and who you can become. This road has no fixed end.</div>
+    <div class="divider-line"></div>
+    <div class="intro-stats">
+      <div class="stat-item"><span class="stat-num">27</span><span class="stat-lbl">Story Nodes</span></div>
+      <div class="stat-item"><span class="stat-num">12</span><span class="stat-lbl">Badges</span></div>
+      <div class="stat-item"><span class="stat-num">3</span><span class="stat-lbl">Endings</span></div>
+      <div class="stat-item"><span class="stat-num">∞</span><span class="stat-lbl">Roads</span></div>
+    </div>
+    <button id="start-btn" onclick="startGame()">Begin the Quest</button>
+    <div class="warning-note">Real-world scenarios · Job · Money · Relationships · Civic life</div>
+  </div>
+
+  <!-- GAME SCENE -->
+  <div id="game-scene">
+    <div id="scene-label">Scene</div>
+
+    <!-- Roads explored dots -->
+    <div id="roads-bar">
+      <span id="roads-label">Roads explored:</span>
+      <div id="dot-container" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+    </div>
+
+    <div id="story-card">
+      <div id="story-text"></div>
+    </div>
+
+    <div id="ending-card">
+      <span class="ending-crown" id="ending-crown">✦</span>
+      <div id="ending-title">Road Complete</div>
+      <div id="ending-type-label">ENDING TYPE</div>
+      <div id="ending-summary"></div>
+    </div>
+
+    <div id="choices-container"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  GAME DATA — 27 NODES
+// ═══════════════════════════════════════════
+const NODES = {
+  start: {
+    scene: "Monday — 7:14 AM",
+    text: "Your phone buzzes on the nightstand. A text from your boss: 'We need to talk today.' You've been at this job nine months. Rent is due Friday. Your stomach drops.",
+    choices: [
+      { text: "Get up and review your recent work before the meeting", next: 'n02', xp: 10 },
+      { text: "Silence the phone and go back to sleep", next: 'n03', xp: 0 }
+    ]
+  },
+  n02: {
+    scene: "7:51 AM — Your Desk",
+    text: "You pull up last week's report. There's a calculation error — nothing catastrophic, but it went to the client. The meeting is in two hours. You have time to fix it.",
+    choices: [
+      { text: "Fix the error and send a correction before the meeting", next: 'n04', xp: 25 },
+      { text: "Leave it. Maybe she won't catch it.", next: 'n05', xp: 0 }
+    ]
+  },
+  n03: {
+    scene: "Tuesday — 9:02 AM",
+    text: "Monday passed in silence. You exhaled. Then Tuesday arrives with an email from HR: 'Final written warning — failure to respond to management communication.' Your hand shakes holding the phone.",
+    choices: [
+      { text: "Request an immediate meeting to explain yourself", next: 'n06', xp: 15 },
+      { text: "Start job hunting right now — this is over", next: 'n07', xp: 5 }
+    ]
+  },
+  n04: {
+    scene: "10:00 AM — The Meeting",
+    text: "Your boss opens the folder. She sees your correction already filed. She looks up slowly. 'You caught this yourself.' A long pause. Then: 'I want to offer you the project lead on the Riverside account. What do you say?'",
+    badge: { id: 'accountable', name: 'ACCOUNTABLE', icon: '🎯', xp: 75 },
+    choices: [
+      { text: "Accept the lead role — you're ready", next: 'n08', xp: 20 },
+      { text: "Ask for a raise before you accept", next: 'n09', xp: 30 }
+    ]
+  },
+  n05: {
+    scene: "10:00 AM — The Meeting",
+    text: "She opens the report. Her finger lands on the number. She looks at you. The silence stretches. 'This went to the client this morning.' Heat rises in your face. Everyone in the room is watching.",
+    choices: [
+      { text: "Own it. Apologize directly and offer a path to fix it.", next: 'n10', xp: 40 },
+      { text: "Say the source data came from another department", next: 'n11', xp: 0 }
+    ]
+  },
+  n06: {
+    scene: "The Requested Meeting",
+    text: "She gives you ten minutes. You sit across from her. 'Tell me what happened Monday.' She's not angry — she's measuring you. The right answer here matters more than the right words.",
+    choices: [
+      { text: "Tell the truth: you were overwhelmed and shut down", next: 'n10', xp: 35 },
+      { text: "Claim a family emergency — it's simpler", next: 'n12', xp: 0 }
+    ]
+  },
+  n07: {
+    scene: "The Job Hunt",
+    text: "Three job boards open by noon. One posting stops you: Coordinator role, 30% pay increase. Then you read the fine print: 'Certification required — Project Management Professional (PMP).' You don't have it.",
+    choices: [
+      { text: "Apply anyway and explain your transferable experience", next: 'n13', xp: 10 },
+      { text: "Enroll in a free PMP prep course first — do it right", next: 'n14', xp: 50 }
+    ]
+  },
+  n08: {
+    scene: "Week One as Project Lead",
+    text: "You're leading a team of four. Thursday: Marcus misses a key deliverable. The cascade is immediate — the client notices. Four sets of eyes are watching how you handle this.",
+    choices: [
+      { text: "Cover for Marcus. You'll absorb the hit.", next: 'n15', xp: 0 },
+      { text: "Address it directly with Marcus — privately, that same afternoon", next: 'n16', xp: 45 }
+    ]
+  },
+  n09: {
+    scene: "The Negotiation",
+    text: "She pauses. Looks at you differently — like she's recalibrating. 'I respect that.' She slides a number across the table, tied to a 90-day review. It's fair. More than fair.",
+    badge: { id: 'negotiator', name: 'NEGOTIATOR', icon: '🤝', xp: 50 },
+    choices: [
+      { text: "Accept. Shake her hand. Go lead the team.", next: 'n08', xp: 20 }
+    ]
+  },
+  n10: {
+    scene: "The Turn",
+    text: "'Thank you for saying that.' She closes the folder. 'I've watched people destroy themselves trying to hide a mistake. You didn't. That matters more to me than the error ever could.' Something lifts from your chest.",
+    badge: { id: 'integrity', name: 'INTEGRITY', icon: '⚖️', xp: 100 },
+    choices: [
+      { text: "Ask what you can do differently going forward", next: 'n04', xp: 20 }
+    ]
+  },
+  n11: {
+    scene: "The Collapse",
+    text: "She pulls up the original data request on her screen. It came from you. Forwarded by you. Your name at the top. 'I think you should go home today and think about what you want your professional life to look like.'",
+    choices: [
+      { text: "Apologize — to her, and to the coworker you blamed", next: 'n17', xp: 60 },
+      { text: "Resign before you're formally let go", next: 'n07', xp: 5 }
+    ]
+  },
+  n12: {
+    scene: "The Cost of the Lie",
+    text: "She nods. 'I hope everything is okay.' Probation. Thirty days. Your rent is due and you have $180 in your checking account. The lie bought you time. Not much.",
+    choices: [
+      { text: "Pick up a side gig immediately — rideshare, anything", next: 'n18', xp: 25 },
+      { text: "Call your brother — ask for a short-term loan", next: 'n19', xp: 10 }
+    ]
+  },
+  n13: {
+    scene: "The Interview Call",
+    text: "They call. Interview Thursday. You open the job description again that night. You recognize half the terms. The other half you've never encountered. Three days to prepare.",
+    choices: [
+      { text: "Wing it — you're a fast learner, you'll hold your own", next: 'n20', xp: 5 },
+      { text: "Spend two focused hours tonight studying the gaps", next: 'n21', xp: 35 }
+    ]
+  },
+  n14: {
+    scene: "The Decision to Build",
+    text: "You find a free 4-week PMP prep course. It's Tuesday. You start that night after dinner. Three weeks later, the certificate is in your email. You apply with it attached.",
+    badge: { id: 'self_builder', name: 'SELF-BUILDER', icon: '🏗️', xp: 100 },
+    choices: [
+      { text: "Submit the application — you built the qualification yourself", next: 'n21', xp: 15 }
+    ]
+  },
+  n15: {
+    scene: "The Weight of Covering",
+    text: "You absorb the client complaint publicly. Marcus says nothing. Two weeks pass. Another slip — different task, same team member. Your boss calls you in: 'Is this team working?' She's looking at you like the answer matters.",
+    choices: [
+      { text: "Come clean about what's been happening", next: 'n17', xp: 40 },
+      { text: "Present a recovery plan with specific team commitments", next: 'n22', xp: 55 }
+    ]
+  },
+  n16: {
+    scene: "The Conversation That Changed Things",
+    text: "Marcus didn't understand the cascade effect. He's mortified. He works through the weekend. The deliverable goes out Monday. Later that week, you hear him tell a colleague: 'Our lead is the real deal.'",
+    badge: { id: 'leader', name: 'LEADER', icon: '🧭', xp: 100 },
+    choices: [
+      { text: "Move forward. The project still needs you.", next: 'n23', xp: 20 }
+    ]
+  },
+  n17: {
+    scene: "The Hard Repair",
+    text: "The apology costs you. Conversations quiet when you walk in. But three weeks pass and something shifts — small acknowledgments, then real ones. Trust returning slowly, like warmth after a long cold morning.",
+    badge: { id: 'resilience', name: 'RESILIENCE', icon: '🌱', xp: 75 },
+    choices: [
+      { text: "Keep showing up. Every single day.", next: 'n23', xp: 20 }
+    ]
+  },
+  n18: {
+    scene: "The Night Shift",
+    text: "Three nights a week, rideshare. You're tired in a way that lives behind your eyes. The bills are current. One Sunday at 11 PM, a passenger in the back seat is reading a business book. You recognize the title. You mention it.",
+    choices: [
+      { text: "Tell her you're looking for a career shift into her field", next: 'n24', xp: 40 },
+      { text: "Stay quiet — it's not professional to pitch yourself here", next: 'n07', xp: 5 }
+    ]
+  },
+  n19: {
+    scene: "The Call to Your Brother",
+    text: "'I'll transfer it tonight.' He pauses. 'But you need a plan — not a loan.' You want to dismiss it. You've heard this before. But this time you're in the passenger seat of your own life, and you know he's right.",
+    choices: [
+      { text: "Ask him to help you build a real budget tonight", next: 'n25', xp: 35 },
+      { text: "Say thanks and change the subject", next: 'n03', xp: 0 }
+    ]
+  },
+  n20: {
+    scene: "The Interview That Taught You",
+    text: "You stall on three technical questions. The interviewer leans back. 'You have strong instincts — but you're not ready for this role yet.' Before you leave she says: 'Have you looked at the PMP prep program? It changes people.'",
+    badge: { id: 'perspective', name: 'PERSPECTIVE', icon: '🔭', xp: 25 },
+    choices: [
+      { text: "Take her advice. Start the PMP course tonight.", next: 'n14', xp: 20 }
+    ]
+  },
+  n21: {
+    scene: "The Offer",
+    text: "Thursday. Your phone rings from an unknown number. 'We'd like to extend you an offer.' You sit with it for a moment before you respond. You think about every turn that brought you here. This is real. This is the road you built.",
+    badge: { id: 'prepared', name: 'PREPARED', icon: '⚡', xp: 125 },
+    choices: [
+      { text: "Accept. Your road continues.", next: 'n23', xp: 25 }
+    ]
+  },
+  n22: {
+    scene: "The Recovery Plan",
+    text: "You present five points. Specific. Timeline-bound. Each team member owns a lane. Your boss reads it twice. Then she looks up: 'This is what leadership under pressure looks like. Execute it.'",
+    badge: { id: 'problem_solver', name: 'PROBLEM-SOLVER', icon: '🔧', xp: 100 },
+    choices: [
+      { text: "Execute the plan. Day by day.", next: 'n23', xp: 20 }
+    ]
+  },
+  n23: {
+    scene: "The Crossroads — Six Months Later",
+    text: "Stable job. A growing reputation. A small savings cushion for the first time in years. One Tuesday evening, your neighbor Maria knocks. 'I've never registered to vote. I don't really know how.' She's 47 years old. She looks a little ashamed asking.",
+    choices: [
+      { text: "Offer to take her to the registration office tomorrow morning", next: 'n26', xp: 30 },
+      { text: "You're tired. Send her a link and say good luck.", next: 'n08', xp: 5 }
+    ]
+  },
+  n24: {
+    scene: "The Unexpected Door",
+    text: "She puts the book down. You talk for eleven minutes. Before she exits she hands you a card: Senior Director, Operations. 'Send me your resume this week. I mean it.' The door closes. You sit in the quiet car and stare at the card.",
+    badge: { id: 'opportunity', name: 'OPPORTUNITY SEIZED', icon: '🚀', xp: 150 },
+    choices: [
+      { text: "Polish the resume tonight and send it before Friday", next: 'n21', xp: 25 }
+    ]
+  },
+  n25: {
+    scene: "The Budget",
+    text: "You find $200 a month you didn't know you had. Three subscriptions. Eating out. A gym you forgot to cancel. It doesn't sound like much — but $200 a month, redirected, is an emergency fund. It's everything.",
+    badge: { id: 'financial_clarity', name: 'FINANCIAL CLARITY', icon: '💡', xp: 100 },
+    choices: [
+      { text: "Redirect it. Start the emergency fund this week.", next: 'n23', xp: 25 }
+    ]
+  },
+  n26: {
+    scene: "Election Day Morning",
+    text: "You and Maria arrive at the polling place at 8 AM. Outside the entrance, a man in a green jacket is telling a small group: 'They moved the location — it's at the community center now.' It hasn't moved. Several people are turning back.",
+    choices: [
+      { text: "Step forward. Tell the people he's wrong — show them the official site.", next: 'n27', xp: 50 },
+      { text: "Mind your own business. You came here to vote, not intervene.", next: 'end_a', xp: 10 }
+    ]
+  },
+  n27: {
+    scene: "The Voice",
+    text: "Four people stop. You show them the official page on your phone. They go in and vote. A woman nearby with a press badge watched the entire thing. She approaches. 'I'm a local reporter. Can I quote you for this story?'",
+    badge: { id: 'civic_courage', name: 'CIVIC COURAGE', icon: '🗽', xp: 200 },
+    choices: [
+      { text: "Yes — this story needs to be told", next: 'end_b', xp: 30 },
+      { text: "No. You did it because it was right — not for recognition.", next: 'end_c', xp: 50 }
+    ]
+  },
+  end_a: {
+    scene: "A Road Walked",
+    text: "You voted. Maria voted. The day was yours. There are other roads ahead — deeper ones, harder ones, ones where you discover what you're actually built from. The Bridge never reaches its last stone.",
+    isEnding: true,
+    endingType: 'WITNESS',
+    endingCrown: '○',
+    endingSummary: "You walked your road and kept your lane. There is more road.",
+    choices: [
+      { text: "Walk a different road — start again", next: 'start', xp: 25 }
+    ]
+  },
+  end_b: {
+    scene: "Ending: The Champion",
+    text: "The story runs the next morning. Three other precincts check their posted locations. Two discrepancies are corrected before noon. You didn't plan to be here. You just kept making the right call — one choice at a time.",
+    isEnding: true,
+    endingType: 'CHAMPION',
+    endingCrown: '★',
+    endingSummary: "You stood at the intersection of private integrity and public courage. Both roads led here.",
+    choices: [
+      { text: "Begin a new road — a different life, the same bridge", next: 'start', xp: 50 }
+    ]
+  },
+  end_c: {
+    scene: "Ending: The Sovereign",
+    text: "You walk Maria home. She says: 'Thank you.' Two words. You don't need the story in the paper. You don't need the quote. The bridge is built in the doing — not the telling. You already know what happened.",
+    isEnding: true,
+    endingType: 'SOVEREIGN',
+    endingCrown: '✦',
+    endingSummary: "Sovereignty isn't claimed. It's demonstrated — when no one is watching, when nothing is in it for you.",
+    choices: [
+      { text: "Walk a new road — the Bridge has no final step", next: 'start', xp: 75 }
+    ]
+  }
+};
+
+// All 12 badge definitions
+const ALL_BADGES = [
+  { id: 'accountable',       name: 'ACCOUNTABLE',        icon: '🎯', xp: 75  },
+  { id: 'integrity',         name: 'INTEGRITY',           icon: '⚖️', xp: 100 },
+  { id: 'negotiator',        name: 'NEGOTIATOR',          icon: '🤝', xp: 50  },
+  { id: 'self_builder',      name: 'SELF-BUILDER',        icon: '🏗️', xp: 100 },
+  { id: 'leader',            name: 'LEADER',              icon: '🧭', xp: 100 },
+  { id: 'resilience',        name: 'RESILIENCE',          icon: '🌱', xp: 75  },
+  { id: 'perspective',       name: 'PERSPECTIVE',         icon: '🔭', xp: 25  },
+  { id: 'prepared',          name: 'PREPARED',            icon: '⚡', xp: 125 },
+  { id: 'problem_solver',    name: 'PROBLEM-SOLVER',      icon: '🔧', xp: 100 },
+  { id: 'opportunity',       name: 'OPPORTUNITY SEIZED',  icon: '🚀', xp: 150 },
+  { id: 'financial_clarity', name: 'FINANCIAL CLARITY',   icon: '💡', xp: 100 },
+  { id: 'civic_courage',     name: 'CIVIC COURAGE',       icon: '🗽', xp: 200 }
+];
+
+// ═══════════════════════════════════════════
+//  GAME STATE
+// ═══════════════════════════════════════════
+let state = {
+  xp: 0,
+  badges: [],        // earned badge ids
+  visited: [],       // visited node ids
+  currentNode: null
+};
+
+const XP_MAX = 1500; // approximate max possible XP
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('gsu_bridge_quest');
+    if (saved) state = JSON.parse(saved);
+  } catch(e) {}
+}
+
+function saveState() {
+  try { localStorage.setItem('gsu_bridge_quest', JSON.stringify(state)); } catch(e) {}
+}
+
+// ═══════════════════════════════════════════
+//  TYPEWRITER ENGINE
+// ═══════════════════════════════════════════
+let typewriterTimer = null;
+
+function typewrite(element, text, onDone) {
+  if (typewriterTimer) clearInterval(typewriterTimer);
+  element.innerHTML = '';
+  let i = 0;
+  const cursor = '<span class="cursor"></span>';
+  const speed = 22;
+  typewriterTimer = setInterval(() => {
+    if (i < text.length) {
+      element.innerHTML = text.slice(0, ++i) + cursor;
+    } else {
+      clearInterval(typewriterTimer);
+      element.innerHTML = text;
+      if (onDone) onDone();
+    }
+  }, speed);
+}
+
+// ═══════════════════════════════════════════
+//  XP + BADGES
+// ═══════════════════════════════════════════
+function addXP(amount) {
+  state.xp += amount;
+  updateXPDisplay();
+  const el = document.getElementById('xp-count');
+  el.classList.remove('xp-pop');
+  void el.offsetWidth;
+  el.classList.add('xp-pop');
+  saveState();
+}
+
+function updateXPDisplay() {
+  document.getElementById('xp-count').textContent = state.xp.toLocaleString() + ' XP';
+  const pct = Math.min(100, (state.xp / XP_MAX) * 100);
+  document.getElementById('xp-bar-fill').style.width = pct + '%';
+  document.getElementById('badge-count-display').textContent =
+    state.badges.length + ' / ' + ALL_BADGES.length;
+}
+
+function awardBadge(badge) {
+  if (state.badges.includes(badge.id)) return;
+  state.badges.push(badge.id);
+  addXP(badge.xp);
+  showBadgeUnlock(badge);
+  renderBadgeGrid();
+  saveState();
+}
+
+function showBadgeUnlock(badge) {
+  document.getElementById('unlock-icon').textContent = badge.icon;
+  document.getElementById('unlock-name').textContent = badge.name;
+  document.getElementById('unlock-xp').textContent = '+' + badge.xp + ' XP';
+  const overlay = document.getElementById('overlay-bg');
+  const popup = document.getElementById('badge-unlock');
+  overlay.classList.add('show');
+  popup.classList.add('show');
+  overlay.onclick = closeBadgeUnlock;
+  setTimeout(closeBadgeUnlock, 3200);
+}
+
+function closeBadgeUnlock() {
+  document.getElementById('overlay-bg').classList.remove('show');
+  document.getElementById('badge-unlock').classList.remove('show');
+  document.getElementById('overlay-bg').onclick = null;
+}
+
+// ═══════════════════════════════════════════
+//  BADGE PANEL
+// ═══════════════════════════════════════════
+function renderBadgeGrid() {
+  const grid = document.getElementById('badge-grid');
+  grid.innerHTML = ALL_BADGES.map(b => {
+    const earned = state.badges.includes(b.id);
+    return `<div class="badge-item ${earned ? 'earned' : ''}">
+      <span class="b-icon">${b.icon}</span>
+      <div class="b-name">${b.name}</div>
+      <span class="b-xp">+${b.xp} XP</span>
+    </div>`;
+  }).join('');
+}
+
+function toggleBadgePanel() {
+  document.getElementById('badge-panel').classList.toggle('open');
+}
+
+function closeBadgePanel() {
+  document.getElementById('badge-panel').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════
+//  ROADS DOTS
+// ═══════════════════════════════════════════
+const NODE_IDS = Object.keys(NODES);
+const DOT_LIMIT = 20;
+
+function updateRoadDots() {
+  const container = document.getElementById('dot-container');
+  const count = Math.min(DOT_LIMIT, NODE_IDS.length);
+  container.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const id = NODE_IDS[i];
+    const dot = document.createElement('div');
+    dot.className = 'road-dot';
+    if (id === state.currentNode) dot.classList.add('current');
+    else if (state.visited.includes(id)) dot.classList.add('visited');
+    container.appendChild(dot);
+  }
+  document.getElementById('nodes-explored').textContent =
+    state.visited.length + ' roads';
+}
+
+// ═══════════════════════════════════════════
+//  SCENE RENDERING
+// ═══════════════════════════════════════════
+function flashTransition(cb) {
+  const el = document.getElementById('scene-transition');
+  el.classList.add('flash');
+  setTimeout(() => {
+    el.classList.remove('flash');
+    cb();
+  }, 300);
+}
+
+function goToNode(nodeId) {
+  flashTransition(() => {
+    renderNode(nodeId);
+  });
+}
+
+function renderNode(nodeId) {
+  const node = NODES[nodeId];
+  if (!node) return;
+
+  state.currentNode = nodeId;
+  if (!state.visited.includes(nodeId)) state.visited.push(nodeId);
+  saveState();
+  updateRoadDots();
+
+  // Scene label
+  document.getElementById('scene-label').textContent = node.scene || '';
+
+  // Story card vs ending card
+  const storyCard = document.getElementById('story-card');
+  const endingCard = document.getElementById('ending-card');
+  const choicesEl = document.getElementById('choices-container');
+
+  choicesEl.classList.remove('visible');
+  choicesEl.innerHTML = '';
+
+  if (node.isEnding) {
+    storyCard.style.display = 'none';
+    endingCard.style.display = 'block';
+    document.getElementById('ending-crown').textContent = node.endingCrown || '✦';
+    document.getElementById('ending-title').textContent = node.scene || '';
+    document.getElementById('ending-type-label').textContent = 'ENDING: ' + (node.endingType || '');
+    document.getElementById('ending-summary').textContent = node.endingSummary || '';
+    document.getElementById('story-text').textContent = '';
+    setTimeout(() => renderChoices(node.choices, false), 600);
+  } else {
+    endingCard.style.display = 'none';
+    storyCard.style.display = 'block';
+    typewrite(document.getElementById('story-text'), node.text, () => {
+      if (node.badge) {
+        setTimeout(() => {
+          awardBadge(node.badge);
+          renderChoices(node.choices, true);
+        }, 500);
+      } else {
+        renderChoices(node.choices, true);
+      }
+    });
+  }
+}
+
+function renderChoices(choices, animate) {
+  const el = document.getElementById('choices-container');
+  const letters = ['A', 'B', 'C', 'D'];
+  el.innerHTML = choices.map((c, i) => `
+    <button class="choice-btn" onclick="handleChoice('${c.next}', ${c.xp})">
+      <span class="choice-letter">${letters[i]}</span>
+      <span>${c.text}</span>
+      ${c.xp > 0 ? `<span class="choice-xp">+${c.xp} XP</span>` : ''}
+    </button>
+  `).join('');
+  if (animate) {
+    setTimeout(() => el.classList.add('visible'), 100);
+  } else {
+    el.classList.add('visible');
+  }
+}
+
+function handleChoice(nextId, xp) {
+  addXP(xp);
+  goToNode(nextId);
+}
+
+// ═══════════════════════════════════════════
+//  START / INIT
+// ═══════════════════════════════════════════
+function startGame() {
+  document.getElementById('title-screen').style.display = 'none';
+  document.getElementById('game-scene').style.display = 'block';
+  goToNode('start');
+}
+
+function init() {
+  loadState();
+  renderBadgeGrid();
+  updateXPDisplay();
+
+  // Show title or resume
+  if (state.currentNode && state.currentNode !== 'start') {
+    const resumeEl = document.createElement('div');
+    resumeEl.style.cssText = 'text-align:center;margin-top:16px;';
+    resumeEl.innerHTML = `
+      <button onclick="resumeGame()" style="
+        background:none;border:1px solid rgba(196,154,44,0.4);
+        border-radius:4px;padding:10px 28px;
+        font-family:'Cinzel',serif;font-size:11px;
+        letter-spacing:0.15em;color:var(--gold);cursor:pointer;
+        margin-top:8px;transition:all 0.2s;
+      " onmouseover="this.style.background='rgba(196,154,44,0.1)'"
+         onmouseout="this.style.background='none'">
+        ↩ Resume Road (${state.visited.length} nodes, ${state.xp.toLocaleString()} XP)
+      </button>
+      <div style="font-size:11px;color:var(--cream-dim);margin-top:8px;font-style:italic;">
+        or start fresh below
+      </div>
+    `;
+    document.getElementById('title-screen').appendChild(resumeEl);
+  }
+}
+
+function resumeGame() {
+  document.getElementById('title-screen').style.display = 'none';
+  document.getElementById('game-scene').style.display = 'block';
+  goToNode(state.currentNode || 'start');
+}
+
+init();
+</script>
+</body>
+</html>
