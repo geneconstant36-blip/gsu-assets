@@ -1,0 +1,684 @@
+<!--
+════════════════════════════════════════════════════════════════════════
+  GSU SEO + AIO MASTER HEAD CODE TEMPLATE  v1.0
+  Global Sovereign University | globalsovereignuniversity.org
+  Foundation for Global Instruction | EIN 39-2716552
+  Brand Colors: Navy #1B2A4A | Teal #1A8B7F | Gold #C49A2C
+
+  WEBFLOW IMPLEMENTATION:
+  ─────────────────────────────────────────────────────────────────────
+  BLOCK A  →  Site Settings → Custom Code → Head Code  (ALL pages)
+  BLOCK B  →  Page Settings → SEO tab  (fill in per-page fields)
+  BLOCK C  →  Page Settings → Custom Code → Head Code  (per page)
+
+  WHAT IS AIO?
+  Google AI Overviews pull answers from pages that have:
+    ✓  FAQPage schema  ← single biggest driver
+    ✓  Question-format H2/H3 headings on the page
+    ✓  40–60 word paragraph answers beneath each heading
+    ✓  Speakable schema  ← marks what Google reads aloud
+    ✓  EducationalOrganization schema  ← authority signal
+    ✓  E-E-A-T: author name, credentials, citations, date
+
+  VALIDATE YOUR SCHEMA:
+    Rich Results Test  →  https://search.google.com/test/rich-results
+    Schema Markup Validator  →  https://validator.schema.org
+    OG Preview  →  https://www.opengraph.xyz
+
+  GOOGLE AD GRANT READINESS CHECKLIST:
+    ✓  501(c)(3) confirmed — EIN 39-2716552
+    ✓  One primary CTA above the fold on each landing page
+    ✓  Privacy policy linked in footer
+    ✓  No ads on any GSU page
+    ✓  Conversion tracking via Firebase
+    ✓  CTR target: above 5% (required to maintain grant)
+    ✓  Keyword bids: $2.00 max CPC cap (Ad Grant rule)
+    ✓  No single-word keywords allowed
+    ✓  Landing pages must match ad keyword intent exactly
+════════════════════════════════════════════════════════════════════════
+-->
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     BLOCK A — SITE-WIDE  (Site Settings → Custom Code → Head Code)
+     Paste once. Never change unless org details change.
+     ══════════════════════════════════════════════════════════════════ -->
+
+<!-- Site Identity & Indexing -->
+<meta name="author" content="Dr. Gene A. Constant, DBA">
+<meta name="publisher" content="Global Sovereign University">
+<meta name="copyright" content="Foundation for Global Instruction, 501(c)(3)">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="googlebot" content="index, follow">
+<meta name="theme-color" content="#1B2A4A">
+
+<!-- Google Site Verification (replace token when verified) -->
+<!-- <meta name="google-site-verification" content="YOUR_TOKEN_HERE"> -->
+
+<!-- Site-Wide Organization Schema — AIO Authority Signal -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "@id": "https://www.globalsovereignuniversity.org/#organization",
+  "name": "Global Sovereign University",
+  "alternateName": "GSU",
+  "legalName": "Foundation for Global Instruction",
+  "url": "https://www.globalsovereignuniversity.org",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/690a547e01ec40e410599b5f_GSU%20Global%20Sovereign%20University%20logo%201%20(1).jpg",
+    "width": 400,
+    "height": 400
+  },
+  "description": "Global Sovereign University is a free 501(c)(3) nonprofit educational foundation building a bridge to freedom through education — not handouts. Offering gamified learning, AI-guided reading comprehension, financial literacy, trades education, and civic knowledge for adults.",
+  "foundingDate": "2025",
+  "nonprofitStatus": "Nonprofit501c3",
+  "taxID": "39-2716552",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Eugene",
+    "addressRegion": "OR",
+    "addressCountry": "US"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "United States"
+  },
+  "knowsLanguage": ["en", "es", "zh", "hi", "ar", "fr", "de", "pt", "ru", "ja"],
+  "sameAs": [
+    "https://www.youtube.com/@GSUGlobalSovereignUniversity",
+    "https://www.buzzsprout.com/2530740"
+  ],
+  "slogan": "Building a Bridge to Freedom Through Education — Not Handouts",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "GSU Free Educational Programs",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Course", "name": "Comprehension Bridge — Free Adult Reading Quest"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Course", "name": "Financification — Financial Literacy Curriculum"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Course", "name": "Tradification — Trades & Repair Skills"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Course", "name": "Mathification — Math Made Visual"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Course", "name": "Civicification — Civic Knowledge & Voting"}}
+    ]
+  }
+}
+</script>
+
+<!-- WebSite Schema — enables Google Sitelinks Search Box -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://www.globalsovereignuniversity.org/#website",
+  "url": "https://www.globalsovereignuniversity.org",
+  "name": "Global Sovereign University",
+  "description": "Free nonprofit education for adults — reading, math, trades, financial literacy, civic knowledge",
+  "publisher": {"@id": "https://www.globalsovereignuniversity.org/#organization"},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.globalsovereignuniversity.org/?s={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     BLOCK B — PAGE META  (Page Settings → SEO tab in Webflow)
+     Fill in the Webflow SEO fields — do NOT paste code here.
+     This is a reference guide for what to type in each field.
+     ══════════════════════════════════════════════════════════════════
+
+  TITLE FORMULA:
+    [Primary Keyword] | [Secondary Benefit] | GSU — Free Education
+    MAX 60 characters. Put most important keyword FIRST.
+    Example: "Free Adult Reading Help | AI-Guided Quest | GSU"
+
+  META DESCRIPTION FORMULA:
+    [What it is] + [primary benefit] + [free/nonprofit proof] + [CTA].
+    MAX 155 characters. Include primary keyword in first 20 words.
+    Example: "Struggling with reading comprehension? GSU's free AI-guided
+    Comprehension Bridge teaches adults to read deeply again — free forever."
+
+  SLUG (URL):
+    Lowercase, hyphens only, keyword-rich.
+    Good:  /free-adult-reading-comprehension-help
+    Bad:   /comprehension-bridge-page-v2
+
+  ══════════════════════════════════════════════════════════════════ -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     BLOCK C — PAGE-SPECIFIC SCHEMA TEMPLATES
+     Copy the correct template for each page type.
+     Paste into: Page Settings → Custom Code → Head Code
+     Replace ALL [PLACEHOLDERS] with real values.
+     ══════════════════════════════════════════════════════════════════ -->
+
+
+<!-- ──────────────────────────────────────────────────────────────────
+     TEMPLATE 1: SUBJECT HUB PAGE
+     Use for: Mathification, Financification, Tradification,
+              Civicification, Readification, Writification, etc.
+     ────────────────────────────────────────────────────────────────── -->
+<!--
+<link rel="canonical" href="https://www.globalsovereignuniversity.org/[HUB-SLUG]">
+<meta property="og:type" content="website">
+<meta property="og:title" content="[Hub Name] — Free [Subject] Course for Adults | GSU">
+<meta property="og:description" content="[150-char benefit-focused description]">
+<meta property="og:url" content="https://www.globalsovereignuniversity.org/[HUB-SLUG]">
+<meta property="og:image" content="[800x800 hub image URL from Webflow CDN]">
+<meta property="og:site_name" content="Global Sovereign University">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="[Hub Name] — Free [Subject] Course | GSU">
+<meta name="twitter:description" content="[120-char description]">
+<meta name="twitter:image" content="[Same OG image URL]">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.globalsovereignuniversity.org/[HUB-SLUG]#webpage",
+      "url": "https://www.globalsovereignuniversity.org/[HUB-SLUG]",
+      "name": "[Hub Name] — Free [Subject] for Adults",
+      "isPartOf": {"@id": "https://www.globalsovereignuniversity.org/#website"},
+      "about": {"@id": "https://www.globalsovereignuniversity.org/#organization"},
+      "description": "[Full description 200-250 chars]",
+      "breadcrumb": {"@id": "https://www.globalsovereignuniversity.org/[HUB-SLUG]#breadcrumb"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.globalsovereignuniversity.org/[HUB-SLUG]#breadcrumb",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home",
+         "item": "https://www.globalsovereignuniversity.org"},
+        {"@type": "ListItem", "position": 2, "name": "Learning Center",
+         "item": "https://www.globalsovereignuniversity.org/learning-center"},
+        {"@type": "ListItem", "position": 3, "name": "[Hub Name]",
+         "item": "https://www.globalsovereignuniversity.org/[HUB-SLUG]"}
+      ]
+    },
+    {
+      "@type": "Course",
+      "name": "[Hub Name] — [Subject] for Adults",
+      "description": "[Detailed course description]",
+      "url": "https://www.globalsovereignuniversity.org/[HUB-SLUG]",
+      "provider": {"@id": "https://www.globalsovereignuniversity.org/#organization"},
+      "educationalLevel": "Beginner to Advanced",
+      "teaches": ["[Skill 1]", "[Skill 2]", "[Skill 3]"],
+      "courseMode": "online",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "courseSchedule": {"@type": "Schedule", "repeatFrequency": "P1D"}
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is [Hub Name] really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Global Sovereign University is a 501(c)(3) nonprofit. Every course, game, and resource on [Hub Name] is free forever — no login required, no ads, no fee."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is [Hub Name] designed for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[Target audience description — 40-60 words. Be specific: age, situation, prior knowledge level.]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does [Hub Name] teach [subject]?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[Describe the learning method: gamified, Bronze-Silver-Gold-Platinum progression, GENO AI tutor, interactive games — 40-60 words.]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need an account to use [Hub Name]?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No account is needed to begin learning at GSU. Simply open the page and start. Progress tracking features are available without requiring personal information."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["h1", "h2", ".speakable"]
+    }
+  ]
+}
+</script>
+-->
+
+
+<!-- ──────────────────────────────────────────────────────────────────
+     TEMPLATE 2: COMPREHENSION BRIDGE (Reading Hub)
+     Ready to use — replace only the FAQPage answers if desired.
+     ────────────────────────────────────────────────────────────────── -->
+<!--
+<link rel="canonical" href="https://www.globalsovereignuniversity.org/comprehension-bridge">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Adult Reading Comprehension Help | AI-Guided Quest | GSU">
+<meta property="og:description" content="Struggling to read deeply? GSU's free Comprehension Bridge uses AI guides GENO and A-Eye to rebuild reading habits for adults. No cost. No login. Start now.">
+<meta property="og:url" content="https://www.globalsovereignuniversity.org/comprehension-bridge">
+<meta property="og:image" content="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c2c1ae845d44fbca2dc159_GENO%20Mindset%20Hub.png">
+<meta property="og:site_name" content="Global Sovereign University">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Adult Reading Help | AI Quest | GSU">
+<meta name="twitter:description" content="Rebuild your reading habits with GENO — GSU's free AI guide. No cost, no login. Start the Comprehension Bridge today.">
+<meta name="twitter:image" content="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69c2c1ae845d44fbca2dc159_GENO%20Mindset%20Hub.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://www.globalsovereignuniversity.org/comprehension-bridge#webpage",
+      "url": "https://www.globalsovereignuniversity.org/comprehension-bridge",
+      "name": "Free Adult Reading Comprehension Help — The Comprehension Bridge | GSU",
+      "description": "GSU's Comprehension Bridge helps adults rebuild deep reading skills through an AI-guided quest with GENO and A-Eye. Three roads — Good, Better, Best — meet every reader where they are. Always free.",
+      "isPartOf": {"@id": "https://www.globalsovereignuniversity.org/#website"},
+      "breadcrumb": {"@id": "https://www.globalsovereignuniversity.org/comprehension-bridge#breadcrumb"},
+      "dateModified": "2026-01-01"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.globalsovereignuniversity.org/comprehension-bridge#breadcrumb",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home",
+         "item": "https://www.globalsovereignuniversity.org"},
+        {"@type": "ListItem", "position": 2, "name": "Comprehension Bridge",
+         "item": "https://www.globalsovereignuniversity.org/comprehension-bridge"}
+      ]
+    },
+    {
+      "@type": "Course",
+      "name": "The Comprehension Bridge — Free AI-Guided Reading Quest for Adults",
+      "description": "A free, gamified reading comprehension program for adults. Learners choose between AI guides GENO and A-Eye, then select one of three skill roads: Good (build confidence), Better (rebuild focus), or Best (achieve mastery). Based on 20 years of reading science including the Stavanger Declaration meta-analysis of 170,000 participants.",
+      "url": "https://www.globalsovereignuniversity.org/comprehension-bridge",
+      "provider": {"@id": "https://www.globalsovereignuniversity.org/#organization"},
+      "educationalLevel": "Beginner to Advanced",
+      "teaches": [
+        "Deep reading comprehension",
+        "Reading habit restoration",
+        "Five pillars of comprehension",
+        "Critical thinking through text",
+        "Neural recycling and bi-literate brain development"
+      ],
+      "courseMode": "online",
+      "isAccessibleForFree": true,
+      "inLanguage": ["en", "es", "zh"],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How can adults improve reading comprehension for free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Adults can improve reading comprehension for free at Global Sovereign University's Comprehension Bridge. The program uses AI guides GENO and A-Eye to lead learners through three skill roads — Good, Better, and Best — rebuilding deep reading habits step by step. No cost, no login, and based on peer-reviewed reading science."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do adults struggle with reading comprehension?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Adults struggle with reading comprehension primarily because of screen-based reading habits, short-form video consumption, and cognitive overload. Research from the Stavanger Declaration meta-analysis (170,000+ participants) shows that digital reading reduces deep comprehension. The brain can be retrained through structured reading practice, which is the basis of the Comprehension Bridge program."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Trifurcation Road at the Comprehension Bridge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Trifurcation Road is GSU's three-path learning system: Good (build confidence, 2-minute daily habit), Better (rebuild focus through timed bursts and comprehension pillars), and Best (full mastery using all five comprehension pillars and active engagement). Each road meets the learner where they are right now."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is GENO at Global Sovereign University?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GENO — GSU Education Navigator Online — is GSU's AI tutor and guide. GENO speaks and comprehends in 32 languages, answers questions about GSU's curriculum, and serves as the warm, patient guide for everyday learners on the Comprehension Bridge. GENO is powered by ElevenLabs voice technology."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Global Sovereign University accredited?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Global Sovereign University is a 501(c)(3) nonprofit educational foundation (EIN 39-2716552), not a degree-granting institution. GSU provides free self-directed adult education, gamified learning, and skill-building resources. The focus is on real-world capability and sovereign learning — not credentials or tuition."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+-->
+
+
+<!-- ──────────────────────────────────────────────────────────────────
+     TEMPLATE 3: LIBRARY / BOOK PAGE
+     Use for individual book pages in the Library (formerly BookGames)
+     ────────────────────────────────────────────────────────────────── -->
+<!--
+<link rel="canonical" href="https://www.globalsovereignuniversity.org/books/[BOOK-SLUG]">
+<meta property="og:type" content="book">
+<meta property="og:title" content="[Book Title] by Dr. Gene Constant | Free Preview | GSU Library">
+<meta property="og:description" content="[150-char description with book topic and why it matters]">
+<meta property="og:url" content="https://www.globalsovereignuniversity.org/books/[BOOK-SLUG]">
+<meta property="og:image" content="[Book cover image URL]">
+<meta property="og:book:author" content="Dr. Gene A. Constant">
+<meta property="og:book:isbn" content="[ISBN if available]">
+<meta property="og:site_name" content="Global Sovereign University">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="[Book Title] — Free Preview | GSU Library">
+<meta name="twitter:description" content="[120-char description]">
+<meta name="twitter:image" content="[Book cover image URL]">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Book",
+      "name": "[Full Book Title]",
+      "author": {
+        "@type": "Person",
+        "name": "Dr. Gene A. Constant",
+        "honorificPrefix": "Dr.",
+        "honorificSuffix": "DBA",
+        "affiliation": {"@id": "https://www.globalsovereignuniversity.org/#organization"},
+        "url": "https://www.amazon.com/author/geneconstant"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Global Sovereign University / Voltage Magazine Special Editions"
+      },
+      "description": "[Book description 150-200 words]",
+      "url": "https://www.globalsovereignuniversity.org/books/[BOOK-SLUG]",
+      "sameAs": "https://www.amazon.com/dp/[ASIN]",
+      "isbn": "[ISBN if available]",
+      "inLanguage": "en",
+      "genre": "[Genre: Self Help / Education / Trades / etc.]",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Adults seeking self-directed education and skill development"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free Preview",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.globalsovereignuniversity.org/books/[BOOK-SLUG]"
+        },
+        {
+          "@type": "Offer",
+          "name": "Kindle Edition",
+          "price": "3.99",
+          "priceCurrency": "USD",
+          "url": "https://www.amazon.com/dp/[ASIN]?tag=gsu2026-20"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home",
+         "item": "https://www.globalsovereignuniversity.org"},
+        {"@type": "ListItem", "position": 2, "name": "Library",
+         "item": "https://www.globalsovereignuniversity.org/bookgames"},
+        {"@type": "ListItem", "position": 3, "name": "[Book Title]",
+         "item": "https://www.globalsovereignuniversity.org/books/[BOOK-SLUG]"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is [Book Title] about?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[2-3 sentence direct answer about the book's core premise and who it helps.]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is [Book Title] free to read?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A free preview and key excerpts of [Book Title] are available at Global Sovereign University. The full Kindle edition is available on Amazon for $3.99. GSU is a 501(c)(3) nonprofit — all Amazon affiliate proceeds support free education."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+-->
+
+
+<!-- ──────────────────────────────────────────────────────────────────
+     TEMPLATE 4: RESEARCH / ARTICLE PAGE (Deep Research Series)
+     Use for: How Your Brain Learns, Collapse of Critical Thinking,
+              Discovering Self, Financial Literacy Research pages
+     ────────────────────────────────────────────────────────────────── -->
+<!--
+<link rel="canonical" href="https://www.globalsovereignuniversity.org/[ARTICLE-SLUG]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Article Title] | GSU Deep Research Series">
+<meta property="og:description" content="[155-char description emphasizing research depth and free access]">
+<meta property="og:url" content="https://www.globalsovereignuniversity.org/[ARTICLE-SLUG]">
+<meta property="og:image" content="[Article cover image URL]">
+<meta property="og:article:author" content="Dr. Gene A. Constant">
+<meta property="og:article:published_time" content="[YYYY-MM-DD]">
+<meta property="og:article:section" content="Education Research">
+<meta property="og:site_name" content="Global Sovereign University">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "[Article Title]",
+      "description": "[Article description]",
+      "url": "https://www.globalsovereignuniversity.org/[ARTICLE-SLUG]",
+      "datePublished": "[YYYY-MM-DD]",
+      "dateModified": "[YYYY-MM-DD]",
+      "author": {
+        "@type": "Person",
+        "name": "Dr. Gene A. Constant",
+        "honorificSuffix": "DBA",
+        "affiliation": {"@id": "https://www.globalsovereignuniversity.org/#organization"}
+      },
+      "publisher": {"@id": "https://www.globalsovereignuniversity.org/#organization"},
+      "isAccessibleForFree": true,
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "name": "GSU Deep Research Series"
+      },
+      "keywords": ["[keyword1]","[keyword2]","[keyword3]"],
+      "articleSection": "Education Research",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["h1", "h2", ".speakable", "article > p:first-of-type"]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "[Primary research question this article answers]",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[Direct 40-60 word answer. This is what Google pulls into AIO. Write it as a standalone answer that makes sense without context.]"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "[Second important question]",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "[Direct answer]"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+-->
+
+
+<!-- ──────────────────────────────────────────────────────────────────
+     TEMPLATE 5: HOMEPAGE
+     ────────────────────────────────────────────────────────────────── -->
+<!--
+<link rel="canonical" href="https://www.globalsovereignuniversity.org">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Global Sovereign University — Free Education for Adults | 501(c)(3) Nonprofit">
+<meta property="og:description" content="GSU offers free gamified education for adults: reading comprehension, financial literacy, trades, math, civic knowledge, and more. AI-guided. No ads. No cost. Forever.">
+<meta property="og:url" content="https://www.globalsovereignuniversity.org">
+<meta property="og:image" content="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/690a547e01ec40e410599b5f_GSU%20Global%20Sovereign%20University%20logo%201%20(1).jpg">
+<meta property="og:site_name" content="Global Sovereign University">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Global Sovereign University — Free Adult Education">
+<meta name="twitter:description" content="Free AI-guided education for adults. Reading, math, trades, financial literacy, civics. No cost. No ads. 501(c)(3) nonprofit.">
+<meta name="twitter:image" content="[OG image URL]">
+
+  NOTE: The WebSite and EducationalOrganization schemas in Block A
+  already cover the homepage. No additional JSON-LD needed here
+  unless you add a specific FAQ section to the homepage.
+-->
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     AIO CONTENT RULES — APPLY TO EVERY PAGE
+     These are IN-PAGE content guidelines, not code.
+     Implement in the Webflow page designer.
+     ══════════════════════════════════════════════════════════════════
+
+  RULE 1 — QUESTION-FORMAT H2/H3 HEADINGS
+    Every H2 and H3 on the page should be a question Google would
+    actually search for. Examples:
+      ✓  "How does financial literacy help adults get out of debt?"
+      ✓  "What is the Comprehension Bridge?"
+      ✗  "Our Approach to Learning"
+      ✗  "Why GSU"
+
+  RULE 2 — 40-60 WORD DIRECT ANSWER PARAGRAPHS
+    The FIRST paragraph under each question-heading must answer
+    the question directly in 40-60 words. Google pulls this into AIO.
+    Start with the answer — not background or context.
+      ✓  "The Comprehension Bridge is a free AI-guided reading program..."
+      ✗  "At GSU, we believe that reading is the foundation of all learning..."
+
+  RULE 3 — ADD class="speakable" TO KEY PARAGRAPHS
+    Add the CSS class "speakable" to your most important answer
+    paragraphs. This matches the speakable schema selector and tells
+    Google these sections are suitable for voice/AI reading.
+
+  RULE 4 — STATISTICS WITH CONTEXT
+    AIO loves specific, cited statistics. Keep the ones already on
+    your pages (46% of adults read zero books, etc.) and frame them
+    as answers to questions.
+
+  RULE 5 — INTERNAL LINKING
+    Every hub page should link to at least 3 other hub pages.
+    Use descriptive anchor text that includes keywords:
+      ✓  "Learn more about financial literacy for adults"
+      ✗  "Click here"
+
+  RULE 6 — PAGE SPEED
+    AIO and Ad Grant quality scores both favor fast pages.
+    In Webflow: compress all images, use WebP format,
+    minimize custom code embeds above the fold.
+
+  ══════════════════════════════════════════════════════════════════ -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     GOOGLE AD GRANT — KEYWORD THEMES BY PAGE
+     These are suggested Ad Grant keyword groups per landing page.
+     Max bid: $2.00 CPC (Grant rule). No single-word keywords.
+     ══════════════════════════════════════════════════════════════════
+
+  COMPREHENSION BRIDGE landing:
+    "free reading comprehension help for adults"
+    "how to improve reading comprehension adults"
+    "adult literacy programs free online"
+    "reading skills for adults free"
+    "AI reading tutor free"
+    "why adults struggle with reading comprehension"
+
+  FINANCIFICATION landing:
+    "free financial literacy course for adults"
+    "how to manage money on a budget"
+    "financial literacy nonprofit free"
+    "personal finance education free online"
+    "how to read a paycheck"
+
+  TRADIFICATION landing:
+    "free home repair courses online"
+    "how to do basic electrical repair free"
+    "free plumbing basics course"
+    "basic automotive knowledge free course"
+    "DIY home repair education free"
+
+  MATHIFICATION landing:
+    "free math help for adults online"
+    "math made visual free course"
+    "adult math education free"
+    "practical math skills for adults"
+
+  CIVICIFICATION landing:
+    "free civics education for adults"
+    "how to register to vote"
+    "civic knowledge free online course"
+    "understanding the US Constitution free"
+
+  HOMEPAGE / GENERAL:
+    "free online education for adults"
+    "nonprofit education foundation free"
+    "self-directed learning for adults free"
+    "free adult education nonprofit"
+    "AI tutor free education nonprofit"
+
+  ══════════════════════════════════════════════════════════════════ -->
