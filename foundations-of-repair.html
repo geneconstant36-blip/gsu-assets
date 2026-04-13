@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations of Repair | Play · Read · Hear · See — Before You Buy | GSU Library</title>
+<meta name="description" content="Read Chapter 7 free, play the comprehension game, hear the podcast, watch the video — then decide. Foundations of Repair by Dr. Gene A. Constant. GSU Library.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0d1421; --navy2:#1B2A4A; --card:#162236;
+  --teal:#1A8B7F; --teal2:#22b5a6;
+  --gold:#C49A2C; --gold2:#e0b93a;
+  --cream:#f0e9d8; --dim:#b8ad9a;
+  --green:#2d6e2d; --green2:#4a9e4a;
+  --red:#8B1A1A; --red2:#c0403a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--navy);color:var(--cream);font-family:'Inter',sans-serif;overflow-x:hidden;}
+html::-webkit-scrollbar{width:4px;}
+html::-webkit-scrollbar-track{background:var(--navy);}
+html::-webkit-scrollbar-thumb{background:var(--teal);border-radius:2px;}
+
+/* ── NAV ── */
+#top-nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(13,20,33,0.97);
+  border-bottom:1px solid rgba(196,154,44,0.2);
+  display:flex;align-items:center;gap:0;
+  padding:0 24px;height:52px;
+  backdrop-filter:blur(10px);
+}
+.nav-brand{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:var(--gold);text-decoration:none;margin-right:auto;}
+.nav-tabs{display:flex;gap:2px;}
+.nav-tab{
+  padding:6px 14px;border-radius:6px;
+  font-family:'Cinzel',serif;font-size:10px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  cursor:pointer;border:none;background:none;
+  color:var(--dim);transition:all 0.2s;text-decoration:none;
+  display:flex;align-items:center;gap:5px;
+}
+.nav-tab:hover{color:var(--cream);background:rgba(255,255,255,0.06);}
+.nav-tab.active{color:var(--gold);background:rgba(196,154,44,0.1);}
+.nav-tab .tab-dot{width:6px;height:6px;border-radius:50%;}
+.dot-play{background:var(--green2);}
+.dot-read{background:var(--teal2);}
+.dot-hear{background:var(--gold);}
+.dot-see{background:#9b7fe8;}
+.dot-ar{background:#e07070;animation:pulse-dot 2s infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(1.3);}}
+@media(max-width:600px){.nav-tab span{display:none;}.nav-tab{padding:6px 10px;}}
+
+/* ── HERO ── */
+#hero{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;min-height:88vh;
+  padding-top:0;
+}
+@media(max-width:768px){#hero{grid-template-columns:1fr;}}
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px 48px 60px 56px;
+}
+@media(max-width:768px){.hero-left{padding:40px 24px;}}
+.hero-series{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;
+  color:var(--teal2);text-transform:uppercase;margin-bottom:12px;
+}
+.hero-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(28px,4vw,48px);font-weight:700;
+  color:var(--cream);line-height:1.15;margin-bottom:8px;
+  letter-spacing:0.03em;
+}
+.hero-title em{font-style:normal;color:var(--gold);}
+.hero-author{
+  font-size:13px;color:var(--dim);margin-bottom:20px;
+  font-style:italic;font-family:'Lora',serif;
+}
+.hero-tagline{
+  font-size:15px;color:rgba(255,255,255,0.6);
+  line-height:1.75;max-width:420px;margin-bottom:28px;
+  font-family:'Lora',serif;
+}
+.experience-bar{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;
+}
+.exp-pill{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:20px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.15em;
+  cursor:pointer;border:none;transition:all 0.2s;text-decoration:none;
+}
+.ep-play{background:rgba(74,158,74,0.15);border:1px solid rgba(74,158,74,0.4);color:var(--green2);}
+.ep-play:hover{background:rgba(74,158,74,0.25);}
+.ep-read{background:rgba(26,139,127,0.15);border:1px solid rgba(26,139,127,0.4);color:var(--teal2);}
+.ep-read:hover{background:rgba(26,139,127,0.25);}
+.ep-hear{background:rgba(196,154,44,0.12);border:1px solid rgba(196,154,44,0.35);color:var(--gold);}
+.ep-hear:hover{background:rgba(196,154,44,0.22);}
+.ep-see{background:rgba(107,79,187,0.15);border:1px solid rgba(107,79,187,0.4);color:#9b7fe8;}
+.ep-see:hover{background:rgba(107,79,187,0.25);}
+.ep-ar{background:rgba(192,64,58,0.15);border:1px solid rgba(192,64,58,0.4);color:#e07070;}
+.ep-ar:hover{background:rgba(192,64,58,0.25);}
+.buy-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--gold),#a07820);
+  color:#0a0800;padding:14px 28px;border-radius:8px;
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.18em;
+  text-transform:uppercase;text-decoration:none;font-weight:700;
+  transition:all 0.3s;width:fit-content;
+  box-shadow:0 4px 20px rgba(196,154,44,0.25);
+}
+.buy-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(196,154,44,0.4);}
+.free-note{font-size:11px;color:var(--dim);margin-top:10px;font-style:italic;}
+
+.hero-right{
+  position:relative;display:flex;align-items:center;
+  justify-content:center;padding:60px 40px;
+  background:linear-gradient(135deg,rgba(26,139,127,0.04),rgba(196,154,44,0.04));
+}
+.book-cover-wrap{position:relative;width:100%;max-width:340px;}
+.book-cover{
+  width:100%;border-radius:8px;
+  box-shadow:0 24px 80px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.06);
+  display:block;
+}
+.ar-badge{
+  position:absolute;top:-14px;right:-14px;
+  background:linear-gradient(135deg,#8B1A1A,#c0403a);
+  border:2px solid rgba(255,255,255,0.2);
+  border-radius:50%;width:72px;height:72px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:transform 0.3s;
+  box-shadow:0 4px 20px rgba(192,64,58,0.5);
+}
+.ar-badge:hover{transform:scale(1.1);}
+.ar-badge-icon{font-size:22px;}
+.ar-badge-text{font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.1em;color:#fff;text-transform:uppercase;}
+@media(max-width:768px){.hero-right{display:none;}}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:72px 24px;max-width:900px;margin:0 auto;}
+.section-eyebrow{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;
+  text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px;
+}
+.section-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;}
+.section-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,32px);font-weight:700;color:var(--cream);margin-bottom:8px;}
+.section-sub{font-size:14px;color:var(--dim);font-style:italic;margin-bottom:36px;font-family:'Lora',serif;line-height:1.7;}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(196,154,44,0.3),transparent);margin:64px 0;}
+
+/* ── PLAY SECTION ── */
+#play .section-eyebrow{color:var(--green2);}
+#play .section-eyebrow::before{background:var(--green2);}
+
+.quiz-xp-bar{
+  background:var(--card);border:1px solid rgba(74,158,74,0.2);
+  border-radius:10px;padding:16px 20px;margin-bottom:24px;
+  display:flex;align-items:center;gap:16px;
+}
+.xp-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.15em;color:var(--green2);}
+.xp-track{flex:1;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green2));border-radius:3px;transition:width 0.6s cubic-bezier(0.22,1,0.36,1);width:0%;}
+.xp-num{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);}
+.badge-display{font-family:'Cinzel',serif;font-size:10px;color:var(--dim);}
+
+.quiz-card{
+  background:var(--card);border:1px solid rgba(255,255,255,0.07);
+  border-radius:12px;padding:32px;margin-bottom:0;
+  position:relative;overflow:hidden;
+}
+.quiz-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--green2),transparent);
+}
+.quiz-counter{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;
+  color:var(--dim);margin-bottom:20px;text-transform:uppercase;
+}
+.quiz-question{
+  font-family:'Lora',serif;font-size:18px;font-weight:500;
+  color:var(--cream);line-height:1.6;margin-bottom:24px;
+}
+.quiz-options{display:flex;flex-direction:column;gap:10px;}
+.quiz-option{
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:14px 18px;text-align:left;cursor:pointer;
+  transition:all 0.2s;color:var(--cream);font-family:'Inter',sans-serif;
+  font-size:14px;line-height:1.5;display:flex;align-items:center;gap:12px;
+}
+.quiz-option:hover:not(:disabled){background:rgba(26,139,127,0.12);border-color:var(--teal);}
+.quiz-option.correct{background:rgba(74,158,74,0.2);border-color:var(--green2);color:#8fdb8f;}
+.quiz-option.wrong{background:rgba(192,64,58,0.15);border-color:var(--red2);color:#e07070;}
+.quiz-option:disabled{cursor:default;}
+.opt-letter{
+  font-family:'Cinzel',serif;font-size:10px;color:var(--gold);
+  background:rgba(196,154,44,0.1);border:1px solid rgba(196,154,44,0.3);
+  border-radius:4px;padding:3px 7px;flex-shrink:0;
+}
+.quiz-feedback{
+  margin-top:18px;padding:14px 18px;border-radius:8px;
+  font-size:13px;line-height:1.6;font-family:'Lora',serif;font-style:italic;
+  display:none;
+}
+.quiz-feedback.correct{background:rgba(74,158,74,0.1);border:1px solid rgba(74,158,74,0.25);color:#8fdb8f;}
+.quiz-feedback.wrong{background:rgba(192,64,58,0.1);border:1px solid rgba(192,64,58,0.25);color:#e09090;}
+.quiz-next{
+  margin-top:18px;background:linear-gradient(135deg,var(--teal),#145f57);
+  color:#fff;border:none;border-radius:6px;padding:12px 28px;
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.18em;
+  text-transform:uppercase;cursor:pointer;transition:all 0.25s;
+  display:none;box-shadow:0 4px 16px rgba(26,139,127,0.25);
+}
+.quiz-next:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,139,127,0.4);}
+.quiz-result{
+  text-align:center;padding:40px 20px;display:none;
+}
+.result-crown{font-size:52px;margin-bottom:12px;display:block;}
+.result-badge-name{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:var(--gold);margin-bottom:8px;}
+.result-score{font-family:'Cinzel',serif;font-size:14px;color:var(--dim);margin-bottom:20px;}
+.result-msg{font-family:'Lora',serif;font-size:15px;color:var(--cream);line-height:1.7;max-width:440px;margin:0 auto 24px;}
+.result-retry{
+  background:rgba(196,154,44,0.12);border:1px solid rgba(196,154,44,0.3);
+  color:var(--gold);border-radius:6px;padding:10px 24px;
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.15em;
+  text-transform:uppercase;cursor:pointer;transition:all 0.2s;
+}
+.result-retry:hover{background:rgba(196,154,44,0.2);}
+
+/* ── READ SECTION ── */
+#read .section-eyebrow{color:var(--teal2);}
+#read .section-eyebrow::before{background:var(--teal2);}
+
+.chapter-frame{
+  background:var(--card);border:1px solid rgba(26,139,127,0.2);
+  border-radius:12px;overflow:hidden;
+}
+.chapter-header{
+  background:linear-gradient(135deg,rgba(26,139,127,0.1),rgba(196,154,44,0.05));
+  padding:24px 32px;border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.chapter-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.3em;color:var(--teal2);text-transform:uppercase;margin-bottom:8px;}
+.chapter-heading{font-family:'Cinzel',serif;font-size:clamp(16px,3vw,22px);font-weight:700;color:var(--cream);}
+.chapter-body{padding:36px 40px;max-height:620px;overflow-y:auto;}
+@media(max-width:600px){.chapter-body{padding:24px 20px;}}
+.chapter-body::-webkit-scrollbar{width:3px;}
+.chapter-body::-webkit-scrollbar-thumb{background:var(--teal);border-radius:2px;}
+
+.chapter-body h3{
+  font-family:'Cinzel',serif;font-size:15px;font-weight:600;
+  color:var(--gold);margin:28px 0 12px;letter-spacing:0.05em;
+}
+.chapter-body h3:first-child{margin-top:0;}
+.chapter-body p{
+  font-family:'Lora',serif;font-size:15px;line-height:1.9;
+  color:rgba(255,255,255,0.82);margin-bottom:16px;
+}
+.chapter-body .key-rule{
+  background:rgba(196,154,44,0.06);border-left:3px solid var(--gold);
+  padding:14px 18px;border-radius:0 6px 6px 0;margin:20px 0;
+  font-family:'Lora',serif;font-size:14px;line-height:1.7;
+  color:rgba(255,255,255,0.85);
+}
+.chapter-body .three-num{
+  background:rgba(26,139,127,0.06);border:1px solid rgba(26,139,127,0.2);
+  border-radius:8px;padding:18px 22px;margin:20px 0;
+}
+.three-num-item{
+  display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;
+}
+.three-num-item:last-child{margin-bottom:0;}
+.num-badge{
+  font-family:'Cinzel',serif;font-size:11px;color:var(--teal2);
+  background:rgba(26,139,127,0.15);border:1px solid rgba(26,139,127,0.3);
+  border-radius:4px;padding:3px 8px;flex-shrink:0;margin-top:2px;
+}
+.three-num-item p{margin-bottom:0;font-size:14px;}
+.chapter-body ul{margin:0 0 16px 20px;}
+.chapter-body ul li{
+  font-family:'Lora',serif;font-size:15px;line-height:1.8;
+  color:rgba(255,255,255,0.82);margin-bottom:6px;
+}
+.chapter-body .star-list{list-style:none;margin-left:0;}
+.chapter-body .star-list li::before{content:'★ ';color:var(--gold);font-size:11px;}
+.chapter-body .section-break{
+  height:1px;background:rgba(255,255,255,0.08);margin:28px 0;
+}
+.no-download-note{
+  padding:14px 20px;
+  background:rgba(26,139,127,0.06);border-top:1px solid rgba(26,139,127,0.15);
+  font-size:11px;color:var(--dim);font-style:italic;text-align:center;
+  font-family:'Cinzel',serif;letter-spacing:0.1em;
+}
+
+/* ── HEAR SECTION ── */
+#hear .section-eyebrow{color:var(--gold);}
+#hear .section-eyebrow::before{background:var(--gold);}
+
+.podcast-card{
+  background:var(--card);border:1px solid rgba(196,154,44,0.2);
+  border-radius:12px;padding:28px 32px;
+}
+.podcast-title{font-family:'Cinzel',serif;font-size:16px;font-weight:600;color:var(--cream);margin-bottom:6px;}
+.podcast-ep{font-size:12px;color:var(--dim);margin-bottom:20px;font-style:italic;}
+.audio-player-wrap{
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);
+  border-radius:8px;padding:16px;
+}
+.audio-player-wrap audio{width:100%;filter:sepia(20%) saturate(50%);}
+.podcast-desc{
+  margin-top:16px;font-family:'Lora',serif;font-size:14px;
+  color:rgba(255,255,255,0.55);line-height:1.7;font-style:italic;
+}
+
+/* ── SEE SECTION ── */
+#see .section-eyebrow{color:#9b7fe8;}
+#see .section-eyebrow::before{background:#9b7fe8;}
+
+.video-wrap{
+  position:relative;padding-bottom:56.25%;height:0;overflow:hidden;
+  border-radius:12px;border:1px solid rgba(107,79,187,0.2);
+}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;}
+
+/* ── AR SECTION ── */
+#ar-section .section-eyebrow{color:#e07070;}
+#ar-section .section-eyebrow::before{background:#e07070;}
+
+.ar-card{
+  background:var(--card);border:1px solid rgba(192,64,58,0.25);
+  border-radius:12px;padding:32px;
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+  align-items:center;
+}
+@media(max-width:600px){.ar-card{grid-template-columns:1fr;}}
+.ar-info h3{font-family:'Cinzel',serif;font-size:16px;color:var(--cream);margin-bottom:12px;}
+.ar-info p{font-family:'Lora',serif;font-size:14px;color:var(--dim);line-height:1.75;margin-bottom:16px;}
+.ar-steps{list-style:none;counter-reset:ar-counter;}
+.ar-steps li{
+  counter-increment:ar-counter;
+  font-size:13px;color:rgba(255,255,255,0.65);
+  padding:6px 0 6px 28px;position:relative;border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.ar-steps li:last-child{border-bottom:none;}
+.ar-steps li::before{
+  content:counter(ar-counter);position:absolute;left:0;
+  font-family:'Cinzel',serif;font-size:10px;color:var(--red2);
+  background:rgba(192,64,58,0.15);border:1px solid rgba(192,64,58,0.3);
+  border-radius:50%;width:18px;height:18px;
+  display:flex;align-items:center;justify-content:center;
+  top:7px;
+}
+.launch-ar-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#8B1A1A,#c0403a);
+  color:#fff;border:none;border-radius:8px;
+  padding:14px 24px;font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  cursor:pointer;margin-top:20px;transition:all 0.3s;
+  box-shadow:0 4px 20px rgba(192,64,58,0.35);
+}
+.launch-ar-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(192,64,58,0.5);}
+.ar-marker-box{text-align:center;}
+.ar-marker-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:var(--dim);text-transform:uppercase;margin-bottom:12px;}
+.ar-marker-img{
+  width:160px;height:160px;border:3px solid rgba(255,255,255,0.15);
+  border-radius:8px;display:block;margin:0 auto 10px;background:#fff;
+}
+.ar-marker-note{font-size:11px;color:var(--dim);font-style:italic;line-height:1.5;}
+
+/* ── AR OVERLAY ── */
+#ar-overlay{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:#000;flex-direction:column;
+}
+#ar-overlay.open{display:flex;}
+#ar-close{
+  position:absolute;top:16px;right:16px;z-index:10;
+  background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.2);
+  border-radius:50%;width:40px;height:40px;
+  color:#fff;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+#ar-status{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,0.8);border:1px solid rgba(255,255,255,0.15);
+  border-radius:20px;padding:8px 20px;
+  font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;
+  color:var(--cream);text-align:center;z-index:10;
+  white-space:nowrap;
+}
+#ar-scene-container{width:100%;height:100%;}
+
+/* ── FOOTER ── */
+.page-footer{
+  background:rgba(0,0,0,0.4);border-top:1px solid rgba(255,255,255,0.07);
+  padding:40px 24px;text-align:center;
+}
+.footer-brand{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:var(--gold);margin-bottom:8px;}
+.footer-sub{font-size:12px;color:var(--dim);margin-bottom:16px;font-style:italic;}
+.footer-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.footer-links a{font-size:12px;color:var(--teal2);text-decoration:none;}
+.footer-links a:hover{color:var(--cream);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn 0.6s ease forwards;}
+</style>
+</head>
+<body>
+
+<!-- ── TOP NAV ── -->
+<nav id="top-nav">
+  <a class="nav-brand" href="https://www.globalsovereignuniversity.org/bookgames">← GSU Library</a>
+  <div class="nav-tabs">
+    <a class="nav-tab active" href="#play"><span class="tab-dot dot-play"></span><span>Play</span></a>
+    <a class="nav-tab" href="#read"><span class="tab-dot dot-read"></span><span>Read</span></a>
+    <a class="nav-tab" href="#hear"><span class="tab-dot dot-hear"></span><span>Hear</span></a>
+    <a class="nav-tab" href="#see"><span class="tab-dot dot-see"></span><span>See</span></a>
+    <a class="nav-tab" href="#ar-section"><span class="tab-dot dot-ar"></span><span>AR</span></a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-series">Sovereign Trades Series · Book 1</div>
+    <h1 class="hero-title">Foundations<br>of <em>Repair</em></h1>
+    <div class="hero-author">Dr. Gene A. Constant · Global Sovereign University Press</div>
+    <p class="hero-tagline">Why fixing what you own is the first step toward personal independence. Learn the economics of repair, the hidden value of maintenance, and the art of the sovereign steward.</p>
+    <div class="experience-bar">
+      <a class="exp-pill ep-play" href="#play">▶ Play</a>
+      <a class="exp-pill ep-read" href="#read">📖 Read</a>
+      <a class="exp-pill ep-hear" href="#hear">🎧 Hear</a>
+      <a class="exp-pill ep-see" href="#see">▶ See</a>
+      <button class="exp-pill ep-ar" onclick="launchAR()">◉ AR</button>
+    </div>
+    <a class="buy-btn" href="https://www.amazon.com/dp/B0GRTHD1GK?tag=gsu2026-20" target="_blank">
+      📦 Get on Amazon — $3.99
+    </a>
+    <div class="free-note">This chapter preview is free forever · No signup · GSU 501(c)(3) nonprofit</div>
+  </div>
+  <div class="hero-right">
+    <div class="book-cover-wrap">
+      <img class="book-cover"
+        src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69dd30db542b5f01fd442390_Foundations%20of%20Repair%20book.jpg"
+        alt="Foundations of Repair by Dr. Gene A. Constant">
+      <div class="ar-badge" onclick="launchAR()" title="Launch AR Experience">
+        <div class="ar-badge-icon">◉</div>
+        <div class="ar-badge-text">AR Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="max-width:900px;margin:0 auto;"></div>
+
+<!-- ══════════════════════════════════════
+     PLAY
+     ══════════════════════════════════════ -->
+<section id="play">
+  <div class="section">
+    <div class="section-eyebrow">▶ Play — Comprehension Quest</div>
+    <h2 class="section-title">Can You Think Like a Sovereign Steward?</h2>
+    <p class="section-sub">Ten questions drawn from Chapter 7. Earn XP. Unlock your badge. Read the chapter after — or before. Either way, the ideas will land differently.</p>
+
+    <div class="quiz-xp-bar">
+      <span class="xp-label">Quest XP</span>
+      <div class="xp-track"><div class="xp-fill" id="xp-fill"></div></div>
+      <span class="xp-num" id="xp-num">0 XP</span>
+      <span class="badge-display" id="badge-display">— / 10</span>
+    </div>
+
+    <div class="quiz-card" id="quiz-card">
+      <div class="quiz-counter" id="quiz-counter">Question 1 of 10</div>
+      <div class="quiz-question" id="quiz-question">Loading question...</div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <button class="quiz-next" id="quiz-next" onclick="nextQuestion()">Next Question →</button>
+    </div>
+
+    <div class="quiz-result" id="quiz-result">
+      <span class="result-crown" id="result-crown">✦</span>
+      <div class="result-badge-name" id="result-badge-name">—</div>
+      <div class="result-score" id="result-score">—</div>
+      <p class="result-msg" id="result-msg">—</p>
+      <button class="result-retry" onclick="restartQuiz()">Try Again →</button>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="max-width:900px;margin:0 auto;"></div>
+
+<!-- ══════════════════════════════════════
+     READ
+     ══════════════════════════════════════ -->
+<section id="read">
+  <div class="section">
+    <div class="section-eyebrow">📖 Read — Chapter Preview</div>
+    <h2 class="section-title">Chapter 7: The Economics of Repair</h2>
+    <p class="section-sub">Calculating the 'Tax-Free' Wealth of Maintenance. Read on this page — no download, no signup, no cost.</p>
+
+    <div class="chapter-frame">
+      <div class="chapter-header">
+        <div class="chapter-label">Foundations of Repair · Chapter 7 · Pages 74–85</div>
+        <div class="chapter-heading">The Economics of Repair — Calculating the 'Tax-Free' Wealth of Maintenance</div>
+      </div>
+      <div class="chapter-body">
+
+        <h3>7.1 Cost-Benefit Analysis of Fixing vs. Replacing</h3>
+
+        <p>Money is not the only reason to repair, but it is one of the reasons repair becomes sustainable. If repair only lives in the realm of virtue, it will be practiced when you have extra time and energy. Those conditions are rare. Chapter 7 adds another stabilizer: arithmetic. Not complicated arithmetic. Honest arithmetic.</p>
+
+        <p>The consumer script says replacement is simple and repair is complicated. That script quietly edits out the full cost of replacement and the full value of maintenance. When you learn to do cost-benefit analysis like a steward, you stop arguing with yourself in vague phrases like "It's probably not worth fixing." You replace that fog with a decision you can explain, repeat, and teach.</p>
+
+        <div class="key-rule">
+          <strong>"Tax-free wealth"</strong> is value you generate by not spending money you would have spent. No paycheck is required, no invoice is issued, and no employer needs to approve. If a five-minute fix keeps forty dollars in your account, that forty dollars behaves like income — but it arrives without taxes and without permission. It is quiet wealth, created at the exact moment consumer culture tells you to give up.
+        </div>
+
+        <p>A better comparison has three parts: total cost of replacement, total cost of repair, and the value of learning. Call it the <strong>Three-Number Repair Test.</strong></p>
+
+        <div class="three-num">
+          <div class="three-num-item">
+            <span class="num-badge">One</span>
+            <p>The replacement total. Not just the sticker price — price plus acquisition time, setup friction, the second trip because the first item was wrong, and disposal of old packaging. Replacement cost is rarely just the sticker price. It is the sticker price plus the hidden line items that follow you home.</p>
+          </div>
+          <div class="three-num-item">
+            <span class="num-badge">Two</span>
+            <p>The repair total. Parts plus a realistic time estimate for one attempt at a safe, small, reversible fix. A multi-bit screwdriver is not a cost assigned to one loose cabinet pull. It is a durable capability. Once you own the action, you stop paying for the same rescue again and again.</p>
+          </div>
+          <div class="three-num-item">
+            <span class="num-badge">Three</span>
+            <p>The risk cost. The cost if repair goes wrong — not in a dramatic way, but in a practical way. Could you make the object unusable? Create a safety hazard? Void a warranty you plan to use? Risk cost keeps the analysis sane. If it involves mains power or structural failure, the risk cost is high.</p>
+          </div>
+        </div>
+
+        <p>Make the decision like a steward: choose the option with the best expected value. You do not need a spreadsheet. You need to ask: "What is likely to happen if I do the first reversible step, and what is the worst reasonable outcome?" Most home repairs have a remarkably low worst reasonable outcome if you keep the procedure strict.</p>
+
+        <ul class="star-list">
+          <li>Flinching is expensive.</li>
+          <li>Forcing is expensive.</li>
+          <li>Confusion is expensive.</li>
+        </ul>
+        <p><strong>Procedure makes repair economically predictable.</strong></p>
+
+        <p>There is also a category of repairs where the economics are almost comically favorable: maintenance of consumables and interfaces. Batteries, filters, simple seals, basic lubrication, cleaning contacts, tightening fasteners. These are not glamorous — and that is exactly why they work. They target the failure modes that happen first and most often.</p>
+
+        <div class="section-break"></div>
+        <h3>7.2 The Hidden Value of Maintenance</h3>
+
+        <p>The simplest way to misunderstand maintenance is to treat it as a weaker, less heroic form of repair. In the consumer story, maintenance is what you do when you are unusually disciplined. It feels like virtue. But in the Efficiency Classroom, maintenance is not moral advice. It is an economic engine. It produces tax-free wealth in at least five hidden currencies.</p>
+
+        <p><strong>Hidden value one:</strong> Maintenance converts catastrophic time into scheduled time. A repair performed under pressure costs more than the same repair performed upstream — not because the physics change, but because your decision-making degrades. Under stress, the mind narrows. It wants the feeling to end. Maintenance is a refusal to meet failure at the cliff edge.</p>
+
+        <p><strong>Hidden value two:</strong> Maintenance protects the cheap version of the fix. A drawer that binds slightly, a chair that begins to creak, a charging cable that develops the angle ritual — these whispers are not the beginning of failure. They are the moment when a ten-minute intervention can prevent a two-hour one, or a five-dollar part can prevent a hundred-dollar replacement. This is where "tax-free wealth" becomes more precise: the wealth is not only the avoided purchase. It is the avoided escalation.</p>
+
+        <p><strong>Hidden value three:</strong> Maintenance reduces decision fatigue, which is itself a financial leak. Consumer life is full of decisions that are not really decisions — just repeated surrenders: "Is this worth fixing?" "Should I replace it?" "Which one should I buy?" Autonomous Maintenance, with its standardization and rhythms, removes those repeated micro-negotiations. When the habit is standard, the decision disappears. And when the decision disappears, you stop paying the hidden tax of procrastination.</p>
+
+        <p><strong>Hidden value four:</strong> The compounding effect of capability. Repairs teach you in bursts. Maintenance teaches you in drips — and drips are powerful because they are frequent. Every time you do a one-minute clean of an interface, you reinforce the idea that dirt is a mechanical actor. Every time you tighten to snug, you train restraint. Every time you use the flashlight before you force a seam, you train visibility. This is not only about saving money on the next similar problem. It is about changing who does the work in your environment.</p>
+
+        <p><strong>Hidden value five:</strong> Maintenance improves the quality of replacement when replacement is necessary. First, it buys you time — you can choose replacement on your schedule rather than in panic. Scheduled replacement is cheaper because you can research, compare, wait for sales. Second, maintenance produces better information: the log you built turns "it died" into "it overheats after twenty minutes; vents were clogged; cleaning helped temporarily; the fan now makes bearing noise." That description helps you choose a replacement intelligently. It also helps you avoid repeating the same failure mode.</p>
+
+        <p><strong>Hidden value six — the emotional one:</strong> Maintenance reduces shame, and shame is expensive. Shame piles happen when repairs lose their story, when parts disappear, when sequences are forgotten. Maintenance fights shame by keeping work small and finishable. When people stop accumulating shame piles, they stop making replacement decisions just to erase a feeling. A lighter environment leaks less money.</p>
+
+        <div class="key-rule">
+          Maintenance produces tax-free wealth in at least five currencies: avoided purchases, avoided escalation, avoided emergencies, avoided decision fatigue, and avoided shame-driven replacement. It also produces something that is not currency but behaves like it: <strong>reliability</strong>. A reliable environment is one where learning, work, and rest are not constantly interrupted by preventable friction.
+        </div>
+
+        <div class="section-break"></div>
+        <h3>Sovereignty Lab: Calculating Your Own Savings</h3>
+
+        <p>A principle is only as strong as your ability to test it against your own life. You will calculate savings in three buckets: cash avoided, time avoided, and escalation avoided.</p>
+
+        <p>Pick five objects to audit. Not fifty. Five. Choose items that represent the life you actually live — at least one high-touch device, one moving household interface, one water-related item, one consumable-dependent item.</p>
+
+        <p>For each object, build a simple savings card with six honest numbers:</p>
+
+        <ul>
+          <li><strong>A — Replacement price:</strong> What would it cost to replace or pay someone to solve it?</li>
+          <li><strong>B — Replacement friction time:</strong> How long would replacement take, end-to-end?</li>
+          <li><strong>C — Repair and maintenance cost:</strong> What did you actually spend?</li>
+          <li><strong>D — Repair time:</strong> How much time did you actually spend?</li>
+          <li><strong>E — Risk cost note:</strong> Was this low-risk and safe, or was it an escalation zone?</li>
+          <li><strong>F — Outcome value:</strong> What did you avoid? Purchase, emergency, disruption, damage, or shame-driven replacement?</li>
+        </ul>
+
+        <p>After a few weeks, you will have a list that is more convincing than any argument — because it is your own evidence. You will also notice something else: the more you do upstream, the less you feel like objects are constantly betraying you. That feeling is not sentimental. It is economic. A world that seems stable is a world you do not constantly pay to stabilize.</p>
+
+        <div class="key-rule">
+          "I will spend five minutes to see if this is one of the easy problems." That sentence is sovereignty in economic form. It respects your time, it respects risk, and it refuses the default tax of helplessness.
+        </div>
+
+      </div>
+      <div class="no-download-note">📖 This chapter is for reading on this page only · Not available for download · Full book on Amazon for $3.99</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="max-width:900px;margin:0 auto;"></div>
+
+<!-- ══════════════════════════════════════
+     HEAR
+     ══════════════════════════════════════ -->
+<section id="hear">
+  <div class="section">
+    <div class="section-eyebrow">🎧 Hear — Podcast Episode</div>
+    <h2 class="section-title">The Sovereign Steward</h2>
+    <p class="section-sub">Repair, resistance, and the right to own what you own. Voice of Sovereignty · Episode from the GSU catalog.</p>
+
+    <div class="podcast-card">
+      <div class="podcast-title">The Sovereign Steward: Repair, Resistance & the Right to Own What You Own</div>
+      <div class="podcast-ep">Voice of Sovereignty Podcast · Dr. Gene A. Constant · Global Sovereign University</div>
+      <div class="audio-player-wrap">
+        <audio controls preload="none">
+          <source src="https://www.buzzsprout.com/2530740/episodes/18876602-the-sovereign-steward-repair-resistance-and-the-right-to-own-what-you-own.mp3?download=true" type="audio/mpeg">
+          Your browser does not support audio playback.
+        </audio>
+      </div>
+      <p class="podcast-desc">Press play before you read, or after. Either way the ideas land differently when you hear them spoken. This episode covers the philosophy behind Foundations of Repair — why fixing what you own is not just practical, it is an act of sovereignty.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="max-width:900px;margin:0 auto;"></div>
+
+<!-- ══════════════════════════════════════
+     SEE
+     ══════════════════════════════════════ -->
+<section id="see">
+  <div class="section">
+    <div class="section-eyebrow">▶ See — Watch the Video</div>
+    <h2 class="section-title">See It Before You Buy It</h2>
+    <p class="section-sub">Watch the video. Get the feel of the book. Then decide. That is what "Before You Buy" means.</p>
+
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/QTVAXs2G4ac"
+        title="Foundations of Repair — GSU"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="max-width:900px;margin:0 auto;"></div>
+
+<!-- ══════════════════════════════════════
+     AR
+     ══════════════════════════════════════ -->
+<section id="ar-section">
+  <div class="section">
+    <div class="section-eyebrow">◉ AR — Augmented Reality</div>
+    <h2 class="section-title">GENO Meets You in the Room</h2>
+    <p class="section-sub">Point your phone camera at the marker below. GENO appears in your space — no app required. Pure browser AR.</p>
+
+    <div class="ar-card">
+      <div class="ar-info">
+        <h3>How to Launch the AR Experience</h3>
+        <p>This uses your phone's camera and browser. No app download. No account. Just your phone pointed at the printed marker.</p>
+        <ol class="ar-steps">
+          <li>Print the marker on the right — or display it on a second screen</li>
+          <li>On your phone, tap the red "Launch AR" button below</li>
+          <li>Allow camera access when prompted</li>
+          <li>Point your camera at the square marker</li>
+          <li>GENO appears above the marker and speaks to you</li>
+        </ol>
+        <button class="launch-ar-btn" onclick="launchAR()">◉ Launch AR Experience</button>
+      </div>
+      <div class="ar-marker-box">
+        <div class="ar-marker-label">Point your camera here</div>
+        <img class="ar-marker-img"
+          src="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png"
+          alt="AR Marker — Print or display this"
+          id="ar-marker-img"
+          onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'160\' height=\'160\'><rect width=\'160\' height=\'160\' fill=\'white\'/><rect x=\'20\' y=\'20\' width=\'120\' height=\'120\' fill=\'black\'/><rect x=\'35\' y=\'35\' width=\'90\' height=\'90\' fill=\'white\'/><rect x=\'50\' y=\'50\' width=\'60\' height=\'60\' fill=\'black\'/><rect x=\'65\' y=\'65\' width=\'30\' height=\'30\' fill=\'white\'/></svg>'">
+        <div class="ar-marker-note">Print this marker or display it on a tablet or second monitor. Your phone camera needs to see the full square.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     AR OVERLAY
+     ══════════════════════════════════════ -->
+<div id="ar-overlay">
+  <button id="ar-close" onclick="closeAR()">✕</button>
+  <div id="ar-status">Point your camera at the printed marker →</div>
+  <div id="ar-scene-container"></div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="page-footer">
+  <div class="footer-brand">Global Sovereign University · GSU Library</div>
+  <div class="footer-sub">Building a Bridge to Freedom Through Education — Not Handouts · 501(c)(3) · EIN 39-2716552</div>
+  <div class="footer-links">
+    <a href="https://www.globalsovereignuniversity.org">Home</a>
+    <a href="https://www.globalsovereignuniversity.org/bookgames">Library</a>
+    <a href="https://www.globalsovereignuniversity.org/tradification">Tradification Hub</a>
+    <a href="https://www.amazon.com/dp/B0GRTHD1GK?tag=gsu2026-20" target="_blank">Buy on Amazon</a>
+    <a href="https://www.globalsovereignuniversity.org/sovereign-handshake">Join GSU</a>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+     ══════════════════════════════════════ -->
+<script>
+// ── QUIZ ENGINE ──
+const QUESTIONS = [
+  {
+    q: "Dr. Constant defines 'tax-free wealth' as which of the following?",
+    opts: [
+      "Money saved in a tax-exempt retirement account",
+      "Value you generate by not spending money you would have spent",
+      "Income earned from repair work as a side job",
+      "Savings from buying items on sale"
+    ],
+    correct: 1,
+    feedback: "Correct. Tax-free wealth requires no paycheck, no invoice, and no employer approval. A five-minute fix that keeps forty dollars in your account behaves like income — without taxes or permission."
+  },
+  {
+    q: "The Three-Number Repair Test has three numbers. What is 'Number One'?",
+    opts: [
+      "The repair cost including parts and tools",
+      "The risk cost if repair goes wrong",
+      "The replacement total — full price including acquisition time and friction",
+      "The learning value gained from attempting the repair"
+    ],
+    correct: 2,
+    feedback: "Right. Replacement cost is rarely just the sticker price. It includes acquisition time, setup friction, the second trip because the first item was wrong, and disposal of the old one."
+  },
+  {
+    q: "According to Chapter 7, what is the 'risk cost' in the Three-Number Repair Test?",
+    opts: [
+      "The emotional cost of not fixing something",
+      "The cost of buying the wrong replacement",
+      "The cost if the repair goes wrong — making the object unusable, creating a hazard, or voiding a warranty",
+      "The cost of calling a professional if you cannot complete the repair"
+    ],
+    correct: 2,
+    feedback: "Exactly right. Risk cost keeps the analysis sane. If the repair involves mains power or structural failure, the risk cost is high — and the economic decision often points to escalation."
+  },
+  {
+    q: "Chapter 7 says that when you complete a repair, you receive two things. What are they?",
+    opts: [
+      "A restored object and a receipt for parts",
+      "A restored object and a capability",
+      "A lesson in patience and a working item",
+      "A skill badge and time saved"
+    ],
+    correct: 1,
+    feedback: "Correct. When you buy a replacement, you receive an object and no durable skill. When you complete a repair, you receive an object and a capability. That capability reduces the cost of every future repair."
+  },
+  {
+    q: "What does Chapter 7 say about flinching and forcing during a repair?",
+    opts: [
+      "They are necessary for difficult repairs",
+      "They are signs of experience",
+      "They are expensive — they damage the expected value of repair",
+      "They are acceptable if you are under time pressure"
+    ],
+    correct: 2,
+    feedback: "Right. Flinching is expensive. Forcing is expensive. Confusion is expensive. Procedure makes repair economically predictable — and procedure is what Chapter 6's script was designed to produce."
+  },
+  {
+    q: "What is the first hidden value of maintenance described in Chapter 7?",
+    opts: [
+      "It reduces decision fatigue",
+      "It builds compounding capability",
+      "It converts catastrophic time into scheduled time",
+      "It improves the quality of replacement when needed"
+    ],
+    correct: 2,
+    feedback: "Correct. A repair performed under pressure costs more — not because the physics change, but because your decision-making degrades. Maintenance is a refusal to meet failure at the cliff edge."
+  },
+  {
+    q: "Chapter 7 describes 'avoided escalation' as part of tax-free wealth. What does this mean?",
+    opts: [
+      "Avoiding arguments about whether to repair or replace",
+      "Preventing small problems from becoming large, expensive ones before they can be cheaply fixed",
+      "Escaping the consumer cycle by buying nothing",
+      "Avoiding the need to escalate repairs to a professional"
+    ],
+    correct: 1,
+    feedback: "Right. A wobbling chair ignored becomes fretting wear, which enlarges holes and damages threads. The cheap fix is restoring clamping force early. The expensive fix is inserts, glue-ups, or a new chair. Maintenance protects the cheap version of the fix."
+  },
+  {
+    q: "According to Chapter 7, why does Autonomous Maintenance reduce decision fatigue?",
+    opts: [
+      "Because you outsource the decisions to a professional",
+      "Because you no longer own things that need decisions",
+      "Because standardized rhythms remove repeated micro-negotiations — the habit runs without deciding",
+      "Because maintenance always leads to the same answer: replace"
+    ],
+    correct: 2,
+    feedback: "Exactly. You do not decide whether to check chair bolts when students rock back. You do it weekly because it is the rule. When the decision disappears, you stop paying the hidden tax of procrastination."
+  },
+  {
+    q: "What are the three savings buckets in the Sovereignty Lab exercise?",
+    opts: [
+      "Parts cost, labor cost, and tool cost",
+      "Cash avoided, time avoided, and escalation avoided",
+      "Repair score, maintenance score, and replacement score",
+      "Immediate savings, long-term savings, and emotional savings"
+    ],
+    correct: 1,
+    feedback: "Correct. Cash avoided, time avoided, and escalation avoided. Then record the result in your maintenance log — because if you do not write it down, your mind will quietly credit the outcome to luck and return to the replacement reflex."
+  },
+  {
+    q: "Chapter 7 ends with a sentence it calls 'sovereignty in economic form.' What is it?",
+    opts: [
+      "I will never replace what I can repair.",
+      "The best tool is the one you already own.",
+      "I will spend five minutes to see if this is one of the easy problems.",
+      "Repair is not a virtue — it is a decision."
+    ],
+    correct: 2,
+    feedback: "Correct. That sentence respects your time, respects risk, and refuses the default tax of helplessness. It is not a commitment to fix everything. It is a commitment to look first — which is where most sovereign decisions begin."
+  }
+];
+
+let current = 0, score = 0, xp = 0, answered = false;
+const XP_PER_Q = 50;
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  document.getElementById('quiz-counter').textContent = `Question ${current+1} of ${QUESTIONS.length}`;
+  document.getElementById('quiz-question').textContent = q.q;
+  document.getElementById('quiz-feedback').style.display = 'none';
+  document.getElementById('quiz-next').style.display = 'none';
+  document.getElementById('badge-display').textContent = `${score} / ${QUESTIONS.length}`;
+  answered = false;
+
+  const opts = document.getElementById('quiz-options');
+  opts.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i, q.correct, q.feedback);
+    opts.appendChild(btn);
+  });
+}
+
+function selectAnswer(chosen, correct, feedback) {
+  if (answered) return;
+  answered = true;
+  const btns = document.querySelectorAll('.quiz-option');
+  btns.forEach(b => b.disabled = true);
+  btns[chosen].classList.add(chosen === correct ? 'correct' : 'wrong');
+  btns[correct].classList.add('correct');
+
+  const fb = document.getElementById('quiz-feedback');
+  if (chosen === correct) {
+    score++;
+    xp += XP_PER_Q;
+    fb.className = 'quiz-feedback correct';
+    fb.textContent = '✓ ' + feedback;
+  } else {
+    fb.className = 'quiz-feedback wrong';
+    fb.textContent = '✗ ' + feedback;
+  }
+  fb.style.display = 'block';
+  updateXP();
+
+  const nxt = document.getElementById('quiz-next');
+  nxt.textContent = current < QUESTIONS.length - 1 ? 'Next Question →' : 'See Results →';
+  nxt.style.display = 'inline-flex';
+}
+
+function updateXP() {
+  document.getElementById('xp-num').textContent = xp.toLocaleString() + ' XP';
+  document.getElementById('xp-fill').style.width = Math.min(100, (xp / (QUESTIONS.length * XP_PER_Q)) * 100) + '%';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= QUESTIONS.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-card').style.display = 'none';
+  const res = document.getElementById('quiz-result');
+  res.style.display = 'block';
+
+  const badges = [
+    { min:0,  name:'APPRENTICE',       crown:'○',  msg:'Every sovereign steward starts here. Read Chapter 7 — then come back.' },
+    { min:4,  name:'STEWARD',          crown:'✦',  msg:'You are beginning to see the arithmetic of repair. Read the chapter again and watch the patterns emerge.' },
+    { min:6,  name:'CRAFTSMAN',        crown:'★',  msg:'Strong understanding. The Three-Number Repair Test is yours. Now apply it to five real objects.' },
+    { min:8,  name:'SOVEREIGN STEWARD',crown:'⚑',  msg:'Excellent. You think like the Efficiency Classroom. The hidden values of maintenance are no longer hidden from you.' },
+    { min:10, name:'MASTER STEWARD',   crown:'✤',  msg:'Perfect score. This chapter is inside you now. Pass it on — that is how sovereignty scales.' }
+  ];
+
+  let badge = badges[0];
+  for (const b of badges) { if (score >= b.min) badge = b; }
+
+  document.getElementById('result-crown').textContent = badge.crown;
+  document.getElementById('result-badge-name').textContent = badge.name;
+  document.getElementById('result-score').textContent = `${score} of ${QUESTIONS.length} correct · ${xp.toLocaleString()} XP earned`;
+  document.getElementById('result-msg').textContent = badge.msg;
+}
+
+function restartQuiz() {
+  current = 0; score = 0; xp = 0;
+  updateXP();
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-card').style.display = 'block';
+  renderQuestion();
+}
+
+renderQuestion();
+
+// ── AR ENGINE ──
+let arLoaded = false;
+
+function launchAR() {
+  const overlay = document.getElementById('ar-overlay');
+  overlay.classList.add('open');
+  if (!arLoaded) { buildARScene(); arLoaded = true; }
+  document.getElementById('ar-status').textContent = 'Point your camera at the printed marker →';
+}
+
+function closeAR() {
+  document.getElementById('ar-overlay').classList.remove('open');
+  const container = document.getElementById('ar-scene-container');
+  container.innerHTML = '';
+  arLoaded = false;
+}
+
+function buildARScene() {
+  const container = document.getElementById('ar-scene-container');
+  container.innerHTML = `
+    <a-scene
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+      vr-mode-ui="enabled: false"
+      renderer="antialias: true; alpha: true"
+      style="width:100%;height:100vh;">
+
+      <a-assets>
+        <img id="geno-tex"
+          src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png"
+          crossorigin="anonymous">
+      </a-assets>
+
+      <a-marker preset="hiro" id="ar-marker">
+        <a-image
+          src="#geno-tex"
+          position="0 0.5 0"
+          rotation="-90 0 0"
+          width="1.2"
+          height="1.2"
+          animation="property: position; to: 0 0.8 0; dur: 1200; easing: easeInOutSine; loop: true; dir: alternate">
+        </a-image>
+        <a-text
+          value="Hello! I am GENO.&#10;Your Guide on the&#10;Sovereign Bridge."
+          position="0 1.6 0"
+          rotation="-90 0 0"
+          align="center"
+          color="#22b5a6"
+          font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+          width="2.5">
+        </a-text>
+        <a-ring
+          color="#C49A2C"
+          radius-inner="0.6"
+          radius-outer="0.65"
+          position="0 0 0"
+          rotation="-90 0 0"
+          animation="property: rotation; to: -90 360 0; dur: 4000; easing: linear; loop: true">
+        </a-ring>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>`;
+
+  const statusEl = document.getElementById('ar-status');
+
+  const marker = container.querySelector('#ar-marker');
+  if (marker) {
+    marker.addEventListener('markerFound', () => {
+      statusEl.textContent = '✓ GENO is here — marker detected';
+      statusEl.style.borderColor = 'rgba(26,139,127,0.5)';
+      speakGENO();
+    });
+    marker.addEventListener('markerLost', () => {
+      statusEl.textContent = 'Point your camera at the printed marker →';
+      statusEl.style.borderColor = 'rgba(255,255,255,0.15)';
+    });
+  }
+}
+
+function speakGENO() {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const msg = "Hello. I am GENO. Foundations of Repair is about something simple: the person who can fix what they own, owns it. That freedom begins with honest arithmetic and a five-minute test. Welcome to the Sovereign Trades Series.";
+  const u = new SpeechSynthesisUtterance(msg);
+  u.rate = 0.9; u.pitch = 1.05; u.volume = 1;
+  speechSynthesis.speak(u);
+}
+
+// ── ACTIVE NAV TAB ──
+const sections = ['play','read','hear','see','ar-section'];
+const tabs = document.querySelectorAll('.nav-tab');
+window.addEventListener('scroll', () => {
+  let active = 'play';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) active = id;
+  });
+  tabs.forEach(t => {
+    const href = t.getAttribute('href').replace('#','');
+    t.classList.toggle('active', href === active);
+  });
+}, { passive: true });
+
+// ── LOAD AR.JS ASYNC ──
+function loadARLibraries() {
+  const aframe = document.createElement('script');
+  aframe.src = 'https://cdnjs.cloudflare.com/ajax/libs/aframe/1.4.0/aframe.min.js';
+  aframe.onload = () => {
+    const arjs = document.createElement('script');
+    arjs.src = 'https://cdn.jsdelivr.net/npm/ar.js@2.2.2/aframe/build/aframe-ar.min.js';
+    document.head.appendChild(arjs);
+  };
+  document.head.appendChild(aframe);
+}
+window.addEventListener('load', loadARLibraries);
+</script>
+
+<!-- SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Book",
+      "name": "Foundations of Repair",
+      "author": {
+        "@type": "Person",
+        "name": "Dr. Gene A. Constant",
+        "honorificSuffix": "DBA",
+        "affiliation": "Global Sovereign University"
+      },
+      "publisher": {"@type": "Organization", "name": "Global Sovereign University Press"},
+      "description": "Why fixing what you own is the first step toward personal independence. Covers the economics of repair, the hidden value of maintenance, and the Three-Number Repair Test.",
+      "url": "https://geneconstant36-blip.github.io/gsu-assets/foundations-of-repair.html",
+      "sameAs": "https://www.amazon.com/dp/B0GRTHD1GK",
+      "genre": "Home Repair / Self-Reliance / Personal Finance",
+      "isAccessibleForFree": true,
+      "offers": [
+        {"@type": "Offer", "name": "Free Chapter Preview", "price": "0", "priceCurrency": "USD"},
+        {"@type": "Offer", "name": "Kindle Edition", "price": "3.99", "priceCurrency": "USD", "url": "https://www.amazon.com/dp/B0GRTHD1GK?tag=gsu2026-20"}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Three-Number Repair Test?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Three-Number Repair Test is a simple decision tool from Foundations of Repair by Dr. Gene Constant. Number one is the replacement total — full price including hidden time and friction. Number two is the repair total — parts plus realistic time for one safe attempt. Number three is the risk cost — what happens if repair goes wrong. Compare all three before deciding."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is tax-free wealth in the context of home repair?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tax-free wealth is value you create by not spending money you would have spent. If a five-minute repair keeps forty dollars in your account, that forty dollars behaves like income — but arrives without taxes and without permission from an employer. It is the core idea in Chapter 7 of Foundations of Repair."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where can I learn basic home repair for free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can learn basic home repair for free at Global Sovereign University's Tradification hub. The free preview of Foundations of Repair — including Chapter 7 on the economics of repair — is available to read on the GSU Library page with no signup and no cost."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
