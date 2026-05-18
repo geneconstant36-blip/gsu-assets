@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Readification Comprehension Certification · Global Sovereign University</title>
+<meta name="description" content="GSU's free, anonymous, publicly verifiable certification in reading comprehension — based on the five-pillar Reading Helix (phonological awareness, phonics, fluency, vocabulary, comprehension).">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/cert/readification/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1B2A4A; --teal: #1A8B7F; --gold: #C9A84C; --black: #000;
+  --ivory: #F5F1E8; --dim: #A8A49C; --red: #B85450; --green: #4A8B6F;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Lora', Georgia, serif;
+  background: var(--black); color: var(--ivory);
+  line-height: 1.65; font-size: 17px; min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+/* HEADER */
+.cert-header {
+  padding: 28px 24px; border-bottom: 1px solid rgba(201,168,76,0.2);
+  background: rgba(0,0,0,0.8);
+}
+.cert-header .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.cert-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ivory); }
+.cert-brand img { width: 44px; height: 44px; border-radius: 6px; background: var(--navy); padding: 4px; border: 1px solid rgba(201,168,76,0.3); }
+.cert-brand .b-name { font-family: 'Poppins',sans-serif; font-weight: 700; font-size: 16px; color: var(--gold); line-height: 1.1; }
+.cert-brand .b-sub { font-family: 'Poppins',sans-serif; font-size: 11px; color: var(--teal); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+.cert-status { font-family: 'Poppins',sans-serif; font-size: 11px; color: var(--dim); letter-spacing: 1.5px; text-transform: uppercase; }
+.cert-status .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--dim); margin-right: 6px; vertical-align: middle; }
+.cert-status .dot.ready { background: var(--green); }
+
+/* SCREENS */
+.screen { display: none; padding: 60px 24px; }
+.screen.active { display: block; }
+
+/* INTRO SCREEN */
+.intro h1 { font-size: 42px; line-height: 1.2; color: var(--ivory); margin-bottom: 14px; font-weight: 700; text-align: center; }
+.intro h1 .accent { color: var(--gold); }
+.intro .eyebrow { color: var(--teal); font-family: 'Poppins',sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; text-align: center; margin-bottom: 16px; }
+.intro .dek { font-size: 19px; color: var(--dim); font-style: italic; text-align: center; max-width: 640px; margin: 0 auto 36px; }
+
+.intro-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin: 28px 0 36px; }
+.intro-stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.25); padding: 22px 14px; border-radius: 10px; text-align: center; }
+.intro-stat .n { font-size: 28px; color: var(--gold); font-weight: 700; line-height: 1; }
+.intro-stat .l { font-family: 'Poppins',sans-serif; font-size: 11px; color: var(--dim); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 6px; }
+
+.intro-rules { background: rgba(26,139,127,0.07); border: 1px solid rgba(26,139,127,0.3); border-radius: 10px; padding: 24px 28px; margin-bottom: 28px; }
+.intro-rules h3 { font-family: 'Poppins',sans-serif; font-size: 13px; color: var(--teal); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.intro-rules ul { list-style: none; padding: 0; font-size: 15px; }
+.intro-rules li { padding: 6px 0 6px 26px; position: relative; color: var(--ivory); }
+.intro-rules li::before { content: "→"; color: var(--gold); position: absolute; left: 0; font-weight: 700; }
+.intro-rules strong { color: var(--gold); }
+
+.intro-pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 32px; }
+.pillar-pill { background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.25); padding: 14px 16px; border-radius: 8px; text-align: center; font-family: 'Poppins',sans-serif; font-size: 13px; color: var(--ivory); }
+.pillar-pill .pn { font-size: 10px; color: var(--gold); letter-spacing: 2px; display: block; margin-bottom: 4px; }
+
+.start-btn-row { text-align: center; }
+.btn-primary {
+  display: inline-block; background: var(--gold); color: var(--navy);
+  padding: 16px 36px; border: none; border-radius: 8px; cursor: pointer;
+  font-family: 'Poppins',sans-serif; font-weight: 700; font-size: 15px;
+  letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.15s;
+}
+.btn-primary:hover:not(:disabled) { background: #D8B95C; transform: translateY(-2px); box-shadow: 0 4px 14px rgba(201,168,76,0.35); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary {
+  display: inline-block; background: transparent; color: var(--gold);
+  padding: 14px 30px; border: 1px solid var(--gold); border-radius: 8px;
+  font-family: 'Poppins',sans-serif; font-weight: 600; font-size: 14px;
+  letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+  cursor: pointer; transition: all 0.15s;
+}
+.btn-secondary:hover { background: rgba(201,168,76,0.1); }
+
+/* QUESTION SCREEN */
+.q-progress { padding: 12px 0; margin-bottom: 24px; }
+.q-progress-bar { background: rgba(255,255,255,0.08); border-radius: 4px; height: 6px; overflow: hidden; margin-bottom: 8px; }
+.q-progress-fill { background: linear-gradient(90deg, var(--teal), var(--gold)); height: 100%; transition: width 0.3s ease; border-radius: 4px; }
+.q-progress-text { font-family: 'Poppins',sans-serif; font-size: 12px; color: var(--dim); letter-spacing: 1.5px; text-transform: uppercase; display: flex; justify-content: space-between; }
+.q-progress-text strong { color: var(--gold); }
+
+.question-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 36px 32px; margin-bottom: 24px; }
+.q-pillar { font-family: 'Poppins',sans-serif; font-size: 11px; color: var(--teal); letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
+.q-text { font-size: 22px; color: var(--ivory); line-height: 1.5; margin-bottom: 26px; font-weight: 400; }
+
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+  display: block; padding: 16px 20px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px; cursor: pointer; font-size: 15px; color: var(--ivory);
+  transition: all 0.15s; font-family: 'Lora',serif;
+}
+.option:hover { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.06); }
+.option.selected { border-color: var(--gold); background: rgba(201,168,76,0.12); color: var(--gold); }
+.option input { display: none; }
+.option .opt-letter { display: inline-block; width: 28px; height: 28px; line-height: 26px; text-align: center; background: rgba(201,168,76,0.15); color: var(--gold); border-radius: 50%; font-family: 'Poppins',sans-serif; font-weight: 700; font-size: 12px; margin-right: 12px; }
+.option.selected .opt-letter { background: var(--gold); color: var(--navy); }
+
+.q-actions { display: flex; justify-content: space-between; align-items: center; }
+.q-back-btn { background: transparent; color: var(--dim); border: 1px solid rgba(255,255,255,0.15); padding: 12px 22px; border-radius: 6px; cursor: pointer; font-family: 'Poppins',sans-serif; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+.q-back-btn:hover:not(:disabled) { color: var(--ivory); border-color: var(--dim); }
+.q-back-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.q-next-btn { background: var(--gold); color: var(--navy); border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; font-family: 'Poppins',sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+.q-next-btn:hover:not(:disabled) { background: #D8B95C; }
+.q-next-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* RESULT SCREEN — CERTIFICATE */
+.result h2 { text-align: center; }
+.cert-display {
+  background: linear-gradient(135deg, #14110A 0%, #1B2A4A 100%);
+  border: 2px solid var(--gold); border-radius: 16px;
+  padding: 48px 36px; margin: 30px 0; position: relative; overflow: hidden;
+}
+.cert-display::before { content: ""; position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px; border: 1px solid rgba(201,168,76,0.4); border-radius: 10px; pointer-events: none; }
+.cert-tier { text-align: center; margin-bottom: 22px; }
+.cert-tier-badge { display: inline-block; padding: 10px 26px; background: var(--gold); color: var(--navy); border-radius: 30px; font-family: 'Poppins',sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 2.5px; text-transform: uppercase; }
+.cert-tier-badge.silver { background: #C0C0C0; }
+.cert-tier-badge.bronze { background: #CD7F32; color: var(--ivory); }
+.cert-tier-badge.platinum { background: linear-gradient(135deg, #E5E4E2, #B7B6B3); color: var(--navy); }
+
+.cert-title { font-family: 'Lora',serif; text-align: center; font-size: 14px; letter-spacing: 4px; color: var(--teal); text-transform: uppercase; font-weight: 600; margin-bottom: 8px; position: relative; z-index: 1; }
+.cert-subject { text-align: center; font-size: 38px; color: var(--gold); font-weight: 700; margin-bottom: 18px; letter-spacing: 1px; position: relative; z-index: 1; }
+.cert-body { text-align: center; font-size: 16px; color: var(--ivory); max-width: 480px; margin: 0 auto 24px; line-height: 1.7; position: relative; z-index: 1; }
+.cert-body strong { color: var(--gold); }
+.cert-score-row { display: flex; justify-content: center; gap: 32px; margin: 24px 0; flex-wrap: wrap; position: relative; z-index: 1; }
+.cert-score-item { text-align: center; }
+.cert-score-item .v { font-size: 28px; color: var(--gold); font-weight: 700; font-family: 'Lora',serif; }
+.cert-score-item .l { font-family: 'Poppins',sans-serif; font-size: 10px; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+.cert-serial-box { background: rgba(0,0,0,0.3); border: 1px solid rgba(201,168,76,0.3); padding: 16px 20px; border-radius: 8px; text-align: center; margin: 24px auto; max-width: 460px; position: relative; z-index: 1; }
+.cert-serial-label { font-family: 'Poppins',sans-serif; font-size: 10px; color: var(--teal); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 6px; }
+.cert-serial { font-family: 'Courier New', monospace; font-size: 18px; color: var(--gold); letter-spacing: 2px; font-weight: 700; word-break: break-all; }
+.cert-verify { font-family: 'Poppins',sans-serif; font-size: 11px; color: var(--dim); text-align: center; margin-top: 8px; word-break: break-all; }
+.cert-verify a { color: var(--teal); text-decoration: none; }
+.cert-footer { text-align: center; font-family: 'Poppins',sans-serif; font-size: 11px; color: var(--dim); letter-spacing: 1px; margin-top: 24px; position: relative; z-index: 1; }
+.cert-footer strong { color: var(--gold); }
+.cert-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+
+/* FAIL SCREEN — RETEST OR STUDY */
+.fail-banner { background: rgba(184,84,80,0.1); border: 2px solid var(--red); border-radius: 12px; padding: 32px; text-align: center; margin: 30px 0; }
+.fail-banner h3 { color: var(--red); font-size: 26px; margin-bottom: 12px; }
+.fail-banner p { color: var(--ivory); font-size: 16px; max-width: 520px; margin: 0 auto 18px; }
+.fail-banner .fb-score { font-size: 32px; color: var(--gold); font-weight: 700; margin: 14px 0; }
+
+.pillar-breakdown { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 22px 26px; margin: 24px 0; }
+.pillar-breakdown h4 { font-family: 'Poppins',sans-serif; font-size: 12px; color: var(--teal); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.pillar-row { display: flex; align-items: center; gap: 14px; padding: 8px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); font-size: 14px; }
+.pillar-row:last-child { border-bottom: none; }
+.pillar-row .pname { flex: 1; color: var(--ivory); }
+.pillar-row .pbar { flex: 1.2; background: rgba(255,255,255,0.06); height: 10px; border-radius: 5px; overflow: hidden; }
+.pillar-row .pbar-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); border-radius: 5px; }
+.pillar-row .pbar-fill.weak { background: var(--red); }
+.pillar-row .pct { color: var(--gold); font-weight: 700; min-width: 50px; text-align: right; font-family: 'Poppins',sans-serif; font-size: 13px; }
+
+/* LOADING + STATUS */
+.loading { text-align: center; padding: 80px 24px; }
+.spinner { width: 40px; height: 40px; border: 3px solid rgba(201,168,76,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { color: var(--dim); font-family: 'Poppins',sans-serif; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; }
+.error-banner { background: rgba(184,84,80,0.1); border: 1px solid var(--red); color: var(--ivory); padding: 14px 20px; border-radius: 6px; margin: 20px 0; font-size: 14px; }
+.error-banner strong { color: var(--red); }
+
+/* FOOTER */
+.site-foot { padding: 32px 24px; border-top: 1px solid rgba(201,168,76,0.15); text-align: center; font-family: 'Poppins',sans-serif; font-size: 12px; color: var(--dim); letter-spacing: 1px; margin-top: 40px; }
+.site-foot strong { color: var(--gold); }
+.site-foot a { color: var(--teal); text-decoration: none; }
+
+@media (max-width: 600px) {
+  .intro h1 { font-size: 30px; }
+  .intro .dek { font-size: 16px; }
+  .q-text { font-size: 18px; }
+  .question-card { padding: 24px 20px; }
+  .cert-display { padding: 32px 22px; }
+  .cert-subject { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<header class="cert-header">
+  <div class="container">
+    <a href="https://www.globalsovereignuniversity.org" class="cert-brand">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/695f9e3d929f6b2f0206ce82_gsu%20logo%20square%20256x256.png" alt="GSU">
+      <div>
+        <div class="b-name">Global Sovereign University</div>
+        <div class="b-sub">Comprehension Certification</div>
+      </div>
+    </a>
+    <div class="cert-status"><span class="dot" id="status-dot"></span><span id="status-text">Initializing…</span></div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ═══ INTRO SCREEN ═══ -->
+<section class="screen intro active" id="screen-intro">
+  <div class="eyebrow">Readification · Reading Helix Comprehension</div>
+  <h1>Earn your GSU <span class="accent">Reading Comprehension</span> Certification</h1>
+  <p class="dek">Free, anonymous, publicly verifiable. Built on the five-pillar Reading Helix grounded in the Science of Reading consensus.</p>
+
+  <div class="intro-stats">
+    <div class="intro-stat"><div class="n">25</div><div class="l">Questions</div></div>
+    <div class="intro-stat"><div class="n">5</div><div class="l">Pillars Tested</div></div>
+    <div class="intro-stat"><div class="n">80%</div><div class="l">Pass Threshold</div></div>
+    <div class="intro-stat"><div class="n">∞</div><div class="l">Free Forever</div></div>
+  </div>
+
+  <div class="intro-pillars">
+    <div class="pillar-pill"><span class="pn">Pillar 1</span>Phonological Awareness</div>
+    <div class="pillar-pill"><span class="pn">Pillar 2</span>Phonics &amp; Decoding</div>
+    <div class="pillar-pill"><span class="pn">Pillar 3</span>Fluency</div>
+    <div class="pillar-pill"><span class="pn">Pillar 4</span>Vocabulary</div>
+    <div class="pillar-pill"><span class="pn">Pillar 5</span>Comprehension</div>
+  </div>
+
+  <div class="intro-rules">
+    <h3>How the certification works</h3>
+    <ul>
+      <li><strong>25 questions</strong> drawn at random from a 50-question bank — 5 from each of the 5 Reading Helix pillars</li>
+      <li><strong>80% (20 of 25) to pass</strong> — Bronze 80-84%, Silver 85-89%, Gold 90-94%, Platinum 95-100%</li>
+      <li><strong>One retest</strong> if you score 70-79% on the first attempt</li>
+      <li><strong>Anonymous</strong> — no account creation, no email required, no data extracted</li>
+      <li><strong>Verifiable</strong> — every certificate has a unique serial, lookupable by anyone at the verification page</li>
+      <li><strong>Permanent record</strong> — once issued, a certificate is immutable in our database</li>
+    </ul>
+  </div>
+
+  <div class="start-btn-row">
+    <button class="btn-primary" id="start-btn" disabled>Begin Assessment →</button>
+    <p style="margin-top:14px; font-size:12px; color:var(--dim); font-family:'Poppins',sans-serif; letter-spacing:1px;" id="start-hint">Connecting to GSU's certification system…</p>
+  </div>
+</section>
+
+<!-- ═══ QUESTION SCREEN ═══ -->
+<section class="screen" id="screen-question">
+  <div class="q-progress">
+    <div class="q-progress-bar"><div class="q-progress-fill" id="progress-fill" style="width: 0%;"></div></div>
+    <div class="q-progress-text"><span>Question <strong id="qn-current">1</strong> of <strong id="qn-total">25</strong></span><span id="pillar-label">PHONOLOGICAL AWARENESS</span></div>
+  </div>
+
+  <div class="question-card">
+    <div class="q-pillar" id="q-pillar">Pillar 1 · Phonological Awareness</div>
+    <div class="q-text" id="q-text">Loading…</div>
+    <div class="options" id="options"></div>
+  </div>
+
+  <div class="q-actions">
+    <button class="q-back-btn" id="back-btn">← Previous</button>
+    <button class="q-next-btn" id="next-btn" disabled>Next →</button>
+  </div>
+</section>
+
+<!-- ═══ SUBMITTING SCREEN ═══ -->
+<section class="screen" id="screen-submitting">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div class="loading-text" id="submitting-text">Scoring your assessment…</div>
+  </div>
+</section>
+
+<!-- ═══ RESULT SCREEN (PASS) ═══ -->
+<section class="screen result" id="screen-pass">
+  <h2 style="text-align:center; color:var(--gold); font-size:32px; margin-bottom:8px;">✓ Certification Earned</h2>
+  <p style="text-align:center; color:var(--dim); font-size:15px; font-style:italic; margin-bottom:8px;">Permanently recorded · Publicly verifiable</p>
+
+  <div class="cert-display" id="cert-display">
+    <div class="cert-tier"><span class="cert-tier-badge" id="tier-badge">GOLD</span></div>
+    <div class="cert-title">Certificate of Reading Comprehension</div>
+    <div class="cert-subject" id="cert-subject">READIFICATION</div>
+    <div class="cert-body">
+      This certifies the bearer has demonstrated comprehension at the <strong id="tier-name">Gold</strong> level on the Reading Helix five-pillar framework, as established by Global Sovereign University — a 501(c)(3) educational foundation.
+    </div>
+    <div class="cert-score-row">
+      <div class="cert-score-item"><div class="v" id="cert-score">92%</div><div class="l">Final Score</div></div>
+      <div class="cert-score-item"><div class="v" id="cert-correct">23/25</div><div class="l">Correct</div></div>
+      <div class="cert-score-item"><div class="v" id="cert-date">May 17 2026</div><div class="l">Issued</div></div>
+    </div>
+    <div class="cert-serial-box">
+      <div class="cert-serial-label">Certificate Serial Number</div>
+      <div class="cert-serial" id="cert-serial">GSU-RD-20260517-A3F8C9</div>
+      <div class="cert-verify">Verify at <a href="https://www.globalsovereignuniversity.org/verify" id="verify-link">globalsovereignuniversity.org/verify</a></div>
+    </div>
+    <div class="cert-footer">
+      <strong>Global Sovereign University</strong> · Foundation for Global Instruction<br>
+      501(c)(3) · EIN 39-2716552 · Eugene, Oregon
+    </div>
+  </div>
+
+  <div class="cert-actions">
+    <button class="btn-primary" onclick="window.print()">Print / Save PDF</button>
+    <button class="btn-secondary" onclick="copySerial()">Copy Serial Number</button>
+    <a href="https://www.globalsovereignuniversity.org" class="btn-secondary">Return to GSU</a>
+  </div>
+</section>
+
+<!-- ═══ RESULT SCREEN (NEAR MISS — 70-79%) ═══ -->
+<section class="screen result" id="screen-retest">
+  <div class="fail-banner">
+    <h3>Not Quite — One Retest Available</h3>
+    <div class="fb-score" id="retest-score">76%</div>
+    <p>You scored <strong id="retest-correct">19 of 25</strong>. The certification requires 80% (20 of 25). The good news: you're close, and you've earned one retest. Review the pillars where you scored lowest, then come back.</p>
+  </div>
+
+  <div class="pillar-breakdown">
+    <h4>Your pillar breakdown</h4>
+    <div id="retest-pillars"></div>
+  </div>
+
+  <div class="cert-actions">
+    <button class="btn-primary" onclick="restartAssessment()">Retake Assessment →</button>
+    <a href="https://www.globalsovereignuniversity.org/readification" class="btn-secondary">Study the Reading Helix</a>
+  </div>
+</section>
+
+<!-- ═══ RESULT SCREEN (FAIL — under 70%) ═══ -->
+<section class="screen result" id="screen-study">
+  <div class="fail-banner">
+    <h3>Not Yet — Study First, Then Return</h3>
+    <div class="fb-score" id="study-score">58%</div>
+    <p>You scored <strong id="study-correct">14 of 25</strong>. The certification requires 80%, and your current score suggests there's substantial ground to cover before retesting. We recommend studying the Reading Helix pillar material — particularly the pillars where you scored lowest — and returning when you're ready.</p>
+  </div>
+
+  <div class="pillar-breakdown">
+    <h4>Your pillar breakdown</h4>
+    <div id="study-pillars"></div>
+  </div>
+
+  <div class="cert-actions">
+    <a href="https://www.globalsovereignuniversity.org/readification" class="btn-primary">Study the Reading Helix →</a>
+    <button class="btn-secondary" onclick="restartAssessment()">Try Again Anyway</button>
+  </div>
+</section>
+
+</div>
+
+<footer class="site-foot">
+  <p><strong>Global Sovereign University</strong> · Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
+  <p style="margin-top:8px;">Building a Bridge to Freedom Through Education — Not Handouts · <a href="https://www.globalsovereignuniversity.org/quid-pro-quo">Quid Pro Quo</a></p>
+</footer>
+
+<script type="module">
+// ═══════════════════════════════════════════════════════════════════════════
+// FIREBASE INITIALIZATION — CDN modular import, no npm required
+// ═══════════════════════════════════════════════════════════════════════════
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAmFycf1iMeISLzjWgbxnuSB1BJ3BuWB_U",
+  authDomain: "gsu-certification.firebaseapp.com",
+  projectId: "gsu-certification",
+  storageBucket: "gsu-certification.firebasestorage.app",
+  messagingSenderId: "124413390849",
+  appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let firebaseReady = false;
+let currentUser = null;
+
+const statusDot = document.getElementById('status-dot');
+const statusText = document.getElementById('status-text');
+const startBtn = document.getElementById('start-btn');
+const startHint = document.getElementById('start-hint');
+
+// Anonymous auth on load
+signInAnonymously(auth).then(() => {
+  // success — wait for onAuthStateChanged
+}).catch((err) => {
+  console.error("Auth error:", err);
+  statusText.textContent = "Connection error";
+  startHint.innerHTML = '<span style="color:var(--red)">Could not connect to Firebase. Refresh to retry.</span>';
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser = user;
+    firebaseReady = true;
+    statusDot.classList.add('ready');
+    statusText.textContent = "Ready · Anonymous";
+    startBtn.disabled = false;
+    startHint.textContent = "All systems connected — anonymous session ready.";
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// QUESTION BANK — 50 questions, 5 pillars × 10 each
+// All standardized to multiple-choice with 4 options. correct = index (0-3)
+// ═══════════════════════════════════════════════════════════════════════════
+const QUESTIONS = [
+  // ─── PILLAR 1 · PHONOLOGICAL AWARENESS ───
+  { id: 1, pillar: 1, text: "The smallest unit of sound in a word is called:", options: ["A syllable", "A phoneme", "A morpheme", "A grapheme"], correct: 1 },
+  { id: 2, pillar: 1, text: "How many phonemes are in the word \"ship\"?", options: ["Two", "Three", "Four", "Five"], correct: 1 },
+  { id: 3, pillar: 1, text: "Phonological awareness is mainly:", options: ["A reading skill — practiced silently with text", "An oral skill — practiced with spoken sounds", "A writing skill — practiced with letters", "A spelling skill — practiced with whole words"], correct: 1 },
+  { id: 4, pillar: 1, text: "Which task best develops phoneme blending in a beginning reader?", options: ["Memorizing sight words from flashcards", "Saying the sounds /c/ /a/ /t/ aloud and asking what word they make", "Copying letters in a workbook", "Reading silently from a leveled book"], correct: 1 },
+  { id: 5, pillar: 1, text: "If you remove the /s/ from the spoken word \"stop\", what word remains?", options: ["Top", "Pot", "Sop", "Tops"], correct: 0 },
+  { id: 6, pillar: 1, text: "Rhyming is most directly an example of:", options: ["Phonics", "Phonological awareness", "Fluency", "Comprehension"], correct: 1 },
+  { id: 7, pillar: 1, text: "Phoneme segmentation is the ability to:", options: ["Read fluently with expression", "Break a spoken word into its individual sounds", "Recognize sight words instantly", "Understand a passage's main idea"], correct: 1 },
+  { id: 8, pillar: 1, text: "Which is generally harder for a beginning reader?", options: ["Phoneme blending", "Phoneme segmentation", "Recognizing rhymes", "Clapping syllables"], correct: 1 },
+  { id: 9, pillar: 1, text: "Phonemic awareness is best understood as:", options: ["The same thing as phonics", "A sub-skill of phonological awareness, focused on individual sounds", "An advanced reading comprehension strategy", "An optional skill, only needed for some readers"], correct: 1 },
+  { id: 10, pillar: 1, text: "The strongest evidence base for phonological awareness as a literacy foundation comes from:", options: ["Anecdotes from individual teachers", "Decades of empirical research, including the National Reading Panel", "Social media discussions and parent forums", "A single influential teaching guide"], correct: 1 },
+
+  // ─── PILLAR 2 · PHONICS AND DECODING ───
+  { id: 11, pillar: 2, text: "\"Decoding\" in reading means:", options: ["Understanding what a text is really about", "Connecting letters and letter groups to their sounds to read a word", "Reading aloud with expression", "Memorizing words by their shape"], correct: 1 },
+  { id: 12, pillar: 2, text: "A consonant blend is best described as:", options: ["One letter making one sound", "Two or three consonants together with each retaining its sound (e.g., \"bl\" in \"blue\")", "A silent letter at the start of a word", "A pair of vowels making one sound"], correct: 1 },
+  { id: 13, pillar: 2, text: "The \"magic e\" in \"cake\" tells the reader to:", options: ["Make the c sound hard", "Make the a long", "Make the k silent", "Stop reading at that point"], correct: 1 },
+  { id: 14, pillar: 2, text: "Which spelling pattern represents the long-a sound?", options: ["\"ay\" as in \"play\" only", "\"ai\" as in \"rain\" only", "\"a_e\" as in \"cake\" only", "All of the above are long-a patterns"], correct: 3 },
+  { id: 15, pillar: 2, text: "Systematic phonics instruction has been shown by research to be more effective than:", options: ["No phonics instruction", "Implicit phonics", "Whole-language-only instruction", "All of the above"], correct: 3 },
+  { id: 16, pillar: 2, text: "The \"sh\" in \"ship\" is best classified as:", options: ["A blend", "A digraph", "A trigraph", "A silent letter"], correct: 1 },
+  { id: 17, pillar: 2, text: "Which word is the best example of a CVC (consonant-vowel-consonant) pattern?", options: ["Tree", "Cat", "Play", "Bread"], correct: 1 },
+  { id: 18, pillar: 2, text: "Sight words are best defined as:", options: ["Words children should guess from pictures", "High-frequency words that learners benefit from recognizing instantly", "Words that cannot be decoded by any means", "Words used only in poetry"], correct: 1 },
+  { id: 19, pillar: 2, text: "Spelling instruction reinforces decoding because:", options: ["It forces children to memorize patterns", "It strengthens the same letter-sound mappings used in reading", "It mainly teaches handwriting form", "It doesn't actually reinforce decoding"], correct: 1 },
+  { id: 20, pillar: 2, text: "The phrase \"phonics first\" in reading instruction means:", options: ["Teach only phonics, nothing else", "Establish decoding skill before expecting fluent reading or independent comprehension", "Skip comprehension instruction entirely", "Avoid using books in the classroom"], correct: 1 },
+
+  // ─── PILLAR 3 · FLUENCY ───
+  { id: 21, pillar: 3, text: "Reading fluency is best described as:", options: ["Reading as fast as possible", "Reading with appropriate accuracy, rate, and expression", "Reading silently in long stretches", "Memorizing whole passages"], correct: 1 },
+  { id: 22, pillar: 3, text: "A fluent reader is one who:", options: ["Can decode every word in isolation perfectly", "Decodes words automatically enough that mental energy goes to meaning", "Always skips hard words for speed", "Reads only easy texts"], correct: 1 },
+  { id: 23, pillar: 3, text: "Prosody in reading refers to:", options: ["Reading accuracy", "The expression, phrasing, and natural rhythm in reading aloud", "Reading speed alone", "Reading silently"], correct: 1 },
+  { id: 24, pillar: 3, text: "Repeated reading of the same passage builds fluency because:", options: ["It tests the reader's memory", "It gives the brain practice on the same words and phrases", "It teaches comprehension directly", "It doesn't actually help much"], correct: 1 },
+  { id: 25, pillar: 3, text: "Which is NOT considered a good fluency-building practice?", options: ["Repeated reading", "Forcing children to read texts far above their decoding level", "Reader's theater", "Listening to a fluent reader model the text"], correct: 1 },
+  { id: 26, pillar: 3, text: "Words Correct Per Minute (WCPM) primarily measures:", options: ["Comprehension depth", "Reading rate plus accuracy", "Vocabulary breadth", "Phonics knowledge"], correct: 1 },
+  { id: 27, pillar: 3, text: "If a reader decodes accurately but slowly and without expression, the most likely bottleneck is:", options: ["Phonics", "Fluency", "Vocabulary", "Phonological awareness"], correct: 1 },
+  { id: 28, pillar: 3, text: "Reading speed alone is NOT a sufficient sign of strong reading because:", options: ["Faster is always better", "A reader can read fast without comprehending", "Speed is rarely measured", "Speed and comprehension are identical"], correct: 1 },
+  { id: 29, pillar: 3, text: "Fluency is sometimes called the bridge between:", options: ["Phonics and comprehension", "Decoding and meaning", "Word recognition and language understanding", "All of the above describe the same bridge"], correct: 3 },
+  { id: 30, pillar: 3, text: "Choral reading is best described as:", options: ["A memorization exercise", "A group reading aloud together in unison", "Silent reading for comprehension", "Singing the words to a melody"], correct: 1 },
+
+  // ─── PILLAR 4 · VOCABULARY ───
+  { id: 31, pillar: 4, text: "Vocabulary breadth refers to:", options: ["The depth of knowledge for each word", "How many words a reader knows", "Reading speed", "Reading aloud"], correct: 1 },
+  { id: 32, pillar: 4, text: "Vocabulary depth refers to:", options: ["How many words you know", "How richly you understand each word — its connotations, multiple meanings, related concepts", "Reading speed", "Silent reading habits"], correct: 1 },
+  { id: 33, pillar: 4, text: "The single strongest predictor of reading comprehension by middle school is:", options: ["Phonics knowledge", "Vocabulary knowledge", "Reading speed", "Handwriting quality"], correct: 1 },
+  { id: 34, pillar: 4, text: "\"Tier 2\" vocabulary refers to:", options: ["The most common everyday words (like \"go\" or \"happy\")", "Academic-but-not-specialized words used across many contexts (like \"analyze,\" \"establish,\" \"context\")", "Highly technical terms in one specific field only", "Slang and informal speech"], correct: 1 },
+  { id: 35, pillar: 4, text: "The best way to teach a new vocabulary word is to:", options: ["Define it once and move on", "Encounter it multiple times in meaningful contexts and use it actively", "Memorize its dictionary definition word-for-word", "Translate it into the student's first language"], correct: 1 },
+  { id: 36, pillar: 4, text: "Morphology is the study of:", options: ["Sentence structure", "Word parts — roots, prefixes, suffixes", "Speech sounds", "Whole-text meaning"], correct: 1 },
+  { id: 37, pillar: 4, text: "Knowing the prefix \"un-\" helps a reader understand:", options: ["Only one specific word", "A large family of words like unkind, unsafe, unhappy, undone", "Nothing useful for reading", "Only verbs"], correct: 1 },
+  { id: 38, pillar: 4, text: "Wide reading builds vocabulary because:", options: ["It doesn't, actually", "Readers encounter many more rare words in books than in everyday conversation", "Reading is faster than talking", "All texts use the same words"], correct: 1 },
+  { id: 39, pillar: 4, text: "Background knowledge supports vocabulary learning because:", options: ["It doesn't really help", "Understanding a topic makes new related words easier to learn and retain", "All words exist independently of each other", "Vocabulary is mostly innate"], correct: 1 },
+  { id: 40, pillar: 4, text: "Teaching root words (such as the Latin \"spect-\") supports vocabulary because:", options: ["It doesn't help much", "One root unlocks many related words (inspect, spectator, spectacular, suspect)", "It only helps with Latin", "It tends to confuse beginning readers"], correct: 1 },
+
+  // ─── PILLAR 5 · COMPREHENSION ───
+  { id: 41, pillar: 5, text: "Reading comprehension is best defined as:", options: ["The act of decoding", "Constructing meaning from text", "Reading speed", "Memorizing what you read"], correct: 1 },
+  { id: 42, pillar: 5, text: "The Simple View of Reading states that reading comprehension equals:", options: ["Decoding plus language comprehension (added together)", "Decoding multiplied by language comprehension", "Phonics minus fluency", "Vocabulary by itself"], correct: 1 },
+  { id: 43, pillar: 5, text: "A reader who decodes every word perfectly but doesn't understand the passage most likely has weakness in:", options: ["Phonics", "Fluency", "Language comprehension", "Phonological awareness"], correct: 2 },
+  { id: 44, pillar: 5, text: "Activating background knowledge before reading helps comprehension because:", options: ["It doesn't", "New text connects to existing knowledge, making understanding easier", "It slows reading down enough to catch errors", "It only helps with familiar topics"], correct: 1 },
+  { id: 45, pillar: 5, text: "Making inferences while reading means:", options: ["Memorizing the text", "Drawing conclusions the text implies but doesn't state directly", "Reading at faster speed", "Skipping the parts that are hard"], correct: 1 },
+  { id: 46, pillar: 5, text: "Comprehension strategies that research supports include:", options: ["Summarizing while reading", "Asking questions while reading", "Monitoring whether the text makes sense", "All of the above"], correct: 3 },
+  { id: 47, pillar: 5, text: "A reader who skips unknown words and \"guesses from context\" is using:", options: ["The recommended Science-of-Reading strategy", "A strategy that is sometimes useful but unreliable for unknown vocabulary", "The only valid reading approach", "The gold standard of fluent reading"], correct: 1 },
+  { id: 48, pillar: 5, text: "Reading comprehension can be most reliably tested by:", options: ["Measuring reading speed alone", "Asking the reader to summarize, explain, and answer questions about the text", "Phonics tests", "Sight-word recognition lists"], correct: 1 },
+  { id: 49, pillar: 5, text: "A child who reads \"The dog barked loudly\" aloud accurately but cannot answer \"what did the dog do?\" most likely has weakness in:", options: ["Decoding", "Language comprehension", "Reading fluency", "Handwriting"], correct: 1 },
+  { id: 50, pillar: 5, text: "The Reading Helix structure (phonological awareness → phonics → fluency → vocabulary → comprehension) is most consistent with:", options: ["One teacher's personal opinion", "The National Reading Panel, the Simple View of Reading, and Scarborough's Reading Rope", "Discredited educational theory", "An unrelated music education framework"], correct: 1 }
+];
+
+const PILLAR_NAMES = {
+  1: "Phonological Awareness",
+  2: "Phonics & Decoding",
+  3: "Fluency",
+  4: "Vocabulary",
+  5: "Comprehension"
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ASSESSMENT STATE
+// ═══════════════════════════════════════════════════════════════════════════
+const STATE = {
+  selectedQuestions: [],   // the 25 questions drawn for this attempt
+  answers: [],             // user's answer for each (index into shuffled options)
+  shuffledOpts: [],        // shuffled option order for each question (array of indices)
+  currentIdx: 0,
+  startedAt: null
+};
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function selectQuestions() {
+  // 5 from each pillar, randomly drawn from the 10 available
+  const selected = [];
+  for (let p = 1; p <= 5; p++) {
+    const pool = QUESTIONS.filter(q => q.pillar === p);
+    const shuffled = shuffleArray(pool);
+    selected.push(...shuffled.slice(0, 5));
+  }
+  return shuffleArray(selected); // shuffle the final 25 so pillars are interleaved
+}
+
+function startAssessment() {
+  STATE.selectedQuestions = selectQuestions();
+  STATE.answers = new Array(25).fill(null);
+  STATE.shuffledOpts = STATE.selectedQuestions.map(q => {
+    // shuffle option indices so the correct one isn't always in the same position
+    return shuffleArray([0,1,2,3]);
+  });
+  STATE.currentIdx = 0;
+  STATE.startedAt = new Date();
+  showScreen('screen-question');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const idx = STATE.currentIdx;
+  const q = STATE.selectedQuestions[idx];
+  const shuffled = STATE.shuffledOpts[idx];
+
+  document.getElementById('qn-current').textContent = idx + 1;
+  document.getElementById('qn-total').textContent = 25;
+  document.getElementById('progress-fill').style.width = ((idx + 1) / 25 * 100) + '%';
+  document.getElementById('pillar-label').textContent = PILLAR_NAMES[q.pillar].toUpperCase();
+  document.getElementById('q-pillar').textContent = `Pillar ${q.pillar} · ${PILLAR_NAMES[q.pillar]}`;
+  document.getElementById('q-text').textContent = q.text;
+
+  const optionsEl = document.getElementById('options');
+  optionsEl.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  shuffled.forEach((origIdx, displayIdx) => {
+    const label = document.createElement('label');
+    label.className = 'option';
+    if (STATE.answers[idx] === displayIdx) label.classList.add('selected');
+    label.innerHTML = `<span class="opt-letter">${letters[displayIdx]}</span>${q.options[origIdx]}`;
+    label.onclick = () => selectOption(displayIdx);
+    optionsEl.appendChild(label);
+  });
+
+  document.getElementById('back-btn').disabled = (idx === 0);
+  document.getElementById('next-btn').disabled = (STATE.answers[idx] === null);
+  document.getElementById('next-btn').textContent = (idx === 24) ? 'Submit Assessment →' : 'Next →';
+}
+
+function selectOption(displayIdx) {
+  STATE.answers[STATE.currentIdx] = displayIdx;
+  renderQuestion();
+}
+
+function goBack() {
+  if (STATE.currentIdx > 0) {
+    STATE.currentIdx--;
+    renderQuestion();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+}
+
+function goNext() {
+  if (STATE.answers[STATE.currentIdx] === null) return;
+  if (STATE.currentIdx < 24) {
+    STATE.currentIdx++;
+    renderQuestion();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  } else {
+    submitAssessment();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SCORING + RESULT
+// ═══════════════════════════════════════════════════════════════════════════
+function calculateResult() {
+  let correctCount = 0;
+  const pillarStats = {1:{correct:0,total:0}, 2:{correct:0,total:0}, 3:{correct:0,total:0}, 4:{correct:0,total:0}, 5:{correct:0,total:0}};
+
+  STATE.selectedQuestions.forEach((q, idx) => {
+    const userPickDisplayIdx = STATE.answers[idx];
+    const userPickOrigIdx = STATE.shuffledOpts[idx][userPickDisplayIdx];
+    const isCorrect = (userPickOrigIdx === q.correct);
+    if (isCorrect) {
+      correctCount++;
+      pillarStats[q.pillar].correct++;
+    }
+    pillarStats[q.pillar].total++;
+  });
+
+  const score = Math.round(correctCount / 25 * 100);
+  let tier = null;
+  if (score >= 95) tier = 'Platinum';
+  else if (score >= 90) tier = 'Gold';
+  else if (score >= 85) tier = 'Silver';
+  else if (score >= 80) tier = 'Bronze';
+
+  return { score, correctCount, tier, pillarStats };
+}
+
+function generateSerial() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const rand = Array.from({length: 6}, () => "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(Math.random() * 31)]).join('');
+  return `GSU-RD-${year}${month}${day}-${rand}`;
+}
+
+async function submitAssessment() {
+  showScreen('screen-submitting');
+  const result = calculateResult();
+  const submittingText = document.getElementById('submitting-text');
+
+  // Always record the attempt (whether pass or fail)
+  try {
+    submittingText.textContent = 'Recording your attempt…';
+    await addDoc(collection(db, 'attempts'), {
+      userId: currentUser.uid,
+      subject: 'readification',
+      startedAt: STATE.startedAt,
+      completedAt: serverTimestamp(),
+      score: result.score,
+      correctCount: result.correctCount,
+      totalQuestions: 25,
+      passed: result.score >= 80,
+      attemptNumber: 1
+    });
+  } catch (err) {
+    console.warn("Attempt write failed:", err);
+    // continue anyway — attempt logging isn't critical for the user experience
+  }
+
+  if (result.score >= 80) {
+    // PASS — issue certificate
+    submittingText.textContent = 'Issuing your certificate…';
+    const serial = generateSerial();
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+    try {
+      await setDoc(doc(db, 'certifications', serial), {
+        serial: serial,
+        subject: 'readification',
+        issued: serverTimestamp(),
+        score: result.score,
+        correctCount: result.correctCount,
+        totalQuestions: 25,
+        tier: result.tier,
+        revoked: false
+      });
+      renderPassCertificate(serial, result, dateStr);
+      showScreen('screen-pass');
+    } catch (err) {
+      console.error("Certificate write failed:", err);
+      // Show certificate anyway with note that it couldn't be saved
+      renderPassCertificate(serial, result, dateStr);
+      showScreen('screen-pass');
+      const verifyEl = document.querySelector('.cert-verify');
+      verifyEl.innerHTML = '<span style="color:var(--red)">⚠ Could not save to database. Take a screenshot. Refresh to retry.</span>';
+    }
+  } else if (result.score >= 70) {
+    // NEAR MISS — retest available
+    renderRetestScreen(result);
+    showScreen('screen-retest');
+  } else {
+    // FAIL — study and try again
+    renderStudyScreen(result);
+    showScreen('screen-study');
+  }
+}
+
+function renderPassCertificate(serial, result, dateStr) {
+  document.getElementById('tier-badge').textContent = result.tier.toUpperCase();
+  document.getElementById('tier-badge').className = 'cert-tier-badge ' + result.tier.toLowerCase();
+  document.getElementById('tier-name').textContent = result.tier;
+  document.getElementById('cert-score').textContent = result.score + '%';
+  document.getElementById('cert-correct').textContent = result.correctCount + '/25';
+  document.getElementById('cert-date').textContent = dateStr;
+  document.getElementById('cert-serial').textContent = serial;
+  const verifyUrl = `https://www.globalsovereignuniversity.org/verify?serial=${serial}`;
+  document.getElementById('verify-link').href = verifyUrl;
+  document.getElementById('verify-link').textContent = `globalsovereignuniversity.org/verify`;
+  window._certSerial = serial;
+}
+
+function renderRetestScreen(result) {
+  document.getElementById('retest-score').textContent = result.score + '%';
+  document.getElementById('retest-correct').textContent = result.correctCount + ' of 25';
+  renderPillarBreakdown('retest-pillars', result.pillarStats);
+}
+
+function renderStudyScreen(result) {
+  document.getElementById('study-score').textContent = result.score + '%';
+  document.getElementById('study-correct').textContent = result.correctCount + ' of 25';
+  renderPillarBreakdown('study-pillars', result.pillarStats);
+}
+
+function renderPillarBreakdown(containerId, stats) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  for (let p = 1; p <= 5; p++) {
+    const s = stats[p];
+    const pct = Math.round(s.correct / s.total * 100);
+    const row = document.createElement('div');
+    row.className = 'pillar-row';
+    row.innerHTML = `<div class="pname">Pillar ${p} · ${PILLAR_NAMES[p]}</div><div class="pbar"><div class="pbar-fill ${pct < 60 ? 'weak' : ''}" style="width:${pct}%"></div></div><div class="pct">${s.correct}/${s.total}</div>`;
+    container.appendChild(row);
+  }
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function restartAssessment() {
+  STATE.selectedQuestions = [];
+  STATE.answers = [];
+  STATE.shuffledOpts = [];
+  STATE.currentIdx = 0;
+  showScreen('screen-intro');
+  window.scrollTo({top: 0});
+}
+
+function copySerial() {
+  if (window._certSerial) {
+    navigator.clipboard.writeText(window._certSerial).then(() => {
+      alert('Serial copied: ' + window._certSerial);
+    });
+  }
+}
+
+// Expose handlers to global scope for inline onclick
+window.restartAssessment = restartAssessment;
+window.copySerial = copySerial;
+
+// Wire up buttons
+document.getElementById('start-btn').onclick = startAssessment;
+document.getElementById('back-btn').onclick = goBack;
+document.getElementById('next-btn').onclick = goNext;
+</script>
+</body>
+</html>
