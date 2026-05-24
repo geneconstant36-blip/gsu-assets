@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Comprehension Game — For Homeschool Families | Global Sovereign University</title>
+<meta name="description" content="Free comprehension lessons for homeschool families. Your child plays solo with GENO standing in when you can't. Bronze through Platinum on understanding what they read — earn a real free Certification from a real University.">
+
+<!-- Firebase compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<!-- GENO Convai Widget (loads the floating voice-enabled tutor in the corner) -->
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<!--
+================================================================================
+GSU READIFICATION · COMPREHENSION GAME v2 — TEMPLATE WITH HOMESCHOOL FRAMING
+Pillar 06 · Foundation Five · The certification pillar.
+
+CHANGES FROM v1:
+- Font sizes increased throughout (body 17px floor, question 23px, options 17px)
+- Questions expanded from 24 to 48 (12 per tier)
+- Hero copy reframed for homeschool families as primary audience
+- ElevenLabs Convai widget embedded directly (GENO floating, voice-enabled)
+- "Ask GENO about this question" contextual link on every explanation
+- Cert banner strengthened with homeschool angle
+
+IF APPROVED: Same pattern applies to the other 7 games.
+
+DEPLOY: https://read.globalsovereignuniversity.org/comprehension-game.html
+FIREBASE: users/{uid}/games/comprehension
+================================================================================
+-->
+
+<style>
+  :root {
+    --navy:#1B2A4A; --teal:#1A8B7F; --gold:#C9A84C; --cream:#F5F1E8;
+    --bronze:#CD7F32; --silver:#C0C0C0; --platinum:#E5E4E2;
+    --ink:#000; --text:#FFF; --muted:#B8BDC7;
+    --panel:#0a1428; --line:#1B2A4A; --correct:#22C55E; --wrong:#EF4444;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { font-size:17px; }
+  body { background:#000; color:var(--text); font-family:'Inter',-apple-system,system-ui,sans-serif; line-height:1.6; font-size:17px; }
+  a { color:var(--gold); text-decoration:none; }
+  a:hover { color:#D9B85C; text-decoration:underline; }
+
+  .nav-strip { background:#000; border-bottom:1px solid var(--line); padding:16px 24px; display:flex; justify-content:space-between; align-items:center; font-size:15px; }
+  .nav-strip .back { color:var(--cream); display:inline-flex; align-items:center; gap:8px; font-weight:600; }
+  .nav-strip .back:hover { color:var(--gold); text-decoration:none; }
+  .nav-strip .brand { color:var(--gold); font-weight:800; letter-spacing:1.5px; text-transform:uppercase; font-size:13px; }
+
+  .hero { background:linear-gradient(180deg,#0a1428 0%,#000 100%); padding:64px 24px 48px; text-align:center; border-bottom:1px solid var(--line); }
+  .hero-eyebrow { color:var(--teal); font-size:14px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:18px; }
+  .hero-title { font-size:54px; line-height:1.1; font-weight:800; letter-spacing:-0.02em; margin-bottom:18px; }
+  @media (max-width:600px) { .hero-title { font-size:36px; } }
+  .hero-title .accent { color:var(--gold); }
+  .hero-sub { color:#E8ECF3; font-size:20px; line-height:1.55; max-width:680px; margin:0 auto 22px; }
+  .hero-sub strong { color:var(--gold); }
+  .hero-source { color:#B8BDC7; font-size:16px; line-height:1.55; max-width:680px; margin:0 auto; font-style:italic; }
+  .hero-source strong { color:var(--cream); font-style:normal; font-weight:600; }
+
+  .cert-banner { background:linear-gradient(135deg,rgba(201,168,76,0.18) 0%,rgba(26,139,127,0.12) 100%); border:2px solid var(--gold); border-radius:10px; padding:18px 24px; max-width:680px; margin:28px auto 0; font-size:17px; line-height:1.55; color:var(--cream); }
+  .cert-banner strong { color:var(--gold); }
+  .cert-banner .small { font-size:14px; color:#B8BDC7; display:block; margin-top:6px; }
+
+  .tier-bar { max-width:760px; margin:32px auto 0; padding:0 24px; }
+  .tier-rail { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .tier-step { background:rgba(255,255,255,0.04); border:1px solid var(--line); border-radius:8px; padding:14px 10px; text-align:center; font-size:13px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); transition:all 0.25s; }
+  .tier-step.active { color:#000; border-color:transparent; }
+  .tier-step.active.bronze { background:var(--bronze); }
+  .tier-step.active.silver { background:var(--silver); }
+  .tier-step.active.gold { background:var(--gold); }
+  .tier-step.active.platinum { background:var(--platinum); }
+  .tier-step.done { color:#9CA3AF; border-color:rgba(34,197,94,0.4); background:rgba(34,197,94,0.08); }
+
+  .auth-pill { display:inline-flex; align-items:center; gap:10px; font-size:14px; color:var(--cream); padding:8px 16px; background:rgba(255,255,255,0.05); border:1px solid var(--line); border-radius:999px; margin-top:22px; letter-spacing:0.3px; }
+  .auth-pill .dot { width:8px; height:8px; border-radius:50%; background:var(--muted); }
+  .auth-pill.synced .dot { background:var(--correct); box-shadow:0 0 0 4px rgba(34,197,94,0.2); }
+
+  .game { max-width:780px; margin:32px auto; padding:0 24px 96px; }
+  .card { background:linear-gradient(180deg,var(--panel) 0%,#000 100%); border:1px solid var(--line); border-radius:14px; padding:36px; position:relative; overflow:hidden; }
+  .card::before { content:""; position:absolute; top:0; left:0; right:0; height:4px; background:var(--gold); }
+
+  .q-meta { display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; font-size:14px; color:var(--muted); letter-spacing:0.5px; text-transform:uppercase; flex-wrap:wrap; gap:8px; }
+  .q-meta .citation { color:var(--gold); font-style:italic; text-transform:none; letter-spacing:0; }
+
+  .q-text { font-size:23px; line-height:1.5; color:var(--text); margin-bottom:28px; font-weight:500; }
+  .q-text em { color:var(--gold); font-style:normal; font-weight:600; }
+  .q-text strong { color:var(--cream); }
+
+  .options { display:flex; flex-direction:column; gap:12px; }
+  .option { background:rgba(255,255,255,0.04); border:1.5px solid var(--line); border-radius:10px; padding:18px 22px; color:var(--text); font-size:17px; line-height:1.5; text-align:left; cursor:pointer; transition:all 0.18s; font-family:inherit; }
+  .option:hover { border-color:var(--teal); background:rgba(26,139,127,0.1); }
+  .option.picked { border-color:var(--gold); background:rgba(201,168,76,0.12); }
+  .option.correct { border-color:var(--correct); background:rgba(34,197,94,0.14); }
+  .option.wrong { border-color:var(--wrong); background:rgba(239,68,68,0.14); }
+  .option:disabled { cursor:default; }
+  .option em { color:var(--gold); font-style:normal; font-weight:600; }
+  .option strong { color:var(--cream); }
+
+  .explain { margin-top:28px; padding:22px 24px; background:rgba(26,139,127,0.1); border-left:4px solid var(--teal); border-radius:8px; font-size:17px; line-height:1.65; color:#E8ECF3; }
+  .explain strong { color:var(--cream); }
+  .explain em { color:var(--gold); font-style:normal; font-weight:600; }
+  .explain .source { display:block; margin-top:14px; font-size:14px; color:var(--muted); font-style:italic; }
+  .explain .geno-link { display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:10px 18px; background:rgba(201,168,76,0.12); border:1.5px solid var(--gold); border-radius:8px; font-size:15px; font-weight:600; color:var(--gold); text-decoration:none; transition:all 0.18s; }
+  .explain .geno-link:hover { background:rgba(201,168,76,0.22); transform:translateY(-1px); text-decoration:none; }
+  .explain .geno-link img { width:24px; height:24px; border-radius:50%; }
+  .explain.hidden { display:none; }
+
+  .controls { display:flex; justify-content:space-between; align-items:center; margin-top:28px; gap:16px; flex-wrap:wrap; }
+  .score { color:var(--cream); font-size:16px; }
+  .score strong { color:var(--gold); font-size:19px; }
+
+  .btn { background:var(--gold); color:#000; border:none; padding:14px 30px; font-size:15px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border-radius:8px; cursor:pointer; transition:all 0.2s; font-family:inherit; }
+  .btn:hover { background:#D9B85C; transform:translateY(-1px); }
+  .btn:disabled { opacity:0.4; cursor:default; transform:none; }
+  .btn.secondary { background:transparent; color:var(--text); border:1.5px solid var(--teal); }
+  .btn.secondary:hover { background:var(--teal); }
+  .btn.cert-claim { background:linear-gradient(135deg,var(--gold) 0%,#D9B85C 100%); color:#000; box-shadow:0 8px 28px rgba(201,168,76,0.45); font-size:16px; padding:16px 36px; }
+  .btn.cert-claim:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(201,168,76,0.6); }
+
+  .done-screen { text-align:center; padding:64px 24px; }
+  .done-medal { font-size:88px; margin-bottom:14px; }
+  .done-title { font-size:38px; font-weight:800; margin-bottom:18px; color:var(--gold); line-height:1.2; }
+  .done-sub { color:#E8ECF3; max-width:560px; margin:0 auto 32px; font-size:18px; line-height:1.6; }
+  .done-sub strong { color:var(--gold); }
+  .done-sub em { color:var(--cream); font-style:italic; font-weight:600; }
+  .done-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  .geno-callout-floating-hint { position:fixed; bottom:96px; right:24px; max-width:260px; background:rgba(10,20,40,0.96); border:1.5px solid var(--gold); border-radius:12px; padding:14px 16px; font-size:14px; line-height:1.5; color:var(--cream); z-index:9998; box-shadow:0 8px 28px rgba(0,0,0,0.5); display:none; }
+  .geno-callout-floating-hint.show { display:block; animation:fadeIn 0.4s ease; }
+  .geno-callout-floating-hint strong { color:var(--gold); }
+  .geno-callout-floating-hint .close-hint { position:absolute; top:6px; right:10px; cursor:pointer; color:var(--muted); font-size:18px; line-height:1; background:none; border:none; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:translateY(0);} }
+
+  .game-foot { text-align:center; padding:56px 24px; color:var(--cream); font-size:15px; border-top:1px solid var(--line); line-height:1.7; }
+  .game-foot a { margin:0 10px; font-weight:600; }
+  .game-foot p { margin-bottom:6px; }
+
+  /* Make the ElevenLabs widget visible above other content */
+  elevenlabs-convai { z-index:9999; }
+</style>
+</head>
+<body>
+
+<div class="nav-strip">
+  <a class="back" href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a>
+  <span class="brand">GSU · The Comprehension Game</span>
+</div>
+
+<header class="hero">
+  <div class="hero-eyebrow">For Homeschool Families · Reader's Toolkit · Pillar 06 · Foundation Five</div>
+  <h1 class="hero-title">The <span class="accent">Comprehension</span> Game</h1>
+  <p class="hero-sub">A free comprehension lesson your child can play on their own. <strong>With GENO, you never learn alone.</strong> Their progress saves. You can see exactly where they are.</p>
+  <p class="hero-source">Built on the comprehension research in <strong>How Sentences Carry Meaning</strong> — Reader's Toolkit Vol. 6 — by Dr. Gene A. Constant. <strong>GENO has read all eight Reader's Toolkit books</strong> and can answer any question your child asks, in voice or text, free.</p>
+
+  <div class="cert-banner">
+    🏆 <strong>When your child reaches Platinum, they can claim a free Comprehension Certification</strong> — issued by Global Sovereign University.
+    <span class="small">First of twelve certifications launching. Free. Anonymous. Publicly verifiable. Holding it in their hands means they can prove the skill — to college, employer, anyone.</span>
+  </div>
+
+  <div class="tier-bar">
+    <div class="tier-rail">
+      <div class="tier-step bronze active" id="tier-bronze">Bronze</div>
+      <div class="tier-step silver" id="tier-silver">Silver</div>
+      <div class="tier-step gold" id="tier-gold">Gold</div>
+      <div class="tier-step platinum" id="tier-platinum">Platinum</div>
+    </div>
+  </div>
+
+  <div class="auth-pill" id="auth-pill">
+    <span class="dot"></span>
+    <span id="auth-text">Connecting…</span>
+  </div>
+</header>
+
+<main class="game">
+  <div class="card" id="card"></div>
+</main>
+
+<!-- Floating hint pointing toward GENO widget (shows on first explanation, dismissable) -->
+<div class="geno-callout-floating-hint" id="geno-hint">
+  <button class="close-hint" onclick="document.getElementById('geno-hint').classList.remove('show')" aria-label="Close hint">×</button>
+  👇 <strong>That's GENO down there.</strong> Click his face to ask a question by voice or text — he knows the whole book.
+</div>
+
+<footer class="game-foot">
+  <p><strong>The Comprehension Game</strong> · Global Sovereign University · 501(c)(3) · <strong>Free forever</strong></p>
+  <p>
+    <a href="https://www.globalsovereignuniversity.org/readification">Readification Hub</a> ·
+    <a href="https://www.globalsovereignuniversity.org/certification">Free Certification</a> ·
+    <a href="https://www.globalsovereignuniversity.org/library">All Free Books</a>
+  </p>
+  <p style="margin-top:12px;color:#9CA3AF;font-size:14px;">Built for homeschool families. Free for adult learners. Available to anyone, anywhere — no login required.</p>
+</footer>
+
+<!-- The actual GENO widget (floating, voice-enabled, available throughout the game) -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+<script>
+const QUESTIONS = {
+  bronze: [
+    {
+      q: "What is <strong>reading comprehension</strong>?",
+      options: [
+        "Reading words out loud at the correct speed",
+        "Understanding what a text means — being able to think with it, summarize it, weigh it, and act on it",
+        "Memorizing a passage word for word",
+        "Speed-reading a book in under an hour"
+      ],
+      correct: 1,
+      explain: "<strong>Comprehension</strong> is the moment a sequence of decoded, fluently-read words becomes a thought the reader can hold, weigh, and act on. Reading is not complete when the words are pronounced — it is complete when the meaning lands. Every other reading pillar (phonics, fluency, vocabulary) exists to deliver the reader to this moment.",
+      cite: "Reader's Toolkit Vol. 6 — How Sentences Carry Meaning",
+      genoPrompt: "Can you explain what comprehension really means in a way my child will understand?"
+    },
+    {
+      q: "Which is the <strong>main idea</strong> of this passage? <em>'Many adults struggle with reading because they were never taught phonics systematically. The result is shame and avoidance. But adult phonics instruction works at any age — the brain remains capable of learning to decode well into the 70s and beyond.'</em>",
+      options: [
+        "Adults are ashamed of not reading",
+        "Adult phonics instruction is effective at any age and can address gaps left by poor schooling",
+        "Phonics was invented in the 1970s",
+        "Reading is impossible after a certain age"
+      ],
+      correct: 1,
+      explain: "The <strong>main idea</strong> is the controlling claim — what the writer most wants you to take away. Specific details (shame, the 70s, phonics history) support it. The other options confuse a detail or a misreading with the main point. Skilled readers separate the claim from the support, then test whether the support actually carries the claim.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 2",
+      genoPrompt: "How do I teach my child to find the main idea in a paragraph?"
+    },
+    {
+      q: "If you read a passage about a character who keeps checking the clock, glances at the door, and bites her lip, what can you <strong>infer</strong>?",
+      options: [
+        "She has a nervous habit",
+        "She is anxious or waiting for someone — the text says these behaviors; you infer the emotion",
+        "The author is biased",
+        "Nothing — the text does not say"
+      ],
+      correct: 1,
+      explain: "<strong>Inference</strong> is reading what the text implies, not just what it says directly. The text gives you behaviors; you connect those behaviors to a likely emotional state. Inference is a critical comprehension skill — most texts say less than they mean, and a reader who only sees the literal surface misses most of the message.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 3",
+      genoPrompt: "How can I help my child practice making inferences while reading?"
+    },
+    {
+      q: "Why is <strong>background knowledge</strong> important for comprehension?",
+      options: [
+        "It's not — comprehension depends only on the text in front of you",
+        "Because new information is understood by connecting it to what you already know; you literally cannot fully comprehend a text about something you have zero background on",
+        "Because schools require it",
+        "Because it helps you memorize faster"
+      ],
+      correct: 1,
+      explain: "Comprehension is <strong>not just decoding the text</strong> — it is integrating new text with what you already know. A passage about baseball reads easily for a baseball fan and confusingly for someone who has never seen a game, even if both can decode every word. This is why <em>E.D. Hirsch</em> argues that vocabulary alone cannot fix the comprehension gap — background knowledge does.",
+      cite: "E.D. Hirsch · Reader's Toolkit Vol. 6 · Chapter 4",
+      genoPrompt: "What background knowledge should I build with my homeschool child to help with reading?"
+    },
+    {
+      q: "What does it mean to <strong>summarize</strong> a passage?",
+      options: [
+        "Copy the first and last sentences",
+        "Compress the text to its essential meaning in your own words — main idea plus most important supporting details, everything else trimmed",
+        "Read the whole thing twice",
+        "Rewrite every paragraph at half length"
+      ],
+      correct: 1,
+      explain: "A <strong>summary</strong> captures what matters most — the main idea and its key supports — in your own words, with the inessential pruned. Good summarization is hard: it requires you to <em>understand</em> the text well enough to compress it without losing what makes it true. If you cannot summarize a passage, you have not fully comprehended it.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 5",
+      genoPrompt: "How can I teach my child to write a good summary?"
+    },
+    {
+      q: "What is the difference between <strong>fluency</strong> and <strong>comprehension</strong>?",
+      options: [
+        "They are the same thing",
+        "Fluency is reading words accurately at a natural pace with appropriate expression; comprehension is understanding what those words mean. Fluency is the bridge — comprehension is the destination",
+        "Fluency is for adults; comprehension is for children",
+        "Comprehension means reading silently"
+      ],
+      correct: 1,
+      explain: "<strong>Fluency</strong> is the bridge from decoding to comprehension. A fluent reader does not waste attention sounding out words — they read with enough automaticity that mental bandwidth is available for meaning. A reader can be fluent without comprehending (reciting a foreign-language text) or can comprehend slowly without fluency (a beginner reader laboring through). Both pillars matter; they are not the same.",
+      cite: "Reader's Toolkit Vol. 4 (Fluency) · Vol. 6 (Comprehension)",
+      genoPrompt: "My child reads fast but doesn't seem to remember what they read. What should I do?"
+    },
+    {
+      q: "What happens when a skilled reader encounters this sentence: <em>'The old farmhouse sat on a hill, paint peeling, porch sagging, with one chair turned over by the door'</em>?",
+      options: [
+        "They read the words and move on",
+        "They form a mental image — the visual of the farmhouse, the peeling paint, the toppled chair — which dramatically improves both comprehension and retention",
+        "They look for an actual picture",
+        "They skip past description"
+      ],
+      correct: 1,
+      explain: "Skilled readers automatically <strong>visualize</strong> — they form mental images from words. Research consistently shows this strategy dramatically improves both comprehension and retention. Teaching a child to <em>'make a movie in your head'</em> while reading is one of the most-validated comprehension strategies — and one of the easiest to model and practice at home.",
+      cite: "Reader's Toolkit Vol. 6 · Visualization research",
+      genoPrompt: "How do I teach my child to make pictures in their head while reading?"
+    },
+    {
+      q: "A skilled reader pauses before opening the next chapter and makes a <strong>prediction</strong> about what will happen. Why?",
+      options: [
+        "It saves time",
+        "Active prediction engages the reader's mind in the text, primes background knowledge to receive new information, and makes meaning-making faster — even when the prediction turns out wrong",
+        "It helps them finish faster",
+        "It doesn't help comprehension at all"
+      ],
+      correct: 1,
+      explain: "<strong>Prediction</strong> is active reading. Asking <em>'what's about to happen?'</em> or <em>'what will the author argue next?'</em> primes the brain to receive new information. Even when the prediction turns out wrong, the act of making it improves comprehension because it engages the reader actively. This is one of the easiest strategies to model at home — ask your child to predict before each chapter and discuss what surprised them.",
+      cite: "Reader's Toolkit Vol. 6 · Prediction research",
+      genoPrompt: "What kinds of prediction questions should I ask my child before they read a chapter?"
+    },
+    {
+      q: "When a reader connects new text to something they already know, what is happening?",
+      options: [
+        "They are losing focus on the reading",
+        "They are building a richer mental model — new information gets integrated into existing knowledge networks, making it both more comprehensible AND more memorable",
+        "They are becoming biased",
+        "They are forgetting the new content"
+      ],
+      correct: 1,
+      explain: "Reading is not absorption — it is <strong>integration</strong>. New information that connects to existing knowledge becomes part of a larger network, making it easier to remember and apply later. This is why background knowledge matters so much for comprehension — and why content-rich curricula (history, science, geography, civics) reinforce reading. Encourage your child to say <em>'this reminds me of…'</em> as they read.",
+      cite: "Reader's Toolkit Vol. 6 · Schema theory · Anderson & Pearson",
+      genoPrompt: "How does background knowledge build comprehension for kids?"
+    },
+    {
+      q: "A child asks <em>'why did the character do that?'</em> while reading. What does this signal about their comprehension?",
+      options: [
+        "They are not understanding the book",
+        "They are engaged in active comprehension — questioning is one of the strongest signs of healthy reading, showing the child is processing the text rather than just decoding it",
+        "They need to stop reading",
+        "They are distracted from the story"
+      ],
+      correct: 1,
+      explain: "<strong>Question-asking during reading</strong> is one of the strongest signs of healthy comprehension. The child isn't confused — they're <em>thinking</em> about the text. Skilled readers naturally generate questions; teaching children to do this explicitly (out loud, in writing, in conversation) accelerates comprehension growth. Welcome the questions; they are the work happening.",
+      cite: "Reader's Toolkit Vol. 6 · Active reading strategies",
+      genoPrompt: "My child asks lots of questions while reading — is that normal and what should I do?"
+    },
+    {
+      q: "Reading meaning slips at the end of a difficult paragraph. What is the skilled response?",
+      options: [
+        "Keep going and hope it becomes clearer",
+        "Go back to the start of the paragraph and re-read with closer attention. Re-reading is not failure — it is the skilled response to meaning loss",
+        "Skip the paragraph entirely",
+        "Stop reading the book"
+      ],
+      correct: 1,
+      explain: "<strong>Re-reading is the skilled reader's natural response to meaning loss.</strong> Less-skilled readers either don't notice the loss or push through anyway. Teaching children that re-reading is the <em>right move</em> — not a sign of weakness — is one of the most important comprehension lessons. Self-monitoring (catching when meaning slips) plus re-reading (rebuilding it) is the comprehension engine.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 6 · Self-monitoring",
+      genoPrompt: "How do I help my child notice when they've stopped understanding what they're reading?"
+    },
+    {
+      q: "A skilled reader skims a recipe to find an ingredient but reads a contract word by word. What does this teach about reading?",
+      options: [
+        "One of these is being done wrong",
+        "Skilled readers <em>adjust their reading style to their purpose</em> — skimming for quick information, deep reading for understanding. The same person should be able to do both, depending on the task",
+        "All reading must be at the same speed",
+        "Skimming is always wrong"
+      ],
+      correct: 1,
+      explain: "<strong>Reading purpose shapes reading style.</strong> Skimming a recipe to locate butter is appropriate; skimming a contract before signing it is not. Deep-reading every dense paragraph of a novel is appropriate; deep-reading every email is exhausting. Teaching children to <em>match their reading to their purpose</em> is one of the most powerful comprehension lessons — and one that pays off for life.",
+      cite: "Reader's Toolkit Vol. 6 · Rate-purpose matching",
+      genoPrompt: "How do I teach my child when to read slowly and carefully versus when to skim?"
+    }
+  ],
+  silver: [
+    {
+      q: "A reader encounters: <em>'Despite the rain, the parade continued.'</em> What relationship does <em>despite</em> signal?",
+      options: [
+        "Cause and effect — the rain caused the parade to continue",
+        "Contrast — what came before would normally prevent what comes after, but didn't",
+        "Sequence — first rain, then parade",
+        "Comparison — rain and parade are similar"
+      ],
+      correct: 1,
+      explain: "<strong>Despite, although, however, nevertheless, yet</strong> all signal <em>contrast</em> — they tell the reader 'what's coming next runs against what just came.' Readers who recognize these <em>signal words</em> process meaning faster because they predict the shape of the upcoming sentence. This is part of how sentence structure carries meaning — and it's directly teachable.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 4",
+      genoPrompt: "What are the most important signal words my child should learn to spot while reading?"
+    },
+    {
+      q: "When a reader reaches the end of a complex paragraph and realizes they have no idea what it said, what should they do?",
+      options: [
+        "Keep reading — it'll probably make sense later",
+        "Stop, return to the start of the paragraph, and re-read with closer attention. Catching the meaning failure is the signal; re-reading is the response",
+        "Switch to a different book",
+        "Skip the paragraph and continue"
+      ],
+      correct: 1,
+      explain: "<strong>Self-monitoring</strong> is the comprehension skill of noticing when meaning has slipped. Skilled readers catch the slip and respond — usually by re-reading. Unskilled readers either don't notice the slip or do notice but keep going anyway. The habit to build: <em>pause when meaning breaks, and rebuild it.</em> Teaching this explicitly to a homeschool child changes their reading life.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 6",
+      genoPrompt: "How do I teach my child to monitor their own understanding while reading?"
+    },
+    {
+      q: "What is <strong>context clues</strong>, and how do skilled readers use them?",
+      options: [
+        "Random hints in the text that mean nothing",
+        "Surrounding words, sentences, and the topic that help a reader figure out the meaning of an unfamiliar word without breaking flow to look it up",
+        "Footnotes in academic texts",
+        "Pictures next to the text"
+      ],
+      correct: 1,
+      explain: "<strong>Context clues</strong> are the surrounding text that hints at an unfamiliar word's meaning. <em>'The arid landscape held no water at all'</em> — the context tells you <em>arid</em> means dry, even if you've never seen the word. Skilled readers use context clues constantly, alongside morphology (word parts) and phonics (decoding), to keep reading without breaking flow. Vocabulary grows through reading because of context.",
+      cite: "Reader's Toolkit Vol. 5 (Vocabulary) · Vol. 6 (Comprehension)",
+      genoPrompt: "How can I teach my child to use context clues to figure out new words?"
+    },
+    {
+      q: "A reader is asked: <em>'What is the author's purpose in this passage?'</em> The four most common purposes are:",
+      options: [
+        "Happy, sad, angry, surprised",
+        "Inform, persuade, entertain, explain — with combinations possible in any single text",
+        "Past, present, future, eternal",
+        "Easy, medium, hard, impossible"
+      ],
+      correct: 1,
+      explain: "<strong>Author's purpose</strong> usually falls into four categories: <strong>inform</strong> (give the reader facts), <strong>persuade</strong> (change the reader's mind), <strong>entertain</strong> (engage the reader's interest), <strong>explain</strong> (help the reader understand something). Most real texts combine purposes — a persuasive essay also informs; an explanatory text may also entertain. Recognizing purpose helps a reader weigh the text appropriately.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 7",
+      genoPrompt: "How do I help my child figure out what an author is trying to do in a text?"
+    },
+    {
+      q: "How does <strong>text structure</strong> (compare/contrast, cause/effect, sequence, problem/solution) support comprehension?",
+      options: [
+        "It doesn't — structure is decoration",
+        "Recognizing the structure tells the reader what to expect and where to look for meaning — different structures organize information differently, and skilled readers adjust attention accordingly",
+        "Structure only matters for fiction",
+        "Structure makes texts longer"
+      ],
+      correct: 1,
+      explain: "Texts are <em>built</em>, and the build tells you how to read. A <strong>compare/contrast</strong> passage lines up similarities and differences — look for the lining. A <strong>cause/effect</strong> passage moves from causes to consequences — look for the link. A <strong>sequence</strong> walks through time — look for order. A reader who recognizes structure reads with the grain rather than against it.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 8",
+      genoPrompt: "What text structures should I teach my homeschool child to recognize?"
+    },
+    {
+      q: "What is <strong>active reading</strong>, and how is it different from passive reading?",
+      options: [
+        "Active reading means reading aloud; passive means reading silently",
+        "Active reading is engaged — questioning, predicting, connecting, summarizing as you go. Passive reading is letting words pass without mental work. Comprehension comes from active reading",
+        "Active reading is for school; passive reading is for fun",
+        "There is no real difference"
+      ],
+      correct: 1,
+      explain: "<strong>Active reading</strong> is comprehension as a practice: predict before you read, ask questions while you read, connect to prior knowledge, summarize when you finish a section, notice when meaning breaks. <strong>Passive reading</strong> is letting words pass through your eyes without engagement. The same text produces vastly different comprehension depending on mode. Active reading is teachable, and it's the difference between scrolling and learning.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 9",
+      genoPrompt: "How can I help my child shift from passive to active reading?"
+    },
+    {
+      q: "<em>'It rained all night, so by morning the river had flooded the lower fields.'</em> What text structure is this?",
+      options: [
+        "Compare and contrast",
+        "Cause and effect — the rain caused the flooding; the word <em>so</em> is the signal",
+        "Sequence in time only",
+        "Description"
+      ],
+      correct: 1,
+      explain: "<strong>Cause and effect</strong> structures move from causes to consequences. Signal words: <em>because, so, therefore, as a result, consequently, due to</em>. Recognizing this pattern helps the reader predict what's coming and integrate the information. A reader who notices the <em>so</em> in this sentence is already doing causal reasoning — the foundation of scientific and analytical reading.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 8",
+      genoPrompt: "What are the signal words for cause and effect that my child should know?"
+    },
+    {
+      q: "A passage about traditional schools and homeschooling alternates between them, listing similarities and differences. What text structure is this?",
+      options: [
+        "Sequence in time",
+        "Compare and contrast — the writer is putting two things side by side to highlight similarities and differences. Recognizing this tells the reader to look for the lining-up",
+        "Cause and effect only",
+        "Persuasion in disguise"
+      ],
+      correct: 1,
+      explain: "<strong>Compare/contrast structures</strong> put two or more things side by side. The skilled reader recognizes the pattern and tracks similarities and differences as they emerge. Signal words: <em>similarly, likewise, however, in contrast, on the other hand, both, neither</em>. This is one of the most common informational structures and a foundation of analytical thinking.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 8",
+      genoPrompt: "How do I help my child track comparisons across a long article?"
+    },
+    {
+      q: "<em>'First, she gathered her supplies. Then she opened the book. Next, she began to read. Finally, she closed her notebook.'</em> What structure?",
+      options: [
+        "Description",
+        "Sequence — the actions happen in time order, marked by signal words <em>first, then, next, finally</em>",
+        "Compare and contrast",
+        "Cause and effect"
+      ],
+      correct: 1,
+      explain: "<strong>Sequence structures</strong> move through time. Common in narratives, recipes, instructions, historical writing. Signal words: <em>first, second, third, then, next, after, before, finally, meanwhile, eventually</em>. Skilled readers track time order; younger readers benefit from explicit sequence-tracking practice — drawing a timeline, listing the steps in order, retelling in sequence.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 8",
+      genoPrompt: "What's a good homeschool activity for teaching sequence in stories?"
+    },
+    {
+      q: "A paragraph opens: <em>'Reading comprehension depends on more than just decoding. Vocabulary, background knowledge, working memory, and reading purpose all play roles. A reader weak in any one will struggle even with strong decoding.'</em> Which is the main idea?",
+      options: [
+        "Vocabulary matters most",
+        "Reading comprehension depends on more than just decoding — multiple factors contribute to it",
+        "Working memory exists",
+        "All readers struggle eventually"
+      ],
+      correct: 1,
+      explain: "The <strong>main idea</strong> is the controlling claim — the sentence(s) that everything else supports. Specific details (vocabulary, background knowledge, working memory) are supporting evidence. Skilled readers separate the claim from the support; the test is whether the details would even make sense without the controlling claim above them.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 2",
+      genoPrompt: "Walk through how to find the main idea in a paragraph with my child."
+    },
+    {
+      q: "A homeschool parent wants their child to retain a chapter better. Which note-taking strategy has the strongest research support?",
+      options: [
+        "Copying the text word-for-word",
+        "Active strategies — summarizing in their own words, identifying main ideas, drawing concept maps, generating questions. Passive copying produces very weak retention",
+        "Highlighting everything",
+        "Memorizing entire passages"
+      ],
+      correct: 1,
+      explain: "Note-taking research consistently shows that <strong>active strategies</strong> (summarizing, mapping, questioning) produce much stronger retention than <strong>passive ones</strong> (copying, highlighting everything). The active engagement is what consolidates memory. Teaching children to summarize in their own words is one of the highest-leverage homeschool literacy practices — and it doubles as comprehension practice.",
+      cite: "Reader's Toolkit Vol. 6 · Note-taking research",
+      genoPrompt: "What note-taking method should I teach my homeschool child for chapter books?"
+    },
+    {
+      q: "Why does recognizing text structure matter for comprehension?",
+      options: [
+        "It doesn't really matter",
+        "Different structures organize information differently — a cause/effect text needs a different reading approach than a sequence text. Recognizing the structure gives the reader a map for the territory",
+        "Only writers care about structure",
+        "Structure is irrelevant to meaning"
+      ],
+      correct: 1,
+      explain: "Texts are <strong>built in patterns</strong>. A reader who recognizes the pattern reads with the grain. A reader who doesn't reads against it. Teaching children the common structures — <em>cause/effect, compare/contrast, sequence, problem/solution, description</em> — gives them a map for any informational text they encounter. It's one of the highest-leverage comprehension lessons in homeschool curriculum.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 8",
+      genoPrompt: "Can you give me a homeschool lesson plan for teaching text structures?"
+    }
+  ],
+  gold: [
+    {
+      q: "The <strong>Simple View of Reading</strong> (Gough & Tunmer, 1986) proposes that reading comprehension equals what?",
+      options: [
+        "Just decoding skill",
+        "Decoding × Language Comprehension. Both must be present; if either is zero, reading comprehension is zero",
+        "Vocabulary alone",
+        "Practice plus motivation"
+      ],
+      correct: 1,
+      explain: "The <strong>Simple View of Reading</strong>: <em>R = D × LC</em>. Reading comprehension equals decoding skill multiplied by language comprehension (ability to understand spoken language). If either is zero, reading comprehension is zero. This is why phonics and language development together drive reading outcomes — and why a reader strong in one but weak in the other still struggles. The pillars must compound.",
+      cite: "Gough & Tunmer (1986) · Reader's Toolkit Vol. 6 · Chapter 10",
+      genoPrompt: "Explain the Simple View of Reading to me as a homeschool parent."
+    },
+    {
+      q: "Why does <em>E.D. Hirsch</em> argue that the <strong>vocabulary-comprehension gap</strong> cannot be closed by vocabulary instruction alone?",
+      options: [
+        "Because vocabulary doesn't matter at all",
+        "Because comprehension depends on the network of background knowledge in which words sit — knowing the word <em>'Senate'</em> doesn't help if you don't know what a senate does. Vocabulary words are tips of knowledge icebergs",
+        "Because there are too many words in English",
+        "Because vocabulary instruction is too expensive"
+      ],
+      correct: 1,
+      explain: "Hirsch's argument: <strong>vocabulary is the visible surface of background knowledge</strong>. A student who knows the word <em>Constitution</em> but not what's in it cannot read a Civics passage about Constitutional arguments. Closing the comprehension gap requires building <em>both</em> word knowledge and the rich knowledge networks behind those words. A serious reading curriculum is also a serious content curriculum.",
+      cite: "Hirsch · Cultural Literacy · Reader's Toolkit Vol. 6 · Chapter 11",
+      genoPrompt: "What background knowledge subjects should be in my homeschool curriculum to build reading?"
+    },
+    {
+      q: "What is <strong>Kintsch's Construction-Integration model</strong> of comprehension?",
+      options: [
+        "A theory that comprehension is purely visual",
+        "A model where comprehension happens in two phases: construction (build a text-base from the words) and integration (fold it into a situation model of what the text is really about, using prior knowledge)",
+        "A method of teaching reading to children",
+        "A model that rejects phonics"
+      ],
+      correct: 1,
+      explain: "<strong>Walter Kintsch's Construction-Integration model</strong>: comprehension happens in two phases. <strong>Construction</strong> builds a literal representation of the text — propositions about what the sentences say. <strong>Integration</strong> connects that text-base to your existing knowledge, building a <em>situation model</em> — your mental simulation of what the text is really about. The difference is <em>'I read the words'</em> versus <em>'I understand what they mean.'</em>",
+      cite: "Kintsch · Comprehension · Reader's Toolkit Vol. 6 · Chapter 12",
+      genoPrompt: "How does the Construction-Integration model help me teach reading?"
+    },
+    {
+      q: "Why are <strong>reciprocal teaching</strong> strategies (Brown & Palincsar, 1984) — predict, question, clarify, summarize — so effective for struggling readers?",
+      options: [
+        "They are not actually effective",
+        "They make the invisible mental moves of skilled readers visible and teachable — turning intuition into method. When a struggling reader learns to predict, question, clarify, and summarize explicitly, they begin doing what skilled readers do automatically",
+        "They replace phonics",
+        "They work only for college students"
+      ],
+      correct: 1,
+      explain: "Skilled readers run a constant internal commentary: <em>I think this is about…</em>, <em>What does this word mean?</em>, <em>Let me re-read that</em>, <em>So the point is…</em>. Struggling readers often don't. <strong>Reciprocal teaching</strong> externalizes these moves — students take turns running each step out loud — until they internalize. It's one of the most-replicated comprehension interventions in research, and it works beautifully in homeschool settings.",
+      cite: "Brown & Palincsar (1984) · NRP comprehension findings",
+      genoPrompt: "How do I use reciprocal teaching with my homeschool child?"
+    },
+    {
+      q: "What does <em>How Sentences Carry Meaning</em> argue about <strong>sentence structure and comprehension</strong>?",
+      options: [
+        "Sentence structure is irrelevant — only individual words matter",
+        "Sentence structure is itself a meaning-carrying system — subordinate clauses, modifier placement, voice, and parallelism all change what a sentence means, and a reader who can't parse structure misses meaning even when they know every word",
+        "Sentence structure only matters in poetry",
+        "Sentence structure is the writer's problem, not the reader's"
+      ],
+      correct: 1,
+      explain: "The central claim of Vol. 6: <strong>sentences are not just word bags</strong>. <em>The dog the cat chased ran</em> is different from <em>The dog chased the cat that ran</em>, even though the words overlap. Subordinate clauses, modifiers, voice, and parallelism are structural carriers of meaning. A reader who can decode every word but cannot parse the grammar misses the meaning. This is why GSU's Pillar 6 is specifically about <em>how sentences carry meaning</em>.",
+      cite: "Reader's Toolkit Vol. 6 · Closing",
+      genoPrompt: "How do I teach my child to parse long, complex sentences?"
+    },
+    {
+      q: "How does <strong>working memory</strong> limit comprehension — and what does this imply for homeschool instruction?",
+      options: [
+        "Working memory is unlimited",
+        "Working memory holds roughly 4-7 chunks at once. If decoding consumes the chunks, comprehension starves. Therefore: building automaticity in lower pillars (phonics, fluency) frees working memory for the higher pillar (comprehension)",
+        "Working memory only matters for math",
+        "Comprehension has nothing to do with memory"
+      ],
+      correct: 1,
+      explain: "<strong>Working memory</strong> is the mental scratchpad. It's limited — roughly 4-7 chunks at once. If decoding consumes all the chunks, there's no space left for comprehension. This is the deep reason phonics, fluency, and vocabulary all serve comprehension: they offload routine work, freeing working memory for meaning-making. A child struggling at the meaning level may not have a comprehension problem — they may have a foundation problem upstream.",
+      cite: "Reader's Toolkit Vol. 6 · Chapter 13",
+      genoPrompt: "Why does my child get tired when reading long passages? Is it working memory?"
+    },
+    {
+      q: "Reciprocal teaching uses four strategies: predict, question, clarify, summarize. Why are these particularly powerful in homeschool settings?",
+      options: [
+        "Because homeschools have no other options",
+        "The parent and child can naturally take turns running each strategy out loud — modeling skilled-reader behavior in conversation. The structure works beautifully one-on-one, which is exactly the homeschool situation",
+        "They only work in large classrooms",
+        "They replace the need for any other instruction"
+      ],
+      correct: 1,
+      explain: "Reciprocal teaching was designed for small-group instruction, and homeschool one-on-one is the ideal version. The parent and child take turns: <em>'Your turn to predict what's next.'</em> <em>'My turn to ask a question.'</em> <em>'You clarify that word.'</em> <em>'I'll summarize the section.'</em> Over time, the child internalizes all four moves. This is exactly the kind of guided practice that classroom teachers struggle to deliver — and homeschool parents can.",
+      cite: "Brown & Palincsar (1984) · Reader's Toolkit Vol. 6",
+      genoPrompt: "Give me a step-by-step example of reciprocal teaching I can do with my child today."
+    },
+    {
+      q: "The <strong>QAR framework</strong> (Raphael, 1986) teaches readers to recognize four question types: 'Right There', 'Think and Search', 'Author and You', 'On My Own'. Why does this matter?",
+      options: [
+        "It doesn't matter — all questions are alike",
+        "Different questions require different strategies. A reader who treats every question as 'Right There' misses inference; one who treats every question as 'On My Own' ignores the text. Teaching the types teaches the strategies",
+        "All questions can be answered the same way",
+        "Children cannot learn this distinction"
+      ],
+      correct: 1,
+      explain: "The <strong>QAR framework</strong> helps readers match the question to the strategy. <strong>Right There</strong> = answer in one sentence. <strong>Think and Search</strong> = answer across multiple sentences. <strong>Author and You</strong> = combine text with reader's experience. <strong>On My Own</strong> = no text needed. Especially valuable in homeschool: when you write comprehension questions for your child, label the type — they learn to match their reading move to the question type.",
+      cite: "Raphael (1986) · Reader's Toolkit Vol. 6",
+      genoPrompt: "Help me write comprehension questions of all four QAR types for a chapter my child is reading."
+    },
+    {
+      q: "A skilled reader reads a comic book at 400 words per minute and a contract at 100 wpm. What is happening?",
+      options: [
+        "One is being read incorrectly",
+        "Reading rate is being adjusted to purpose — light material fast, dense material slow. Skilled readers do this automatically; struggling readers don't, which hurts comprehension on both ends",
+        "The reader is inconsistent",
+        "All reading should be at the same rate"
+      ],
+      correct: 1,
+      explain: "<strong>Rate-to-purpose matching</strong> is a marker of skilled reading. Reading a recipe at the same rate as a legal contract wastes time on the recipe and misses meaning in the contract. Teaching this explicitly — <em>'this text needs you to slow down; this text doesn't'</em> — builds metacognitive reading skill. It's also a great homeschool habit: name the purpose before each reading, and adjust the rate accordingly.",
+      cite: "Reader's Toolkit Vol. 6 · Rate adjustment research",
+      genoPrompt: "How do I help my child read different types of material at different speeds?"
+    },
+    {
+      q: "How does comprehension connect to critical thinking?",
+      options: [
+        "They are unrelated skills",
+        "Comprehension answers <em>'what does this say?'</em> Critical thinking adds <em>'should I believe it?'</em> Together they form complete reading — neither is enough alone",
+        "Critical thinking replaces comprehension",
+        "Comprehension prevents critical thinking"
+      ],
+      correct: 1,
+      explain: "Comprehension is the necessary precursor to critical thinking — you can't critically evaluate what you don't understand. But comprehension alone isn't enough. A reader who comprehends without judging is dangerously credulous; one who judges without comprehending is just contrarian. The two pillars work together. This is why GSU pairs Comprehension (Pillar 6) with Critical Reading (Pillar 7) — they are paired moves.",
+      cite: "Reader's Toolkit Vol. 6 · Vol. 7 (Critical Reading)",
+      genoPrompt: "When should I start teaching critical reading to my homeschool child?"
+    },
+    {
+      q: "A homeschool student reads three sources on the American Revolution and is asked to write a summary. What advanced comprehension skill is needed?",
+      options: [
+        "Memorization of facts",
+        "Synthesis — integrating multiple texts into a coherent understanding, noting agreements, disagreements, and gaps. This is a high-level comprehension skill that goes beyond single-text understanding",
+        "Speed reading all three texts",
+        "Translation between languages"
+      ],
+      correct: 1,
+      explain: "<strong>Multi-text synthesis</strong> is one of the highest-level comprehension skills. It requires holding multiple texts in mind, comparing them, noting where they agree and disagree, and constructing a coherent integrated understanding. Central to college-level reading and to thoughtful citizenship — and absolutely teachable in middle and high school homeschool settings. Start with two short articles on the same topic; build up.",
+      cite: "Reader's Toolkit Vol. 6 · Multi-text comprehension research",
+      genoPrompt: "How do I teach my middle-schooler to synthesize across multiple sources?"
+    },
+    {
+      q: "<em>'The teacher, despite having warned the class repeatedly about deadlines, ultimately decided to extend the due date.'</em> What makes this sentence harder than <em>'The teacher extended the due date.'</em>?",
+      options: [
+        "It's longer",
+        "Embedded clauses, subordinate phrases, and contrast signals all add cognitive load. Skilled readers parse complex syntax efficiently; less-skilled readers may lose the main subject-verb thread",
+        "It uses fancier words",
+        "It's not actually harder"
+      ],
+      correct: 1,
+      explain: "<strong>Sentence complexity</strong> is a hidden comprehension barrier. Long sentences with embedded clauses, multiple modifiers, and contrast markers tax working memory. A reader who can decode every word but loses the main subject-verb thread doesn't comprehend the sentence. Teaching children to identify the main subject and verb in complex sentences is an underrated comprehension skill — and a critical homeschool literacy lesson for older kids.",
+      cite: "Reader's Toolkit Vol. 6 · Syntactic complexity research",
+      genoPrompt: "How do I teach my child to parse long, complicated sentences?"
+    }
+  ],
+  platinum: [
+    {
+      q: "Charles Perfetti's <strong>Lexical Quality Hypothesis</strong> proposes what about comprehension?",
+      options: [
+        "Comprehension depends only on practice",
+        "The quality of your word representations — how precisely you know each word's meaning, sound, and spelling — predicts your comprehension. Vague word knowledge produces vague comprehension; precise knowledge produces precise comprehension",
+        "Vocabulary size is the only thing that matters",
+        "Comprehension cannot be measured"
+      ],
+      correct: 1,
+      explain: "<strong>Perfetti's Lexical Quality Hypothesis</strong>: comprehension scales with how <em>precisely</em> a reader knows each word — not just how many words they recognize, but how cleanly they retrieve meaning, sound, and spelling. A reader with thousands of fuzzy word representations comprehends worse than one with hundreds of precise ones. Active vocabulary work — using words in writing, defining them, distinguishing them from neighbors — matters more than passive exposure.",
+      cite: "Perfetti · Lexical Quality Hypothesis · Reader's Toolkit Vol. 6 · Chapter 14",
+      genoPrompt: "How do I help my child build deep, precise vocabulary knowledge?"
+    },
+    {
+      q: "The <strong>Matthew Effect</strong> in reading (named for the biblical verse 'to those who have, more shall be given') describes what?",
+      options: [
+        "Religious readers comprehend better than secular ones",
+        "Strong readers read more, which makes them stronger, which makes them read more — and the same compounds in reverse for weak readers, so gaps widen over time unless deliberately addressed",
+        "Younger readers comprehend better than older ones",
+        "Reading is irrelevant in modern life"
+      ],
+      correct: 1,
+      explain: "The <strong>Matthew Effect</strong> (Stanovich, 1986): reading is a compound-interest skill. Strong readers read more, encounter more words and ideas, build more vocabulary and background knowledge, and become even stronger readers. Weak readers avoid reading, fall further behind, and the gap widens every year. This is why <em>early intervention matters so much in homeschool</em> — and why GSU's free resources matter, because without deliberate intervention, the compound runs in reverse for an entire life.",
+      cite: "Stanovich (1986) · Matthew Effects in Reading",
+      genoPrompt: "How do I make sure my homeschool child gets the positive Matthew Effect in reading?"
+    },
+    {
+      q: "Recht & Leslie's classic 1988 experiment had <strong>high-knowledge poor readers and low-knowledge good readers</strong> read a passage about baseball. Who comprehended better?",
+      options: [
+        "The good readers, because reading skill matters most",
+        "The high-knowledge readers — even though they were technically poorer readers, their baseball knowledge overwhelmed the reading-skill gap. This proves background knowledge is a primary driver of comprehension",
+        "Both groups scored identically",
+        "Nobody could comprehend the passage"
+      ],
+      correct: 1,
+      explain: "The <strong>Recht & Leslie experiment</strong> is one of the most consequential studies in comprehension research. Poor readers who knew baseball <em>out-comprehended</em> good readers who didn't. The implication: <strong>comprehension is not just a generic skill</strong>. It is partly domain-specific. A reader who has read widely across many subjects has many domains to draw on; a reader who hasn't is comprehension-limited even with strong technical skills.",
+      cite: "Recht & Leslie (1988) · Hirsch · Reader's Toolkit Vol. 6 · Chapter 15",
+      genoPrompt: "What does the Recht & Leslie experiment mean for designing a homeschool reading curriculum?"
+    },
+    {
+      q: "How does <strong>reading on screens</strong> compare to reading on paper for deep comprehension, based on the research?",
+      options: [
+        "Screen reading is always better",
+        "Paper reading typically produces deeper comprehension on long, complex texts — the <em>Stavanger Declaration</em> (2019, 130+ researchers) and meta-analyses identify a small but consistent paper advantage. Mechanisms include better spatial memory, reduced distraction, and less skimming",
+        "There is no difference",
+        "Screen reading is for entertainment only"
+      ],
+      correct: 1,
+      explain: "The <strong>Stavanger Declaration</strong> (2019), backed by meta-analyses of 50+ studies, found that for <em>long-form, complex, informational</em> text, paper reading produces deeper comprehension than screen reading. The effect is small but consistent. Mechanisms: better spatial memory of where information sits on a page, less distraction, less tendency to skim. <em>For serious homeschool reading, print still has measurable advantages.</em>",
+      cite: "Stavanger Declaration (2019) · Delgado et al. meta-analysis",
+      genoPrompt: "Should my homeschool child read more on paper or on a tablet?"
+    },
+    {
+      q: "Why does <em>How Sentences Carry Meaning</em> argue that <strong>comprehension is a democratic skill</strong>, not just an academic one?",
+      options: [
+        "Because comprehension tests are required by law",
+        "Because a citizen who cannot critically comprehend a contract, a ballot, a news article, or a government document cannot fully participate in self-government. Comprehension is the foundation of consent — without it, every other right depreciates",
+        "Because comprehension is taught in schools",
+        "Because authors prefer democratic readers"
+      ],
+      correct: 1,
+      explain: "Gene's argument: <strong>literacy is the foundation of consent</strong>. A citizen who cannot critically read a contract signs unfair terms. A citizen who cannot critically read a ballot is governed by others' framings. A citizen who cannot read the news cannot weigh public claims. Comprehension is not just academic — it is the floor of self-government. <em>Education is the bridge to freedom, not handouts.</em> This is why homeschool families building deep readers are building free citizens.",
+      cite: "Reader's Toolkit Vol. 6 · Closing thesis · GSU mission",
+      genoPrompt: "Explain to me why deep reading is a citizenship issue for my children."
+    },
+    {
+      q: "When you can reliably comprehend across all the difficulty tiers, what does <em>The Comprehension Certification</em> represent?",
+      options: [
+        "A toy credential of no value",
+        "Verified evidence — anonymous, public, and free — that you can comprehend text at a real adult standard. Not seat-time. Not memorization. Demonstrated skill, certified by a university that does not sell credentials",
+        "A diploma from a regular university",
+        "A consolation prize"
+      ],
+      correct: 1,
+      explain: "GSU's <strong>Comprehension Certification</strong> is GSU's first verified credential — and it certifies a <em>real</em> skill, not seat-time. It is free, anonymous, and publicly verifiable. Eleven more certifications launch on Independence Day, July 4, 2026. A homeschool family who holds this certification has <em>proof</em> of their child's skill they can show to colleges, employers, or anyone who asks. <em>The certification is the prize. The prize is the proof.</em>",
+      cite: "GSU Comprehension Certification · /certification",
+      genoPrompt: "How does my homeschool child claim and use their Comprehension Certification?"
+    },
+    {
+      q: "The same word can mean different things in math class, history class, and science class. What does this imply for comprehension instruction?",
+      options: [
+        "Nothing — vocabulary is vocabulary",
+        "Comprehension is partly <em>disciplinary</em> — different fields have different conventions, vocabulary uses, and reading approaches. Teaching only 'generic' comprehension misses the discipline-specific layer that advanced reading requires",
+        "All disciplines read the same way",
+        "Only English class teaches reading"
+      ],
+      correct: 1,
+      explain: "<strong>Disciplinary literacy</strong> research (Shanahan & Shanahan) shows that historians, scientists, mathematicians, and literary scholars read <em>differently</em> — they ask different questions, weight different evidence, attend to different cues. Generic comprehension instruction gets a child to fifth grade; disciplinary literacy is what carries them into high school content. Increasingly important in homeschool curricula as kids move into upper grades.",
+      cite: "Shanahan & Shanahan · Disciplinary Literacy · Reader's Toolkit Vol. 6",
+      genoPrompt: "How do I teach my homeschooler that science reading is different from history reading?"
+    },
+    {
+      q: "How does cognitive load affect comprehension in a homeschool setting?",
+      options: [
+        "It doesn't affect comprehension",
+        "Comprehension consumes working memory. When working memory is taxed by other demands (decoding, distraction, anxiety, multitasking), comprehension degrades — even on familiar material. Protecting attention <em>is</em> protecting comprehension",
+        "Working memory is unlimited",
+        "Comprehension doesn't use the brain"
+      ],
+      correct: 1,
+      explain: "<strong>Cognitive load</strong> is the bottleneck of comprehension. When decoding consumes working memory, comprehension starves. When distraction (TV in the next room, sibling activity, phone notifications) consumes it, comprehension fragments. Teaching children to recognize their own working-memory state — and protecting <em>quiet, focused reading time</em> in the homeschool day — is a foundational comprehension practice. Pay off lasts a lifetime.",
+      cite: "Reader's Toolkit Vol. 6 · Cognitive load research",
+      genoPrompt: "How do I set up the right reading environment for my homeschool child?"
+    },
+    {
+      q: "A child can comprehend a fairy tale but struggles with a science text. What does this reveal about comprehension?",
+      options: [
+        "They cannot read at all",
+        "Comprehension is partly <em>genre-specific</em> — narrative comprehension and expository comprehension involve different structures, expectations, and strategies. Strong narrative comprehension doesn't automatically transfer to informational text",
+        "Science texts are too hard for children",
+        "They should only read fairy tales"
+      ],
+      correct: 1,
+      explain: "<strong>Narrative comprehension</strong> (stories) and <strong>expository comprehension</strong> (informational texts) are partly different skills. Story structures are intuitive — character, setting, problem, solution. Informational structures (cause/effect, compare/contrast) need explicit teaching. Homeschool curricula that balance both genres build broader comprehension. <em>Don't let your homeschool reading diet drift entirely into stories — informational reading is its own skill.</em>",
+      cite: "Reader's Toolkit Vol. 6 · Genre research",
+      genoPrompt: "Give me a list of great informational books for my elementary homeschool reader."
+    },
+    {
+      q: "In an AI-rich era where summaries are one click away, does deep comprehension still matter?",
+      options: [
+        "It doesn't — AI has made it obsolete",
+        "Yes — more, not less. AI summaries can <em>mirror</em> comprehension but cannot <em>replace</em> it. A citizen who relies entirely on someone else's summary — whether from a person or a model — is consenting to that summarizer's framing. Deep comprehension is the verification step",
+        "AI has made comprehension obsolete",
+        "Children should stop reading entirely"
+      ],
+      correct: 1,
+      explain: "AI summaries are useful — but they <em>mirror</em> comprehension, they don't <em>replace</em> it. A reader who relies entirely on AI summaries is consenting to the summarizer's framing without verification. Deep comprehension is what lets a reader verify — read the original, weigh it themselves, decide for themselves. <em>In an AI-rich era, comprehension matters more, not less.</em> This is the foundation the next generation needs — and it's what homeschool families can build deliberately.",
+      cite: "Reader's Toolkit Vol. 6 · GSU mission · Critical reading in AI era",
+      genoPrompt: "How do I raise a critical reader in an AI world?"
+    },
+    {
+      q: "Why does GSU treat the Comprehension Certification as a <strong>civil-rights asset</strong>, not just an academic credential?",
+      options: [
+        "Because it's required by law",
+        "Because a verified comprehension credential — free, anonymous, university-issued — gives a homeschool family, an adult learner, or anyone documented proof of a foundational skill they can use anywhere: college applications, employment, civic engagement. It is recovery of a recognition the system has denied many",
+        "Because it costs money to issue",
+        "Because only certain people deserve it"
+      ],
+      correct: 1,
+      explain: "Most credentials cost money. Most are tied to seat-time. Most exclude the people who most need them — adults whose schooling failed them, homeschool families outside the conventional system, anyone without resources to buy entry. <strong>GSU's Comprehension Certification is free, anonymous, university-issued, and based on demonstrated skill.</strong> It's recovery of a recognition the system has too often denied — a tool homeschool families can hold up to colleges, employers, and the public.",
+      cite: "GSU Comprehension Certification · GSU mission",
+      genoPrompt: "How can my homeschool family use the Comprehension Certification when applying to colleges?"
+    },
+    {
+      q: "What does <em>How Sentences Carry Meaning</em> say is the <strong>real prize</strong> of mastering comprehension as a homeschool family — or as anyone?",
+      options: [
+        "A higher reading score",
+        "<em>Sovereign comprehension</em> — the durable capacity to read what you encounter, weigh it for yourself, and act on what you find. Not a test result. Not a credential. The mind's working independence — built once, carried for life, free to give away to others",
+        "A certificate alone",
+        "Faster reading speed"
+      ],
+      correct: 1,
+      explain: "The real prize is <strong>sovereign comprehension</strong> — the durable capacity to read what you encounter, weigh it for yourself, and act on what you find. <em>Independent of any teacher, any tribe, any platform, any authority.</em> A homeschool family teaching this is building citizens who can read their own contracts, their own ballots, their own children's curricula — and pass the skill forward. The certificate is the proof. The skill is the prize. <em>The freedom is yours, and it is portable for life.</em>",
+      cite: "Reader's Toolkit Vol. 6 · Closing thesis · GSU mission",
+      genoPrompt: "Help me articulate why homeschool reading matters for the long term."
+    }
+  ]
+};
+
+// ============================================================
+//   FIREBASE
+// ============================================================
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain:        "gsu-handshake.firebaseapp.com",
+  projectId:         "gsu-handshake",
+  storageBucket:     "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId:             "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId:     "G-LZDRK48TL7"
+};
+let _firebase = null, _user = null;
+function initFirebase() {
+  try {
+    if (typeof firebase === 'undefined') throw new Error("Firebase compat SDK not loaded");
+    firebase.initializeApp(FIREBASE_CONFIG);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    _firebase = { auth, db };
+    auth.onAuthStateChanged((user) => { if (user) { _user = user; setAuthStatus("Playing as guest · synced", true); loadProgress(); } });
+    auth.signInAnonymously().catch((err) => { console.warn("Sign-in failed:", err); setAuthStatus("Playing local (offline)", false); });
+  } catch (err) { console.warn("Firebase init failed:", err); setAuthStatus("Playing local (offline)", false); }
+}
+function setAuthStatus(text, synced) {
+  const pill = document.getElementById('auth-pill');
+  const txt = document.getElementById('auth-text');
+  if (txt) txt.textContent = text;
+  if (pill) pill.classList.toggle('synced', !!synced);
+}
+async function saveProgress() {
+  if (!_firebase || !_user) return;
+  try {
+    const updateData = { tier: state.tier, score: state.score, questionsAnswered: state.qIdx, updatedAt: new Date().toISOString() };
+    if (state.tierScore > (state.personalBests[state.tier] || 0)) {
+      state.personalBests[state.tier] = state.tierScore;
+      updateData['best_' + state.tier] = state.tierScore;
+    }
+    await _firebase.db.collection('users').doc(_user.uid).collection('games').doc('comprehension').set(updateData, { merge: true });
+  } catch (err) { console.warn("Save failed:", err); }
+}
+async function loadProgress() {
+  if (!_firebase || !_user) return;
+  try {
+    const snap = await _firebase.db.collection('users').doc(_user.uid).collection('games').doc('comprehension').get();
+    if (snap.exists) {
+      const data = snap.data();
+      state.personalBests = { bronze: data.best_bronze||0, silver: data.best_silver||0, gold: data.best_gold||0, platinum: data.best_platinum||0 };
+      const total = state.personalBests.bronze + state.personalBests.silver + state.personalBests.gold + state.personalBests.platinum;
+      if (total > 0) setAuthStatus("Welcome back · Personal best: " + total + " / 48", true);
+    }
+  } catch (err) { console.warn("Load failed:", err); }
+}
+
+const TIERS = ['bronze','silver','gold','platinum'];
+const TIER_LABELS = { bronze:'Bronze', silver:'Silver', gold:'Gold', platinum:'Platinum' };
+const TIER_MEDALS = { bronze:'🥉', silver:'🥈', gold:'🥇', platinum:'💎' };
+const PASS_THRESHOLD = 0.75;
+const state = { tier:'bronze', qIdx:0, score:0, tierScore:0, tierQuestions:[], picked:null, showingExplain:false, done:false, personalBests:{bronze:0,silver:0,gold:0,platinum:0}, genoHintShown:false };
+
+function startTier(tier) {
+  state.tier = tier; state.qIdx = 0; state.tierScore = 0;
+  state.tierQuestions = [...QUESTIONS[tier]].sort(() => Math.random() - 0.5);
+  state.picked = null; state.showingExplain = false;
+  updateTierBar(); renderQuestion(); saveProgress();
+}
+function updateTierBar() {
+  TIERS.forEach((t) => {
+    const el = document.getElementById('tier-' + t);
+    if (!el) return;
+    el.classList.remove('active','done');
+    if (TIERS.indexOf(t) < TIERS.indexOf(state.tier)) el.classList.add('done');
+    if (t === state.tier) el.classList.add('active');
+  });
+}
+function renderQuestion() {
+  const q = state.tierQuestions[state.qIdx];
+  if (!q) { renderTierComplete(); return; }
+  const card = document.getElementById('card');
+  card.innerHTML = `
+    <div class="q-meta"><span>${TIER_MEDALS[state.tier]} ${TIER_LABELS[state.tier]} · Question ${state.qIdx + 1} of ${state.tierQuestions.length}</span><span class="citation">${q.cite}</span></div>
+    <div class="q-text">${q.q}</div>
+    <div class="options" id="options">${q.options.map((opt, i) => `<button class="option" data-i="${i}">${opt}</button>`).join('')}</div>
+    <div class="explain hidden" id="explain"></div>
+    <div class="controls"><div class="score">Tier score: <strong>${state.tierScore}</strong> / ${state.tierQuestions.length} · Total: <strong>${state.score}</strong></div><button class="btn" id="next-btn" disabled>Next →</button></div>`;
+  document.querySelectorAll('#options .option').forEach(btn => btn.addEventListener('click', () => pickAnswer(parseInt(btn.dataset.i))));
+  document.getElementById('next-btn').addEventListener('click', nextQuestion);
+}
+function pickAnswer(i) {
+  if (state.picked !== null) return;
+  const q = state.tierQuestions[state.qIdx];
+  state.picked = i;
+  if (i === q.correct) { state.score++; state.tierScore++; }
+  document.querySelectorAll('#options .option').forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === q.correct) btn.classList.add('correct');
+    else if (idx === i) btn.classList.add('wrong');
+  });
+  const ex = document.getElementById('explain');
+  const genoFace = 'https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png';
+  const genoLink = q.genoPrompt
+    ? `<a class="geno-link" href="https://www.globalsovereignuniversity.org/geno" target="_blank" rel="noopener"><img src="${genoFace}" alt="GENO">Ask GENO about this →</a>`
+    : '';
+  ex.innerHTML = `${q.explain}<span class="source">— ${q.cite}</span>${genoLink}`;
+  ex.classList.remove('hidden');
+  document.getElementById('next-btn').disabled = false;
+
+  // Show GENO floating hint on first question's first explanation
+  if (!state.genoHintShown && state.qIdx === 0) {
+    state.genoHintShown = true;
+    setTimeout(() => {
+      const hint = document.getElementById('geno-hint');
+      if (hint) {
+        hint.classList.add('show');
+        setTimeout(() => hint.classList.remove('show'), 12000);
+      }
+    }, 2000);
+  }
+}
+function nextQuestion() {
+  state.picked = null; state.qIdx++;
+  if (state.qIdx >= state.tierQuestions.length) renderTierComplete();
+  else renderQuestion();
+  saveProgress();
+}
+function renderTierComplete() {
+  const pct = state.tierScore / state.tierQuestions.length;
+  const passed = pct >= PASS_THRESHOLD;
+  const nextTierIdx = TIERS.indexOf(state.tier) + 1;
+  const hasNext = nextTierIdx < TIERS.length;
+  const card = document.getElementById('card');
+  const personalBest = state.personalBests[state.tier] || 0;
+  const newRecord = state.tierScore > personalBest;
+  const bestLine = personalBest > 0
+    ? (newRecord ? `<p style="color:var(--gold);font-weight:600;margin-top:8px;font-size:17px;">🏆 New personal best for ${TIER_LABELS[state.tier]}! (previous: ${personalBest}/${state.tierQuestions.length})</p>` : `<p style="color:var(--muted);margin-top:8px;font-size:15px;">Personal best for ${TIER_LABELS[state.tier]}: ${Math.max(personalBest, state.tierScore)}/${state.tierQuestions.length}</p>`)
+    : '';
+  if (passed && hasNext) {
+    const nextTier = TIERS[nextTierIdx];
+    card.innerHTML = `
+      <div class="done-screen">
+        <div class="done-medal">${TIER_MEDALS[state.tier]}</div>
+        <h2 class="done-title">${TIER_LABELS[state.tier]} Tier Complete</h2>
+        <p class="done-sub">You scored <strong>${state.tierScore}/${state.tierQuestions.length}</strong> — climb to the next rung?</p>
+        ${bestLine}
+        <div class="done-actions"><button class="btn" onclick="startTier('${nextTier}')">Climb to ${TIER_LABELS[nextTier]} ${TIER_MEDALS[nextTier]} →</button><a class="btn secondary" href="https://www.globalsovereignuniversity.org/readification">Back to Readification</a></div>
+      </div>`;
+  } else if (passed && !hasNext) {
+    const totalBest = state.personalBests.bronze + state.personalBests.silver + state.personalBests.gold + state.personalBests.platinum;
+    card.innerHTML = `
+      <div class="done-screen">
+        <div class="done-medal">💎</div>
+        <h2 class="done-title">Platinum · You Earned Your Certification</h2>
+        <p class="done-sub">You climbed every rung. <strong>${state.score} correct on this climb.</strong> Personal best across all four tiers: <strong>${totalBest} / 48</strong>. <em>You can comprehend at a real adult standard — and you can prove it.</em></p>
+        ${bestLine}
+        <div class="done-actions" style="margin-top:28px;">
+          <a class="btn cert-claim" href="https://www.globalsovereignuniversity.org/certification">🏆 Claim Your Free Certification →</a>
+        </div>
+        <div class="done-actions" style="margin-top:16px;">
+          <button class="btn secondary" onclick="startTier('bronze')">Climb Again — Fresh Questions</button>
+          <a class="btn secondary" href="https://www.globalsovereignuniversity.org/geno">Talk it Through With GENO</a>
+        </div>
+        <p style="margin-top:36px;color:var(--cream);font-size:15px;line-height:1.6;">When a homeschool parent teaches one other family to do this, the helix completes one full turn upward.</p>
+      </div>`;
+  } else {
+    card.innerHTML = `
+      <div class="done-screen">
+        <div class="done-medal" style="opacity:0.5;">${TIER_MEDALS[state.tier]}</div>
+        <h2 class="done-title">Almost There</h2>
+        <p class="done-sub">You scored <strong>${state.tierScore}/${state.tierQuestions.length}</strong>. You need <strong>${Math.ceil(state.tierQuestions.length * PASS_THRESHOLD)}</strong> correct to advance. Questions reshuffle — try again, or ask GENO (the chat button bottom right) to walk you through the harder concepts first.</p>
+        ${bestLine}
+        <div class="done-actions"><button class="btn" onclick="startTier('${state.tier}')">Try ${TIER_LABELS[state.tier]} Again</button><a class="btn secondary" href="https://www.globalsovereignuniversity.org/geno">Ask GENO First</a></div>
+      </div>`;
+  }
+  saveProgress();
+}
+initFirebase();
+startTier('bronze');
+</script>
+
+</body>
+</html>
