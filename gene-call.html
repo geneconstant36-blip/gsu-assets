@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>GSU Multilingual Call - Operator Console</title>
+<style>
+:root {
+  --navy:#1B2A4A; --navy-dark:#0E1A33; --gold:#C9A84C; --gold-bright:#E0BE5A;
+  --teal:#1A8B7F; --cream:#F5F1E8; --slate:rgba(245,241,232,.72);
+  --slate-dim:rgba(245,241,232,.5); --card-bg:rgba(27,42,74,.55);
+  --card-border:rgba(201,168,76,.25); --green:#4ADE80; --red:#F87171;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #000; color: var(--cream); min-height: 100vh;
+  font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: Georgia, serif; line-height: 1.2; }
+
+/* ============ LOCKED SCREEN ============ */
+#gate {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, var(--navy), var(--navy-dark) 80%, #000);
+  padding: 24px;
+}
+#gate .panel {
+  max-width: 480px; padding: 48px 32px; text-align: center;
+  background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px;
+}
+#gate .eyebrow {
+  color: var(--gold); font-size: 12px; font-weight: 700;
+  letter-spacing: .28em; text-transform: uppercase; margin-bottom: 16px;
+}
+#gate h1 { font-size: 28px; margin-bottom: 16px; color: var(--cream); }
+#gate p { color: var(--slate); font-size: 15px; }
+#gate code {
+  display: inline-block; padding: 4px 10px; margin-top: 16px;
+  background: rgba(0,0,0,.4); border-radius: 4px;
+  color: var(--gold); font-family: monospace; font-size: 13px;
+}
+
+/* ============ APP SHELL ============ */
+#app { display: none; min-height: 100vh; flex-direction: column;
+  background: linear-gradient(180deg, var(--navy), var(--navy-dark) 80%, #000);
+}
+header.gh {
+  border-bottom: 1px solid var(--card-border);
+  padding: 16px 24px; display: flex; align-items: center;
+  justify-content: space-between; gap: 16px; background: rgba(14,26,51,.8);
+}
+.logo {
+  font-family: Georgia, serif; font-size: 14px; color: var(--gold);
+  letter-spacing: .1em; text-transform: uppercase; font-weight: 700;
+}
+.logo span { color: var(--cream); font-style: italic; font-weight: 400; }
+.status { font-size: 12px; color: var(--slate-dim); letter-spacing: .1em; text-transform: uppercase; }
+
+.workspace {
+  flex: 1; display: grid; grid-template-columns: 1fr 360px;
+  gap: 20px; padding: 20px; min-height: 0;
+}
+@media (max-width: 900px) {
+  .workspace { grid-template-columns: 1fr; }
+}
+
+.pane {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: 12px; padding: 18px; display: flex; flex-direction: column;
+  min-height: 0;
+}
+.pane h2 {
+  font-size: 13px; color: var(--gold); font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase; margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+/* video pane */
+.video-wrap {
+  flex: 1; position: relative; min-height: 480px;
+  background: #000; border-radius: 8px; overflow: hidden;
+  border: 1px solid var(--card-border);
+}
+.video-wrap iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+}
+.video-placeholder {
+  position: absolute; inset: 0; display: flex; align-items: center;
+  justify-content: center; flex-direction: column; padding: 32px; text-align: center;
+}
+.video-placeholder svg {
+  width: 56px; height: 56px; color: var(--gold); opacity: .6; margin-bottom: 16px;
+}
+.video-placeholder p { color: var(--slate); font-size: 14px; max-width: 360px; }
+
+/* controls row */
+.controls {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; flex-shrink: 0;
+}
+.btn {
+  background: var(--gold); color: var(--navy); border: none; padding: 10px 18px;
+  border-radius: 6px; font-size: 12px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; cursor: pointer;
+  font-family: inherit;
+}
+.btn:hover { background: var(--gold-bright); }
+.btn.ghost { background: transparent; color: var(--cream); border: 1px solid var(--card-border); }
+.btn.ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn.danger { background: rgba(248,113,113,.15); color: var(--red); border: 1px solid rgba(248,113,113,.4); }
+.btn.danger:hover { background: rgba(248,113,113,.25); }
+
+/* room URL display */
+.room-info {
+  margin-top: 14px; padding: 14px;
+  background: rgba(0,0,0,.3); border-radius: 8px;
+  border: 1px solid var(--card-border); flex-shrink: 0;
+}
+.room-info label {
+  display: block; font-size: 10px; color: var(--gold);
+  letter-spacing: .15em; text-transform: uppercase; margin-bottom: 6px; font-weight: 700;
+}
+.room-info .url {
+  font-family: monospace; font-size: 12px; color: var(--cream);
+  background: rgba(0,0,0,.4); padding: 8px 10px; border-radius: 4px;
+  word-break: break-all; user-select: all;
+}
+.room-info .hint { font-size: 11px; color: var(--slate-dim); margin-top: 8px; line-height: 1.5; }
+
+/* GENO pane */
+.geno-pane { min-height: 0; }
+.geno-embed {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 20px; min-height: 380px;
+  background: rgba(0,0,0,.2); border-radius: 8px;
+  border: 1px solid var(--card-border);
+}
+.geno-instructions {
+  margin-top: 14px; padding: 14px; background: rgba(26,139,127,.08);
+  border-left: 3px solid var(--teal); border-radius: 6px;
+}
+.geno-instructions h3 {
+  font-size: 11px; color: var(--teal); letter-spacing: .15em;
+  text-transform: uppercase; margin-bottom: 8px; font-weight: 700;
+  font-family: -apple-system, sans-serif;
+}
+.geno-instructions ol {
+  padding-left: 18px; color: var(--slate); font-size: 12px; line-height: 1.7;
+}
+.geno-instructions li { margin-bottom: 4px; }
+
+/* setup modal */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,.85);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; padding: 24px;
+}
+.modal {
+  max-width: 480px; width: 100%;
+  background: var(--navy-dark); border: 2px solid var(--gold);
+  border-radius: 14px; padding: 32px;
+}
+.modal h2 {
+  font-family: Georgia, serif; font-size: 22px; color: var(--cream);
+  margin-bottom: 12px; letter-spacing: 0; text-transform: none; font-weight: 700;
+}
+.modal p { color: var(--slate); font-size: 14px; margin-bottom: 18px; }
+.modal input {
+  width: 100%; padding: 12px 14px;
+  background: rgba(0,0,0,.4); border: 1px solid var(--card-border);
+  border-radius: 6px; color: var(--cream); font-size: 14px;
+  font-family: monospace; margin-bottom: 14px;
+}
+.modal input:focus { outline: none; border-color: var(--gold); }
+.modal .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.modal .external {
+  display: block; margin-bottom: 14px; font-size: 13px;
+  color: var(--gold); text-decoration: none;
+}
+.modal .external:hover { text-decoration: underline; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--green); color: var(--navy); padding: 12px 24px;
+  border-radius: 6px; font-weight: 700; font-size: 13px;
+  letter-spacing: .05em; box-shadow: 0 6px 24px rgba(0,0,0,.4);
+  z-index: 200; opacity: 0; transition: opacity .2s;
+}
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ============ ACCESS GATE ============ -->
+<div id="gate">
+  <div class="panel">
+    <div class="eyebrow">Restricted - Operator Only</div>
+    <h1>This page requires a passphrase.</h1>
+    <p>Add the passphrase to the page URL after a hash (#) symbol. If you don't have it, this page is not for you.</p>
+    <code>example.com/gene-call.html#yourpassphrase</code>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+  <header class="gh">
+    <div class="logo">GSU - <span>Multilingual Call Console</span></div>
+    <div class="status" id="status">Loading...</div>
+  </header>
+
+  <div class="workspace">
+    <!-- VIDEO PANE -->
+    <div class="pane">
+      <h2>Video Room (Daily.co)</h2>
+      <div class="video-wrap" id="videoWrap">
+        <div class="video-placeholder" id="videoPlaceholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg>
+          <p>No Daily.co room configured yet. Click <strong>Setup Room</strong> below to paste your room URL.</p>
+        </div>
+        <iframe id="videoIframe" allow="microphone; camera; autoplay; display-capture; fullscreen" style="display:none;"></iframe>
+      </div>
+      <div class="controls">
+        <button class="btn" id="btnSetup">Setup Room</button>
+        <button class="btn ghost" id="btnCopy">Copy Applicant Link</button>
+        <button class="btn ghost" id="btnNew">Open in New Tab</button>
+        <button class="btn danger" id="btnEnd">End Session</button>
+      </div>
+      <div class="room-info" id="roomInfo" style="display:none;">
+        <label>Applicant Link (share this)</label>
+        <div class="url" id="roomUrlDisplay"></div>
+        <div class="hint">Send this link to the applicant via email, SMS, or WhatsApp. They click and join. No account needed on their side.</div>
+      </div>
+    </div>
+
+    <!-- GENO TRANSLATOR PANE -->
+    <div class="pane geno-pane">
+      <h2>GENO Translator (32 Languages)</h2>
+      <div class="geno-embed">
+        <elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+      </div>
+      <div class="geno-instructions">
+        <h3>How to Use</h3>
+        <ol>
+          <li>Start the Daily.co room. Send the applicant link.</li>
+          <li>Click the GENO button to begin a session.</li>
+          <li>Speak in English. GENO will respond in the applicant's language.</li>
+          <li>The applicant speaks in their language. Listen to GENO's English back to you.</li>
+          <li>Use GENO as a parallel translator alongside the video.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SETUP MODAL ============ -->
+<div class="modal-backdrop" id="setupModal" style="display:none;">
+  <div class="modal">
+    <h2>Configure Daily.co Room</h2>
+    <p>Paste your Daily.co room URL below. It will be saved in your browser only.</p>
+    <a href="https://dashboard.daily.co/" target="_blank" class="external">→ Open Daily.co Dashboard (free signup)</a>
+    <input type="url" id="roomUrlInput" placeholder="https://your-subdomain.daily.co/your-room">
+    <div class="modal-actions">
+      <button class="btn ghost" id="btnCancel">Cancel</button>
+      <button class="btn" id="btnSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+<script>
+(function(){
+  // ============ PASSWORD GATE ============
+  var PASS = 'genoiselected2026';
+  var hash = location.hash.replace('#','');
+  if (hash !== PASS) {
+    document.getElementById('gate').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+    return;
+  }
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+
+  // ============ STATE ============
+  var STORAGE_KEY = 'gsu_gene_call_room_url';
+  var roomUrl = localStorage.getItem(STORAGE_KEY) || '';
+  var sessionActive = false;
+
+  // ============ ELEMENTS ============
+  var el = {
+    status: document.getElementById('status'),
+    iframe: document.getElementById('videoIframe'),
+    placeholder: document.getElementById('videoPlaceholder'),
+    roomInfo: document.getElementById('roomInfo'),
+    roomUrlDisplay: document.getElementById('roomUrlDisplay'),
+    setupModal: document.getElementById('setupModal'),
+    roomUrlInput: document.getElementById('roomUrlInput'),
+    toast: document.getElementById('toast')
+  };
+
+  // ============ HELPERS ============
+  function showToast(msg) {
+    el.toast.textContent = msg;
+    el.toast.classList.add('show');
+    setTimeout(function(){ el.toast.classList.remove('show'); }, 2500);
+  }
+  function updateUI() {
+    if (roomUrl) {
+      el.iframe.src = roomUrl;
+      el.iframe.style.display = 'block';
+      el.placeholder.style.display = 'none';
+      el.roomInfo.style.display = 'block';
+      el.roomUrlDisplay.textContent = roomUrl;
+      el.status.textContent = 'Room: Active';
+      el.status.style.color = 'var(--green)';
+      sessionActive = true;
+    } else {
+      el.iframe.src = '';
+      el.iframe.style.display = 'none';
+      el.placeholder.style.display = 'flex';
+      el.roomInfo.style.display = 'none';
+      el.status.textContent = 'No Room Configured';
+      el.status.style.color = 'var(--slate-dim)';
+      sessionActive = false;
+    }
+  }
+
+  // ============ EVENTS ============
+  document.getElementById('btnSetup').onclick = function(){
+    el.roomUrlInput.value = roomUrl;
+    el.setupModal.style.display = 'flex';
+    setTimeout(function(){ el.roomUrlInput.focus(); }, 100);
+  };
+  document.getElementById('btnCancel').onclick = function(){
+    el.setupModal.style.display = 'none';
+  };
+  document.getElementById('btnSave').onclick = function(){
+    var v = el.roomUrlInput.value.trim();
+    if (!v) { showToast('Please paste a room URL'); return; }
+    if (!/^https?:\/\/.+daily\.co/.test(v)) {
+      if (!confirm('That does not look like a Daily.co URL. Save anyway?')) return;
+    }
+    roomUrl = v;
+    localStorage.setItem(STORAGE_KEY, roomUrl);
+    el.setupModal.style.display = 'none';
+    updateUI();
+    showToast('Room configured');
+  };
+  document.getElementById('btnCopy').onclick = function(){
+    if (!roomUrl) { showToast('No room to copy. Click Setup Room first.'); return; }
+    navigator.clipboard.writeText(roomUrl).then(function(){
+      showToast('Applicant link copied');
+    }, function(){ showToast('Copy failed - select the URL manually'); });
+  };
+  document.getElementById('btnNew').onclick = function(){
+    if (!roomUrl) { showToast('No room configured'); return; }
+    window.open(roomUrl, '_blank');
+  };
+  document.getElementById('btnEnd').onclick = function(){
+    if (!confirm('End session and clear the saved room URL?')) return;
+    roomUrl = '';
+    localStorage.removeItem(STORAGE_KEY);
+    updateUI();
+    showToast('Session ended');
+  };
+
+  // ============ INIT ============
+  updateUI();
+})();
+</script>
+</body>
+</html>
