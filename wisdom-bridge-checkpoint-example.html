@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wisdom Bridge Checkpoint — Example Template | GSU</title>
+
+<!-- 
+  WISDOM BRIDGE CHECKPOINT INTEGRATION — EXAMPLE TEMPLATE
+  
+  This file shows EXACTLY how to add Firebase checkpoint progress 
+  to any GSU chapter or learning page in ~12 lines of JavaScript.
+  
+  COPY-PASTE PATTERN:
+  1. Add the <script type="module"> block at the bottom (it loads GSU)
+  2. Mark each question or activity with data-checkpoint="some-id"
+  3. Call GSU.saveCheckpoint() when the learner completes one
+  4. Call GSU.getCheckpoint() on page load to restore their state
+  
+  That's it. No localStorage. No login screen. Anonymous auth handles 
+  the rest invisibly.
+-->
+
+<style>
+:root{
+  --navy:#1B2A4A;--navy-dark:#0E1A33;--gold:#C9A84C;--gold-bright:#E0BE5A;
+  --teal:#1A8B7F;--cream:#F5F1E8;--cream-dim:rgba(245,241,232,.75);
+  --border:rgba(201,168,76,.3);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:var(--cream);font:17px/1.7 Georgia,serif;padding:40px 20px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto}
+.eyebrow{font:700 11px/1 -apple-system,sans-serif;color:var(--gold);letter-spacing:.3em;text-transform:uppercase;margin-bottom:14px}
+h1{font:700 36px/1.15 Georgia,serif;color:var(--cream);margin-bottom:14px}
+h1 em{color:var(--gold);font-style:italic}
+.subtitle{font:italic 17px/1.5 Georgia,serif;color:var(--cream-dim);margin-bottom:36px}
+.progress-bar{background:rgba(14,26,51,.7);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:30px;display:flex;align-items:center;gap:16px}
+.progress-label{font:700 12px/1.2 -apple-system,sans-serif;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;flex-shrink:0}
+.progress-track{flex:1;height:8px;background:rgba(245,241,232,.1);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--teal));width:0%;transition:width .5s ease}
+.progress-count{font:700 14px/1 Georgia,serif;color:var(--cream);flex-shrink:0}
+.checkpoint{background:linear-gradient(160deg,rgba(27,42,74,.55),rgba(14,26,51,.55));border:1px solid var(--border);border-radius:14px;padding:28px 26px;margin-bottom:18px;transition:all .25s ease}
+.checkpoint.completed{border-color:var(--teal);background:linear-gradient(160deg,rgba(26,139,127,.12),rgba(27,42,74,.55))}
+.cp-num{font:700 11px/1 -apple-system,sans-serif;color:var(--gold);letter-spacing:.24em;text-transform:uppercase;margin-bottom:10px}
+.cp-title{font:700 22px/1.25 Georgia,serif;color:var(--cream);margin-bottom:12px}
+.cp-body{font:17px/1.7 Georgia,serif;color:var(--cream);margin-bottom:18px}
+.cp-status{font:italic 14px/1.5 Georgia,serif;color:var(--cream-dim);margin-top:16px;padding-top:14px;border-top:1px dashed var(--border);display:none}
+.checkpoint.completed .cp-status{display:block;color:var(--teal)}
+.cp-btn{background:var(--gold);color:var(--navy);border:none;padding:12px 24px;border-radius:8px;font:700 12px/1 -apple-system,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .15s}
+.cp-btn:hover{background:var(--gold-bright)}
+.cp-btn:disabled{opacity:.5;cursor:not-allowed}
+.checkpoint.completed .cp-btn{display:none}
+.footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--border);text-align:center;font:italic 13px/1.5 Georgia,serif;color:rgba(245,241,232,.5)}
+.footer code{font-family:Menlo,monospace;font-style:normal;color:var(--gold);font-size:12px;background:rgba(201,168,76,.08);padding:2px 6px;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Template Example</div>
+  <h1>Wisdom Bridge — <em>Checkpoint Progress</em></h1>
+  <p class="subtitle">This page demonstrates Firebase-backed checkpoint persistence. Complete checkpoints below; close the tab, come back tomorrow, your progress is still here. No login required.</p>
+
+  <!-- Progress bar updates as checkpoints complete -->
+  <div class="progress-bar">
+    <span class="progress-label">Progress</span>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <span class="progress-count" id="progress-count">0 / 3</span>
+  </div>
+
+  <!-- ===== CHECKPOINT 1 ===== -->
+  <div class="checkpoint" data-checkpoint="intro">
+    <div class="cp-num">Checkpoint 1</div>
+    <h2 class="cp-title">Acknowledge the Bridge</h2>
+    <p class="cp-body">The Wisdom Bridge is the transmission of earned knowledge across generations. Click below to mark this checkpoint complete and your progress will save automatically.</p>
+    <button class="cp-btn" data-action="complete">I've read this — mark complete</button>
+    <div class="cp-status">✓ Completed <span class="cp-time"></span></div>
+  </div>
+
+  <!-- ===== CHECKPOINT 2 ===== -->
+  <div class="checkpoint" data-checkpoint="mentor-types">
+    <div class="cp-num">Checkpoint 2</div>
+    <h2 class="cp-title">The Three Mentor Types</h2>
+    <p class="cp-body">Master practitioner, lived-experience guide, and the patient repeater. Each plays a role. Each is irreplaceable. Click to mark complete.</p>
+    <button class="cp-btn" data-action="complete">Mark complete</button>
+    <div class="cp-status">✓ Completed <span class="cp-time"></span></div>
+  </div>
+
+  <!-- ===== CHECKPOINT 3 ===== -->
+  <div class="checkpoint" data-checkpoint="apprentice-mindset">
+    <div class="cp-num">Checkpoint 3</div>
+    <h2 class="cp-title">The Apprentice Mindset</h2>
+    <p class="cp-body">Curiosity over credential. Humility over hierarchy. Practice over performance. The bridge holds only when both sides walk it.</p>
+    <button class="cp-btn" data-action="complete">Mark complete</button>
+    <div class="cp-status">✓ Completed <span class="cp-time"></span></div>
+  </div>
+
+  <div class="footer">
+    Template only. Replace <code>data-checkpoint="..."</code> ids with real chapter slugs.<br>
+    Progress persists per anonymous browser identity via Firebase. No cookies. No tracking pixels.
+  </div>
+
+</div>
+
+<!-- ============== FIREBASE + CHECKPOINT LOGIC ============== -->
+<script type="module">
+  import { GSU } from 'https://read.globalsovereignuniversity.org/gsu-firebase.js';
+
+  // ====================================================
+  // CONFIGURE PER PAGE
+  // ====================================================
+  // 'book' is the identifier for this whole chapter/book.
+  // Each checkpoint within the page is a separate doc.
+  const BOOK_ID = 'wisdom-bridge-example';
+  // ====================================================
+
+  const checkpoints = document.querySelectorAll('.checkpoint');
+  const progressFill = document.getElementById('progress-fill');
+  const progressCount = document.getElementById('progress-count');
+
+  function updateProgress() {
+    const total = checkpoints.length;
+    const done = document.querySelectorAll('.checkpoint.completed').length;
+    progressFill.style.width = (done / total * 100) + '%';
+    progressCount.textContent = `${done} / ${total}`;
+  }
+
+  function markUI(checkpointEl, completedAt) {
+    checkpointEl.classList.add('completed');
+    const time = checkpointEl.querySelector('.cp-time');
+    if (time && completedAt) {
+      const d = new Date(completedAt);
+      time.textContent = `· ${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+    }
+    updateProgress();
+  }
+
+  // ===== Restore previous progress on page load =====
+  GSU.ready().then(async () => {
+    const all = await GSU.getAllCheckpoints(BOOK_ID);
+    all.forEach(cp => {
+      if (cp.completed) {
+        const el = document.querySelector(`[data-checkpoint="${cp.chapter}"]`);
+        if (el) {
+          const ts = cp.updatedAt && cp.updatedAt.toDate ? cp.updatedAt.toDate() : new Date();
+          markUI(el, ts);
+        }
+      }
+    });
+  });
+
+  // ===== Wire up "mark complete" buttons =====
+  checkpoints.forEach(cp => {
+    const btn = cp.querySelector('[data-action="complete"]');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+      try {
+        await GSU.saveCheckpoint({
+          book: BOOK_ID,
+          chapter: cp.dataset.checkpoint,
+          completed: true
+        });
+        markUI(cp, new Date());
+      } catch (err) {
+        console.error('Save failed:', err);
+        btn.disabled = false;
+        btn.textContent = 'Try again';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
