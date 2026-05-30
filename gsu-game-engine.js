@@ -1,5 +1,5 @@
 /* ============================================================================
-   GSU GAME ENGINE  ·  gsu-game-engine.js  ·  v1.2  ·  May 28 2026
+   GSU GAME ENGINE  ·  gsu-game-engine.js  ·  v1.3  ·  patched for profiles
    Host at: read.globalsovereignuniversity.org/gsu-game-engine.js
    ----------------------------------------------------------------------------
    v1.2 adds optional QUEST MODE (cfg.quest). When present, the engine becomes a
@@ -58,7 +58,9 @@
         firebase.initializeApp(global.GSU_FIREBASE_CONFIG);
       }
       db = firebase.firestore();
-      uid = (await firebase.auth().signInAnonymously()).user.uid;
+      // v1.3: respect a restored profile session before falling back to anonymous.
+      await new Promise(function(res){ var off = firebase.auth().onAuthStateChanged(function(u){ off(); res(u); }); });
+      uid = (firebase.auth().currentUser || (await firebase.auth().signInAnonymously()).user).uid;
       firebaseReady = true; return true;
     } catch (e) { console.warn("[GSU] Firebase off, session progress:", e.message); return false; }
   }

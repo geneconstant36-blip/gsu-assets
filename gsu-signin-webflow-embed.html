@@ -1,0 +1,33 @@
+<!-- ===========================================================================
+     GSU SIGN IN / CREATE PROFILE  ·  Webflow Code Embed
+     Place this in a Webflow "Code Embed" element on the "Save Your Score" page,
+     where the old "Coming Soon" button sits. (Or, to keep your existing button,
+     skip the <button> here and just add the attribute  data-gsu-auth-open  to it.)
+
+     Replace the two PASTE_ values with your gsu-handshake web config
+     (Firebase console > Project settings > Your apps > SDK setup, "Config").
+     This is the SAME config your climb pages use — safe to expose; it is not a secret.
+     =========================================================================== -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script>
+  window.GSU_FIREBASE_CONFIG = window.GSU_FIREBASE_CONFIG || {
+    apiKey: "PASTE_YOUR_API_KEY",
+    authDomain: "gsu-handshake.firebaseapp.com",
+    projectId: "gsu-handshake",
+    appId: "PASTE_YOUR_APP_ID"
+  };
+</script>
+<script src="https://read.globalsovereignuniversity.org/gsu-auth.js"></script>
+
+<!-- The button. Styled to match; restyle freely. -->
+<button data-gsu-auth-open
+  style="font-family:Georgia,serif;font-size:1rem;font-weight:700;background:#C9A84C;color:#1a1407;border:none;border-radius:7px;padding:13px 26px;cursor:pointer;">
+  Sign In / Create Profile
+</button>
+
+<!-- Optional: put the navbar profile chip somewhere specific by adding an empty
+     element with id="gsu-profile-slot" in your navbar. If you don't, a chip
+     floats at the top-right automatically. -->

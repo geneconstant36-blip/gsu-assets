@@ -340,11 +340,29 @@
   <!-- INFINITY CLIMB (shared engine + this book's 52 questions) -->
   <section id="climb">
     <div class="sec-head"><h2>The <span>Infinity Climb</span></h2><p>52 questions across four tiers — Bronze, Silver, Gold, Platinum. Sign in to save your score and pick up where you left off.</p></div>
-    <!-- Mount follows the documented data-game convention. If phonemic-awareness mounts
-         its climb differently, match that markup here. -->
-    <div id="climb-mount" data-game="builders-of-eternity-climb"></div>
+
+    <!-- The engine renders into this exact element id. -->
+    <div id="gsu-game"></div>
+
+    <!-- Firebase (compat) — required for cross-device score saving.
+         Paste your gsu-handshake config below (the SAME block already in
+         phonemic-awareness.html). Without it, the climb still plays but saves
+         only for the current session. -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <script>
+      window.GSU_FIREBASE_CONFIG = window.GSU_FIREBASE_CONFIG || {
+        apiKey: "PASTE_YOUR_API_KEY",
+        authDomain: "gsu-handshake.firebaseapp.com",
+        projectId: "gsu-handshake",
+        appId: "PASTE_YOUR_APP_ID"
+      };
+    </script>
+
     <script src="https://read.globalsovereignuniversity.org/gsu-game-engine.js"></script>
     <script src="https://read.globalsovereignuniversity.org/builders-of-eternity-climb.js"></script>
+    <script src="https://read.globalsovereignuniversity.org/gsu-auth.js"></script>
   </section>
 
   <!-- GENO -->
