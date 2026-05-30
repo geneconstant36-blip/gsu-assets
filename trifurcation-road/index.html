@@ -596,7 +596,7 @@ const NODE_DATA = {
     "publisher": "Global Sovereign University",
     "total_nodes": 27,
     "paths": ["witness", "steward", "unbound"],
-    "note": "This build delivers the Witness arc and the Steward arc, both fully polished. The Unbound arc is a routing stub marked [STUB] — to be completed in a future build turn."
+    "note": "This build delivers all three arcs in full polish: Witness, Steward, and Unbound. Each arc carries the same narrative weight — approximately 17 nodes and 3,000 words of body text per path — and converges on its own honorable ending. The three endings together form the complete Trifurcation experience."
   },
 
   "badges": {
@@ -671,6 +671,30 @@ const NODE_DATA = {
       "name": "Unbinding Approached",
       "description": "Chose the way of release.",
       "icon": "⟳"
+    },
+    "pilgrim": {
+      "id": "pilgrim",
+      "name": "The Pilgrim",
+      "description": "Chose release over grasping.",
+      "icon": "✺"
+    },
+    "first_release": {
+      "id": "first_release",
+      "name": "The First Release",
+      "description": "Set down something that was never yours to carry.",
+      "icon": "⤓"
+    },
+    "cross_steward": {
+      "id": "cross_steward",
+      "name": "Cross-Steward",
+      "description": "Met the Steward across the field and was seen by them.",
+      "icon": "⧈"
+    },
+    "walking_free": {
+      "id": "walking_free",
+      "name": "The Walking Free",
+      "description": "Reached the open hand. Carried nothing across the threshold.",
+      "icon": "✶"
     },
     "recognition_attained": {
       "id": "recognition_attained",
@@ -1550,24 +1574,309 @@ const NODE_DATA = {
       "id": "t1_unbound",
       "tier": 1,
       "path": "unbound",
-      "title": "The Path of Release [STUB]",
+      "title": "The Burden",
       "body": [
-        "[STUB NODE — Unbound arc scheduled for next turn]",
-        "You walk the path that looks most like release. The narrative for this arc is being written in the next build turn. For now, this node exists to keep routing functional.",
-        "The Unbound arc will explore the teachings of the Bardo Thödol — the path of letting go, the recognition that the cloud was never the sky. Expected completion: next build turn."
+        "You walk the third path, the one that smelled of wind and far-off rivers, and within a hundred paces you become aware of something you had not been aware of before: you are carrying weight. The weight is on your back, and in your hands, and somewhere lower than your hands — a weight whose shape you cannot make out by looking at it, because the shape has been with you for so long that it feels like part of your body.",
+        "You stop. You set your bags down on the path, except you have no bags. You open your hands, except your hands have been open all along. And still, the weight is there. It does not respond to the gestures that worked on suitcases. It does not respond to the gestures that worked on grudges, either, or to the gestures that worked on the names of the dead.",
+        "Whatever this weight is, you understand suddenly, it is not yours. It was never yours. It was given to you by people who could not carry it themselves, and you accepted it because acceptance was the kind thing — or seemed to be — and somewhere along the way you forgot that the alternative existed. The alternative is not putting it down. The alternative is older than putting it down. The alternative is the slow recognition that you were the one who agreed to lift it, and the agreement can be unmade."
       ],
-      "awards_badge": "questioner",
-      "is_stub": true,
+      "awards_badge": "pilgrim",
       "choices": [
         {
-          "label": "Continue to next stub node",
-          "next": "t4_unbound_threshold",
-          "flavor": "[Full Tier 2 and Tier 3 nodes to be written in next turn]"
+          "label": "Sit, and name what you have been carrying, one weight at a time.",
+          "next": "t2_unbound_naming",
+          "flavor": "What cannot be named cannot be released."
         },
         {
-          "label": "Return to the crossroads",
-          "next": "start",
-          "flavor": "Try a different path — the polished Witness arc awaits."
+          "label": "Reach in and set the smallest one down, right now, without naming it.",
+          "next": "t2_unbound_releasing",
+          "flavor": "The hand learns before the mind."
+        },
+        {
+          "label": "Stand still. Do nothing. Let the weight be what it is for a long minute.",
+          "next": "t2_unbound_resting",
+          "flavor": "Release begins as a quality of attention, not an action."
+        }
+      ],
+      "irreality_bridge": {
+        "chapter": "chapter-10",
+        "title": "Chapter Ten — Unbinding",
+        "prompt": "The first recognition — that you have been carrying what was never yours — is the opening territory of Unbinding. Chapter Ten of IRREALITY opens here."
+      }
+    },
+
+    "t2_unbound_naming": {
+      "id": "t2_unbound_naming",
+      "tier": 2,
+      "path": "unbound",
+      "title": "The Inventory of the Unowned",
+      "body": [
+        "You sit. You begin to name what you have been carrying, and the naming itself is harder than expected — because each weight, when you try to lift it into language, slips into a related weight, and that one into another, until you realize the things you have been carrying are not discrete objects but a long entangled lineage of obligations, opinions, fears, postures, debts, and old loyalties that no longer match the person you have become.",
+        "Some of them, when you finally name them, are surprising in their smallness. A grudge from a job you left twelve years ago. The shape of an apology you never received. A version of yourself you were performing for someone who is no longer in the room. Each one, looked at directly, looks less load-bearing than it felt when it was unexamined.",
+        "Others are larger and refuse easy names. You leave those for now. The path does not require you to name everything in the first sitting. The path requires only that you begin the inventory, and that you recognize the inventory is being kept by someone — you — who has a say in what stays and what goes."
+      ],
+      "choices": [
+        {
+          "label": "Hear, faintly behind you, a voice from your old life asking you to carry one of these weights again.",
+          "next": "t3_unbound_calling",
+          "flavor": "The named weight does not yet know it is no longer yours."
+        },
+        {
+          "label": "Reach in and lift one specific possession — the hand that was never yours — into the light.",
+          "next": "t3_unbound_possession",
+          "flavor": "The single object is easier to release than the category."
+        },
+        {
+          "label": "Glance up. Someone is walking past on a parallel path, holding tightly to a weight you have just named.",
+          "next": "t3_unbound_mirror",
+          "flavor": "Someone else's grasp is not your problem to solve."
+        }
+      ],
+      "irreality_bridge": {
+        "chapter": "chapter-10",
+        "title": "Chapter Ten — Unbinding",
+        "prompt": "Naming what you carry is the Unbinding chapter's first instruction. Until the weight has a name, the hand cannot find the seam."
+      }
+    },
+
+    "t2_unbound_releasing": {
+      "id": "t2_unbound_releasing",
+      "tier": 2,
+      "path": "unbound",
+      "title": "The First Setting Down",
+      "body": [
+        "You reach without naming. The hand knows which weight is closest to the edge, and you do not interrupt it with thinking. You take the smallest, nearest weight, and you set it down on the path beside you.",
+        "The lightness that follows is not what you expected. You expected relief. What arrives instead is a kind of vertigo — a brief, unsteady moment in which your sense of who you are gets confused by the absence of one of its longest-standing burdens. The weight had been holding part of you up. With it down, you sway slightly. You realize that some of the things you carry have been doing double duty as ballast.",
+        "The vertigo passes. What replaces it is a quieter, smaller sensation: a region of your body, not your back exactly, becomes available again, as though a room in a house you had been living in had been closed off for years and someone has just opened the door."
+      ],
+      "awards_badge": "first_release",
+      "choices": [
+        {
+          "label": "Hold still and feel what gets taken away by circumstance, now that you have begun to let go of your own accord.",
+          "next": "t3_unbound_stripping",
+          "flavor": "Voluntary release loosens the grip on what was not voluntary."
+        },
+        {
+          "label": "Listen — a voice from your old life is calling you, louder than the first time, insisting you pick that back up.",
+          "next": "t3_unbound_calling_loud",
+          "flavor": "The world rarely consents to your letting go without protest."
+        },
+        {
+          "label": "Look across the field. A figure is walking parallel to you, hands full of careful repair work — the Steward.",
+          "next": "t3_unbound_cross_steward",
+          "flavor": "The other paths were never as far away as the maps suggested."
+        }
+      ],
+      "irreality_bridge": {
+        "chapter": "chapter-10",
+        "title": "Chapter Ten — Unbinding",
+        "prompt": "The first physical act of release — the hand learning before the mind — is the opening practice the Unbinding chapter teaches."
+      }
+    },
+
+    "t2_unbound_resting": {
+      "id": "t2_unbound_resting",
+      "tier": 2,
+      "path": "unbound",
+      "title": "Empty Hands",
+      "body": [
+        "You do nothing. You stand on the path with the weight still in you, and you do not try to release it, and you do not try to name it. You let it be what it is for a long, long minute, and then for another long minute after that.",
+        "Around the third minute, a discomfort you had not anticipated arrives. Your hands begin to feel restless. You realize you have been a person who carries things for so long that the experience of not-carrying, of being a body in a place without a task, feels almost like an absence of self. You want to pick something up — anything — just to have a reason to be standing here.",
+        "You do not pick anything up. The discomfort builds for a few minutes and then, quietly, undramatically, it dissolves. What is left in its place is not lightness, exactly. It is a strange and unfamiliar permission: the permission to be a person whose hands are empty, whose body is present, whose presence does not have to justify itself with weight."
+      ],
+      "choices": [
+        {
+          "label": "Sit lower. Let the stillness become stiller still.",
+          "next": "t3_unbound_emptier",
+          "flavor": "Beneath the silence there is a silence the surface silence did not know about."
+        },
+        {
+          "label": "Notice that small things are returning to your open palms, unbidden — a leaf, a shaft of light, a sound.",
+          "next": "t3_unbound_offering",
+          "flavor": "The open hand is not empty. It is simply not gripping."
+        },
+        {
+          "label": "Listen for the sound beneath the sound — the one that has been there all along, beneath the noise of carrying.",
+          "next": "t3_unbound_quietest",
+          "flavor": "What you stop carrying, you begin to hear."
+        }
+      ],
+      "irreality_bridge": {
+        "chapter": "chapter-10",
+        "title": "Chapter Ten — Unbinding",
+        "prompt": "The discomfort of empty hands — and the dissolving of that discomfort — is the opening practice the Unbinding chapter calls the threshold of presence."
+      }
+    },
+
+    "t3_unbound_calling": {
+      "id": "t3_unbound_calling",
+      "tier": 3,
+      "path": "unbound",
+      "title": "The Voice Behind You",
+      "body": [
+        "The voice is familiar. It is not malevolent. It is the voice of someone — perhaps a person, perhaps an institution, perhaps a self you once were — who has come to collect what they assume you are still keeping for them. They are not wrong to ask. The arrangement was real. They are calling in a debt that, at one time, you genuinely agreed to.",
+        "What is different now is that you have just named the debt. The naming has revealed something the unnaming kept hidden: the debt was paid years ago, or was never structured as a debt in the first place, or was the kind of arrangement that no one with your present sense of yourself would have agreed to. The voice is calling on a contract whose other party has dissolved.",
+        "You can answer the voice. You can ignore it. The choice that the path is actually offering is subtler: you can answer it without lifting the weight again. You can let the voice hear that you have heard it, and let it understand that hearing it is not the same as being bound by it. The voice quiets, eventually. Not because you defeated it. Because you stopped feeding it the response it required."
+      ],
+      "choices": [
+        {
+          "label": "Answer without lifting. Then walk on.",
+          "next": "t4_unbound_threshold",
+          "flavor": "The voice has been heard. The weight remains down."
+        }
+      ]
+    },
+
+    "t3_unbound_possession": {
+      "id": "t3_unbound_possession",
+      "tier": 3,
+      "path": "unbound",
+      "title": "The Hand That Was Never Yours",
+      "body": [
+        "You lift one specific thing into the light. It turns out to be a story — a story about who you are that you have been telling for so long that you stopped noticing you were telling it. The story is not entirely wrong. It contains real elements of a real life. But the shape of the story belonged to someone who came before you, and you accepted the shape because accepting it was easier than carving your own.",
+        "You look at the story in your palm. You can keep it. The keeping is reasonable; the story has gotten you this far. You can set it down. The setting-down is harder than the small release you did before — this one has roots — but the roots have grown shallower than they look. They were never as anchored as the carrying made them feel.",
+        "You set it down. The world does not end. The version of yourself that needed the story does not collapse. What collapses is a small, quiet fiction about what the story was holding up. The story was a hand you had been holding — a hand that, looked at honestly, was never yours."
+      ],
+      "choices": [
+        {
+          "label": "Walk on, lighter by the weight of one story.",
+          "next": "t4_unbound_threshold",
+          "flavor": "The hand you have been holding releases you, too."
+        }
+      ]
+    },
+
+    "t3_unbound_mirror": {
+      "id": "t3_unbound_mirror",
+      "tier": 3,
+      "path": "unbound",
+      "title": "The One Who Grasps What You Released",
+      "body": [
+        "The figure on the parallel path is holding, tightly, exactly the kind of weight you have just begun to set down. They are gripping it with the determination of someone who believes the weight is the thing keeping them upright. You recognize the grip. You had the same grip yesterday, or last year, or in the version of yourself you are still becoming unfamiliar with.",
+        "There is a brief, hot temptation — the temptation to call across the field, to tell them, to lighten their load by sharing what you have learned. The temptation feels generous. You almost answer it.",
+        "Then you understand: their grasp is theirs. Theirs to keep, theirs to loosen, theirs to release when their hand is ready. You cannot pry a fist open from the outside without bruising what is inside it. The most honest thing you can do — for them, for yourself — is to keep walking your own path with your own opening hand. They will see it, if they are ready. They will not see it, if they are not. Neither outcome is yours to author."
+      ],
+      "choices": [
+        {
+          "label": "Walk on without calling out. Trust their hand to its own work.",
+          "next": "t4_unbound_threshold",
+          "flavor": "Releasing your need to teach is itself a release."
+        }
+      ]
+    },
+
+    "t3_unbound_stripping": {
+      "id": "t3_unbound_stripping",
+      "tier": 3,
+      "path": "unbound",
+      "title": "What Was Taken Without Your Permission",
+      "body": [
+        "Voluntary release is one thing. The thing the path teaches next is harder: the involuntary kind. While you have been setting down what you chose to set down, the world has been quietly taking other things from you without your consent. A friend has stopped calling. A door has closed that you thought you would always be able to walk through. A version of your body, or your mind, or your life, has been changed by time or illness or simple ordinary loss, and the change was not on your list of releases.",
+        "You sit with this. The forced removal is harder than the voluntary one. Voluntary release came with the dignity of choice. Involuntary release comes with the indignity of being acted upon. You can rage, fairly, for a long time about the difference.",
+        "And then, slowly, the path teaches what it teaches: that the discipline you have been practicing on the voluntary side has been quietly building the muscle you now need on the involuntary side. You do not have to like the loss. You only have to let it be a loss, instead of insisting that the loss undo itself. The hand that has practiced opening on its own behalf knows, faintly, how to open when something is taken from it."
+      ],
+      "awards_badge": "weight_held",
+      "choices": [
+        {
+          "label": "Walk on — carrying nothing, including the resentment of the carrying.",
+          "next": "t4_unbound_unfamiliar",
+          "flavor": "The opening hand is the same hand, in both directions."
+        }
+      ]
+    },
+
+    "t3_unbound_calling_loud": {
+      "id": "t3_unbound_calling_loud",
+      "tier": 3,
+      "path": "unbound",
+      "title": "The Insistent Voice",
+      "body": [
+        "The voice this time is louder. It has noticed that you set the small weight down, and it is not pleased. It enumerates, in some detail, all the reasons the weight was important — why someone has to carry it, why it would be irresponsible of you to walk on without it, why your release is, in fact, an abandonment, an insult, a refusal of love.",
+        "Some of what the voice says is true. Some of what the voice says is the voice's own grief at the changing of the arrangement. The two are tangled, and untangling them is not the work of a single moment.",
+        "You do the harder thing: you let the voice be loud, and you do not lift the weight back up. You can grieve with the voice about the changing. You can acknowledge what it cost the voice for you to set the weight down. But the weight stays where you set it. The voice's pain is real. The weight is still not yours."
+      ],
+      "choices": [
+        {
+          "label": "Carry the grief without re-carrying the weight. Walk on.",
+          "next": "t4_unbound_threshold",
+          "flavor": "Grief and release are not in opposition. They are the same act, seen from different sides."
+        }
+      ]
+    },
+
+    "t3_unbound_cross_steward": {
+      "id": "t3_unbound_cross_steward",
+      "tier": 3,
+      "path": "unbound",
+      "title": "Across the Field, A Familiar Hand",
+      "body": [
+        "The figure on the parallel path is carrying something carefully. They have the posture of someone who is repairing, slowly, what has been placed in their hands. You know without being told that they are walking the Steward path. You also know — and this is the small revelation — that what they are tending and what you are releasing are not opposites. They are two faces of the same patience.",
+        "Neither of you raises a voice. The distance is small enough that you could speak; the distance is also large enough that the speech would be incidental to the meeting. You lift one hand in the smallest gesture. They lift one hand back. Each of you sees that the other is not lost, and is not wrong, and is doing the work that their particular path calls for.",
+        "You walk on, lighter for the recognition. The Steward keeps tending. Their work is not the work of opening the hand; your work is not the work of repairing the inheritance. The world, you understand for the first time, has enough room for both."
+      ],
+      "awards_badge": "cross_steward",
+      "choices": [
+        {
+          "label": "Walk on, knowing the field holds more than one true path.",
+          "next": "t4_unbound_threshold",
+          "flavor": "Tending and releasing are not arguments. They are languages."
+        }
+      ]
+    },
+
+    "t3_unbound_emptier": {
+      "id": "t3_unbound_emptier",
+      "tier": 3,
+      "path": "unbound",
+      "title": "The Lower Tide",
+      "body": [
+        "You sit lower. The stillness you had reached turns out to have been only the surface of a deeper stillness. You did not know there was a lower tide; the upper tide was already further out than you had been in a long time.",
+        "In the lower tide, the categories begin to soften. The line between you and the path becomes less defined. The line between this moment and the moments around it becomes less defined. The line between the weight you had been carrying and the body that had been carrying it becomes less defined.",
+        "This is not dissolution. This is not loss of self. This is the older thing the surface self had been working hard to obscure: that the self is not a thing held tightly inside the skin, but a slow weave that includes the path, the air, the time, the breath, the world that the carrying had been distracting you from. The release was not the goal. The release was the door."
+      ],
+      "choices": [
+        {
+          "label": "Stay until the lower tide becomes ordinary — then stand and walk.",
+          "next": "t4_unbound_unfamiliar",
+          "flavor": "What looks like dissolution from above looks like return from below."
+        }
+      ]
+    },
+
+    "t3_unbound_offering": {
+      "id": "t3_unbound_offering",
+      "tier": 3,
+      "path": "unbound",
+      "title": "The Bowl Refilling Itself",
+      "body": [
+        "Small things have begun to land in your open palms. Not weights — weights you would have noticed. Smaller things. A leaf, pale yellow, has come down and rested for a long moment before continuing past. A shaft of late light has crossed your right hand and made the skin briefly translucent. A sound — a bird, or a distant bell, or the membrane between them — has rested in the cup of your attention and then continued on.",
+        "You realize the open hand is not empty. The open hand is simply not gripping. What passes through it leaves a trace, or does not; what arrives in it stays for as long as it stays; what you experience in the holding is not the having but the meeting.",
+        "The bowl is refilling itself, but the refilling is not the point. The point is that the bowl has stopped trying to fill itself. The pouring-in was a function of the pouring-out. You did not become emptier by releasing. You became more receivable."
+      ],
+      "choices": [
+        {
+          "label": "Carry the open hand — and what arrives in it — across the threshold.",
+          "next": "t4_unbound_yielding",
+          "flavor": "The open hand is the one that can be filled and refilled, both."
+        }
+      ]
+    },
+
+    "t3_unbound_quietest": {
+      "id": "t3_unbound_quietest",
+      "tier": 3,
+      "path": "unbound",
+      "title": "The Sound Beneath the Sound",
+      "body": [
+        "You listen. At first there is only the quiet of the path, which is already a deeper quiet than the noise you had been carrying. Then, slowly, the quiet itself becomes audible — not as silence, exactly, but as a low, sustaining hum, like the sound of a room you have walked into a thousand times without noticing it had a sound.",
+        "Beneath that, there is something else. You cannot describe it in words that would translate accurately. It is the sound that was there before any of the noises you had been carrying began. It is the sound that will be there after the noises end. It is not yours, and it is not anyone's, and the recognition of that not-belonging is itself a kind of homecoming.",
+        "You understand, with a quiet jolt of something that is not quite emotion, that this sound has been audible in every quiet moment of your life, and you have been too busy carrying to hear it. The carrying was a perfectly understandable response to the world. The hearing is what the path was teaching you to be ready for."
+      ],
+      "choices": [
+        {
+          "label": "Carry the hearing — but not as a possession — across the threshold.",
+          "next": "t4_unbound_yielding",
+          "flavor": "What you have been listening for has been listening back the whole time."
         }
       ]
     },
@@ -1576,17 +1885,56 @@ const NODE_DATA = {
       "id": "t4_unbound_threshold",
       "tier": 4,
       "path": "unbound",
-      "title": "The Threshold of Release [STUB]",
+      "title": "The Road With No Destination",
       "body": [
-        "[STUB NODE — Full narrative arrives in the next build turn]",
-        "This is the placeholder for the Unbound ending threshold. The polished version will be written with the same care as the Witness arc."
+        "Time passes, the way it passes when the carrying has slowed. You walk. The walking has changed character: it is no longer a transit toward something, because the carrying that made transit feel necessary has thinned out. You walk because the body walks, because the path is here, because the air is good against the skin.",
+        "You notice that you have been making smaller releases without commentary — a half-thought set down before it became a full thought, an old reaction noticed and unfollowed, a story about a stranger that you almost added to and did not. The release has become a quality of attention rather than an event.",
+        "Ahead of you, the path approaches a threshold. Not a doorway; nothing so constructed. Just a place where the road ahead becomes less defined, because the road behind has gradually stopped requiring you to look at it. You understand: you have not been walking toward a destination. You have been walking out of the assumption that one was required."
       ],
-      "is_stub": true,
       "choices": [
         {
-          "label": "Cross the threshold [stub ending]",
+          "label": "Cross — into the place where nothing pulls.",
+          "next": "t4_unbound_yielding",
+          "flavor": "The threshold opens onto the open hand."
+        }
+      ]
+    },
+
+    "t4_unbound_unfamiliar": {
+      "id": "t4_unbound_unfamiliar",
+      "tier": 4,
+      "path": "unbound",
+      "title": "The Place Where Nothing Pulls",
+      "body": [
+        "You walk in the territory of involuntary release for some time. The losses do not stop because you have practiced. The losses continue, the way losses continue in any honest life. What has changed is the speed at which you reach for them after they leave.",
+        "You find, with a slow steady recognition, that the grief is real but the resentment is optional. The grief belongs to the loss. The resentment belongs to the insistence that the loss was wrong to happen. You did not choose to discard the resentment; you simply stopped feeding it, and it became thinner, and one morning you noticed it had not arrived with the loss.",
+        "This is what the path has been teaching, underneath the voluntary practice: that the open hand is the same hand in both directions. The hand that can let go can also receive without grasping. The receiving and the letting-go are the same gesture, performed in two different rooms of the same house."
+      ],
+      "choices": [
+        {
+          "label": "Walk forward, into the place where nothing pulls — and nothing is being held back.",
+          "next": "t4_unbound_yielding",
+          "flavor": "The opening hand is sovereign, in either direction."
+        }
+      ]
+    },
+
+    "t4_unbound_yielding": {
+      "id": "t4_unbound_yielding",
+      "tier": 4,
+      "path": "unbound",
+      "title": "The Open Hand",
+      "body": [
+        "You arrive at the place where the path ends. Not because the road has run out of ground, but because the carrying has run out of weight. There is no further to walk in the direction you had been walking, because the direction itself was a function of the carrying, and the carrying has thinned to nothing.",
+        "You look at your hands. They are open. They have been open for some time. Whatever you had been holding, you have set down somewhere along the way, often without ceremony — small releases between larger ones, a thousand quiet ungrippings that have left, finally, this: a body, a breath, a piece of air against the skin, and no obligation to be holding anything for anyone, including yourself.",
+        "The threshold is not dramatic. There is no light. There is no door. There is only the small, complete sense that you can walk across it carrying nothing, and that walking across it carrying nothing is exactly the crossing the path was offering all along."
+      ],
+      "awards_badge": "walking_free",
+      "choices": [
+        {
+          "label": "Walk through, with both hands open and neither hand holding.",
           "next": "ending_unbound",
-          "flavor": "[Full ending in next build turn]"
+          "flavor": "The crossing is the opening. The opening was the crossing."
         }
       ]
     },
@@ -1595,24 +1943,25 @@ const NODE_DATA = {
       "id": "ending_unbound",
       "tier": 5,
       "path": "unbound",
-      "title": "The Unbound [STUB]",
+      "title": "The Walking Free",
       "body": [
-        "[STUB ENDING — Full Unbound ending scheduled for next build turn]",
-        "You reach an ending that represents the choice of release — the way of unbinding. The full, polished ending text arrives in the next delivery."
+        "You cross. There is no fanfare. There is no transcendence; there is no enlightenment. The thresholds that were promising those things, you walked past at the very beginning of the path, when the carrying still felt like the price of being a person. What you have now is smaller and more real: you are a body in the world, breathing, present, with hands that have stopped insisting they were here to hold anything in particular.",
+        "The world does not look different. The world is the same world. What has changed is the quality of your meeting with it. The leaf, when it lands in your palm, lands in a hand that is not preparing to do anything with it. The voice, when it comes from your old life, arrives at an ear that hears it and does not have to obey it. The loss, when it arrives, arrives at a chest that grieves and does not have to convert the grief into a permanent stance.",
+        "This is what the Unbinding teaches that the other paths can teach but cannot teach in this particular shape: that the self you spent so long carrying around was not the only self available, and that the self underneath it — the one that did not require a name or a weight or a story to be present — has been here the whole time. You did not become enlightened. You did not become anything. You became reachable, by yourself, by the world, by the moments that had been arriving at a sealed-up door for longer than you had been aware.",
+        "You walk on. The walking has no destination. The not-having-a-destination has stopped being a problem. The road continues, or it does not; it does not need to do either, because the road was never the point. The opening hand was the point. The opening hand is the point. The opening hand will be the point, for as long as the body lasts, and possibly — though no one walks back to confirm — for some quiet stretch after that."
       ],
       "awards_badge": "unbinding_approached",
       "also_awards": "the_crossing",
       "is_ending": true,
-      "is_stub": true,
       "ending_name": "The Unbound",
-      "ending_reflection": "[To be written with the full Unbound arc]",
+      "ending_reflection": "This ending reflects the recognition that release is not loss. The hand that opens to let go is the same hand that opens to receive. The path of unbinding does not end in transcendence — it ends in presence, reachable and unowned. What you set down was never yours. What you carry forward is what you are.",
       "irreality_bridge": {
         "chapter": "chapter-10",
         "title": "Chapter Ten — Unbinding",
-        "prompt": "The philosophy of release — recognizing that you were the sky all along — is the subject of IRREALITY Chapter Ten. Even though this arc is a stub, the book chapter it points to is complete and free."
+        "prompt": "The philosophy of unbinding — release as a quality of attention, the open hand as the sovereign gesture in both directions — is given its full treatment in Chapter Ten of IRREALITY. If this ending spoke to you, the chapter will go deeper."
       },
       "next_actions": [
-        {"type": "replay", "label": "Walk the road again — try the Witness path", "target": "start"},
+        {"type": "replay", "label": "Walk the road again — find a different ending", "target": "start"},
         {"type": "book", "label": "Read IRREALITY Chapter Ten (free)", "target": "https://read.globalsovereignuniversity.org/irreality/chapter-10.html"},
         {"type": "library", "label": "Explore the GSU Library", "target": "https://www.globalsovereignuniversity.org/library"}
       ]
