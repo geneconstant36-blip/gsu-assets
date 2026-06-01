@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Phonics Climb — Reading Helix | Global Sovereign University</title>
+<meta name="description" content="Climb the Phonics ladder — 52 questions, four tiers, Bronze to Platinum. Free, no login. Your tier saves between visits. Part of the Reading Helix at Global Sovereign University.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/phonics-climb.html">
+<meta name="theme-color" content="#0B0E14">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1B2A4A;--gold:#C9A84C;--teal:#1A8B7F;--cream:#F5F1E8;--bg:#0B0E14;--card:#141a26;--muted:#9aa6b8;--good:#39b88b;--bad:#d9596b;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{background:var(--bg);color:var(--cream);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.6;min-height:100vh;}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 20px 80px;}
+  .head{text-align:center;margin-bottom:22px;}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+  h1{font-family:'Lora',serif;font-weight:700;font-size:clamp(1.9rem,5vw,2.6rem);color:var(--cream);line-height:1.1;}
+  .sub{color:var(--muted);font-size:.98rem;margin-top:10px;max-width:46ch;margin-left:auto;margin-right:auto;}
+
+  .panel{background:var(--card);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:26px;box-shadow:0 18px 50px -28px #000;}
+  .barwrap{height:8px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;margin:0 0 6px;}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .35s ease;}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);letter-spacing:.04em;margin-bottom:20px;}
+  .tier{font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+  .tier.bronze{color:#cd7f4d;} .tier.silver{color:#c7d0db;} .tier.gold{color:var(--gold);} .tier.platinum{color:#7fe9d6;}
+
+  .q{font-family:'Lora',serif;font-size:1.35rem;font-weight:600;line-height:1.4;color:#fff;margin-bottom:22px;}
+  .opts{display:flex;flex-direction:column;gap:12px;}
+  .opt{text-align:left;background:#1b2433;border:1.5px solid rgba(255,255,255,.1);color:var(--cream);font-family:inherit;font-size:1rem;font-weight:400;padding:15px 18px;border-radius:12px;cursor:pointer;transition:.15s;}
+  .opt:hover:not(:disabled){border-color:var(--gold);background:#212b3d;}
+  .opt:disabled{cursor:default;}
+  .opt.correct{border-color:var(--good);background:rgba(57,184,139,.14);color:#bff3df;}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,89,107,.14);color:#f6c9d1;}
+  .fb{margin-top:18px;padding:15px 18px;border-radius:12px;font-size:.95rem;line-height:1.55;display:none;}
+  .fb.show{display:block;}
+  .fb.ok{background:rgba(57,184,139,.1);border:1px solid rgba(57,184,139,.35);}
+  .fb.no{background:rgba(217,89,107,.1);border:1px solid rgba(217,89,107,.35);}
+  .fb b{color:var(--gold);}
+  .next{margin-top:18px;display:none;width:100%;background:var(--gold);color:#0A0907;font-family:inherit;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;}
+  .next.show{display:block;} .next:hover{transform:translateY(-1px);}
+
+  .btn{display:inline-block;background:var(--gold);color:#0A0907;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px 32px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;font-family:inherit;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold);}
+  .center{text-align:center;}
+  .best{margin-top:16px;font-size:13px;color:var(--muted);}
+  .best b{color:var(--gold);}
+  .medals{display:flex;justify-content:center;gap:10px;margin:18px 0;flex-wrap:wrap;}
+  .medal{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);border-radius:999px;padding:7px 13px;color:var(--muted);}
+  .medal.on{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.1);}
+  .scorebig{font-family:'Lora',serif;font-size:3.4rem;font-weight:700;color:var(--gold);line-height:1;}
+  .tierbadge{font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:8px 0 4px;}
+  .geno-hint{margin-top:22px;text-align:center;font-size:13px;color:var(--muted);}
+  .geno-hint b{color:var(--teal);}
+  .status{text-align:center;font-size:11px;color:#5b6678;margin-top:18px;letter-spacing:.04em;}
+  a{color:var(--teal);} a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">Reading Helix · Element 02 · Free</div>
+    <h1>The Phonics Climb</h1>
+    <p class="sub">Fifty-two questions. Four tiers — Bronze, Silver, Gold, Platinum. Climb as far as you can; your best is saved.</p>
+  </div>
+  <div id="app" class="panel"></div>
+  <p class="status" id="status">Connecting…</p>
+  <p class="geno-hint">Stuck on one? <b>Ask GENO</b> — your free AI tutor, lower-right. He explains any answer in 32 languages.</p>
+</div>
+
+<!-- GENO LIVE WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+
+let db=null, uid=null, best=null;
+const statusEl=document.getElementById('status');
+try{
+  const app=initializeApp(firebaseConfig);
+  const auth=getAuth(app); db=getFirestore(app);
+  onAuthStateChanged(auth, async (user)=>{
+    if(user){
+      uid=user.uid;
+      try{
+        const snap=await getDoc(doc(db,'phonics_climb',uid));
+        if(snap.exists()){ best=snap.data(); }
+      }catch(e){}
+      statusEl.textContent='Scores save automatically. Start on a phone, finish on a laptop.';
+      renderStart();
+    }
+  });
+  signInAnonymously(auth).catch(()=>{ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); });
+}catch(e){ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); }
+
+async function saveScore(score,tier){
+  if(!db||!uid) return;
+  try{
+    const prevBest = best && best.bestScore ? best.bestScore : 0;
+    if(score>=prevBest){
+      best={bestScore:score,bestTier:tier,updatedAt:Date.now()};
+      await setDoc(doc(db,'phonics_climb',uid), best, {merge:true});
+    }
+  }catch(e){}
+}
+
+/* ===== 52 QUESTIONS · grounded in "The Code That Unlocks Reading: Phonics" ===== */
+const QUESTIONS=[
+ // BRONZE — the alphabetic principle, sounds vs. letter names, CVC, blending
+ {t:'Bronze',q:'Phonics begins the moment you connect what you can hear to what you can…',o:['see','smell','remember'],a:0,why:'Phonics connects sounds you can hear to letters you can <b>see</b>.'},
+ {t:'Bronze',q:'Reading the word "cat" correctly means thinking:',o:['the letter names c–a–t','the sounds /k/ /a/ /t/','the picture of a cat'],a:1,why:'Reading is /k/ /a/ /t/ — <b>sounds</b>, not letter names.'},
+ {t:'Bronze',q:'In "cat," the letter "a" says…',o:['its name, "ay"','the short sound /a/, as in apple','nothing'],a:1,why:'Here "a" is the short vowel <b>/a/</b>. Letter names ≠ letter sounds.'},
+ {t:'Bronze',q:'Written English mainly represents…',o:['meaning','sound','pictures of ideas'],a:1,why:'English writing represents <b>sound</b>. Meaning comes after the sound.'},
+ {t:'Bronze',q:'Once you can decode "cat," you can also read "cap, can, cab." This shows the principle…',o:['scales','fails','is random'],a:0,why:'The alphabetic principle <b>scales</b>. Memorization does not.'},
+ {t:'Bronze',q:'When you decode a word, meaning arrives…',o:['before the sound','after the sound','instead of the sound'],a:1,why:'Sound first, then <b>meaning</b>.'},
+ {t:'Bronze',q:'Which is a clean CVC (consonant-vowel-consonant) word?',o:['cat','cake','cheese'],a:0,why:'<b>cat</b> = three phonemes, three graphemes. Ideal foundation word.'},
+ {t:'Bronze',q:'Blend these sounds: /s/ /u/ /n/',o:['nus','sun','snow'],a:1,why:'Blending /s/ /u/ /n/ makes <b>sun</b>.'},
+ {t:'Bronze',q:'For a beginner learning to decode, letter NAMES are…',o:['always required','often unhelpful','the same as letter sounds'],a:1,why:'Letter names are <b>often unhelpful</b> — beginners need the sounds.'},
+ {t:'Bronze',q:'Phonemic awareness (Book 1) is hearing sounds. Phonics adds…',o:['letters and print','numbers','pictures'],a:0,why:'Phonics connects those sounds to <b>letters/print</b>.'},
+ {t:'Bronze',q:'"Sound it out" should mean saying the…',o:['letter names','sounds','word shape'],a:1,why:'Say the <b>sounds</b>, then blend — not the names.'},
+ {t:'Bronze',q:'The alphabetic principle is what makes ___ words readable.',o:['only familiar','unfamiliar','short'],a:1,why:'It lets you read <b>unfamiliar</b> words you never memorized.'},
+ {t:'Bronze',q:'The best first words for teaching the code are…',o:['irregular sight words','clean CVC words','long words'],a:1,why:'Start with clean <b>CVC words</b> where the code is visible.'},
+ // SILVER — graphemes, digraphs, short vowels, the two-way street
+ {t:'Silver',q:'A grapheme is the written unit that represents a…',o:['syllable','phoneme','sentence'],a:1,why:'A grapheme represents a <b>phoneme</b> (one sound).'},
+ {t:'Silver',q:'The "sh" in "ship" is a grapheme made of how many letters?',o:['1','2','3'],a:1,why:'"sh" is a two-letter grapheme (a digraph) for one sound.'},
+ {t:'Silver',q:'How many phonemes does "tch" in "match" represent?',o:['one','three','two'],a:0,why:'"tch" is three letters but <b>one</b> phoneme: /ch/.'},
+ {t:'Silver',q:'"igh" in "night" is a grapheme of how many letters?',o:['two','three','four'],a:1,why:'"igh" is a <b>three</b>-letter grapheme for the long /ī/ sound.'},
+ {t:'Silver',q:'The /f/ sound can be spelled f, ff, ph, and occasionally…',o:['gh (as in laugh)','kn','wr'],a:0,why:'<b>gh</b> in "laugh" — options exist, but they are not endless.'},
+ {t:'Silver',q:'In the word "box," the letter x represents…',o:['one phoneme','two phonemes /k/ /s/','no sound'],a:1,why:'x = <b>/k/ /s/</b>, two phonemes. A learnable pattern, not chaos.'},
+ {t:'Silver',q:'Reading travels: letters/graphemes → phonemes → spoken word →',o:['meaning','spelling','guessing'],a:0,why:'Reading ends at <b>meaning</b>.'},
+ {t:'Silver',q:'Spelling travels: spoken word → phonemes → ___ → written word.',o:['pictures','graphemes','syllables'],a:1,why:'You choose <b>graphemes</b> to match each phoneme.'},
+ {t:'Silver',q:'A child reads "cat" but spells it "kat." This learner has…',o:['failed phonics','grasped the principle (now learning conventions)','memorized a picture'],a:1,why:'They <b>grasped the principle</b> — sounds can be letters — and are learning English spelling choices.'},
+ {t:'Silver',q:'A digraph is two letters that represent…',o:['two sounds','one sound','a syllable'],a:1,why:'A digraph = two letters, <b>one</b> sound (sh, ch, th, ck).'},
+ {t:'Silver',q:'Which of these is a consonant digraph?',o:['bl','sh','st'],a:1,why:'<b>sh</b> is a digraph; bl and st are blends (each letter keeps its sound).'},
+ {t:'Silver',q:'The short vowel sound in "hop" is…',o:['/o/','/oh/ (long)','/aw/'],a:0,why:'Short <b>/o/</b>, as in hop, mop, top.'},
+ {t:'Silver',q:'Practicing spelling strengthens reading because it forces attention to each…',o:['phoneme','picture','letter name'],a:0,why:'Spelling makes the brain attend to every <b>phoneme</b> and pick a grapheme.'},
+ // GOLD — synthetic vs analytic, /k/ spellings, controlled text, silent e
+ {t:'Gold',q:'Synthetic phonics builds…',o:['from small units up (blend sounds)','from whole words down','from pictures'],a:0,why:'Synthetic = synthesize: connect graphemes to phonemes, then <b>blend up</b>.'},
+ {t:'Gold',q:'Analytic phonics starts with…',o:['single letters','whole words you already know','random text'],a:1,why:'Analytic starts with <b>known whole words</b> and breaks them down to find patterns.'},
+ {t:'Gold',q:'For beginners and struggling adults, the stronger starting approach is…',o:['analytic','synthetic','neither'],a:1,why:'<b>Synthetic</b> makes the code visible from day one instead of asking learners to infer it.'},
+ {t:'Gold',q:'"Controlled text" means reading material built mostly from…',o:['the correspondences already taught','random hard words','sight words only'],a:0,why:'Controlled text uses <b>taught correspondences</b> — alignment is everything.'},
+ {t:'Gold',q:'/k/ before e, i, or y is usually spelled…',o:['c','k','ck'],a:1,why:'<b>k</b> before e/i/y: kit, kept, sky.'},
+ {t:'Gold',q:'/k/ before a, o, or u is usually spelled…',o:['k','c','ch'],a:1,why:'<b>c</b> before a/o/u: cat, cot, cut.'},
+ {t:'Gold',q:'/k/ right after a short vowel in a one-syllable word is often spelled…',o:['ck','ch','que'],a:0,why:'<b>ck</b>: back, neck, sick, rock.'},
+ {t:'Gold',q:'The silent e in "cape" makes the vowel…',o:['say its name (long)','short','silent'],a:0,why:'Silent e often makes the vowel <b>say its name</b>: cap → cape.'},
+ {t:'Gold',q:'Analytic phonics works best as a…',o:['first stage','later stage, after the code is secure','replacement for phonics'],a:1,why:'It\u2019s a powerful <b>second lens</b> once you can already decode.'},
+ {t:'Gold',q:'If synthetic phonics is the steering wheel, analytic phonics is the…',o:['map','engine','brakes'],a:0,why:'Synthetic gives control (steering); analytic is the <b>map</b> of how patterns are organized.'},
+ {t:'Gold',q:'Phonics is not in conflict with comprehension because it removes a…',o:['rule','bottleneck','vowel'],a:1,why:'Accurate, automatic word recognition removes the decoding <b>bottleneck</b>, freeing attention for meaning.'},
+ {t:'Gold',q:'The word family "-ight" appears in light, night, and…',o:['bite','bright','bit'],a:1,why:'<b>bright</b> — same "-ight" chunk.'},
+ {t:'Gold',q:'Precise feedback ("that\u2019s a vowel team") instead of "try again" reduces…',o:['speed','shame','accuracy'],a:1,why:'Precision turns a mistake into information, which reduces <b>shame</b>.'},
+ // PLATINUM — orthographic mapping, ti=/sh/, predictability, history, theory
+ {t:'Platinum',q:'Linnea Ehri\u2019s term for bonding a word\u2019s spelling to its pronunciation and meaning is…',o:['orthographic mapping','sight memorizing','visual recall'],a:0,why:'<b>Orthographic mapping</b> is how decoded words become instant "sight" words.'},
+ {t:'Platinum',q:'A fluent reader\u2019s "sight words" became automatic because they were…',o:['photographed as shapes','mapped through the code','guessed enough times'],a:1,why:'They were <b>mapped through the code</b>, not memorized as pictures.'},
+ {t:'Platinum',q:'In "nation," the letters "ti" often represent which sound?',o:['/t/','/sh/','/ch/'],a:1,why:'"ti" before a vowel often says <b>/sh/</b>: nation, motion, partial.'},
+ {t:'Platinum',q:'The "ti = /sh/" pattern tends to appear in words of which origin?',o:['Anglo-Saxon','Latin','Norse'],a:1,why:'It comes from <b>Latin</b> roots — history leaves learnable patterns.'},
+ {t:'Platinum',q:'English spelling is often cited as roughly how predictable?',o:['about 50%','about 84%','100%'],a:1,why:'About <b>84%</b> — most words are decodable if you know the patterns and their conditions.'},
+ {t:'Platinum',q:'True "irregularity" in English is concentrated in a small number of…',o:['high-frequency words','long words','foreign words'],a:0,why:'A relatively small set of <b>high-frequency</b> words carries most of the irregularity.'},
+ {t:'Platinum',q:'In Mark Seidenberg\u2019s view, the reading brain is a…',o:['memorizing machine','pattern-learning machine','guessing machine'],a:1,why:'A <b>pattern-learning machine</b> that extracts regularities from clear, repeated print.'},
+ {t:'Platinum',q:'That pattern-learning brain can only extract regularities it is exposed to…',o:['clearly and repeatedly','occasionally','through pictures'],a:0,why:'It needs <b>clear, repeated</b> input — which is why guessing-based instruction leaves patterns blurry.'},
+ {t:'Platinum',q:'English spelling layers come from Anglo-Saxon, Norman French, Latin, and…',o:['Greek','Sanskrit','Arabic'],a:0,why:'<b>Greek</b> too — those layers create predictable spelling choices.'},
+ {t:'Platinum',q:'Compared with phonics, memorization scales…',o:['better','poorly (every word is a new task)','the same'],a:1,why:'Memorization scales <b>poorly</b>; phonics scales well because each word reuses the same code.'},
+ {t:'Platinum',q:'The ultimate goal of phonics instruction is to make sounding out…',o:['permanent','unnecessary for most words','faster forever'],a:1,why:'Use decoding as a bridge until it becomes <b>unnecessary</b> — instant recognition.'},
+ {t:'Platinum',q:'Why is phonics called the "fairest" reading instruction?',o:['it relies on a rich home environment','it makes the code explicit for every learner','it is the fastest'],a:1,why:'It makes the code <b>explicit for all</b>, not just for kids who infer it on their own.'},
+ {t:'Platinum',q:'A decoder reads "national" as "nation" plus the suffix…',o:['-tion','-al','-ity'],a:1,why:'nation + <b>-al</b>. Seeing meaningful parts is how long words get unlocked.'}
+];
+
+const app=document.getElementById('app');
+let order=[], idx=0, score=0;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildOrder(){
+  // shuffle within each tier, keep Bronze→Platinum ramp
+  const tiers=['Bronze','Silver','Gold','Platinum']; let o=[];
+  tiers.forEach(t=>{ o=o.concat(shuffle(QUESTIONS.filter(q=>q.t===t))); });
+  return o;
+}
+
+function renderStart(){
+  const bestLine = best && best.bestScore!=null
+    ? `<p class="best">Your best climb: <b>${best.bestScore}/52</b> — ${best.bestTier||''}</p>` : '';
+  app.innerHTML=`
+    <div class="center">
+      <div class="medals">
+        <span class="medal">🥉 Bronze</span><span class="medal">🥈 Silver</span>
+        <span class="medal">🥇 Gold</span><span class="medal">💎 Platinum</span>
+      </div>
+      <p style="color:var(--muted);margin-bottom:22px;max-width:44ch;margin-left:auto;margin-right:auto;">
+        Thirteen questions per tier, drawn from <i>The Code That Unlocks Reading</i>. Fresh order every climb. Answer to see why.
+      </p>
+      <button class="btn" id="startBtn">Start the Climb →</button>
+      ${bestLine}
+    </div>`;
+  document.getElementById('startBtn').addEventListener('click',start);
+}
+
+function start(){ order=buildOrder(); idx=0; score=0; renderQ(); }
+
+function renderQ(){
+  const item=order[idx];
+  const pct=Math.round((idx/order.length)*100);
+  app.innerHTML=`
+    <div class="barwrap"><div class="bar" style="width:${pct}%"></div></div>
+    <div class="meta"><span class="tier ${item.t.toLowerCase()}">${item.t} Tier</span><span>Question ${idx+1} / ${order.length} · Score ${score}</span></div>
+    <div class="q">${item.q}</div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <button class="next" id="nextBtn"></button>`;
+  const opts=document.getElementById('opts');
+  item.o.forEach((text,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=text;
+    b.addEventListener('click',()=>choose(i));
+    opts.appendChild(b);
+  });
+}
+
+function choose(i){
+  const item=order[idx];
+  const buttons=[...document.querySelectorAll('.opt')];
+  buttons.forEach(b=>b.disabled=true);
+  const correct = i===item.a;
+  if(correct) score++;
+  buttons[item.a].classList.add('correct');
+  if(!correct) buttons[i].classList.add('wrong');
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(correct?'ok':'no');
+  fb.innerHTML=(correct?'✓ Correct. ':'✗ Not quite. ')+item.why;
+  const nb=document.getElementById('nextBtn');
+  nb.className='next show';
+  nb.textContent = idx+1<order.length ? 'Next →' : 'See your result →';
+  nb.addEventListener('click',()=>{ idx++; idx<order.length?renderQ():finish(); });
+}
+
+function tierFor(s){
+  if(s>=47) return {name:'Platinum',cls:'platinum',icon:'💎',msg:'A near-perfect climb. You own the code.'};
+  if(s>=39) return {name:'Gold',cls:'gold',icon:'🥇',msg:'Strong mastery of the phonics code.'};
+  if(s>=27) return {name:'Silver',cls:'silver',icon:'🥈',msg:'Solid. The system is taking hold.'};
+  if(s>=13) return {name:'Bronze',cls:'bronze',icon:'🥉',msg:'You got through — the foundation is set.'};
+  return {name:'Keep Climbing',cls:'bronze',icon:'⛰️',msg:'Run it again — every climb maps the code deeper.'};
+}
+
+function finish(){
+  const tr=tierFor(score);
+  saveScore(score,tr.name);
+  app.innerHTML=`
+    <div class="center">
+      <div style="font-size:2.6rem">${tr.icon}</div>
+      <div class="tierbadge tier ${tr.cls}">${tr.name}</div>
+      <div class="scorebig">${score}<span style="font-size:1.4rem;color:var(--muted)"> / 52</span></div>
+      <p style="color:var(--muted);margin:14px auto 0;max-width:42ch;">${tr.msg}</p>
+      <div class="medals" style="margin-top:22px;">
+        <span class="medal ${score>=13?'on':''}">🥉 Bronze</span>
+        <span class="medal ${score>=27?'on':''}">🥈 Silver</span>
+        <span class="medal ${score>=39?'on':''}">🥇 Gold</span>
+        <span class="medal ${score>=47?'on':''}">💎 Platinum</span>
+      </div>
+      <p style="margin-top:18px;"><button class="btn" id="again">Climb Again →</button></p>
+      <p style="margin-top:14px;"><a href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a></p>
+    </div>`;
+  document.getElementById('again').addEventListener('click',start);
+}
+</script>
+</body>
+</html>
