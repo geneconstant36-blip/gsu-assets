@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Comprehension Climb — Reading Helix | Global Sovereign University</title>
+<meta name="description" content="Climb the Comprehension ladder — 52 questions, four tiers, Bronze to Platinum. Free, no login. Your tier saves between visits. Part of the Reading Helix at Global Sovereign University.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/comprehension-climb.html">
+<meta name="theme-color" content="#0B0E14">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1B2A4A;--gold:#C9A84C;--teal:#1A8B7F;--cream:#F5F1E8;--bg:#0B0E14;--card:#141a26;--muted:#9aa6b8;--good:#39b88b;--bad:#d9596b;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{background:var(--bg);color:var(--cream);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.6;min-height:100vh;}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 20px 80px;}
+  .head{text-align:center;margin-bottom:22px;}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+  h1{font-family:'Lora',serif;font-weight:700;font-size:clamp(1.9rem,5vw,2.6rem);color:var(--cream);line-height:1.1;}
+  .sub{color:var(--muted);font-size:.98rem;margin-top:10px;max-width:46ch;margin-left:auto;margin-right:auto;}
+
+  .panel{background:var(--card);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:26px;box-shadow:0 18px 50px -28px #000;}
+  .barwrap{height:8px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;margin:0 0 6px;}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .35s ease;}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);letter-spacing:.04em;margin-bottom:20px;}
+  .tier{font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+  .tier.bronze{color:#cd7f4d;} .tier.silver{color:#c7d0db;} .tier.gold{color:var(--gold);} .tier.platinum{color:#7fe9d6;}
+
+  .q{font-family:'Lora',serif;font-size:1.35rem;font-weight:600;line-height:1.4;color:#fff;margin-bottom:22px;}
+  .opts{display:flex;flex-direction:column;gap:12px;}
+  .opt{text-align:left;background:#1b2433;border:1.5px solid rgba(255,255,255,.1);color:var(--cream);font-family:inherit;font-size:1rem;font-weight:400;padding:15px 18px;border-radius:12px;cursor:pointer;transition:.15s;}
+  .opt:hover:not(:disabled){border-color:var(--gold);background:#212b3d;}
+  .opt:disabled{cursor:default;}
+  .opt.correct{border-color:var(--good);background:rgba(57,184,139,.14);color:#bff3df;}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,89,107,.14);color:#f6c9d1;}
+  .fb{margin-top:18px;padding:15px 18px;border-radius:12px;font-size:.95rem;line-height:1.55;display:none;}
+  .fb.show{display:block;}
+  .fb.ok{background:rgba(57,184,139,.1);border:1px solid rgba(57,184,139,.35);}
+  .fb.no{background:rgba(217,89,107,.1);border:1px solid rgba(217,89,107,.35);}
+  .fb b{color:var(--gold);}
+  .next{margin-top:18px;display:none;width:100%;background:var(--gold);color:#0A0907;font-family:inherit;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;}
+  .next.show{display:block;} .next:hover{transform:translateY(-1px);}
+
+  .btn{display:inline-block;background:var(--gold);color:#0A0907;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px 32px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;font-family:inherit;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold);}
+  .center{text-align:center;}
+  .best{margin-top:16px;font-size:13px;color:var(--muted);}
+  .best b{color:var(--gold);}
+  .medals{display:flex;justify-content:center;gap:10px;margin:18px 0;flex-wrap:wrap;}
+  .medal{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);border-radius:999px;padding:7px 13px;color:var(--muted);}
+  .medal.on{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.1);}
+  .scorebig{font-family:'Lora',serif;font-size:3.4rem;font-weight:700;color:var(--gold);line-height:1;}
+  .tierbadge{font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:8px 0 4px;}
+  .geno-hint{margin-top:22px;text-align:center;font-size:13px;color:var(--muted);}
+  .geno-hint b{color:var(--teal);}
+  .status{text-align:center;font-size:11px;color:#5b6678;margin-top:18px;letter-spacing:.04em;}
+  a{color:var(--teal);} a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="eyebrow">Reading Helix · Element 06 · Free</div>
+    <h1>The Comprehension Climb</h1>
+    <p class="sub">Fifty-two questions. Four tiers — Bronze, Silver, Gold, Platinum. Climb as far as you can; your best is saved.</p>
+  </div>
+  <div id="app" class="panel"></div>
+  <p class="status" id="status">Connecting…</p>
+  <p class="geno-hint">Stuck on one? <b>Ask GENO</b> — your free AI tutor, lower-right. He explains any answer in 32 languages.</p>
+</div>
+
+<!-- GENO LIVE WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+
+let db=null, uid=null, best=null;
+const statusEl=document.getElementById('status');
+try{
+  const app=initializeApp(firebaseConfig);
+  const auth=getAuth(app); db=getFirestore(app);
+  onAuthStateChanged(auth, async (user)=>{
+    if(user){
+      uid=user.uid;
+      try{
+        const snap=await getDoc(doc(db,'comprehension_climb',uid));
+        if(snap.exists()){ best=snap.data(); }
+      }catch(e){}
+      statusEl.textContent='Scores save automatically. Start on a phone, finish on a laptop.';
+      renderStart();
+    }
+  });
+  signInAnonymously(auth).catch(()=>{ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); });
+}catch(e){ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); }
+
+async function saveScore(score,tier){
+  if(!db||!uid) return;
+  try{
+    const prevBest = best && best.bestScore ? best.bestScore : 0;
+    if(score>=prevBest){
+      best={bestScore:score,bestTier:tier,updatedAt:Date.now()};
+      await setDoc(doc(db,'comprehension_climb',uid), best, {merge:true});
+    }
+  }catch(e){}
+}
+
+/* ===== 52 QUESTIONS · grounded in "How Sentences Carry Meaning: Comprehension" ===== */
+const QUESTIONS=[
+ {t:'Bronze',q:'The book says a sentence is best understood as…',o:['a bag of words with definitions','an organized unit of meaning','a list of nouns and verbs'],a:1,why:'A sentence is an <b>organized unit of meaning</b> — not a bag of words.'},
+ {t:'Bronze',q:'Fill in the book’s rule: “A word points; a sentence ___.”',o:['commits','repeats','stops'],a:0,why:'A word points; a sentence <b>commits</b> — it makes a claim you can test.'},
+ {t:'Bronze',q:'“Dogs bite people” and “People bite dogs” differ in…',o:['structure — who does what to whom','vocabulary','spelling'],a:0,why:'Same words; the <b>structure</b> assigns each noun its job.'},
+ {t:'Bronze',q:'In “The safety valve prevented the explosion,” the valve is…',o:['what exploded','a thing mentioned near the explosion','the cause the explosion did NOT happen'],a:2,why:'The sentence does <b>causal</b> work — the valve is why the explosion didn’t occur.'},
+ {t:'Bronze',q:'“The medication may cause dizziness.” The words “may cause” signal…',o:['possibility, not certainty','something in the past','a guarantee it will happen'],a:0,why:'<b>“May”</b> is possibility, not “will.” A careful reader notices the difference.'},
+ {t:'Bronze',q:'The first builder’s move for any sentence is to find the…',o:['longest word','first comma','subject–predicate spine'],a:2,why:'Find the <b>spine</b> (who/what + does what), then attach the rest.'},
+ {t:'Bronze',q:'A sentence becomes a proposition — something you can…',o:['agree with, dispute, or test','only memorize','safely ignore'],a:0,why:'A <b>proposition</b> can be agreed with, disputed, or tested.'},
+ {t:'Bronze',q:'“If symptoms persist, take two tablets” differs from “Take two tablets” because it is…',o:['a question','shorter','conditional'],a:2,why:'The first is <b>conditional</b> — the obligation depends on symptoms.'},
+ {t:'Bronze',q:'You look up every word and still feel unsure. The book says you’ve reached the level of the…',o:['sentence','syllable','letter'],a:0,why:'That feeling signals the next dimension of reading: the <b>sentence</b>.'},
+ {t:'Bronze',q:'Guessing meaning from plausibility is most dangerous in…',o:['picture books','casual conversation','law, science, and professional text'],a:2,why:'In <b>law/science/professional</b> text the page describes the unusual — guessing is costly.'},
+ {t:'Bronze',q:'Coordination (and, but, or) joins two ideas as…',o:['a single word','cause and effect only','equals'],a:2,why:'<b>Coordination</b> joins ideas as equals.'},
+ {t:'Bronze',q:'“X happened because Y happened” uses…',o:['no relationship at all','subordination — a cause relationship','a simple list'],a:1,why:'<b>Subordination</b> (“because”) sets up a cause relationship.'},
+ {t:'Bronze',q:'Connectors like “because” and “although,” the book says, are…',o:['optional and meaningless','different kinds of meaning, not decoration','interchangeable filler'],a:1,why:'They signal <b>different meanings</b> — not cosmetic upgrades.'},
+ {t:'Silver',q:'Modification means a writer attaches descriptive or limiting material to a…',o:['period','noun or verb','title'],a:1,why:'<b>Modifiers</b> attach to a noun or verb to describe or limit it.'},
+ {t:'Silver',q:'A one-clause sentence can still feel dense because of…',o:['too few words','heavy modification','having no verb'],a:1,why:'Stacked <b>modifiers</b> pack one clause with information.'},
+ {t:'Silver',q:'Two careful readers get different meanings from one sentence most often when a modifier…',o:['is a short word','is spelled incorrectly','attaches to the wrong word'],a:2,why:'A <b>drifting modifier</b> changes who or what it describes.'},
+ {t:'Silver',q:'Keeping a modifier with the right word is the skill of controlling…',o:['attachment','volume','spelling'],a:0,why:'<b>Attachment</b> — making sure modifiers don’t drift.'},
+ {t:'Silver',q:'For reading, pronouns (it, they, this, that) work mainly as…',o:['a list to memorize','cohesive devices that tie sentences together','decoration'],a:1,why:'Pronouns are <b>cohesive stitches</b> linking the chain of meaning.'},
+ {t:'Silver',q:'The book says a paragraph is best pictured as a…',o:['chain of linked claims','stack of separate claims','single long word'],a:0,why:'A paragraph is a <b>chain</b>, and pronouns are key links.'},
+ {t:'Silver',q:'When “this” or “they” has no clear thing it points back to, the pronoun is…',o:['correct as written','floating / unanchored','automatically plural'],a:1,why:'An <b>unanchored</b> pronoun breaks the chain of reference.'},
+ {t:'Silver',q:'In a lease, “it” appears three sentences after its noun. Your job is to…',o:['ignore the word “it”','invent a new noun for it','track the reference back to that noun'],a:2,why:'Track the <b>reference</b> across sentences before deciding meaning.'},
+ {t:'Silver',q:'Logical connectors like “however” and “therefore” should be read as…',o:['instructions about how claims relate','filler words','plain synonyms'],a:0,why:'They are <b>logic labels</b> — instructions, not decoration.'},
+ {t:'Silver',q:'“However” tells the reader the next claim will…',o:['give its cause','simply repeat it','contrast with the previous one'],a:2,why:'<b>However</b> signals a contrast.'},
+ {t:'Silver',q:'“Therefore” tells the reader the next claim is…',o:['an exception','a conclusion from what came before','an unrelated aside'],a:1,why:'<b>Therefore</b> marks a conclusion.'},
+ {t:'Silver',q:'Readers who parse each sentence but still “lose the plot” usually fail to…',o:['read quickly enough','track the connectors between sentences','sound out the words'],a:1,why:'They read sentences as <b>islands</b> and miss the logical stitches.'},
+ {t:'Silver',q:'Treating connectors as decoration is risky because a single one can…',o:['do nothing at all','add one syllable','flip the logic of a passage'],a:2,why:'A connector can quietly <b>flip the logic</b> of what you read.'},
+ {t:'Gold',q:'Given-new structure means an English sentence usually moves from…',o:['long words to short','what is already known to what is new','new information to old'],a:1,why:'<b>Given → new</b>: shared ground first, then the addition.'},
+ {t:'Gold',q:'When a sentence follows given-new order, the reader feels…',o:['carried smoothly','bored','jarred and confused'],a:0,why:'It feels <b>smooth</b> — you are carried along.'},
+ {t:'Gold',q:'A sentence that “begins in midair” has likely violated…',o:['the word count','a spelling rule','the given-new flow'],a:2,why:'Starting with <b>new</b> info before shared ground feels abrupt.'},
+ {t:'Gold',q:'The book reframes grammar for reading as a matter of…',o:['punctuation only','labeling parts of speech','control, not correction'],a:2,why:'Grammar as <b>control</b> over meaning — not red-pen correction.'},
+ {t:'Gold',q:'Traditional grammar drills often fail readers because the practice was…',o:['too modern','too short','not shaped around the job of reading'],a:2,why:'Labeling for its own sake becomes <b>dead knowledge</b>.'},
+ {t:'Gold',q:'The honest limit: perfect parsing still fails when the real problem is…',o:['missing knowledge, genre, or purpose','a single typo','the font size'],a:0,why:'Meaning above the sentence — <b>knowledge, genre, purpose</b> — can still block comprehension.'},
+ {t:'Gold',q:'“Distributed meaning” refers to meaning spread…',o:['inside a single word','across a whole document, not one sentence','in the title only'],a:1,why:'Some meaning lives <b>across the document</b>.'},
+ {t:'Gold',q:'Sentence tools, the book admits, are necessary but not…',o:['real','teachable','sufficient for all comprehension'],a:2,why:'Necessary, not <b>sufficient</b> — Chapter 8’s honest limit.'},
+ {t:'Gold',q:'A benefit letter hides who must act by using…',o:['bold type','very short sentences','agentless “official fog”'],a:2,why:'Stacked conditions and agentless phrasing create <b>official fog</b>.'},
+ {t:'Gold',q:'When two ideas are joined by “although,” the second idea is…',o:['the main point','the cause of the first','a concession that does not cancel the first'],a:2,why:'<b>Although</b> concedes without overturning the spine’s claim.'},
+ {t:'Gold',q:'The book’s stance on exposure (just reading more) is that it…',o:['always fixes every reading problem','does not reliably become learning for every reader','never helps anyone'],a:1,why:'Ch9: <b>exposure</b> alone isn’t reliable, especially with punishing sentences.'},
+ {t:'Gold',q:'A chapter titled “Where the Field Disagrees” exists because reading research…',o:['has genuine open debates','is completely settled','is entirely fake'],a:0,why:'Honest books name the <b>disagreements</b>.'},
+ {t:'Gold',q:'The strongest reason to learn sentence control, per the book, is to read…',o:['more email per hour','the documents of adult life accurately','novels faster'],a:1,why:'Leases, policies, medical instructions — read them <b>accurately</b>.'},
+ {t:'Platinum',q:'A self-directed adult program’s biggest advantage is that you can build it around…',o:['grammar charts','a fixed published textbook','the exact sentences costing you time and money'],a:2,why:'Build it around the <b>real documents</b> that matter to you.'},
+ {t:'Platinum',q:'The biggest risk of self-directed study, the book warns, is…',o:['moving through it too fast','drift — motivated days, then hoping reading more will fix it','owning too many books'],a:1,why:'<b>Drift</b> is the danger; structure beats hope.'},
+ {t:'Platinum',q:'The children’s sentence curriculum targets which transition years?',o:['grades 9–12','kindergarten and grade 1','roughly grades 3–8'],a:2,why:'Grades <b>3–8</b>: “I can read the words” stops being enough.'},
+ {t:'Platinum',q:'Teaching children sentence skills aims NOT to raise little grammarians but to build…',o:['fast typists','spelling-bee champions','automatic alarms for meaning'],a:2,why:'Build the same <b>automatic alarms</b> adults need.'},
+ {t:'Platinum',q:'The design principle that keeps the children’s work alive is teaching sentences as…',o:['diagrams to memorize','meaning, not as labels','timed tests'],a:1,why:'Sentences taught as <b>meaning</b> avoid dead knowledge.'},
+ {t:'Platinum',q:'The book’s core warning about critical reading: you cannot responsibly evaluate a claim you have not…',o:['memorized','read aloud','accurately assembled'],a:2,why:'<b>Assembly first</b> — you can’t judge what you haven’t accurately built.'},
+ {t:'Platinum',q:'Parsing sentences, the book argues, is not pre-reading but…',o:['the gate controlling what you think the text said','an optional warm-up','the very last step'],a:0,why:'It is the <b>gate</b> — what you think it said is what you’ll act on.'},
+ {t:'Platinum',q:'If you misattach a condition in a contract, the danger is that you will later…',o:['praise, attack, share, or act on the wrong meaning','only read it more slowly','merely spell it wrong'],a:0,why:'A wrong assembly leads to <b>acting on the wrong meaning</b>.'},
+ {t:'Platinum',q:'The Reading Helix volume that comes next after this one is…',o:['Critical Reading','Phonics','Phonemic Awareness'],a:0,why:'This book is the <b>bridge to Critical Reading</b> (Volume 7).'},
+ {t:'Platinum',q:'“Grammar can mean control, not correction” reframes grammar as a tool for the…',o:['publisher','reader, not just the editor','printer'],a:1,why:'Control serves the <b>reader’s</b> assembly of meaning.'},
+ {t:'Platinum',q:'“Do not stop the medication unless your doctor advises, even if you feel better.” The binding condition is…',o:['being free to stop anytime','a doctor’s advice — not feeling better','simply feeling better'],a:1,why:'The <b>condition</b> is the doctor’s advice; “feel better” is a concession, not permission.'},
+ {t:'Platinum',q:'The deepest claim of the book is that comprehension begins not with opinion but with accurate…',o:['reading speed','assembly of what the sentence commits to','vocabulary size'],a:1,why:'Accurate <b>assembly</b> precedes evaluation.'},
+ {t:'Platinum',q:'Reading at the sentence level ultimately protects a reader’s…',o:['judgment and decisions','handwriting','spelling'],a:0,why:'Accurate assembly protects <b>judgment</b> — what you decide and do.'},
+];
+
+const app=document.getElementById('app');
+let order=[], idx=0, score=0;
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildOrder(){
+  // shuffle within each tier, keep Bronze→Platinum ramp
+  const tiers=['Bronze','Silver','Gold','Platinum']; let o=[];
+  tiers.forEach(t=>{ o=o.concat(shuffle(QUESTIONS.filter(q=>q.t===t))); });
+  return o;
+}
+
+function renderStart(){
+  const bestLine = best && best.bestScore!=null
+    ? `<p class="best">Your best climb: <b>${best.bestScore}/52</b> — ${best.bestTier||''}</p>` : '';
+  app.innerHTML=`
+    <div class="center">
+      <div class="medals">
+        <span class="medal">🥉 Bronze</span><span class="medal">🥈 Silver</span>
+        <span class="medal">🥇 Gold</span><span class="medal">💎 Platinum</span>
+      </div>
+      <p style="color:var(--muted);margin-bottom:22px;max-width:44ch;margin-left:auto;margin-right:auto;">
+        Thirteen questions per tier, drawn from <i>How Sentences Carry Meaning</i>. Fresh order every climb. Answer to see why.
+      </p>
+      <button class="btn" id="startBtn">Start the Climb →</button>
+      ${bestLine}
+    </div>`;
+  document.getElementById('startBtn').addEventListener('click',start);
+}
+
+function start(){ order=buildOrder(); idx=0; score=0; renderQ(); }
+
+function renderQ(){
+  const item=order[idx];
+  const pct=Math.round((idx/order.length)*100);
+  app.innerHTML=`
+    <div class="barwrap"><div class="bar" style="width:${pct}%"></div></div>
+    <div class="meta"><span class="tier ${item.t.toLowerCase()}">${item.t} Tier</span><span>Question ${idx+1} / ${order.length} · Score ${score}</span></div>
+    <div class="q">${item.q}</div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <button class="next" id="nextBtn"></button>`;
+  const opts=document.getElementById('opts');
+  item.o.forEach((text,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=text;
+    b.addEventListener('click',()=>choose(i));
+    opts.appendChild(b);
+  });
+}
+
+function choose(i){
+  const item=order[idx];
+  const buttons=[...document.querySelectorAll('.opt')];
+  buttons.forEach(b=>b.disabled=true);
+  const correct = i===item.a;
+  if(correct) score++;
+  buttons[item.a].classList.add('correct');
+  if(!correct) buttons[i].classList.add('wrong');
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(correct?'ok':'no');
+  fb.innerHTML=(correct?'✓ Correct. ':'✗ Not quite. ')+item.why;
+  const nb=document.getElementById('nextBtn');
+  nb.className='next show';
+  nb.textContent = idx+1<order.length ? 'Next →' : 'See your result →';
+  nb.addEventListener('click',()=>{ idx++; idx<order.length?renderQ():finish(); });
+}
+
+function tierFor(s){
+  if(s>=47) return {name:'Platinum',cls:'platinum',icon:'💎',msg:'A near-perfect climb. You assemble meaning like an engineer.'};
+  if(s>=39) return {name:'Gold',cls:'gold',icon:'🥇',msg:'Strong command of how sentences carry meaning.'};
+  if(s>=27) return {name:'Silver',cls:'silver',icon:'🥈',msg:'Solid. The sentence is becoming a tool, not a wall.'};
+  if(s>=13) return {name:'Bronze',cls:'bronze',icon:'🥉',msg:'You got through — the spine is in your hands now.'};
+  return {name:'Keep Climbing',cls:'bronze',icon:'⛰️',msg:'Run it again — every climb maps the code deeper.'};
+}
+
+function finish(){
+  const tr=tierFor(score);
+  saveScore(score,tr.name);
+  app.innerHTML=`
+    <div class="center">
+      <div style="font-size:2.6rem">${tr.icon}</div>
+      <div class="tierbadge tier ${tr.cls}">${tr.name}</div>
+      <div class="scorebig">${score}<span style="font-size:1.4rem;color:var(--muted)"> / 52</span></div>
+      <p style="color:var(--muted);margin:14px auto 0;max-width:42ch;">${tr.msg}</p>
+      <div class="medals" style="margin-top:22px;">
+        <span class="medal ${score>=13?'on':''}">🥉 Bronze</span>
+        <span class="medal ${score>=27?'on':''}">🥈 Silver</span>
+        <span class="medal ${score>=39?'on':''}">🥇 Gold</span>
+        <span class="medal ${score>=47?'on':''}">💎 Platinum</span>
+      </div>
+      <p style="margin-top:18px;"><button class="btn" id="again">Climb Again →</button></p>
+      <p style="margin-top:14px;"><a href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a></p>
+    </div>`;
+  document.getElementById('again').addEventListener('click',start);
+}
+</script>
+</body>
+</html>
