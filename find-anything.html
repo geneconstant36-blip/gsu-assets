@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Find Anything · Global Sovereign University</title>
+<meta name="description" content="Seek Sovereign Knowledge — search every book, game, pillar, and program at Global Sovereign University. Free education for all." />
+<meta name="robots" content="index,follow" />
+<style>
+  :root{--navy:#1B2A4A;--black:#0B0E14;--gold:#C9A84C;--gold-dim:#8C7532;--teal:#1A8B7F;--cream:#F5F1E8;--cream-dim:#b9b4a6;--line:rgba(201,168,76,.22);--card:rgba(27,42,74,.45);}
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{min-height:100vh;color:var(--cream);font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(900px 600px at 50% -10%,rgba(27,42,74,.9),transparent 60%),linear-gradient(180deg,#0e1422 0%,var(--black) 60%,#060810 100%);background-attachment:fixed;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .serif{font-family:Georgia,'Times New Roman',serif;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;}
+  header{display:flex;align-items:center;justify-content:space-between;padding:22px 0 8px;}
+  .brand{display:flex;align-items:center;gap:14px;text-decoration:none;}
+  .brand .ring{width:42px;height:42px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;flex:0 0 auto;}
+  .brand .ring::before{content:"";position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:var(--gold);}
+  .brand .ring b{font-family:Georgia,serif;color:var(--gold);font-size:15px;line-height:1;}
+  .brand .txt small{display:block;color:var(--teal);letter-spacing:.18em;font-size:10.5px;text-transform:uppercase;}
+  .brand .txt span{font-family:Georgia,serif;color:var(--cream);font-size:18px;}
+  .back{color:var(--cream-dim);text-decoration:none;font-size:14px;border:1px solid var(--line);padding:8px 14px;border-radius:999px;transition:.2s;}
+  .back:hover{color:var(--gold);border-color:var(--gold-dim);}
+  .hero{position:relative;text-align:center;padding:42px 0 8px;}
+  .hero::before{content:"";position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:520px;height:520px;border:1px solid rgba(201,168,76,.12);border-radius:50%;pointer-events:none;}
+  .hero::after{content:"";position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:360px;height:360px;border:1px solid rgba(26,139,127,.10);border-radius:50%;pointer-events:none;}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);color:var(--gold);margin:0 0 10px;font-weight:700;}
+  .hero p{color:var(--cream-dim);font-size:1.05rem;margin:0 auto 26px;max-width:560px;}
+  .searchbox{position:relative;max-width:680px;margin:0 auto;}
+  .searchbox svg{position:absolute;left:20px;top:50%;transform:translateY(-50%);width:22px;height:22px;stroke:var(--gold);opacity:.8;}
+  #q{width:100%;padding:18px 54px 18px 56px;border-radius:999px;border:1.5px solid var(--gold-dim);background:rgba(8,11,18,.7);color:var(--cream);font-size:1.12rem;font-family:Georgia,serif;outline:none;transition:.25s;}
+  #q::placeholder{color:#8f8a7d;font-style:italic;}
+  #q:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,168,76,.12),0 0 34px rgba(26,139,127,.25);}
+  #clear{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--cream-dim);font-size:20px;cursor:pointer;display:none;line-height:1;}
+  #clear:hover{color:var(--gold);}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:24px auto 6px;max-width:920px;}
+  .chip{border:1px solid var(--line);background:transparent;color:var(--cream-dim);padding:7px 15px;border-radius:999px;font-size:13.5px;cursor:pointer;transition:.18s;}
+  .chip:hover{color:var(--gold);border-color:var(--gold-dim);}
+  .chip.active{background:var(--gold);color:#0b0e14;border-color:var(--gold);font-weight:600;}
+  .count{text-align:center;color:var(--cream-dim);font-size:13px;margin:20px 0 12px;}
+  .results{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;padding:6px 0 10px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px;transition:.18s;opacity:0;transform:translateY(10px);animation:rise .5s forwards;}
+  @keyframes rise{to{opacity:1;transform:none;}}
+  .card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.35);}
+  .card .badge{align-self:flex-start;color:var(--teal);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;}
+  .card h3{font-family:Georgia,serif;color:var(--gold);font-size:1.18rem;margin:0;line-height:1.25;}
+  .card p{margin:0;color:var(--cream-dim);font-size:.92rem;line-height:1.5;flex:1;}
+  .card .go{color:var(--gold);font-size:.86rem;margin-top:4px;}
+  .empty{text-align:center;color:var(--cream-dim);padding:30px 0;}
+  .empty b{color:var(--cream);}
+  .geno{margin:30px auto 10px;max-width:760px;background:linear-gradient(180deg,rgba(27,42,74,.55),rgba(11,14,20,.4));border:1px solid var(--line);border-radius:18px;padding:24px;text-align:center;}
+  .geno img{width:64px;height:64px;border-radius:50%;border:2px solid var(--gold);}
+  .geno h2{font-family:Georgia,serif;color:var(--gold);font-size:1.5rem;margin:14px 0 4px;}
+  .geno .tag{color:var(--teal);font-size:.95rem;margin:0 0 6px;}
+  .geno p{color:var(--cream-dim);margin:0 auto;max-width:520px;font-size:.96rem;}
+  .geno-widget{margin-top:18px;display:flex;justify-content:center;min-height:60px;}
+  footer{text-align:center;color:#7d7a70;font-size:12.5px;padding:34px 0 40px;}
+  footer .gold{color:var(--gold-dim);}
+  @media(max-width:560px){.hero::before,.hero::after{display:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="https://www.globalsovereignuniversity.org"><span class="ring"><b>GSU</b></span><span class="txt"><small>Global Sovereign University</small><span class="serif">Find Anything</span></span></a>
+    <a class="back" href="https://www.globalsovereignuniversity.org">← Back to GSU</a>
+  </header>
+  <section class="hero">
+    <h1 class="serif">Seek Sovereign Knowledge</h1>
+    <p>Search every book, game, pillar, and program at GSU. All of it free — and you never have to learn alone.</p>
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="q" type="text" autocomplete="off" placeholder="Try “phonics”, “lemonade”, “freedom”, “math”, “GENO”…" />
+      <button id="clear" aria-label="Clear">×</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </section>
+  <div class="count" id="count"></div>
+  <div class="results" id="results"></div>
+  <section class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor" />
+    <h2 class="serif">Ask GENO</h2>
+    <p class="tag">GENO AI Tutor available 24/7 — a robot you can actually TALK to.</p>
+    <p>Not sure what you need? Tell GENO in your own language. He'll point you to the right book, game, or pillar — and walk you in.</p>
+    <div class="geno-widget"><elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai></div>
+  </section>
+  <footer><span class="serif" style="color:var(--gold)">Global Sovereign University</span><br/>Free Education for All · <span class="gold">No One Learns Alone</span></footer>
+</div>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<script>
+const BASE="https://www.globalsovereignuniversity.org";
+const DATA=[
+  {t:"Home — Global Sovereign University",u:BASE+"/",c:"join",type:"hub",d:"Free education for everyone, everywhere."},
+  {t:"Readification",u:BASE+"/readification",c:"reading",type:"hub",d:"The reading pillar — the Reading Helix, the Magic of Six, the path to fluent reading."},
+  {t:"Phonics",u:BASE+"/phonics",c:"reading",type:"hub",d:"Sound becomes print — the 44 sounds mapped to 26 letters."},
+  {t:"Language Lab",u:BASE+"/language-lab",c:"reading",type:"hub",d:"Language learning plus the Body Language Decoder."},
+  {t:"Mathification",u:BASE+"/mathification",c:"math",type:"hub",d:"Math made visual — grades 4 through junior college."},
+  {t:"Financification",u:BASE+"/financification",c:"math",type:"hub",d:"Gamified financial literacy: budgets, debt, compound interest, credit."},
+  {t:"Civicification",u:BASE+"/civicification",c:"civics",type:"hub",d:"Constitutional literacy, dual sovereignty, informed voting."},
+  {t:"Lawification",u:BASE+"/lawification",c:"civics",type:"hub",d:"How law works, and how to read it."},
+  {t:"Scientification",u:BASE+"/scientification",c:"science",type:"hub",d:"Hands-on, visual science."},
+  {t:"Historification",u:BASE+"/historification",c:"history",type:"hub",d:"History told as the human story."},
+  {t:"Geographification",u:BASE+"/geographication",c:"history",type:"hub",d:"The world, mapped and understood."},
+  {t:"Critical Thinking",u:BASE+"/critical-thinking",c:"tech",type:"hub",d:"Paul-Elder elements, Bloom's taxonomy, the Socratic method."},
+  {t:"Computer Literacy",u:BASE+"/computer-literacy",c:"tech",type:"hub",d:"The digital skills every learner needs."},
+  {t:"Digitification",u:BASE+"/digitification",c:"tech",type:"hub",d:"Living and learning in a digital world."},
+  {t:"Tradification (Trades)",u:BASE+"/tradification",c:"trades",type:"hub",d:"Real, hands-on trade skills and trade math."},
+  {t:"Library — Free BookGames",u:BASE+"/library",c:"games",type:"hub",d:"98 free BookGames, Bronze-Silver-Gold-Platinum progression."},
+  {t:"Homeschool",u:BASE+"/homeschool",c:"homeschool",type:"hub",d:"Tools and tracks built for families teaching at home."},
+  {t:"Certification",u:BASE+"/certification",c:"join",type:"hub",d:"Earn a free Comprehension Certification along Trifurcation Road."},
+  {t:"Deep Research Vault",u:BASE+"/deep-research",c:"research",type:"hub",d:"Cited, in-depth research articles across the curriculum."},
+  {t:"Learning Center",u:BASE+"/learning-center",c:"join",type:"hub",d:"Subject hubs, games, and AI tutoring in one place."},
+  {t:"Robot-Proof Comprehension",u:BASE+"/robot-proof",c:"reading",type:"hub",d:"AI-verified reading comprehension."},
+  {t:"Comprehension Bridge",u:BASE+"/comprehension-bridge",c:"reading",type:"hub",d:"A free adult reading comprehension quest, coached by GENO."},
+  {t:"Wisdom Bridge",u:BASE+"/wisdom-bridge",c:"join",type:"hub",d:"Checkpoints and milestones across the journey."},
+  {t:"Civilization Builders / Sign-Up",u:BASE+"/civilization-builders",c:"join",type:"hub",d:"Become a learner or tutor; mentorship from retired professionals."},
+  {t:"About GSU",u:BASE+"/about",c:"join",type:"hub",d:"Mission, founder, and the bridge to freedom through education."},
+  {t:"Our Mission",u:BASE+"/mission",c:"join",type:"hub",d:"The GSU mission video."},
+  {t:"FAQ",u:BASE+"/faq",c:"join",type:"hub",d:"Answers to common questions."},
+  {t:"Voice of Sovereignty Podcast",u:BASE+"/podcast",c:"join",type:"hub",d:"160+ episodes in 10 languages."},
+  {t:"Donate · Quid Pro Quo",u:BASE+"/quid-pro-quo",c:"join",type:"hub",d:"Support free education for the world."},
+  {t:"Bridge to Big Words",u:BASE+"/bridge-to-big-words",c:"reading",type:"game",d:"Free GSU learning game."},
+  {t:"The Greek Connection",u:BASE+"/the-greek-connection",c:"reading",type:"game",d:"Free GSU learning game."},
+  {t:"The Latin Powerhouse",u:BASE+"/the-latin-powerhouse",c:"reading",type:"game",d:"Free GSU learning game."},
+  {t:"Digraph Detective",u:BASE+"/digraph-detective",c:"reading",type:"game",d:"Free GSU learning game."},
+  {t:"Sound Safari",u:BASE+"/sound-safari",c:"reading",type:"game",d:"Free GSU learning game."},
+  {t:"Blend Blaster",u:BASE+"/blend-blaster",c:"reading",type:"game",d:"Free GSU learning game."},
+  {t:"Word Family Factory",u:BASE+"/word-family-factory",c:"reading",type:"game",d:"Free GSU learning game."},
+  {t:"Academic Excellence",u:BASE+"/academic-excellence",c:"reading",type:"game",d:"Free GSU learning game."},
+  {t:"The Lemonade Stand That Made $50",u:BASE+"/the-lemonade-stand-that-made-50-dollars",c:"math",type:"game",d:"Free GSU learning game."},
+  {t:"Math Jeopardy",u:BASE+"/math-jeopardy",c:"math",type:"game",d:"Free GSU learning game."},
+  {t:"Make 24",u:BASE+"/make-24",c:"math",type:"game",d:"Free GSU learning game."},
+  {t:"Street Smart Math",u:BASE+"/street-smart-math",c:"math",type:"game",d:"Free GSU learning game."},
+  {t:"Number Ninja",u:BASE+"/number-ninja",c:"math",type:"game",d:"Free GSU learning game."},
+  {t:"Compound Interest Visualizer",u:BASE+"/compound-interest-visualizer",c:"math",type:"game",d:"Free GSU learning game."},
+  {t:"The Wealth Climb — Jeopardy Edition",u:BASE+"/the-wealth-climb-jeopardy-edition",c:"math",type:"game",d:"Free GSU learning game."},
+  {t:"Currency Quest",u:BASE+"/currency-quest",c:"math",type:"game",d:"Free GSU learning game."},
+  {t:"Case Cracker",u:BASE+"/case-cracker",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"Fallacy Finder",u:BASE+"/fallacy-finder",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"Truth Detector",u:BASE+"/truth-detector",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"The Jury Room",u:BASE+"/the-jury-room",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"Bill Builder",u:BASE+"/bill-builder",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"Mayor for a Day",u:BASE+"/mayor-for-a-day",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"Constitution Debate",u:BASE+"/constitution-debate",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"Founding Choices",u:BASE+"/founding-choices",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"Republic vs Democracy",u:BASE+"/republic-vs-democracy-game",c:"civics",type:"game",d:"Free GSU learning game."},
+  {t:"The Trifurcation Road",u:BASE+"/the-trifurcation-road",c:"join",type:"game",d:"Free GSU learning game."},
+  {t:"Light Lab",u:BASE+"/light-lab",c:"science",type:"game",d:"Free GSU learning game."},
+  {t:"Ecosystem Balance",u:BASE+"/ecosystem-balance",c:"science",type:"game",d:"Free GSU learning game."},
+  {t:"Molecule Maker",u:BASE+"/molecule-maker",c:"science",type:"game",d:"Free GSU learning game."},
+  {t:"Westward Journey",u:BASE+"/westward-journey",c:"history",type:"game",d:"Free GSU learning game."},
+  {t:"Civilization Crossroads",u:BASE+"/civilization-crossroads",c:"history",type:"game",d:"Free GSU learning game."},
+  {t:"History of the Americans",u:BASE+"/history-of-the-americans",c:"history",type:"game",d:"Free GSU learning game."},
+  {t:"Flag Finder",u:BASE+"/flag-finder",c:"history",type:"game",d:"Free GSU learning game."},
+  {t:"Global Greetings",u:BASE+"/global-greetings",c:"history",type:"game",d:"Free GSU learning game."},
+  {t:"Plant Manager Simulator",u:BASE+"/plant-manager-simulator",c:"trades",type:"game",d:"Free GSU learning game."},
+  {t:"Plumber Simulator",u:BASE+"/plumber-simulator",c:"trades",type:"game",d:"Free GSU learning game."},
+  {t:"The Meaning of Life",u:"https://www.amazon.com/dp/B0GGQ8V9XC?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Frankenstein Methodology",u:"https://www.amazon.com/dp/B0GG67J1TP?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Building Emotional Capacity",u:"https://www.amazon.com/dp/B0GGBY5FNK?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Sovereign Architect",u:"https://www.amazon.com/dp/B0GG7Q1NVL?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Talent of Self-Reliance",u:"https://www.amazon.com/dp/B0GG5M184T?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Math in Action: Grade 6",u:"https://www.amazon.com/dp/B0GFDF7THY?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Grade 4 Mathematics Textbook",u:"https://www.amazon.com/dp/B0GCT1Q37G?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Teach Them to Fish",u:"https://www.amazon.com/dp/B0G8ZMGM13?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Self-Reliant Magazine",u:"https://www.amazon.com/dp/B0FTK122R3?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Project Management Professional (PMP)",u:"https://www.amazon.com/dp/B0G6CM21HJ?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Unschooling High School Handbook",u:"https://www.amazon.com/dp/B0G5QFN3XS?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Breaking Free from Perfectionism",u:"https://www.amazon.com/dp/B0G5M7K2WL?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Do The Math 2+2=5",u:"https://www.amazon.com/dp/B0D78W7DF9?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"How Children Think",u:"https://www.amazon.com/dp/B0G52NDRFL?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Female Mind",u:"https://www.amazon.com/dp/B0G4XVH972?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Rational Male Brain",u:"https://www.amazon.com/dp/B0G4SWFGWG?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"AI and Business",u:"https://www.amazon.com/dp/B0G4R3C3XG?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"A Well Lived Life",u:"https://www.amazon.com/dp/B0G4NKSMGF?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"A Real Good Life",u:"https://www.amazon.com/dp/B0G4KRFY9V?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Builders of Eternity",u:"https://www.amazon.com/dp/B0G4JJH3P7?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Puppy Training Newfoundland",u:"https://www.amazon.com/dp/B0CLYXGR5J?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Rumination Book",u:"https://www.amazon.com/dp/B0G3M98JZ2?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"TPM Education and Training",u:"https://www.amazon.com/dp/B0F8KCJJ9T?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Catastrophizing Workbook",u:"https://www.amazon.com/dp/B0F7Y8CQND?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Math Anxiety for Adults",u:"https://www.amazon.com/dp/B0G2P4RFHX?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Critical Thinking for Kids",u:"https://www.amazon.com/dp/B0FSYLC4RP?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Anxiety and Fear Guide",u:"https://www.amazon.com/dp/B0G2KJZXDS?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"90-Day Relationship Transformation",u:"https://www.amazon.com/dp/B0G2HKVWFK?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Better Life I Deserve",u:"https://www.amazon.com/dp/B0G1TNQW1T?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Civic Virtue",u:"https://www.amazon.com/dp/B0G15PCKFZ?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Digital Farm: Modern Allegory",u:"https://www.amazon.com/dp/B0FNP71PHJ?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Emotional Intelligence for Leaders",u:"https://www.amazon.com/dp/B0FZ56JC8J?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Financial Literacy for Teens",u:"https://www.amazon.com/dp/B0FYP5Y5KQ?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Efficiency Classroom",u:"https://www.amazon.com/dp/B0FYDH4T42?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Three Burrows",u:"https://www.amazon.com/dp/B0DP5XXB2S?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Last Horizon: Cowboy History",u:"https://www.amazon.com/dp/B0FQ4ZYXK7?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Great Lawgivers: Haudenosaunee",u:"https://www.amazon.com/dp/B0FPFHHL36?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"History of The Americans IV",u:"https://www.amazon.com/dp/B0FPDL9KGQ?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Safety, Health, and Environment (SHE) TPM",u:"https://www.amazon.com/dp/B0F412ZR6F?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Risk-Based Thinking (RBT)",u:"https://www.amazon.com/dp/B0F38L8Q5Q?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Paranoia: The Psychology of Fear",u:"https://www.amazon.com/dp/B0D971K6ZX?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Meritocracy",u:"https://www.amazon.com/dp/B0DV5HHWQS?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"A Leader's Moral Compass",u:"https://www.amazon.com/dp/B0D8Z28K77?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"A Purpose-Driven Life",u:"https://www.amazon.com/dp/B0DPRF6YXS?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Declaration of Educational Independence",u:"https://www.amazon.com/dp/B0FWGQ3QQ4?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Freedom: The Definitive Guide",u:"https://www.amazon.com/dp/B0FWV8VR2F?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Jealous Behavior",u:"https://www.amazon.com/dp/B0DJG6R49Y?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Respect: A Scholarly Guide",u:"https://www.amazon.com/dp/B0DGCLKCH1?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Total Productive Maintenance: ISO 9000",u:"https://www.amazon.com/dp/B0F3NWWX7H?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"History of the Americans (Vol. 1-5)",u:"https://www.amazon.com/dp/B0FP3SFQWR?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Modern Slavery: Human Trafficking",u:"https://www.amazon.com/dp/B0DHV5HYQB?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Absence of Pain is Death",u:"https://www.amazon.com/dp/B0DVMHQB6R?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Night of the Living Stuffed Animals",u:"https://www.amazon.com/dp/B0F5NXDSVB?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Coming to America: Great Melting Pot",u:"https://www.amazon.com/dp/B0DHCZF7XQ?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Hunger and Poverty in America",u:"https://www.amazon.com/dp/B0DM8JGMN4?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Math Revolution",u:"https://www.amazon.com/dp/B0FW8P1D8B?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Anger Management: CBT Workbook",u:"https://www.amazon.com/dp/B0D98W9SV9?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"In the Line of Fire: Coast Guard Tale",u:"https://www.amazon.com/dp/B0F352VDT9?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Wisdom Bridge",u:"https://www.amazon.com/dp/B0FSX1CCZJ?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"The Undeclared War: NATO and Russia",u:"https://www.amazon.com/dp/B0FK9SQRGS?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Office TPM",u:"https://www.amazon.com/dp/B0F8SYMLWJ?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Computer Literacy Unlocked",u:"https://www.amazon.com/dp/B0GPMLN32V?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."},
+  {t:"Digitification",u:"https://www.amazon.com/dp/B0GGXTPFNS?tag=gsu2026-20",c:"books",type:"book",d:"By Dr. Gene A. Constant \u2014 proceeds fund free education."}
+];
+const CHIPS=[["All","All"],["Reading","reading"],["Math & Money","math"],["Civics & Law","civics"],["Science","science"],["History","history"],["Trades & Work","trades"],["Tech","tech"],["Homeschool","homeschool"],["Games","__games"],["KDP Books","__books"],["Deep Research","research"],["Join","join"]];
+const CATLABEL={reading:"Reading",math:"Math & Money",civics:"Civics & Law",science:"Science",history:"History",trades:"Trades & Work",tech:"Thinking & Tech",homeschool:"Homeschool",research:"Deep Research",join:"GSU",books:"KDP Book",games:"Library"};
+let state={q:"",cat:"All"};
+const resultsEl=document.getElementById("results"),countEl=document.getElementById("count"),qEl=document.getElementById("q"),clearEl=document.getElementById("clear");
+function buildChips(){const c=document.getElementById("chips");CHIPS.forEach(([label,val])=>{const b=document.createElement("button");b.className="chip"+(val==="All"?" active":"");b.textContent=label;b.onclick=()=>{state.cat=val;[...c.children].forEach(x=>x.classList.toggle("active",x===b));render();};c.appendChild(b);});}
+function match(it){if(state.cat==="__games"&&it.type!=="game")return false;if(state.cat==="__books"&&it.type!=="book")return false;if(state.cat!=="All"&&state.cat!=="__games"&&state.cat!=="__books"&&it.c!==state.cat)return false;const q=state.q.trim().toLowerCase();if(!q)return true;return (it.t+" "+it.d+" "+it.c+" "+it.type).toLowerCase().includes(q);}
+function render(){const list=DATA.filter(match);const chip=CHIPS.find(c=>c[1]===state.cat);countEl.textContent=list.length+" result"+(list.length===1?"":"s")+(state.q?` for “${state.q}”`:"")+(state.cat!=="All"?` · ${chip[0]}`:"");if(!list.length){resultsEl.innerHTML=`<div class="empty" style="grid-column:1/-1">No matches yet. Try a broader word — or <b>Ask GENO</b> below and he'll find it for you.</div>`;return;}resultsEl.innerHTML=list.map((it,i)=>`<a class="card" href="${it.u}" ${it.type==="book"?'target="_blank" rel="noopener"':''} style="animation-delay:${Math.min(i*22,420)}ms"><span class="badge">${it.type==="game"?"Game · ":it.type==="book"?"Book · ":""}${CATLABEL[it.c]||""}</span><h3 class="serif">${it.t}</h3><p>${it.d}</p><span class="go">Open ↗</span></a>`).join("");}
+qEl.addEventListener("input",e=>{state.q=e.target.value;clearEl.style.display=state.q?"block":"none";render();});
+qEl.addEventListener("keydown",e=>{if(e.key==="Enter"){const f=DATA.filter(match)[0];if(f)window.location.href=f.u;}if(e.key==="Escape"){qEl.value="";state.q="";clearEl.style.display="none";render();}});
+clearEl.onclick=()=>{qEl.value="";state.q="";clearEl.style.display="none";qEl.focus();render();};
+buildChips();render();qEl.focus();
+</script>
+</body>
+</html>
