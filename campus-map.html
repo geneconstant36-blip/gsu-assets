@@ -1,0 +1,128 @@
+<!-- ============================================================
+     GSU CAMPUS MAP  ·  /campus-map
+     Paste into a Webflow Embed on the Campus Map page body.
+     Self-contained: live search + category filter directory.
+     Site-wide navbar & footer come from your head code.
+     ============================================================ -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap');
+  #gsu-campus{--navy:#1B2A4A;--gold:#C9A84C;--teal:#1A8B7F;--cream:#F5F1E8;--ink:#33404f;background:var(--cream);font-family:'Poppins',system-ui,sans-serif;font-weight:300;color:var(--ink);padding:56px 20px 72px;}
+  #gsu-campus *{box-sizing:border-box;}
+  #gsu-campus .cm-wrap{max-width:1120px;margin:0 auto;}
+  #gsu-campus .cm-eyebrow{text-align:center;font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
+  #gsu-campus h1{font-family:'Lora',serif;color:var(--navy);font-size:clamp(2rem,5vw,3rem);font-weight:700;text-align:center;margin:0 0 10px;}
+  #gsu-campus .cm-sub{text-align:center;font-size:1.08rem;color:#4a5563;max-width:60ch;margin:0 auto 30px;line-height:1.6;}
+  #gsu-campus .cm-searchbar{position:relative;max-width:620px;margin:0 auto 10px;}
+  #gsu-campus .cm-searchbar input{width:100%;padding:18px 54px 18px 24px;font-family:'Poppins',sans-serif;font-size:1.05rem;color:var(--navy);background:#fff;border:2px solid rgba(27,42,74,.14);border-radius:14px;outline:none;box-shadow:0 6px 22px rgba(27,42,74,.07);transition:border-color .18s,box-shadow .18s;}
+  #gsu-campus .cm-searchbar input:focus{border-color:var(--gold);box-shadow:0 6px 26px rgba(201,168,76,.22);}
+  #gsu-campus .cm-searchbar .cm-mag{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:2.2;}
+  #gsu-campus .cm-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px auto 8px;max-width:900px;}
+  #gsu-campus .cm-chip{font-size:.82rem;font-weight:500;letter-spacing:.02em;color:var(--navy);background:#fff;border:1px solid rgba(27,42,74,.16);border-radius:999px;padding:8px 16px;cursor:pointer;transition:all .15s;}
+  #gsu-campus .cm-chip:hover{border-color:var(--gold);}
+  #gsu-campus .cm-chip.on{background:var(--navy);color:var(--cream);border-color:var(--navy);}
+  #gsu-campus .cm-count{text-align:center;font-size:.85rem;color:#7a8492;margin:18px 0 22px;letter-spacing:.02em;}
+  #gsu-campus .cm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:18px;}
+  #gsu-campus .cm-card{display:flex;flex-direction:column;background:#fff;border:1px solid rgba(27,42,74,.09);border-top:3px solid var(--gold);border-radius:14px;padding:20px 20px 18px;text-decoration:none;transition:transform .16s,box-shadow .16s,border-color .16s;}
+  #gsu-campus .cm-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(27,42,74,.12);}
+  #gsu-campus .cm-card[data-accent="teal"]{border-top-color:var(--teal);}
+  #gsu-campus .cm-card[data-accent="navy"]{border-top-color:var(--navy);}
+  #gsu-campus .cm-tag{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
+  #gsu-campus .cm-card h3{font-family:'Lora',serif;color:var(--navy);font-size:1.22rem;font-weight:700;margin:0 0 6px;line-height:1.2;}
+  #gsu-campus .cm-card p{font-size:.9rem;color:#56606f;line-height:1.5;margin:0 0 14px;flex:1;}
+  #gsu-campus .cm-open{font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);}
+  #gsu-campus .cm-none{display:none;text-align:center;padding:40px 20px;}
+  #gsu-campus .cm-none h3{font-family:'Lora',serif;color:var(--navy);font-size:1.3rem;margin:0 0 8px;}
+  #gsu-campus .cm-none a{display:inline-block;margin-top:8px;background:var(--navy);color:var(--cream);text-decoration:none;font-weight:600;font-size:.9rem;letter-spacing:.03em;border-radius:10px;padding:13px 26px;}
+  #gsu-campus .cm-geno{text-align:center;color:#5a6573;font-size:.95rem;margin-top:34px;font-style:italic;}
+</style>
+
+<section id="gsu-campus">
+  <div class="cm-wrap">
+    <div class="cm-eyebrow">GSU Campus Map</div>
+    <h1>Find your way through the university</h1>
+    <p class="cm-sub">Every faculty, program, library, and resource in one place. Start typing to seek sovereign knowledge &mdash; the map narrows to what you need.</p>
+
+    <div class="cm-searchbar">
+      <input id="cmSearch" type="search" placeholder="Seek sovereign knowledge&hellip;" autocomplete="off" aria-label="Search the campus map">
+      <svg class="cm-mag" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+    </div>
+
+    <div class="cm-chips" id="cmChips"></div>
+    <div class="cm-count" id="cmCount"></div>
+    <div class="cm-grid" id="cmGrid"></div>
+
+    <div class="cm-none" id="cmNone">
+      <h3>No matches on the map for that.</h3>
+      <p>It may still live somewhere on the site &mdash; search everything:</p>
+      <a id="cmSiteSearch" href="#" target="_blank" rel="noopener">Search the full site &rarr;</a>
+    </div>
+
+    <p class="cm-geno">Can&rsquo;t find it? Ask GENO, the free AI tutor available 24/7 in the corner of every page.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  var D=[
+    ["Reading & Language","Readification","/readification","The reading faculty &mdash; the eight-pillar Reading Helix from sounds to deep comprehension.","navy","reading literacy helix phonemic"],
+    ["Reading & Language","Phonics","/phonics","Turning letters into sounds and sounds into words &mdash; the decoding foundation.","gold","phonics decoding letters sounds"],
+    ["Reading & Language","Linguification","/linguification","Language, grammar, and the structure of clear expression.","teal","language grammar linguistics"],
+    ["Reading & Language","Comprehension Bridge","/comprehension-bridge","Practice that turns decoded words into understanding you can hold and use.","gold","comprehension understanding meaning"],
+    ["Reading & Language","Robot-Proof Comprehension","/robot-proof","Reading and thinking skills no machine can replace.","navy","robot proof comprehension critical"],
+    ["Reading & Language","Humanics","/humanics","The human disciplines &mdash; character, meaning, and the examined life.","teal","humanities philosophy character"],
+    ["Math & Money","Mathification","/mathification","The mathematics faculty &mdash; visual, practical math for every level.","navy","math mathematics numbers arithmetic"],
+    ["Math & Money","Financification","/financification","Personal finance and the literacy of money.","gold","finance money budgeting wealth"],
+    ["Math & Money","Wealthification Junior","/wealthification-junior","Money sense for young learners.","teal","kids money wealth junior children"],
+    ["Trades & Work","Tradification","/tradification","The skilled-trades faculty &mdash; real, hands-on work that pays.","navy","trades carpentry electrical plumbing work skills"],
+    ["Trades & Work","Entrepreneurship","/entrepreneurship","Starting and running something of your own.","gold","entrepreneur business startup"],
+    ["Trades & Work","Leadership & Influence","/leadership-influence","Leading people and earning real influence.","teal","leadership influence management"],
+    ["Trades & Work","Computer Literacy","/computer-literacy","The digital basics everyone now needs.","gold","computer digital literacy basics"],
+    ["Science, Tech & World","Scientification","/scientification","The science faculty &mdash; how the world actually works.","navy","science biology chemistry physics"],
+    ["Science, Tech & World","Digitification","/digitification","Digital and AI literacy for the new economy.","teal","digital ai technology coding"],
+    ["Science, Tech & World","Geographication","/geographication","The places, maps, and geography of the world.","gold","geography maps world places"],
+    ["Civics, History & Law","Civicification","/civicification","Citizenship, government, and how a republic works.","navy","civics government citizenship democracy"],
+    ["Civics, History & Law","Historification","/historification","History and the thinking skills to read it honestly.","gold","history american past"],
+    ["Civics, History & Law","Lawification","/lawification","Practical legal knowledge, ungated at last.","teal","law legal rights contracts"],
+    ["Civics, History & Law","Critical Thinking","/critical-thinking","Reasoning, logic, and resisting manipulation.","navy","critical thinking logic reasoning"],
+    ["Library & Books","Library","/library","The Library &mdash; play, read, hear, and see every book before you keep it.","navy","library books bookgames read play"],
+    ["Library & Books","Reach Them All","/reach-them-all","The mission to reach the offline world by phone and by box.","gold","reach them all offline hotline box mission"],
+    ["Library & Books","GENO in a Box","/geno-in-a-box","A whole offline university on a small device, for places with no internet.","teal","geno box offline device library"],
+    ["Programs","Learning Center","/learning-center","Your starting point &mdash; how to use everything GSU offers.","navy","learning center start guide help"],
+    ["Programs","Civilization Builders","/civilization-builders","Mentorship, and the place learners and tutors sign up.","gold","mentors tutors signup civilization builders volunteer"],
+    ["Programs","Wisdom Bridge","/wisdom-bridge","Checkpoints that carry you from one level of mastery to the next.","teal","wisdom bridge checkpoint mastery"],
+    ["Programs","Deep Research Vault","/deep-research","Original, fully-sourced research articles on learning and society.","navy","deep research vault articles studies evidence"],
+    ["Programs","Certification","/certification","Earn a GSU Certificate of Comprehension.","gold","certification certificate exam credential"],
+    ["Programs","Homeschool","/homeschool","Tools and curricula for families teaching at home.","teal","homeschool family parents curriculum"],
+    ["Media & Mission","Podcast","/podcast","The Voice of Sovereignty podcast.","navy","podcast audio voice of sovereignty listen"],
+    ["Media & Mission","Mission","/mission","Why GSU exists &mdash; free education as a bridge to freedom.","gold","mission purpose why vision"],
+    ["Media & Mission","About GSU","/about","The story and the people behind the university.","teal","about story founder gene constant"],
+    ["Media & Mission","FAQ","/faq","Answers to the questions visitors ask most.","navy","faq questions answers help"],
+    ["Media & Mission","Contact","/contact","Reach the foundation.","gold","contact email reach support"],
+    ["Media & Mission","Support GSU","/quid-pro-quo","Become a person of good will &mdash; sponsor the free mission.","teal","donate support sponsor quid pro quo give"]
+  ];
+  var grid=document.getElementById('cmGrid'),chips=document.getElementById('cmChips'),
+      count=document.getElementById('cmCount'),none=document.getElementById('cmNone'),
+      search=document.getElementById('cmSearch'),siteSearch=document.getElementById('cmSiteSearch');
+  var cats=['All'];D.forEach(function(d){if(cats.indexOf(d[0])<0)cats.push(d[0]);});
+  var active='All';
+  cats.forEach(function(c){var b=document.createElement('button');b.className='cm-chip'+(c==='All'?' on':'');b.textContent=c;b.onclick=function(){active=c;[].forEach.call(chips.children,function(x){x.classList.toggle('on',x.textContent===c);});render();};chips.appendChild(b);});
+  D.forEach(function(d){
+    var a=document.createElement('a');a.className='cm-card';a.href=d[2];a.setAttribute('data-accent',d[4]);
+    a.setAttribute('data-cat',d[0]);a.setAttribute('data-kw',(d[1]+' '+d[0]+' '+d[3]+' '+d[5]).toLowerCase());
+    a.innerHTML='<div class="cm-tag">'+d[0]+'</div><h3>'+d[1]+'</h3><p>'+d[3]+'</p><span class="cm-open">Open &rarr;</span>';
+    grid.appendChild(a);
+  });
+  function render(){
+    var q=(search.value||'').trim().toLowerCase(),shown=0;
+    [].forEach.call(grid.children,function(card){
+      var okCat=active==='All'||card.getAttribute('data-cat')===active;
+      var okQ=!q||card.getAttribute('data-kw').indexOf(q)>-1;
+      var show=okCat&&okQ;card.style.display=show?'':'none';if(show)shown++;
+    });
+    count.textContent=shown+(shown===1?' place':' places')+(active!=='All'?' in '+active:'')+(q?' matching \u201C'+search.value.trim()+'\u201D':'');
+    if(shown===0){none.style.display='block';siteSearch.href='https://www.google.com/search?q=site:globalsovereignuniversity.org+'+encodeURIComponent(search.value.trim());}
+    else none.style.display='none';
+  }
+  search.addEventListener('input',render);render();
+})();
+</script>
