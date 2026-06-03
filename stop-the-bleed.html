@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stop the Bleed — The Lifeline Climb | Global Sovereign University</title>
+<meta name="description" content="A free, scenario-based bleeding-control climb game from GSU's Lifeline Track. Learn to recognize life-threatening bleeding and control it with pressure, packing, and tourniquets — for when help is far away. Bronze to Platinum. No login. No cost.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1B2A4A">
+<link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png">
+<style>
+  :root{
+    --navy:#1B2A4A; --navy-deep:#0A0F1C; --black:#0A0907;
+    --gold:#C9A84C; --gold-bright:#FFE9A8; --teal:#1A8B7F;
+    --cream:#F5F1E8; --cream-dim:rgba(245,241,232,.72); --line:rgba(201,168,76,.22);
+    --bronze:#C77B4A; --silver:#B8C0C8; --good:#3FB27F; --bad:#D96459;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--cream);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+  h1,h2,h3,h4,.serif{font-family:Georgia,"Times New Roman",serif}
+  .bg{position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(1100px 650px at 80% -10%,rgba(27,42,74,.85),transparent 60%),
+    radial-gradient(800px 560px at 6% 10%,rgba(26,139,127,.14),transparent 55%),
+    linear-gradient(180deg,var(--navy-deep) 0%,var(--black) 55%)}
+  .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.045;
+    background-image:radial-gradient(rgba(201,168,76,.6) 1px,transparent 1px);background-size:3px 3px}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+
+  /* top bar */
+  .topbar{display:flex;align-items:center;gap:12px;padding:18px 0 6px}
+  .topbar img{width:46px;height:46px;border-radius:8px;background:var(--black);padding:5px;border:1px solid var(--line);object-fit:contain}
+  .topbar .wm{display:flex;flex-direction:column;line-height:1.15}
+  .topbar .wm b{font-size:15px;font-weight:800}
+  .topbar .wm span{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.8px;text-transform:uppercase;margin-top:2px}
+
+  .screen{display:none;animation:rise .5s ease both}
+  .screen.on{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* INTRO */
+  .eyebrow{display:inline-block;font-size:11px;font-weight:800;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:999px;padding:7px 18px;margin:30px 0 18px}
+  .intro h1{font-size:clamp(34px,6.5vw,58px);line-height:1.04;letter-spacing:-.5px}
+  .intro h1 em{font-style:italic;color:var(--gold)}
+  .intro .lede{color:var(--cream-dim);font-size:17px;margin-top:16px}
+  .abc{display:flex;gap:12px;margin:26px 0;flex-wrap:wrap}
+  .abc .step{flex:1;min-width:150px;background:rgba(27,42,74,.45);border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:10px;padding:16px}
+  .abc .step b{font-family:Georgia,serif;color:var(--gold);font-size:20px}
+  .abc .step span{display:block;font-size:13.5px;color:var(--cream-dim);margin-top:5px}
+  .tiers{display:flex;gap:10px;margin:22px 0;flex-wrap:wrap}
+  .tiers .t{flex:1;min-width:120px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:12px 8px;font-size:12px;font-weight:700;letter-spacing:.5px}
+  .tiers .t small{display:block;font-weight:500;color:var(--cream-dim);font-size:11px;margin-top:4px;letter-spacing:0}
+  .tiers .t.b{border-top:3px solid var(--bronze)} .tiers .t.s{border-top:3px solid var(--silver)}
+  .tiers .t.g{border-top:3px solid var(--gold)} .tiers .t.p{border-top:3px solid var(--teal)}
+  .disclaimer{background:rgba(26,139,127,.08);border:1px solid rgba(26,139,127,.4);border-left:3px solid var(--teal);border-radius:8px;padding:16px 20px;font-size:13.5px;color:var(--cream-dim);margin:22px 0}
+  .disclaimer b{color:var(--cream)}
+  .best{font-size:13px;color:var(--cream-dim);margin:14px 0;text-align:center}
+  .best b{color:var(--gold)}
+
+  .btn{display:inline-block;background:var(--gold);color:var(--black);font-weight:800;letter-spacing:.5px;text-transform:uppercase;font-size:14px;padding:15px 36px;border:none;border-radius:8px;cursor:pointer;transition:background .2s,transform .15s;text-decoration:none}
+  .btn:hover{background:var(--gold-bright);transform:translateY(-2px)}
+  .btn.block{display:block;width:100%;text-align:center}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--line)}
+  .btn.ghost:hover{background:rgba(201,168,76,.1);color:var(--gold-bright)}
+
+  /* QUIZ */
+  .qhead{display:flex;align-items:center;justify-content:space-between;margin:24px 0 6px;gap:10px}
+  .tierbadge{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:5px;color:var(--black)}
+  .tierbadge.b{background:var(--bronze)} .tierbadge.s{background:var(--silver)}
+  .tierbadge.g{background:var(--gold)} .tierbadge.p{background:var(--teal);color:var(--cream)}
+  .qcount{font-size:13px;color:var(--cream-dim)}
+  .pbar{height:7px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-bottom:22px}
+  .pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));width:0;transition:width .4s ease}
+  .scenario{background:rgba(20,17,10,.55);border:1px solid var(--line);border-radius:12px;padding:22px 24px;font-size:17px;margin-bottom:18px}
+  .scenario .lbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
+  .opt{display:block;width:100%;text-align:left;background:rgba(27,42,74,.35);border:1px solid var(--line);border-radius:9px;padding:15px 18px;margin-bottom:11px;color:var(--cream);font-size:15.5px;cursor:pointer;transition:background .15s,border-color .15s;font-family:inherit;line-height:1.45}
+  .opt:hover:not(:disabled){background:rgba(201,168,76,.1);border-color:var(--gold)}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:var(--good);background:rgba(63,178,127,.16)}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,100,89,.16)}
+  .explain{background:rgba(27,42,74,.45);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:8px;padding:16px 18px;font-size:14.5px;color:var(--cream-dim);margin:4px 0 18px;display:none}
+  .explain.on{display:block;animation:rise .35s ease both}
+  .explain b{color:var(--cream)}
+  .explain .verdict{font-family:Georgia,serif;font-weight:700;font-size:15px;display:block;margin-bottom:6px}
+  .explain .verdict.ok{color:var(--good)} .explain .verdict.no{color:var(--bad)}
+
+  /* GENO */
+  .geno-row{display:flex;align-items:center;gap:10px;margin:2px 0 14px}
+  .geno-btn{display:flex;align-items:center;gap:9px;background:rgba(201,168,76,.08);border:1px solid var(--line);border-radius:24px;padding:6px 16px 6px 6px;cursor:pointer;color:var(--cream);font-size:13.5px;font-weight:600;transition:background .18s,border-color .18s;font-family:inherit}
+  .geno-btn:hover{background:rgba(201,168,76,.16);border-color:var(--gold)}
+  .geno-btn img{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--black);object-fit:cover}
+  .geno-hint{background:rgba(26,139,127,.08);border:1px solid rgba(26,139,127,.35);border-radius:8px;padding:13px 16px;font-size:14px;color:var(--cream-dim);margin-bottom:14px;display:none}
+  .geno-hint.on{display:block;animation:rise .3s ease both}
+  .geno-hint b{color:var(--teal)}
+
+  /* RESULTS */
+  .results{text-align:center}
+  .results h2{font-size:clamp(28px,5vw,42px);margin:24px 0 6px}
+  .scorebig{font-family:Georgia,serif;font-size:64px;font-weight:800;color:var(--gold);line-height:1}
+  .scoresub{color:var(--cream-dim);margin:4px 0 22px}
+  .badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0}
+  .badge{width:104px;border:1px solid var(--line);border-radius:12px;padding:16px 8px;opacity:.32;filter:grayscale(1)}
+  .badge.earned{opacity:1;filter:none}
+  .badge .ring{font-size:30px}
+  .badge.b .ring{color:var(--bronze)} .badge.s .ring{color:var(--silver)}
+  .badge.g .ring{color:var(--gold)} .badge.p .ring{color:var(--teal)}
+  .badge .nm{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-top:8px}
+  .badge .got{font-size:11px;color:var(--cream-dim);margin-top:3px}
+  .crosslinks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:26px 0}
+  .crosslinks a{background:rgba(27,42,74,.4);border:1px solid var(--line);border-radius:9px;padding:14px 10px;text-decoration:none;color:var(--cream);font-size:13px;font-weight:600;transition:background .15s,border-color .15s}
+  .crosslinks a:hover{background:rgba(201,168,76,.1);border-color:var(--gold);color:var(--gold-bright)}
+  .crosslinks a span{display:block;font-size:11px;color:var(--cream-dim);font-weight:500;margin-top:3px}
+
+  footer{margin-top:48px;border-top:1px solid var(--line);padding:26px 0 46px;text-align:center;color:var(--cream-dim);font-size:12.5px}
+  footer b{color:var(--cream)} footer a{color:var(--gold);text-decoration:none}
+
+  @media(max-width:560px){
+    .crosslinks{grid-template-columns:1fr}
+    .scenario{font-size:16px;padding:18px}
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="grain"></div>
+
+<div class="wrap">
+  <div class="topbar">
+    <a href="https://www.globalsovereignuniversity.org" aria-label="GSU home" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a1772f0e8c7469f382d7897_gsu-logo-navbar-192.png" alt="Global Sovereign University">
+      <span class="wm"><b>Global Sovereign University</b><span>The Lifeline Track</span></span>
+    </a>
+  </div>
+
+  <!-- ===== INTRO ===== -->
+  <section id="intro" class="screen on intro">
+    <span class="eyebrow">When Help Is Far Away</span>
+    <h1>Stop the <em>Bleed</em>.</h1>
+    <p class="lede">Uncontrolled bleeding is the number one preventable cause of death after injury — a person can bleed to death in minutes. The hands nearest them are the ones most likely to save them. Yours. Learn the three moves that buy time, or stand in when no help is coming.</p>
+
+    <div class="abc">
+      <div class="step"><b>A — Alert</b><span>Call your local emergency number (911 · 112 · 999 · 000), or send someone to call.</span></div>
+      <div class="step"><b>B — Bleeding</b><span>Find the source. Open or remove clothing — blood hides under fabric.</span></div>
+      <div class="step"><b>C — Compress</b><span>Pressure, packing, or a tourniquet — stop the flow.</span></div>
+    </div>
+
+    <div class="tiers">
+      <div class="t b">BRONZE<small>Recognize &amp; react</small></div>
+      <div class="t s">SILVER<small>Pressure &amp; packing</small></div>
+      <div class="t g">GOLD<small>Tourniquets</small></div>
+      <div class="t p">PLATINUM<small>Judgment &amp; the long wait</small></div>
+    </div>
+
+    <div class="disclaimer">
+      <b>This is a Comprehension Certificate — not a medical certification or license.</b> It proves you understood the material. It does not qualify you to provide professional medical care. These skills are a supplement to professional help, never a replacement for it — reach trained care whenever you can.
+    </div>
+
+    <p class="best" id="bestLine"></p>
+    <button class="btn block" id="startBtn">Begin the Climb · 56 Scenarios</button>
+  </section>
+
+  <!-- ===== QUIZ ===== -->
+  <section id="quiz" class="screen">
+    <div class="qhead">
+      <span class="tierbadge b" id="tierBadge">Bronze</span>
+      <span class="qcount" id="qCount">1 / 56</span>
+    </div>
+    <div class="pbar"><i id="pbar"></i></div>
+
+    <div class="scenario"><span class="lbl" id="sLbl">Scenario</span><span id="sText"></span></div>
+    <div id="opts"></div>
+
+    <div class="geno-row">
+      <button class="geno-btn" id="genoBtn">
+        <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+        Ask GENO for a nudge
+      </button>
+    </div>
+    <div class="geno-hint" id="genoHint"></div>
+
+    <div class="explain" id="explain"></div>
+    <button class="btn block" id="nextBtn" style="display:none">Next</button>
+  </section>
+
+  <!-- ===== RESULTS ===== -->
+  <section id="results" class="screen results">
+    <h2>Climb Complete</h2>
+    <div class="scorebig" id="finalScore">0</div>
+    <div class="scoresub" id="finalSub">out of 56 correct</div>
+
+    <div class="badges" id="badges"></div>
+    <p class="best" id="savedLine"></p>
+
+    <div class="disclaimer" style="text-align:left">
+      <b>Remember:</b> understanding these steps is not the same as being trained to perform them under pressure. If you can, take a hands-on bleeding-control or first-aid course, and reach professional medical help whenever it is available.
+    </div>
+
+    <h4 style="margin:30px 0 0;font-size:15px;color:var(--gold);letter-spacing:1px;text-transform:uppercase">Continue your climb</h4>
+    <div class="crosslinks">
+      <a href="https://read.globalsovereignuniversity.org/coming-soon.html">The Lifeline Track<span>The full medical curriculum</span></a>
+      <a href="https://www.globalsovereignuniversity.org/tradification">Tradification<span>Hands-on trade skills</span></a>
+      <a href="https://www.globalsovereignuniversity.org/library">GSU Library<span>Watch · Hear · Play · Read</span></a>
+    </div>
+
+    <button class="btn ghost block" id="againBtn" style="margin-top:8px">Climb Again</button>
+  </section>
+
+  <footer>
+    <p><b>Global Sovereign University</b> · The Lifeline Track — <em>When Help Is Far Away</em></p>
+    <p style="margin-top:7px">A program of the Foundation for Global Instruction, a 501(c)(3) nonprofit. Free worldwide. ·
+    <a href="https://www.globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
+    <p style="margin-top:7px;font-size:11px;opacity:.7">Bleeding-control guidance aligned with the ACS STOP THE BLEED® framework and Red Cross first-aid practice. GSU is independent and not affiliated with these organizations.</p>
+  </footer>
+</div>
+
+<!-- ============================================================
+     FIREBASE — anonymous auth + Firestore score retention
+     PASTE your GSU Firebase config below (the same project your
+     other games / the Sovereign Handshake use). Until it is
+     filled in, the game runs in session-only mode and still plays.
+     ============================================================ -->
+<script type="module">
+  const firebaseConfig = {
+    apiKey: "PASTE_FIREBASE_API_KEY",
+    authDomain: "PASTE.firebaseapp.com",
+    projectId: "PASTE_PROJECT_ID",
+    storageBucket: "PASTE.appspot.com",
+    messagingSenderId: "PASTE_SENDER_ID",
+    appId: "PASTE_APP_ID"
+  };
+
+  let db=null, uid=null;
+  const FB_ON = !firebaseConfig.apiKey.startsWith("PASTE");
+
+  if(FB_ON){
+    try{
+      const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+      const { getAuth, signInAnonymously, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
+      const { getFirestore, doc, getDoc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      const auth = getAuth(app);
+      window.__fb = { doc, getDoc, setDoc };
+      await signInAnonymously(auth);
+      onAuthStateChanged(auth, async (u)=>{
+        if(u){ uid=u.uid; await loadBest(); }
+      });
+    }catch(e){ console.warn("Firebase unavailable — session-only mode.", e); }
+  }
+
+  async function loadBest(){
+    try{
+      const { doc, getDoc } = window.__fb;
+      const snap = await getDoc(doc(db,"stop_the_bleed_scores",uid));
+      if(snap.exists()){ window.__best = snap.data(); paintBest(); }
+    }catch(e){ console.warn(e); }
+  }
+  window.__saveScore = async function(data){
+    if(!FB_ON || !db || !uid) return false;
+    try{
+      const { doc, getDoc, setDoc } = window.__fb;
+      const ref = doc(db,"stop_the_bleed_scores",uid);
+      const snap = await getDoc(ref);
+      const prevBest = snap.exists() ? (snap.data().best||0) : 0;
+      await setDoc(ref,{
+        best: Math.max(prevBest, data.score),
+        lastScore: data.score,
+        lastBadges: data.badges,
+        total: data.total,
+        updated: new Date().toISOString()
+      },{merge:true});
+      return true;
+    }catch(e){ console.warn(e); return false; }
+  };
+  function paintBest(){
+    if(!window.__best) return;
+    const el=document.getElementById('bestLine');
+    if(el) el.innerHTML = 'Your best so far: <b>'+(window.__best.best||0)+' / '+(window.__best.total||56)+'</b>';
+  }
+  window.__paintBest = paintBest;
+</script>
+
+<!-- ============================================================
+     GAME ENGINE + QUESTION BANK
+     ============================================================ -->
+<script>
+(function(){
+  "use strict";
+
+  // tier: 1 Bronze, 2 Silver, 3 Gold, 4 Platinum
+  const Q = [
+    /* ---------- BRONZE — Recognize & React ---------- */
+    {t:1,s:"You come upon someone whose leg is bleeding heavily after a fall onto sharp debris. Why does this demand action in the next moments, not minutes from now?",
+     o:["A wound only becomes dangerous after an hour","Severe bleeding is the top preventable cause of death after injury — a person can bleed out in minutes","Bleeding always stops on its own","You should wait for it to clot before doing anything"],a:1,
+     e:"Uncontrolled bleeding can kill within minutes. Acting immediately is what saves the life.",
+     h:"Think about how fast blood is leaving the body, not how the wound looks later."},
+    {t:1,s:"A car has struck a pole and a passenger is bleeding. Before you rush to help, what is your very first consideration?",
+     o:["Whether you'll get blood on your clothes","Your own safety — is the scene safe to enter (traffic, fire, electrical, violence)?","Taking a photo for responders","Finding the car's owner"],a:1,
+     e:"You can't help anyone if you become the second casualty. Scene safety first, always.",
+     h:"A rescuer who gets hurt can't rescue anyone."},
+    {t:1,s:"The 'A' in the ABCs of bleeding control stands for Alert. What does it mean in practice?",
+     o:["Stay alert and quiet","Call your local emergency number, or clearly direct someone to call","Alert the person they are bleeding","Wait alertly for help to appear"],a:1,
+     e:"Alert = get professional help moving immediately. Call (911, 112, 999, 000…) or assign a specific person to call.",
+     h:"It's about summoning help, not about staying watchful."},
+    {t:1,s:"Which of these signs tells you bleeding is life-threatening and needs aggressive control right now?",
+     o:["A slow ooze that stops with a tissue","Blood that is spurting, pooling on the ground, or soaking through clothing","A small scrape that's pink","A bruise forming under the skin"],a:1,
+     e:"Spurting, pooling, or rapidly soaking blood signals major blood loss — treat it as life-threatening.",
+     h:"Look for volume and speed: spurting, pooling, soaking."},
+    {t:1,s:"You see blood on someone's shirt but can't tell where it's coming from. What should you do?",
+     o:["Press randomly on the shirt","Open or remove the clothing to expose and find the actual wound","Assume it's not serious","Pour water over the shirt"],a:1,
+     e:"Clothing hides wounds and blood. Expose the area so you can find and treat the real source.",
+     h:"You can't stop a bleed you can't see."},
+    {t:1,s:"You've found a deep, fast-bleeding wound on a forearm. What is your immediate first move?",
+     o:["Look for a bandage in another room first","Apply firm direct pressure on the wound right away, with whatever clean material is at hand","Wash it gently with soap","Wrap it loosely and wait"],a:1,
+     e:"Direct pressure is the fastest, most universal way to slow bleeding. Do it immediately; improve the dressing as you go.",
+     h:"Don't go searching — press now."},
+    {t:1,s:"You have no gloves and the person is bleeding badly. What's the right call?",
+     o:["Refuse to help without gloves","Begin life-saving care immediately; use a barrier if available and wash thoroughly afterward","Wait until gloves arrive","Only help if you know the person"],a:1,
+     e:"Protect yourself when you can, but don't let the lack of gloves cost a life. Use any barrier, and wash well after.",
+     h:"A life now outweighs a barrier you don't have."},
+    {t:1,s:"While controlling a leg wound, what body position usually helps the injured person?",
+     o:["Standing them up","Having them lie down — it helps with shock and makes the wound easier to manage","Making them walk it off","Sitting them upright on a stool"],a:1,
+     e:"Lying down reduces the chance of fainting/shock and helps you work on the wound.",
+     h:"Up high is bad for someone losing blood."},
+    {t:1,s:"A person has two bleeding wounds — one is gushing, one is a slow trickle. Where do you focus first?",
+     o:["The trickle, because it's easier","The gushing wound — control the life-threatening bleeding first","Bandage both equally and slowly","Neither until help arrives"],a:1,
+     e:"Always control the most severe, life-threatening bleeding first. Triage your own actions.",
+     h:"Most blood lost, fastest — that one first."},
+    {t:1,s:"A shard of metal is impaled in the wound and bleeding is heavy around it. What do you do?",
+     o:["Pull the object out quickly","Leave the object in place and apply pressure around it","Push it in deeper to plug the hole","Ignore it and wrap loosely"],a:1,
+     e:"Don't remove an impaled object — it may be limiting bleeding and removing it can worsen damage. Pressure around it.",
+     h:"Pulling it out can open the floodgates."},
+    {t:1,s:"You're alone with a badly bleeding person and your phone is in your pocket. Best practice?",
+     o:["Stop care to hold the phone to your ear","Call emergency services and put it on speaker so your hands stay free to work","Text a friend first","Wait until you're done to call"],a:1,
+     e:"Speakerphone lets you get help on the way while keeping both hands on the bleed.",
+     h:"Keep your hands on the wound."},
+    {t:1,s:"Someone nicks their finger slicing vegetables and it bleeds a little. What's the appropriate response?",
+     o:["Apply a tourniquet immediately","Wash it, apply gentle pressure and a small dressing — this is minor, not life-threatening","Call an ambulance for the cut","Pack the finger with gauze"],a:1,
+     e:"Match the response to the threat. Minor bleeding needs simple care — don't escalate to life-saving measures.",
+     h:"Save the big guns for big bleeds."},
+    {t:1,s:"A crowd has gathered around an injured person. How do you get someone to call for help effectively?",
+     o:["Shout 'someone call for help!' to the crowd","Point to one specific person and say 'You — call the emergency number now and come back to me'","Assume someone already called","Ask the injured person to call"],a:1,
+     e:"A vague shout to a crowd often means no one acts. Assign one specific person a specific task.",
+     h:"'Someone' often means no one. Name a person."},
+    {t:1,s:"What is the core idea behind 'immediate responder' bleeding-control training for ordinary people?",
+     o:["Only doctors can help bleeding victims","The bystander right there is often the person most able to prevent death before professionals arrive","Bleeding can always wait for an ambulance","Untrained people should never touch a wound"],a:1,
+     e:"You don't need a medical background to save a life from bleeding — proximity and quick action matter most.",
+     h:"Who's closest when seconds count?"},
+
+    /* ---------- SILVER — Pressure & Packing ---------- */
+    {t:2,s:"You're applying direct pressure but the bleeding continues. How firmly should you press?",
+     o:["Lightly, to avoid hurting them","Hard and firm — enough to actually stop the flow, even if it's uncomfortable for them","Just rest your hand there","Press, lift, press, lift repeatedly"],a:1,
+     e:"Effective pressure is firm and constant. It may hurt, but stopping the bleed is what matters.",
+     h:"Gentle won't cut it — press to stop the flow."},
+    {t:2,s:"You have no first-aid kit. What can you press onto a bleeding wound?",
+     o:["Nothing — wait for gauze","A clean cloth, a folded shirt, a towel — any clean absorbent material","Only sterile gauze","Loose tissue paper that falls apart"],a:1,
+     e:"Use whatever clean cloth you have. A shirt or towel works when gauze isn't available.",
+     h:"Improvise with clean fabric."},
+    {t:2,s:"After 30 seconds of pressure you want to 'check' if it's working by lifting the cloth. Good idea?",
+     o:["Yes, check every few seconds","No — keep constant, uninterrupted pressure; lifting to peek lets bleeding restart","Lift it fully off every minute","Replace the cloth each time you check"],a:1,
+     e:"Each time you release to peek, you undo progress. Maintain steady pressure.",
+     h:"Peeking restarts the clock."},
+    {t:2,s:"Roughly how long should you maintain firm, uninterrupted pressure on a serious bleed?",
+     o:["A few seconds","Several minutes of constant pressure — and don't let up until it's controlled or help takes over","Half a second","You shouldn't hold pressure at all"],a:1,
+     e:"Bleeding control takes sustained minutes of pressure, not seconds.",
+     h:"Think minutes, held steady."},
+    {t:2,s:"The cloth you're pressing with is now soaked through with blood. What do you do?",
+     o:["Remove it and start over with a fresh one","Add more material on top and keep pressing — don't peel off the soaked layer","Stop pressing","Wring it out and reuse it"],a:1,
+     e:"Removing the soaked dressing disturbs any clot forming. Pile more on top and keep the pressure.",
+     h:"Build up, don't strip off."},
+    {t:2,s:"Direct pressure alone isn't controlling a deep wound on the thigh. What technique comes next?",
+     o:["Give up and wait","Pack the wound — push gauze or clean cloth firmly into it, down to the source of bleeding","Pour water in it","Wave a fan over it"],a:1,
+     e:"Wound packing fills the wound cavity and applies pressure to the bleeding vessel from inside.",
+     h:"Fill the hole, then press."},
+    {t:2,s:"When packing a deep wound, how do you do it correctly?",
+     o:["Lay gauze gently on top","Push material firmly into the wound, packing toward the source of bleeding, then hold hard pressure","Sprinkle it loosely around the edges","Tape gauze over the opening only"],a:1,
+     e:"Pack tightly into the wound toward the bleed, then maintain firm pressure on top.",
+     h:"Into the wound and toward the source — not on top."},
+    {t:2,s:"There's blood pooling on the floor around the wound. What should you avoid when grabbing gauze?",
+     o:["Avoid dropping the gauze into the pooled blood — soaked-from-the-floor gauze won't pack effectively","Avoid using gauze at all","Avoid pressing afterward","Avoid calling for help"],a:0,
+     e:"Gauze that's already soaked from pooled blood can't absorb or pack well. Keep your packing material clean and dry going in.",
+     h:"Don't pre-soak your packing material."},
+    {t:2,s:"You've packed the wound. What's the immediate next step?",
+     o:["Walk away to find help","Hold firm, constant pressure over the packed wound and don't let up until help arrives or it's controlled","Unpack it to check","Loosen everything to 'let it breathe'"],a:1,
+     e:"Packing without sustained pressure won't hold. Press hard and keep pressing.",
+     h:"Packing + pressure work together."},
+    {t:2,s:"A coworker has a deep gash on the upper arm, bleeding steadily. You have a clean towel. First line of attack?",
+     o:["Tourniquet immediately","Firm direct pressure with the towel on the wound — escalate only if that fails","Run for a doctor first","Elevate and do nothing else"],a:1,
+     e:"Start with firm direct pressure. Most bleeding responds to it; escalate to packing/tourniquet if needed.",
+     h:"Pressure is the first tool, not the last."},
+    {t:2,s:"To press as hard as a serious bleed needs, what helps you apply maximum force?",
+     o:["One fingertip","Use the heel of your hand, both hands, or your body weight to drive firm pressure","The very edge of a coin","A feather-light touch"],a:1,
+     e:"Use your palm/heel of hand and lean your body weight in to generate real, sustained pressure.",
+     h:"Use your whole body, not a fingertip."},
+    {t:2,s:"While you hold pressure and wait for help, what else helps the injured person?",
+     o:["Letting them get cold and walk around","Keeping them lying still, calm, and warm","Giving them a big meal","Having them run to stay alert"],a:1,
+     e:"Keeping them still, calm and warm helps fight shock while you maintain bleeding control.",
+     h:"Still, calm, warm."},
+    {t:2,s:"You've held firm pressure and the bleeding has clearly stopped. Help is on the way. Now what?",
+     o:["Release and clean up","Maintain steady pressure / keep the dressing in place until professionals take over","Remove the dressing to inspect","Have them get up and walk"],a:1,
+     e:"Don't undo your work. Keep pressure/dressing in place and hand off to responders.",
+     h:"Controlled doesn't mean finished — hold until handoff."},
+    {t:2,s:"Someone has a heavily bleeding scalp wound. Scalps bleed dramatically. What's the right approach?",
+     o:["Wrap a tourniquet around the neck","Apply firm direct pressure to the scalp wound — pressure controls most scalp bleeding","Ignore it; scalp bleeds look worse than they are, so do nothing","Pour alcohol on it"],a:1,
+     e:"Scalp wounds bleed a lot but respond well to firm direct pressure. Never put a tourniquet on the neck or head.",
+     h:"Pressure yes; tourniquet on a head/neck, never."},
+
+    /* ---------- GOLD — Tourniquets ---------- */
+    {t:3,s:"When is a tourniquet the right choice?",
+     o:["For any cut that bleeds","For catastrophic bleeding from an arm or leg that direct pressure and packing can't control, or that's clearly massive","For nosebleeds","For bruises"],a:1,
+     e:"Tourniquets are for severe, uncontrolled limb bleeding — not minor wounds.",
+     h:"Limb + catastrophic + not stopping."},
+    {t:3,s:"A tourniquet works on which part of the body?",
+     o:["Neck and head","Chest and abdomen","Limbs only — arms and legs","Anywhere equally"],a:2,
+     e:"Tourniquets only work on limbs. Neck, chest, abdomen, and head need direct pressure and other techniques.",
+     h:"Think arms and legs."},
+    {t:3,s:"Where do you place a tourniquet relative to the wound?",
+     o:["Directly on top of the wound","2–3 inches above the wound, between the wound and the heart","Below the wound","On the opposite limb"],a:1,
+     e:"Place it 2–3 inches above the wound, on the heart side, so it cuts off the blood supply feeding the bleed.",
+     h:"Above the wound, toward the heart."},
+    {t:3,s:"The wound is right at the knee. Where does the tourniquet go?",
+     o:["Right over the knee joint","Above the joint — never place a tourniquet directly over a joint like the knee or elbow","Below the knee","It doesn't matter"],a:1,
+     e:"Joints lack the tissue to compress the artery. If the wound is near a joint, place the tourniquet above the joint.",
+     h:"Never on a joint — go above it."},
+    {t:3,s:"How tight should the tourniquet be?",
+     o:["Snug but comfortable","Tight enough that the bleeding actually stops — that's the goal","Just barely touching","Loose enough to slide a hand under"],a:1,
+     e:"Tighten until the life-threatening bleeding stops. A loose tourniquet can make things worse, not better.",
+     h:"Tight enough to stop the bleed — no half measures."},
+    {t:3,s:"The person screams that the tourniquet hurts badly. What do you do?",
+     o:["Loosen it to ease the pain","Warn them it will hurt, but keep it tight — the pain is expected and stopping the bleed saves their life","Remove it","Move it lower"],a:1,
+     e:"A correctly applied tourniquet is very painful. That's normal and necessary — do not loosen it for pain.",
+     h:"Pain is expected; the bleed is the danger."},
+    {t:3,s:"You've applied the tourniquet and the bleeding stopped. What critical piece of information must you record?",
+     o:["The person's shoe size","The exact time the tourniquet was applied","The color of the cloth","Your own name only"],a:1,
+     e:"Note the time of application and tell responders — it guides their medical decisions downstream.",
+     h:"Time matters to the doctors who take over."},
+    {t:3,s:"Help is 20 minutes out. Should you periodically loosen the tourniquet to 'let blood through'?",
+     o:["Yes, loosen it every few minutes","No — once applied, do not loosen or remove it; only a medical professional should","Loosen it halfway","Take it off after 10 minutes"],a:1,
+     e:"The old advice to loosen periodically is outdated and dangerous. Leave it on until professionals manage it.",
+     h:"Once it's on, it stays on."},
+    {t:3,s:"You've tightened one tourniquet as far as it will go, but bleeding hasn't fully stopped. Next step?",
+     o:["Give up on tourniquets","Apply a second tourniquet just above the first, closer to the heart","Loosen the first one","Move it onto the wound itself"],a:1,
+     e:"If one isn't enough, add a second above the first. Two side-by-side often succeed where one couldn't.",
+     h:"Second one, just above the first."},
+    {t:3,s:"There's heavy clothing over the limb. Can you apply the tourniquet over it?",
+     o:["No, you must always remove all clothing first","Yes — a tourniquet can be applied over clothing if needed; don't delay over it","Only over thin clothing","Only if the clothing is white"],a:1,
+     e:"You can place it over clothing. Don't lose precious time undressing the limb if the bleed is catastrophic.",
+     h:"Speed matters — over clothing is fine."},
+    {t:3,s:"You have no commercial tourniquet. What makes an improvised one actually work?",
+     o:["A thin string or wire pulled tight","A wide strip of cloth with a sturdy rod (windlass) to twist and lock it tight","A rubber band","A shoelace alone"],a:1,
+     e:"Improvised tourniquets need width plus a windlass (a rod/stick) to generate and hold enough force.",
+     h:"Wide band + a stick to twist."},
+    {t:3,s:"Why avoid thin material like wire or cord for an improvised tourniquet?",
+     o:["It's too expensive","Thin material cuts into tissue and often fails to compress the artery effectively","It's the best option","Thin is always better"],a:1,
+     e:"Narrow materials damage tissue and don't reliably stop arterial flow. Use a wide band.",
+     h:"Thin cuts; wide compresses."},
+    {t:3,s:"A wound on the hand is bleeding but stops cleanly with firm direct pressure. Should you apply a tourniquet?",
+     o:["Yes, always use a tourniquet","No — if direct pressure controls it, a tourniquet isn't needed","Yes, to be safe","Apply two tourniquets"],a:1,
+     e:"Reserve tourniquets for bleeding that pressure/packing can't control. Don't use one when pressure works.",
+     h:"If pressure works, that's your answer."},
+    {t:3,s:"After applying a tourniquet, what should you communicate clearly to arriving responders?",
+     o:["Nothing — they'll figure it out","That a tourniquet is on, and the time it was applied (write it on the tourniquet or the person if you can)","Only the person's age","Your opinion of the hospital"],a:1,
+     e:"Tell them a tourniquet is in place and when it went on. Writing the time on it or the skin helps the handoff.",
+     h:"They need: it's on, and when."},
+
+    /* ---------- PLATINUM — Judgment & the long wait ---------- */
+    {t:4,s:"A very young child (infant) has serious limb bleeding. What's the safest first approach?",
+     o:["Apply a tourniquet immediately","Use firm direct pressure and packing — tourniquets are not used on infants/very small children","Do nothing until help comes","Elevate only"],a:1,
+     e:"For infants and very small children, direct pressure is the mainstay; standard tourniquets are not appropriate for them.",
+     h:"For the smallest, pressure leads."},
+    {t:4,s:"A limb has been traumatically amputated. After controlling bleeding with a tourniquet, what about the severed part?",
+     o:["Leave it behind","Keep it with the patient — wrapped clean and kept cool (not directly on ice) — for transport","Wash it in a river","Bury it"],a:1,
+     e:"Control bleeding first, then send the amputated part with the patient, wrapped and kept cool, never directly on ice.",
+     h:"Tourniquet first; bring the part, kept cool."},
+    {t:4,s:"Someone was struck hard in the abdomen. They're pale and weak but you see little external blood. What does this suggest?",
+     o:["They're fine — no visible blood","Possible internal bleeding you can't compress — this needs rapid evacuation to professional care","Apply a tourniquet to the belly","Give them water and food"],a:1,
+     e:"Internal bleeding can't be stopped with your hands. Recognize the signs and prioritize getting them to definitive care fast.",
+     h:"No external bleed + shock signs = look inside."},
+    {t:4,s:"Two people are injured: one has spurting leg bleeding, one has a minor arm scrape. You're alone. Who first?",
+     o:["The scrape, it's quicker","The spurting leg — the immediately life-threatening, controllable bleed comes first","Flip a coin","Neither"],a:1,
+     e:"Triage toward the life you can save right now: the catastrophic, controllable bleed.",
+     h:"Save the one whose life is leaving fastest."},
+    {t:4,s:"You're in a remote area; professional help is hours away. After controlling the bleed, what's your ongoing job?",
+     o:["Relax, your work is done","Keep monitoring, keep them warm and still, watch for shock, and be ready to re-address bleeding","Remove all dressings","Make them walk out immediately"],a:1,
+     e:"In delayed-care situations, control is only the start — monitor, manage shock, and reassess continuously.",
+     h:"The job continues through the long wait."},
+    {t:4,s:"Which cluster of signs warns you the injured person is going into shock?",
+     o:["Warm, pink, chatty, strong pulse","Pale, cold, clammy skin; fast weak pulse; confusion or drowsiness","Hungry and energetic","Sweating from heat only"],a:1,
+     e:"Pale, cold, clammy skin with a fast weak pulse and altered mental state signals shock — keep them warm and lying down.",
+     h:"Pale, cold, clammy, fading — that's shock."},
+    {t:4,s:"A wound is in the groin crease (junctional area) where a tourniquet can't be placed. Bleeding is severe. What do you do?",
+     o:["Force a tourniquet onto the hip","Pack the wound firmly and apply hard, sustained direct pressure — tourniquets can't seal junctional wounds","Apply a tourniquet to the leg below it","Do nothing"],a:1,
+     e:"Junctional wounds (groin, armpit) can't be tourniqueted. Aggressive wound packing plus firm pressure is the tool.",
+     h:"No limb to squeeze — pack and press."},
+    {t:4,s:"A gunshot wound is on the front of the thigh. What should you also check for?",
+     o:["Nothing else","A possible exit wound (and other wounds) — a person may be bleeding from more than one site","Their wallet","The caliber of the bullet"],a:1,
+     e:"Penetrating injuries often have exit wounds or multiple sites. Check the whole person for additional bleeding.",
+     h:"Where it goes in, it may come out."},
+    {t:4,s:"You've been exposed to a lot of the person's blood while helping. What's the responsible follow-up?",
+     o:["Ignore it","Use a barrier during care when possible, then wash thoroughly afterward and seek medical advice about exposure","Never help anyone again","Rinse with the nearest soda"],a:1,
+     e:"Blood-borne exposure is a real risk. Barrier up when you can, wash thoroughly after, and get medical guidance.",
+     h:"Barrier during, wash after, ask a professional."},
+    {t:4,s:"For a catastrophic limb bleed, what is the correct order of escalation?",
+     o:["Tourniquet, then maybe pressure","Direct pressure → wound packing → tourniquet, escalating as each fails to control it","Packing only","Nothing until help arrives"],a:1,
+     e:"Escalate logically: firm pressure first, pack if needed, tourniquet for limb bleeding you still can't control (or that's obviously massive from the start).",
+     h:"Press, then pack, then tourniquet."},
+    {t:4,s:"You did everything right, but the injuries were too severe and the person may not survive. How should you understand your role?",
+     o:["It was your fault","You gave them their best chance; some injuries exceed what any immediate responder can fix — that is not failure","You should never have helped","You did nothing useful"],a:1,
+     e:"Knowing the limit is part of the skill. Doing the right things gives the best possible chance; outcomes aren't always in your hands.",
+     h:"Best chance given ≠ guaranteed outcome."},
+    {t:4,s:"When professionals arrive, what handoff information is most valuable?",
+     o:["Your guess at the diagnosis","What you found, what you did, and the time any tourniquet went on","The person's social media","Nothing"],a:1,
+     e:"A clear handoff — findings, actions taken, and tourniquet time — lets the medical team continue care seamlessly.",
+     h:"Findings, actions, tourniquet time."},
+    {t:4,s:"During the wait, a previously controlled wound starts bleeding through the dressing again. What now?",
+     o:["Assume it's fine","Reassess and escalate — more pressure, more packing, or a tourniquet for a limb — don't ignore re-bleeding","Remove all dressings to look","Walk away"],a:1,
+     e:"Bleeding control isn't 'set and forget.' Reassess and escalate if it restarts.",
+     h:"Re-bleed means re-act."},
+    {t:4,s:"What single principle best captures the spirit of the Lifeline Track's bleeding-control training?",
+     o:["Only experts may act","Ordinary people, acting fast with simple skills, save lives before — and sometimes instead of — professional help","Always wait for an ambulance","Bleeding is rarely dangerous"],a:1,
+     e:"That's the heart of it: simple skills + immediate action by whoever is there. Capability, not credentials.",
+     h:"The person there, acting now."}
+  ];
+
+  const TIERS = [
+    {id:1,key:"b",name:"Bronze",pass:10},
+    {id:2,key:"s",name:"Silver",pass:10},
+    {id:3,key:"g",name:"Gold",pass:10},
+    {id:4,key:"p",name:"Platinum",pass:10}
+  ];
+  const TOTAL = Q.length;
+
+  let idx=0, score=0, answered=false;
+  const tierCorrect={1:0,2:0,3:0,4:0};
+
+  const $=function(id){return document.getElementById(id);};
+  const screens={intro:$("intro"),quiz:$("quiz"),results:$("results")};
+  function show(name){for(var k in screens){screens[k].classList.toggle("on",k===name);}window.scrollTo({top:0,behavior:"smooth"});}
+
+  function tierOf(t){return TIERS.find(function(x){return x.id===t;});}
+
+  function render(){
+    answered=false;
+    var q=Q[idx], tier=tierOf(q.t);
+    var tb=$("tierBadge");
+    tb.className="tierbadge "+tier.key;
+    tb.textContent=tier.name;
+    $("qCount").textContent=(idx+1)+" / "+TOTAL;
+    $("pbar").style.width=((idx)/TOTAL*100)+"%";
+    $("sText").textContent=q.s;
+    var opts=$("opts"); opts.innerHTML="";
+    q.o.forEach(function(text,i){
+      var b=document.createElement("button");
+      b.className="opt"; b.type="button"; b.textContent=text;
+      b.addEventListener("click",function(){choose(i,b);});
+      opts.appendChild(b);
+    });
+    $("explain").className="explain"; $("explain").innerHTML="";
+    $("genoHint").className="geno-hint"; $("genoHint").textContent="";
+    $("nextBtn").style.display="none";
+  }
+
+  function choose(i,btn){
+    if(answered) return;
+    answered=true;
+    var q=Q[idx];
+    var buttons=$("opts").querySelectorAll(".opt");
+    buttons.forEach(function(b){b.disabled=true;});
+    var ok=(i===q.a);
+    if(ok){ score++; tierCorrect[q.t]++; btn.classList.add("correct"); }
+    else { btn.classList.add("wrong"); buttons[q.a].classList.add("correct"); }
+    var ex=$("explain");
+    ex.innerHTML='<span class="verdict '+(ok?"ok":"no")+'">'+(ok?"Correct":"Not quite")+'</span>'+q.e;
+    ex.className="explain on";
+    $("nextBtn").style.display="block";
+    $("nextBtn").textContent = (idx===TOTAL-1) ? "See Your Result" : "Next";
+  }
+
+  $("genoBtn").addEventListener("click",function(){
+    var h=$("genoHint");
+    if(h.classList.contains("on")){h.classList.remove("on");return;}
+    h.innerHTML="<b>GENO:</b> "+Q[idx].h;
+    h.classList.add("on");
+  });
+
+  $("nextBtn").addEventListener("click",function(){
+    if(idx<TOTAL-1){ idx++; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+    else { finish(); }
+  });
+
+  function finish(){
+    $("pbar").style.width="100%";
+    $("finalScore").textContent=score;
+    $("finalSub").textContent="out of "+TOTAL+" correct";
+    var earned=[];
+    var box=$("badges"); box.innerHTML="";
+    TIERS.forEach(function(t){
+      var got=tierCorrect[t.id], passed=got>=t.pass;
+      if(passed) earned.push(t.name);
+      var d=document.createElement("div");
+      d.className="badge "+t.key+(passed?" earned":"");
+      d.innerHTML='<div class="ring">&#9679;</div><div class="nm">'+t.name+'</div><div class="got">'+got+'/14'+(passed?' &#10003;':'')+'</div>';
+      box.appendChild(d);
+    });
+    var saved=$("savedLine");
+    var msg = earned.length===4 ? "Platinum mastery — you passed every tier." :
+              earned.length>0 ? "Badges earned: "+earned.join(", ")+"." :
+              "Keep climbing — aim for 10 correct in each tier to earn its badge.";
+    saved.textContent=msg;
+    // persist
+    if(window.__saveScore){
+      window.__saveScore({score:score,total:TOTAL,badges:earned}).then(function(ok){
+        if(ok) saved.innerHTML=msg+'<br><span style="color:var(--gold)">Your best score has been saved.</span>';
+      });
+    }
+    show("results");
+  }
+
+  $("startBtn").addEventListener("click",function(){ idx=0;score=0;tierCorrect[1]=tierCorrect[2]=tierCorrect[3]=tierCorrect[4]=0; render(); show("quiz"); });
+  $("againBtn").addEventListener("click",function(){ idx=0;score=0;tierCorrect[1]=tierCorrect[2]=tierCorrect[3]=tierCorrect[4]=0; render(); show("quiz"); });
+
+  // paint best score if Firebase loaded it before this script ran
+  if(window.__paintBest) window.__paintBest();
+})();
+</script>
+</body>
+</html>
