@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restart the Heart — The Lifeline Simulation | Global Sovereign University</title>
+<meta name="description" content="Don't read about CPR — do it. A free hands-on simulation from GSU's Lifeline Track: run the rescue, compress to a live metronome, work the AED, and let GENO coach you. For when help is far away.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1B2A4A">
+<link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png">
+<style>
+  :root{
+    --navy:#1B2A4A; --navy-deep:#0A0F1C; --black:#0A0907;
+    --gold:#C9A84C; --gold-bright:#FFE9A8; --teal:#1A8B7F;
+    --cream:#F5F1E8; --cream-dim:rgba(245,241,232,.72); --line:rgba(201,168,76,.22);
+    --good:#3FB27F; --bad:#D96459; --warn:#E0A33A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);color:var(--cream);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;
+    -webkit-tap-highlight-color:transparent}
+  h1,h2,h3,h4,.serif{font-family:Georgia,"Times New Roman",serif}
+  .bg{position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(1100px 650px at 80% -10%,rgba(27,42,74,.85),transparent 60%),
+    radial-gradient(800px 560px at 6% 10%,rgba(26,139,127,.14),transparent 55%),
+    linear-gradient(180deg,var(--navy-deep) 0%,var(--black) 55%)}
+  .wrap{max-width:640px;margin:0 auto;padding:0 18px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:16px 0 4px}
+  .topbar img{width:44px;height:44px;border-radius:8px;background:var(--black);padding:5px;border:1px solid var(--line);object-fit:contain}
+  .topbar .wm b{font-size:14px;font-weight:800;display:block}
+  .topbar .wm span{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:1.6px;text-transform:uppercase}
+
+  .screen{display:none;animation:rise .45s ease both}
+  .screen.on{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  .eyebrow{display:inline-block;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:999px;padding:6px 16px;margin:26px 0 16px}
+  h1.title{font-size:clamp(32px,6vw,52px);line-height:1.03;letter-spacing:-.5px}
+  h1.title em{font-style:italic;color:var(--gold)}
+  .lede{color:var(--cream-dim);font-size:16px;margin-top:14px}
+  .disclaimer{background:rgba(26,139,127,.08);border:1px solid rgba(26,139,127,.4);border-left:3px solid var(--teal);border-radius:8px;padding:15px 18px;font-size:13px;color:var(--cream-dim);margin:20px 0}
+  .disclaimer b{color:var(--cream)}
+
+  .btn{display:inline-block;background:var(--gold);color:var(--black);font-weight:800;letter-spacing:.4px;text-transform:uppercase;font-size:14px;padding:15px 30px;border:none;border-radius:9px;cursor:pointer;transition:background .2s,transform .12s;font-family:inherit;text-align:center;text-decoration:none}
+  .btn:hover{background:var(--gold-bright);transform:translateY(-2px)}
+  .btn.block{display:block;width:100%}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--line)}
+  .btn.ghost:hover{background:rgba(201,168,76,.1);color:var(--gold-bright)}
+
+  /* stage chrome */
+  .stagebar{display:flex;align-items:center;justify-content:space-between;margin:22px 0 6px;gap:10px}
+  .stagebar .step{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+  .pbar{height:6px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-bottom:20px}
+  .pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));width:0;transition:width .4s}
+  .teachcard{background:rgba(20,17,10,.55);border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:12px;padding:22px;margin-bottom:16px}
+  .teachcard .k{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+  .teachcard h2{font-size:23px;margin-bottom:8px}
+  .teachcard p{font-size:15px;color:var(--cream-dim)}
+  .teachcard p b{color:var(--cream)}
+  .actions{display:grid;gap:10px;margin-top:6px}
+  .act{background:rgba(27,42,74,.4);border:1px solid var(--line);border-radius:9px;padding:15px 18px;color:var(--cream);font-size:15px;cursor:pointer;text-align:left;font-family:inherit;transition:background .15s,border-color .15s}
+  .act:hover{background:rgba(201,168,76,.1);border-color:var(--gold)}
+  .act.correct{border-color:var(--good);background:rgba(63,178,127,.16)}
+  .act.wrong{border-color:var(--bad);background:rgba(217,100,89,.16)}
+
+  /* GENO coach */
+  .coach{display:flex;gap:12px;align-items:flex-start;background:rgba(26,139,127,.08);border:1px solid rgba(26,139,127,.32);border-radius:10px;padding:13px 15px;margin-top:14px;min-height:64px}
+  .coach img{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--black);flex-shrink:0;object-fit:cover}
+  .coach .c-name{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--teal)}
+  .coach .c-msg{font-size:14px;color:var(--cream-dim);margin-top:2px}
+
+  /* torso SVG */
+  .torso-wrap{display:flex;justify-content:center;margin:8px 0 6px}
+  svg.torso{width:100%;max-width:300px;height:auto}
+  .zone{cursor:pointer;fill:rgba(255,255,255,.02);stroke:rgba(201,168,76,.35);stroke-dasharray:5 5;transition:fill .15s}
+  .zone:hover{fill:rgba(201,168,76,.12)}
+  .zone.hit{fill:rgba(63,178,127,.3);stroke:var(--good);stroke-dasharray:none}
+
+  /* compression game */
+  .cpr-stage{text-align:center}
+  .metro{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0}
+  .metro .dot{width:18px;height:18px;border-radius:50%;background:var(--line);transition:transform .08s,background .08s}
+  .metro .dot.beat{background:var(--gold);transform:scale(1.7)}
+  .metro .lbl{font-size:12px;color:var(--cream-dim);letter-spacing:1px;text-transform:uppercase}
+  .perf{margin:14px 0 6px}
+  .perf .pf-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--cream-dim);margin-bottom:5px}
+  .perf .pf-bar{height:14px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}
+  .perf .pf-fill{height:100%;width:0;background:linear-gradient(90deg,var(--bad),var(--warn),var(--good));transition:width .15s}
+  .ratebox{font-family:Georgia,serif;font-size:15px;font-weight:700;margin:6px 0;min-height:24px}
+  .ratebox.good{color:var(--good)} .ratebox.slow{color:var(--warn)} .ratebox.fast{color:var(--bad)}
+  .count{font-family:Georgia,serif;font-size:60px;font-weight:800;color:var(--cream);line-height:1;margin:4px 0}
+  .count small{display:block;font-family:-apple-system,sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-top:6px}
+  .push{width:100%;max-width:360px;margin:14px auto 0;height:120px;border-radius:16px;border:2px solid var(--gold);background:radial-gradient(circle at 50% 40%,rgba(201,168,76,.18),rgba(27,42,74,.5));color:var(--gold-bright);font-family:Georgia,serif;font-size:30px;font-weight:800;cursor:pointer;user-select:none;transition:transform .05s,background .1s}
+  .push:active{transform:scale(.97);background:radial-gradient(circle at 50% 40%,rgba(201,168,76,.32),rgba(27,42,74,.6))}
+  .clear-banner{background:rgba(217,100,89,.16);border:1px solid var(--bad);border-radius:10px;padding:14px;font-weight:800;color:var(--bad);letter-spacing:1px;text-transform:uppercase;margin:10px 0;display:none}
+  .clear-banner.on{display:block;animation:flash 1s infinite}
+  @keyframes flash{50%{opacity:.5}}
+
+  /* results */
+  .results{text-align:center}
+  .results h2{font-size:clamp(26px,5vw,38px);margin:22px 0 4px}
+  .tier{font-family:Georgia,serif;font-size:46px;font-weight:800;margin:8px 0}
+  .tier.bronze{color:#C77B4A} .tier.silver{color:#B8C0C8} .tier.gold{color:var(--gold)} .tier.platinum{color:var(--teal)}
+  .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:18px 0}
+  .stat{background:rgba(27,42,74,.4);border:1px solid var(--line);border-radius:10px;padding:14px 8px}
+  .stat .v{font-family:Georgia,serif;font-size:26px;font-weight:800;color:var(--gold)}
+  .stat .l{font-size:10.5px;color:var(--cream-dim);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+  .recap{text-align:left;background:rgba(20,17,10,.55);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:18px 20px;margin:18px 0;font-size:14px;color:var(--cream-dim)}
+  .recap b{color:var(--cream)} .recap li{margin:6px 0 6px 18px}
+  .crosslinks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0}
+  .crosslinks a{background:rgba(27,42,74,.4);border:1px solid var(--line);border-radius:9px;padding:13px 9px;text-decoration:none;color:var(--cream);font-size:12.5px;font-weight:600;transition:background .15s}
+  .crosslinks a:hover{background:rgba(201,168,76,.1);border-color:var(--gold);color:var(--gold-bright)}
+  .crosslinks a span{display:block;font-size:10.5px;color:var(--cream-dim);font-weight:500;margin-top:3px}
+
+  footer{margin-top:44px;border-top:1px solid var(--line);padding:24px 0 44px;text-align:center;color:var(--cream-dim);font-size:12px}
+  footer b{color:var(--cream)} footer a{color:var(--gold);text-decoration:none}
+  @media(max-width:520px){ .stats{grid-template-columns:1fr 1fr} .crosslinks{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="topbar">
+    <a href="https://www.globalsovereignuniversity.org" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a1772f0e8c7469f382d7897_gsu-logo-navbar-192.png" alt="GSU">
+      <span class="wm"><b>Global Sovereign University</b><span>The Lifeline Track</span></span>
+    </a>
+  </div>
+
+  <!-- INTRO -->
+  <section id="intro" class="screen on">
+    <span class="eyebrow">When Help Is Far Away</span>
+    <h1 class="title">Restart the <em>Heart</em>.</h1>
+    <p class="lede">You won't read about CPR here. You'll <b>do</b> it. Someone has collapsed in front of you. Run the rescue, step by step — find the spot, push to the beat, work the defibrillator — while GENO coaches you. Learn it with your hands, so it's there when it counts.</p>
+    <div class="disclaimer">
+      <b>This is a Comprehension Certificate — not a medical certification or license.</b> A simulation teaches the steps; it cannot replace a hands-on, manikin-based CPR course or professional care. If you can, take a real class and always call for trained help. This drill is built around an adult who suddenly collapses.
+    </div>
+    <button class="btn block" id="startBtn">Begin the Rescue</button>
+  </section>
+
+  <!-- SIM -->
+  <section id="sim" class="screen">
+    <div class="stagebar"><span class="step" id="stepLabel">Step 1 of 7</span><span class="step" id="stepName">Scene</span></div>
+    <div class="pbar"><i id="pbar"></i></div>
+    <div id="stageBody"></div>
+    <div class="coach" id="coach">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+      <div><div class="c-name">GENO · your coach</div><div class="c-msg" id="coachMsg">I'm right here with you. Take the first action when you're ready.</div></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="screen results">
+    <h2>The medics have taken over.</h2>
+    <div class="tier" id="tierName">—</div>
+    <p style="color:var(--cream-dim)" id="tierMsg"></p>
+    <div class="stats">
+      <div class="stat"><div class="v" id="sRate">—</div><div class="l">Good-rate compressions</div></div>
+      <div class="stat"><div class="v" id="sSteps">—</div><div class="l">Sequence errors</div></div>
+      <div class="stat"><div class="v" id="sAed">—</div><div class="l">AED safety</div></div>
+    </div>
+    <div class="recap">
+      <b>What you just practiced — burn it in:</b>
+      <ul>
+        <li><b>Push hard, push fast:</b> 100–120 compressions a minute, at least 2 inches deep (not past 2.4).</li>
+        <li><b>All the way up:</b> let the chest fully recoil between pushes — don't lean.</li>
+        <li><b>Don't stop:</b> keep interruptions under 10 seconds. Hands-only is enough for an adult if you're not trained in breaths.</li>
+        <li><b>AED the instant it arrives:</b> power on, pads on a bare dry chest, hands off while it analyzes and shocks, then push again immediately.</li>
+      </ul>
+    </div>
+    <p class="best" id="savedLine" style="font-size:13px;color:var(--cream-dim)"></p>
+    <h4 style="margin:26px 0 0;font-size:14px;color:var(--gold);letter-spacing:1px;text-transform:uppercase">Continue your climb</h4>
+    <div class="crosslinks">
+      <a href="https://read.globalsovereignuniversity.org/stop-the-bleed.html">Stop the Bleed<span>Lifeline · bleeding</span></a>
+      <a href="https://read.globalsovereignuniversity.org/coming-soon.html">The Lifeline Track<span>The full curriculum</span></a>
+      <a href="https://www.globalsovereignuniversity.org/library">GSU Library<span>Watch · Hear · Play · Read</span></a>
+    </div>
+    <button class="btn ghost block" id="againBtn">Run the Rescue Again</button>
+  </section>
+</div>
+
+<!-- FIREBASE (optional) — paste your GSU config; runs session-only until then -->
+<script type="module">
+  const firebaseConfig = { apiKey:"PASTE_FIREBASE_API_KEY", authDomain:"PASTE.firebaseapp.com", projectId:"PASTE_PROJECT_ID", storageBucket:"PASTE.appspot.com", messagingSenderId:"PASTE_SENDER_ID", appId:"PASTE_APP_ID" };
+  const ON = !firebaseConfig.apiKey.startsWith("PASTE");
+  let db=null, uid=null;
+  if(ON){ try{
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+    const { getAuth, signInAnonymously } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
+    const { getFirestore, doc, setDoc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+    const app=initializeApp(firebaseConfig); db=getFirestore(app);
+    const auth=getAuth(app); const u=await signInAnonymously(auth); uid=u.user.uid;
+    window.__fb={doc,setDoc,getDoc};
+  }catch(e){ console.warn("Firebase off — session only.",e); } }
+  window.__saveRescue=async function(d){
+    if(!ON||!db||!uid) return false;
+    try{ const {doc,setDoc,getDoc}=window.__fb; const ref=doc(db,"restart_the_heart_scores",uid);
+      const s=await getDoc(ref); const order=["—","Bronze","Silver","Gold","Platinum"];
+      const prev=s.exists()?(order.indexOf(s.data().bestTier||"—")):0;
+      const now=order.indexOf(d.tier);
+      await setDoc(ref,{ bestTier: now>=prev? d.tier : s.data().bestTier, lastTier:d.tier, rate:d.rate, updated:new Date().toISOString() },{merge:true});
+      return true;
+    }catch(e){ console.warn(e); return false; }
+  };
+</script>
+
+<!-- GAME -->
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  var screens={intro:$("intro"),sim:$("sim"),results:$("results")};
+  function show(n){for(var k in screens)screens[k].classList.toggle("on",k===n);window.scrollTo({top:0,behavior:"smooth"});}
+
+  // score state
+  var S={errors:0, comp:0, good:0, aedSafe:true, breaths:"hands"};
+  var stageIndex=0;
+  var STAGES=["Scene","Responsiveness","Call for help","Breathing","Find the spot","Compressions","The AED"];
+
+  function coach(msg){ $("coachMsg").textContent=msg; }
+  function setStage(name){
+    stageIndex = STAGES.indexOf(name);
+    $("stepLabel").textContent="Step "+(stageIndex+1)+" of "+STAGES.length;
+    $("stepName").textContent=name;
+    $("pbar").style.width=(stageIndex/STAGES.length*100)+"%";
+  }
+  function teach(k,h,p){ return '<div class="teachcard"><div class="k">'+k+'</div><h2>'+h+'</h2><p>'+p+'</p></div>'; }
+
+  // generic single-correct action stage
+  function choiceStage(opts){
+    setStage(opts.stage);
+    var html=teach(opts.k,opts.h,opts.p)+'<div class="actions">';
+    opts.choices.forEach(function(c,i){ html+='<button class="act" data-i="'+i+'">'+c.t+'</button>'; });
+    html+='</div>';
+    $("stageBody").innerHTML=html;
+    coach(opts.coach||"Choose the next right action.");
+    var done=false;
+    Array.prototype.forEach.call($("stageBody").querySelectorAll(".act"),function(b){
+      b.addEventListener("click",function(){
+        if(done) return;
+        var i=+b.getAttribute("data-i"), c=opts.choices[i];
+        if(c.ok){ done=true; b.classList.add("correct"); coach(c.fb||"Good."); 
+          setTimeout(opts.next,900);
+        } else {
+          b.classList.add("wrong"); b.disabled=true; S.errors++; coach(c.fb||"Not yet — try another action.");
+        }
+      });
+    });
+  }
+
+  // ---- STAGE 1: SCENE ----
+  function s1(){ choiceStage({stage:"Scene",
+    k:"First, before you touch anyone",
+    h:"You see a man collapse on the sidewalk.",
+    p:"Your instinct is to run to him. But the first job of any rescuer is to make sure <b>you</b> don't become the second victim.",
+    coach:"What comes before helping?",
+    choices:[
+      {t:"Check the scene is safe — traffic, wires, fire — then approach", ok:true, fb:"Exactly. A hurt rescuer can't rescue. Scene safe — move in."},
+      {t:"Sprint into the road without looking", ok:false, fb:"That's how rescuers get hit. Make the scene safe first."},
+      {t:"Start chest compressions from across the street", ok:false, fb:"You have to reach him safely first."}
+    ], next:s2 }); }
+
+  // ---- STAGE 2: RESPONSIVENESS ----
+  function s2(){ choiceStage({stage:"Responsiveness",
+    k:"Is he actually unconscious?",
+    h:"You reach him. He isn't moving.",
+    p:"Before CPR, confirm he's unresponsive. The method is <b>shout–tap–shout</b>: shout to get attention, tap firmly on the shoulders, shout again.",
+    coach:"How do you check if someone is responsive?",
+    choices:[
+      {t:'Shout "Are you okay?", tap both shoulders firmly, shout again', ok:true, fb:"No response. He's unconscious — keep moving fast."},
+      {t:"Shake him hard by the head", ok:false, fb:"Never shake the head/neck. Tap the shoulders and shout."},
+      {t:"Wait a minute to see if he wakes up on his own", ok:false, fb:"Seconds matter. Check now with shout–tap–shout."}
+    ], next:s3 }); }
+
+  // ---- STAGE 3: CALL ----
+  function s3(){ choiceStage({stage:"Call for help",
+    k:"Get the system moving",
+    h:"He's unresponsive. You need help and a defibrillator — fast.",
+    p:"Call your local emergency number (911, 112, 999, 000…). If others are near, <b>point to one specific person</b> and give them one job — a vague shout to a crowd means no one moves.",
+    coach:"Who do you send, and how?",
+    choices:[
+      {t:'Call emergency services (speaker on), then point: "You in the red shirt — get the AED and come back!"', ok:true, fb:"Help is coming and the AED is on its way. Hands free, keep going."},
+      {t:'Yell "somebody call someone!" to the whole crowd', ok:false, fb:'"Somebody" usually means nobody. Name one person, one task.'},
+      {t:"Skip calling — you'll handle it all yourself", ok:false, fb:"You still need the medics and the AED. Make the call."}
+    ], next:s4 }); }
+
+  // ---- STAGE 4: BREATHING ----
+  function s4(){ choiceStage({stage:"Breathing",
+    k:"Look for normal breathing — no more than 10 seconds",
+    h:"You watch his chest. It isn't rising. Then — a single, gasping breath.",
+    p:"<b>Occasional gasping is NOT normal breathing.</b> In a collapsed adult, gasping means the heart has stopped. The answer is the same: start CPR now.",
+    coach:"He's gasping. Breathing or not?",
+    choices:[
+      {t:"Gasping isn't breathing — begin CPR", ok:true, fb:"Right. Gasping fools people and costs lives. Down to work."},
+      {t:"He gasped, so he's breathing — just wait", ok:false, fb:"A dangerous myth. Agonal gasping = cardiac arrest. Start CPR."},
+      {t:"Give him water", ok:false, fb:"Never put anything in an unresponsive person's mouth. Start CPR."}
+    ], next:s4b }); }
+
+  // ---- STAGE 4b: hands-only vs breaths ----
+  function s4b(){ choiceStage({stage:"Breathing",
+    k:"One quick decision",
+    h:"Are you trained and willing to give rescue breaths?",
+    p:"For an adult who suddenly collapses, <b>hands-only CPR is recommended</b> if you're untrained or unsure — non-stop compressions are what matter most. Trained rescuers add 2 breaths every 30 compressions.",
+    coach:"There's no wrong answer here — pick what fits you.",
+    choices:[
+      {t:"Hands-only CPR (recommended if untrained)", ok:true, fb:"Good choice — non-stop, high-quality compressions. Let's push.", },
+      {t:"30 compressions, then 2 breaths (I'm trained)", ok:true, fb:"Trained path — 30:2. We'll cue the breaths. Let's push."}
+    ], next:function(){ /* set mode from last clicked */ s5(); } }); 
+    // capture mode
+    setTimeout(function(){
+      var acts=$("stageBody").querySelectorAll(".act");
+      acts[0].addEventListener("click",function(){S.breaths="hands";});
+      acts[1].addEventListener("click",function(){S.breaths="30:2";});
+    },0);
+  }
+
+  // ---- STAGE 5: FIND THE SPOT (torso click) ----
+  function s5(){
+    setStage("Find the spot");
+    $("stageBody").innerHTML = teach("Where your hands go",
+      "Place your hands on the center of the chest.",
+      "Heel of one hand on the <b>center of the chest</b> (lower half of the breastbone), other hand on top, fingers up off the ribs. Shoulders over your hands, elbows locked. Tap the correct spot on his chest.")
+      + '<div class="torso-wrap">'+torsoSVG([{id:"chest",x:104,y:150,w:92,h:80,correct:true}])+'</div>';
+    coach("Find the center of the chest — the lower half of the breastbone.");
+    wireZones(function(ok){
+      if(ok){ coach("Hands locked in. Now — push hard and fast."); setTimeout(s6,800); }
+      else { S.errors++; coach("Too high or off to the side. Center of the chest — try again."); }
+    });
+  }
+
+  // ---- STAGE 6: COMPRESSIONS ----
+  var metroTimer=null, beatAudio=null, lastTap=0, decayTimer=null, perf=0, target=30;
+  function s6(){
+    setStage("Compressions");
+    S.comp=0; S.good=0; perf=0; lastTap=0; target = (S.breaths==="30:2")?30:40;
+    $("stageBody").innerHTML =
+      '<div class="cpr-stage">'
+      + teach("Push to the beat","Push hard. Push fast. All the way up.",
+          "Match the beat: <b>100–120 a minute</b>, at least <b>2 inches</b> deep, and let the chest rise fully between pushes. Tap <b>PUSH</b> on every beat. Reach "+target+" good compressions.")
+      + '<div class="metro"><span class="dot" id="dot"></span><span class="lbl">~110 / min — follow the beat</span></div>'
+      + '<div class="ratebox" id="rate">Tap PUSH to start</div>'
+      + '<div class="count" id="count">0<small>Compressions · target '+target+'</small></div>'
+      + '<div class="perf"><div class="pf-lbl"><span>Blood flow to the brain</span><span id="pfpct">0%</span></div><div class="pf-bar"><div class="pf-fill" id="pffill"></div></div></div>'
+      + '<button class="push" id="push">PUSH</button>'
+      + '</div>';
+    coach("Tap PUSH on each beat. I'll tell you if you're too fast or too slow.");
+    startMetro();
+    decayTimer=setInterval(function(){ // perfusion decays if you stop/slow
+      perf=Math.max(0,perf-2); paintPerf();
+    },500);
+    $("push").addEventListener("click",compress);
+    document.addEventListener("keydown",spaceTap);
+  }
+  function spaceTap(e){ if(e.code==="Space"){ e.preventDefault(); var p=$("push"); if(p) compress(); } }
+
+  function startMetro(){
+    try{ var Ctx=window.AudioContext||window.webkitAudioContext; beatAudio=new Ctx(); }catch(e){ beatAudio=null; }
+    var period=60000/110;
+    var dot=function(){ var d=$("dot"); if(!d){return;} d.classList.add("beat"); setTimeout(function(){ if($("dot"))$("dot").classList.remove("beat"); },90);
+      if(beatAudio){ try{ var o=beatAudio.createOscillator(),g=beatAudio.createGain(); o.frequency.value=880; o.connect(g); g.connect(beatAudio.destination);
+        g.gain.setValueAtTime(.0001,beatAudio.currentTime); g.gain.exponentialRampToValueAtTime(.25,beatAudio.currentTime+.01); g.gain.exponentialRampToValueAtTime(.0001,beatAudio.currentTime+.06);
+        o.start(); o.stop(beatAudio.currentTime+.07);}catch(e){} } };
+    metroTimer=setInterval(dot,period); dot();
+  }
+  function stopMetro(){ if(metroTimer)clearInterval(metroTimer); if(decayTimer)clearInterval(decayTimer); document.removeEventListener("keydown",spaceTap); }
+
+  function compress(){
+    var now=performance.now();
+    S.comp++;
+    if(lastTap){
+      var interval=now-lastTap; var rate=60000/interval;
+      var rb=$("rate");
+      if(rate>=100 && rate<=120){ S.good++; perf=Math.min(100,perf+9); rb.textContent="GOOD — "+Math.round(rate)+"/min"; rb.className="ratebox good"; }
+      else if(rate<100){ perf=Math.min(100,perf+2); rb.textContent="FASTER — "+Math.round(rate)+"/min"; rb.className="ratebox slow"; }
+      else { perf=Math.min(100,perf+2); rb.textContent="SLOW DOWN — "+Math.round(rate)+"/min"; rb.className="ratebox fast"; }
+    } else { $("rate").textContent="Keep going — match the beat"; }
+    lastTap=now;
+    var c=$("count"); if(c) c.innerHTML=S.comp+'<small>Compressions · target '+target+'</small>';
+    paintPerf();
+    if(S.comp>=target){ stopMetro(); if(S.breaths==="30:2"){ breathStep(); } else { aedArrives(); } }
+  }
+  function paintPerf(){ var f=$("pffill"),p=$("pfpct"); if(f)f.style.width=perf+"%"; if(p)p.textContent=Math.round(perf)+"%"; }
+
+  // ---- 30:2 breath cue ----
+  function breathStep(){
+    setStage("Compressions");
+    $("stageBody").innerHTML = teach("Two breaths","30 done — give 2 rescue breaths.",
+      "Tilt the head back, lift the chin, pinch the nose, and give <b>2 breaths</b> — each about 1 second, just until the chest rises. Then straight back to compressions. Keep the pause under 10 seconds.")
+      + '<button class="btn block" id="breathBtn">Give 2 breaths (chest rises) →</button>';
+    coach("Quick — 2 breaths, watch the chest rise, then back to pushing.");
+    $("breathBtn").addEventListener("click",function(){ coach("Chest rose. Don't linger — the AED is here."); setTimeout(aedArrives,700); });
+  }
+
+  // ---- STAGE 7: AED ----
+  var aedPhase=0;
+  function aedArrives(){
+    setStage("The AED");
+    aedPhase=0;
+    renderAed();
+  }
+  function renderAed(){
+    var body="";
+    if(aedPhase===0){
+      body=teach("The AED has arrived","Turn it on first — then do what it says.",
+        "An AED reads the heart and shocks only if it's the kind of problem a shock can fix. <b>Power it on and follow its voice.</b>")
+        +'<button class="btn block" id="aedOn">Power on the AED</button>';
+    } else if(aedPhase===1){
+      body=teach("Attach the pads","Bare, dry chest. Place the two pads as pictured.",
+        "One pad on the <b>upper-right chest</b>, one on the <b>lower-left side</b>, below the armpit. Tap each correct spot.")
+        +'<div class="torso-wrap">'+torsoSVG([
+          {id:"ur",x:70,y:120,w:60,h:46,correct:true},
+          {id:"ll",x:150,y:185,w:64,h:50,correct:true}
+        ],true)+'</div>';
+    } else if(aedPhase===2){
+      body=teach("Analyzing","Hands OFF. Don't touch him.",
+        "The AED is reading the heart. <b>Anyone touching him can ruin the reading or get shocked.</b> Stay clear until it tells you.")
+        +'<div class="clear-banner on">⚠ CLEAR — DO NOT TOUCH</div>'
+        +'<button class="push" id="tempt" style="max-width:none;height:90px;font-size:20px">PUSH (don\'t!)</button>'
+        +'<button class="btn ghost block" id="stayClear" style="margin-top:12px">Stay clear and wait</button>';
+    } else if(aedPhase===3){
+      body=teach("Shock advised","Shout 'CLEAR!' — make sure no one is touching — then shock.",
+        "Look head to toe: nobody in contact with him. <b>Then press the shock button.</b>")
+        +'<button class="btn block" id="shock">Everyone clear — deliver shock</button>';
+    } else if(aedPhase===4){
+      body=teach("Shock delivered","Resume compressions IMMEDIATELY.",
+        "Don't wait, don't re-check for a pulse — get straight back on the chest. Push hard, push fast.")
+        +'<button class="btn block" id="resume">Resume compressions →</button>';
+    }
+    $("stageBody").innerHTML=body;
+
+    if(aedPhase===0){ coach("Power it on and let it guide you."); $("aedOn").addEventListener("click",function(){aedPhase=1;renderAed();}); }
+    else if(aedPhase===1){ coach("Upper-right chest, and lower-left below the armpit."); 
+      var hits=0; wireZones(function(ok,el){ if(ok){ el.classList.add("hit"); hits++; if(hits>=2){ coach("Pads on. Stand back — it's going to analyze."); setTimeout(function(){aedPhase=2;renderAed();},700);} } else { S.errors++; coach("Not there — upper-right and lower-left."); } }, true); }
+    else if(aedPhase===2){ coach("Hands off. Let it work.");
+      $("tempt").addEventListener("click",function(){ S.aedSafe=false; S.errors++; coach("No! Touching during analysis is dangerous and ruins the reading. Hands OFF."); });
+      $("stayClear").addEventListener("click",function(){ coach("Good discipline. Shock advised — get ready."); aedPhase=3; renderAed(); });
+    }
+    else if(aedPhase===3){ coach("Eyes head-to-toe — nobody touching — then shock."); $("shock").addEventListener("click",function(){aedPhase=4;renderAed();}); }
+    else if(aedPhase===4){ coach("Straight back to compressions — no pause."); $("resume").addEventListener("click",function(){ finish(); }); }
+  }
+
+  // ---- torso SVG + zones ----
+  function torsoSVG(zones,pads){
+    var z="";
+    zones.forEach(function(zn){ z+='<rect class="zone" data-correct="'+(zn.correct?1:0)+'" data-id="'+zn.id+'" x="'+zn.x+'" y="'+zn.y+'" width="'+zn.w+'" height="'+zn.h+'" rx="10"></rect>'; });
+    return '<svg class="torso" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">'
+      + '<ellipse cx="150" cy="48" rx="34" ry="36" fill="rgba(245,241,232,.08)" stroke="rgba(201,168,76,.3)"/>'
+      + '<rect x="78" y="92" width="144" height="190" rx="40" fill="rgba(245,241,232,.06)" stroke="rgba(201,168,76,.3)"/>'
+      + '<line x1="150" y1="100" x2="150" y2="250" stroke="rgba(201,168,76,.18)" stroke-dasharray="4 6"/>'
+      + z + '</svg>';
+  }
+  function wireZones(cb,multi){
+    Array.prototype.forEach.call($("stageBody").querySelectorAll(".zone"),function(r){
+      r.addEventListener("click",function(){
+        var ok=r.getAttribute("data-correct")==="1";
+        if(ok && !multi){ r.classList.add("hit"); }
+        cb(ok,r);
+      });
+    });
+  }
+
+  // ---- RESULTS ----
+  function finish(){
+    stopMetro();
+    $("pbar").style.width="100%";
+    var ratePct = S.comp? Math.round(S.good/S.comp*100):0;
+    var tier;
+    if(S.errors===0 && ratePct>=80 && S.aedSafe) tier="Platinum";
+    else if(S.errors<=1 && ratePct>=60 && S.aedSafe) tier="Gold";
+    else if(S.errors<=3 && ratePct>=40) tier="Silver";
+    else tier="Bronze";
+    var tn=$("tierName"); tn.textContent=tier; tn.className="tier "+tier.toLowerCase();
+    var msgs={Platinum:"Flawless. Clean sequence, strong rhythm, perfect AED discipline. You'd give someone a real chance.",
+      Gold:"Strong rescue — good rhythm and safe with the AED. Tighten the rest and it's perfect.",
+      Silver:"You got through it and kept him going. Watch your rate and your sequence next round.",
+      Bronze:"You stayed and you acted — that already beats freezing. Run it again and sharpen each step."};
+    $("tierMsg").textContent=msgs[tier];
+    $("sRate").textContent=ratePct+"%";
+    $("sSteps").textContent=S.errors;
+    $("sAed").textContent=S.aedSafe?"Clean":"Touched";
+    if(window.__saveRescue){ window.__saveRescue({tier:tier,rate:ratePct}).then(function(ok){ if(ok)$("savedLine").innerHTML="Your best result has been saved."; }); }
+    show("results");
+  }
+
+  function reset(){ S={errors:0,comp:0,good:0,aedSafe:true,breaths:"hands"}; stageIndex=0; }
+  $("startBtn").addEventListener("click",function(){ reset(); show("sim"); s1(); });
+  $("againBtn").addEventListener("click",function(){ reset(); show("sim"); s1(); });
+})();
+</script>
+
+<!-- GENO — live ElevenLabs widget -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<footer class="wrap">
+  <p><b>Global Sovereign University</b> · The Lifeline Track — <em>When Help Is Far Away</em></p>
+  <p style="margin-top:6px">A program of the Foundation for Global Instruction, a 501(c)(3) nonprofit. Free worldwide. · <a href="https://www.globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
+  <p style="margin-top:6px;font-size:11px;opacity:.7">CPR/AED steps aligned with current AHA &amp; American Red Cross lay-rescuer guidance. GSU is independent and not affiliated with these organizations. A simulation is not a substitute for hands-on certification.</p>
+</footer>
+</body>
+</html>
