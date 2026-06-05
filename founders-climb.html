@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Founders Climb — Entrepreneurship Game | Free GSU Game</title>
+<meta name="description" content="Infinite entrepreneurship game: validation, MVPs, pricing, cash flow, and the founder's mindset. Free, GENO-coached, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Entrepreneurship · Build Value, Build Freedom</div>
+  <h1>The Founders <span class="accent">Climb</span></h1>
+  <p class="sub">Validate · Build small · Charge for value · Watch the cash · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Pitch GENO your idea and ask for the three hardest questions a customer would ask. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/entrepreneurship">↩ Entrepreneurship Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Talk to three potential customers about their problem this week — before building anything. Then read The Sovereign Architect on the Critical Thinking hub.</p>
+  </div>
+  <p class="fine">Education, not business or legal advice. Companion game to the GSU Entrepreneurship hub. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "founders-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["A business exists, at its core, to…", ["Have a logo", "Solve a real problem for someone willing to pay", "File paperwork", "Hire friends"], 1, 0, "No problem, no business — the pain you relieve is the value you create."], ["Revenue versus profit:", ["The same thing", "Revenue is money in; profit is what remains after costs", "Profit comes first", "Revenue is optional"], 1, 0, "A business can drown in revenue and starve for profit — track both, respect the second."], ["Your first customer matters most because…", ["They pay the most", "They prove someone real will pay — the moment an idea becomes a business", "They write reviews", "They become staff"], 1, 0, "One stranger's dollar beats a hundred friends' compliments."], ["An MVP (minimum viable product) is…", ["The cheapest junk possible", "The smallest version that tests the core value with real users", "A finished product", "A pitch deck"], 1, 1, "Build the skateboard before the car — learn whether anyone wants to ride at all."], ["'Validate before you build' means…", ["Get permits", "Confirm real demand — pre-orders, sign-ups, conversations — before heavy investment", "Ask family", "Trademark first"], 1, 1, "The cheapest failure is the one discovered before the money was spent."], ["Fixed costs versus variable costs:", ["Both scale with sales", "Fixed stay constant (rent); variable rise with each unit sold (materials)", "Fixed are optional", "Variable means annual"], 1, 1, "Know which is which and break-even stops being a mystery."], ["Break-even is the point where…", ["You retire", "Total revenue equals total costs", "Marketing starts", "Taxes end"], 1, 0, "Units needed = fixed costs ÷ (price − variable cost per unit). One formula, enormous clarity."], ["The best early marketing is usually…", ["A billboard", "Talking directly to potential customers and solving loudly in public", "A mascot", "Waiting"], 1, 1, "Do things that don't scale first — ten real conversations beat ten thousand impressions."], ["Cash flow kills more small businesses than…", ["Competition", "Lack of profit on paper — money timing matters more than totals", "Bad logos", "Long hours"], 1, 2, "Profitable-on-paper firms die waiting for invoices. Watch when money moves, not just how much."], ["Pricing should start from…", ["Your costs plus a little", "The value delivered to the customer", "Whatever competitors charge minus 10%", "A round number"], 1, 2, "Cost sets your floor; value sets the ceiling — price toward the problem you solve, not the hours you spent."], ["A niche beats a broad market early because…", ["Niches are easier to spell", "You can dominate a small pond, learn fast, and expand from strength", "Big markets are illegal", "Ads cost less"], 1, 1, "Everyone's customer is no one's favorite — specific wins trust first."], ["Failure in entrepreneurship is best treated as…", ["Shame to hide", "Tuition — data about what the market actually wants", "Proof to quit", "Bad luck only"], 1, 0, "Every founder's resume is mostly experiments. The skill is failing small, learning fast, and iterating."], ["Keeping business and personal money separate matters because…", ["Banks insist", "Clean books mean real decisions, honest taxes, and legal protection", "It looks fancy", "Cash is heavy"], 1, 1, "A separate account is day-one discipline — you cannot steer what you cannot see."], ["A 'unique value proposition' answers…", ["What's your slogan?", "Why should THIS customer choose YOU over every alternative, including doing nothing?", "How big is the office?", "Who invested?"], 1, 1, "'Doing nothing' is your biggest competitor — the UVP must beat inertia too."], ["Customer feedback is most useful when you ask about…", ["Compliments", "Their problems and behavior — not whether they 'like' your idea", "Your logo", "Future promises"], 1, 2, "People are polite about ideas and honest about their own pain — ask about the pain."], ["Recurring revenue is prized because…", ["It sounds modern", "Predictable repeat income compounds and survives slow months", "Customers prefer paying more", "It needs no service"], 1, 2, "Sell once, earn monthly — retention quietly outearns acquisition."], ["The founder's most limited resource is…", ["Coffee", "Focus — saying no to good ideas to finish the vital one", "Business cards", "Followers"], 1, 1, "Every yes is a hundred hidden nos. Guard the main thing like inventory."], ["Why does GSU teach entrepreneurship as sovereignty?", ["Everyone must found startups", "Building value others will pay for is independence no employer can revoke", "Jobs are bad", "It's trendy"], 1, 0, "The Sovereign Architect's lesson: the builder of value writes more of their own story."], ["A business exists to…", ["Have a logo", "Solve a real problem people pay to fix", "File paperwork", "Hire friends"], 1, 0, "No problem, no business — the pain you relieve is the value you create."], ["Revenue is money in; profit is…", ["The same", "What remains after costs", "Always negative", "Tax"], 1, 0, "A business can drown in revenue and starve for profit — respect the second number."], ["Break-even is where…", ["You retire", "Total revenue equals total costs", "Marketing starts", "Taxes end"], 1, 1, "Units = fixed costs ÷ (price − variable cost). One formula, huge clarity."], ["Cash flow kills businesses because…", ["Profit is fake", "Money timing can starve a profitable-on-paper company", "Logos cost much", "Hours are long"], 1, 2, "Profitable firms die waiting on invoices — watch WHEN money moves, not just how much."], ["A unique value proposition must beat even…", ["Competitors", "'Doing nothing' — inertia is your biggest rival", "Employees", "Investors"], 1, 1, "Why choose you over every alternative, including changing nothing? Answer that."], ["Customer interviews are most useful when you ask about…", ["Your idea's appeal", "Their actual problems and current behavior", "Compliments", "Future promises"], 1, 2, "People are polite about ideas and honest about their own pain — ask about the pain."], ["Recurring revenue is prized because it's…", ["Trendy", "Predictable repeat income that compounds", "One-time", "Service-free"], 1, 1, "Sell once, earn monthly — retention quietly outearns acquisition."], ["The founder's scarcest resource is…", ["Coffee", "Focus — saying no to good ideas to finish the vital one", "Cards", "Followers"], 1, 1, "Every yes is a hundred hidden nos. Guard the main thing like inventory."], ["'Do things that don't scale' early means…", ["Automate first", "Hand-serve early customers to learn fast", "Hire big", "Skip support"], 1, 1, "Ten real conversations teach more than ten thousand impressions — scale comes later."], ["A pivot is…", ["Quitting", "Changing strategy based on what you learned, keeping the mission", "Failing", "Raising money"], 1, 1, "Same destination, new road — the willingness to be wrong about the route, not the goal."], ["Product-market fit feels like…", ["Begging for sales", "Demand pulling the product out of your hands", "Quiet", "A logo"], 1, 2, "When it clicks, you're scrambling to keep up — before it, you're pushing uphill."], ["Gross margin is…", ["All revenue", "Revenue minus the direct cost of delivering the product", "Profit after taxes", "Marketing spend"], 1, 2, "Thin margins cap everything you can do — know it before you scale anything."], ["Bootstrapping means…", ["Taking investment", "Funding growth from revenue and savings", "Borrowing heavily", "Selling the company"], 1, 1, "Slower but yours — every dollar of revenue is a vote of confidence and a source of fuel."], ["Failure, to a founder, is…", ["Shame", "Tuition — data about what the market wants", "Proof to quit", "Bad luck"], 1, 0, "Fail small, learn fast, iterate — every founder's resume is mostly experiments."], ["Separating business and personal money matters because…", ["Banks insist", "Clean books mean clear decisions, honest taxes, legal protection", "It looks fancy", "Cash is heavy"], 1, 1, "Day-one discipline — you can't steer what you can't see."], ["A 'moat' protects a business through…", ["Walls", "Durable advantages: brand, network effects, switching costs", "Secrecy alone", "Low prices forever"], 1, 1, "What stops the next competitor from copying you tomorrow? That's the moat."], ["The lean cycle is…", ["Plan, plan, plan", "Build, measure, learn — repeat", "Hire, spend, hope", "Pitch, raise, exit"], 1, 1, "Tight loops beat grand plans — reality is the only honest critic."], ["Sweat equity means…", ["Gym fees", "Value built through your own work instead of cash", "A loan", "A salary"], 1, 1, "Early on, hours are the currency you have most of — spend them where they compound."], ["Customer retention matters because…", ["New is better", "Keeping a customer costs far less than winning a new one", "It's automatic", "It's optional"], 1, 1, "A leaky bucket can't fill — fix retention before pouring in acquisition."], ["GSU teaches entrepreneurship as sovereignty because…", ["All must start companies", "Building value others pay for is independence no employer can revoke", "Jobs are bad", "It's trendy"], 1, 0, "The builder of value writes more of their own story. Education, not business advice."], ["An LLC's main appeal for a small founder is…", ["Lower prices", "Separating personal assets from business liabilities", "Free marketing", "Avoiding all taxes"], 1, 1, "The liability shield — business debts and lawsuits stop at the company line when run properly. Education, not legal advice."], ["An EIN is…", ["A loan type", "The business's federal tax ID number, free from the IRS", "A license", "A trademark"], 1, 1, "Like a Social Security number for the business — needed for banking, hiring, and taxes; free directly from irs.gov."], ["A simple written agreement beats a handshake because…", ["Friends lie", "Memory and assumptions diverge — writing locks the shared version", "Lawyers insist", "It's formal"], 1, 0, "Scope, price, deadline, what happens if — one page prevents most disputes between honest people."], ["An invoice should always include…", ["A slogan", "What was delivered, the amount, terms, and a due date", "A discount", "Photos"], 1, 0, "Vague invoices get paid slowly — clarity is collection strategy."], ["'Net 30' on an invoice means…", ["30% discount", "Payment due 30 days after the invoice date", "30 installments", "Pay by the 30th"], 1, 1, "Know your terms — and that cash-flow gap between delivering and getting paid is where businesses drown."], ["CAC stands for…", ["Cash And Credit", "Customer Acquisition Cost — what you spend to win one customer", "Company Annual Cost", "Customer Account Code"], 1, 2, "If a customer costs $50 to win, they must be worth more than $50 — obvious, and constantly violated."], ["LTV (lifetime value) matters because…", ["It sounds impressive", "A customer's total worth over time justifies what you can spend to acquire them", "Banks require it", "It's a vanity metric"], 1, 2, "LTV well above CAC = a machine worth feeding; below it = a treadmill burning cash."], ["Positioning answers the question…", ["What's the price?", "'For whom, and instead of what?' — where you live in the customer's mind", "Where's the office?", "Who invested?"], 1, 2, "'The affordable option for busy parents' beats 'high-quality solutions for everyone.'"], ["Word-of-mouth is the cheapest marketing because…", ["Talk is free", "A delighted customer's recommendation carries trust no ad can buy", "It's untrackable", "Friends are easy"], 1, 1, "Make the product remarkable enough to mention — that's a marketing budget hidden inside quality."], ["An A/B test compares…", ["Two employees", "Two versions of one element to see which performs better with real users", "Two competitors", "Two years"], 1, 2, "Opinion is a hypothesis; the test is the verdict. Change one thing at a time."], ["In sales, an objection ('it's too expensive') is best treated as…", ["Rejection", "A request for more information — about value, fit, or timing", "An insult", "The end"], 1, 1, "'Too expensive' often means 'I don't yet see the value' — answer the real question underneath."], ["The follow-up matters in sales because…", ["Pestering works", "Most yeses arrive after multiple contacts; most sellers quit after one", "Email is free", "It fills time"], 1, 1, "Polite persistence is a competitive advantage precisely because it's rare."], ["Asking for the sale matters because…", ["It's aggressive", "Interested customers often need the clear invitation to decide", "It's optional", "Silence sells"], 1, 1, "'Would you like to start this week?' — clarity is a courtesy, not pressure."], ["A founder's 'runway' is…", ["An airport", "How many months the business can operate before cash runs out", "A product line", "A pitch deck"], 1, 1, "Burn rate versus bank balance — the countdown every decision plays against."], ["Hiring your first help should target…", ["A friend", "The tasks that steal your highest-value hours", "A manager", "A specialist in everything"], 1, 2, "Buy back the hours only you can't delegate — founders doing $15/hour work at $200/hour cost are common."], ["'Revenue first, perfection later' warns against…", ["Low standards", "Polishing endlessly while no one is paying yet", "Fast shipping", "Customer feedback"], 1, 1, "Version one should embarrass you slightly — the market's edits beat your imagination's."], ["Keeping a simple profit-and-loss (P&L) monthly tells you…", ["Your worth", "What came in, what went out, and whether the model actually works", "Tax tricks", "Stock prices"], 1, 1, "A business you don't measure is a hobby with expenses."], ["Customer complaints are valuable because…", ["They're rare", "Complainers care enough to tell you — most unhappy customers just vanish", "They're wrong", "They're loud"], 1, 1, "The complaint is a free consult; the silent churn is the real killer."], ["Partnerships fail most often over…", ["Logos", "Unwritten expectations about money, roles, and exit", "Office space", "Names"], 1, 2, "Write the hard conversation down on day one — who owns what, who does what, what if someone leaves."], ["The honest founder's metric of success is…", ["Followers", "Customers who pay, return, and refer", "Press mentions", "Office size"], 1, 0, "Everything else is commentary — pay, return, refer is the heartbeat."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

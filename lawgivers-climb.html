@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Great Lawgivers Climb — Iroquois Confederacy History Game | Free GSU Game</title>
+<meta name="description" content="Infinite history game on the Iroquois Confederacy, the Peacemaker, and the Great Law of Peace — the founding before the Founders. Free, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Historification · History of the Americans</div>
+  <h1>The Great Lawgivers <span class="accent">Climb</span></h1>
+  <p class="sub">The Peacemaker · The Great Law · The founding before the Founders · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Ask GENO about the Haudenosaunee, the clan mothers, or the Tree of Peace — any hour. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/historification">↩ US History Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Read The Great Lawgivers — adult and grades 4–5 editions — then climb the American Story ladder on the Historification hub.</p>
+  </div>
+  <p class="fine">Companion game to The Great Lawgivers by Dr. Gene A. Constant. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "lawgivers-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["The Iroquois Confederacy is also known as the…", ["Haudenosaunee", "Algonquin Alliance", "Powhatan League", "Sioux Nation"], 0, 0, "Haudenosaunee — 'People of the Longhouse' — the confederacy's own name for itself."], ["How many nations originally formed the Iroquois Confederacy?", ["Three", "Five", "Seven", "Ten"], 1, 0, "Mohawk, Oneida, Onondaga, Cayuga, and Seneca — the Five Nations."], ["Which nation later joined, making it the Six Nations?", ["Cherokee", "Tuscarora", "Huron", "Lenape"], 1, 1, "The Tuscarora joined in the early 1700s after migrating north from the Carolinas."], ["The Confederacy's founding law is called…", ["The Longhouse Code", "The Great Law of Peace", "The Five Nations Treaty", "The Wampum Charter"], 1, 0, "The Great Law of Peace — Gayanashagowa — the constitution that united the nations."], ["The figure credited with uniting the nations in peace is known as…", ["The Peacemaker", "The Great Sachem", "The Firekeeper", "The Pathfinder"], 0, 0, "The Peacemaker, with Hiawatha as his ally and orator, carried the Great Law from nation to nation."], ["Hiawatha is remembered in the founding story as…", ["A war chief who resisted union", "The Peacemaker's ally and spokesman", "A European missionary", "The first clan mother"], 1, 1, "Hiawatha's grief and recovery, and his voice for the Peacemaker's message, anchor the founding epic."], ["In the Confederacy, clan mothers held the power to…", ["Declare war only", "Select and depose chiefs", "Trade exclusively", "Keep no role"], 1, 1, "Women of the clans nominated the sachems and could remove them — accountability built into the design."], ["The Confederacy's central council fire was kept by which nation?", ["Mohawk", "Onondaga", "Seneca", "Oneida"], 1, 1, "The Onondaga, geographically central, served as Firekeepers — hosts and conveners of the Grand Council."], ["The longhouse served the Confederacy as…", ["Only a dwelling", "Both a dwelling and the metaphor for the union itself", "A fort", "A granary"], 1, 0, "One long house, many fires, one roof — the nations as families under a single symbolic dwelling."], ["Benjamin Franklin's Albany Plan of Union (1754) is often discussed alongside the Confederacy because…", ["He copied it word for word", "He pointed to the united Iroquois nations as proof colonies could unite", "He opposed the Iroquois", "It was written at Onondaga"], 1, 1, "Franklin famously argued that if the Six Nations could form such a union, the colonies could too."], ["In 1988, the U.S. Congress formally…", ["Dissolved the Confederacy", "Acknowledged the Confederacy's contribution to the development of the Constitution", "Annexed the Six Nations", "Rewrote the Great Law"], 1, 2, "A concurrent resolution acknowledged the confederation's influence on the framers — recognition on the record."], ["Wampum belts functioned as…", ["Currency only", "Records of laws, treaties, and history", "Decoration", "Weapons"], 1, 1, "Woven shell beads encoded agreements and the Great Law itself — a constitution you could hold."], ["Decision-making in the Grand Council emphasized…", ["Simple majority votes", "Deliberation toward consensus across the nations", "One chief's command", "Random selection"], 1, 1, "Matters passed between elder and younger brother nations until the council reached one mind."], ["The 'Tree of Peace' symbolized…", ["A trading post", "Weapons buried beneath it and the union's living peace", "A boundary marker", "A calendar"], 1, 1, "Weapons buried under the white pine; an eagle atop watching for danger — peace with vigilance."], ["'Seven generations' thinking asks leaders to…", ["Rule for seven years", "Weigh decisions by their effect on descendants far ahead", "Consult seven elders", "Serve seven terms"], 1, 1, "Stewardship over the horizon — a standard of judgment modern law still strains to match."], ["The Confederacy predates the U.S. Constitution by…", ["A few years", "Centuries", "It came after", "They were simultaneous"], 1, 0, "Founding dates are debated — well before European contact by oral tradition — centuries ahead of 1787 either way."], ["One clear structural parallel between the Great Law and the U.S. system is…", ["A king", "A union of distinct sovereign units under a shared council", "A standing army", "A state church"], 1, 2, "Federated nations keeping local autonomy under a common framework — the federal idea in practice."], ["Why does the Lawgivers story matter to civic education?", ["It replaces the Constitution", "Democracy on this continent did not begin in 1776 — the founding before the Founders", "It is only legend", "It ended in 1754"], 1, 0, "Students should meet the Peacemaker as well as Madison — the full American story is longer and richer."], ["The role of sachem is best described as…", ["A hereditary king", "A chief serving at the consent of his clan, removable for failing the people", "A military rank", "A priest"], 1, 2, "Authority held on conditions — leadership as service, with the clan mothers holding the recall."], ["The Confederacy's member nations handled internal affairs…", ["By central command", "Locally, while the Grand Council handled matters of common concern", "By lottery", "Through European governors"], 1, 2, "Enumerated common powers, reserved local powers — a balance American federalism would echo."], ["The Haudenosaunee Confederacy is governed by a council called the…", ["Senate", "Grand Council", "House of Sachems", "Tribal Court"], 1, 1, "The Grand Council of fifty sachems — the deliberative body at the heart of the Great Law."], ["The number of sachems (chiefs) in the Grand Council is traditionally…", ["Thirteen", "Fifty", "One hundred", "Five"], 1, 2, "Fifty, distributed among the nations in fixed numbers set by the Great Law itself."], ["In the Confederacy, the nations were organized as 'elder' and 'younger' brothers to…", ["Rank them by wealth", "Structure debate and the passing of decisions across the council", "Decide warfare", "Assign hunting grounds"], 1, 2, "Matters crossed the council fire between the brother sides until consensus emerged — procedure as peacemaking."], ["Wampum, in Haudenosaunee governance, served as…", ["Money only", "A mnemonic record of laws, treaties, and council decisions", "Jewelry", "Weapons"], 1, 1, "Patterns in shell beads encoded agreements — read aloud by keepers, they were the written law of an oral nation."], ["The Great Law of Peace replaced cycles of blood feud with…", ["A king's justice", "Condolence and a law-bound council process", "Trial by combat", "Exile"], 1, 2, "The Condolence Ceremony channeled grief away from revenge — the founding insight that mourning, unhealed, breeds war."], ["The Peacemaker's vision united the nations against…", ["Foreign empires", "Endless intertribal warfare and the cycle of vengeance", "Famine", "A common enemy tribe"], 1, 1, "Peace among the five was the project — strength followed from unity, not the other way around."], ["Clan mothers held the authority to remove a sachem who…", ["Aged past fifty", "Failed the people or violated the Great Law", "Lost a vote", "Married outside the clan"], 1, 1, "Leadership on condition — the recall power sat with the women who nominated him."], ["The 'Tree of Peace,' a great white pine, symbolized…", ["A boundary", "The Great Law itself, with roots extending invitation to all who would follow it", "A burial site", "A trade route"], 1, 2, "White Roots of Peace spreading in four directions — any nation could trace them back and take shelter."], ["Beneath the Tree of Peace, weapons were…", ["Displayed", "Buried — the literal burying of the hatchet", "Counted", "Blessed"], 1, 1, "The phrase entered English from exactly this practice: war's tools put under the roots."], ["An eagle was said to perch atop the Tree of Peace to…", ["Hunt", "Watch for approaching danger and warn the people", "Mark territory", "Carry messages"], 1, 1, "Peace with vigilance — the union rests, but never sleeps."], ["The Albany Plan of Union (1754) proposed by Franklin aimed to…", ["Declare independence", "Unite the colonies under one government for defense and common affairs", "Abolish colonial assemblies", "Join the Confederacy"], 1, 1, "Rejected then, but the seed of federation — and Franklin pointed to the Haudenosaunee as living proof it could work."], ["Franklin's famous remark on the Confederacy expressed…", ["Contempt", "Astonishment that 'ignorant savages' could form a union the colonies could not", "Indifference", "Fear"], 1, 2, "His words were sharp about colonial disunity — the comparison was meant to shame, and to inspire."], ["The 1988 U.S. Congressional resolution (H.Con.Res. 331) formally…", ["Granted statehood", "Acknowledged the Confederacy's influence on the U.S. Constitution", "Returned land", "Disbanded the council"], 1, 2, "On the record: the framers' debt to Haudenosaunee models of federation and governance."], ["'Seven generations' thinking asks a leader to weigh decisions by…", ["This year's harvest", "Their impact on descendants far into the future", "The council's mood", "Trade value"], 1, 1, "Stewardship over the horizon — a time scale modern governments still struggle to match."], ["The Confederacy is often described as one of the world's oldest…", ["Empires", "Participatory, representative governments", "Monarchies", "Trading companies"], 1, 1, "Continuous self-government by council and consent — predating the European arrival by generations."], ["Each nation in the Confederacy retained control over…", ["Nothing", "Its own internal affairs, while the Grand Council handled common concerns", "Only warfare", "Only trade"], 1, 1, "Local autonomy under a shared framework — the federal principle, centuries before the word."], ["The Peacemaker is traditionally said to have come from the…", ["Seneca", "Huron (Wendat) people, crossing to bring the message", "Mohawk", "Onondaga"], 1, 2, "An outsider bearing the vision — the law's origin story crosses national lines from the start."], ["Hiawatha's role was chiefly that of…", ["War chief", "Orator and ally who carried the Peacemaker's message into the world", "Firekeeper", "Judge"], 1, 1, "Grief transformed into eloquence — his voice made the vision spread."], ["The 'condolence' at the heart of the founding addressed the problem that…", ["Crops failed", "Grief and loss, unhealed, drove the cycle of revenge killings", "Borders were unclear", "Leaders aged"], 1, 2, "Heal the mourner and you break the feud — a startlingly modern understanding of conflict's roots."], ["The Onondaga's special role as 'Firekeepers' meant they…", ["Cooked for all", "Hosted the Grand Council and helped guide its deliberations to consensus", "Controlled trade", "Led in war"], 1, 2, "Geographically central, they kept the central council fire — convener and steward of the process."], ["The deeper lesson of the Lawgivers for American civics is that…", ["History began in 1776", "Self-government on this continent is far older than the United States", "The Confederacy failed", "Only Europe built republics"], 1, 0, "The founding before the Founders — students deserve the whole, longer American story."], ["Decisions in the Grand Council aimed for consensus rather than…", ["Discussion", "A bare majority that leaves a defeated minority resentful", "Compromise", "Speed"], 1, 1, "One mind, reached by patience — slower than a vote, but more durable."], ["The Confederacy's structure inspired later thinkers because it balanced…", ["Wealth and poverty", "Unity among nations with the autonomy of each", "Church and state", "War and trade"], 1, 2, "The enduring puzzle of federation — solved here in practice long before it was theorized in Philadelphia."], ["The Great Law provided a process for adding new nations, as shown when…", ["The Huron joined", "The Tuscarora were admitted, making the Five into Six", "The Seneca left", "Europeans joined"], 1, 1, "A constitution with an amendment path — the union could grow without breaking."], ["Respect for the Lawgivers tradition means presenting it as…", ["A myth for children", "Genuine political achievement worthy of study alongside Athens and Philadelphia", "A footnote", "Pre-history"], 1, 1, "Not folklore — statecraft. The respect is in the seriousness."], ["The Haudenosaunee still maintain their Grand Council today, which shows…", ["It is extinct", "A living, continuous tradition of self-government, not a relic", "It was recently invented", "It abandoned the Great Law"], 1, 1, "Present tense — the longhouse stands, and the council still meets."], ["The Hiawatha Belt, a famous wampum design, depicts…", ["A war scene", "Four squares and a central tree — the five nations united around the Great Law", "A calendar", "A map of rivers"], 1, 2, "The Onondaga's tree at center, the nations linked in a line — today it flies as the Haudenosaunee flag."], ["The Two Row Wampum (Guswenta) records an agreement of…", ["Surrender", "Two vessels traveling the same river in parallel — coexistence without interference", "Trade prices", "A military alliance"], 1, 2, "A ship and a canoe, side by side, neither steering the other — a treaty philosophy centuries ahead of its time."], ["The 'Three Sisters' of Haudenosaunee agriculture are…", ["Three rivers", "Corn, beans, and squash grown together", "Three festivals", "Three councils"], 1, 1, "Corn lifts the beans, beans feed the soil, squash shades the ground — companion planting as civilization's base."], ["The longhouse, the Confederacy's namesake dwelling, housed…", ["One warrior", "Many related families of a clan under one roof", "Only chiefs", "Grain stores"], 1, 1, "Extended families along a central aisle of fires — the building was the social structure made visible."], ["Clans in Haudenosaunee society are traced through…", ["The father's line", "The mother's line — a matrilineal system", "Wealth", "Age"], 1, 1, "Clan identity, and the longhouse itself, followed the mothers — central to why clan mothers held real power."], ["Early American suffragists like Matilda Joslyn Gage pointed to Haudenosaunee women as…", ["A warning", "Living proof that women could hold real political authority", "A legend", "Outliers"], 1, 2, "Documented influence: reformers living near the Six Nations saw women's standing there and asked why their own laws lagged."], ["Clan animals (Turtle, Bear, Wolf, and others) served to…", ["Decorate only", "Organize kinship, duty, and identity across the nations", "Mark seasons", "Rank wealth"], 1, 1, "A Bear clan member found kin in every nation — the clans stitched the confederacy together beneath politics."], ["Council decisions were spoken into permanence by…", ["Printing presses", "Wampum keepers reciting the belts' encoded record", "Foreign scribes", "Stone carvings"], 1, 2, "Oral law with a physical index — the keeper read the beads as a librarian reads a shelf."], ["The Great Law's rules for council procedure mattered because…", ["Ceremony pleased elders", "Fixed process made power predictable and disputes survivable", "Speed was the goal", "Outsiders demanded it"], 1, 1, "Process IS peace — when everyone knows how decisions are made, losing one doesn't mean war."], ["'People of the Longhouse' (Haudenosaunee) expresses the idea that…", ["Houses matter most", "The five nations are one family under one symbolic roof, each keeping its own fire", "Walls make peace", "Wood is sacred"], 1, 0, "One roof, many fires — unity without erasure, the federal idea in a single image."], ["The Confederacy's diplomacy with European powers showed it operating as…", ["A conquered people", "A sovereign power negotiating treaties and alliances", "A trading post", "A colony"], 1, 1, "For two centuries, French, British, and later American officials dealt with the Confederacy as the power it was."], ["Teaching the Lawgivers BEFORE 1776 in the American story matters because…", ["Dates are flexible", "Constitutional ideas on this continent have deeper roots than one summer in Philadelphia", "It's chronological trivia", "Europe came second"], 1, 0, "The full 13,000-year American story — the founding before the Founders is chapter one, not a footnote."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

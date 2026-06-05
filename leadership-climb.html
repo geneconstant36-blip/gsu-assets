@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Leadership Climb — Leadership & Influence Game | Free GSU Game</title>
+<meta name="description" content="Infinite leadership game: trust, delegation, feedback, vision, and influence without authority. Free, GENO-coached, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Leadership &amp; Influence · Lead Without a Title</div>
+  <h1>The Leadership <span class="accent">Climb</span></h1>
+  <p class="sub">Trust · Listen · Delegate · Multiply · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Rehearse the hard conversation with GENO before you have it for real. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/leadership-influence">↩ Leadership &amp; Influence Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Pick one person to recognize specifically this week, and one hard conversation to stop postponing — then raise your hand as a Civilization Builder mentor.</p>
+  </div>
+  <p class="fine">Companion game to the GSU Leadership &amp; Influence hub. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "leadership-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["Leadership, at its root, is…", ["A job title", "Influence toward a shared goal — with or without authority", "Giving orders", "Seniority"], 1, 0, "Titles command compliance; leadership earns commitment. The difference shows when no one's watching."], ["Trust is built primarily through…", ["Charisma", "Consistent kept promises over time", "Speeches", "Perks"], 1, 0, "Trust is deposited in small coins and withdrawn in large bills."], ["The first job of a leader in a conversation is…", ["Talking convincingly", "Listening to understand before being understood", "Taking notes", "Setting time limits"], 1, 0, "People support what they helped shape — and they only shape what someone actually heard."], ["Delegation done well means handing over…", ["Tasks you hate", "Outcomes with authority and context — not just chores", "Blame", "Everything"], 1, 1, "Delegate the destination and the why; let them own the route. Dumping tasks isn't delegating — it's offloading."], ["Praise publicly, correct…", ["Publicly too", "Privately", "Never", "In writing only"], 1, 0, "Public correction teaches the room fear; private correction teaches the person the lesson."], ["Good feedback is…", ["Vague but kind", "Specific, timely, and about behavior, not character", "Annual only", "Always positive"], 1, 1, "'The report missed the deadline' can be fixed; 'you're careless' can only be resented."], ["A leader who admits mistakes…", ["Loses all authority", "Builds credibility and licenses honesty in the whole team", "Should resign", "Must apologize daily"], 1, 1, "Accountability flows downhill from the top — hide yours and everyone hides theirs."], ["Vision matters because…", ["It sounds inspiring", "People row harder when they can see the destination and why it matters", "Plans never change", "Investors ask"], 1, 0, "A team without a why negotiates every task; a team with one volunteers."], ["The difference between urgent and important:", ["None", "Urgent demands now; important builds the future — leaders protect the important", "Important is louder", "Urgent can wait"], 1, 1, "The inbox screams; the mission whispers. Calendar the whispers or lose them."], ["Influence without authority works through…", ["Tricks", "Credibility, reciprocity, and genuine alignment of interests", "Volume", "Seniority claims"], 1, 2, "Help people win at their goals and your goals acquire allies."], ["A leader's response to a team failure starts with…", ["Finding the culprit", "Owning the outcome, then fixing the system that allowed it", "Silence", "A memo"], 1, 1, "Blame fixes feelings for a minute; systems thinking fixes the failure forever."], ["Servant leadership means…", ["Doing everyone's work", "Measuring your success by your people's growth and capability", "Avoiding decisions", "Being liked"], 1, 1, "The harvest of a leader is leaders — civilization builders building builders."], ["Hard conversations should happen…", ["Never", "Early — problems compound interest faster than savings do", "Annually", "By email only"], 1, 1, "The conversation you're avoiding is usually the leadership the moment requires."], ["Listening 'to understand' looks like…", ["Nodding while planning your reply", "Questions, reflection, and silence that lets the speaker finish", "Agreement always", "Speed"], 1, 0, "Humanics inside leadership: the heard person tells you the truth; the unheard one tells you what's safe."], ["Decisiveness under uncertainty means…", ["Waiting for perfect data", "Deciding with the best available information, then adapting fast", "Flipping coins", "Outsourcing choices"], 1, 2, "Most decisions are reversible doors — speed through those, deliberate only at the one-way ones."], ["Recognizing others' work…", ["Spoils them", "Costs nothing and multiplies effort — caught-doing-right beats caught-doing-wrong", "Is annual", "Reduces standards"], 1, 0, "What gets recognized gets repeated. Aim the spotlight at what you want more of."], ["A leader develops successors because…", ["Retirement looms", "Unscalable leaders cap their team; multiplied leaders compound it", "HR requires it", "It fills time"], 1, 2, "If everything stops when you're gone, you built dependence, not an organization."], ["Why does GSU pair Leadership with Influence?", ["Alliteration", "Because most real leadership happens without formal power — influence is the engine", "Influence sounds modern", "They're identical"], 1, 0, "The mentor, the parent, the volunteer — the world is mostly led by people with no title at all."], ["Leadership at its root is…", ["A title", "Influence toward a shared goal, with or without authority", "Seniority", "Giving orders"], 1, 0, "Titles command compliance; leadership earns commitment — the difference shows when no one's watching."], ["Trust is built mainly through…", ["Charisma", "Consistent kept promises over time", "Speeches", "Perks"], 1, 0, "Deposited in small coins, withdrawn in large bills."], ["The leader's first job in a conversation is to…", ["Convince", "Listen to understand before being understood", "Take notes", "Set limits"], 1, 0, "People support what they helped shape — and only shape what someone truly heard."], ["Good delegation hands over…", ["Hated chores", "Outcomes with authority and context", "Blame", "Everything"], 1, 1, "Delegate the destination and the why; let them own the route."], ["Praise publicly; correct…", ["Publicly too", "Privately", "Never", "In writing only"], 1, 0, "Public correction teaches the room fear; private correction teaches the person."], ["Effective feedback is…", ["Vague but kind", "Specific, timely, about behavior not character", "Annual", "Always positive"], 1, 1, "'The report missed the deadline' can be fixed; 'you're careless' can only be resented."], ["Servant leadership measures success by…", ["Your status", "Your people's growth and capability", "Being liked", "Avoiding decisions"], 1, 1, "The harvest of a leader is leaders — builders building builders."], ["Responding to team failure starts with…", ["Finding the culprit", "Owning the outcome, then fixing the system", "Silence", "A memo"], 1, 1, "Blame fixes feelings for a minute; systems thinking fixes the failure for good."], ["Psychological safety means a team can…", ["Never disagree", "Speak up, admit error, ask questions without humiliation", "Relax always", "Ignore mistakes"], 1, 1, "The biggest predictor of team performance — safe teams surface problems early."], ["A leader's calm under pressure matters because…", ["It looks cool", "Emotion is contagious — the room borrows the leader's state", "Calm wins arguments", "It's required"], 1, 1, "Regulate yourself first; you're setting the temperature for everyone."], ["Recognizing good work…", ["Spoils people", "Costs nothing and multiplies effort", "Is annual", "Lowers standards"], 1, 0, "What gets recognized gets repeated — aim the spotlight at what you want more of."], ["Developing successors matters because…", ["Retirement", "Unscalable leaders cap the team; multiplied leaders compound it", "HR says so", "It fills time"], 1, 1, "If everything stops when you leave, you built dependence, not an organization."], ["Leading by example works because…", ["It's traditional", "People copy what you DO far more than what you say", "It's easy", "It avoids talking"], 1, 1, "The standard you walk past is the standard you set."], ["Active listening to understand looks like…", ["Planning your reply", "Questions, reflection, and silence that lets them finish", "Constant agreement", "Speed"], 1, 0, "The heard person tells you the truth; the unheard one tells you what's safe."], ["'Extreme ownership' means a leader…", ["Blames the team", "Takes responsibility for everything in their charge", "Micromanages", "Avoids risk"], 1, 1, "No excuses up the chain — accountability flows from the top and licenses honesty below."], ["The 'platinum rule' of leading diverse people is…", ["Treat all the same", "Treat each as THEY want to be treated", "Treat harshly", "Ignore differences"], 1, 2, "One size fits one — ask what motivates each person, then lead accordingly."], ["A leader who admits 'I don't know' tends to…", ["Lose all respect", "Build trust and model honest learning", "Seem weak", "Get fired"], 1, 1, "Pretended certainty is brittle — earned humility is durable."], ["Delegation fails most often because leaders…", ["Trust too much", "Hand off tasks without authority or context", "Delegate too little", "Pay too well"], 1, 1, "Responsibility without authority is a trap — give both or neither."], ["Aligning a team means everyone understands…", ["The org chart", "The goal, their role in it, and how success is measured", "The budget only", "The rules"], 1, 1, "Clarity is kindness — confusion is the silent tax on every unaligned team."], ["Conflict on a healthy team is…", ["Always bad", "Often productive — ideas tested, not people attacked", "Avoided always", "A failure"], 1, 1, "The goal isn't no conflict; it's conflict about ideas, conducted with respect."], ["GSU pairs Leadership with Influence because…", ["Alliteration", "Most real leadership happens without formal power", "Influence is modern", "They're identical"], 1, 0, "The mentor, the parent, the volunteer — the world is mostly led by people with no title at all."], ["A meeting without an agenda tends to…", ["Run efficiently", "Wander, run long, and decide little", "End early", "Need no notes"], 1, 0, "The agenda is respect for everyone's hours — purpose, topics, time, owner."], ["Every decision in a meeting should leave with…", ["Applause", "An owner and a deadline — who does what by when", "A vote count", "A recording"], 1, 0, "Decisions without owners evaporate by Friday — the action item is the meeting's only product."], ["Regular one-on-ones with each team member exist mainly to…", ["Audit work", "Hear concerns early, coach, and build the trusted channel", "Assign tasks", "Fill calendars"], 1, 1, "It's their meeting, not yours — the problems you hear there never have to become crises."], ["Coaching differs from directing in that coaching…", ["Is slower always", "Asks questions that grow the person's own judgment", "Avoids standards", "Skips feedback"], 1, 1, "Direct when the building burns; coach the rest of the time — directives solve today, coaching solves careers."], ["Situational leadership means…", ["Changing values often", "Matching your style to the person's skill and confidence on THIS task", "Being unpredictable", "Avoiding choices"], 1, 2, "The new hire needs structure; the veteran needs trust — one style fits no one."], ["Teams commonly move through stages described as…", ["Hire, work, quit", "Forming, storming, norming, performing", "Plan, do, check", "Win, lose, draw"], 1, 2, "The storm is normal, not failure — leaders who expect it steer through instead of panicking."], ["Leading change starts with…", ["The new org chart", "The why — people resist loss they don't understand the reason for", "A memo", "Speed"], 1, 1, "Explain the why, name what's hard, involve people in the how — change done TO people fails; done WITH them, it holds."], ["In negotiation, your BATNA is…", ["A bluff", "Your Best Alternative To a Negotiated Agreement — your walk-away power", "The first offer", "A deadline"], 1, 2, "Know what you'll do if talks fail and you negotiate from strength instead of need."], ["Listening in negotiation matters because…", ["It stalls", "The other side's interests, once understood, reveal trades that grow the pie", "Silence wins", "Talk is cheap"], 1, 1, "Positions clash; interests overlap — 'why do you want that?' opens doors 'no' keeps shut."], ["Mediating conflict between two team members starts with…", ["Picking a side", "Hearing each separately, then together on facts and needs, not accusations", "An email to both", "Ignoring it"], 1, 1, "The leader referees the process, not the people — structure turns combat into problem-solving."], ["Autonomy, mastery, and purpose are…", ["Pay grades", "Deep drivers of motivation beyond money", "Job titles", "Annual goals"], 1, 1, "People work hard for money and bleed for meaning — design roles that offer all three."], ["Micromanagement signals…", ["High standards", "Distrust — and it trains people to stop thinking", "Care", "Efficiency"], 1, 1, "Inspect outcomes, not keystrokes — the cure is clear expectations plus real authority."], ["In remote or distributed teams, leaders must over-invest in…", ["Surveillance", "Clear written communication and deliberate connection", "Meetings", "Time zones"], 1, 2, "Hallway osmosis is gone — clarity and ritual must replace what proximity gave for free."], ["The 'last 10%' conversation — saying the hard part — matters because…", ["It's dramatic", "Withholding the real concern lets the problem keep growing politely", "It wins points", "Honesty is rare"], 1, 2, "Most feedback fails by stopping at 90% candor — the kind, complete truth is the leadership act."], ["A leader's calendar reveals…", ["Nothing", "Their true priorities — time is the only resource that can't be faked", "Their typing speed", "Their friends"], 1, 1, "Say culture matters, then spend zero hours on it, and the team believes the calendar."], ["Onboarding a new team member well means…", ["A laptop and luck", "Context, early wins, a buddy, and clear 30/60/90 expectations", "A long manual", "Silence"], 1, 1, "The first weeks set the trajectory — confusion compounds, and so does confidence."], ["'Disagree and commit' means…", ["Endless debate", "Voice dissent fully, then execute the decision wholeheartedly once made", "Quiet sabotage", "Always agreeing"], 1, 2, "Teams need both: real argument before the decision, real unity after it."], ["Credit and blame flow best when leaders…", ["Keep both", "Pass credit down and absorb blame up", "Pass both down", "Avoid both"], 1, 1, "The mirror for failure, the window for success — the oldest durable leadership rule."], ["Burnout on a team is usually a sign of…", ["Weak people", "System problems — chronic overload, unclear priorities, no recovery", "Bad luck", "Low pay only"], 1, 2, "Fix the workload design, not just the morale events — pizza doesn't cure structural overload."], ["The quietest person in the room matters because…", ["Quiet means agreement", "They often hold unspoken information — invite them in directly", "They're shy forever", "Volume equals value"], 1, 1, "'What are we missing, Sam?' — the leader's job is harvesting ALL the room's knowledge."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

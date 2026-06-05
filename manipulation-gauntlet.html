@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Manipulation Gauntlet — Critical Thinking Narrative Game | Free GSU Game</title>
+<meta name="description" content="A teach-by-doing narrative game: eight everyday ambushes on your reason — viral headlines, doorstep pressure, miracle ads, confident pundits — and your trivium against them. Companion to The Sovereign Mind. Free, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .sc-title { font-family:Georgia,serif; font-size:20px; color:var(--gold-b); margin-bottom:8px; }
+  .sc-step { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .setup { font-size:14px; color:var(--muted); line-height:1.6; border-left:3px solid var(--teal); padding:8px 12px; margin-bottom:14px; font-style:italic; }
+  .q { font-family:Georgia,serif; font-size:17.5px; line-height:1.45; margin-bottom:14px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14px; line-height:1.45; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.best { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.ok { border-color:var(--gold); background:rgba(201,168,76,.12); }
+  .opt.danger { border-color:#a05050; background:rgba(160,80,80,.18); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .explain .dz { color:#d08080; font-weight:800; }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; font-family:inherit; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Critical Thinking · Companion to The Sovereign Mind</div>
+  <h1>The Manipulation <span class="accent">Gauntlet</span></h1>
+  <p class="sub">Eight ambushes on your reason · You make the calls · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Clarity Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="sc-title" id="sctitle"></div>
+    <div class="sc-step" id="scstep"></div>
+    <div class="setup" id="setup"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next" type="button">Continue →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Paste a suspicious claim to GENO and dismantle it together — name the fallacy, find the base rate — in 32 languages. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.amazon.com/dp/B0GNWGLX2C?tag=gsu2026-20" target="_blank" rel="noopener sponsored">📕 The Sovereign Mind</a>
+    <a href="https://www.globalsovereignuniversity.org/critical-thinking">🛡️ Critical Thinking Hub</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Manipulation Gauntlet work?</b>Eight everyday ambushes — the viral headline, the doorstep pitch, the miracle bottle, the certain pundit — each a three-decision story. You apply the trivium: gather the real input, reason past the trick, choose the response. Falling for a manipulation resets your Clarity Streak and explains exactly which lever moved you. The scenarios reshuffle forever.</p>
+    <p><b>Is this about politics?</b>No side is taken anywhere in the Gauntlet — the tricks themselves are the only target, and they're used by every side on every issue. It&#8217;s the companion game to <em>The Sovereign Mind: Input, Process, Output</em>, which carries the full method.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your streak survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Read the anchor text, run the Sovereign Mind Climb (78 questions of fallacies, biases, and statistics tricks), and tonight: find one claim in your own feed and ask what would prove it wrong. That one is homework.</p>
+  </div>
+  <p class="fine">No side taken — only the tricks are the target. Companion game to The Sovereign Mind: Input, Process, Output by Dr. Gene A. Constant. © Global Sovereign University</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Manipulation Gauntlet work?","acceptedAnswer":{"@type":"Answer","text":"Eight everyday persuasion ambushes — viral headlines, doorstep pressure, miracle ads, polls, pundits — each a three-decision story. The player applies the trivium to gather real input, reason past the trick, and choose the response. Falling for a manipulation resets the Clarity Streak with a full explanation of the lever used. Scenarios reshuffle infinitely."}},
+{"@type":"Question","name":"Is the Manipulation Gauntlet free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested; scores persist anonymously. No political side is taken; the persuasion tricks themselves are the only target. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "manipulation-gauntlet";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+const SCN = [["The Viral Headline", "Your feed serves it hot: 'SHOCKING: New Study Shows 80% Increase in Risk!' — 40,000 shares in six hours. Your thumb hovers over the share button.", [["First move?", [["Open the article and hunt for the actual study — who measured, how many, compared to what", 10, "Grammar stage: input quality first. Headlines are advertisements for articles; articles are often advertisements for studies. Go to the source before the source goes through you.", false], ["Share it — 40,000 people can't be wrong", 0, "MANIPULATED. Forty thousand thumbs prove virality, not validity. The bandwagon is a vehicle with no driver.", true], ["Share it with 'if true, this is huge'", 2, "The hedge doesn't sterilize it — your share IS the amplification, disclaimer and all.", false], ["Reply angrily to the person who posted it", 1, "Now there are two amplifiers and zero fact-checks. The headline wins either way.", false]]], ["You find it: the 'risk' rose from 1 in 100,000 to 1.8 in 100,000. The headline said 80%. Both are…", [["Technically true — relative risk (80% jump) hides a tiny absolute risk (0.0008 percentage points)", 10, "The classic switch. 'Eighty percent increase' sells; 'eight more cases per million' informs. Always ask: eighty percent OF WHAT?", false], ["Proof the study is fake", 2, "The study may be fine — the FRAMING is the trick. Don't burn the data for the headline's sins.", false], ["Reason to panic slightly less but still share", 0, "MANIPULATED. You decoded the trick and amplified it anyway — knowledge unused is knowledge surrendered.", true], ["Too confusing; numbers always lie", 1, "Numbers don't lie; selections of numbers do. The cure is the question, not surrender.", false]]], ["The graph in the article starts its y-axis at 95, making a 2-point change look like a cliff. This is…", [["A truncated axis — the oldest visual exaggeration in the book; check the axis before the shape", 10, "Output-stage armor: charts persuade before they inform. The axis is where the thumb goes on the scale.", false], ["Standard practice, so it's fine", 2, "Common, yes — innocent, no. Convention doesn't neutralize distortion.", false], ["Proof of a conspiracy", 1, "Sloppy or motivated — either way the fix is the same: read the numbers, not the cliff.", false], ["A reason to share the graph as a warning, uncropped", 0, "MANIPULATED — the graph travels faster than your warning caption. Screenshots shed context like rain.", true]]]]], ["The Salesman at the Door", "Clipboard, lanyard, big smile: 'We're doing your neighbors' houses today — this price is only good while my crew is on your street.'", [["Two pressure tools just deployed. Name them.", [["Social proof ('your neighbors') and false scarcity ('only today')", 10, "Logic stage: name the tactic and it loses half its force. Real deals survive a day of thinking; manufactured ones evaporate under it.", false], ["Friendliness and a clipboard", 3, "Those are the costume. The levers underneath are the neighbors and the clock.", false], ["None — he seems honest", 0, "MANIPULATED. He may even BE honest — but the pitch structure is pressure-engineered, and you just declined to see it.", true], ["Hypnosis", 1, "Nothing so exotic — just two of the six classic influence levers, working as designed.", false]]], ["Your counter-move?", [["'Leave the written quote and license info — I decide tomorrow.' A real offer survives a sunset", 10, "The Steward's cousin: paper, license, and time. Every legitimate contractor expects this; only pressure-merchants resist it.", false], ["Sign now to lock the discount, cancel later if needed", 0, "MANIPULATED. 'Cancel later' is the trap's velvet lining — cancellation windows, fees, and friction are the business model.", true], ["Negotiate hard right there on the porch", 2, "Negotiating inside their time pressure is playing their stadium. Move the game to your calendar first.", false], ["Slam the door", 4, "Effective but wasteful — if the service is real, the paper-and-tomorrow test sorts it for free.", false]]], ["He says: 'Studies show homes like yours lose 30% efficiency.' Your question?", [["'Which study? Who ran it, and can I see it?' Vague authority is a costume, not a credential", 10, "Appeal to unnamed studies is rhetoric wearing a lab coat. The Sovereign Mind asks the citation question out loud, politely, every time.", false], ["Accept it — companies can't just make up numbers", 0, "MANIPULATED. 'Studies show' without a study is exactly making up numbers, with better tailoring.", true], ["Counter with a number you make up", 1, "Now there are two fabrications on the porch. Don't fight fog with fog.", false], ["Ask if HE knows the study", 6, "Close — but aim at the study, not the salesman. The claim owes the receipt regardless of his sincerity.", false]]]]], ["Thanksgiving Crossfire", "Politics erupts over the mashed potatoes. Your uncle just summarized your position as something you'd never say, and the table is looking at you.", [["He's attacking a position you don't hold. The move?", [["Calmly restate your ACTUAL position in one sentence: 'That's not my view. Here's what I actually think…'", 10, "The straw man dies in sunlight. Refuse the costume he built; hand him the real argument and watch the fight get honest or end.", false], ["Defend the distorted version since everyone heard it", 0, "MANIPULATED. Defend the straw man and you adopt it — now you're losing an argument you never made.", true], ["Attack his character — he's always been like this", 0, "MANIPULATED — by your own ad hominem this time. His flaws don't settle the issue, and the table knows it.", true], ["Go silent and seethe", 3, "Survivable, but the distortion stands as the record. One calm sentence costs less than the seething.", false]]], ["Before answering his real point, the strongest move is…", [["Steelman him: 'If I understand you, your best point is X — is that right?' Then answer X", 10, "The principle of charity, weaponized for peace. Beating his strongest version is the only win that teaches anyone anything — including you.", false], ["List every flaw in everything he's ever said", 1, "The Gish gallop, family edition. Floods end conversations; they never win them.", false], ["Quote a headline you half-remember", 0, "MANIPULATED — by your own confirmation bias. A half-remembered headline is ammunition you haven't inspected.", true], ["Change the subject to dessert", 4, "Sometimes wise! But as an argument move it concedes the field. Choose it for peace, not as strategy.", false]]], ["What's the actual goal at this table?", [["Dialogue — understanding his real concern — because family is a relationship, not a debate score", 10, "Rhetoric stage wisdom: know which mode the moment needs. Debates have winners; dinners have relatives. The sovereign mind picks the right tool.", false], ["Total victory by dessert", 2, "Even achieved, what did you win? He'll re-arm by Christmas. Understanding compounds; victories at tables don't.", false], ["Getting the table on your side", 1, "Now you're performing, not reasoning — the audience is the bandwagon lever pointed at yourself.", false], ["Recording it for the group chat", 0, "MANIPULATED — by the outrage economy itself. Some moments are for repairing, not broadcasting.", true]]]]], ["The Miracle Bottle", "The ad has everything: a doctor-looking man, 'ancient natural secret,' three tearful testimonials, and 'Big Pharma doesn't want you to know.'", [["The three testimonials are powerful because…", [["Stories beat statistics in the gut — but three anecdotes are not evidence; they're casting", 10, "Anecdote is the oldest trick because it's the best one. The question that breaks it: how many people tried it and DIDN'T improve? You'll never see those ads.", false], ["Three people can't all be wrong", 0, "MANIPULATED. Three selected people out of thousands of buyers is a survivorship highlight reel.", true], ["Tears can't be faked", 1, "Tears are sincere AND selected. Sincerity of the witness doesn't establish causation in the bottle.", false], ["They're actors, so the product is fake", 3, "Maybe, but you don't need that claim — even REAL testimonials are non-evidence. Attack the logic, not the casting.", false]]], ["'All-natural ancient remedy' is doing what work?", [["Appeal to nature plus appeal to antiquity — origin says nothing about safety or effect", 10, "Arsenic is natural and ancient. The lab coat fallacy's herbal cousin: where it comes from never answers whether it works.", false], ["Honest ingredient disclosure", 1, "'Natural' on a label is vibes, not chemistry. The ingredient list in small print is the disclosure.", false], ["Proof it's at least harmless", 0, "MANIPULATED. 'Natural' products hospitalize people every year — the word is a marketing molecule, not a safety test.", true], ["A price justification", 4, "That too — the word adds margin, not medicine. You're warm.", false]]], ["'Big Pharma doesn't want you to know' is structured to…", [["Make skepticism feel like the conspiracy — pre-poisoning every expert who might check the claim", 10, "The masterstroke: any debunking becomes evidence FOR the product. A claim that converts all criticism into confirmation is unfalsifiable — and unfalsifiable means empty.", false], ["Bravely expose the industry", 0, "MANIPULATED. Real exposés name names and show documents. This names a vibe and shows a bottle.", true], ["Add drama harmlessly", 2, "Not harmless — it's the immune-suppressant for your skepticism, applied before the dose.", false], ["Comply with ad regulations", 1, "Quite the opposite — it's engineered to live exactly at the regulation's edge.", false]]]]], ["The Forwarded Message", "Family group chat, 11 p.m.: 'URGENT!! Share before they delete this!!' — a wall of text, no source, three siren emojis, already forwarded many times.", [["The urgency itself ('before they delete it!') is…", [["The tell — manufactured time pressure exists to beat your verification reflex to the punch", 10, "True things survive until morning. Urgency is the manipulation's getaway car: it needs you to act before you think.", false], ["Proof it's being suppressed", 0, "MANIPULATED. 'They're deleting it' is unfalsifiable theater — and the message has demonstrably survived a thousand forwards.", true], ["Just how aunts type", 3, "Often! But the structure rode in from somewhere — your aunt is the carrier, not the author.", false], ["A reason to read faster", 1, "Speed is exactly what it wants. Slow is the counter-move.", false]]], ["Thirty seconds of lateral reading: paste a distinctive phrase into a search. You find it's a years-old hoax, names swapped. Now?", [["Reply with the fact-check link, kindly and privately if possible — correct the record without humiliating the messenger", 10, "The repair matters as much as the rebuttal: shame the sender and the family stops sharing WITH you, not stops sharing falsehoods.", false], ["Blast 'FAKE, you always fall for these' to the whole chat", 2, "Right on facts, wrong on rhetoric — humiliation inoculates people against YOU, not against hoaxes.", false], ["Ignore it; it's harmless", 1, "This one might be. The reflex you're training — in yourself and the chat — is not.", false], ["Forward it onward 'just in case'", 0, "MANIPULATED — fully. 'Just in case' is how a years-old hoax got its thousand forwards. You'd be link one thousand and one.", true]]], ["The deeper lesson about messages engineered for outrage?", [["Outrage is the product — anger is the most shareable emotion, and someone upstream is farming it", 10, "The attention economy's first law: what enrages, engages. The sovereign mind asks of every furious message: who profits from my pulse rate?", false], ["Never feel anger at news", 2, "Anger at true injustice is fuel. The discipline is verifying BEFORE burning it.", false], ["Leave all group chats", 3, "Tempting at 11 p.m. But the chat is also where your fact-check can actually reach people who trust you.", false], ["Emotion means a message is false", 0, "MANIPULATED — by overcorrection. True things can enrage too. Emotion is a flag to verify, not a verdict either way.", true]]]]], ["The Opportunity of a Lifetime", "An old classmate slides into your messages: 'Be your own boss! I made $3,000 last month from my phone! Small investment, huge returns — but my team is almost full.'", [["'I made $3,000 last month' deserves which question?", [["'Gross or net — and what did you SPEND to make it?' Revenue brags hide cost realities", 10, "The Founders Climb lesson weaponized: income claims without expenses are theater. Most recruits in such schemes lose money — ask for the income disclosure document; legitimate companies must have one.", false], ["'How do I start?'", 0, "MANIPULATED. You answered a number with enthusiasm instead of arithmetic. The pitch is designed for exactly that reflex.", true], ["'Can you screenshot your bank account?'", 4, "Screenshots are croppable theater too. The income disclosure statement and the net question cut deeper than pixels.", false], ["'Is this legal?'", 5, "Fair question, wrong first — plenty of legal structures still lose money for 99% of joiners. Net first, legal second.", false]]], ["'My team is almost full' plus 'small investment' — the structure check:", [["Ask: is the money made selling a product to real customers, or recruiting more sellers? Recruitment-fed income is the pyramid's heartbeat", 10, "The one diagnostic that matters. Products can be real and incidental; if the math runs on recruits buying in, the floor is other people's losses.", false], ["Scarcity means demand, so hurry", 0, "MANIPULATED. 'Almost full' is the doorstep salesman's clock with a friendship attached. Infinite teams are always almost full.", true], ["Invest small to test it", 1, "The 'small' investment is the sunk-cost seed — once planted, it argues for watering. The test is the structure question, which is free.", false], ["Ask other team members if they're happy", 3, "You'll be introduced to the three happiest — survivorship bias with a guest list.", false]]], ["You decline. The classmate says 'you'll regret missing this; winners take risks.' That's…", [["A parting shot of FOMO plus flattery-inversion — declining a bad bet is the risk literacy, not the cowardice", 10, "Probabilistic thinking holds: a 'risk' with hidden odds and disclosed losses isn't bold, it's blind. Walking away from negative expected value IS the winner's move.", false], ["A fair point — fortune favors the bold", 0, "MANIPULATED. Fortune favors the bold WITH good odds. Boldness at a rigged table favors the house.", true], ["A reason to block them forever", 3, "Your call — but the tactic deserves the block more than the classmate, who is likely also a victim of it.", false], ["Devastating; reconsider", 1, "That sting is the FOMO working as designed. Name it, thank it for the lesson, and keep your wallet.", false]]]]], ["The Poll on the Screen", "The chyron blares: '73% OF AMERICANS SUPPORT THE NEW PLAN.' The anchor nods gravely. Your cousin is already citing it as settled.", [["Before the 73% means anything, you need…", [["Who was asked, how many, how they were chosen, and the exact question wording", 10, "Grammar stage on data: a poll is a recipe, and the number is just the plating. Wording and sampling decide what 73% even measures.", false], ["Nothing — 73% is 73%", 0, "MANIPULATED. 'Do you support helping families?' and 'Do you support Plan X's tax changes?' can both summarize as the same plan and yield wildly different numbers.", true], ["The anchor's political leaning", 2, "Relevant to selection bias in which polls get aired, but the methodology questions cut deeper than the messenger.", false], ["A counter-poll showing 27%", 1, "Dueling unexamined numbers is a coin-flip with extra steps. Examine one properly instead.", false]]], ["Fine print: 'online survey, 412 self-selected respondents.' Translation?", [["Self-selected means the sample chose itself — motivated people opt in, so it may represent nobody but the motivated", 10, "A million volunteers can mislead worse than a thousand properly drawn — HOW you sample beats how MANY. Self-selection is the methodology's original sin.", false], ["412 is too few for any poll", 2, "Size isn't the sin here — properly drawn, ~1,000 can represent a nation. SELF-SELECTED is the poison, at any size.", false], ["Online polls are all fake", 1, "Online polls with proper sampling exist. The medium isn't the flaw; the self-selection is.", false], ["Good enough for television, good enough for me", 0, "MANIPULATED. Broadcast standards are about airtime, not inference. The chyron owes you nothing; your standards owe you everything.", true]]], ["Cousin: 'Well, support JUMPED 5%, from 10% to 15%!' Actually that's…", [["A 5 percentage-POINT rise — which is a 50% relative jump; the two framings sell opposite stories from one fact", 10, "Points versus percent: the difference between 'modest shift' and 'SUPPORT SURGES 50%.' Whoever picks the framing picks the feeling. Now you pick it consciously.", false], ["The same thing said twice", 0, "MANIPULATED — by the ambiguity itself. The gap between 5 points and 50 percent is where headlines are manufactured.", true], ["Impossible math", 1, "The math is fine; the language is the variable. 10→15 is both +5 points and +50%.", false], ["Pedantry that doesn't matter", 2, "Tell that to every drug ad ('cuts risk in HALF!') and budget headline built on exactly this gap.", false]]]]], ["The Pundit Who's Never Wrong", "The confident voice on the screen has predicted twelve of the last two recessions, and tonight he's CERTAIN about next year. Your feed loves him.", [["Before weighing tonight's certainty, check…", [["His track record IN WRITING — what did he predict before, dated, and what happened?", 10, "Hindsight bias's only antidote: receipts. Confident pundits are remembered for hits and forgiven misses; a dated ledger forgives nothing.", false], ["His credentials and suit", 1, "Credentials earn a hearing, not a verdict — and the suit earns nothing. Calibration is the credential that matters.", false], ["How certain he sounds", 0, "MANIPULATED. Confidence is a performance skill, orthogonal to accuracy — and often inversely correlated past a point (hello, Dunning-Kruger).", true], ["How many followers agree", 0, "MANIPULATED — bandwagon again, wearing a verified checkmark.", true]]], ["His prediction is worded so ANY outcome can be claimed as a hit ('turbulence ahead, but resilience possible'). That's…", [["Unfalsifiable — a forecast compatible with every future predicts nothing and risks nothing", 10, "The horoscope structure in a market suit. Ask of every prediction: what specific outcome would prove this WRONG? No answer, no information.", false], ["Nuanced and wise", 0, "MANIPULATED. Real nuance specifies conditions and probabilities. This specifies applause lines for all weathers.", true], ["Standard hedging, harmless", 2, "Standard, yes — harmless, no: it manufactures a reputation for foresight out of fog.", false], ["A legal disclaimer", 1, "Disclaimers live in the fine print. This ambiguity IS the product.", false]]], ["The habit that protects you from every pundit, including your own inner one?", [["Write your own predictions down, dated, with confidence levels — and grade yourself later", 10, "The sovereign mind keeps a ledger on itself. 'I knew it all along' dies the moment there's a dated entry saying otherwise. Calibration is built, never assumed.", false], ["Trust no forecasts ever", 2, "Overcorrection — forecasting with stated odds and graded results is how good judgment is actually trained. Trust the calibrated, not the loud.", false], ["Only trust pundits you agree with", 0, "MANIPULATED — by the in-group lever, the most comfortable trap on this entire gauntlet. Agreement is not accuracy.", true], ["Predict the opposite of pundits", 1, "Inverse-punditry is still letting them steer. Keep your own ledger; sail your own course.", false]]]]]];
+let st = { score:0, streak:0, best:0, sIdx:0, step:0, order:[], user:null, db:null, cloud:false };
+try { const sv=JSON.parse(localStorage.getItem("gsu-"+GAME_ID)||"{}"); st.score=sv.score||0; st.best=sv.best||0; } catch(e){}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle(){ st.order=shuffle(SCN.map((_,i)=>i)); st.sIdx=0; }
+reshuffle();
+const $=id=>document.getElementById(id);
+function paint(){ $("score").textContent=st.score; $("streak").textContent=st.streak; $("best").textContent=st.best; }
+
+function ask(){
+  const sc=SCN[st.order[st.sIdx]];
+  $("sctitle").textContent="🎯 "+sc[0];
+  $("scstep").textContent="Decision "+(st.step+1)+" of 3";
+  $("setup").textContent=sc[1];
+  $("setup").style.display = st.step===0 ? "block" : "none";
+  const [prompt,opts]=sc[2][st.step];
+  $("q").textContent=prompt;
+  $("explain").style.display="none"; $("next").style.display="none";
+  const box=$("opts"); box.innerHTML="";
+  shuffle(opts.map(o=>o)).forEach(o=>{
+    const b=document.createElement("button"); b.className="opt"; b.textContent=o[0];
+    b.onclick=()=>answer(b,o);
+    box.appendChild(b);
+  });
+}
+function answer(btn,o){
+  document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+  const [text,pts,fb,danger]=o;
+  if(danger){
+    btn.classList.add("danger");
+    st.streak=0;
+    $("explain").innerHTML="<span class=\'dz\'>⚠ MANIPULATED — Clarity Streak reset.</span><br><b>Why:</b> "+fb;
+  } else if(pts>=10){
+    btn.classList.add("best");
+    st.streak++; st.score += 10 + Math.min(st.streak,10);
+    if(st.streak>st.best) st.best=st.streak;
+    $("explain").innerHTML="<b>The Sovereign Mind&#8217;s call.</b> "+fb;
+  } else {
+    btn.classList.add("ok");
+    st.score += pts;
+    $("explain").innerHTML="<b>Survivable, not optimal ("+pts+" pts).</b> "+fb;
+  }
+  $("explain").style.display="block"; $("next").style.display="block";
+  $("next").textContent = st.step<2 ? "Continue →" : "Next Ambush →";
+  paint(); save();
+}
+$("next").onclick=()=>{
+  st.step++;
+  if(st.step>2){ st.step=0; st.sIdx++; if(st.sIdx>=st.order.length) reshuffle(); }
+  ask();
+};
+async function save(){
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:st.score,best:st.best})); } catch(e){}
+  if(st.cloud && st.user){
+    try { await setDoc(doc(st.db,"gameScores",st.user.uid+"_"+GAME_ID),{uid:st.user.uid,game:GAME_ID,score:st.score,best:st.best,updated:serverTimestamp()},{merge:true}); }
+    catch(e){ cloudStatus(false,"local saves only"); }
+  }
+}
+function cloudStatus(on,msg){ st.cloud=on; const p=$("cloud"); p.textContent="Cloud: "+msg; p.style.color=on?"var(--teal)":"var(--muted)"; }
+(async()=>{
+  try {
+    const app=initializeApp(FIREBASE_CONFIG);
+    const auth=getAuth(app); st.db=getFirestore(app);
+    onAuthStateChanged(auth, async u=>{
+      if(u){ st.user=u; cloudStatus(true,"scores saving ✓");
+        try { const snap=await getDoc(doc(st.db,"gameScores",u.uid+"_"+GAME_ID));
+          if(snap.exists()){ const d=snap.data(); if((d.score||0)>st.score) st.score=d.score; if((d.best||0)>st.best) st.best=d.best; paint(); }
+        } catch(e){}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e){ cloudStatus(false,"saving locally"); }
+})();
+paint(); ask();
+</script>
+</body>
+</html>

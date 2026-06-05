@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Steward&#8217;s House — Home Repair Narrative Game | Free GSU Game</title>
+<meta name="description" content="A teach-by-doing narrative game: eight household emergencies, and you make the calls. Diagnose before paying, safety before speed, and know when to call a pro. Companion to Foundations of Repair. Free, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .sc-title { font-family:Georgia,serif; font-size:20px; color:var(--gold-b); margin-bottom:8px; }
+  .sc-step { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .setup { font-size:14px; color:var(--muted); line-height:1.6; border-left:3px solid var(--teal); padding:8px 12px; margin-bottom:14px; font-style:italic; }
+  .q { font-family:Georgia,serif; font-size:17.5px; line-height:1.45; margin-bottom:14px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14px; line-height:1.45; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.best { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.ok { border-color:var(--gold); background:rgba(201,168,76,.12); }
+  .opt.danger { border-color:#a05050; background:rgba(160,80,80,.18); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .explain .dz { color:#d08080; font-weight:800; }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; font-family:inherit; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Tradification · Companion to Foundations of Repair</div>
+  <h1>The Steward&#8217;s <span class="accent">House</span></h1>
+  <p class="sub">Eight emergencies · You make the calls · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Safe Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="sc-title" id="sctitle"></div>
+    <div class="sc-step" id="scstep"></div>
+    <div class="setup" id="setup"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next" type="button">Continue →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Describe YOUR house&#8217;s mystery noise or dead outlet to GENO and diagnose it together — in 32 languages. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.amazon.com/dp/B0GRTHD1GK?tag=gsu2026-20" target="_blank" rel="noopener sponsored">📕 Foundations of Repair</a>
+    <a href="https://www.globalsovereignuniversity.org/tradification">🛠 Tradification Hub</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does The Steward&#8217;s House work?</b>Eight household emergencies — a tripping breaker, a gas smell, a 2 a.m. toilet — each a three-decision story. You assess, diagnose, and act; every choice teaches the Sovereign Steward method: diagnose before paying, safety before speed, and the boundary where licensed pros take over. Dangerous choices reset your Safe Streak and explain exactly why. The scenarios reshuffle forever.</p>
+    <p><b>Is this a repair manual?</b>It&#8217;s a judgment trainer — the companion game to <em>Foundations of Repair</em>, which carries the method in full. Education only: always de-energize, depressurize, and verify; gas lines, main panels, and structural work belong to licensed professionals, in this game and in your house.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your streak survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Read the anchor text, walk the seven-book Sovereign Trades shelf on the Tradification hub, and tonight: go locate your home&#8217;s main water shut-off. That one is homework.</p>
+  </div>
+  <p class="fine">Education only — in a real emergency call 911; gas, main panels, and structural work require licensed professionals. Companion game to Foundations of Repair by Dr. Gene A. Constant. © Global Sovereign University</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does The Steward's House work?","acceptedAnswer":{"@type":"Answer","text":"Eight household-emergency scenarios, each a three-decision story. The player assesses, diagnoses, and acts, and every choice teaches the Sovereign Steward method: diagnose before paying, safety before speed, and the boundary where licensed professionals take over. Dangerous choices reset the Safe Streak with a full explanation. Scenarios reshuffle infinitely."}},
+{"@type":"Question","name":"Is The Steward's House free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested; scores persist anonymously. It is education only: gas lines, main electrical panels, and structural work require licensed professionals. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "stewards-house";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+const SCN = [["The Tripping Breaker", "Saturday morning. The kitchen goes dark mid-toast. At the panel, one breaker sits in the middle position — tripped. It's the third time this week.", [["Your first move?", [["Reset it once, then note exactly what was running when it trips again", 10, "The Steward's way: a breaker is a messenger. One reset is diagnosis — watching WHAT trips it is the investigation.", false], ["Hold it closed with tape so it stops bothering you", 0, "DANGEROUS. The breaker trips to stop the wiring from overheating. Defeating it invites a fire inside your walls.", true], ["Swap it for a bigger breaker so it can handle more", 0, "DANGEROUS. The breaker is sized to the WIRE. A bigger breaker on the same wire lets the wire cook. This causes house fires.", true], ["Ignore it — kitchens are dark sometimes", 2, "Ignoring a repeating trip leaves a real problem growing. The message will get louder.", false]]], ["It trips again with the toaster AND microwave running together. Diagnosis?", [["Circuit overload — two heavy appliances sharing one circuit", 10, "Correct. Heat-making appliances pull heavy current; two on one circuit exceeds its rating. The breaker is doing its job perfectly.", false], ["The toaster is broken", 3, "Possible but unlikely — the pattern points at the combination, not one device. Test one at a time before condemning the toaster.", false], ["The panel is haunted", 0, "The panel is fine. The arithmetic of amps is the ghost.", false], ["The house wiring is all bad", 2, "Don't escalate past the evidence — one overloaded circuit is not a whole-house verdict.", false]]], ["The fix?", [["Run the heavy appliances on separate circuits or one at a time; if you need a new circuit, that's a licensed electrician's job", 10, "The complete Steward answer: behavior fix is free and immediate; ADDING circuits crosses into licensed territory — and you know the boundary.", false], ["Install a bigger breaker yourself", 0, "DANGEROUS — same trap as before. The wire sets the limit, not your appetite for toast.", true], ["Stop using the microwave forever", 3, "Works, but you've surrendered instead of solved. Load management beats abstinence.", false], ["Call an electrician to come reset breakers weekly", 2, "You'd be paying a professional to press a switch you understand. Save the pro for the new circuit.", false]]]]], ["The Smell of Gas", "You walk in from the garage and smell it — the unmistakable sulfur-rotten-egg odor of gas, strongest near the kitchen.", [["Your IMMEDIATE move?", [["Get everyone out now — touch nothing electrical on the way", 10, "The only right answer. Distance first. Switches, phones, and flames can ignite gas; nothing in the house is worth more than the people in it.", false], ["Open windows and start the kitchen exhaust fan", 0, "DANGEROUS. The fan switch can spark ignition. Doors on your way out, yes — but no switches, no fans.", true], ["Sniff around the stove with a lighter for light", 0, "EXTREMELY DANGEROUS. A flame in a gas leak is the explosion you were warned about.", true], ["Check your phone for what gas smells like", 1, "You already know — and using a phone inside a gas leak risks a spark. Out first.", false]]], ["Everyone's outside. Now?", [["Call the gas company's emergency line (or 911) from outside, and don't go back in", 10, "Textbook Steward. From a safe distance, professionals take over. Gas is one of the three absolute boundaries — never DIY.", false], ["Go back in to shut off appliances", 0, "DANGEROUS. Re-entering a gas-filled house to flip switches is the exact wrong instinct. Stay out.", true], ["Wait an hour and sniff again", 1, "Time doesn't fix a leak — it fills the house. Call now.", false], ["Post in the neighborhood group asking for advice", 0, "The gas company answers faster than the comments section, and this is an emergency line's job.", false]]], ["The lesson this scenario forges?", [["Gas, main electrical panels, and structural work are the permanent boundary — knowing it IS the skill", 10, "The Sovereign Steward fixes ninety percent and recognizes the ten percent that belongs to licensed pros. The boundary is wisdom, not weakness.", false], ["Never own a gas appliance", 2, "Gas is safe when respected — the lesson is the protocol, not the fuel.", false], ["DIY everything, carefully", 0, "No. Some lines are drawn by physics and law. Gas is both.", true], ["Move to an all-cabin lifestyle", 1, "Tempting on a Saturday, but the protocol travels with you anyway.", false]]]]], ["The Running Toilet", "2 a.m. The toilet in the hall bathroom hisses, fills, sighs, and starts again. It has done this all week. The water bill arrives tomorrow.", [["First move in the morning?", [["Lift the tank lid and watch a full flush cycle", 10, "Diagnosis before parts, parts before pros. The tank lid is the hood of the car — open it and the machine explains itself.", false], ["Call a plumber immediately", 2, "A running toilet is the single most fixable thing in plumbing — a $200 service call for a $5 part. Look first.", false], ["Jiggle the handle forever", 3, "The classic treatment of the symptom. The cause is in the tank, eight inches from your hand.", false], ["Shut off water to the whole house", 1, "Overkill — the angle stop behind the toilet isolates just this fixture.", false]]], ["You watch: water trickles into the bowl, and the flapper looks warped and slimy. Diagnosis?", [["Worn flapper — it no longer seals, so the tank slowly drains and refills", 10, "Exactly. The flapper is a rubber seal with a hard life. Warped or mineral-coated, it leaks, and the fill valve runs to compensate.", false], ["The bowl is cracked", 1, "A cracked bowl leaks onto the FLOOR. Water into the bowl points at the seal above.", false], ["Water pressure is too high", 2, "Pressure affects fill speed, not the seal. The slimy warped flapper confessed already.", false], ["The handle is cursed", 0, "The handle just pulls the chain. The flapper is the suspect with motive and opportunity.", false]]], ["The repair?", [["Shut the angle stop, flush to empty the tank, swap the flapper ($5–10), turn water back on, test", 10, "Ten minutes, ten dollars, done. THIS is the Sovereign Steward dividend — the same job, billed, runs $150–$250.", false], ["Replace the entire toilet", 1, "A $300 solution to a $7 problem. Diagnosis exists to prevent exactly this.", false], ["Pour chemicals into the tank", 0, "Tank chemicals degrade the very rubber parts you're trying to save. The flapper dies faster.", false], ["Put a brick in the tank and hope", 2, "The old brick trick reduces fill volume — it doesn't seal a warped flapper. Wrong tool, wrong problem.", false]]]]], ["The Dead Outlet", "The bathroom outlet is dead. Hair dryer: nothing. Phone charger: nothing. Every other outlet in the room works… wait, there IS no other outlet in the bathroom.", [["First check?", [["Look for a GFCI outlet (the one with TEST/RESET buttons) in the bathroom — or in another bathroom or the garage — and press RESET", 10, "Steward's secret: one GFCI often protects a whole chain of bathroom/garage/outdoor outlets. A tripped one upstream kills them all. RESET revives the chain.", false], ["Call an electrician for a dead outlet", 2, "Maybe eventually — but eighty percent of 'dead bathroom outlets' are a tripped GFCI one room away. Check the free thing first.", false], ["Replace the outlet immediately", 1, "You'd be surgically replacing a healthy organ. Diagnose before parts.", false], ["Plug in a bigger hair dryer to force it", 0, "DANGEROUS and backwards — if a fault tripped the protection, forcing load is the wrong direction entirely.", true]]], ["You find a popped GFCI in the other bathroom; RESET clicks and your outlet lives. But it trips again the moment the hair dryer runs. Now?", [["Suspect the hair dryer: test it on a different GFCI-protected circuit, and test the outlet with a different small load", 10, "Isolate the variable — the trades version of a controlled experiment. If the dryer trips every GFCI, the dryer is leaking current and should be retired.", false], ["Tape the RESET button in", 0, "DANGEROUS. The GFCI trips because current is leaking — possibly through water, possibly someday through a person. It's the device saving lives near sinks.", true], ["Remove the GFCI and fit a regular outlet", 0, "DANGEROUS and against code — bathrooms require GFCI protection precisely because water and electricity share the room.", true], ["Never use that bathroom again", 1, "The dryer is the likely culprit and it's portable. Don't exile the room; interrogate the appliance.", false]]], ["The dryer trips every GFCI it meets. Verdict?", [["The dryer has an internal fault — replace it; the GFCIs were protecting you all along", 10, "Case closed by evidence. Total cost: one hair dryer. The protection system worked exactly as designed, and you read it like a Steward.", false], ["All your GFCIs are too sensitive", 1, "Three independent devices agreeing isn't oversensitivity — it's testimony.", false], ["Rewire the bathroom", 0, "The fault travels WITH the dryer. The walls are innocent.", false], ["Use the dryer outside", 0, "DANGEROUS — outdoor outlets are GFCI-protected too (for good reason), and a leaking appliance stays leaky everywhere.", true]]]]], ["The Dripping Faucet", "Drip. Drip. Drip. The kitchen faucet has kept a steady beat for a month. You've started hearing it in your sleep.", [["Before any wrench touches anything…", [["Close the angle stops under the sink and confirm the faucet is dead", 10, "Rule one of plumbing: stop the water FIRST. The under-sink valves isolate the fixture — no geysers, no panic.", false], ["Start unscrewing the faucet handle right away", 0, "Open a pressurized faucet's guts and the sink becomes a fountain. Water off first, always.", true], ["Crank the faucet handle harder closed", 2, "Over-tightening grinds the worn seal even flatter. You're polishing the problem.", false], ["Put a cup under it and call it solved", 1, "That's a water collection program, not a repair. The washer is still dying in there.", false]]], ["Water's off. The faucet is an older two-handle type, dripping from the spout. Likely culprit?", [["A worn rubber washer or cartridge seal inside the handle assembly", 10, "The classic. Rubber seals compress and erode over years of pressure; the drip is their resignation letter. Parts cost a few dollars.", false], ["The spout is cracked", 1, "A cracked spout leaks while RUNNING. A drip when off points at the internal seal.", false], ["Water pressure is too low", 0, "Low pressure causes weak flow, not drips. The seal is the storyteller here.", false], ["The sink is improperly grounded", 0, "Grounding is an electrical concept — your faucet is innocent of electricity.", false]]], ["Cartridge swapped, water back on, drip gone. What did the Steward just bank?", [["About $150 in plumber labor, plus up to 3,000 gallons a year a steady drip wastes — and the confidence for the next repair", 10, "The full dividend: money, water, and capability. Each repair makes the next one smaller. That's the Foundations of Repair thesis in a single faucet.", false], ["Bragging rights only", 3, "Those too — but count the gallons and the invoice you didn't pay.", false], ["Nothing; plumbers would do it better", 1, "A correctly seated $4 washer doesn't know who installed it. Done right is done right.", false], ["A new career", 2, "Maybe! The Tradification simulators are one click away. But today you banked a repair.", false]]]]], ["The Mower That Won't Start", "First warm Saturday. The lawn is shaggy, the neighbors are mowing, and your mower answers the pull-cord with silence.", [["Before ANY inspection of the blade area…", [["Pull the spark plug wire off the plug", 10, "Iron law of small engines: a turned blade can fire the engine. The wire comes off FIRST — it costs two seconds and protects ten fingers.", false], ["Tip the mower over to look underneath right away", 0, "DANGEROUS — and tipping the wrong way also floods the air filter with oil. Wire first, then proper tipping technique.", true], ["Reach under for grass clumps while it 'can't start anyway'", 0, "DANGEROUS. 'It can't start' is what every missing-finger story begins with. The wire is the only off switch you trust.", true], ["Spray starter fluid everywhere", 1, "Premature — diagnose before dosing. And fluid plus mystery spark is a bad cocktail.", false]]], ["Wire's off. An engine needs three things to run. They are…", [["Fuel, air, and spark", 10, "The small-engine trinity. Every no-start is one of the three missing — and they can each be checked in minutes.", false], ["Gas, oil, and luck", 3, "Oil keeps it alive; it doesn't make it START. And luck is not a system.", false], ["Electricity, water, and patience", 0, "Water is the enemy of two of the real three. Back to basics: fuel, air, spark.", false], ["A pro, a truck, and an invoice", 1, "Sometimes — but the trinity check costs nothing and solves most of these in the driveway.", false]]], ["Fuel is old (sat all winter), the air filter is clean, the plug looks sooty. Smart sequence?", [["Drain the stale fuel, refill fresh, clean or replace the plug ($5), reconnect, then test", 10, "Stale fuel and a fouled plug cause most spring no-starts. Twenty minutes, under ten dollars — and the mower roars. (Next fall: run it dry or stabilize the fuel.)", false], ["Buy a new mower", 1, "A $300 answer to a $9 question. The trinity check exists to prevent exactly this.", false], ["Pull the cord fifty more times unchanged", 2, "Repetition without diagnosis is exercise, not repair.", false], ["Pour the old fuel into the storm drain", 0, "DANGEROUS and illegal — stale fuel goes to hazardous waste collection, never the drain. The Steward's responsibility doesn't end at the property line.", true]]]]], ["The Water Heater Puddle", "A thin sheet of water glints on the garage floor under the water heater. You don't know how long it's been there.", [["First read of the situation?", [["Trace WHERE the water originates — a top fitting, the relief valve, or the tank body itself", 10, "Diagnosis before verdict. A weeping fitting is a wrench-fix; a sweating tank BODY means the tank is done. The source decides everything.", false], ["Mop it and assume condensation forever", 2, "Maybe once. A recurring puddle is the heater filing a report — read it.", false], ["Replace the water heater today", 1, "If it's a loose fitting, that's a $1,200 overreaction. Source first.", false], ["Taste it to check if it's water", 0, "Garage-floor mystery liquid is never a beverage. Eyes and a paper towel, not taste.", false]]], ["It's seeping from the TANK BODY seam, and the unit is gas-fired. The Steward's call?", [["Shut off the water supply to the tank, turn the gas control to OFF, and call a licensed pro — tank replacement on a gas unit crosses the boundary", 10, "Perfect boundary judgment: you can and should stop the water and set gas to OFF (the user controls), but a failed tank plus gas connections = licensed territory by law and by wisdom.", false], ["Patch the tank seam with epoxy", 0, "DANGEROUS. A pressurized, heated, corroding tank is not a candidate for glue. Failure modes here include flooding and worse.", true], ["Swap the gas water heater yourself this weekend", 0, "DANGEROUS where you're not licensed for gas — the connection, venting, and combustion air are exactly the ten percent the boundary exists for.", true], ["Ignore it; garages like moisture", 1, "Tanks fail toward catastrophe, not toward dry. Forty gallons is waiting on your decision.", false]]], ["While the pro is scheduled, the bonus Steward move?", [["Locate the home's main water shut-off and make sure everyone in the house knows it", 10, "Foundations of Repair, chapter one energy: the emergency you prepared for is an inconvenience. The main shut-off is the single most valuable address in the house.", false], ["Stack boxes around the heater to hide it", 0, "Cardboard plus forty gallons of potential is the opposite of preparation.", false], ["Watch the puddle hourly", 2, "Vigilance without a plan is just anxiety. Know the shut-off; that's the plan.", false], ["Drain the whole house plumbing", 1, "Unnecessary — supply valve off at the heater isolates it. Proportion is a tool too.", false]]]]], ["The 65-Inch Question", "The new TV weighs 60 pounds. The wall is drywall. The family is watching you size up the mount with visible concern.", [["First task?", [["Find the studs with a finder (and confirm with a small test nail or knuckle-knock pattern)", 10, "Drywall alone holds posters. Sixty pounds hangs on FRAMING — studs every 16 inches on center, found before any hole is drilled.", false], ["Screw the mount straight into drywall — more screws equals more strength", 0, "DANGEROUS to the TV and anyone under it. Ten screws into crumbly gypsum is ten points of failure, not strength.", true], ["Glue the mount with construction adhesive", 0, "Adhesive plus paper-faced drywall plus 60 pounds plus time = a slow-motion crash. Mechanical fastening into framing or nothing.", true], ["Lean the TV against the wall artistically", 2, "Honest, at least. But the Steward can do better than surrender.", false]]], ["The studs sit awkwardly — only ONE falls behind the mount's bracket zone. Options?", [["Use the stud for the primary lags AND rated heavy-duty anchors (toggle/snap-toggle) matched to the remaining load for the off-stud holes", 10, "The pro pattern: framing carries the main load; RATED anchors (check the box's weight rating, divide by safety margin) assist. Hardware has math — use it.", false], ["Plastic cone anchors from the junk drawer", 0, "DANGEROUS for this load — those are for towel hooks. Anchor ratings exist because physics doesn't negotiate.", true], ["Skip the awkward holes; one stud is plenty", 2, "One stud can carry weight but the unbalanced mount can rack and tear out over time. Use the rated-anchor assist.", false], ["Cut the drywall open and add blocking between studs", 8, "Actually a fully legitimate pro technique — more work than needed here, but the Steward who knows it earns the points.", false]]], ["Before drilling each hole…", [["Check what's behind: scan for wires/pipes, and reason from outlet and fixture positions", 10, "The pre-drill ritual. Wires run vertically from outlets and horizontally between them; pipes follow fixtures. Thirty seconds of thinking prevents the expensive surprise.", false], ["Drill fast so you're through before anything matters", 0, "DANGEROUS — speed has never once dodged a wire. The drill doesn't know what's back there; you have to.", true], ["Drill only at night when wires sleep", 0, "Wires don't sleep. They hold a grudge around the clock.", false], ["Have someone watch the breaker panel for sparks", 1, "Creative, but detection-after-contact is the wrong end of the problem. Scan before, not during.", false]]]]]];
+let st = { score:0, streak:0, best:0, sIdx:0, step:0, order:[], user:null, db:null, cloud:false };
+try { const sv=JSON.parse(localStorage.getItem("gsu-"+GAME_ID)||"{}"); st.score=sv.score||0; st.best=sv.best||0; } catch(e){}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle(){ st.order=shuffle(SCN.map((_,i)=>i)); st.sIdx=0; }
+reshuffle();
+const $=id=>document.getElementById(id);
+function paint(){ $("score").textContent=st.score; $("streak").textContent=st.streak; $("best").textContent=st.best; }
+
+function ask(){
+  const sc=SCN[st.order[st.sIdx]];
+  $("sctitle").textContent="📂 "+sc[0];
+  $("scstep").textContent="Decision "+(st.step+1)+" of 3";
+  $("setup").textContent=sc[1];
+  $("setup").style.display = st.step===0 ? "block" : "none";
+  const [prompt,opts]=sc[2][st.step];
+  $("q").textContent=prompt;
+  $("explain").style.display="none"; $("next").style.display="none";
+  const box=$("opts"); box.innerHTML="";
+  shuffle(opts.map(o=>o)).forEach(o=>{
+    const b=document.createElement("button"); b.className="opt"; b.textContent=o[0];
+    b.onclick=()=>answer(b,o);
+    box.appendChild(b);
+  });
+}
+function answer(btn,o){
+  document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+  const [text,pts,fb,danger]=o;
+  if(danger){
+    btn.classList.add("danger");
+    st.streak=0;
+    $("explain").innerHTML="<span class=\'dz\'>⚠ DANGEROUS CALL — Safe Streak reset.</span><br><b>Why:</b> "+fb;
+  } else if(pts>=10){
+    btn.classList.add("best");
+    st.streak++; st.score += 10 + Math.min(st.streak,10);
+    if(st.streak>st.best) st.best=st.streak;
+    $("explain").innerHTML="<b>The Steward&#8217;s call.</b> "+fb;
+  } else {
+    btn.classList.add("ok");
+    st.score += pts;
+    $("explain").innerHTML="<b>Survivable, not optimal ("+pts+" pts).</b> "+fb;
+  }
+  $("explain").style.display="block"; $("next").style.display="block";
+  $("next").textContent = st.step<2 ? "Continue →" : "Next Emergency →";
+  paint(); save();
+}
+$("next").onclick=()=>{
+  st.step++;
+  if(st.step>2){ st.step=0; st.sIdx++; if(st.sIdx>=st.order.length) reshuffle(); }
+  ask();
+};
+async function save(){
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:st.score,best:st.best})); } catch(e){}
+  if(st.cloud && st.user){
+    try { await setDoc(doc(st.db,"gameScores",st.user.uid+"_"+GAME_ID),{uid:st.user.uid,game:GAME_ID,score:st.score,best:st.best,updated:serverTimestamp()},{merge:true}); }
+    catch(e){ cloudStatus(false,"local saves only"); }
+  }
+}
+function cloudStatus(on,msg){ st.cloud=on; const p=$("cloud"); p.textContent="Cloud: "+msg; p.style.color=on?"var(--teal)":"var(--muted)"; }
+(async()=>{
+  try {
+    const app=initializeApp(FIREBASE_CONFIG);
+    const auth=getAuth(app); st.db=getFirestore(app);
+    onAuthStateChanged(auth, async u=>{
+      if(u){ st.user=u; cloudStatus(true,"scores saving ✓");
+        try { const snap=await getDoc(doc(st.db,"gameScores",u.uid+"_"+GAME_ID));
+          if(snap.exists()){ const d=snap.data(); if((d.score||0)>st.score) st.score=d.score; if((d.best||0)>st.best) st.best=d.best; paint(); }
+        } catch(e){}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e){ cloudStatus(false,"saving locally"); }
+})();
+paint(); ask();
+</script>
+</body>
+</html>

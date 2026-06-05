@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Trades Climb — Home Repair & Trades Game | Free GSU Game</title>
+<meta name="description" content="Infinite trades game: electrical safety, plumbing basics, auto care, and the judgment to know when to call a pro. Free, GENO-coached, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Tradification · The Sovereign Trades Series</div>
+  <h1>The Trades <span class="accent">Climb</span></h1>
+  <p class="sub">Safety first · Fix it yourself · Know when to call a pro · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Ask GENO how to shut off the water main or test an outlet safely — any hour. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/tradification">↩ Tradification Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Open the Sovereign Trades series — Foundations of Repair first — and remember the boundary: gas lines, main panels, and structural work belong to licensed professionals.</p>
+  </div>
+  <p class="fine">Education only — always de-energize, depressurize, and know your limits. Gas, main panels, and structural work require licensed professionals. Companion game to the Sovereign Trades series by Dr. Gene A. Constant. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "trades-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["Before working on any electrical outlet or switch, the first step is…", ["Wear gloves only", "Turn off the circuit at the breaker and verify power is off with a tester", "Work quickly", "Wrap the wires in tape"], 1, 0, "Breaker off, then verify dead with a non-contact tester — never trust the switch alone."], ["A GFCI outlet protects against…", ["Power surges", "Electric shock by cutting power when current leaks to ground", "Overheating bulbs", "High bills"], 1, 0, "Required near water — kitchens, baths, outdoors. Test the button monthly."], ["If a breaker trips repeatedly, the right move is…", ["Tape it on", "Find and fix the cause — overload or fault — or call a licensed electrician", "Replace it with a bigger breaker", "Ignore it"], 1, 1, "A bigger breaker on the same wire is a fire recipe. The breaker is the messenger, not the problem."], ["Before any plumbing repair, locate and close…", ["The water heater", "The fixture or main shut-off valve", "The drain", "The vent stack"], 1, 0, "Know your main shut-off BEFORE the emergency — it is the single most valuable plumbing fact in the house."], ["'Righty-tighty, lefty-loosey' describes…", ["Pipe slope", "Standard clockwise-to-tighten threading", "Wiring color codes", "Door hinges"], 1, 0, "Clockwise tightens, counterclockwise loosens — with rare reverse-thread exceptions."], ["A toilet that keeps running usually needs…", ["A new toilet", "A flapper or fill-valve adjustment/replacement", "More water pressure", "Drain cleaning"], 1, 1, "A few dollars in parts and ten minutes — one of the highest-value beginner repairs there is."], ["Teflon (PTFE) tape is used to…", ["Insulate wires", "Seal threaded pipe joints", "Patch drywall", "Sharpen blades"], 1, 1, "Wrap clockwise around male threads so it tightens with the fitting instead of unraveling."], ["The most important habit before drilling into a wall is…", ["Drilling fast", "Checking for wires, pipes, and studs behind the surface", "Using the biggest bit", "Wearing a hat"], 1, 1, "A stud finder with wire detection — or reasoning from outlet and fixture locations — prevents expensive surprises."], ["Changing a car's engine oil requires draining the oil and replacing…", ["The radiator", "The oil filter", "The air freshener", "The battery"], 1, 1, "Oil and filter together — fresh oil through a dirty filter defeats the purpose."], ["Tire pressure should be set to the number on…", ["The tire sidewall maximum", "The placard in the driver's door jamb", "A guess", "The fuel cap"], 1, 1, "The sidewall shows the tire's max, not your car's spec — the door placard is the vehicle's correct number."], ["A multimeter measures…", ["Distance", "Voltage, current, and resistance", "Torque", "Pipe diameter"], 1, 1, "The trades' stethoscope — confirming a circuit is dead is its most important job for beginners."], ["Lawn mower blades should be…", ["Loose for safety", "Sharp and balanced — with the spark plug wire disconnected before any blade work", "Removed in summer", "Oiled weekly"], 1, 1, "Disconnect the plug wire FIRST: a turned blade can fire the engine. Sharp blades cut; dull blades tear."], ["The judgment rule for DIY versus calling a licensed professional is…", ["Never call anyone", "Know your limits: gas lines, main panels, and structural work belong to licensed pros", "Always call for everything", "Watch one video first"], 1, 0, "Sovereign trades skill includes the wisdom of the boundary — gas, mains, and load-bearing changes are pro territory, often by law."], ["Shutting power at a single breaker versus the main: the main shuts…", ["Only the kitchen", "Everything in the panel — used for panel work or emergencies", "Outdoor lights", "Nothing"], 1, 2, "Breaker = one circuit; main = the whole house. Working inside the panel itself is licensed-pro territory."], ["A 'stud' in framing is…", ["Decoration", "The vertical framing lumber walls hang their strength on", "Pipe fitting", "A type of nail"], 1, 0, "Typically every 16 inches on center — find them to mount anything heavy."], ["Caulk's job is to…", ["Hold up shelves", "Seal gaps against water and air", "Lubricate hinges", "Color walls"], 1, 0, "A $5 tube of caulk around tubs and windows prevents four-figure water damage."], ["If you smell gas in the house…", ["Light a match to find it", "Leave immediately, don't flip switches, call the gas company from outside", "Open the oven", "Spray air freshener"], 1, 0, "No flames, no switches, no phones inside — out first, call from a safe distance. This one is not DIY."], ["Preventive maintenance beats repair because…", ["It's more fun", "Small scheduled care — filters, gutters, seals — prevents large failures", "Tools are cheap", "Repairs are easy"], 1, 1, "The Foundations of Repair principle: the cheapest fix is the one you scheduled before the break."], ["'Measure twice, cut once' encodes…", ["Slowness", "Verification before irreversible action — the master habit of every trade", "Doubt", "Tradition"], 1, 0, "Wood, wire, pipe, paint: checking costs seconds; redoing costs hours and material."], ["A clogged P-trap under a sink is often cleared by…", ["Replacing the sink", "Placing a bucket, unscrewing the trap, and cleaning it out", "Hammering the pipe", "Hot wax"], 1, 1, "The trap unscrews by hand or with channel locks — the clog is usually sitting right in the bend."], ["Personal protective equipment (PPE) for most home repair starts with…", ["A helmet camera", "Safety glasses and gloves appropriate to the task", "Steel boots only", "Nothing"], 1, 0, "Eyes first, always — debris, splash, and snap-back injuries are the most common and most preventable."], ["When a repair involves a permit (electrical panels, structural, gas)…", ["Skip it quietly", "Get it — permits protect your safety, your insurance, and your resale", "Permits are optional everywhere", "Only pros need rules"], 1, 2, "Unpermitted major work can void insurance and poison a sale — the paperwork is part of the craft."], ["The right tool 'philosophy' for a beginner kit is…", ["Buy everything at once", "A quality core — driver set, pliers, tape, level, multimeter — bought once, added to per project", "Only powered tools", "Borrow forever"], 1, 2, "Buy the core once, buy quality, and let each project justify its next tool."], ["Why does GSU teach trades alongside academics?", ["Tradition", "Self-reliance: the hands that can fix are hard to make helpless", "Tools are cheap", "Schools stopped"], 1, 0, "Weight-bearing life: capability in the physical world is sovereignty you can hold in your hands."], ["A GFCI outlet should be tested…", ["Never", "Monthly, using its test/reset buttons", "Once a decade", "Only by an electrician"], 1, 0, "Press TEST — power should cut; press RESET to restore. A dead GFCI is a silent hazard near water."], ["Before removing an electrical outlet cover to work, you should…", ["Wear rubber shoes only", "Turn off the breaker and verify the outlet is dead with a tester", "Work fast", "Wet your hands"], 1, 0, "De-energize, then VERIFY — testers cost a few dollars and prevent the worst day of your life."], ["Wire nuts are used to…", ["Hang pictures", "Join and insulate electrical wire connections", "Seal pipes", "Patch drywall"], 1, 0, "Twist, cap, tug-test — a loose connection is a fire waiting on a busy circuit."], ["A circuit breaker's job is to…", ["Save energy", "Cut power when current exceeds safe limits", "Boost voltage", "Store electricity"], 1, 0, "It trips to protect the wiring — repeated trips mean find the cause, never upsize the breaker."], ["The most important plumbing location to know in any home is…", ["The water heater", "The main shut-off valve", "The dishwasher", "The roof vent"], 1, 0, "When a pipe bursts, seconds matter — locate and label it today, dry."], ["A plunger works best when…", ["The bowl is empty", "There's enough water to seal the cup, with firm push-pull strokes", "You add bleach", "You use it once"], 1, 1, "The seal does the work — air, not water, is what fails to move the clog."], ["To stop a running toilet, first inspect the…", ["Supply line", "Flapper and fill valve in the tank", "Wax ring", "Floor bolts"], 1, 0, "A worn flapper or misadjusted float is the usual, cheap culprit."], ["Shutting off water to a single sink uses the…", ["Main valve", "Angle stop valve under the fixture", "Water heater", "Hose bib"], 1, 1, "Local shut-offs let you fix one fixture without leaving the whole house dry."], ["Before drilling into a wall, check for…", ["Paint type", "Hidden wires, pipes, and studs", "The weather", "Wall color"], 1, 1, "Outlets, switches, and fixtures hint at what's behind — a detector confirms before the bit bites."], ["A stud finder helps you…", ["Find leaks", "Locate framing to anchor heavy items securely", "Test voltage", "Measure level"], 1, 1, "Drywall alone won't hold a TV — find the wood, hit the center."], ["To hang something heavy where there's no stud, use…", ["Tape", "A rated wall anchor matched to the weight", "A nail", "Glue"], 1, 1, "Anchors have weight ratings — match the hardware to the load or it pulls free."], ["A level ensures a surface is…", ["Clean", "Truly horizontal (or vertical with the right vial)", "Strong", "Painted"], 1, 0, "The bubble between the lines — trust it over your eyes, which lie on sloped floors."], ["Engine oil should typically be changed based on…", ["Color alone", "The manufacturer's mileage/time interval in the owner's manual", "Never", "Tire wear"], 1, 1, "The manual is the authority — modern intervals are longer than old habits assume."], ["Correct tire pressure is found on the…", ["Tire sidewall max", "Door-jamb placard for your vehicle", "Owner's guess", "Gas cap"], 1, 1, "Sidewall = the tire's maximum; placard = your car's correct spec. Use the placard."], ["Brake pads warn they're worn by…", ["Getting quieter", "A squeal from built-in wear indicators", "Smelling sweet", "Lasting forever"], 1, 1, "That metallic squeak is a designed alarm — address it before it becomes grinding (and rotor damage)."], ["Jump-starting a car safely means connecting…", ["Any order", "Red to dead positive, red to good positive, black to good negative, black to bare metal on the dead car", "Both blacks to batteries", "Negative first"], 1, 2, "Last clamp to unpainted metal away from the battery — it grounds safely and avoids sparks near gases."], ["A multimeter set to measure continuity helps you…", ["Paint evenly", "Check whether a circuit or component completes a path", "Cut wood", "Level shelves"], 1, 1, "Beep = connected — the fastest way to find a broken wire or blown element."], ["Disconnecting a lawn mower's spark plug wire before blade work…", ["Sharpens it", "Prevents accidental starting", "Cleans the engine", "Saves fuel"], 1, 0, "A turned blade can fire the engine — pull the wire FIRST, every time."], ["Sharp mower blades matter because dull ones…", ["Cut cleaner", "Tear grass, stressing the lawn and the engine", "Last longer", "Use less fuel"], 1, 1, "A clean cut heals; a ragged tear browns and invites disease."], ["Caulk should be applied to…", ["Load-bearing joints", "Gaps around tubs, sinks, and windows to block water and air", "Electrical boxes", "Engine parts"], 1, 1, "A few dollars of caulk prevents four-figure water and mold damage — cheapest insurance in the house."], ["Sandpaper grit numbers work such that higher numbers are…", ["Coarser", "Finer/smoother", "Stronger", "Cheaper"], 1, 1, "Start coarse to shape, finish fine to smooth — 80 grit roughs, 220 polishes."], ["The phrase 'measure twice, cut once' teaches…", ["Speed", "Verification before irreversible action", "Distrust", "Laziness"], 1, 0, "The master habit of every trade — seconds of checking save hours of redoing."], ["If you smell gas, you should…", ["Light a match", "Leave immediately without using switches or phones inside, then call from outside", "Open the oven", "Investigate"], 1, 1, "No flames, no sparks, no electronics indoors — out first, professionals only. Never DIY."], ["Preventive maintenance is valuable because…", ["It's fun", "Scheduled small care prevents large, expensive failures", "Tools are cheap", "It looks busy"], 1, 0, "Filters, gutters, seals, fluids — the cheapest repair is the breakdown you prevented."], ["The clearest sign a job needs a licensed professional is…", ["It's boring", "It involves gas, the main panel, or structural changes", "It takes an hour", "It needs a ladder"], 1, 1, "Some lines are drawn by physics and some by law — gas, mains, and structure cross both."], ["Personal protective equipment for most repairs starts with…", ["A hat", "Safety glasses and task-appropriate gloves", "Headphones", "Nothing"], 1, 0, "Eyes are irreplaceable and injuries are sudden — protection goes on before the work starts."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

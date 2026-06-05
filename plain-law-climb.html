@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Plain-Language Law Climb — Legal Literacy Game | Free GSU Game</title>
+<meta name="description" content="Infinite legal literacy game: the hierarchy of law, contracts, leases, small claims, and your rights. Education, not legal advice. Free, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Lawification · The Gate Comes Down</div>
+  <h1>The Plain-Language Law <span class="accent">Climb</span></h1>
+  <p class="sub">Ten modules · No retainer · Education, not legal advice · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Ask GENO to explain any clause or right in plain language — for advice on your own case, see the free legal aid module. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/lawification">↩ Lawification Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Work the ten Lawification modules — start with the one costing you money today — and remember Module 10 maps free real-lawyer help.</p>
+  </div>
+  <p class="fine">Education, not legal advice. Companion game to the GSU Lawification modules. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "plain-law-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["The hierarchy of American law, top to bottom, begins with…", ["Federal statutes", "The Constitution", "Supreme Court opinions", "State constitutions"], 1, 0, "The Constitution is the supreme law of the land; everything beneath must conform to it."], ["A state law conflicts with a federal statute. Generally…", ["The state law controls", "The federal statute controls under the supremacy clause", "The newer law wins", "A governor decides"], 1, 1, "Article VI resolves the collision — federal law validly enacted displaces conflicting state law."], ["Small claims court is designed for…", ["Felony trials", "Modest money disputes resolved without lawyers", "Divorces", "Appeals"], 1, 0, "The people's court: simplified procedure, low fees, limits commonly between $5,000 and $25,000 by state."], ["After winning a small claims judgment, the often-overlooked step is…", ["Framing it", "Actually collecting — the court doesn't write the check", "Appealing", "Re-filing"], 1, 1, "Garnishment, liens, payment plans — a judgment is a tool, not a deposit."], ["An arbitration clause in a contract typically means…", ["Free legal help", "Disputes go to a private arbitrator instead of court", "Automatic refunds", "No obligations"], 1, 1, "You may be waiving your day in court — find this clause before signing, not after."], ["An auto-renewal clause…", ["Cancels the contract", "Continues the contract automatically unless you cancel by a deadline", "Lowers the price", "Is illegal"], 1, 0, "Calendar the cancellation window the day you sign — that is the whole defense."], ["A non-compete clause restricts…", ["Returning products", "Working for competitors after you leave, within limits that vary by state", "Joining a union", "Asking for raises"], 1, 1, "Scope, duration, geography — and enforceability varies enormously by state law."], ["The implied warranty of habitability requires landlords to…", ["Provide furniture", "Keep rental housing safe and livable", "Allow pets", "Freeze rent"], 1, 1, "Heat, water, structural safety — rights that exist even if the lease never mentions them."], ["A security deposit is generally…", ["A gift to the landlord", "Your money, returnable minus lawful deductions, on state timelines", "Nonrefundable always", "Optional"], 1, 0, "Document the unit's condition on day one with photos — your future refund will thank you."], ["The right to remain silent comes from…", ["The First Amendment", "The Fifth Amendment's protection against self-incrimination", "Police policy", "Common courtesy"], 1, 1, "You generally must be clear about invoking it — silence works best when stated."], ["Police generally need a warrant to…", ["Look at your house from the street", "Search your home, with several recognized exceptions", "Ask questions", "Watch traffic"], 1, 1, "The Fourth Amendment makes the home the castle; exceptions like consent and exigency are the gates."], ["During a traffic stop, you generally must…", ["Answer all questions", "Provide license, registration, and insurance when asked", "Exit immediately", "Consent to searches"], 1, 1, "Documents yes; consent to a vehicle search is yours to give or withhold."], ["The Fair Labor Standards Act (FLSA) governs…", ["Workplace décor", "Minimum wage and overtime rules", "Hiring quotas", "Office hours"], 1, 1, "Time-and-a-half over 40 hours for non-exempt employees — the floor under American paychecks."], ["Employers sometimes misclassify employees as contractors because…", ["Contractors work harder", "It shifts taxes and strips overtime and benefit obligations", "Titles sound better", "The law requires it"], 1, 1, "The test is control and economic reality, not the label on the paperwork."], ["Workplace retaliation protections mean…", ["You can't be managed", "Punishing workers for lawful complaints (wages, safety, harassment) is itself illegal", "All firing is illegal", "Complaints stay secret"], 1, 1, "The complaint is protected activity — retaliation is often easier to prove than the original violation."], ["The Fair Debt Collection Practices Act limits…", ["What you owe", "How collectors may behave — no harassment, threats, or lies", "Interest rates", "Credit scores"], 1, 1, "Call-time limits, validation rights, the power to demand contact stop in writing — know the leash."], ["Under the Fair Credit Reporting Act, you can…", ["Erase true debts", "Dispute inaccurate items and get them investigated", "Hide your report", "Set your own score"], 1, 1, "Free annual reports from the bureaus; disputed errors must be investigated, typically within 30 days."], ["Magnuson-Moss is the federal statute on…", ["Leases", "Consumer product warranties", "Traffic law", "Wills"], 1, 2, "It governs written warranties — including limits on 'you must use our parts' conditions."], ["Legal aid societies provide…", ["Paid premium lawyers", "Free civil legal help based on income", "Bail money", "Notary stamps"], 1, 0, "Income-qualified, free — for housing, benefits, family law, and consumer disputes."], ["Law school clinics offer…", ["Mock trials only", "Real representation by supervised students, often free", "Paid internships", "Online courses"], 1, 1, "Students supervised by professors handle real cases — quality help at no or low cost."], ["'Legal literacy, not legal advice' means this education…", ["Replaces lawyers", "Teaches how the law works; your specific case may need a licensed professional", "Is unofficial law", "Guarantees outcomes"], 1, 0, "Read your own documents, know your own rights — and know when Module 10's free-help routes are the move."], ["The Constitution's Article I establishes…", ["The presidency", "Congress and the legislative power", "The courts", "The states"], 1, 1, "Articles I, II, III: legislature, executive, judiciary — in that order, on purpose."], ["Common law refers to…", ["Statutes", "Judge-made law built from precedent", "Local ordinances", "Regulations"], 1, 2, "Case by case, courts fill the gaps — precedent is the connective tissue of the system."], ["Administrative regulations are issued by…", ["Juries", "Executive agencies under authority delegated by statutes", "State legislatures", "Bar associations"], 1, 2, "OSHA, FTC, EPA — agencies write the detailed rules statutes authorize."], ["Liquidated damages clauses…", ["Ban lawsuits", "Pre-set the payment owed for specific breaches", "Are always unenforceable", "Cover only injuries"], 1, 2, "Courts enforce reasonable pre-estimates; penalties dressed as damages can fail."], ["Reading the Constitution 'in plain English' matters because…", ["The original is secret", "Citizens shouldn't need a translator to know the supreme law that governs them", "Old English is illegal", "Summaries are law"], 1, 0, "What it actually says — and does NOT say — is the start of every honest constitutional argument."], ["If a contract clause seems to waive a right, the first move is…", ["Sign anyway", "Slow down: identify the clause, ask questions, negotiate or walk", "Cross it out secretly", "Assume it's standard"], 1, 1, "The seven clauses worth reading slowly exist precisely because they're skimmed."], ["When should you seek an actual lawyer rather than self-help?", ["Never", "High stakes, criminal exposure, or complexity beyond small claims", "Only if wealthy", "Only for appeals"], 1, 1, "Legal literacy includes the judgment call — and the map to free and low-cost professional help."], ["Federal regulations (agency rules) rank where in the hierarchy of law?", ["Above the Constitution", "Below statutes — they implement laws Congress passed", "Above statutes", "Equal to the Constitution"], 1, 1, "Agencies fill in details Congress authorized — and a rule exceeding that authority can be struck down."], ["'Statute of limitations' refers to…", ["A courtroom rule", "The deadline to file a particular legal claim", "A sentencing cap", "A jury size"], 1, 0, "Wait too long and even a valid claim dies — the clock is part of the law."], ["A contract generally requires offer, acceptance, and…", ["A lawyer", "Consideration — something of value exchanged by each side", "Notarization", "Witnesses"], 1, 1, "A promise for nothing in return is usually a gift, not an enforceable contract."], ["Reading a lease, the clause to find before signing includes…", ["The font", "Renewal, deposit return, repair duties, and early-termination terms", "The landlord's hobbies", "The paint color"], 1, 0, "The boring paragraphs hold the money — skim the marketing, study the obligations."], ["An 'as-is' sale generally means…", ["Free returns", "The buyer accepts the item's current condition with limited recourse", "A warranty applies", "The price is fixed"], 1, 1, "Inspect before, not after — 'as-is' shifts the risk onto you."], ["Small claims court limits are…", ["The same nationwide", "Set by each state, commonly a few thousand to $25,000", "Unlimited", "Federal only"], 1, 1, "Check your state's cap — claims above it go to regular civil court."], ["A demand letter is…", ["A court order", "A written request to resolve a dispute before filing suit", "A criminal charge", "A subpoena"], 1, 1, "Clear, dated, specific — it often resolves matters, and documents that you tried."], ["'Due process' in plain terms guarantees…", ["A win", "Fair notice and a fair chance to be heard before government acts against you", "Free counsel always", "A jury for everything"], 1, 1, "HOW the state proceeds is constrained — the procedure protects you even when the outcome doesn't."], ["Miranda warnings must be given when a suspect is…", ["Arrested on the street", "In custody AND being interrogated", "Pulled over", "Photographed"], 1, 2, "Custody plus questioning triggers it — not every police encounter requires the warning."], ["You generally may record a conversation you're part of, but…", ["Never legally", "Some states require ALL parties to consent", "It's always illegal", "Only police may"], 1, 2, "One-party vs all-party consent varies by state — know your state's rule before you hit record."], ["A warranty 'disclaimer' in fine print attempts to…", ["Add protection", "Limit or waive the seller's responsibility for defects", "Lower the price", "Extend coverage"], 1, 1, "Magnuson-Moss limits how far written warranties can be gutted — read what's being waived."], ["If a debt collector contacts you, the FDCPA lets you…", ["Do nothing", "Demand validation of the debt and request that contact stop in writing", "Be arrested", "Ignore court dates"], 1, 1, "Validation first — and written instructions to cease most contact are your right."], ["Wage garnishment generally requires…", ["A phone call", "A court judgment first (with limited exceptions like taxes and child support)", "Employer whim", "Nothing"], 1, 2, "Most creditors must sue and win before touching a paycheck — know which exceptions skip that step."], ["An NDA (non-disclosure agreement) binds you to…", ["Work forever", "Keep specified information confidential", "Sell your rights", "Arbitrate"], 1, 0, "Define what's actually 'confidential' before signing — vague NDAs overreach."], ["'Joint and several liability' means each defendant can be…", ["Sued separately only", "Held responsible for the FULL amount, not just their share", "Excused", "Fined equally"], 1, 2, "The plaintiff can collect the whole judgment from the deepest pocket — who then chases the others."], ["A power of attorney lets you…", ["Become a lawyer", "Authorize someone to act on your behalf in defined matters", "Skip court", "Avoid taxes"], 1, 1, "Powerful and revocable — scope it carefully; it can be 'durable' to survive incapacity."], ["A will primarily…", ["Avoids all taxes", "Directs how your property is distributed and names guardians", "Skips probate", "Is only for the rich"], 1, 0, "Without one, the state's default rules decide — often not as you'd choose."], ["'Probate' is…", ["A type of parole", "The court process of validating a will and settling an estate", "A tax form", "A contract"], 1, 1, "Some planning tools reduce or bypass it — but the basic concept is court-supervised settlement."], ["Tenant rights typically include…", ["Free rent", "Habitable conditions, notice before entry, and deposit protections", "Lifetime leases", "No rules"], 1, 1, "Implied warranty of habitability exists even when the lease is silent — heat, water, safety."], ["If served with a lawsuit, the critical first step is…", ["Ignore it", "Note the response deadline and answer in time — default loses automatically", "Call the plaintiff", "Move away"], 1, 1, "Silence is a loss — courts can enter default judgment against those who don't respond."], ["Arbitration differs from court in that it is…", ["Always free", "Private, often binding, sometimes waiving your right to sue or appeal", "Run by juries", "Faster always and better"], 1, 2, "Find the arbitration clause BEFORE signing — you may be trading away the courthouse."], ["A 'cease and desist' letter…", ["Is a court order", "Demands someone stop a specified action, often before litigation", "Guarantees damages", "Is criminal"], 1, 1, "A warning shot in writing — not binding itself, but it documents notice."], ["Consumer protection laws like the FTC's exist to…", ["Raise prices", "Curb deceptive and unfair business practices", "Help only businesses", "Replace contracts"], 1, 1, "Bait-and-switch, hidden fees, false claims — there's a regulator and often a complaint path."], ["When the stakes or complexity are high, legal literacy includes knowing to…", ["Always self-represent", "Hire or consult a licensed attorney", "Avoid courts", "Trust the other side"], 1, 1, "The sovereign skill is judgment about the boundary — Module 10 maps free and low-cost help."], ["This material is best described as…", ["Legal advice", "Legal education — how the system works, not counsel on your specific case", "A guarantee", "Court-certified"], 1, 1, "Know your rights and read your documents; for your particular situation, consult a professional."], ["The most valuable everyday legal habit is…", ["Memorizing statutes", "Slowing down to read what you sign and ask before agreeing", "Avoiding all contracts", "Trusting fine print"], 1, 0, "Most legal trouble is signed into existence in a hurry — the pause is the protection."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The EQ Climb — Emotional Intelligence Game | Free GSU Game</title>
+<meta name="description" content="Infinite emotional intelligence game: self-awareness, regulation, empathy, and communication — including what the 93% myth gets wrong. Free, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Humanics · The Emotional IQ Shelf</div>
+  <h1>The EQ <span class="accent">Climb</span></h1>
+  <p class="sub">Regulate without suppressing · Read without projecting · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Rehearse a hard conversation with GENO — zero judgment, unlimited patience. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/humanics">↩ Humanics Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Open the Emotional IQ shelf on the Humanics hub, and take the Anger Management workbook for structured practice.</p>
+  </div>
+  <p class="fine">Companion game to the GSU Humanics library by Dr. Gene A. Constant. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "eq-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["Emotional intelligence (EQ) is the ability to…", ["Suppress all emotion", "Recognize, understand, and manage emotions in yourself and others", "Win arguments", "Avoid conflict"], 1, 0, "Five components: self-awareness, self-regulation, motivation, empathy, social skill."], ["Unlike IQ, emotional intelligence…", ["Is fixed at birth", "Can be developed at any age through practice", "Only matters at work", "Cannot be observed"], 1, 0, "Triggers can be learned, regulation strategies built, empathy practiced — EQ is trainable."], ["Self-awareness in EQ means…", ["Self-criticism", "Recognizing your own emotions and triggers as they arise", "Talking about yourself", "High self-esteem"], 1, 0, "You cannot regulate what you have not noticed — naming the feeling is step one."], ["Regulating 'without suppressing' means…", ["Hiding emotions completely", "Managing the response while acknowledging the feeling", "Venting freely", "Avoiding triggers forever"], 1, 1, "Suppression leaks; regulation channels. Feel it, name it, choose the response."], ["Reading emotion 'without projecting' warns against…", ["Eye contact", "Assuming others feel what you would feel", "Asking questions", "Noticing body language"], 1, 1, "Your map is not their territory — verify with questions instead of assuming."], ["Active listening primarily involves…", ["Planning your reply while they talk", "Full attention plus reflecting back what you heard", "Agreeing with everything", "Taking notes"], 1, 0, "Reflect, confirm, then respond — people open up when they feel accurately heard."], ["The famous claim that communication is '93% nonverbal'…", ["Is settled science", "Misapplies Mehrabian's research, which covered feelings when words and tone conflict", "Was never researched", "Understates it"], 1, 1, "The 7-38-55 numbers came from narrow UCLA experiments on attitude messages — not all communication."], ["What IS true about nonverbal signals?", ["They never matter", "They carry great weight, especially when they contradict the words", "They replace language", "Only face matters"], 1, 1, "When the mouth says 'fine' and the body says otherwise, people believe the body."], ["Debate aims to win; dialogue aims to…", ["Perform", "Understand", "Stall", "Concede"], 1, 0, "Knowing which mode a conversation needs is itself an EQ skill."], ["An emotional trigger is…", ["A weapon", "A stimulus that reliably sets off a strong emotional reaction in you", "Any criticism", "A mood"], 1, 0, "Mapping your own triggers turns ambushes into forecasts — you can prepare for known weather."], ["The physiological 'flooding' response during conflict suggests you should…", ["Push through immediately", "Pause and return when calm — the thinking brain is offline", "Raise your voice", "Leave permanently"], 1, 1, "A flooded nervous system cannot problem-solve; a structured break is strategy, not surrender."], ["Empathy as a 'tool for connection rather than performance' means…", ["Displaying concern publicly", "Using understanding to genuinely meet the other person", "Agreeing to keep peace", "Mirroring gestures"], 1, 1, "Performed empathy serves your image; real empathy serves the relationship."], ["Repairing a rupture in a relationship starts with…", ["Waiting for them to apologize", "Owning your part specifically, without 'but'", "Explaining their faults", "Acting like nothing happened"], 1, 1, "'I was short with you and that wasn't fair' beats a thousand 'I'm sorry you felt that way's."], ["Tone collapses in text because…", ["People type badly", "Text strips the vocal and facial channels that carry emotional meaning", "Screens are small", "Autocorrect interferes"], 1, 0, "The words arrive naked — readers dress them in whatever mood they're already wearing."], ["Why does social media often reward 'the worst version of every conversation'?", ["Users are worse people online", "Outrage and extremity drive engagement, which algorithms amplify", "Text is too slow", "Moderation is strict"], 1, 1, "The incentive structure pays for heat, not light — knowing that is digital self-defense."], ["Conflict resolution improves when you state…", ["Accusations early", "Observations and needs instead of judgments and blame", "Your conclusion only", "Ultimatums"], 1, 1, "'When X happened, I felt Y, I need Z' keeps the problem on the table and the person off it."], ["A bid for connection is…", ["A negotiation tactic", "A small attempt — comment, question, touch — seeking response from someone close", "A formal request", "A compliment"], 1, 2, "Turning toward small bids, researchers find, is the daily brickwork of strong relationships."], ["Motivation, in the EQ framework, refers to…", ["External rewards", "Inner drive that persists through setbacks toward meaningful goals", "Competition", "Praise-seeking"], 1, 1, "The regulated mind can delay gratification and keep rowing when the applause stops."], ["The best response to receiving hard feedback is usually…", ["Immediate defense", "Listen fully, ask clarifying questions, decide later what to adopt", "Counter-criticism", "Silence forever"], 1, 2, "Feedback is data; defensiveness corrupts the download. Sort the signal after, not during."], ["Being 'a person other people can rely on' is built primarily by…", ["Charisma", "Kept promises accumulating over time", "Talent", "Status"], 1, 0, "Trust is a ledger of small fulfilled commitments — deposits are slow, withdrawals are fast."], ["The four commonly cited domains of emotional intelligence are…", ["Speed, power, focus, calm", "Self-awareness, self-management, social awareness, relationship management", "IQ, EQ, AQ, SQ", "Past, present, future, self"], 1, 0, "Inward then outward: know yourself, manage yourself, read others, work with others."], ["'Naming the emotion' helps regulate it because…", ["It sounds smart", "Putting feelings into words engages the thinking brain and dampens the reaction", "It impresses others", "It hides the feeling"], 1, 1, "Name it to tame it — labeling the wave makes it possible to ride instead of be dragged."], ["Empathy and sympathy differ in that empathy…", ["Pities from a distance", "Feels WITH a person; sympathy feels FOR them", "Is weaker", "Requires agreement"], 1, 1, "Sympathy looks down into the hole; empathy climbs in and says 'I'm here.'"], ["'Emotional contagion' describes how…", ["Diseases spread", "Moods spread between people, especially from leaders and loud voices", "Anger is illegal", "Feelings are faked"], 1, 1, "Calm is catching too — which is why a regulated person changes a whole room."], ["The 'amygdala hijack' is when…", ["Logic wins", "A strong emotional response overrides rational thought", "Memory fails", "You fall asleep"], 1, 1, "The alarm system fires before the thinking brain checks the facts — the pause is how you reclaim the wheel."], ["A useful pause before reacting to a triggering message is to…", ["Reply instantly", "Wait, breathe, and ask 'what response would I respect tomorrow?'", "Forward it", "Match the tone"], 1, 1, "The unsent reply is often the wisest one — time converts heat into judgment."], ["Reflective listening means…", ["Repeating word for word", "Paraphrasing back the meaning and feeling to confirm you understood", "Staying silent", "Giving advice fast"], 1, 1, "'So you're frustrated because the plan changed last-minute?' — accuracy, checked out loud."], ["'I' statements ('I felt overlooked when…') work because they…", ["Assign blame cleverly", "Describe your experience without attacking, keeping the other person listening", "Win arguments", "Avoid the issue"], 1, 1, "'You always ignore me' starts a war; 'I felt overlooked' starts a conversation."], ["Emotional granularity is the skill of…", ["Hiding feelings", "Distinguishing fine shades — not just 'bad' but disappointed, anxious, or resentful", "Feeling less", "Crying on cue"], 1, 2, "Precision in naming gives precision in responding — 'bad' has no action attached; 'lonely' does."], ["Setting a boundary is best understood as…", ["Punishing someone", "Stating clearly what you will and won't do, kindly and firmly", "Building walls", "Winning"], 1, 1, "A boundary describes YOUR behavior, not theirs — 'I'll step away if voices rise,' not 'stop yelling.'"], ["Self-compassion in EQ means…", ["Excusing everything", "Treating yourself with the fairness you'd give a friend who erred", "Lowering standards", "Ignoring faults"], 1, 1, "Harsh self-talk doesn't motivate — it floods. The kind voice gets more done."], ["When someone is venting, they usually want first…", ["Solutions", "To feel heard before any fixing begins", "Statistics", "Silence then exit"], 1, 0, "Lead with the fix and they feel unheard; lead with understanding and they often solve it themselves."], ["Reading a room means attending to…", ["Only words", "Tone, posture, pace, and what's NOT being said", "Just the leader", "The agenda"], 1, 1, "Most of the message travels on channels the transcript never captures."], ["'Holding space' for someone means…", ["Reserving a seat", "Being present with their emotion without rushing to fix or judge it", "Giving advice", "Changing the subject"], 1, 2, "Sometimes the most helpful act is to not flinch from another person's hard feeling."], ["Anger, in EQ terms, is best treated as…", ["Always wrong", "A signal pointing at a violated value or unmet need — data to decode", "Weakness", "Strength to display"], 1, 1, "Under the anger is usually a 'because' — find it and the anger has somewhere useful to go."], ["A repair attempt in a conflict is…", ["A formal apology only", "Any gesture — humor, a soft word, a touch — that de-escalates and reconnects", "Winning the point", "Leaving"], 1, 1, "The skill isn't avoiding all rupture; it's getting good at the repair afterward."], ["Delayed gratification correlates with better outcomes because it reflects…", ["Wealth", "Self-regulation — the capacity to serve a future goal over a present urge", "Luck", "Intelligence alone"], 1, 1, "Not deprivation — direction. The regulated mind can wait because it can see further."], ["'Psychological safety' in a team is the shared sense that…", ["No one disagrees", "You can speak up, admit error, or ask questions without humiliation", "The boss is nice", "Mistakes are ignored"], 1, 2, "Teams that feel safe surface problems early — the single biggest predictor of team performance in major studies."], ["Mirroring body language in moderation tends to…", ["Creep people out", "Build rapport subtly, signaling attunement", "Win negotiations instantly", "Replace listening"], 1, 1, "Subtle and natural, not mimicry — humans relax around those who match their rhythm."], ["The 'Mehrabian myth' (93% of communication is nonverbal) is wrong because…", ["Nonverbals don't matter", "His narrow study covered feelings when words and tone conflict, not all communication", "He never existed", "It's actually 99%"], 1, 1, "Nonverbals matter enormously — but the famous statistic is a misquote of a tiny experiment."], ["Curiosity defuses defensiveness because…", ["It delays the fight", "A genuine question shifts the exchange from combat to exploration", "It flatters", "It ends conversations"], 1, 1, "'Help me understand' is hard to fight — curiosity and contempt can't occupy the same sentence."], ["Gratitude expressed specifically ('thank you for staying late on the report')…", ["Sounds robotic", "Lands harder than generic praise and reinforces the exact behavior", "Embarrasses people", "Is unnecessary"], 1, 1, "Specific recognition is a targeting system — it tells people precisely what to do more of."], ["Emotional labor refers to…", ["Heavy lifting", "The effort of managing one's feelings and expressions as part of a role", "Crying at work", "Therapy"], 1, 2, "Real, taxing, and often invisible — naming it is the first step to sharing it fairly."], ["The most reliable way to improve EQ is…", ["A personality test", "Practice plus reflection — noticing patterns, trying responses, reviewing outcomes", "Reading one book", "Waiting to mature"], 1, 0, "A skill, not a trait — built rep by rep, like any other."], ["A leader who names their own mistake openly tends to…", ["Lose respect", "Increase trust and make honesty safe for everyone else", "Seem weak", "Invite blame"], 1, 1, "Vulnerability at the top sets the ceiling for candor below it."], ["The 'platinum rule' upgrades the golden rule to…", ["Treat others as you'd want", "Treat others as THEY would want to be treated", "Treat others harshly", "Ignore others"], 1, 2, "Your preferences aren't universal — ask, then tailor. Empathy operationalized."], ["When emotions run high, the literacy move is to address…", ["The content first", "The emotion first — people can't process content while flooded", "Neither", "The clock"], 1, 1, "Calm the storm, then sail — facts bounce off a flooded nervous system."], ["Tone in writing collapses because…", ["People type badly", "The voice and face that carry feeling are stripped away, so readers supply their own", "Screens are small", "Words are weak"], 1, 0, "Assume the kinder reading, and write to prevent the unkind one — emojis and clarity exist for this."], ["Recognizing your own 'tells' under stress (clenched jaw, short replies) lets you…", ["Hide them", "Catch the state early and self-regulate before it leaks onto others", "Blame your body", "Ignore them"], 1, 1, "The body announces the storm before the mind admits it — learn your own early-warning system."], ["The deepest payoff of emotional intelligence is…", ["Manipulation", "Relationships and trust that compound over a lifetime", "Winning debates", "Looking calm"], 1, 1, "Read without projecting, regulate without suppressing — the quiet skills that make every other skill land."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

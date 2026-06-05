@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sovereign Mind Climb — Trivium & Critical Thinking Game | Free GSU Game</title>
+<meta name="description" content="Infinite critical thinking game: the trivium, fallacies, biases, statistics tricks, and media literacy. Free, GENO-coached, no login. From Global Sovereign University.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Critical Thinking · The Sovereign Mind Trivium Library</div>
+  <h1>The Sovereign Mind <span class="accent">Climb</span></h1>
+  <p class="sub">Grammar · Logic · Rhetoric — input, process, output · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Stuck on a fallacy? Say it out loud to GENO and reason it through together. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/critical-thinking">↩ Critical Thinking Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Read The Sovereign Mind — the anchor text this climb trains — and test the other mental-armor games on the Critical Thinking hub.</p>
+  </div>
+  <p class="fine">Companion game to The Sovereign Mind: Input, Process, Output by Dr. Gene A. Constant. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "sovereign-mind-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["What are the three arts of the trivium, in order?", ["Grammar, Logic, Rhetoric", "Reading, Writing, Arithmetic", "Ethics, Politics, Poetics", "Thesis, Antithesis, Synthesis"], 0, 0, "Input, process, output: Grammar gathers information, Logic reasons through it, Rhetoric communicates it with power."], ["In the Sovereign Mind framing, Grammar corresponds to…", ["Output", "Input", "Process", "Memory"], 1, 0, "Grammar is the input stage — gathering accurate information before reasoning begins."], ["Logic corresponds to which stage?", ["Input", "Output", "Process", "Storage"], 2, 0, "Logic is the processing stage — testing claims, spotting contradictions, drawing valid conclusions."], ["Rhetoric corresponds to…", ["Process", "Input", "Decoration", "Output"], 3, 0, "Rhetoric is output — communicating reasoned conclusions persuasively and honestly."], ["An 'ad hominem' fallacy attacks…", ["The person instead of the argument", "The argument's evidence", "A weaker version of the claim", "The audience's emotions"], 0, 0, "Attacking the speaker leaves the argument itself untouched — the claim could still be true."], ["A 'straw man' fallacy works by…", ["Citing a fake authority", "Misrepresenting the opposing view, then refuting that", "Appealing to tradition", "Shifting the burden of proof"], 1, 0, "Defeating a distorted copy of an argument proves nothing about the real one."], ["A 'false dichotomy' presents…", ["Too many options", "Only two options when more exist", "A circular argument", "An irrelevant conclusion"], 1, 0, "Either-or framing hides the middle paths — most real decisions have more than two doors."], ["'After this, therefore because of this' names which error?", ["Slippery slope", "Post hoc reasoning", "Equivocation", "Begging the question"], 1, 1, "Sequence is not causation — the rooster crows before dawn, but does not raise the sun."], ["Confirmation bias is the tendency to…", ["Trust the first number you see", "Seek and favor evidence that fits what you already believe", "Copy what the group believes", "Overvalue sunk costs"], 1, 0, "The cure is deliberately hunting for what would prove you wrong — the scientist's habit."], ["Anchoring bias means…", ["Sticking with a failing plan", "Over-relying on the first piece of information offered", "Judging by how easily examples come to mind", "Believing what authority says"], 1, 1, "The first number drops an anchor; every later estimate drags it. Reset by asking what the evidence alone says."], ["The sunk cost fallacy keeps people committed because…", ["Of future benefits", "They've already invested and hate to 'waste' it", "The odds improved", "Of peer pressure"], 1, 1, "Past costs are gone either way — only future costs and benefits should drive the decision."], ["In an argument, a premise is…", ["The conclusion", "A reason offered in support of the conclusion", "The emotional appeal", "The rebuttal"], 1, 0, "Premises are the legs the conclusion stands on — test the legs before trusting the chair."], ["A hidden assumption is…", ["A stated premise", "An unstated claim the argument needs to work", "A logical conclusion", "A counterexample"], 1, 1, "Find what must be true for the argument to hold — that unstated link is often where it breaks."], ["A valid argument with false premises produces…", ["A guaranteed true conclusion", "An unreliable conclusion", "A sound argument", "A paradox"], 1, 1, "Validity is about structure; soundness needs true premises too. Garbage in, garbage out — even through perfect logic."], ["Correlation differs from causation because…", ["Correlated things never cause each other", "Two things can move together without one causing the other", "Causation is just strong correlation", "Statistics can't show causation ever"], 1, 0, "Ice cream sales and drownings rise together — summer causes both. Look for the third factor."], ["A 'confounding variable' is…", ["The variable being measured", "A third factor influencing both things being compared", "An outlier", "A sampling error"], 1, 1, "It's the hidden hand: the lurking cause that makes two innocents look guilty of causing each other."], ["Cherry-picked data means…", ["Random sampling", "Selecting only the results that support your case", "Using fresh data", "Small sample sizes"], 1, 0, "Honest analysis shows the whole orchard, not just the sweetest tree."], ["A truncated graph axis can mislead by…", ["Showing too much data", "Exaggerating small differences", "Hiding the legend", "Using the wrong colors"], 1, 1, "Starting the y-axis at 98 instead of 0 turns a molehill into a mountain. Check the axis first, always."], ["Bandwagon propaganda persuades by claiming…", ["Experts agree", "Everyone is doing it", "Fear of consequences", "Tradition demands it"], 1, 0, "Popularity is not proof — ten million people can share one mistake."], ["Loaded language persuades through…", ["Statistical evidence", "Emotionally charged word choice", "Expert citation", "Logical structure"], 1, 0, "'Freedom fighter' and 'terrorist' can describe the same person — the word does the arguing before the facts arrive."], ["A red herring is…", ["A false statistic", "A distraction that pulls the argument off course", "A personal attack", "A circular definition"], 1, 0, "When cornered, change the subject — spotting the swerve is half of winning the argument back."], ["An appeal to false authority cites…", ["A relevant expert", "Someone famous but unqualified on the topic", "Peer-reviewed research", "Primary sources"], 1, 1, "An athlete's opinion on breakfast cereal is marketing, not nutrition science. Match the expert to the field."], ["'Begging the question' means…", ["Raising a new question", "Assuming the conclusion inside the premises", "Asking rhetorically", "Avoiding the question"], 1, 2, "'It's true because it says it's true' — the argument runs in a circle and never touches the ground."], ["Equivocation exploits…", ["Statistics", "A word's multiple meanings mid-argument", "The audience's fear", "Missing context"], 1, 2, "If 'law' means statute in premise one and natural law in premise two, the conclusion connects nothing."], ["The principle of charity says…", ["Donate to causes you debate", "Engage the strongest version of an opposing argument", "Always compromise halfway", "Assume good intentions equal good arguments"], 1, 2, "Beating the best version of the other side is the only victory that teaches you anything."], ["Falsifiability matters because a claim that cannot be disproven…", ["Must be true", "Cannot be tested and so carries no empirical weight", "Is a strong theory", "Is mathematically certain"], 1, 2, "A theory that fits every possible outcome predicts nothing. Ask: what evidence would change my mind?"], ["The Socratic method advances by…", ["Lecturing systematically", "Asking structured questions that expose assumptions", "Citing authorities", "Voting on answers"], 1, 1, "Questions do what assertions cannot: they make the mind examine its own foundations."], ["Base rate neglect means ignoring…", ["Recent evidence", "How common something is overall when judging a specific case", "Expert opinion", "Margin of error"], 1, 2, "A 99%-accurate test for a one-in-a-million condition still yields mostly false positives — the base rate rules."], ["Survivorship bias studies…", ["Only failures", "Only the cases that made it through, missing the silent failures", "Random samples", "Whole populations"], 1, 2, "WWII engineers armored where returning planes were NOT hit — the downed planes told the real story."], ["Occam's razor advises…", ["The simplest explanation that fits the evidence is preferred", "The most complex theory wins", "Never assume anything", "Authorities know best"], 0, 1, "Do not multiply assumptions beyond necessity — every extra assumption is another place to be wrong."], ["Steelmanning is the opposite of…", ["Stonewalling", "Straw-manning", "Brainstorming", "Bandwagoning"], 1, 1, "You rebuild the other side's argument stronger than they made it — then test yours against that."], ["In the trivium, why does Grammar come before Logic?", ["Tradition", "You cannot reason well over information you gathered badly", "Logic is harder", "Grammar is for children"], 1, 1, "Process follows input: clean data first, sharp reasoning second, powerful speech third."], ["A 'slippery slope' fallacy claims…", ["One step inevitably cascades to extreme consequences without showing the mechanism", "Small causes have small effects", "Trends always continue", "Change is always good"], 0, 1, "Chains of 'and then…' need evidence at every link, not just momentum."], ["The availability heuristic distorts judgment by…", ["Overweighting whatever comes to mind easily", "Favoring written sources", "Trusting numbers over stories", "Ignoring emotions"], 0, 2, "Plane crashes feel common because they make the news; the drive to the airport is the dangerous part."], ["Why does the Sovereign Mind treat critical thinking as a method, not a talent?", ["Talent can't be measured", "Methods can be learned, practiced, and taught to anyone", "Talent is genetic", "Methods never fail"], 1, 0, "Two and a half millennia of students learned the same trivium — the method is free, learnable, and yours."], ["'What it does NOT say' matters when reading any document because…", ["Silence implies consent", "People smuggle claims into texts that aren't there", "Documents are usually wrong", "Reading is interpretation"], 1, 1, "Half of constitutional argument is about words people assume are in the document and aren't. Read the text itself."], ["Dialogue differs from debate in that dialogue aims at…", ["Winning", "Understanding", "Compromise", "Performance"], 1, 0, "Debate scores points; dialogue builds maps. The sovereign mind knows which tool the moment needs."], ["The best first response to a shocking statistic is…", ["Share it", "Ask for the source, sample, and what was actually measured", "Reject it", "Memorize it"], 1, 1, "Who measured, how many, compared to what — three questions that deflate most manufactured outrage."], ["The 'tu quoque' (you too) fallacy deflects criticism by…", ["Citing evidence", "Pointing out the critic's hypocrisy instead of answering the charge", "Changing definitions", "Appealing to pity"], 1, 1, "A hypocrite can still be right — the doctor who smokes is still correct that smoking kills."], ["The 'no true Scotsman' move protects a claim by…", ["Adding evidence", "Redefining the group to exclude every counterexample", "Citing tradition", "Polling members"], 1, 2, "'No real expert would say that' — the definition shrinks until the claim can't lose, which means it can't inform."], ["The appeal to nature assumes…", ["Nature is irrelevant", "Natural means good and unnatural means bad", "Science beats instinct", "Synthetic is superior"], 1, 1, "Arsenic is natural; vaccines are not. 'Natural' describes origin, not safety or virtue."], ["The genetic fallacy judges a claim by…", ["Its evidence", "Its source or origin rather than its merits", "Its popularity", "Its age"], 1, 2, "Even a broken clock is right twice a day — check the claim, not just where it came from."], ["The gambler's fallacy expects…", ["Streaks to continue forever", "Random events to 'balance out' in the short run", "Casinos to lose", "Skill to beat dice"], 1, 1, "The coin has no memory. Five heads in a row leaves the sixth flip at exactly 50/50."], ["A hasty generalization draws a big conclusion from…", ["Decades of data", "A sample too small or unrepresentative to support it", "Peer review", "Multiple studies"], 1, 0, "Two bad meals don't condemn a cuisine; one anecdote is a story, not a statistic."], ["The appeal to ignorance argues that…", ["Experts disagree", "A claim is true because it hasn't been proven false", "Evidence is mixed", "Questions are bad"], 1, 1, "Absence of disproof is not proof — the burden sits with whoever makes the claim."], ["The middle-ground fallacy assumes…", ["Extremes are always right", "The truth must lie between two positions", "Compromise is impossible", "Averages lie"], 1, 2, "If one person says 2+2=4 and another says 2+2=6, the answer is not 5."], ["The fallacy of composition assumes…", ["Parts differ from wholes", "What's true of the parts must be true of the whole", "Wholes have no parts", "Teams equal players"], 1, 2, "Every player being great doesn't make a great team — wholes have properties parts lack."], ["Anecdotal evidence is weak because…", ["Stories are false", "Vivid single cases can't reveal patterns or rates", "People lie", "It's old-fashioned"], 1, 0, "'My grandfather smoked and lived to 95' — survivors tell stories; statistics count the silent."], ["The Dunning-Kruger effect describes how…", ["Experts overestimate themselves", "Low skill often comes with high confidence, because judging skill requires skill", "Confidence equals competence", "Practice reduces confidence"], 1, 1, "Knowing enough to know what you don't know is itself an achievement — beware the easy certainty of beginners (including yourself)."], ["Hindsight bias makes past events seem…", ["Random", "Obvious and predictable after the fact", "Impossible", "Irrelevant"], 1, 1, "'I knew it all along' — except nobody wrote it down beforehand. Keep predictions in writing."], ["The halo effect causes one good trait to…", ["Stand alone", "Color our judgment of unrelated traits", "Disappear", "Create suspicion"], 1, 1, "Attractive, articulate, or famous gets unconsciously scored as honest and smart — check each trait separately."], ["The framing effect shows that choices shift when…", ["Facts change", "The same facts are worded differently ('90% survive' vs '10% die')", "Stakes rise", "Time passes"], 1, 1, "Identical information, opposite feelings — re-frame every important choice both ways before deciding."], ["In-group bias inclines us to…", ["Distrust everyone", "Favor our own group's members and claims", "Favor strangers", "Ignore groups"], 1, 1, "The argument sounds stronger in your team's jersey — strip the jersey and re-read it."], ["Negativity bias means…", ["Optimism rules judgment", "Bad events grab more attention and memory than equally sized good ones", "News is balanced", "Threats are ignored"], 1, 1, "One insult outweighs five compliments; one crime story outweighs a falling crime rate. Calibrate against the data."], ["Recency bias overweights…", ["Ancient history", "Whatever happened last", "First impressions", "Written records"], 1, 1, "The latest event feels like the trend — zoom out before declaring one."], ["Mean versus median: the median is more honest when…", ["Data is symmetric", "A few extreme values would drag the average", "Samples are huge", "Numbers are small"], 1, 1, "One billionaire walks into a bar and the 'average' patron is rich — the median patron didn't change."], ["'Statistically significant' means…", ["Important in real life", "Unlikely to be due to chance alone — which may still be a tiny effect", "Proven true", "Large"], 1, 2, "Significance is about chance, not size — a real but trivial effect can be 'significant.'"], ["Percentage points versus percent: a rate rising from 2% to 4% is…", ["A 2% increase", "A 100% relative increase, or 2 percentage points", "A 4% increase", "Unchanged"], 1, 2, "'Doubled!' and 'up 2 points' describe the same change — headlines pick whichever sounds bigger."], ["Relative versus absolute risk: 'cuts risk in half' matters less when…", ["Risk is high", "The absolute risk was tiny to begin with (1 in a million → 1 in 2 million)", "Studies are large", "Drugs are cheap"], 1, 2, "Always ask: half of WHAT? Relative numbers sell; absolute numbers inform."], ["Regression to the mean explains why…", ["Streaks never end", "Extreme performances tend to be followed by more ordinary ones", "Practice fails", "Averages rise"], 1, 2, "The rookie of the year 'slumps' and the cure 'works' on the worst week — extremes drift back naturally."], ["A 'necessary' condition differs from a 'sufficient' one:", ["They're identical", "Necessary must be present; sufficient alone guarantees the result", "Sufficient must be present", "Both guarantee results"], 1, 2, "Oxygen is necessary for fire, not sufficient — keep the two straight and half of bad arguments dissolve."], ["Affirming the consequent reasons: 'If A then B; B, therefore A.' It fails because…", ["B never happens", "Other causes besides A can produce B", "A causes B", "Logic forbids ifs"], 1, 2, "If it rains the grass is wet; the grass is wet — sprinklers exist. The arrow only runs one way."], ["Ethos, pathos, logos are appeals to…", ["Law, custom, fact", "Credibility, emotion, and logic", "Past, present, future", "Self, group, world"], 1, 1, "Aristotle's trio — persuasion runs on all three; the literate listener notices which one is doing the work."], ["A euphemism persuades by…", ["Precision", "Softening reality with gentler words ('downsizing', 'collateral damage')", "Volume", "Statistics"], 1, 1, "Rename the thing and you renegotiate the feeling — translate euphemisms back before judging."], ["The 'Gish gallop' tactic works by…", ["One deep argument", "Firing more claims than can possibly be answered in the time given", "Staying silent", "Citing one source"], 1, 2, "Refuting takes ten times longer than asserting — the flood is the strategy. Pin down ONE claim and finish it."], ["Whataboutism responds to criticism with…", ["Evidence", "'But what about THEIR wrongdoing?' — deflection by counter-accusation", "An apology", "A question"], 1, 1, "Two wrongs make two wrongs. The original charge still sits on the table, unanswered."], ["Lateral reading means checking a source by…", ["Reading it twice", "Opening new tabs to see what OTHER sources say about it", "Reading its About page", "Trusting its design"], 1, 1, "Fact-checkers leave the site to judge the site — the About page is the suspect's own testimony."], ["A primary source is…", ["A summary", "Direct, firsthand evidence — the document, data, or witness itself", "The first article you find", "A textbook"], 1, 1, "Closer to the event, fewer hands in between — secondary sources interpret; primaries testify."], ["Native advertising is…", ["Local news", "Paid content styled to look like ordinary articles", "Public broadcasting", "Classified ads"], 1, 1, "The word 'sponsored' in small gray letters is doing a lot of work — find it before trusting."], ["When a headline asks a dramatic question ('Is X killing you?'), the seasoned reader…", ["Panics appropriately", "Applies Betteridge's instinct: question headlines often signal weak evidence", "Shares first", "Skips the article"], 1, 1, "If they had the goods, the headline would state it. The question mark is a hedge."], ["A sample is 'representative' when…", ["It's large", "It mirrors the relevant features of the population being studied", "Volunteers chose it", "It's random in time"], 1, 1, "A million online volunteers can mislead worse than a thousand properly drawn — how you sample beats how many."], ["The motte-and-bailey tactic defends a bold claim by…", ["Strengthening it", "Retreating to a modest, defensible version when challenged, then re-expanding later", "Abandoning it", "Citing experts"], 1, 2, "Bold claim for the crowd, safe claim for the critics — hold the speaker to ONE version."], ["'Just asking questions' becomes a tactic when…", ["Questions are sincere", "Insinuations are smuggled in with no burden of proof accepted", "Answers exist", "Curiosity is real"], 1, 2, "Questions can assert without owning the assertion — notice when the asker rejects every answer."], ["The contrapositive of 'If A, then B' is…", ["If B, then A", "If not B, then not A — and it's logically equivalent", "If not A, then not B", "A and B"], 1, 2, "'If it's a dog, it's a mammal' equals 'if it's not a mammal, it's not a dog' — the converse, however, is not."], ["Simpson's paradox warns that a trend can…", ["Never reverse", "Reverse when grouped data is combined or split", "Only appear in graphs", "Prove causation"], 1, 2, "A treatment can win in every subgroup and lose overall — ask how the data was grouped."], ["An 'epistemic' question asks…", ["What should I do?", "How do I know this, and how confident should I be?", "Who benefits?", "What happens next?"], 1, 1, "Before what to believe comes how you'd know — the sovereign mind audits its own certainty."], ["The best habit when you notice you were wrong is…", ["Quiet revision", "Update openly, note what misled you, and adjust the method that produced the error", "Defend the old view", "Blame the source"], 1, 1, "Being wrong is data about your process — waste the embarrassment, keep the lesson."], ["Why end every climb with 'what would change my mind?'", ["It's polite", "A belief with no possible updater isn't a conclusion — it's a possession", "It ends arguments", "It's rhetorical"], 1, 1, "The question keeps beliefs answerable to reality — the whole point of the trivium's middle art."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

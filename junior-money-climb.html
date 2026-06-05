@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Junior Money Climb — Kids' Money Game | Free GSU Game</title>
+<meta name="description" content="Infinite kids' money game: saving, needs vs wants, earning, and the three jars. Ages 7+. Free, GENO-coached, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Wealthification Junior · Money Skills for Kids</div>
+  <h1>The Junior Money <span class="accent">Climb</span></h1>
+  <p class="sub">Save some · Spend some · Give some · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Ask GENO to help plan a savings goal for anything you're dreaming of. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/wealthification-junior">↩ Wealthification Junior</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Set up three jars tonight — save, spend, give — pick one savings goal with a price and a weekly plan, and watch the first jar grow.</p>
+  </div>
+  <p class="fine">A family game — best played with a grown-up nearby. Companion game to GSU Wealthification Junior. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "junior-money-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["Money is mainly…", ["Magic paper", "A tool people trade for things they need and want", "Only for adults", "A toy"], 1, 0, "A tool — and like every tool, it works best for the person who learns how to use it."], ["A 'need' is something like…", ["A new video game", "Food, a safe home, and clothes", "Candy", "More toys"], 1, 0, "Needs keep you healthy and safe. Wants are the fun extras — both are okay, but needs come first."], ["A 'want' is…", ["Something you must have to live", "Something fun you'd like but can live without", "Always bad", "Free"], 1, 0, "Wanting things is normal! Smart savers just decide on purpose instead of by accident."], ["If you get $10 and spend $10, your savings grow by…", ["$10", "$0", "$5", "$1"], 1, 0, "Saving means keeping some — even $1 of every $10 starts the habit that builds everything later."], ["A piggy bank or savings jar teaches…", ["Hiding things", "Watching saved money grow when you leave it alone", "Spending faster", "Counting only"], 1, 0, "Seeing the pile grow is the first superpower — patience you can count."], ["Earning money usually comes from…", ["Wishing", "Doing work that helps someone — chores, jobs, making things people value", "Finding it", "Asking loudly"], 1, 0, "Money flows toward helpfulness. The bigger the help, the bigger the thank-you."], ["If a toy costs $20 and you save $5 each week, you can buy it in…", ["1 week", "4 weeks", "10 weeks", "20 weeks"], 1, 1, "$5 + $5 + $5 + $5 = $20. A savings goal is just a math problem with a prize at the end."], ["Waiting to buy something until you've saved enough is called…", ["Being slow", "Delayed gratification — and it's a real superpower", "Losing", "Cheating"], 1, 1, "People who can wait for the bigger, better thing usually end up with more of everything."], ["'Interest' from a bank is…", ["A fee you pay to save", "A little extra money the bank pays you for keeping savings there", "A tax", "A trick"], 1, 1, "Your money makes baby money while it sleeps. The longer it sleeps, the bigger the family."], ["If you have $100 saved and earn 10% interest in a year, you'd have about…", ["$10", "$110", "$101", "$200"], 1, 1, "$100 + $10 = $110. And next year the interest counts the $110 — that's money growing on money."], ["Before buying something, a smart question is…", ["Is it shiny?", "Do I want this more than the thing I'm saving for?", "Does my friend have it?", "Is it the last one?"], 1, 1, "Every dollar can only be spent once. Comparing to your goal keeps your goal alive."], ["Sharing or giving some money to help others…", ["Wastes it", "Is one of the three smart jars: save, spend, give", "Is only for rich people", "Loses interest"], 1, 1, "Save some, spend some, give some — the three-jar habit grows money AND character."], ["Ads on TV and videos are made to…", ["Inform you only", "Make you want things — which is why smart kids pause before wanting", "Save you money", "Be fair"], 1, 1, "Ads are want-machines. Knowing that is armor: you decide, not the commercial."], ["If two stores sell the same toy for $15 and $12, the smart move is…", ["Buy the $15 one", "Buy the $12 one — comparing prices is free money", "Buy both", "Buy neither ever"], 1, 0, "Three saved dollars is three earned dollars — comparison shopping is a paying job that takes one minute."], ["Borrowing money means…", ["Free money", "You must pay it back — usually with extra", "Keeping it", "A gift"], 1, 1, "Borrowed money is rented money. The rent is called interest, and it works AGAINST you."], ["A 'savings goal' works best when it is…", ["Secret and vague", "Specific: the thing, the price, and the weekly plan", "Impossible", "Someone else's idea"], 1, 1, "'A bike, $80, $8 a week, 10 weeks' beats 'save someday' every single time."], ["If you earn money helping a neighbor, the FIRST smart move is…", ["Spend it all that day", "Put your save-share into the jars before spending", "Hide it", "Lose it"], 1, 2, "Pay your future self first — even kids can run the grown-up rule."], ["Why does GSU teach kids about money?", ["To make kids worry", "Because kids who understand money grow into adults nobody can trick", "Banks asked", "It replaces fun"], 1, 0, "Money skills are freedom skills — and the earlier the seed, the bigger the tree."], ["If you have 3 quarters, how much money is that?", ["25 cents", "75 cents", "3 dollars", "50 cents"], 1, 0, "Each quarter is 25 cents. 25 + 25 + 25 = 75 cents!"], ["Saving money means…", ["Spending it fast", "Keeping some instead of spending it all", "Hiding it forever", "Giving it away"], 1, 0, "Even saving a little from each dollar starts a powerful habit."], ["If a snack costs $2 and you have $5, your change is…", ["$2", "$3", "$5", "$7"], 1, 0, "$5 minus $2 equals $3 back in your pocket."], ["The smartest way to reach a savings goal is to…", ["Wish for it", "Save a little bit regularly until you have enough", "Spend more", "Forget about it"], 1, 0, "Small amounts add up — $2 a week becomes $8 a month becomes a real goal reached."], ["Comparing prices at two stores helps you…", ["Waste time", "Find the better deal and keep more money", "Spend more", "Get confused"], 1, 0, "The same toy can cost less at one store — checking is like finding free money."], ["'Earning' money usually means…", ["Finding it", "Doing helpful work like chores or a job", "Wishing", "Taking it"], 1, 0, "Money comes to people who help others — the more you help, the more you earn."], ["Which is a NEED?", ["A new toy", "Healthy food", "Candy", "A video game"], 1, 0, "Needs keep you healthy and safe. Wants are the fun extras that come after."], ["Which is a WANT?", ["Water to drink", "A warm coat in winter", "A fun new game", "A safe place to sleep"], 2, 0, "Wants are nice to have — saving up for them on purpose feels great!"], ["If you save $3 every week, how much will you have after 4 weeks?", ["$3", "$12", "$7", "$30"], 1, 1, "$3 + $3 + $3 + $3 = $12. Saving every week really adds up!"], ["The three smart money jars are…", ["Big, medium, small", "Save, Spend, Give", "Coins, bills, cards", "Mine, yours, ours"], 1, 1, "Save some for goals, spend some for now, give some to help others — all three matter."], ["Why do stores make ads?", ["To inform only", "To make you WANT to buy things", "To save you money", "To be fair"], 1, 1, "Ads are want-machines! Smart kids pause and ask, 'Do I really need this?'"], ["If you really want something, the patient choice is to…", ["Buy it right now", "Save up until you can afford it", "Borrow money", "Forget it"], 1, 1, "Waiting for the bigger, better thing is a real superpower called patience."], ["Interest from a bank is…", ["A fee you pay", "A little extra money the bank gives you for saving", "A trick", "A toy"], 1, 1, "Your saved money makes a little more money while it rests — like magic that's actually math!"], ["If a toy you want costs $20 and you have $14, you still need…", ["$6", "$34", "$4", "$20"], 0, 1, "$20 minus $14 equals $6 more to save. You're almost there!"], ["Giving some money to help others…", ["Wastes it", "Is one of the three smart jars and feels good", "Is only for grown-ups", "Loses money"], 1, 1, "Helping others is part of being smart with money — and it grows a kind heart too."], ["Borrowing money means you…", ["Keep it free", "Have to pay it back, usually with a little extra", "Got a gift", "Earned it"], 1, 1, "Borrowed money is like renting — you give back more than you took, so borrow carefully."], ["A good savings goal has…", ["Just a wish", "The thing, the price, and a weekly plan", "A secret", "Someone else's idea"], 1, 1, "'A bike, $80, save $8 a week' beats 'save someday' every single time!"], ["When you earn money helping a neighbor, the first smart step is…", ["Spend it all today", "Put some in your save and give jars first", "Hide it", "Lose it"], 1, 2, "Pay your future self first — even kids can use the grown-up rule!"], ["If you split $10 evenly into 3 jars (save, spend, give), each gets about…", ["$10", "A little over $3", "$30", "$1"], 1, 2, "$10 split three ways is about $3.33 each — sharing your money across all three jars."], ["A budget for kids is…", ["Boring rules", "A simple plan for your money so YOU decide", "A punishment", "Only for adults"], 1, 1, "It's like a game plan — you're the boss of where your money goes."], ["Money that 'grows over time' in savings shows the power of…", ["Spending", "Patience and interest working together", "Luck", "Wishing"], 1, 2, "The longer money rests and earns, the bigger it grows — time is a saver's best friend."], ["The best reason to learn about money young is…", ["Adults say so", "Smart money kids grow into adults nobody can trick", "To worry", "It's a rule"], 1, 0, "Learning when it's easy makes life easier later — you're building a superpower!"], ["If you buy lemonade supplies for $4 and sell cups for $10 total, your profit is…", ["$10", "$6", "$4", "$14"], 1, 1, "$10 earned minus $4 spent = $6 profit. Profit is what's left AFTER costs!"], ["In a lemonade stand, the cost of cups and lemons is called…", ["Profit", "Expenses", "Allowance", "Change"], 1, 1, "Expenses are what you spend to run the stand — keep them smaller than what you earn!"], ["If you charge too much for lemonade, customers might…", ["Buy more", "Not buy any", "Pay double", "Tell friends"], 1, 1, "Price is a balance — too high and nobody buys, too low and you earn too little."], ["A bank is a place that…", ["Hides money forever", "Keeps money safe and pays a little interest on savings", "Gives free money", "Only adults visit"], 1, 0, "Safer than under the mattress — and your savings earn a little while they wait."], ["If your allowance is $5 a week and you save half, in 8 weeks you'll have saved…", ["$5", "$20", "$40", "$10"], 1, 2, "Half of $5 is $2.50; $2.50 × 8 weeks = $20. Half-saving is a strong habit!"], ["You want a $30 gift for your mom and have 6 weeks. You need to save about…", ["$30 a week", "$5 a week", "$1 a week", "$10 a week"], 1, 2, "$30 ÷ 6 weeks = $5 a week. Goals become easy when you divide them!"], ["Which coins make exactly 50 cents?", ["Two dimes", "Two quarters", "Three nickels", "Four pennies"], 1, 1, "25 + 25 = 50. Quarters are the quickest way to count up!"], ["Choosing which charity to give to is a chance to…", ["Spend faster", "Think about what problems YOU care about helping", "Avoid math", "Get gifts back"], 1, 1, "Your give jar is your power to help — animals, hungry families, sick kids: you choose what matters."], ["A savings chart with stickers for each week helps because…", ["Stickers are money", "Seeing the streak grow makes saving feel like winning a game", "Charts are required", "It hides money"], 1, 0, "Streaks are powerful — don't break the chain and the goal arrives almost by itself."], ["If something costs $7.25 and you pay with $10, your change is…", ["$2.75", "$3.25", "$2.25", "$3.75"], 0, 2, "$10.00 minus $7.25 = $2.75. Counting change protects your money!"], ["'On sale' means…", ["Free", "A lower price than usual — but only a deal if you needed it anyway", "Better quality", "Buy two"], 1, 1, "A sale on something you didn't need doesn't save money — it spends it."], ["Trading your time to help someone (raking leaves) teaches that money is really…", ["Paper", "Stored-up helpfulness — you earned it by making someone's day easier", "Luck", "A game"], 1, 1, "Every dollar is a thank-you for help given — that's the secret of all earning."], ["If two friends split a $9 job evenly, each earns…", ["$9", "$4.50", "$3", "$5"], 1, 1, "$9 ÷ 2 = $4.50 each. Fair splitting keeps friends AND teaches division!"], ["The smartest first question before buying ANYTHING is…", ["Is it shiny?", "Do I want this more than my savings goal?", "Is it the last one?", "Does my friend have it?"], 1, 0, "Your goal is the measuring stick — every purchase competes with the dream."], ["Money you find on the ground at school should…", ["Go in your pocket fast", "Go to a teacher in case someone lost it", "Be split", "Be hidden"], 1, 0, "Honesty with money is part of being good with money — character counts in every coin."], ["If a $12 toy is '50% off,' the new price is…", ["$12", "$6", "$2", "$10"], 1, 2, "50% off means half off — half of $12 is $6. Percent math finds the real price!"], ["Waiting one day before buying something you suddenly want is smart because…", ["Stores close", "The 'gotta have it' feeling often fades, revealing what you truly want", "Prices rise", "It's a rule"], 1, 1, "Sleep on it — tomorrow-you is the wisest shopper you know."], ["The BEST thing your three jars teach you is…", ["Counting", "That YOU are in charge of your money — not ads, not impulses", "Patience only", "Math facts"], 1, 0, "Save, spend, give — three jars, one boss: you. That's money sovereignty, kid-sized!"]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

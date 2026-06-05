@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Thinkification Climb — Problem-Solving & Mental Models Game | Free GSU Game</title>
+<meta name="description" content="Infinite thinking-skills game: mental models, first principles, learning how to learn, and creative problem-solving. Free, GENO-coached, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Thinkification · The Mind's Workshop</div>
+  <h1>The Thinkification <span class="accent">Climb</span></h1>
+  <p class="sub">First principles · Mental models · Learn how to learn · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Hand GENO a stuck problem and run the five whys together, out loud. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/thinkification">↩ Thinkification Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Pick one mental model from the game and apply it to a real decision this week — then visit Critical Thinking for the defensive half of the toolkit.</p>
+  </div>
+  <p class="fine">Companion game to the GSU Thinkification hub. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "thinkification-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["A 'mental model' is…", ["A daydream", "A simple map of how something works that helps you reason about it", "A memory trick only", "A type of test"], 1, 0, "Models like supply-and-demand or feedback loops are thinking tools — collect them like a toolbox."], ["First-principles thinking means…", ["Copying experts", "Breaking a problem down to its basic truths and rebuilding from there", "Going with tradition", "Trusting instinct only"], 1, 1, "Instead of 'how is it usually done?', ask 'what is actually true here?' — then build up."], ["Inversion solves problems by asking…", ["What's the fastest route?", "How could this fail — and how do I avoid that?", "Who's to blame?", "What's popular?"], 1, 1, "Avoiding stupidity is easier than seeking brilliance — map the failure modes first."], ["The 'five whys' technique…", ["Asks five people", "Repeats 'why?' to drill from symptom to root cause", "Lists five answers", "Takes five days"], 1, 0, "The machine stopped — why? — overload — why? — keep digging until you hit the real root."], ["A feedback loop is…", ["A music effect", "A system where output circles back to influence the next input", "A survey", "An argument"], 1, 1, "Savings compounding, practice improving skill, outrage feeding outrage — loops run the world."], ["Second-order thinking asks…", ["What happens first?", "And then what? — the consequences of the consequences", "Who agrees?", "What's the average?"], 1, 1, "Most bad decisions look good at first order. Play the tape forward two more moves."], ["'Divergent' versus 'convergent' thinking:", ["Both narrow options", "Divergent generates many possibilities; convergent selects among them", "Divergent is math only", "Convergent is creative only"], 1, 1, "Brainstorm wide first, judge later — mixing the modes too early kills the best ideas."], ["The best brainstorming rule is…", ["Criticize early", "Defer judgment — quantity first, quality emerges from the pile", "One idea per person", "Vote immediately"], 1, 0, "Bad ideas are stepping stones; an early 'no' burns the bridge to the good one behind it."], ["Analogical thinking solves problems by…", ["Avoiding comparisons", "Borrowing structure from a domain where the problem is already solved", "Pure logic", "Memorization"], 1, 1, "Velcro came from burrs; printing from wine presses — solved problems are everywhere wearing disguises."], ["A 'spaced repetition' approach to learning…", ["Crams everything at once", "Reviews material at growing intervals, right before forgetting", "Reads once", "Highlights heavily"], 1, 1, "Memory strengthens at the edge of forgetting — schedule the reviews and the curve bends your way."], ["Active recall beats rereading because…", ["It's faster", "Retrieving from memory strengthens it far more than recognizing on a page", "Books are boring", "It feels easier"], 1, 1, "Close the book and answer from nothing — the struggle IS the learning."], ["The Feynman technique tests understanding by…", ["Taking a quiz", "Explaining the idea simply, as if to a child, and finding the gaps", "Memorizing definitions", "Speed reading"], 1, 0, "Where your simple explanation stumbles is exactly where your understanding is hollow."], ["A 'problem statement' should be written…", ["After solving", "Before solving — a problem well-stated is half-solved", "Never", "By someone else"], 1, 1, "Most teams solve the wrong problem brilliantly. Defining it precisely is the highest-leverage step."], ["'Chesterton's Fence' warns…", ["Against all fences", "Don't remove a rule until you understand why it was built", "Fences are useless", "Always preserve everything"], 1, 2, "The fence in the field exists for a reason you may not see — understand before you demolish."], ["The map is not the territory means…", ["Maps are useless", "Models simplify reality and can mislead when mistaken for it", "Geography is hard", "Plans always fail"], 1, 2, "All models are wrong; some are useful — hold them firmly, not religiously."], ["Probabilistic thinking replaces 'will it happen?' with…", ["'Who says so?'", "'How likely is it, and what's the cost if I'm wrong?'", "'When exactly?'", "'Why me?'"], 1, 2, "Decisions under uncertainty are bets — size them by likelihood and consequence, not by hope."], ["Deliberate practice differs from repetition because it…", ["Takes longer", "Targets specific weaknesses at the edge of ability with feedback", "Is more fun", "Avoids mistakes"], 1, 1, "Ten years of comfortable repetition builds one year of skill ten times. Practice the hard edge."], ["'Beginner's mind' is valuable because…", ["Experts are wrong", "Fresh eyes see possibilities that expertise has learned to ignore", "Knowledge is bad", "Questions annoy people"], 1, 2, "The expert knows a hundred reasons it can't work; the beginner sometimes just does it."], ["Why does Thinkification exist alongside Critical Thinking at GSU?", ["They're identical", "Critical thinking defends the mind; Thinkification builds with it — problem-solving, creativity, learning how to learn", "One replaces the other", "Marketing"], 1, 0, "The shield and the workshop: one guards against bad ideas, the other manufactures good ones."], ["A 'mental model' is best described as…", ["A daydream", "A simple map of how something works that aids reasoning", "A memory trick", "A test score"], 1, 0, "Supply and demand, feedback loops, incentives — thinking tools you collect like a toolbox."], ["'First principles' reasoning means…", ["Copying experts", "Breaking a problem to basic truths and rebuilding up", "Following tradition", "Trusting gut"], 1, 1, "Ask 'what's actually true here?' instead of 'how is it usually done?' — then build."], ["Spaced repetition strengthens memory by…", ["Cramming once", "Reviewing at growing intervals, just before forgetting", "Highlighting", "Reading aloud"], 1, 1, "Memory firms at the edge of forgetting — schedule reviews and the curve bends your way."], ["Active recall means…", ["Rereading notes", "Retrieving answers from memory without looking", "Highlighting", "Listening"], 1, 1, "Close the book and answer from nothing — the struggle IS the learning."], ["Occam's razor advises preferring…", ["The most complex idea", "The simplest explanation that fits the evidence", "No assumptions", "Authority"], 1, 1, "Don't multiply assumptions beyond need — each extra one is another place to be wrong."], ["Chesterton's Fence warns you to…", ["Tear down all rules", "Understand why a rule exists before removing it", "Keep everything", "Build fences"], 1, 2, "The fence in the field is there for a reason you may not see — understand before you demolish."], ["Deliberate practice differs from repetition by…", ["Lasting longer", "Targeting specific weaknesses with feedback", "Being fun", "Avoiding errors"], 1, 1, "Comfortable repetition plateaus; practicing the hard edge improves."], ["Analogical thinking borrows…", ["Money", "Structure from a domain where the problem is already solved", "Authority", "Time"], 1, 1, "Velcro from burrs, printing from wine presses — solved problems wear disguises everywhere."], ["A 'premortem' imagines…", ["Success", "The project has failed — then asks why, before starting", "Retirement", "Profits"], 1, 2, "Pre-grieving the failure surfaces risks while you can still prevent them."], ["Opportunity cost is…", ["Cash spent", "The value of the best option you gave up", "A bank fee", "A tax"], 1, 1, "Every yes is a hidden no — the real price of anything is what you forgo to get it."], ["Confirmation bias, the thinker's enemy, is the pull to…", ["Seek disproof", "Notice only evidence that fits what you already believe", "Stay neutral", "Ask questions"], 1, 0, "The cure: deliberately hunt for what would prove you wrong."], ["The 'beginner's mind' is valuable because…", ["Experts are wrong", "Fresh eyes see options expertise has learned to ignore", "Knowledge is bad", "Questions annoy"], 1, 2, "The expert knows a hundred reasons it can't work; the beginner sometimes just does it."], ["Breaking a big problem into smaller parts is called…", ["Inversion", "Decomposition", "Recall", "Framing"], 1, 1, "Eat the elephant one bite at a time — most overwhelming problems are several small ones stacked."], ["'Steelmanning' an idea means…", ["Attacking it", "Building its strongest version before evaluating", "Ignoring it", "Copying it"], 1, 1, "Beat the best version and your conclusion is trustworthy — beat a weak one and you've learned nothing."], ["Thinking 'in bets' means treating decisions as…", ["Certainties", "Probabilistic wagers you can be right about and still lose", "Guesses", "Facts"], 1, 2, "A good decision with a bad outcome is still a good decision — judge process, not just results."], ["The 'availability' shortcut tricks us into…", ["Careful math", "Judging likelihood by how easily examples come to mind", "Ignoring news", "Trusting data"], 1, 1, "Vivid and recent feels common — plane crashes over car crashes. Reach for the base rate."], ["Writing down a problem clearly helps because…", ["It's tidy", "A problem well-stated is half-solved", "It's required", "Others can read it"], 1, 1, "Vague problems get vague solutions — precision in the question sharpens the answer."], ["Thinkification exists alongside Critical Thinking because…", ["They're identical", "One builds ideas (workshop); the other defends them (shield)", "One replaced the other", "Marketing"], 1, 0, "Manufacture good ideas AND guard against bad ones — two halves of one sovereign mind."], ["The 'method of loci' (memory palace) works by…", ["Repetition alone", "Placing items to remember along a familiar mental route", "Writing lists", "Sleeping more"], 1, 1, "Ancient orators' trick — spatial memory is powerful, so you hang facts on places you already know."], ["Chunking improves memory by…", ["Forgetting details", "Grouping items into meaningful units (1-7-7-6 → 1776)", "Repeating faster", "Color coding"], 1, 1, "Working memory holds few items — make each item carry more."], ["A mnemonic like 'My Very Educated Mother…' works because…", ["It's funny", "Structure and meaning give the brain hooks raw lists lack", "Planets are easy", "Rhymes are magic"], 1, 0, "The brain keeps stories and patterns; it drops arbitrary sequences."], ["The Eisenhower matrix sorts tasks by…", ["Cost and time", "Urgent/not-urgent against important/not-important", "Difficulty", "Who assigned them"], 1, 1, "The dangerous quadrant is urgent-but-unimportant — it eats days while the important waits."], ["The 10/10/10 framework asks how a choice will look in…", ["Ten steps", "Ten minutes, ten months, and ten years", "Ten dollars", "Ten tries"], 1, 1, "Three time horizons pull a decision out of the heat of the moment."], ["Satisficing means…", ["Settling badly", "Choosing the first option that meets your criteria instead of hunting the perfect one", "Never deciding", "Maximizing always"], 1, 2, "For most decisions, 'good enough, decided now' beats 'optimal, someday' — save maximizing for the few that matter."], ["A bottleneck in a system is…", ["Any slow part", "The single constraint that limits the whole system's output", "The newest part", "The cheapest part"], 1, 1, "Improve anything but the bottleneck and total output doesn't move — find the narrowest point first."], ["SCAMPER is a creativity checklist meaning…", ["A running technique", "Substitute, Combine, Adapt, Modify, Put to other use, Eliminate, Reverse", "Seven planning steps", "A memory trick"], 1, 2, "Seven forced twists on an existing idea — creativity by systematic prompt instead of waiting for lightning."], ["Constraints often HELP creativity because…", ["They lower standards", "A bounded problem focuses search; infinite options paralyze", "They save money", "Rules are fun"], 1, 1, "Write a story in six words and ideas appear — the blank page is the enemy, the box is a tool."], ["Lateral thinking differs from logical deduction by…", ["Being sloppy", "Deliberately approaching from unexpected angles to escape rutted paths", "Avoiding answers", "Being faster"], 1, 2, "When straight-ahead fails, step sideways — question the assumption everyone walked past."], ["'Parkinson's Law' observes that work…", ["Shrinks always", "Expands to fill the time available", "Requires meetings", "Never ends"], 1, 1, "Give a task a week, it takes a week — tight, honest deadlines are a thinking tool."], ["A 'stock' versus a 'flow' in systems thinking:", ["Identical", "A stock is an accumulation (water in tub); a flow is the rate (faucet)", "Stocks are money only", "Flows are fixed"], 1, 2, "Debt is a stock; spending is a flow — confusing them is why budgets and policies surprise people."], ["Asking 'what would I advise a friend to do?' helps because…", ["Friends are smarter", "Distance strips away emotion and self-serving bias", "It delays choice", "It's polite"], 1, 1, "Solomon's paradox: we reason better about others' problems — borrow that clarity for your own."], ["The two-minute rule says…", ["Think for two minutes", "If it takes under two minutes, do it now instead of tracking it", "Rest every two minutes", "Decide in two minutes"], 1, 0, "The overhead of remembering exceeds the cost of doing — clear the small stuff on contact."], ["Interleaving practice (mixing topics) beats blocking because…", ["It's easier", "Switching forces retrieval and discrimination, deepening learning", "It's faster", "Blocks are boring"], 1, 2, "It feels worse and works better — the difficulty is the signal of learning, not the absence of it."], ["A 'forcing function' is…", ["Coercion", "A structure that makes the desired behavior automatic or unavoidable", "A math tool", "A deadline only"], 1, 2, "Gym clothes by the bed, autosave, checklists — design beats willpower."], ["'Galileo's question' — what evidence would change my mind? — should be asked…", ["Never", "Before debating, of yourself first", "Only of opponents", "After winning"], 1, 1, "If nothing could change your mind, you're not reasoning — you're guarding."], ["Brainstorm quantity-first works because…", ["All ideas are good", "Early judgment kills the chains of association that lead to the good ones", "Lists look nice", "Voting is hard"], 1, 1, "Bad ideas are stepping stones — generate wide, select late."], ["Writing to think (not just to record) works because…", ["Handwriting matters", "Writing forces linear precision that exposes fuzzy spots in your understanding", "It's traditional", "Notes are pretty"], 1, 1, "'I thought I understood until I tried to write it' — the page is a debugger for thought."], ["The ultimate aim of Thinkification is…", ["Winning arguments", "A repeatable toolkit: define, decompose, model, decide, learn, repeat", "Trivia mastery", "Speed"], 1, 0, "Not being smart — being equipped. The toolkit is learnable, and it's free."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

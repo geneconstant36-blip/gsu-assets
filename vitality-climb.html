@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vitality Climb — Health Literacy Game | Free GSU Game</title>
+<meta name="description" content="Infinite health literacy game: nutrition labels, movement mechanics, the stress toolkit, sleep, and emergency readiness. Education, not medical advice. Free.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Health & Vitality · Built for Life, Not for Gym Class</div>
+  <h1>The Vitality <span class="accent">Climb</span></h1>
+  <p class="sub">Move · Fuel · Mind · Respond · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Ask GENO what an ingredient label means or for a breathing tool on a hard day. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/health-vitality">↩ Health & Vitality Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Run the grocery-store fiber test this week, track your resting heart rate for a month, and take a certified CPR class — this game is education, not medical advice.</p>
+  </div>
+  <p class="fine">Education, not medical advice — in an emergency call 911. Companion game to the GSU Health & Vitality hub. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "vitality-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["The three macronutrients are…", ["Vitamins, minerals, water", "Protein, carbohydrates, fat", "Sugar, salt, fiber", "Calcium, iron, zinc"], 1, 0, "The big three that supply energy — micronutrients (vitamins, minerals) work in smaller amounts."], ["On an ingredient label, ingredients are listed…", ["Alphabetically", "By weight, largest amount first", "By healthiness", "Randomly"], 1, 0, "If sugar is ingredient number one, you're holding dessert — whatever the front of the box says."], ["The grocery-store fiber test compares…", ["Price per box", "A cereal's fiber-to-sugar ratio", "Box colors", "Brand names"], 1, 0, "The kitchen-lab assignment: pull three cereals, compare fiber to sugar grams — the label tells the truth."], ["Fiber helps manage blood sugar by…", ["Adding sweetness", "Slowing digestion and the absorption of sugars", "Replacing protein", "Adding calories"], 1, 1, "Slower absorption means a steadier curve instead of a spike and crash."], ["'Added sugars' on a label means…", ["Natural fruit sugar", "Sugars put in during processing, beyond what the food naturally contains", "Artificial sweetener", "Carbohydrates total"], 1, 1, "The line that separates an apple from apple-flavored candy."], ["A functional squat pattern keeps…", ["Knees caving inward", "Weight on mid-foot/heels with a neutral spine", "Heels off the ground", "Back rounded"], 1, 0, "The squat is how humans pick things up for life — own the pattern before adding weight."], ["When lifting something heavy from the floor, the safest mechanics use…", ["A rounded back and straight legs", "Bent knees and hips with the load close to your body", "Arms only", "Speed"], 1, 0, "Hinge at the hips, keep it close — let the big muscles do the big work."], ["Good standing posture stacks…", ["Head forward of the chest", "Ears over shoulders over hips", "Shoulders above ears", "Hips ahead of feet"], 1, 1, "The plumb line: every inch the head drifts forward multiplies the load on the neck."], ["The goal of functional fitness is…", ["Winning competitions", "A daily habit of movement that serves real life", "Maximum muscle size", "Avoiding all exertion"], 1, 0, "Hiking, swimming, biking, carrying groceries — fitness measured by what your life can do."], ["Endurance is built primarily by…", ["One hard workout", "Consistent, progressively increasing activity over time", "Supplements", "Stretching only"], 1, 1, "Consistency beats intensity — the body adapts to what it does regularly."], ["Sleep matters to brain function because during sleep the brain…", ["Shuts off completely", "Consolidates memory and clears metabolic waste", "Only dreams", "Uses no energy"], 1, 1, "Skimping on sleep physically changes attention, mood, and learning — it's chemistry, not laziness."], ["Heavy screen time close to bedtime tends to…", ["Improve sleep", "Delay sleep, partly via light exposure and stimulation", "Have zero effect", "Replace sleep needs"], 1, 1, "Light tells the brain it's daytime; feeds tell it to keep scrolling — the toolkit: a shutdown time."], ["A 'stress toolkit' is…", ["Avoiding all stress", "Practiced strategies — breathing, movement, reframing — ready before the crisis", "Medication only", "Venting on social media"], 1, 0, "Proactive beats reactive: tools built in calm weather work in storms."], ["Slow breathing (longer exhales) calms the body by…", ["Raising heart rate", "Engaging the parasympathetic nervous system", "Adding oxygen only", "Distraction alone"], 1, 1, "The exhale is a brake pedal wired into your own nervous system — free and always installed."], ["Identifying your emotional triggers gives you…", ["Excuses", "Forecasts — the chance to prepare a response instead of being ambushed", "Immunity", "Control over others"], 1, 1, "Self-awareness plus a plan equals autonomy — the heart of emotional mechanics."], ["Tracking your resting heart rate for a month teaches…", ["Nothing useful", "How sleep, stress, and training visibly move a real biomarker", "Your maximum heart rate", "Genetics only"], 1, 1, "The homeschool method in one assignment: measure, log, notice, adjust."], ["In any serious emergency in the U.S., the first call is…", ["A neighbor", "911", "The family doctor", "Poison control for everything"], 1, 0, "Get professional help moving first — then do what you're trained to do until it arrives."], ["Hands-only CPR for an adult who collapses involves…", ["Back slaps", "Hard, fast chest compressions around 100–120 per minute", "Only rescue breaths", "Waiting for paramedics"], 1, 1, "Push hard and fast in the center of the chest — formal certification teaches the full skill; take the class."], ["The first step for bleeding control is…", ["Rinse and wait", "Direct, firm pressure on the wound", "Apply heat", "Elevate only"], 1, 1, "Pressure stops most bleeding — wound-care basics are Pillar Four's first mastery."], ["Knowing when to seek professional medical care is…", ["Weakness", "Itself a core health skill — the judgment under all the others", "Unnecessary if prepared", "Only for doctors"], 1, 0, "Self-reliance includes knowing the limits of self-care — that judgment call is taught, not guessed."], ["A nutrient-dense meal is one that…", ["Has maximum calories", "Delivers high vitamins, minerals, and protein relative to its calories", "Tastes bland", "Costs the most"], 1, 1, "Density is value per calorie — the cooking-from-scratch assignment makes it visible on the plate."], ["Hydration's everyday rule of thumb is…", ["Only drink when ill", "Drink water regularly; thirst and pale-yellow urine are practical gauges", "Eight sodas daily", "Avoid water during exercise"], 1, 0, "Simple, free, and the first variable to check when energy and focus dip."], ["Consistency 'gamified' means…", ["Playing instead of training", "Streaks, milestones, and credentials that reward showing up daily", "Competition only", "Scoring others"], 1, 0, "Pass/fail measures a moment; streaks build a life — that's the homeschool shift."], ["Conflict resolution belongs in a health curriculum because…", ["Arguments burn calories", "Chronic interpersonal stress is a physical health load, and the skill reduces it", "It replaces exercise", "Schools require it"], 1, 2, "Mental resilience is body maintenance — stress chemistry doesn't distinguish gym from kitchen-table battles."], ["Outdoor recreation (hiking, swimming, biking) earns its pillar place because…", ["It requires equipment", "It makes daily movement a pleasure people sustain for life", "It's competitive", "It replaces strength"], 1, 1, "Habits survive when they're enjoyed — the trail does what the treadmill threat never could."], ["Calories per gram: protein, carbs, and fat provide…", ["4 / 4 / 9", "9 / 4 / 4", "4 / 9 / 4", "7 / 7 / 7"], 0, 1, "Protein 4, carbohydrates 4, fat 9 — why fatty foods pack more energy into less weight."], ["Protein's main job in the body is…", ["Quick energy only", "Building and repairing tissue — muscle, enzymes, immune components", "Storing vitamins", "Insulating nerves"], 1, 0, "The construction material — which is why repair, growth, and recovery all raise the need."], ["Whole grains differ from refined grains because they…", ["Taste sweeter", "Keep the bran and germ — the fiber and nutrients milling strips away", "Cook faster", "Contain less starch"], 1, 1, "'Whole' first on the ingredient list is the tell — 'wheat flour' alone usually means refined."], ["'% Daily Value' on a label tells you…", ["Calories per bite", "How much of a day's recommended amount one serving provides", "Price per nutrient", "Freshness"], 1, 1, "Quick math: 5% or less is low, 20% or more is high — for fiber you want high; for sodium, low."], ["Serving size versus portion:", ["Identical", "Serving is the label's reference amount; portion is what you actually eat", "Portion is smaller always", "Serving is a suggestion to maximize"], 1, 1, "The bag says three servings; the couch says one portion. Multiply honestly."], ["A practical hydration gauge is…", ["Counting exact ounces forever", "Thirst plus pale-yellow urine", "Drinking only at meals", "Matching others"], 1, 0, "Free biofeedback you carry everywhere — dark yellow says drink, clear says you're covered."], ["Sodium guidance for most adults centers on…", ["Maximizing intake", "Limiting intake — most excess comes from processed and restaurant food, not the shaker", "Avoiding all sodium", "Salt tablets daily"], 1, 1, "The label finds it where taste can't — bread, sauces, and deli meats carry more than chips."], ["Iron-rich foods include…", ["Only red meat", "Red meat, beans, lentils, spinach, and fortified grains", "Only supplements", "Dairy chiefly"], 1, 1, "Plant iron absorbs better alongside vitamin C — beans plus salsa is chemistry, not just lunch."], ["Vitamin D is unusual because…", ["It's only in candy", "Skin makes it from sunlight, and few foods carry much naturally", "It's toxic always", "Plants are full of it"], 1, 1, "The sunshine vitamin — fortified milk and fish help when the season doesn't."], ["The refrigerator should hold at or below…", ["60°F", "40°F (4°C)", "50°F", "32°F"], 1, 1, "40°F slows bacterial growth; the freezer's 0°F stops the clock — two numbers worth a magnet."], ["Poultry is safely cooked at an internal temperature of…", ["125°F", "165°F (74°C)", "145°F", "200°F"], 1, 1, "A food thermometer beats guessing by color — 165°F for poultry, every time."], ["The 'danger zone' for food bacteria is…", ["0–32°F", "40–140°F (4–60°C)", "150–200°F", "Below freezing"], 1, 2, "Between fridge-cold and steaming-hot, bacteria multiply fast — the two-hour rule exists for this window."], ["The purpose of a warm-up is to…", ["Burn most calories", "Raise temperature and blood flow so muscles and joints work ready, not cold", "Replace stretching forever", "Impress others"], 1, 0, "Five easy minutes buys better performance and fewer strains — the cheapest insurance in fitness."], ["Progressive overload means…", ["Lifting maximum daily", "Gradually increasing demand — weight, reps, or time — so the body keeps adapting", "Random workouts", "Training to failure always"], 1, 1, "The body answers the question you ask it. Ask slightly harder questions over time."], ["Rest days matter because…", ["They're lazy", "Adaptation happens during recovery — training is the stimulus, rest is the building", "They prevent enjoyment", "Muscles only grow asleep"], 1, 1, "Hard day, easy day, rebuild — chronic soreness and stalled progress often mean too little rest, not too little work."], ["Balance training (single-leg work, stability practice) matters most for…", ["Athletes only", "Everyone — it's the skill that prevents falls, the leading injury cause in older adults", "Children only", "Nobody"], 1, 1, "Falls are a leading cause of injury for older adults — and balance responds to practice at any age."], ["The core's real job is…", ["Visible abs", "Stabilizing the spine while limbs produce force", "Digestion", "Posture only at desks"], 1, 1, "Every carry, swing, and lift routes through the middle — train it as a stabilizer, not a beach ornament."], ["Exercise and mood are linked because activity…", ["Distracts only", "Triggers real neurochemical changes that reliably lift mood and reduce anxiety", "Tires you too much to worry", "Is social only"], 1, 1, "One of the most replicated findings in health science — a walk is a legitimate mental health tool."], ["Strong social connection correlates with…", ["Nothing measurable", "Longer, healthier lives — comparable in impact to major health risk factors", "Only happiness", "Higher expenses"], 1, 2, "Loneliness is a health load, not just a feeling — the relationships pillar IS body maintenance."], ["Box breathing follows the pattern…", ["Inhale only", "Inhale 4 · hold 4 · exhale 4 · hold 4", "Rapid panting", "Exhale first always"], 1, 1, "Four sides of the box, repeated — a portable brake pedal used by soldiers and surgeons alike."], ["Journaling helps stress mainly by…", ["Magic", "Externalizing the loop — naming worries on paper interrupts rumination", "Improving handwriting", "Filling time"], 1, 1, "The page holds the thought so your head doesn't have to re-run it all night."], ["A healthy screen-time boundary at night looks like…", ["Screens until sleep", "A shutdown time with the phone parked away from the bed", "Brighter screens", "Sleeping with notifications on"], 1, 0, "Light plus infinite feeds postpone sleep twice — the charger across the room is the whole intervention."], ["Gratitude practice (three good things, written) is notable because…", ["It's mandatory", "Small daily reps measurably shift attention and mood over weeks", "It replaces sleep", "It works instantly"], 1, 2, "Attention is trainable — the brain finds more of whatever it's assigned to look for."], ["The recovery position is used for…", ["Sprained ankles", "An unresponsive person who IS breathing — keeping the airway clear while help comes", "Choking adults", "Broken arms"], 1, 2, "On their side, head supported, airway open — then stay with them and watch the breathing. Take a class to drill it."], ["For a choking adult who cannot breathe or speak, the trained response is…", ["Water", "Abdominal thrusts (the Heimlich maneuver) — and call 911", "Lying them down", "Waiting"], 1, 1, "Universal sign: hands at the throat. Get behind, thrust inward and upward — and get certified so your hands know it."], ["First response to a minor burn is…", ["Ice directly", "Cool running water for several minutes — not ice, not butter", "Butter", "A tight bandage"], 1, 1, "Ice damages the tissue further; cool water draws heat out gently. Old kitchen myths cause real harm."], ["Poison Control in the U.S. is reached at…", ["911 only", "1-800-222-1222 — free, expert, 24/7; call 911 if someone collapses or can't breathe", "A hospital walk-in only", "No number exists"], 1, 2, "Save it in your phone tonight — most calls are resolved at home with expert guidance."], ["An AED (automated external defibrillator)…", ["Requires a doctor", "Talks untrained bystanders through restoring heart rhythm — designed for public use", "Is dangerous to touch", "Replaces CPR"], 1, 1, "It speaks instructions out loud and won't shock unless needed — find where yours hangs at work and the gym."], ["If you suspect a spinal injury, you should…", ["Move them to comfort", "Not move them unless danger demands it — call 911 and keep them still", "Sit them upright", "Offer water"], 1, 2, "Movement can turn an injury into a tragedy — stillness and professionals are the treatment."], ["A severe allergic reaction (anaphylaxis) calls for…", ["Antihistamines alone and waiting", "Epinephrine if prescribed and 911 immediately — even if symptoms ease", "A warm bath", "Coffee"], 1, 2, "Reactions can rebound after improvement — the ER visit isn't optional after epinephrine."], ["Smoke detectors should be tested…", ["Never", "Monthly, with batteries refreshed on a schedule", "Every decade", "Only after fires"], 1, 0, "The button takes five seconds — the chirping 3 a.m. battery teaches the schedule the hard way."], ["A family emergency plan's core elements are…", ["Just a flashlight", "Meeting points, out-of-area contact, copies of documents, and supplies basics", "Cash only", "A generator"], 1, 1, "Pillar Four's homework: the plan costs an evening and removes the panic from the worst day."], ["Sleep consistency (same schedule daily) matters because…", ["Weekends don't count", "The body clock runs everything from hormones to focus — and it hates surprises", "Naps are evil", "Alarms are unhealthy"], 1, 1, "Same bedtime, same wake time — the cheapest performance enhancer ever discovered."], ["Caffeine late in the day…", ["Has no effect", "Can linger for hours and quietly fragment sleep", "Improves sleep", "Only affects children"], 1, 1, "It has a long half-life — the afternoon cup is often the hidden author of the restless night."], ["'Nutrient timing' for ordinary life mostly reduces to…", ["Complex schedules", "Eating enough protein across the day and not skipping fuel around activity", "Midnight meals", "Fasting always"], 1, 2, "For non-athletes, the boring totals dominate the fancy timing — consistency beats choreography."], ["A resting heart rate that trends DOWN over months of training usually signals…", ["Illness", "Improving cardiovascular fitness — the heart does more per beat", "Aging", "Overtraining always"], 1, 2, "Your month-long log makes this visible: the engine idles lower as it strengthens."], ["The single most reliable exercise plan is…", ["The optimal one you quit", "The good-enough one you actually sustain", "The most expensive one", "The hardest one"], 1, 0, "Adherence beats optimization — the homeschool shift in one sentence: streaks over snapshots."], ["When symptoms are severe, sudden, or scary, the health-literate move is…", ["Research for a week", "Professional care now — self-education is for management, not emergencies", "A supplement", "Toughing it out"], 1, 0, "Chest pain, sudden weakness, trouble breathing: 911 first, Google never. The boundary is the skill."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

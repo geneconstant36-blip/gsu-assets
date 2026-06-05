@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Four Sciences Climb — Free Science Game | Free GSU Game</title>
+<meta name="description" content="Infinite science game across Life, Physical, Earth, and Space science — one connected universe. Free, GENO-coached, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Scientification · Four Sciences, One Universe</div>
+  <h1>The Four Sciences <span class="accent">Climb</span></h1>
+  <p class="sub">Life · Physical · Earth · Space · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Ask GENO why the sky is blue or what a black hole actually is — in 32 languages. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/scientification">↩ Scientification Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Enter the Deep Research vault for verified-citation reading, and pick the science pillar that already fascinates you.</p>
+  </div>
+  <p class="fine">Companion game to the GSU Scientification hub. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "four-sciences-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["Life science studies…", ["Rocks and minerals", "Living things, from cells to ecosystems", "Stars and planets", "Forces and motion"], 1, 0, "Cells, organisms, ecosystems, evolution, genetics, the human body — the science of what is alive."], ["The basic unit of life is the…", ["Atom", "Cell", "Molecule", "Organ"], 1, 0, "Every living thing is built from cells — from one bacterium to your trillions."], ["Physical science covers…", ["Weather only", "Matter, energy, motion, electricity, magnetism, sound, and light", "Animals", "Fossils"], 1, 0, "The rules every object in the universe obeys — including your car, your phone, your microwave."], ["Earth science includes…", ["Geology, weather, climate, and oceans", "Genetics", "Galaxies", "Circuits"], 0, 0, "The systems that keep the planet livable — and the science behind this generation's biggest choices."], ["Space science puts Earth's problems 'in proportion' by studying…", ["Stock markets", "Stars, planets, galaxies, gravity, and the universe's deep history", "Ocean currents", "Ecosystems"], 1, 0, "Where Earth came from, and how small and precious it looks from out there."], ["Photosynthesis converts…", ["Oxygen into carbon", "Sunlight, water, and CO2 into sugar and oxygen", "Soil into roots", "Heat into light"], 1, 1, "Plants run the planet's solar economy — nearly every food chain starts there."], ["DNA's job is to…", ["Digest food", "Carry the inherited instructions for building and running organisms", "Produce heat", "Fight gravity"], 1, 1, "A four-letter code, copied and passed on — heredity written in molecules."], ["Newton's third law states…", ["Objects fall at different speeds by weight", "For every action there is an equal and opposite reaction", "Energy is created freely", "Light bends always"], 1, 1, "Push the wall, the wall pushes back — rockets fly by throwing mass the other way."], ["Energy cannot be…", ["Stored", "Created or destroyed, only transformed", "Measured", "Transferred"], 1, 1, "Conservation of energy: the universe's strictest accounting rule."], ["Water changes to vapor through…", ["Condensation", "Evaporation", "Erosion", "Precipitation"], 1, 0, "The water cycle's engine: evaporate, condense, precipitate, repeat — powered by the sun."], ["Weather differs from climate because…", ["They're identical", "Weather is short-term conditions; climate is the long-term pattern", "Climate changes daily", "Weather is global only"], 1, 1, "Today's rain is weather; thirty years of rainfall records describe climate."], ["Earthquakes occur mainly because…", ["Wind pressure", "Tectonic plates shift and release stored stress", "Tides", "Volcanoes only"], 1, 1, "The crust is a moving jigsaw — boundaries store strain and snap."], ["Gravity is the force that…", ["Pushes objects apart", "Attracts masses toward each other", "Only works on Earth", "Creates light"], 1, 0, "It holds you to the ground, the Moon to Earth, and galaxies together."], ["A light-year measures…", ["Time", "Distance light travels in one year", "Brightness", "Speed"], 1, 1, "About 9.46 trillion kilometers — astronomy's yardstick for a very large universe."], ["The scientific method begins with…", ["A conclusion", "An observation and a testable question", "A vote", "A law"], 1, 0, "Observe, question, hypothesize, test, revise — self-government applied to knowledge."], ["A hypothesis must be…", ["Popular", "Testable — capable of being supported or refuted by evidence", "Complicated", "Final"], 1, 1, "If no possible evidence could prove it wrong, it isn't doing scientific work."], ["A controlled experiment changes…", ["Everything at once", "One variable while holding others constant", "Nothing", "Only the results"], 1, 1, "Isolate the variable, or you can't say what caused what."], ["Why is peer review part of science?", ["Tradition", "Independent experts check methods and claims before publication", "It speeds publishing", "It guarantees truth"], 1, 2, "Error-hunting by rivals is the quality control — science is organized skepticism."], ["An ecosystem includes…", ["Only animals", "Living things plus the nonliving environment they interact with", "Only plants", "Only soil and water"], 1, 1, "Producers, consumers, decomposers, plus sunlight, water, and soil — one interacting system."], ["Why does GSU say 'scientific literacy is civic literacy'?", ["Scientists should rule", "Major public decisions turn on evidence a citizen should be able to read", "Science replaces law", "Labs vote"], 1, 0, "Energy, health, agriculture, technology — a citizen who can read a study can't be stampeded by a headline."], ["The states of matter change with…", ["Color", "Energy added or removed (temperature and pressure)", "Age", "Location"], 1, 0, "Ice, water, steam: same molecules, different energy."], ["Earth's seasons are caused by…", ["Distance from the sun", "The tilt of Earth's axis as it orbits", "Ocean currents", "The Moon"], 1, 2, "23.5 degrees of tilt — hemispheres take turns leaning into the light."], ["Evolution by natural selection requires…", ["Intentional design by organisms", "Variation, inheritance, and differential survival", "Instant change", "Extinction first"], 1, 2, "Heritable differences that affect survival accumulate across generations."], ["The universe's age is estimated at roughly…", ["6,000 years", "13.8 billion years", "1 million years", "Infinite, provably"], 1, 2, "Multiple independent measurements — cosmic background radiation, expansion rate — converge near 13.8 billion."], ["An atom's nucleus contains…", ["Electrons only", "Protons and neutrons", "Photons", "Cells"], 1, 0, "Protons (positive) and neutrons (neutral) at the center; electrons orbit in a cloud."], ["The number of protons in an atom determines its…", ["Color", "Element identity", "Temperature", "Charge always"], 1, 1, "Six protons is always carbon; change the proton count and you change the element itself."], ["Mitochondria are known as the cell's…", ["Brain", "Powerhouse — they produce usable energy", "Skin", "Memory"], 1, 0, "They turn nutrients into ATP, the cell's energy currency."], ["Photosynthesis mostly takes place in the plant's…", ["Roots", "Leaves, inside chloroplasts", "Flowers", "Bark"], 1, 0, "Chlorophyll in the leaves captures light — the green is the machinery."], ["The pH scale measures…", ["Temperature", "How acidic or basic a solution is", "Mass", "Speed"], 1, 1, "0 is strongly acidic, 7 neutral, 14 strongly basic — each step is a tenfold change."], ["Sound travels fastest through…", ["A vacuum", "Solids", "Air", "It can't travel"], 1, 1, "Tighter-packed particles pass the vibration faster — and sound can't travel through a vacuum at all."], ["Light travels approximately…", ["Instantly", "300,000 kilometers per second", "The speed of sound", "1,000 km/h"], 1, 1, "The cosmic speed limit — about 186,000 miles per second."], ["A chemical change differs from a physical change because it…", ["Changes shape only", "Forms new substances with new properties", "Is reversible always", "Only changes size"], 1, 1, "Melting ice is physical; burning wood is chemical — the second makes something genuinely new."], ["The water cycle's main stages are…", ["Only rain", "Evaporation, condensation, precipitation, collection", "Just rivers", "Freezing only"], 1, 0, "Sun lifts it, clouds hold it, gravity drops it, the land returns it — endlessly."], ["Tectonic plates float on the…", ["Solid core", "Hot, slowly flowing mantle", "Ocean", "Atmosphere"], 1, 1, "The crust rides convection currents in the mantle — geology in slow motion."], ["A vaccine works by…", ["Killing all germs", "Training the immune system to recognize a threat in advance", "Adding vitamins", "Sterilizing blood"], 1, 1, "A rehearsal for the immune system — it learns the enemy's face before the real fight."], ["DNA is structured as a…", ["Single strand", "Double helix", "Flat sheet", "Sphere"], 1, 1, "Two complementary strands twisted together — Watson, Crick, and crucially Franklin's data."], ["Natural selection acts on…", ["Individual wishes", "Heritable variation, favoring traits that aid survival and reproduction", "Learned skills", "Random luck only"], 1, 1, "The environment is the editor; heritable differences are the manuscript."], ["The greenhouse effect refers to…", ["Plant growth", "Atmospheric gases trapping heat near the surface", "Indoor farming", "Cooling at night"], 1, 1, "Without some of it, Earth would freeze; the question science studies is how much, how fast."], ["Earth's atmosphere is mostly…", ["Oxygen", "Nitrogen (about 78%)", "Carbon dioxide", "Hydrogen"], 1, 1, "Nitrogen dominates; oxygen is about 21% — the rest is a thin, vital trace."], ["A star shines because of…", ["Burning wood", "Nuclear fusion in its core", "Reflected light", "Electricity"], 1, 1, "Hydrogen fusing into helium releases the energy — the Sun is a controlled fusion reactor."], ["Our solar system has how many recognized planets?", ["Nine", "Eight", "Seven", "Ten"], 1, 1, "Eight since 2006, when Pluto was reclassified as a dwarf planet."], ["Gravity on the Moon is weaker than Earth's, roughly…", ["The same", "One-sixth", "Twice", "Zero"], 1, 1, "About 1/6 — which is why the Apollo astronauts bounced."], ["An ecosystem's energy ultimately comes from…", ["The soil", "The Sun (via photosynthesis), with rare exceptions", "Animals", "Wind"], 1, 1, "Producers capture sunlight; everything up the food chain spends that solar budget."], ["A 'theory' in science is…", ["A guess", "A well-tested explanation supported by extensive evidence", "An opinion", "Unproven"], 1, 1, "Gravity and evolution are 'theories' — the word means robust, not flimsy."], ["A controlled variable in an experiment is one that is…", ["Changed", "Kept constant so it doesn't confuse the results", "Measured as the outcome", "Ignored"], 1, 1, "Hold everything steady except the one thing you're testing — that's how cause shows itself."], ["Conservation of mass means in a chemical reaction…", ["Mass vanishes", "Matter is rearranged, not created or destroyed", "Mass doubles", "Atoms disappear"], 1, 1, "Count the atoms before and after — they're all still there, just recombined."], ["Electric current is the flow of…", ["Heat", "Electric charge (typically electrons)", "Light", "Water"], 1, 1, "Charge in motion through a conductor — measured in amperes."], ["Renewable energy sources include…", ["Coal and oil", "Solar, wind, hydro, and geothermal", "Natural gas", "Uranium"], 1, 1, "Replenished on human timescales — unlike the finite fossil fuels."], ["The brain communicates using…", ["Only chemicals", "Electrical and chemical signals between neurons", "Blood pressure", "Sound"], 1, 1, "Electrical impulses within neurons, chemical messengers (neurotransmitters) across the gaps."], ["Erosion is the process by which…", ["Mountains grow", "Wind, water, and ice wear down and move earth and rock", "Volcanoes erupt", "Plates collide"], 1, 1, "The slow sculptor — the Grand Canyon is erosion's signature, written over millions of years."], ["Bacteria and viruses differ in that viruses…", ["Are larger", "Cannot reproduce without hijacking a host cell", "Are always harmless", "Are alive by every definition"], 1, 2, "That dependence is why antibiotics (which target bacteria) don't work on viral infections."], ["Scientific literacy is civic literacy because…", ["Scientists vote", "Public choices on energy, health, and technology require reading evidence", "Science is law", "It's required"], 1, 0, "A citizen who can read a study can't be stampeded by a headline — that's the whole point."], ["The first step of the scientific method is usually…", ["Conclude", "Observe and ask a testable question", "Publish", "Vote"], 1, 0, "Curiosity, disciplined — observe, question, hypothesize, test, revise."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

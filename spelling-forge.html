@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Spelling Forge — Type-It-Yourself Spelling Game | Free GSU Game</title>
+<meta name="description" content="Hear the word, type the word, learn the rule. An infinite teach-by-doing spelling game: sound patterns, the big rules, demons and homophones. Free, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:12px; }
+  .hear { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+  .hear button { flex:1; min-width:150px; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:14px 12px; font-size:14px; font-weight:800; cursor:pointer; font-family:inherit; }
+  .hear button:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .clue { font-family:Georgia,serif; font-size:16.5px; line-height:1.5; color:var(--muted); border-left:3px solid var(--teal); padding:8px 12px; margin-bottom:16px; }
+  .clue b { color:var(--cream); letter-spacing:2px; }
+  #spell { width:100%; background:rgba(10,9,7,.6); border:1.5px solid var(--line); color:var(--cream); border-radius:10px; padding:15px 14px; font-size:19px; letter-spacing:2px; font-family:Georgia,serif; text-align:center; }
+  #spell:focus { outline:none; border-color:var(--gold); }
+  .go { display:block; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:12px; font-family:inherit; }
+  .go:hover { background:var(--gold-b); }
+  .verdict { display:none; margin-top:14px; font-family:Georgia,serif; font-size:18px; text-align:center; }
+  .verdict.right { color:var(--teal); } .verdict.wrong { color:#d08080; }
+  .word-reveal { font-size:26px; letter-spacing:4px; color:var(--gold-b); display:block; margin-top:4px; }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:12px; }
+  .explain b { color:var(--gold-b); }
+  .explain em { color:var(--gold); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Writification · Encoding Is the Other Half of Reading</div>
+  <h1>The Spelling <span class="accent">Forge</span></h1>
+  <p class="sub">Hear it · Type it · Learn the rule · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="hear">
+      <button id="hearWord" type="button">🔊 Hear the Word</button>
+      <button id="hearSent" type="button">🔊 Hear the Sentence</button>
+    </div>
+    <div class="clue" id="clue"></div>
+    <input id="spell" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="type the word, then press Enter" aria-label="Type the word you heard">
+    <button class="go" id="go" type="button">Forge It →</button>
+    <div class="verdict" id="verdict"></div>
+    <div class="explain" id="explain"></div>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Ask GENO why English spells the way it does, or to quiz you on the word that just beat you — in 32 languages. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/writification">↩ Writification Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/readification">📖 Readification</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Spelling Forge work?</b>The Forge speaks a word aloud (and a sentence, which matters for sound-alike words) — you type it, then every word teaches its pattern: the -ck rule, the doubling rule, silent letters, the demons. Typing is the point: producing a spelling is a stronger skill than recognizing one, which is why this is not a multiple-choice game.</p>
+    <p><b>What if I can&#8217;t hear the audio?</b>The sentence clue with the blank is always shown, so the Forge works in silence too — and the audio uses your device&#8217;s built-in voice, no downloads. On some phones, tap a Hear button to wake the voice the first time.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your forge-streak survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Pair the Forge with the Phonemic Awareness climb on Readification — sound is the foundation under spelling — and the Writification helix, where spelling serves its real master: your own writing.</p>
+  </div>
+  <p class="fine">Companion game to the GSU Writification hub. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Spelling Forge work?","acceptedAnswer":{"@type":"Answer","text":"The game speaks a word and a sentence aloud using the browser's built-in voice; the player types the word, and every answer teaches the spelling pattern behind it — from the -ck rule and the doubling rule to silent letters, homophones, and the classic demons. Typing, not multiple choice, because producing a spelling is the real skill."}},
+{"@type":"Question","name":"Is the Spelling Forge free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "spelling-forge";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const WORDS = [["black", "The black cat sat in the sun.", "After a short vowel, the /k/ sound at the end is spelled <b>-ck</b>: black, duck, stick.", 0], ["wish", "I wish summer would last longer.", "The /sh/ sound is the two-letter team <b>sh</b> — one sound, two letters working together.", 0], ["chin", "The ball bounced and hit his chin.", "/ch/ is the digraph <b>ch</b> — chin, chat, lunch.", 0], ["them", "Give them a few more minutes.", "The /th/ sound is the team <b>th</b> — one of English's busiest digraphs.", 0], ["jump", "The frog can jump very high.", "Final blends keep BOTH sounds: <b>-mp</b> in jump, lamp, camp — say it slowly and you hear each letter.", 0], ["hand", "Raise your hand to ask a question.", "The <b>-nd</b> blend: hand, sand, wind — two sounds, two letters.", 0], ["sing", "We sing together every morning.", "/ng/ is its own sound, spelled <b>ng</b>: sing, ring, long.", 0], ["bath", "The dog needs a bath after the park.", "Final <b>th</b> — bath, math, both. Digraphs work at both ends of words.", 0], ["rain", "The rain finally stopped at noon.", "Long A in the middle of a word is often the team <b>ai</b>: rain, paint, train.", 0], ["play", "The kids went outside to play.", "Long A at the END of a word is usually <b>ay</b>: play, day, stay — ai inside, ay at the end.", 0], ["boat", "The little boat crossed the lake.", "Long O is often the team <b>oa</b>: boat, road, coat.", 0], ["feet", "My feet are tired from walking.", "Long E in the middle is often <b>ee</b>: feet, green, sleep.", 0], ["coin", "She found a shiny coin on the path.", "The /oi/ sound inside a word is <b>oi</b>: coin, point — at the end it becomes <b>oy</b>: boy, enjoy.", 0], ["cart", "The horse pulled a heavy cart.", "Bossy R: <b>ar</b> says /ar/ — cart, farm, star. The r changes the vowel's sound.", 0], ["bird", "A small bird landed on the fence.", "Bossy R again: <b>ir</b> says /er/ — bird, girl, first.", 0], ["home", "We walked home before dark.", "Silent E makes the vowel say its name: hop→hope, hom→home. The e is quiet but powerful.", 0], ["smile", "Her smile made everyone relax.", "Silent E at work: the i says its own name because the e stands guard at the end.", 0], ["catch", "Try to catch the ball with two hands.", "After a short vowel, /ch/ at the end is spelled <b>-tch</b>: catch, match, pitch.", 0], ["bridge", "We crossed the old stone bridge.", "After a short vowel, /j/ at the end is spelled <b>-dge</b>: bridge, badge, fudge. English never ends a word in plain j.", 0], ["happy", "The puppy was happy to see us.", "Two-syllable words often double the middle consonant to keep the first vowel short: hap-py, sil-ly.", 0], ["little", "A little practice every day adds up.", "The <b>-le</b> ending: little, table, purple — consonant + le closes hundreds of English words.", 0], ["when", "Tell me when you are ready.", "Question words often start with <b>wh</b>: when, where, which, why.", 0], ["quick", "Be quick — the bus is coming.", "In English, <b>q is always followed by u</b>: quick, queen, quiet. No exceptions in native words.", 0], ["story", "Grandpa told us a long story.", "Long E at the end of a longer word is usually <b>y</b>: story, funny, candy.", 0], ["school", "The school bell rang at nine.", "Some /k/ sounds wear the <b>ch</b> costume from Greek: school, echo, chorus — old words carry old clothes.", 0], ["running", "She kept running until sunset.", "THE DOUBLING RULE: short vowel + one consonant? Double it before -ing: run→running, swim→swimming. The double protects the short sound.", 1], ["hopping", "The rabbit went hopping across the yard.", "hop→hopping (double = short o). One p would make it 'hoping' — the doubling rule keeps hop and hope apart.", 1], ["hoping", "We are hoping for good weather.", "THE DROP-E RULE: hope→hoping. Silent e steps aside when -ing arrives. One p, long o — compare 'hopping'.", 1], ["making", "They are making dinner together.", "Drop the silent e before -ing: make→making, take→taking. The vowel stays long without it.", 1], ["cried", "The baby cried until she slept.", "THE Y RULE: consonant + y? Change y to i before endings: cry→cried, try→tried.", 1], ["carried", "He carried the boxes upstairs.", "carry→carried: y becomes i, then add -ed. (But keep the y before -ing: carrying.)", 1], ["happiness", "Her happiness was easy to see.", "happy→happiness: the y→i rule works before -ness too. Consonant before y is the trigger.", 1], ["stayed", "We stayed until the very end.", "VOWEL + y keeps the y: stay→stayed, play→played. The y rule only fires after a consonant.", 1], ["boxes", "Stack the boxes by the door.", "Plurals after s, x, z, ch, sh add <b>-es</b> (you can hear the extra syllable): boxes, wishes, churches.", 1], ["parties", "They planned two birthday parties.", "Consonant + y plural: change y to i, add -es: party→parties, city→cities.", 1], ["knives", "The chef sharpened all the knives.", "Many f-words flip to <b>-ves</b> in the plural: knife→knives, leaf→leaves, wolf→wolves.", 1], ["heroes", "The firefighters were greeted as heroes.", "Some o-words take <b>-es</b>: heroes, potatoes, tomatoes — the famous trio worth memorizing.", 1], ["children", "The children lined up for lunch.", "Irregular plural — no s at all: child→children, like man→men, foot→feet. Old English survivors.", 1], ["knee", "He scraped his knee on the steps.", "SILENT K: kn- words once pronounced the k (k-nee!) — knee, knife, know keep the ghost letter.", 1], ["write", "Please write your name at the top.", "Silent W in wr-: write, wrong, wrist — another ghost from older English.", 1], ["lamb", "The lamb stayed close to its mother.", "Silent B after m: lamb, thumb, climb. Say it without the b — that's the modern sound.", 1], ["ghost", "The story was about a friendly ghost.", "Silent H in gh-: ghost, ghastly — and gh elsewhere can be silent (night) or /f/ (laugh). English history showing.", 1], ["city", "The city lights glowed at night.", "SOFT C: c says /s/ before e, i, or y — city, center, cycle. Before a, o, u it stays hard: cat, cot, cut.", 1], ["giant", "A giant oak shaded the whole yard.", "SOFT G: g often says /j/ before e, i, y — giant, gentle, gym. (English keeps exceptions like 'get' and 'give'.)", 1], ["phone", "Her phone buzzed during the movie.", "/f/ spelled <b>ph</b> comes from Greek: phone, photo, graph — spot ph and you've spotted a Greek root.", 1], ["misspell", "Be careful not to misspell this one.", "PREFIX MEETS BASE: mis + spell = misspell — keep BOTH letters where they meet. Same with unnatural, dissatisfied.", 1], ["hopeful", "She felt hopeful about the tryout.", "Suffix -ful has ONE l: hopeful, careful, beautiful. (Full alone keeps two — 'a cup full', 'a hopeful cup'.)", 1], ["finally", "The package finally arrived.", "final + ly = finally: when the base ends in l, adding -ly gives you the double l honestly.", 1], ["until", "Wait here until I return.", "Only ONE l in until (though 'till' has two) — one of English's small cruelties, worth a flashcard.", 1], ["doesn't", "She doesn't like cold coffee.", "Contractions: the apostrophe stands exactly where letters left — does not → doesn't (the o of 'not' departed).", 1], ["we're", "We're leaving in ten minutes.", "we are → we're. The apostrophe marks the missing a — and keeps it apart from 'were' and 'where'.", 1], ["watched", "They watched the storm roll in.", "-ed has three sounds (/t/ in watched, /d/ in played, /id/ in wanted) but ONE spelling: -ed. Spell the meaning, not the sound.", 1], ["colorful", "The garden was colorful in spring.", "Building words: color + ful — morphemes snap together like bricks. Spell the parts and the whole spells itself.", 1], ["separate", "Keep the recycling separate from the trash.", "Demon #1: sep-A-rate — 'there's A RAT in sepARATe.' The middle vowel is a, not e.", 2], ["necessary", "A helmet is necessary on this trail.", "One collar, two sleeves: one C, two S's — neCeSSary. The shirt mnemonic has saved millions.", 2], ["definitely", "I will definitely be there by six.", "definite + ly — there's FINITE inside deFINITEly. No 'a' anywhere, despite what your ear suggests.", 2], ["rhythm", "Clap along with the rhythm.", "Rhythm Helps Your Two Hips Move — six letters, no real vowel but y, pure memorization with a mnemonic ladder.", 2], ["embarrass", "Don't embarrass me in front of the team.", "Double R, double S: embaRRaSS — 'I went really red and smiled shyly.'", 2], ["occurrence", "It was a strange occurrence indeed.", "occur + ence — the doubling rule strikes again on the stressed syllable: oCCuRRence. Two c's, two r's.", 2], ["accommodate", "The cabin can accommodate six people.", "Generous word, generous letters: two C's AND two M's — it aCCoMModates everything.", 2], ["privilege", "Voting is a right, not a privilege.", "No 'd': privi-LEGE. There's a LEG in priviLEGe — kick the d out.", 2], ["calendar", "Mark the date on your calendar.", "-AR ending: calendAR, not -er. The word ends like 'ar' in March's calendar.", 2], ["weird", "That cloud has a weird shape.", "The rule-breaker: WEIRD is weird — it ignores i-before-e entirely. Some words earn their spelling by rebellion.", 2], ["receive", "Did you receive my message?", "I before E, EXCEPT AFTER C: receive, deceive, ceiling — the c flips the team to ei.", 2], ["believe", "I believe you can do this.", "I before E (no c here): believe, achieve, field. There's a LIE in beLIEve — believe it.", 2], ["conscience", "Let your conscience be your guide.", "CON + SCIENCE: your conscience contains science. See the parts and the demon loses its teeth.", 2], ["their", "The students raised their hands.", "HOMOPHONE: their = belonging to them (HEIR is inside — heirs own things). There = place. They're = they are. The sentence decides.", 2], ["they're", "They're coming over after dinner.", "they are → they're. If you can say 'they are' in the sentence, the apostrophe wins.", 2], ["you're", "You're going to love this book.", "you are → you're. 'Your book' owns; 'you're reading' acts. Test by expanding it.", 2], ["its", "The dog wagged its tail.", "The exception that breaks brains: possessive ITS has NO apostrophe. It's = it is, always. Here the tail belongs — no apostrophe.", 2], ["it's", "It's almost time to leave.", "it is → it's. The apostrophe means letters left, never possession, for this word.", 2], ["too", "The soup is too hot to eat.", "TOO = also or excess (too hot, me too) — the extra o is the 'extra' meaning. To = direction; two = 2.", 2], ["principal", "The principal spoke at the assembly.", "Your princiPAL is your PAL (a person, or the main thing). A princiPLE is a rule. The sentence names a person.", 2], ["dessert", "We had ice cream for dessert.", "DeSSert has two s's because you always want Seconds of Sweets. The dry sandy one (desert) gets just one.", 2], ["stationery", "She wrote the note on lovely stationery.", "StationEry with E = lEtter paper. StationAry with A = stAnding still. Match the vowel to the meaning.", 2], ["lose", "Don't lose your ticket.", "LOSE (one o) = misplace. LOOSE (two o's) = not tight. The extra o makes the word physically looser.", 2], ["affect", "Rain can affect the game schedule.", "Mostly: Affect = Action (verb), Effect = End result (noun). RAVEN: Remember Affect Verb Effect Noun.", 2], ["February", "Her birthday is in February.", "FebRUary — the hidden RU that mouths skip but pens must not: 'BRR, it's February.'", 2], ["Wednesday", "The meeting moved to Wednesday.", "WedNESday — Odin's day (Woden's day) keeps its silent middle: 'We D N E S day' — spell the ghost.", 2]];
+const COACH = ["A missed word, once studied, is yours forever \u2014 the right answer just hid this lesson from you.", "Spelling demons fall to patterns, not luck. Read the rule, then forge on.", "Every great speller is a collector of misses. You just added to the collection \u2014 climb on.", "The rule below is the whole secret. Own it and this word never beats you again."];
+const TIERS = ["Bronze · Sound Patterns","Silver · The Big Rules","Gold · Demons & Homophones"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false, current:null, answered:false };
+
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle(){ state.order=shuffle(WORDS.map((_,i)=>i)); state.idx=0; }
+reshuffle();
+const $=id=>document.getElementById(id);
+function paint(){ $("score").textContent=state.score; $("streak").textContent=state.streak; $("best").textContent=state.best; }
+
+const canSpeak = "speechSynthesis" in window;
+function speak(text){
+  if(!canSpeak) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.85; u.lang = "en-US";
+    window.speechSynthesis.speak(u);
+  } catch(e) {}
+}
+
+function maskSentence(sent, word){
+  const re = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"), "i");
+  return sent.replace(re, "<b>______</b>");
+}
+
+function ask(){
+  const w = WORDS[state.order[state.idx]];
+  state.current = w; state.answered = false;
+  $("tier").textContent = TIERS[w[3]];
+  $("clue").innerHTML = maskSentence(w[1], w[0]);
+  $("spell").value = ""; $("spell").disabled = false;
+  $("verdict").style.display="none"; $("explain").style.display="none";
+  $("go").textContent = "Forge It →";
+  $("spell").focus();
+  speak(w[0]);
+}
+
+function judge(){
+  if(state.answered){ state.idx++; if(state.idx>=state.order.length) reshuffle(); ask(); return; }
+  const w = state.current;
+  const typed = $("spell").value.trim();
+  if(!typed){ $("spell").focus(); return; }
+  state.answered = true; $("spell").disabled = true;
+  const ok = typed.toLowerCase() === w[0].toLowerCase();
+  const v = $("verdict");
+  v.style.display = "block";
+  if(ok){
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if(state.streak > state.best) state.best = state.streak;
+    v.className = "verdict right";
+    v.innerHTML = "Forged. ✓ <span class=\'word-reveal\'>"+w[0]+"</span>";
+    $("explain").innerHTML = "<b>The pattern:</b> " + w[2];
+  } else {
+    state.streak = 0;
+    v.className = "verdict wrong";
+    v.innerHTML = "Not yet — you typed <em>"+typed.replace(/</g,"&lt;")+"</em><span class=\'word-reveal\'>"+w[0]+"</span>";
+    $("explain").innerHTML = "<b>The pattern:</b> " + w[2] + "<br><em>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block";
+  $("go").textContent = "Next Word →";
+  paint(); save();
+}
+
+$("go").onclick = judge;
+$("spell").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); judge(); } });
+$("hearWord").onclick = () => speak(state.current[0]);
+$("hearSent").onclick = () => speak(state.current[1]);
+if(!canSpeak){
+  $("hearWord").textContent = "🔇 Audio unavailable — use the sentence clue";
+  $("hearSent").style.display = "none";
+}
+
+async function save(){
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if(state.cloud && state.user){
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+function cloudStatus(on, msg){
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if(u){
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if(snap.exists()){
+            const d = snap.data();
+            if((d.score||0) > state.score) state.score = d.score;
+            if((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>

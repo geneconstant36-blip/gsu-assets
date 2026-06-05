@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Civic Virtue Climb — Free Civics Game | Free GSU Game</title>
+<meta name="description" content="Infinite civics game: branches, checks and balances, the Bill of Rights, amendments, and citizenship in practice. The system, not a side. Free, no login.">
+<style>
+  :root { --navy:#1B2A4A; --gold:#C9A84C; --gold-b:#FFE9A8; --teal:#1A8B7F; --black:#0A0907; --cream:#F5F1E8; --muted:#B8C0D4; --line:rgba(201,168,76,.22); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:linear-gradient(180deg,#0A0F1C 0%,#0A0907 240px); color:var(--cream); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif; min-height:100vh; }
+  .wrap { max-width:680px; margin:0 auto; padding:28px 16px 60px; }
+  .eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--teal); text-align:center; margin-bottom:8px; }
+  h1 { font-family:Georgia,serif; font-size:clamp(24px,6vw,34px); text-align:center; margin-bottom:4px; }
+  h1 .accent { color:var(--gold); }
+  .sub { text-align:center; color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
+  .pill { font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; border:1px solid var(--line); border-radius:99px; padding:6px 12px; color:var(--muted); }
+  .pill b { color:var(--gold); font-family:Georgia,serif; font-size:14px; }
+  #cloud { border-color:rgba(26,139,127,.4); color:var(--teal); }
+  .card { background:rgba(27,42,74,.4); border:1px solid var(--line); border-top:2px solid var(--gold); border-radius:14px; padding:22px 20px; }
+  .tier { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:10px; }
+  .q { font-family:Georgia,serif; font-size:18.5px; line-height:1.45; margin-bottom:16px; }
+  .opt { display:block; width:100%; text-align:left; background:rgba(10,9,7,.5); border:1px solid var(--line); color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px; margin-bottom:9px; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .opt:hover { border-color:var(--gold); background:rgba(201,168,76,.08); }
+  .opt.right { border-color:var(--teal); background:rgba(26,139,127,.18); }
+  .opt.wrong { border-color:#a05050; background:rgba(160,80,80,.15); }
+  .explain { display:none; border-left:3px solid var(--gold); background:rgba(201,168,76,.07); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13.5px; color:var(--muted); line-height:1.55; margin-top:6px; }
+  .explain b { color:var(--gold-b); }
+  .next { display:none; width:100%; background:var(--gold); color:#000; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:13px; padding:14px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; }
+  .next:hover { background:var(--gold-b); }
+  .geno { display:flex; gap:12px; align-items:center; margin-top:18px; background:rgba(27,42,74,.4); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+  .geno img { width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; object-fit:cover; }
+  .geno p { font-size:12.5px; color:var(--muted); line-height:1.5; }
+  .geno p em { color:var(--gold); }
+  .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+  .links a { display:block; text-align:center; text-decoration:none; font-weight:800; letter-spacing:.5px; text-transform:uppercase; font-size:11.5px; padding:12px; border-radius:9px; background:transparent; color:var(--gold); border:1px solid rgba(201,168,76,.4); }
+  .links a:hover { background:rgba(201,168,76,.1); color:var(--gold-b); }
+  .faq { margin-top:34px; border-top:1px solid var(--line); padding-top:22px; }
+  .faq h2 { font-family:Georgia,serif; font-size:19px; margin-bottom:12px; }
+  .faq p { color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:12px; }
+  .faq b { color:var(--cream); display:block; }
+  .fine { text-align:center; font-size:10.5px; color:var(--muted); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU · Civicification · The Healthy Republic Series</div>
+  <h1>The Civic Virtue <span class="accent">Climb</span></h1>
+  <p class="sub">The system, not a side — claim your citizenship · Infinite play · Free · No login</p>
+  <div class="bar">
+    <span class="pill">Score <b id="score">0</b></span>
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Best <b id="best">0</b></span>
+    <span class="pill" id="cloud">Cloud: connecting…</span>
+  </div>
+  <div class="card">
+    <div class="tier" id="tier"></div>
+    <div class="q" id="q"></div>
+    <div id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="next">Next Question →</button>
+  </div>
+  <div class="geno">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+    <p id="coach"><em>GENO AI Tutor available 24/7 — a robot you can actually TALK to.</em> Ask GENO how a bill becomes a law, in any of 32 languages — no side taken. Find GENO in the corner of every page at globalsovereignuniversity.org.</p>
+  </div>
+  <div class="links">
+    <a href="https://www.globalsovereignuniversity.org/civicification">↩ Civicification Hub</a>
+    <a href="https://www.globalsovereignuniversity.org/wisdom-bridge">🌉 Wisdom Bridge</a>
+  </div>
+  <div class="faq">
+    <h2>Questions, answered</h2>
+    <p><b>How does the Climb work?</b>Questions climb from Bronze to Gold and never run out — the deck reshuffles forever, your streak builds your score, and every answer teaches: each question ends with the why, not just the what.</p>
+    <p><b>Is it really free?</b>Yes — free, no login, no data harvested. Scores save anonymously so your climb survives between visits. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit.</p>
+    <p><b>What should I do next?</b>Open the Healthy Republic series — Civic Virtue first — and read the Constitution in plain English on the Lawification hub.</p>
+  </div>
+  <p class="fine">Companion game to the Healthy Republic series by Dr. Gene A. Constant. © Global Sovereign University · globalsovereignuniversity.org</p>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How does the Climb work?","acceptedAnswer":{"@type":"Answer","text":"Questions climb from Bronze to Gold and never run out. The deck reshuffles infinitely, streaks build score, and every question ends with an explanation that teaches the why."}},
+{"@type":"Question","name":"Is the Climb free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free with no login and no data harvested. Scores persist anonymously. GSU operates under The Foundation for Global Instruction, a 501(c)(3) nonprofit."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const GAME_ID = "civic-virtue-climb";
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+
+const BANK = [["The three branches of the U.S. federal government are…", ["Legislative, Executive, Judicial", "Federal, State, Local", "House, Senate, President", "Military, Civil, Commercial"], 0, 0, "Congress makes law, the President executes it, the courts interpret it — the division is the design."], ["Which branch writes federal laws?", ["Executive", "Judicial", "Legislative", "Administrative"], 2, 0, "Congress — House and Senate — holds the lawmaking power under Article I."], ["Which branch interprets the laws?", ["Legislative", "Judicial", "Executive", "Electoral"], 1, 0, "The courts, headed by the Supreme Court, decide what the law means under Article III."], ["The Constitution's first three words are…", ["'In the beginning'", "'We the People'", "'Life, liberty, and'", "'Congress shall make'"], 1, 0, "Sovereignty flows from the people — that is the whole revolution in three words."], ["'Checks and balances' means…", ["Budget accounting", "Each branch can restrain the others", "States check the federal government", "Voters check politicians"], 1, 0, "The veto, the override, judicial review, confirmations — power restraining power, by design."], ["A presidential veto can be overridden by…", ["The Supreme Court", "A two-thirds vote of both houses of Congress", "A national referendum", "The Cabinet"], 1, 1, "Article I, Section 7: two-thirds of House and Senate can pass a law over the President's objection."], ["Federalism divides power between…", ["The three branches", "National and state governments", "Parties", "House and Senate"], 1, 0, "Two levels of sovereignty, each supreme in its own sphere — the vertical separation of powers."], ["How many amendments make up the Bill of Rights?", ["Five", "Ten", "Twelve", "Twenty-seven"], 1, 0, "The first ten amendments, ratified in 1791, list rights the federal government may not invade."], ["The First Amendment protects which cluster of rights?", ["Speech, religion, press, assembly, petition", "Arms, militia, security", "Search, seizure, warrants", "Speedy trial, counsel, jury"], 0, 0, "Five freedoms in one amendment — and it is bigger than free speech alone."], ["The Fourth Amendment guards against…", ["Self-incrimination", "Unreasonable searches and seizures", "Cruel punishment", "Quartering soldiers"], 1, 1, "Warrants, probable cause, the security of persons, houses, papers, and effects."], ["How a bill becomes a law, in short:", ["President signs whatever Congress debates", "Passes both houses, then presidential signature or veto override", "Supreme Court approves it", "States ratify it"], 1, 1, "Committee, floor votes in both chambers, reconciliation, then the President's desk."], ["Civic virtue refers to…", ["Holding office", "The habits and character self-government requires of citizens", "Paying taxes only", "Party loyalty"], 1, 0, "No constitution survives a citizenry without character — the parchment needs people behind it."], ["Who confirms Supreme Court justices?", ["The House", "The Senate", "The states", "The sitting Court"], 1, 1, "The President nominates; the Senate provides advice and consent. Two branches, one appointment."], ["Amendments to the Constitution most commonly require…", ["A presidential order", "Two-thirds of Congress proposing, three-fourths of states ratifying", "A national vote", "Supreme Court approval"], 1, 2, "Article V sets a high bar on purpose — fundamental law should not move with every breeze."], ["Jury duty matters to self-government because…", ["It is paid work", "Citizens, not the state, deliver verdicts on fellow citizens", "It trains lawyers", "Judges need help"], 1, 1, "The jury box is the citizen's seat inside the judicial branch — power exercised in person."], ["'Separation of powers' chiefly prevents…", ["Slow government", "Concentration of power in one set of hands", "High taxes", "Party politics"], 1, 0, "Madison's insight: ambition must counteract ambition, because men are not angels."], ["The supremacy clause establishes that…", ["States outrank cities", "The Constitution and federal law outrank conflicting state law", "The President outranks Congress", "Courts outrank legislatures"], 1, 1, "Article VI: the Constitution is the supreme law of the land — the hierarchy starts there."], ["Naturalization is…", ["Being born a citizen", "The legal process by which an immigrant becomes a citizen", "Getting a visa", "Registering to vote"], 1, 0, "An oath, a test most native-born adults would have to study for, and full membership in the republic."], ["The Tenth Amendment reserves…", ["War powers to the President", "Powers not delegated to the federal government to the states or the people", "Tax powers to Congress", "Veto power to states"], 1, 1, "What the Constitution does not grant, it does not take — the residue stays with states and citizens."], ["'The system, not a side' means civics education should…", ["Avoid all controversial topics", "Teach how the machinery works so any citizen can use it, whatever they conclude", "Promote the founders' party", "Stay neutral on the Constitution itself"], 1, 0, "Built for the citizen who votes red, blue, neither, or never — the conclusions belong to you."], ["A federal law conflicts with a city ordinance. Which controls?", ["The ordinance, being local", "The federal law, under the supremacy clause", "Whichever is newer", "The governor decides"], 1, 1, "Hierarchy of law: Constitution, federal statute, state law, local ordinance — top trumps bottom."], ["Why did the framers make passing laws deliberately hard?", ["To limit lawyers", "To force deliberation and protect against momentary passions", "To save paper", "To empower courts"], 1, 2, "Two chambers, a veto, and amendments' high bar — friction is a feature protecting liberty."], ["The 'consent of the governed' doctrine holds that…", ["Government authority derives from the people's agreement", "Citizens must obey all laws silently", "Voting is mandatory", "Officials are above the law"], 0, 0, "From the Declaration: governments derive their just powers from the consent of the governed."], ["Civic sacrifice and individualism coexist when…", ["Individuals surrender all preference", "Free people voluntarily contribute to common life without surrendering conscience", "The state assigns duties", "Majorities overrule minorities"], 1, 2, "A healthy republic asks contribution, not absorption — the citizen serves without dissolving."], ["Voting in federal elections requires…", ["A property qualification", "Citizenship and meeting your state's registration rules", "A civics exam", "Party membership"], 1, 0, "The franchise belongs to citizens; states administer the mechanics."], ["The rule of law means…", ["Lawyers govern", "The law binds rulers and ruled alike", "Judges write laws", "Majorities are always right"], 1, 0, "No one is above it and no one beneath its protection — the alternative is rule of men."], ["Which document declared independence; which one structures the government?", ["Constitution; Declaration", "Declaration of Independence; Constitution", "Bill of Rights; Articles", "Federalist; Constitution"], 1, 0, "1776 declared the why; 1787 built the how. Two documents, two jobs."], ["Impeachment by the House results in…", ["Automatic removal", "A Senate trial that may remove the official", "A new election", "Court review"], 1, 2, "The House accuses; the Senate tries. Conviction and removal require two-thirds of senators."], ["Civil discourse across disagreement is a civic skill because…", ["It avoids all conflict", "Self-government requires citizens who can disagree and still build together", "It wins elections", "It ends debate"], 1, 1, "Restoring social peace starts at the kitchen table and the town hall — contempt is the republic's rust."], ["The First Amendment limits…", ["Private companies", "Government action against expression", "Newspapers", "All criticism"], 1, 2, "'Congress shall make no law…' — it restrains the state, which is both its power and its boundary."], ["How many U.S. Senators does each state have?", ["One", "Two", "Proportional to population", "Four"], 1, 0, "Two per state, regardless of size — equality of states in one chamber, population in the other."], ["House terms versus Senate terms:", ["Both two years", "Two years for House, six for Senate", "Six and two", "Four and four"], 1, 0, "The House feels every election wind; the Senate was built to be the slower, cooler chamber."], ["How many members serve in the House of Representatives?", ["100", "435", "538", "50"], 1, 1, "Fixed at 435 voting members since 1929, apportioned among states by population."], ["The Electoral College number 538 equals…", ["Senators only", "435 Representatives + 100 Senators + 3 for D.C.", "States times ten", "An arbitrary count"], 1, 2, "270 to win — half of 538 plus one."], ["Marbury v. Madison (1803) established…", ["The two-party system", "Judicial review — courts may strike down laws that violate the Constitution", "The Cabinet", "Senate rules"], 1, 2, "The Court claimed its check: saying what the Constitution means when laws collide with it."], ["Habeas corpus protects against…", ["High taxes", "Imprisonment without being brought before a court", "Libel", "Eviction"], 1, 1, "'Produce the body' — the ancient writ that makes secret detention answer to a judge."], ["An ex post facto law would…", ["Tax the future", "Criminalize conduct after the fact — and is forbidden by the Constitution", "Pardon offenders", "Expire automatically"], 1, 2, "You cannot be punished for what was legal when you did it — Article I forbids it to Congress and the states."], ["The 13th, 14th, and 15th Amendments are known together as…", ["The Bill of Rights", "The Reconstruction Amendments — ending slavery, defining citizenship, protecting the vote", "The Progressive Era trio", "The War Powers set"], 1, 1, "The Constitution's second founding, written in the aftermath of civil war."], ["The 19th Amendment (1920) secured…", ["Income tax", "Women's right to vote", "Direct election of senators", "Prohibition's end"], 1, 0, "Votes for women — after a seventy-year movement that petitioned, marched, and persisted."], ["The 22nd Amendment limits…", ["Senate terms", "Presidents to two elected terms", "Court appointments", "State budgets"], 1, 1, "Written after FDR's four terms — the two-term tradition became constitutional law in 1951."], ["The 26th Amendment set the voting age at…", ["21", "18", "16", "25"], 1, 0, "'Old enough to fight, old enough to vote' — ratified in 1971 during the Vietnam era."], ["A pocket veto occurs when the President…", ["Signs quietly", "Holds an unsigned bill as Congress adjourns, letting it die", "Vetoes twice", "Delegates the veto"], 1, 2, "No signature, no return, no session to override — the bill expires in the pocket."], ["Grand jury versus petit (trial) jury:", ["Identical", "Grand juries decide whether to charge; trial juries decide guilt", "Grand juries sentence", "Petit juries indict"], 1, 1, "One opens the courtroom door; the other decides what happens inside it."], ["The Speaker of the House is chosen by…", ["The President", "A vote of the House membership", "The Supreme Court", "Seniority alone"], 1, 1, "The House elects its own leader — second in the presidential line of succession."], ["If the presidency is vacated, next in line after the Vice President is…", ["The Chief Justice", "The Speaker of the House", "The Senate Majority Leader", "The Secretary of State"], 1, 2, "VP, then Speaker, then Senate President pro tempore, then Cabinet by department seniority."], ["The Articles of Confederation failed largely because…", ["Too much central power", "The national government couldn't tax or enforce its own laws", "States were abolished", "It lacked a flag"], 1, 2, "A government that must ask permission to fund itself isn't one — the 1787 Convention was the response."], ["The Federalist Papers were written to…", ["Oppose the Constitution", "Argue for ratifying the Constitution", "Declare independence", "Found a party"], 1, 1, "Hamilton, Madison, and Jay as 'Publius' — still the deepest commentary on the document's design."], ["The Magna Carta (1215) matters to American civics because…", ["It freed the colonies", "It planted the idea that even the ruler is under the law", "It created Parliament's parties", "It was written here"], 1, 2, "From a muddy field at Runnymede to due process clauses — the rule-of-law lineage runs through it."], ["The Mayflower Compact (1620) is remembered as…", ["A trade treaty", "An early self-government agreement — consent before there was a government to consent to", "A military pact", "A church charter"], 1, 1, "Forty-one signatures on a ship: the governed creating the government, in miniature."], ["'Federalism' gives states power over…", ["War and treaties", "Most everyday law: schools, police, licenses, elections administration", "Currency", "Tariffs"], 1, 1, "The states are where most of the law that touches your day actually lives — and where one vote weighs most."], ["A city ordinance is…", ["Federal law", "A local law passed by a municipal government", "A court ruling", "A state amendment"], 1, 0, "Zoning, noise, parking, permits — the closest law to your front door."], ["School boards matter because they…", ["Are ceremonial", "Set curriculum, budgets, and policy for local public schools — and are elected", "Report to Congress", "Cannot be attended"], 1, 0, "A few hundred votes often decide them — the highest-leverage ballot most citizens skip."], ["FOIA (the Freedom of Information Act) lets…", ["Only journalists request records", "Any person request federal agency records, with exemptions", "Congress hide records", "Agencies charge anything"], 1, 1, "Sunlight by statute since 1966 — states have their own open-records laws too."], ["The right to petition the government appears in…", ["The Fourth Amendment", "The First Amendment", "Article III", "No document"], 1, 1, "The least famous of the First's five freedoms — and the one town halls and public comments run on."], ["'Due process' guarantees…", ["Specific outcomes", "Fair procedures before government takes life, liberty, or property", "Speedy paperwork", "Jury duty"], 1, 1, "The Fifth and Fourteenth: HOW the government acts is constrained, not just what it decides."], ["'Equal protection of the laws' comes from…", ["The First Amendment", "The Fourteenth Amendment", "Article I", "The Tenth Amendment"], 1, 1, "No state may deny it — the clause carrying more constitutional argument than nearly any other."], ["The census, every ten years, determines…", ["Tax rates", "How House seats and electoral votes are apportioned among states", "Court sizes", "Senate seats"], 1, 1, "Article I requires the count — representation follows the people."], ["Gerrymandering refers to…", ["Voter registration", "Drawing district lines to favor a party or group", "Recounting ballots", "Term limits"], 1, 1, "The map can pick the voters before the voters pick anyone — knowing the word is the first defense."], ["A filibuster, in the modern Senate, effectively requires…", ["51 votes to pass most legislation", "60 votes to end debate on most legislation", "A unanimous Senate", "House approval"], 1, 2, "Cloture takes 60 — why 'a majority' often isn't enough, and why the rule itself stays controversial."], ["The President's Cabinet exists to…", ["Make laws", "Head executive departments and advise the President", "Try impeachments", "Fund campaigns"], 1, 0, "State, Treasury, Defense, Justice and the rest — administration is where policy meets reality."], ["Treaties negotiated by the President require…", ["House approval", "Two-thirds of the Senate to ratify", "No approval", "State ratification"], 1, 2, "Another shared power: the executive negotiates, the Senate consents."], ["'Consent of the governed' is operationalized between elections by…", ["Waiting quietly", "Public comment, petitions, town halls, juries, and a free press", "Only lawsuits", "Party membership"], 1, 1, "Voting is the floor of citizenship, not the ceiling — the system has more handles than one lever."], ["Naturalized citizens may do all of the following EXCEPT…", ["Vote", "Serve on juries", "Become President", "Hold most public offices"], 2, 1, "The natural-born clause is the single office gap — everything else, including Congress, is open."], ["A 'republic' differs from a pure democracy in that…", ["Citizens never vote", "Laws are made by elected representatives under a constitution", "There are no elections", "Judges legislate"], 1, 1, "Representation plus constitutional limits — majorities govern, but not without brakes."], ["'Civil society' refers to…", ["Government agencies", "The voluntary layer: churches, clubs, charities, unions, neighborhood groups", "Polite manners", "Courts"], 1, 1, "Tocqueville's marvel — the associations that solve problems before government is ever asked."], ["Why does GSU teach 'the system, not a side'?", ["Sides are illegal", "A citizen who understands the machinery can use it for ANY conclusion they reach", "Systems are neutral magic", "To avoid hard topics"], 1, 0, "Red, blue, neither, never — the manual belongs to every owner of the republic."], ["The oath new citizens take pledges allegiance to…", ["A party", "The Constitution and laws of the United States", "A president", "A state"], 1, 1, "Not to a person, not to a party — to the framework itself. That's the American distinction."], ["Secured rights can still be lost in practice when…", ["Written down twice", "Citizens don't know them well enough to invoke them", "Courts exist", "Amendments pass"], 1, 1, "A right you can't name is a right you can't claim — civic literacy is the enforcement layer."], ["Town hall meetings and public comment periods exist because…", ["Laws require decoration", "Many government decisions legally require hearing from the public first", "Officials are lonely", "Cameras need content"], 1, 1, "Zoning, budgets, schools — showing up is a superpower precisely because so few do."], ["The peaceful transfer of power is celebrated because…", ["It's rare in history and the republic's deepest habit", "It's legally optional", "It saves money", "Crowds enjoy it"], 0, 1, "From Washington's farewell forward — the losing side hands over the army and goes home. Most of history couldn't."]];
+
+const COACH = ["Wrong answers are tuition \u2014 the explanation below is the lesson. Climb on.", "A broken streak is just a new base camp. Read the why, then take it back.", "You just learned something a right answer would have hidden from you.", "Champions miss questions; quitters miss the explanation. You're still climbing."];
+
+const TIERS = ["Bronze · Foundation","Silver · Consolidation","Gold · Mastery"];
+let state = { score:0, streak:0, best:0, idx:0, order:[], user:null, db:null, cloud:false };
+
+// local fallback first, always
+try {
+  const saved = JSON.parse(localStorage.getItem("gsu-"+GAME_ID) || "{}");
+  state.score = saved.score||0; state.best = saved.best||0;
+} catch(e) {}
+
+function shuffle(a) { for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function reshuffle() { state.order = shuffle(BANK.map((_,i)=>i)); state.idx = 0; }
+reshuffle();
+
+const $ = id => document.getElementById(id);
+function paint() { $("score").textContent = state.score; $("streak").textContent = state.streak; $("best").textContent = state.best; }
+
+function ask() {
+  const q = BANK[state.order[state.idx]];
+  $("tier").textContent = TIERS[q[3]];
+  $("q").textContent = q[0];
+  $("explain").style.display = "none"; $("next").style.display = "none";
+  const box = $("opts"); box.innerHTML = "";
+  shuffle(q[1].map((t,i)=>[t,i===q[2]])).forEach(([t,ok])=>{
+    const b = document.createElement("button"); b.className = "opt"; b.textContent = t;
+    b.onclick = () => answer(b, ok, q);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn, ok, q) {
+  document.querySelectorAll(".opt").forEach(b=>{ b.disabled = true; });
+  if (ok) {
+    btn.classList.add("right");
+    state.streak++; state.score += 10 + Math.min(state.streak,10);
+    if (state.streak > state.best) state.best = state.streak;
+    $("explain").innerHTML = "<b>Correct.</b> " + q[4];
+  } else {
+    btn.classList.add("wrong");
+    state.streak = 0;
+    $("explain").innerHTML = "<b>Not quite.</b> " + q[4] + "<br><em style='color:var(--gold)'>GENO: " + COACH[Math.floor(Math.random()*COACH.length)] + "</em>";
+  }
+  $("explain").style.display = "block"; $("next").style.display = "block";
+  paint(); save();
+}
+
+$("next").onclick = () => { state.idx++; if (state.idx >= state.order.length) reshuffle(); ask(); };
+
+async function save() {
+  try { localStorage.setItem("gsu-"+GAME_ID, JSON.stringify({score:state.score, best:state.best})); } catch(e) {}
+  if (state.cloud && state.user) {
+    try {
+      await setDoc(doc(state.db, "gameScores", state.user.uid + "_" + GAME_ID),
+        { uid:state.user.uid, game:GAME_ID, score:state.score, best:state.best, updated:serverTimestamp() }, { merge:true });
+    } catch(e) { cloudStatus(false, "local saves only"); }
+  }
+}
+
+function cloudStatus(on, msg) {
+  state.cloud = on;
+  const p = $("cloud");
+  p.textContent = "Cloud: " + msg;
+  p.style.color = on ? "var(--teal)" : "var(--muted)";
+}
+
+(async () => {
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app); state.db = getFirestore(app);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        state.user = u; cloudStatus(true, "scores saving ✓");
+        try {
+          const snap = await getDoc(doc(state.db, "gameScores", u.uid + "_" + GAME_ID));
+          if (snap.exists()) {
+            const d = snap.data();
+            if ((d.score||0) > state.score) state.score = d.score;
+            if ((d.best||0) > state.best) state.best = d.best;
+            paint();
+          }
+        } catch(e) {}
+      }
+    });
+    await signInAnonymously(auth);
+  } catch(e) { cloudStatus(false, "saving locally"); }
+})();
+
+paint(); ask();
+</script>
+</body>
+</html>
