@@ -1,0 +1,34 @@
+<!--
+================================================================================
+GSU LANGUAGE LAB — THE HOLE FIX (June 7, 2026)
+The page says "The Lab is below — pick your language and begin," but the iframe
+was removed during the https troubleshooting and never restored. This restores it.
+
+INSTALL (two edits in the /language-lab page embed):
+
+  EDIT 1 — paste the block below immediately AFTER this line in the embed:
+      Open the Lab in a new tab ↗</a>
+  (keep it inside the same section, before the closing </div></section>)
+
+  EDIT 2 — fix the stale link in that same "Open the Lab in a new tab" anchor:
+      FIND:    https://geneconstant36-blip.github.io/gsu-assets/world-languages.html
+      REPLACE: https://read.globalsovereignuniversity.org/world-languages.html
+  (the old URL still redirects, but canonical https is what made the iframe legal)
+================================================================================
+-->
+
+<style>
+  .gsu-lab-frame-wrap { margin-top:28px; }
+  .gsu-lab-frame { width:100%; height:820px; border:1px solid #1B2A4A; border-radius:12px; background:#000; display:block; box-shadow:0 10px 40px rgba(0,0,0,0.55); }
+  @media (max-width:700px) { .gsu-lab-frame { height:640px; } }
+</style>
+
+<div class="gsu-lab-frame-wrap">
+  <iframe
+    class="gsu-lab-frame"
+    src="https://read.globalsovereignuniversity.org/world-languages.html"
+    title="The GENO Language Lab — free vocabulary practice with full pronunciation, 12 categories per language"
+    loading="lazy"
+    allow="microphone; autoplay"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
