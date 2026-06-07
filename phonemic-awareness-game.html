@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sounds Inside the Words — Play the Book | GSU</title>
+<style>
+  :root{
+    --navy:#1B2A4A; --navy-deep:#0F1B33; --black:#0A0907;
+    --gold:#C9A84C; --gold-soft:#E2C97E; --teal:#1A8B7F; --teal-soft:#3FB3A5;
+    --cream:#F5F1E8; --cream-dim:#CFC9BA;
+    --red-soft:#C96B5A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:
+      radial-gradient(1200px 600px at 75% -10%, rgba(201,168,76,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(26,139,127,.12), transparent 60%),
+      linear-gradient(165deg, var(--navy-deep), var(--navy) 55%, #14223D);
+    color:var(--cream);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    min-height:100vh; display:flex; flex-direction:column; align-items:center;
+    padding:22px 14px 40px;
+  }
+  h1,h2,.serif{font-family:Georgia,"Times New Roman",serif}
+  .wrap{width:100%;max-width:760px}
+
+  /* ---------- header ---------- */
+  header{text-align:center;margin-bottom:14px}
+  .kicker{letter-spacing:.28em;font-size:.68rem;color:var(--gold);text-transform:uppercase}
+  h1{font-size:clamp(1.5rem,4.5vw,2.2rem);color:var(--cream);margin:.25em 0 .15em}
+  h1 em{color:var(--gold-soft);font-style:italic}
+  .tagline{color:var(--cream-dim);font-style:italic;font-family:Georgia,serif;font-size:.95rem}
+
+  /* ---------- status bar ---------- */
+  .status{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0 6px}
+  .pill{background:rgba(245,241,232,.06);border:1px solid rgba(201,168,76,.35);
+    border-radius:999px;padding:7px 16px;font-size:.8rem;display:flex;gap:8px;align-items:center}
+  .pill b{color:var(--gold-soft);font-size:1rem}
+  .badge{border-color:rgba(26,139,127,.6)}
+  .badge b{color:var(--teal-soft)}
+
+  /* ---------- rung ladder ---------- */
+  .ladder{display:flex;gap:6px;justify-content:center;margin:10px 0 18px;flex-wrap:wrap}
+  .rung{font-size:.68rem;letter-spacing:.06em;padding:6px 10px;border-radius:6px;
+    border:1px solid rgba(245,241,232,.18);color:var(--cream-dim);cursor:pointer;
+    background:rgba(10,9,7,.25);transition:all .2s}
+  .rung.active{border-color:var(--gold);color:var(--gold-soft);background:rgba(201,168,76,.12)}
+  .rung.done::after{content:" ✓";color:var(--teal-soft)}
+  .rung:hover{border-color:var(--gold-soft)}
+
+  /* ---------- card ---------- */
+  .card{background:linear-gradient(180deg, rgba(245,241,232,.05), rgba(245,241,232,.02));
+    border:1px solid rgba(201,168,76,.30); border-radius:14px; padding:26px 22px;
+    box-shadow:0 18px 50px rgba(0,0,0,.35);}
+  .mode-name{color:var(--teal-soft);letter-spacing:.22em;font-size:.7rem;text-transform:uppercase;text-align:center}
+  .question{font-family:Georgia,serif;font-size:clamp(1.15rem,3.6vw,1.5rem);text-align:center;
+    margin:14px 0 6px;line-height:1.45}
+  .question .word{color:var(--gold-soft);font-style:italic}
+  .question .ph{color:var(--teal-soft);font-style:normal;white-space:nowrap}
+
+  .orbs{display:flex;gap:12px;justify-content:center;margin:16px 0 4px;flex-wrap:wrap}
+  .orb{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:Georgia,serif;font-size:1.05rem;color:var(--navy-deep);
+    background:radial-gradient(circle at 32% 30%, var(--gold-soft), var(--gold) 70%);
+    box-shadow:0 6px 18px rgba(201,168,76,.35), inset 0 -3px 8px rgba(0,0,0,.25);
+    animation:pop .4s ease both}
+  .orb:nth-child(2){animation-delay:.08s}.orb:nth-child(3){animation-delay:.16s}
+  .orb:nth-child(4){animation-delay:.24s}.orb:nth-child(5){animation-delay:.32s}
+  @keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+
+  .listen{display:flex;justify-content:center;margin:14px 0 4px}
+  .listen button{background:rgba(26,139,127,.18);border:1px solid var(--teal);color:var(--cream);
+    border-radius:999px;padding:10px 22px;font-size:.9rem;cursor:pointer;display:flex;gap:9px;align-items:center;
+    transition:all .2s}
+  .listen button:hover{background:rgba(26,139,127,.32)}
+  .listen .ic{font-size:1.1rem}
+
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:18px}
+  .ans{background:rgba(10,9,7,.35);border:1px solid rgba(245,241,232,.22);border-radius:10px;
+    padding:16px 10px;font-family:Georgia,serif;font-size:1.15rem;color:var(--cream);cursor:pointer;
+    transition:all .15s;text-align:center}
+  .ans:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .ans.correct{border-color:var(--teal-soft);background:rgba(26,139,127,.25);color:#fff}
+  .ans.wrong{border-color:var(--red-soft);background:rgba(201,107,90,.18)}
+  .ans:disabled{cursor:default;opacity:.85}
+
+  .feedback{margin-top:16px;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);
+    padding:13px 16px;border-radius:0 10px 10px 0;font-size:.92rem;line-height:1.55;display:none}
+  .feedback.show{display:block;animation:fadeUp .3s ease}
+  .feedback .fhead{font-family:Georgia,serif;color:var(--gold-soft);margin-bottom:4px}
+  .feedback.good{border-left-color:var(--teal-soft);background:rgba(26,139,127,.08)}
+  .feedback.good .fhead{color:var(--teal-soft)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .next{display:flex;justify-content:center;margin-top:18px}
+  .next button{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:var(--navy-deep);
+    border:none;border-radius:8px;padding:12px 34px;font-size:.95rem;font-weight:700;letter-spacing:.06em;
+    cursor:pointer;display:none;box-shadow:0 8px 20px rgba(201,168,76,.3)}
+  .next button.show{display:block;animation:fadeUp .3s ease}
+  .next button:hover{filter:brightness(1.07)}
+
+  footer{margin-top:26px;text-align:center;color:var(--cream-dim);font-size:.74rem;line-height:1.7}
+  footer a{color:var(--teal-soft);text-decoration:none}
+  footer .motto{font-family:Georgia,serif;font-style:italic;color:var(--gold-soft)}
+
+  /* intro overlay */
+  .intro{position:fixed;inset:0;background:rgba(10,9,7,.82);display:flex;align-items:center;justify-content:center;z-index:10;padding:16px}
+  .intro .panel{max-width:540px;background:linear-gradient(165deg,var(--navy-deep),var(--navy));
+    border:1px solid var(--gold);border-radius:14px;padding:34px 30px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .intro h2{font-size:1.5rem;color:var(--gold-soft);margin-bottom:10px}
+  .intro p{color:var(--cream-dim);font-size:.95rem;line-height:1.65;margin-bottom:10px}
+  .intro .eyes{font-family:Georgia,serif;font-style:italic;color:var(--cream);font-size:1.1rem;margin:14px 0}
+  .intro button{margin-top:8px;background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+    color:var(--navy-deep);border:none;border-radius:8px;padding:13px 38px;font-weight:700;font-size:1rem;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro">
+  <div class="panel">
+    <div class="kicker">Readification · Play the Book</div>
+    <h2>The Sounds Inside the Words</h2>
+    <p>Every word you speak is built from smaller sounds. This game trains your ear to hear them — the single strongest predictor of reading success.</p>
+    <p class="eyes">“Eyes closed. This is listening.”</p>
+    <p>There is no clock. A pause while you think is a <b style="color:var(--teal-soft)">working pause</b> — that is the skill being built. Climb all six rungs.</p>
+    <button onclick="startGame()">Begin the Climb</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">Global Sovereign University · Free Education for All</div>
+    <h1>The Sounds <em>Inside</em> the Words</h1>
+    <div class="tagline">Play the book — six rungs, endless practice, no clock.</div>
+  </header>
+
+  <div class="status">
+    <div class="pill">Streak <b id="streak">0</b></div>
+    <div class="pill">Sounds Heard <b id="score">0</b></div>
+    <div class="pill badge">Badge <b id="badge">Listener</b></div>
+  </div>
+
+  <div class="ladder" id="ladder"></div>
+
+  <div class="card">
+    <div class="mode-name" id="modeName"></div>
+    <div class="question" id="question"></div>
+    <div class="orbs" id="orbs"></div>
+    <div class="listen"><button id="listenBtn" onclick="speakCurrent()"><span class="ic">🔊</span><span id="listenLabel">Listen</span></button></div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="next"><button id="nextBtn" onclick="nextQuestion()">Next Sound →</button></div>
+  </div>
+
+  <footer>
+    <div class="motto">“The sounds were always there. The learner did not invent those parts. They learned to perceive them.”</div>
+    — Dr. Gene A. Constant, <i>Phonemic Awareness: The Sounds Inside the Words</i><br>
+    <a href="https://www.globalsovereignuniversity.org/readification" target="_top">← Back to Readification</a> ·
+    Free forever from <a href="https://www.globalsovereignuniversity.org" target="_top">Global Sovereign University</a>
+  </footer>
+</div>
+
+<script>
+/* ================= WORD BANK =================
+   Phoneme arrays follow the book's conventions:
+   ship = /sh/i/p (3) · box = /b/o/k/s (4) · knee = /n/ē (2)
+   Digraph symbols: sh ch th ng · long vowels: ay ee igh oh oo
+*/
+const PH = { sh:"/sh/", ch:"/ch/", th:"/th/", ng:"/ng/", ay:"/ā/", ee:"/ē/", igh:"/ī/", oh:"/ō/", oo:"/oo/",
+  a:"/a/", e:"/e/", i:"/i/", o:"/o/", u:"/u/", b:"/b/", d:"/d/", f:"/f/", g:"/g/", h:"/h/", j:"/j/",
+  k:"/k/", l:"/l/", m:"/m/", n:"/n/", p:"/p/", r:"/r/", s:"/s/", t:"/t/", v:"/v/", w:"/w/", y:"/y/", z:"/z/" };
+const ph = s => PH[s] || ("/"+s+"/");
+
+const W = [
+ // ----- at / an / ap / am / ack -----
+ {w:"cat",p:["k","a","t"],r:"at"},{w:"bat",p:["b","a","t"],r:"at"},{w:"hat",p:["h","a","t"],r:"at"},
+ {w:"mat",p:["m","a","t"],r:"at"},{w:"rat",p:["r","a","t"],r:"at"},{w:"sat",p:["s","a","t"],r:"at"},
+ {w:"pat",p:["p","a","t"],r:"at"},{w:"fat",p:["f","a","t"],r:"at"},
+ {w:"man",p:["m","a","n"],r:"an"},{w:"pan",p:["p","a","n"],r:"an"},{w:"can",p:["k","a","n"],r:"an"},
+ {w:"fan",p:["f","a","n"],r:"an"},{w:"ran",p:["r","a","n"],r:"an"},{w:"van",p:["v","a","n"],r:"an"},{w:"tan",p:["t","a","n"],r:"an"},
+ {w:"map",p:["m","a","p"],r:"ap"},{w:"cap",p:["k","a","p"],r:"ap"},{w:"nap",p:["n","a","p"],r:"ap"},
+ {w:"tap",p:["t","a","p"],r:"ap"},{w:"lap",p:["l","a","p"],r:"ap"},{w:"gap",p:["g","a","p"],r:"ap"},
+ {w:"ham",p:["h","a","m"],r:"am"},{w:"jam",p:["j","a","m"],r:"am"},{w:"ram",p:["r","a","m"],r:"am"},{w:"yam",p:["y","a","m"],r:"am"},
+ {w:"back",p:["b","a","k"],r:"ack",trap:1},{w:"pack",p:["p","a","k"],r:"ack",trap:1},
+ {w:"sack",p:["s","a","k"],r:"ack",trap:1},{w:"rack",p:["r","a","k"],r:"ack",trap:1},{w:"tack",p:["t","a","k"],r:"ack",trap:1},
+ {w:"bath",p:["b","a","th"],r:"ath",trap:1},{w:"path",p:["p","a","th"],r:"ath",trap:1},{w:"math",p:["m","a","th"],r:"ath",trap:1},
+ {w:"hand",p:["h","a","n","d"],r:"and"},{w:"sand",p:["s","a","n","d"],r:"and"},
+ {w:"band",p:["b","a","n","d"],r:"and"},{w:"land",p:["l","a","n","d"],r:"and"},
+ // ----- ip / it / in / ig / ick / ish -----
+ {w:"ship",p:["sh","i","p"],r:"ip",trap:1},{w:"sip",p:["s","i","p"],r:"ip"},{w:"tip",p:["t","i","p"],r:"ip"},
+ {w:"lip",p:["l","i","p"],r:"ip"},{w:"hip",p:["h","i","p"],r:"ip"},{w:"rip",p:["r","i","p"],r:"ip"},
+ {w:"dip",p:["d","i","p"],r:"ip"},{w:"zip",p:["z","i","p"],r:"ip"},
+ {w:"sit",p:["s","i","t"],r:"it"},{w:"bit",p:["b","i","t"],r:"it"},{w:"hit",p:["h","i","t"],r:"it"},
+ {w:"fit",p:["f","i","t"],r:"it"},{w:"kit",p:["k","i","t"],r:"it"},{w:"pit",p:["p","i","t"],r:"it"},
+ {w:"pin",p:["p","i","n"],r:"in"},{w:"fin",p:["f","i","n"],r:"in"},{w:"win",p:["w","i","n"],r:"in"},
+ {w:"tin",p:["t","i","n"],r:"in"},{w:"chin",p:["ch","i","n"],r:"in",trap:1},{w:"shin",p:["sh","i","n"],r:"in",trap:1},
+ {w:"big",p:["b","i","g"],r:"ig"},{w:"pig",p:["p","i","g"],r:"ig"},{w:"dig",p:["d","i","g"],r:"ig"},
+ {w:"wig",p:["w","i","g"],r:"ig"},{w:"fig",p:["f","i","g"],r:"ig"},
+ {w:"kick",p:["k","i","k"],r:"ick",trap:1},{w:"sick",p:["s","i","k"],r:"ick",trap:1},
+ {w:"pick",p:["p","i","k"],r:"ick",trap:1},{w:"lick",p:["l","i","k"],r:"ick",trap:1},{w:"tick",p:["t","i","k"],r:"ick",trap:1},
+ {w:"fish",p:["f","i","sh"],r:"ish",trap:1},{w:"dish",p:["d","i","sh"],r:"ish",trap:1},{w:"wish",p:["w","i","sh"],r:"ish",trap:1},
+ {w:"ring",p:["r","i","ng"],r:"ing",trap:1},{w:"king",p:["k","i","ng"],r:"ing",trap:1},
+ {w:"sing",p:["s","i","ng"],r:"ing",trap:1},{w:"wing",p:["w","i","ng"],r:"ing",trap:1},
+ // ----- op / ot / ox -----
+ {w:"top",p:["t","o","p"],r:"op"},{w:"mop",p:["m","o","p"],r:"op"},{w:"hop",p:["h","o","p"],r:"op"},
+ {w:"pop",p:["p","o","p"],r:"op"},{w:"chop",p:["ch","o","p"],r:"op",trap:1},{w:"shop",p:["sh","o","p"],r:"op",trap:1},
+ {w:"stop",p:["s","t","o","p"],r:"op"},{w:"drop",p:["d","r","o","p"],r:"op"},
+ {w:"hot",p:["h","o","t"],r:"ot"},{w:"pot",p:["p","o","t"],r:"ot"},{w:"not",p:["n","o","t"],r:"ot"},
+ {w:"dot",p:["d","o","t"],r:"ot"},{w:"lot",p:["l","o","t"],r:"ot"},{w:"got",p:["g","o","t"],r:"ot"},
+ {w:"box",p:["b","o","k","s"],r:"ox",trap:1},{w:"fox",p:["f","o","k","s"],r:"ox",trap:1},
+ // ----- un / ug / um / ump / ust -----
+ {w:"sun",p:["s","u","n"],r:"un"},{w:"fun",p:["f","u","n"],r:"un"},{w:"run",p:["r","u","n"],r:"un"},{w:"bun",p:["b","u","n"],r:"un"},
+ {w:"bug",p:["b","u","g"],r:"ug"},{w:"rug",p:["r","u","g"],r:"ug"},{w:"mug",p:["m","u","g"],r:"ug"},
+ {w:"hug",p:["h","u","g"],r:"ug"},{w:"jug",p:["j","u","g"],r:"ug"},{w:"tug",p:["t","u","g"],r:"ug"},
+ {w:"thumb",p:["th","u","m"],r:"um",trap:1},{w:"drum",p:["d","r","u","m"],r:"um"},{w:"gum",p:["g","u","m"],r:"um"},{w:"hum",p:["h","u","m"],r:"um"},
+ {w:"jump",p:["j","u","m","p"],r:"ump"},{w:"bump",p:["b","u","m","p"],r:"ump"},{w:"pump",p:["p","u","m","p"],r:"ump"},
+ {w:"dust",p:["d","u","s","t"],r:"ust"},{w:"must",p:["m","u","s","t"],r:"ust"},{w:"just",p:["j","u","s","t"],r:"ust"},
+ // ----- ed / en / et / est -----
+ {w:"bed",p:["b","e","d"],r:"ed"},{w:"red",p:["r","e","d"],r:"ed"},{w:"fed",p:["f","e","d"],r:"ed"},{w:"led",p:["l","e","d"],r:"ed"},
+ {w:"pen",p:["p","e","n"],r:"en"},{w:"ten",p:["t","e","n"],r:"en"},{w:"hen",p:["h","e","n"],r:"en"},
+ {w:"men",p:["m","e","n"],r:"en"},{w:"den",p:["d","e","n"],r:"en"},
+ {w:"net",p:["n","e","t"],r:"et"},{w:"pet",p:["p","e","t"],r:"et"},{w:"wet",p:["w","e","t"],r:"et"},
+ {w:"jet",p:["j","e","t"],r:"et"},{w:"get",p:["g","e","t"],r:"et"},{w:"vet",p:["v","e","t"],r:"et"},
+ {w:"nest",p:["n","e","s","t"],r:"est"},{w:"best",p:["b","e","s","t"],r:"est"},{w:"rest",p:["r","e","s","t"],r:"est"},
+ {w:"test",p:["t","e","s","t"],r:"est"},{w:"vest",p:["v","e","s","t"],r:"est"},{w:"west",p:["w","e","s","t"],r:"est"},
+ // ----- long vowels & big traps -----
+ {w:"bee",p:["b","ee"],r:"ee",trap:1},{w:"see",p:["s","ee"],r:"ee",trap:1},{w:"knee",p:["n","ee"],r:"ee",trap:1},
+ {w:"tree",p:["t","r","ee"],r:"ee"},{w:"free",p:["f","r","ee"],r:"ee"},{w:"three",p:["th","r","ee"],r:"ee",trap:1},
+ {w:"deep",p:["d","ee","p"],r:"eep"},{w:"keep",p:["k","ee","p"],r:"eep"},{w:"jeep",p:["j","ee","p"],r:"eep"},{w:"sheep",p:["sh","ee","p"],r:"eep",trap:1},
+ {w:"cake",p:["k","ay","k"],r:"ake",trap:1},{w:"lake",p:["l","ay","k"],r:"ake",trap:1},{w:"make",p:["m","ay","k"],r:"ake",trap:1},
+ {w:"rake",p:["r","ay","k"],r:"ake",trap:1},{w:"take",p:["t","ay","k"],r:"ake",trap:1},{w:"bake",p:["b","ay","k"],r:"ake",trap:1},
+ {w:"snake",p:["s","n","ay","k"],r:"ake",trap:1},
+ {w:"rain",p:["r","ay","n"],r:"ain",trap:1},{w:"train",p:["t","r","ay","n"],r:"ain",trap:1},
+ {w:"brain",p:["b","r","ay","n"],r:"ain",trap:1},{w:"chain",p:["ch","ay","n"],r:"ain",trap:1},
+ {w:"light",p:["l","igh","t"],r:"ight",trap:1},{w:"night",p:["n","igh","t"],r:"ight",trap:1},
+ {w:"right",p:["r","igh","t"],r:"ight",trap:1},{w:"fight",p:["f","igh","t"],r:"ight",trap:1},{w:"bright",p:["b","r","igh","t"],r:"ight",trap:1},
+ {w:"boat",p:["b","oh","t"],r:"oat",trap:1},{w:"coat",p:["k","oh","t"],r:"oat",trap:1},{w:"goat",p:["g","oh","t"],r:"oat",trap:1},
+ {w:"moon",p:["m","oo","n"],r:"oon",trap:1},{w:"soon",p:["s","oo","n"],r:"oon",trap:1},{w:"spoon",p:["s","p","oo","n"],r:"oon",trap:1},
+ // ----- s-cluster deletion pairs (Sound Swap "magic trick") -----
+ {w:"snap",p:["s","n","a","p"],r:"ap"},{w:"slip",p:["s","l","i","p"],r:"ip"},
+ {w:"spin",p:["s","p","i","n"],r:"in"},{w:"stick",p:["s","t","i","k"],r:"ick",trap:1},
+ {w:"pill",p:["p","i","l"],r:"ill"},{w:"spill",p:["s","p","i","l"],r:"ill",trap:1},
+ {w:"till",p:["t","i","l"],r:"ill"},{w:"still",p:["s","t","i","l"],r:"ill",trap:1},
+ {w:"mile",p:["m","igh","l"],r:"ile",trap:1},{w:"smile",p:["s","m","igh","l"],r:"ile",trap:1},
+ {w:"team",p:["t","ee","m"],r:"eam",trap:1},{w:"steam",p:["s","t","ee","m"],r:"eam",trap:1}
+];
+
+// Syllable bank (separate, multi-syllable allowed)
+const SYL = [
+ ["sun",1],["dog",1],["fish",1],["book",1],["school",1],["house",1],["chair",1],["train",1],
+ ["paper",2],["water",2],["table",2],["pencil",2],["window",2],["happy",2],["basket",2],
+ ["garden",2],["monster",2],["rabbit",2],["spider",2],["tiger",2],["wagon",2],["yellow",2],["sister",2],["pumpkin",2],
+ ["banana",3],["elephant",3],["umbrella",3],["butterfly",3],["computer",3],["tomato",3],
+ ["potato",3],["dinosaur",3],["kangaroo",3],["hospital",3],["telephone",3],["magazine",3],["grandfather",3],
+ ["watermelon",4],["helicopter",4],["alligator",4],["caterpillar",4],["calculator",4],["motorcycle",4]
+];
+
+/* ================= MODES (the six rungs, from Chapter 11) ================= */
+const MODES = [
+ {id:"rhyme",  name:"Rung 1 · Rhyme Time",  ch:"Chapter 4"},
+ {id:"beats",  name:"Rung 2 · Beat Counter",ch:"Chapter 5"},
+ {id:"hunt",   name:"Rung 3 · Sound Hunt",  ch:"Chapter 6 · isolation"},
+ {id:"robot",  name:"Rung 4 · Robot Talk",  ch:"Chapter 6 · blending"},
+ {id:"turtle", name:"Rung 5 · Turtle Talk", ch:"Chapter 6 · segmentation"},
+ {id:"swap",   name:"Rung 6 · Sound Swap",  ch:"Chapter 6 · manipulation"}
+];
+const UNLOCK_AT = 6;          // correct answers needed to unlock next rung
+const BADGES = [[0,"Listener"],[20,"Bronze Ear"],[50,"Silver Ear"],[100,"Gold Ear"],[200,"Platinum Ear"]];
+
+/* ================= STATE (in-memory only) ================= */
+let state = { rung:0, perRung:[0,0,0,0,0,0], unlocked:1, streak:0, score:0, recent:[] };
+let current = null;
+
+/* ================= HELPERS ================= */
+const rnd = a => a[Math.floor(Math.random()*a.length)];
+const shuffle = a => a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+function pickWord(filter){ 
+  for(let i=0;i<40;i++){ const c=rnd(W); if((!filter||filter(c)) && !state.recent.includes(c.w)) return c; }
+  return rnd(W.filter(filter||(()=>true)));
+}
+function remember(w){ state.recent.push(w); if(state.recent.length>14) state.recent.shift(); }
+function byWord(w){ return W.find(x=>x.w===w); }
+function samePhonemes(a,b){ return a.length===b.length && a.every((x,i)=>x===b[i]); }
+function findByPhon(parr){ return W.find(x=>samePhonemes(x.p,parr)); }
+
+// minimal pairs: words differing in exactly one phoneme position
+function minimalPairs(word){
+  return W.filter(o=>o.w!==word.w && o.p.length===word.p.length &&
+    o.p.filter((x,i)=>x!==word.p[i]).length===1);
+}
+
+/* ================= SPEECH (oral-first, per the book) ================= */
+let voiceOK = "speechSynthesis" in window;
+function say(text, rate=0.92){
+  if(!voiceOK) return;
+  try{ speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text); u.rate=rate; u.pitch=1; u.lang="en-US";
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function speakCurrent(){
+  if(!current) return;
+  if(current.say) say(current.say.text, current.say.rate||0.9);
+}
+
+/* ================= QUESTION GENERATORS ================= */
+function genRhyme(){
+  // choose a rhyme family with >=2 members
+  let t,fam;
+  for(let i=0;i<50;i++){ t=pickWord(); fam=W.filter(o=>o.r===t.r&&o.w!==t.w); if(fam.length>=1) break; }
+  const correct = rnd(fam);
+  const wrong = shuffle(W.filter(o=>o.r!==t.r&&o.w!==t.w)).slice(0,3);
+  remember(t.w);
+  return {
+    q:`Which word rhymes with <span class="word">${t.w}</span>?`,
+    say:{text:`Which word rhymes with ${t.w}? ${t.w}.`},
+    answers:shuffle([correct.w, ...wrong.map(o=>o.w)]), correct:correct.w,
+    good:`Yes — <i>${t.w}</i> and <i>${correct.w}</i> share the same ending sounds. The beginning changes; the ending pattern stays.`,
+    fix:`Listen to the endings: <i>${t.w}</i> … <i>${correct.w}</i>. The ending sounds match — that match is the rhyme. (Chapter 4: rhyming is the first phonemic skill.)`
+  };
+}
+
+function genBeats(){
+  const [w,n] = rnd(SYL);
+  const opts = shuffle([1,2,3,4].filter(x=>x!==n)).slice(0,3); 
+  return {
+    q:`Clap the beats: how many <b>syllables</b> in <span class="word">${w}</span>?`,
+    say:{text:`How many syllables in ${w}? ${w}.`, rate:0.8},
+    answers:shuffle([n,...opts]).map(String), correct:String(n),
+    good:`Right — <i>${w}</i> has ${n} beat${n>1?"s":""}. You can feel your jaw drop once per syllable.`,
+    fix:`Say it like a turtle and tap: <i>${w}</i> has <b>${n}</b> beats. Syllables are the bridge — phonemes come next. (Chapter 5.)`
+  };
+}
+
+function genHunt(){
+  const variant = rnd(["first","first","last","middle","contains"]);
+  if(variant==="contains"){
+    const target = rnd(["sh","ch","th","s","m","f"]);
+    const has = pickWord(o=>o.p.includes(target));
+    const not = pickWord(o=>!o.p.includes(target));
+    const useYes = Math.random()<0.5; const w = useYes?has:not;
+    remember(w.w);
+    return {
+      q:`Sound hunt: do we hear <span class="ph">${ph(target)}</span> in <span class="word">${w.w}</span>?`,
+      say:{text:`Do we hear the sound ${target==="sh"?"shhh":target==="th"?"thhh":target==="ch"?"chuh":target} in ${w.w}? ${w.w}.`, rate:0.8},
+      answers:["Yes","No"], correct: useYes?"Yes":"No",
+      good: useYes?`Yes — say <i>${w.w}</i> slowly and ${ph(target)} is in there: ${w.p.map(ph).join(" ")}.`
+                  :`Right — <i>${w.w}</i> is ${w.p.map(ph).join(" ")}. No ${ph(target)} hiding inside.`,
+      fix: useYes?`Stretch it: <i>${w.w}</i> = ${w.p.map(ph).join(" ")} — the ${ph(target)} is there. Close your eyes and listen again.`
+                 :`<i>${w.w}</i> = ${w.p.map(ph).join(" ")}. The ${ph(target)} sound isn't in this one. Ears, not eyes.`
+    };
+  }
+  let w, idx, label;
+  if(variant==="middle"){ w = pickWord(o=>o.p.length===3); idx=1; label="middle"; }
+  else if(variant==="last"){ w = pickWord(); idx=w.p.length-1; label="last"; }
+  else { w = pickWord(o=>!!o.trap && "schtn".includes(o.p[0][0]) || true); idx=0; label="first"; }
+  if(variant==="first" && Math.random()<0.5){ const trapW=pickWord(o=>o.trap&&["sh","ch","th"].includes(o.p[0])); if(trapW) w=trapW; }
+  const correct = ph(w.p[idx]);
+  const pool = Object.keys(PH).filter(k=>ph(k)!==correct);
+  let wrongs = [];
+  // letter-trap distractor: first letter ≠ first sound
+  if(label==="first" && ["sh","ch","th"].includes(w.p[0])) wrongs.push(ph(w.p[0][0]));
+  while(wrongs.length<3){ const c=ph(rnd(pool)); if(!wrongs.includes(c)&&c!==correct) wrongs.push(c); }
+  remember(w.w);
+  return {
+    q:`What is the <b>${label}</b> sound in <span class="word">${w.w}</span>?`,
+    say:{text:`What is the ${label} sound in ${w.w}? Listen: ${w.w}.`, rate:0.7},
+    answers:shuffle([correct,...wrongs]), correct,
+    good:`Yes — <i>${w.w}</i> = ${w.p.map(ph).join(" ")}. The ${label} sound is ${correct}.`,
+    fix: (label==="first"&&["sh","ch","th"].includes(w.p[0]))
+      ? `Not the letter — the <b>sound</b>. Your mouth makes ONE action at the start of <i>${w.w}</i>: ${ph(w.p[0])}. Two letters, one sound. (Chapter 2: the letter trap.)`
+      : `Say it slowly with your eyes closed: <i>${w.w}</i> = ${w.p.map(ph).join(" ")}. The ${label} sound is ${correct}.`
+  };
+}
+
+function genRobot(){
+  const w = pickWord(o=>o.p.length>=3&&o.p.length<=4);
+  const pairs = minimalPairs(w);
+  let wrongs = shuffle(pairs).slice(0,3).map(o=>o.w);
+  while(wrongs.length<3){
+    const c = pickWord(o=>o.p.length===w.p.length&&o.w!==w.w&&!wrongs.includes(o.w));
+    if(c) wrongs.push(c.w);
+  }
+  remember(w.w);
+  return {
+    q:`Robot Talk: blend the sounds. Which word do they make?`,
+    orbs:w.p.map(ph),
+    say:{text:`Blend these sounds into a word. Listen slowly: ${w.w}.`, rate:0.45},
+    answers:shuffle([w.w,...wrongs]), correct:w.w,
+    good:`Blended! ${w.p.map(ph).join(" + ")} = <i>${w.w}</i>. That assembly is exactly what decoding does.`,
+    fix:`Slide them together slowly, no gaps: ${w.p.map(ph).join(" … ")} → <i>${w.w}</i>. Accuracy first, never speed. (Chapter 11: Robot Talk.)`
+  };
+}
+
+function genTurtle(){
+  // bias toward trap words where letters ≠ sounds
+  const w = Math.random()<0.65 ? pickWord(o=>o.trap) : pickWord();
+  const n = w.p.length; const letters = w.w.length;
+  const opts = new Set([n]);
+  if(letters!==n) opts.add(letters);           // the letter-count trap answer
+  while(opts.size<4){ const c=n+rnd([-2,-1,1,2]); if(c>=1&&c<=6) opts.add(c); }
+  remember(w.w);
+  return {
+    q:`Turtle Talk: how many <b>sounds</b> are in <span class="word">${w.w}</span>?<br><small style="color:var(--cream-dim)">(sounds — not letters)</small>`,
+    say:{text:`How many sounds in ${w.w}? Say it like a turtle: ${w.w}.`, rate:0.5},
+    answers:shuffle([...opts]).map(String), correct:String(n),
+    good:`Yes — <i>${w.w}</i> = ${w.p.map(ph).join(" ")} — <b>${n}</b> sounds${letters!==n?` (and ${letters} letters — they don't match, and now you know why)`:``}.`,
+    fix: letters!==n
+      ? `The letters lied to you — that's the trap. <i>${w.w}</i> has ${letters} letters but <b>${n}</b> sounds: ${w.p.map(ph).join(" ")}. Spelling has shortcuts; speech does not. (Chapter 1: box is /b/ /o/ /k/ /s/.)`
+      : `Push a token forward for each sound: <i>${w.w}</i> = ${w.p.map(ph).join(" ")} — ${n} sounds.`
+  };
+}
+
+function genSwap(){
+  // deletion "magic trick" sometimes
+  if(Math.random()<0.33){
+    const pairs=[["stop","top"],["snap","nap"],["slip","lip"],["spin","pin"],["stick","tick"],["spill","pill"],["still","till"],["smile","mile"],["steam","team"]];
+    const [a,b]=rnd(pairs); const A=byWord(a);
+    const wrongs=shuffle(W.filter(o=>o.w!==b&&o.w!==a&&o.p.length===byWord(b).p.length)).slice(0,3).map(o=>o.w);
+    remember(a);
+    return {
+      q:`Magic trick: say <span class="word">${a}</span>. Now say it <b>without</b> <span class="ph">${ph(A.p[0])}</span>. What's left?`,
+      say:{text:`Say ${a}. Now say ${a} without the ${A.p[0]==="s"?"sss":A.p[0]} sound.`, rate:0.75},
+      answers:shuffle([b,...wrongs]), correct:b,
+      good:`The sound disappeared! <i>${a}</i> − ${ph(A.p[0])} = <i>${b}</i>. Words are structures you can work with, not bricks to memorize.`,
+      fix:`Hold the word in your mind and lift off the first sound: <i>${a}</i> = ${A.p.map(ph).join(" ")}. Remove ${ph(A.p[0])} → <i>${b}</i>. (Chapter 11: Delete a Sound.)`
+    };
+  }
+  // substitution via minimal pairs
+  let w,pairs;
+  for(let i=0;i<60;i++){ w=pickWord(o=>o.p.length>=3); pairs=minimalPairs(w); if(pairs.length) break; }
+  const target = rnd(pairs);
+  const pos = w.p.findIndex((x,i)=>x!==target.p[i]);
+  const place = pos===0?"first sound":(pos===w.p.length-1?"last sound":"middle sound");
+  const wrongs = shuffle(W.filter(o=>o.w!==target.w&&o.w!==w.w&&o.r===target.r||minimalPairs(target).some(m=>m.w===o.w))).slice(0,3).map(o=>o.w);
+  while(wrongs.length<3){ const c=pickWord(o=>o.w!==target.w&&o.w!==w.w&&!wrongs.includes(o.w)); wrongs.push(c.w); }
+  remember(w.w);
+  return {
+    q:`Say <span class="word">${w.w}</span>. Now change <span class="ph">${ph(w.p[pos])}</span> to <span class="ph">${ph(target.p[pos])}</span>. What word do you get?`,
+    say:{text:`Say ${w.w}. Now change one sound. What do you get?`, rate:0.8},
+    answers:shuffle([target.w,...wrongs.slice(0,3)]), correct:target.w,
+    good:`Swap complete: <i>${w.w}</i> → <i>${target.w}</i>. One phoneme changed, a whole new word. That is the power of the smallest sound.`,
+    fix:`Take it apart, swap the ${place}, rebuild: ${w.p.map(ph).join(" ")} → ${target.p.map(ph).join(" ")} = <i>${target.w}</i>. (Chapter 6: manipulation is the stress test.)`
+  };
+}
+
+const GEN = {rhyme:genRhyme, beats:genBeats, hunt:genHunt, robot:genRobot, turtle:genTurtle, swap:genSwap};
+
+/* ================= UI FLOW ================= */
+function startGame(){ document.getElementById("intro").style.display="none"; nextQuestion(); }
+
+function renderLadder(){
+  const el=document.getElementById("ladder"); el.innerHTML="";
+  MODES.forEach((m,i)=>{
+    const b=document.createElement("button"); b.className="rung";
+    if(i===state.rung) b.classList.add("active");
+    if(state.perRung[i]>=UNLOCK_AT) b.classList.add("done");
+    b.textContent=m.name.replace("Rung "+(i+1)+" · ","");
+    b.disabled = i>=state.unlocked;
+    if(b.disabled){ b.style.opacity=.35; b.style.cursor="default"; b.textContent="🔒 "+b.textContent; }
+    b.onclick=()=>{ if(i<state.unlocked){ state.rung=i; nextQuestion(); } };
+    el.appendChild(b);
+  });
+}
+
+function updateStatus(){
+  document.getElementById("streak").textContent=state.streak;
+  document.getElementById("score").textContent=state.score;
+  let badge=BADGES[0][1]; for(const [n,name] of BADGES){ if(state.score>=n) badge=name; }
+  document.getElementById("badge").textContent=badge;
+}
+
+function nextQuestion(){
+  const mode=MODES[state.rung];
+  current=GEN[mode.id]();
+  current.mode=mode;
+  document.getElementById("modeName").textContent=mode.name+"  ·  "+mode.ch;
+  document.getElementById("question").innerHTML=current.q;
+  const orbs=document.getElementById("orbs"); orbs.innerHTML="";
+  if(current.orbs) current.orbs.forEach(s=>{const o=document.createElement("div");o.className="orb";o.textContent=s;orbs.appendChild(o);});
+  document.getElementById("listenLabel").textContent = current.mode.id==="robot" ? "Listen (slow)" : "Listen";
+  document.getElementById("listenBtn").style.display = voiceOK ? "flex" : "none";
+  const ansEl=document.getElementById("answers"); ansEl.innerHTML="";
+  current.answers.forEach(a=>{
+    const b=document.createElement("button"); b.className="ans"; b.innerHTML=a;
+    b.onclick=()=>answer(b,a); ansEl.appendChild(b);
+  });
+  const fb=document.getElementById("feedback"); fb.className="feedback"; fb.innerHTML="";
+  document.getElementById("nextBtn").classList.remove("show");
+  renderLadder(); updateStatus();
+  if(voiceOK && current.mode.id!=="robot") setTimeout(()=>speakCurrent(),350);
+}
+
+function answer(btn,val){
+  const buttons=[...document.querySelectorAll(".ans")];
+  buttons.forEach(b=>b.disabled=true);
+  const fb=document.getElementById("feedback");
+  if(val===current.correct){
+    btn.classList.add("correct");
+    state.streak++; state.score++;
+    state.perRung[state.rung]++;
+    // unlock logic
+    if(state.perRung[state.rung]===UNLOCK_AT && state.unlocked<MODES.length && state.rung===state.unlocked-1){
+      state.unlocked++;
+      fb.innerHTML=`<div class="fhead">Rung complete — the next rung is unlocked. ✦</div>${current.good}`;
+    } else {
+      fb.innerHTML=`<div class="fhead">${rnd(["Yes.","That's the sound.","Your ear caught it.","Exactly.","Clean hearing."])}</div>${current.good}`;
+    }
+    fb.className="feedback show good";
+  } else {
+    btn.classList.add("wrong");
+    buttons.find(b=>b.innerHTML===String(current.correct))?.classList.add("correct");
+    state.streak=0;
+    fb.innerHTML=`<div class="fhead">A working pause — that's the skill being built.</div>${current.fix}`;
+    fb.className="feedback show";
+  }
+  updateStatus(); renderLadder();
+  document.getElementById("nextBtn").classList.add("show");
+}
+
+renderLadder(); updateStatus();
+</script>
+</body>
+</html>
