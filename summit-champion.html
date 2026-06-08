@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summit Champions — This Month at the Daily Summit | GSU</title>
+<meta name="description" content="See this month's Daily Summit champions at Global Sovereign University. Every climber who takes the free daily quiz has a place on the board. Anonymous, free forever, come when you can.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Summit Champions?","acceptedAnswer":{"@type":"Answer","text":"A friendly monthly leaderboard for the free Daily Summit quiz at Global Sovereign University. Everyone who climbs the Summit this month appears on the board, ranked by their daily streak and best score. The top climber is crowned this month's Summit Champion."}},{"@type":"Question","name":"Is it free and anonymous?","acceptedAnswer":{"@type":"Answer","text":"Yes — free forever, no account, no email. Your progress saves anonymously. You may optionally claim a display name to show on the board; leave it blank to stay an Anonymous Climber."}},{"@type":"Question","name":"How do I get on the board?","acceptedAnswer":{"@type":"Answer","text":"Just play the Daily Summit. Each day you complete the quiz, your streak and best score update and you appear among this month's climbers. Miss a day? No penalty beyond your streak resetting — the Summit is always open."}}]}</script>
+<style>
+  :root{--navy:#1B2A4A;--teal:#1A8B7F;--gold:#C9A84C;--cream:#F5F1E8;--ink:#0A0907;--muted:#9CA3AF;--panel:#0e1830;--correct:#22C55E}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--cream);font-family:'Inter',Arial,sans-serif;min-height:100vh}
+  .gsu-game-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(10,9,7,.96);border-bottom:1px solid var(--gold);padding:10px 16px;backdrop-filter:blur(6px)}
+  .gsu-game-nav a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:700;transition:all .2s}
+  .gn-back{color:var(--gold);border:1px solid rgba(201,168,76,.5);background:rgba(201,168,76,.08)}.gn-back:hover{background:var(--gold);color:#000}
+  .gn-brand{color:var(--cream);font-family:Georgia,serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;flex:1;justify-content:center;min-height:auto}.gn-brand:hover{color:var(--gold)}
+  .gn-dl{color:var(--teal);border:1px solid rgba(26,139,127,.55);background:rgba(26,139,127,.08)}.gn-dl:hover{background:var(--teal);color:#FFF}
+  @media(max-width:560px){.gn-brand{display:none}.gsu-game-nav a{font-size:13px;padding:8px 12px}}
+  .wrap{max-width:760px;margin:0 auto;padding:34px 18px 60px}
+  .center{text-align:center}
+  .eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+  h1{font-family:Georgia,serif;font-size:40px;margin:10px 0 6px}h1 em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){h1{font-size:28px}}
+  .sub{color:var(--muted);font-style:italic;font-family:Georgia,serif;margin-bottom:26px}
+  .crown{background:linear-gradient(180deg,rgba(201,168,76,.16),rgba(201,168,76,.04));border:1px solid var(--gold);border-radius:16px;padding:24px;margin-bottom:22px;text-align:center}
+  .crown .who{font-family:Georgia,serif;font-size:26px;color:var(--gold);margin:6px 0}
+  .crown .meta{color:var(--cream);font-size:14px}
+  .crown .label{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+  .you{background:linear-gradient(180deg,var(--panel),#000);border:1px solid var(--teal);border-radius:14px;padding:18px 20px;margin-bottom:22px}
+  .you h2{font-family:Georgia,serif;font-size:18px;color:var(--teal);margin-bottom:10px}
+  .you .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .stat{border:1px solid var(--navy);background:#0a0f1f;border-radius:999px;padding:7px 16px;font-size:13px}
+  .stat b{color:var(--gold)}
+  .claim{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+  .claim input{flex:1;min-width:160px;background:#0a0f1f;border:1px solid var(--navy);border-radius:8px;padding:11px 14px;color:var(--cream);font-size:15px;font-family:inherit}
+  .claim button{background:var(--gold);color:#000;border:none;border-radius:8px;padding:11px 18px;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;font-family:inherit}
+  .claim button:hover{background:#D9B85C}
+  .claim small{flex-basis:100%;color:var(--muted);font-size:11.5px;margin-top:2px}
+  .board{border:1px solid var(--navy);border-radius:14px;overflow:hidden}
+  .board .head,.board .li{display:grid;grid-template-columns:54px 1fr auto auto;gap:10px;align-items:center;padding:13px 16px}
+  .board .head{background:var(--navy);color:var(--cream);font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+  .board .li{border-top:1px solid rgba(27,42,74,.7);font-size:15px}
+  .board .li:nth-child(even){background:rgba(14,24,48,.4)}
+  .board .li.me{background:rgba(26,139,127,.14);border-left:3px solid var(--teal)}
+  .rank{font-family:Georgia,serif;font-size:18px;color:var(--gold);text-align:center}
+  .nm{font-family:Georgia,serif;font-size:16px;color:var(--cream);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nm .tag{color:var(--teal);font-size:11px;font-family:Inter,Arial,sans-serif;margin-left:6px}
+  .col{font-size:13px;color:var(--muted);text-align:right;min-width:60px}
+  .col b{color:var(--cream)}
+  .note{color:var(--muted);font-size:13px;text-align:center;padding:26px 10px;line-height:1.7}
+  .foot{margin-top:34px;color:var(--muted);font-size:13px;line-height:1.8;text-align:center}
+  .foot a{color:var(--teal);text-decoration:none}.foot a:hover{text-decoration:underline}
+  .geno{margin-top:16px;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--navy);border-radius:999px;padding:8px 18px;font-size:13px;color:#E5E5E5}
+  .geno img{width:26px;height:26px;border-radius:50%}
+  .cta{display:inline-block;margin-top:8px;background:var(--teal);color:#fff;text-decoration:none;border-radius:8px;padding:12px 26px;font-size:14px;font-weight:800;letter-spacing:.5px}
+  .cta:hover{background:#16a394}
+</style>
+</head>
+<body>
+<nav class="gsu-game-nav" aria-label="GSU navigation">
+  <a class="gn-back" href="https://www.globalsovereignuniversity.org/todays-summit">&larr; Today's Summit</a>
+  <a class="gn-brand" href="https://www.globalsovereignuniversity.org/">Global Sovereign University &middot; Free Education for All</a>
+  <a class="gn-dl" href="https://www.globalsovereignuniversity.org/todays-summit">&#9654; Climb Today</a>
+</nav>
+
+<div class="wrap">
+  <div class="center">
+    <div class="eyebrow">Global Sovereign University &middot; The Daily Summit</div>
+    <h1><span id="monthName">This Month</span> <em>Champions</em></h1>
+    <p class="sub">Everyone who climbs the Summit this month has a place here. Come when you can &mdash; the mountain is always open, and a day away costs you nothing but a streak you can start again.</p>
+  </div>
+
+  <div class="crown" id="crown" style="display:none">
+    <div class="label">&#128081; This Month's Summit Champion</div>
+    <div class="who" id="champName">&mdash;</div>
+    <div class="meta" id="champMeta"></div>
+  </div>
+
+  <div class="you">
+    <h2>Your climb</h2>
+    <div class="row" id="youStats"><span class="stat">Connecting&hellip;</span></div>
+    <div class="claim">
+      <input id="nameInput" maxlength="20" placeholder="Claim a name for the board (optional)" aria-label="Display name">
+      <button id="claimBtn" type="button">Save</button>
+      <small>Shown publicly on the board. Leave blank to stay an Anonymous Climber. Be kind &mdash; younger climbers read this too.</small>
+    </div>
+  </div>
+
+  <div class="board" id="board" aria-live="polite">
+    <div class="head"><span style="text-align:center">#</span><span>Climber</span><span class="col">Streak</span><span class="col">Best</span></div>
+    <div class="note" id="boardNote">Reading the mountain&hellip;</div>
+  </div>
+
+  <div class="foot">
+    <div>The Summit is one short quiz a day &mdash; a habit of learning, not a competition for prizes.<br>Free forever from <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>, a 501(c)(3) nonprofit.</div>
+    <a class="cta" href="https://www.globalsovereignuniversity.org/todays-summit">Climb Today's Summit &rarr;</a>
+    <div><span class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">GENO AI Tutor available 24/7 &mdash; ask him anything at globalsovereignuniversity.org</span></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDocs, collection, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54",
+  measurementId: "G-LZDRK48TL7"
+};
+const GAME_ID = "todays-summit";
+
+const now = new Date();
+const monthPrefix = now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0"); // matches quiz dayKey YYYY-MM
+document.getElementById("monthName").textContent = now.toLocaleString(undefined,{month:"long"});
+
+const $ = id => document.getElementById(id);
+const esc = s => { const d=document.createElement("div"); d.textContent=String(s||""); return d.innerHTML; };
+const cleanName = s => String(s||"").replace(/[^\p{L}\p{N} .,'\-]/gu,"").trim().slice(0,20);
+const handle = uid => "Climber " + String(uid||"----").slice(0,4).toUpperCase();
+const medal = r => r===1?"\u{1F947}":r===2?"\u{1F948}":r===3?"\u{1F949}":("#"+r);
+
+let db, myUid=null;
+
+function renderYou(mine, rank){
+  const s = $("youStats");
+  if(!mine){
+    s.innerHTML = '<span class="stat">No climb logged this month yet</span>'+
+      '<a class="stat" style="text-decoration:none;color:var(--gold)" href="https://www.globalsovereignuniversity.org/todays-summit">Climb today &rarr;</a>';
+    return;
+  }
+  s.innerHTML =
+    `<span class="stat">Streak <b>${mine.streak||0}</b> day${(mine.streak===1)?"":"s"}</span>`+
+    `<span class="stat">Best <b>${mine.best||0}</b></span>`+
+    `<span class="stat">${rank?("Rank <b>#"+rank+"</b> this month"):"Climb today to rank"}</span>`;
+}
+
+function render(rows){
+  const board = $("board");
+  // clear all but header
+  [...board.querySelectorAll(".li,.note")].forEach(n=>n.remove());
+  if(!rows.length){
+    const d=document.createElement("div"); d.className="note";
+    d.innerHTML="Be the first name on the mountain this month.<br><a style='color:var(--teal)' href='https://www.globalsovereignuniversity.org/todays-summit'>Climb today&rsquo;s Summit &rarr;</a>";
+    board.appendChild(d); 
+    $("crown").style.display="none";
+    return;
+  }
+  rows.forEach((r,i)=>{
+    const li=document.createElement("div");
+    li.className="li"+(r.uid===myUid?" me":"");
+    const name = r.name ? esc(r.name) : `<span style="color:var(--muted)">${handle(r.uid)}</span>`;
+    const meTag = r.uid===myUid ? '<span class="tag">you</span>' : '';
+    li.innerHTML=`<span class="rank">${medal(i+1)}</span>`+
+      `<span class="nm">${name}${meTag}</span>`+
+      `<span class="col">\u{1F525} <b>${r.streak||0}</b></span>`+
+      `<span class="col"><b>${r.best||0}</b></span>`;
+    board.appendChild(li);
+  });
+  // crown #1
+  const top=rows[0];
+  $("champName").innerHTML = top.name ? esc(top.name) : handle(top.uid);
+  $("champMeta").innerHTML = `${top.streak||0}-day streak \u00b7 best score ${top.best||0}`;
+  $("crown").style.display="block";
+  // your rank
+  const myRow = rows.find(r=>r.uid===myUid);
+  renderYou(myRow || (myUid?{streak:0,best:0}:null), myRow?rows.indexOf(myRow)+1:null);
+}
+
+async function loadBoard(){
+  try{
+    const snap = await getDocs(query(collection(db,"gameScores"), where("game","==",GAME_ID)));
+    let rows=[];
+    snap.forEach(d=>{ const v=d.data(); if((v.lastDay||"").startsWith(monthPrefix)) rows.push(v); });
+    rows.sort((a,b)=> (b.streak||0)-(a.streak||0) || (b.best||0)-(a.best||0) || String(b.lastDay).localeCompare(String(a.lastDay)));
+    render(rows.slice(0,30));
+    if(!rows.find(r=>r.uid===myUid)) renderYou(myUid?{streak:0,best:0}:null, null);
+  }catch(e){
+    [...$("board").querySelectorAll(".li,.note")].forEach(n=>n.remove());
+    const d=document.createElement("div"); d.className="note";
+    d.innerHTML="The leaderboard is warming up. If this lingers, the climbers&rsquo; board may need its read permission switched on.";
+    $("board").appendChild(d);
+  }
+}
+
+async function claimName(){
+  if(!myUid) return;
+  const nm = cleanName($("nameInput").value);
+  $("claimBtn").textContent="Saving\u2026"; $("claimBtn").disabled=true;
+  try{
+    await setDoc(doc(db,"gameScores", myUid+"_"+GAME_ID), { uid:myUid, game:GAME_ID, name:nm, updated:serverTimestamp() }, {merge:true});
+    $("claimBtn").textContent="Saved \u2713";
+    setTimeout(()=>{ $("claimBtn").textContent="Save"; $("claimBtn").disabled=false; loadBoard(); }, 700);
+  }catch(e){
+    $("claimBtn").textContent="Try again"; $("claimBtn").disabled=false;
+  }
+}
+
+try{
+  const app = initializeApp(FIREBASE_CONFIG);
+  const auth = getAuth(app); db = getFirestore(app);
+  $("claimBtn").onclick = claimName;
+  onAuthStateChanged(auth, u=>{ if(u){ myUid=u.uid; loadBoard(); } });
+  signInAnonymously(auth).catch(()=>{ /* still show public board */ loadBoard(); });
+}catch(e){
+  $("boardNote").textContent="Could not connect right now — please try again later.";
+}
+</script>
+</body>
+</html>
