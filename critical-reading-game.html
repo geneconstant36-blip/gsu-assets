@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading to Question — Play the Book | GSU Critical Reading Game</title>
+<meta name="description" content="Play the free GSU critical reading book: turn judgment on through six rungs — the three layers of comprehension, inference, claim and evidence and warrant, recognizing what's missing, questioning without cynicism, and judging the claim not the team. Endless play, no clock, free forever.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the Reading to Question critical reading game?", "acceptedAnswer": {"@type": "Answer", "text": "A free, endless critical-reading game built from the GSU book of the same name. Six rungs follow the book's sequence: the three layers of comprehension, inference, argument structure, recognizing perspective, questioning without cynicism, and judging the claim not the source."}}, {"@type": "Question", "name": "Is it free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — free forever, no login, from Global Sovereign University, a 501(c)(3) nonprofit. The full book is a free PDF on the Readification page."}}, {"@type": "Question", "name": "Can I get help while playing?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. GENO, GSU's AI tutor, is always available to answer questions about this book and every GSU book — find the call button on any page of globalsovereignuniversity.org."}}]}</script>
+<style>
+  :root{--navy:#1B2A4A;--teal:#1A8B7F;--gold:#C9A84C;--cream:#F5F1E8;--ink:#0A0907;--muted:#9CA3AF;--panel:#0e1830;--correct:#22C55E;--wrong:#EF4444}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--cream);font-family:'Inter',Arial,sans-serif;min-height:100vh}
+  .gsu-game-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(10,9,7,.96);border-bottom:1px solid var(--gold);padding:10px 16px;backdrop-filter:blur(6px)}
+  .gsu-game-nav a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:700;transition:all .2s}
+  .gn-back{color:var(--gold);border:1px solid rgba(201,168,76,.5);background:rgba(201,168,76,.08)}.gn-back:hover{background:var(--gold);color:#000}
+  .gn-brand{color:var(--cream);font-family:Georgia,serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;flex:1;justify-content:center;min-height:auto}.gn-brand:hover{color:var(--gold)}
+  .gn-dl{color:var(--teal);border:1px solid rgba(26,139,127,.55);background:rgba(26,139,127,.08)}.gn-dl:hover{background:var(--teal);color:#FFF}
+  @media(max-width:560px){.gn-brand{display:none}.gsu-game-nav a{font-size:13px;padding:8px 12px}}
+  .wrap{max-width:860px;margin:0 auto;padding:34px 18px 60px;text-align:center}
+  .eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+  h1{font-family:Georgia,serif;font-size:42px;margin:10px 0 6px}h1 em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){h1{font-size:28px}}
+  .sub{color:var(--muted);font-style:italic;font-family:Georgia,serif;margin-bottom:22px}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .pill{border:1px solid var(--navy);background:var(--panel);border-radius:999px;padding:8px 18px;font-size:13px;color:var(--cream)}
+  .pill b{color:var(--gold)}
+  .rungs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .rung{border:1px solid var(--navy);background:transparent;color:var(--muted);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+  .rung.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.1)}
+  .rung.locked{opacity:.45;cursor:default}
+  .card{background:linear-gradient(180deg,var(--panel),#000);border:1px solid var(--navy);border-radius:14px;padding:34px 26px;min-height:300px}
+  .qmeta{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  .q{font-family:Georgia,serif;font-size:25px;line-height:1.4;margin-bottom:22px}.q em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){.q{font-size:20px}}
+  .listen{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:22px}
+  .listen:hover{background:var(--teal);color:#FFF}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;max-width:680px;margin:0 auto}
+  .opt{background:#0a0f1f;border:1px solid var(--navy);border-radius:10px;padding:16px 14px;font-size:17px;font-family:Georgia,serif;color:var(--cream);cursor:pointer;transition:all .2s;min-height:56px;line-height:1.3}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:var(--correct);background:rgba(34,197,94,.13)}
+  .opt.wrong{border-color:var(--wrong);background:rgba(239,68,68,.13)}
+  .explain{margin:20px auto 0;max-width:620px;text-align:left;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);padding:14px 18px;border-radius:0 8px 8px 0;font-size:14.5px;line-height:1.65;color:#E5E5E5;display:none}
+  .explain b{color:var(--gold)}
+  .pausenote{color:var(--teal);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:14px;display:none}
+  .next{display:none;margin:22px auto 0;background:var(--gold);color:#000;border:none;border-radius:8px;padding:13px 34px;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:inherit}
+  .next:hover{background:#D9B85C}
+  .foot{margin-top:42px;color:var(--muted);font-size:13px;line-height:1.8}
+  .foot .quote{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-size:15px}
+  .foot a{color:var(--teal);text-decoration:none}.foot a:hover{text-decoration:underline}
+  .geno{margin-top:18px;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--navy);border-radius:999px;padding:8px 18px;font-size:13px;color:#E5E5E5}
+  .geno img{width:26px;height:26px;border-radius:50%}
+</style>
+</head>
+<body>
+<nav class="gsu-game-nav" aria-label="GSU game navigation">
+  <a class="gn-back" href="https://www.globalsovereignuniversity.org/readification">&larr; Readification Hub</a>
+  <a class="gn-brand" href="https://www.globalsovereignuniversity.org/">Global Sovereign University &middot; Free Education for All</a>
+  <a class="gn-dl" href="critical-reading-game.html" download>&#10515; Download Game</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Global Sovereign University &middot; Play the Book</div>
+  <h1>Reading to <em>Question</em></h1>
+  <p class="sub">Comprehension with judgment on &mdash; six rungs, endless, no clock.</p>
+
+  <div class="stats">
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Claims Judged <b id="score">0</b></span>
+    <span class="pill">Badge <b id="badge">Apprentice</b></span>
+  </div>
+  <div class="rungs" id="rungs"></div>
+
+  <div class="card">
+    <div class="qmeta" id="qmeta"></div>
+    <div class="q" id="q"></div>
+    <button class="listen" id="listen" type="button">&#128266; Listen</button>
+    <div class="opts" id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <div class="pausenote" id="pausenote">A working pause &mdash; mastery is built one rung at a time.</div>
+    <button class="next" id="next" type="button">Next &rarr;</button>
+  </div>
+
+  <div class="foot">
+    <div class="quote">&ldquo;If you cannot tell what is central, you cannot evaluate it later.&rdquo;</div>
+    &mdash; Dr. Gene A. Constant, <i>Reading to Question &mdash; Critical Reading</i><br>
+    <a href="https://www.globalsovereignuniversity.org/readification">&larr; Back to Readification</a> &middot; Free forever from <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>
+    <div><span class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">GENO AI Tutor available 24/7 &mdash; ask him anything about this book at globalsovereignuniversity.org</span></div>
+  </div>
+</div>
+
+<script>
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function pick4(correct,pool){const o=new Set([correct]);const p=shuffle(pool.filter(x=>x!==correct));for(const x of p){if(o.size>=4)break;o.add(x)}return shuffle([...o])}
+
+const LAYERS=["Literal","Inferential","Evaluative"];
+const LAYERQ=[
+ ["&lsquo;What does the passage directly state happened?&rsquo; Which layer of comprehension is this?","Literal","Chapter 1: the <b>literal</b> layer is what the text actually says on the surface. The book insists you assemble this accurately first &mdash; you cannot judge a claim you have not yet understood."],
+ ["&lsquo;What is the author implying without saying it outright?&rsquo; Which layer?","Inferential","The <b>inferential</b> layer reads between the lines using clues plus background knowledge. It sits above the literal and below the evaluative in the book's three-layer model."],
+ ["&lsquo;Is this argument actually sound &mdash; should I believe it?&rsquo; Which layer?","Evaluative","The <b>evaluative</b> layer is judgment: weighing evidence and soundness. The book's warning &mdash; never jump here before the literal and inferential layers are secure."],
+ ["A reader summarizes exactly what the text said, no more. Which layer are they working at?","Literal","Pure summary of stated content is the <b>literal</b> layer. The book treats it as the foundation: get this wrong and every later judgment is built on sand."]
+];
+const INFER=[
+ ["<em>The streets were wet and people were folding umbrellas.</em> Best supported inference?","It had recently been raining",["It had recently been raining","It was snowing","A pipe burst","It was a sunny day"],"Chapter 4: inference uses text clues + knowledge. Wet streets and umbrellas point to <b>recent rain</b>. The book's rule: a good inference is <i>supported</i> by evidence, not invented beyond it."],
+ ["<em>She slid the untouched plate away and asked for the check.</em> Most reasonable inference?","She didn't want to eat",["She didn't want to eat","The food was poisoned","She loved the meal","She was the chef"],"&lsquo;Untouched&rsquo; plus leaving early supports <b>she didn't want to eat</b>. The book warns against over-reading: &lsquo;poisoned&rsquo; leaps far past the evidence."],
+ ["<em>He checked his watch three times during the short meeting.</em> Best inference?","He was anxious about time",["He was anxious about time","He hated his coworkers","His watch was broken","He was asleep"],"Repeated watch-checking supports <b>concern about time</b>. Inference, the book says, stays tethered to the clues &mdash; it fills gaps reasonably, it does not fabricate."]
+];
+const ARG=[
+ ["In arguing an ad worked: <em>&lsquo;Sales rose 20% the month after the campaign.&rsquo;</em> This statement is the &hellip;","Evidence",["Evidence","Claim","Warrant","Opinion"],"Chapter 5 &mdash; claim, evidence, warrant. The <b>claim</b> is &lsquo;the ad worked&rsquo;; this sales figure is the <b>evidence</b> offered to support it. The book trains readers to label each part."],
+ ["<em>&lsquo;Therefore, the new policy should be adopted nationwide.&rsquo;</em> In an argument, this is the &hellip;","Claim",["Claim","Evidence","Warrant","Citation"],"&lsquo;Therefore&hellip;should&rsquo; signals the <b>claim</b> &mdash; the point being argued for. The book: find the claim first, because everything else exists to support it."],
+ ["The unstated assumption linking evidence to a claim is called the &hellip;","Warrant",["Warrant","Claim","Evidence","Footnote"],"The <b>warrant</b> is the hidden bridge: <i>why</i> the evidence supports the claim. The book says the warrant is where weak arguments hide &mdash; expose it and you can test it."],
+ ["<em>&lsquo;Most experts surveyed agreed with the plan.&rsquo;</em> In an argument for the plan, this is &hellip;","Evidence",["Evidence","Claim","Warrant","Conclusion"],"A reported survey result is <b>evidence</b> marshaled for the claim. The book reminds readers to then ask the warrant question: does expert agreement actually prove the plan is right?"]
+];
+const MISSING=[
+ ["An article on a factory closing quotes only the CEO and the mayor. Whose perspective is most clearly missing?","the workers",["the workers","the CEO","the mayor","the reporter"],"Chapter 6: critical readers ask <b>who is absent</b>. The people most affected &mdash; the <b>workers</b> &mdash; have no voice here. The book treats missing perspectives as part of the meaning."],
+ ["A glowing review of a product was written by the company that sells it. What should a critical reader notice?","A conflict of interest is missing from view",["A conflict of interest is missing from view","Nothing &mdash; reviews are neutral","The product must be good","The review is too short"],"The book: follow the <b>incentives</b>. A seller praising its own product has a stake. Recognizing what's missing &mdash; an independent voice &mdash; is core critical reading."],
+ ["A history of a war tells only the victor's side. What is missing?","the defeated side's account",["the defeated side's account","the date","the location","the weather"],"&lsquo;Recognizing what is missing&rsquo; (Ch.6): one-sided sources leave a hole. The book trains readers to ask whose story was left out before trusting the whole."]
+];
+const CYNIC=[
+ ["A reader dismisses every source as &lsquo;all lies anyway&rsquo; without examining any. That is not critical reading &mdash; it is &hellip;","cynicism",["cynicism","inference","close reading","fact-checking"],"Chapter 7's warning: <b>cynicism</b> rejects everything by reflex. Critical reading <i>questions</i> in order to judge fairly &mdash; it weighs evidence rather than refusing it all."],
+ ["What separates a critical reader from a cynic?","The critical reader weighs evidence before judging",["The critical reader weighs evidence before judging","The critical reader trusts nothing","The cynic reads more carefully","There is no difference"],"The book draws the line clearly: questioning is a tool for reaching a fair verdict, not a license to <b>dismiss everything</b>. The critical reader stays open to being convinced by good evidence."],
+ ["A claim is well-supported by strong evidence, but a reader rejects it only because they distrust all news. This reader is being &hellip;","cynical, not critical",["cynical, not critical","appropriately careful","perfectly logical","a good fact-checker"],"Rejecting <b>well-supported</b> claims by reflex is cynicism. The book: critical reading must be able to say &lsquo;yes, this holds up&rsquo; when the evidence earns it."]
+];
+const TRIBE=[
+ ["You accept a claim only because &lsquo;your side&rsquo; made it, without checking the evidence. That is &hellip;","tribalism",["tribalism","critical reading","inference","close reading"],"Chapter 8's warning: <b>tribalism</b> judges a claim by its source's team, not its merits. The book's discipline &mdash; judge the <i>claim</i>, not the jersey it wears."],
+ ["What does the book say a critical reader judges a claim by?","its evidence and reasoning",["its evidence and reasoning","who said it","which side it helps","how popular it is"],"The whole point of critical reading: a claim stands or falls on <b>evidence and reasoning</b>, never on whose mouth it came from. That is what keeps questioning honest."],
+ ["You reject a true, well-evidenced claim only because an opposing group said it. This is &hellip;","motivated reasoning",["motivated reasoning","sound judgment","careful skepticism","literal comprehension"],"<b>Motivated reasoning</b> &mdash; the tribal trap. The book warns it is the mirror image of cynicism: both let something other than evidence decide. Judge the claim on its merits."]
+];
+const RUNGS=[
+ {name:"Three Layers",ch:"Chapter 1 \u00b7 Layers of Comprehension",gen(){const[q,a,why]=R(LAYERQ);return{q,answer:a,opts:shuffle(LAYERS.slice()),why}}},
+ {name:"Inference",ch:"Chapter 4 \u00b7 Reading Between the Lines",gen(){const[q,a,o,why]=R(INFER);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Claim, Evidence, Warrant",ch:"Chapter 5 \u00b7 Evaluating Argument",gen(){const[q,a,o,why]=R(ARG);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"What's Missing",ch:"Chapter 6 \u00b7 Recognizing Perspective",gen(){const[q,a,o,why]=R(MISSING);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Question, Don't Dismiss",ch:"Chapter 7 \u00b7 Not Cynicism",gen(){const[q,a,o,why]=R(CYNIC);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Judge the Claim",ch:"Chapter 8 \u00b7 Not Tribalism",gen(){const[q,a,o,why]=R(TRIBE);return{q,answer:a,opts:shuffle(o.slice()),why}}}
+];
+
+const BADGES=[[0, "Apprentice"], [25, "Bronze Skeptic"], [60, "Silver Skeptic"], [120, "Gold Skeptic"], [250, "Platinum Critical Reader"]];
+let rung=0,unlocked=1,streak=0,score=0,cur=null,locked=false,correctInRung=0;
+function badge(){let b=BADGES[0][1];for(const[n,t]of BADGES)if(score>=n)b=t;return b}
+function drawRungs(){document.getElementById('rungs').innerHTML=RUNGS.map((r,i)=>`<button class="rung ${i===rung?'on':''} ${i>=unlocked?'locked':''}" data-i="${i}" type="button">${i>=unlocked?'\u{1F512} ':''}${r.name}</button>`).join('');document.querySelectorAll('.rung').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i<unlocked){rung=i;correctInRung=0;ask()}})}
+function ask(){locked=false;cur=RUNGS[rung].gen();document.getElementById('qmeta').textContent=`Rung ${rung+1} \u00b7 ${RUNGS[rung].name} \u00b7 ${RUNGS[rung].ch}`;document.getElementById('q').innerHTML=cur.q;
+ const lb=document.getElementById('listen');lb.style.display=cur.say?'inline-flex':'none';
+ const o=document.getElementById('opts');o.innerHTML='';cur.opts.forEach(w=>{const b=document.createElement('button');b.className='opt';b.type='button';b.innerHTML=w;b.onclick=()=>choose(b,w);o.appendChild(b)});
+ document.getElementById('explain').style.display='none';document.getElementById('pausenote').style.display='none';document.getElementById('next').style.display='none';drawRungs()}
+function choose(btn,w){if(locked)return;locked=true;const ok=w===cur.answer;
+ document.querySelectorAll('.opt').forEach(b=>{if(b.innerHTML===cur.answer)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong')});
+ const ex=document.getElementById('explain');ex.innerHTML=cur.why;ex.style.display='block';
+ if(ok){streak++;score++;correctInRung++;if(correctInRung>=6&&unlocked<RUNGS.length){unlocked++;correctInRung=0}}
+ else{streak=0;document.getElementById('pausenote').style.display='block'}
+ document.getElementById('streak').textContent=streak;document.getElementById('score').textContent=score;document.getElementById('badge').textContent=badge();
+ document.getElementById('next').style.display='inline-block'}
+document.getElementById('next').onclick=ask;
+document.getElementById('listen').onclick=()=>cur&&cur.say&&speak(cur.say);
+ask();
+</script>
+</body>
+</html>

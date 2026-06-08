@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Sentences Carry Meaning — Play the Book | GSU Comprehension Game</title>
+<meta name="description" content="Play the free GSU comprehension book: see how sentences carry meaning through six rungs — who did what to whom, coordination and subordination, modifiers, pronoun reference, logical connectors, and main idea. Endless play, no clock, free forever.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the How Sentences Carry Meaning comprehension game?", "acceptedAnswer": {"@type": "Answer", "text": "A free, endless comprehension game built from the GSU book of the same name. Six rungs follow the book's sequence: what a sentence does, coordination and subordination, modification, pronoun reference, logical connectors, and information structure."}}, {"@type": "Question", "name": "Is it free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — free forever, no login, from Global Sovereign University, a 501(c)(3) nonprofit. The full book is a free PDF on the Readification page."}}, {"@type": "Question", "name": "Can I get help while playing?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. GENO, GSU's AI tutor, is always available to answer questions about this book and every GSU book — find the call button on any page of globalsovereignuniversity.org."}}]}</script>
+<style>
+  :root{--navy:#1B2A4A;--teal:#1A8B7F;--gold:#C9A84C;--cream:#F5F1E8;--ink:#0A0907;--muted:#9CA3AF;--panel:#0e1830;--correct:#22C55E;--wrong:#EF4444}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--cream);font-family:'Inter',Arial,sans-serif;min-height:100vh}
+  .gsu-game-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(10,9,7,.96);border-bottom:1px solid var(--gold);padding:10px 16px;backdrop-filter:blur(6px)}
+  .gsu-game-nav a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:700;transition:all .2s}
+  .gn-back{color:var(--gold);border:1px solid rgba(201,168,76,.5);background:rgba(201,168,76,.08)}.gn-back:hover{background:var(--gold);color:#000}
+  .gn-brand{color:var(--cream);font-family:Georgia,serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;flex:1;justify-content:center;min-height:auto}.gn-brand:hover{color:var(--gold)}
+  .gn-dl{color:var(--teal);border:1px solid rgba(26,139,127,.55);background:rgba(26,139,127,.08)}.gn-dl:hover{background:var(--teal);color:#FFF}
+  @media(max-width:560px){.gn-brand{display:none}.gsu-game-nav a{font-size:13px;padding:8px 12px}}
+  .wrap{max-width:860px;margin:0 auto;padding:34px 18px 60px;text-align:center}
+  .eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+  h1{font-family:Georgia,serif;font-size:42px;margin:10px 0 6px}h1 em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){h1{font-size:28px}}
+  .sub{color:var(--muted);font-style:italic;font-family:Georgia,serif;margin-bottom:22px}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .pill{border:1px solid var(--navy);background:var(--panel);border-radius:999px;padding:8px 18px;font-size:13px;color:var(--cream)}
+  .pill b{color:var(--gold)}
+  .rungs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .rung{border:1px solid var(--navy);background:transparent;color:var(--muted);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+  .rung.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.1)}
+  .rung.locked{opacity:.45;cursor:default}
+  .card{background:linear-gradient(180deg,var(--panel),#000);border:1px solid var(--navy);border-radius:14px;padding:34px 26px;min-height:300px}
+  .qmeta{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  .q{font-family:Georgia,serif;font-size:25px;line-height:1.4;margin-bottom:22px}.q em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){.q{font-size:20px}}
+  .listen{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:22px}
+  .listen:hover{background:var(--teal);color:#FFF}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;max-width:680px;margin:0 auto}
+  .opt{background:#0a0f1f;border:1px solid var(--navy);border-radius:10px;padding:16px 14px;font-size:17px;font-family:Georgia,serif;color:var(--cream);cursor:pointer;transition:all .2s;min-height:56px;line-height:1.3}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:var(--correct);background:rgba(34,197,94,.13)}
+  .opt.wrong{border-color:var(--wrong);background:rgba(239,68,68,.13)}
+  .explain{margin:20px auto 0;max-width:620px;text-align:left;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);padding:14px 18px;border-radius:0 8px 8px 0;font-size:14.5px;line-height:1.65;color:#E5E5E5;display:none}
+  .explain b{color:var(--gold)}
+  .pausenote{color:var(--teal);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:14px;display:none}
+  .next{display:none;margin:22px auto 0;background:var(--gold);color:#000;border:none;border-radius:8px;padding:13px 34px;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:inherit}
+  .next:hover{background:#D9B85C}
+  .foot{margin-top:42px;color:var(--muted);font-size:13px;line-height:1.8}
+  .foot .quote{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-size:15px}
+  .foot a{color:var(--teal);text-decoration:none}.foot a:hover{text-decoration:underline}
+  .geno{margin-top:18px;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--navy);border-radius:999px;padding:8px 18px;font-size:13px;color:#E5E5E5}
+  .geno img{width:26px;height:26px;border-radius:50%}
+</style>
+</head>
+<body>
+<nav class="gsu-game-nav" aria-label="GSU game navigation">
+  <a class="gn-back" href="https://www.globalsovereignuniversity.org/readification">&larr; Readification Hub</a>
+  <a class="gn-brand" href="https://www.globalsovereignuniversity.org/">Global Sovereign University &middot; Free Education for All</a>
+  <a class="gn-dl" href="comprehension-game.html" download>&#10515; Download Game</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Global Sovereign University &middot; Play the Book</div>
+  <h1>How Sentences <em>Carry</em> Meaning</h1>
+  <p class="sub">Who did what to whom &mdash; six rungs, endless, no clock.</p>
+
+  <div class="stats">
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Sentences Cracked <b id="score">0</b></span>
+    <span class="pill">Badge <b id="badge">Apprentice</b></span>
+  </div>
+  <div class="rungs" id="rungs"></div>
+
+  <div class="card">
+    <div class="qmeta" id="qmeta"></div>
+    <div class="q" id="q"></div>
+    <button class="listen" id="listen" type="button">&#128266; Listen</button>
+    <div class="opts" id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <div class="pausenote" id="pausenote">A working pause &mdash; mastery is built one rung at a time.</div>
+    <button class="next" id="next" type="button">Next &rarr;</button>
+  </div>
+
+  <div class="foot">
+    <div class="quote">&ldquo;You cannot responsibly evaluate a claim you have not accurately assembled.&rdquo;</div>
+    &mdash; Dr. Gene A. Constant, <i>How Sentences Carry Meaning &mdash; Comprehension</i><br>
+    <a href="https://www.globalsovereignuniversity.org/readification">&larr; Back to Readification</a> &middot; Free forever from <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>
+    <div><span class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">GENO AI Tutor available 24/7 &mdash; ask him anything about this book at globalsovereignuniversity.org</span></div>
+  </div>
+</div>
+
+<script>
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function pick4(correct,pool){const o=new Set([correct]);const p=shuffle(pool.filter(x=>x!==correct));for(const x of p){if(o.size>=4)break;o.add(x)}return shuffle([...o])}
+
+const CORE=[
+ ["<em>The dog chased the cat.</em> Who is doing the chasing?","the dog",["the dog","the cat","both","neither"],"Chapter 1: a sentence answers <b>who did what to whom</b>. Here the subject &lsquo;the dog&rsquo; is the doer. Find the actor first and the sentence's core proposition appears."],
+ ["<em>The cat was chased by the dog.</em> Who did the chasing?","the dog",["the dog","the cat","no one","the reader"],"Passive voice hides the doer at the end. The book warns: word order can disguise <b>who acted</b>. Here it is still <b>the dog</b> &mdash; reorder it in your head to be sure."],
+ ["<em>The senator the reporter questioned resigned.</em> Who resigned?","the senator",["the senator","the reporter","both","no one"],"Embedded clauses test the core. Strip the middle: <i>The senator&hellip;resigned.</i> The reporter only questioned. The book's drill &mdash; find the main subject and main verb first."],
+ ["<em>After the storm, the village rebuilt the bridge.</em> What did the village do?","rebuilt the bridge",["rebuilt the bridge","caused the storm","was destroyed","questioned the bridge"],"&lsquo;After the storm&rsquo; is just setting. The core action is <b>rebuilt the bridge</b>. The book teaches readers to separate the main clause from the scenery around it."]
+];
+const SUBORD=[
+ ["<em>Although the team practiced hard, they lost.</em> What is the main point?","they lost",["they lost","they practiced hard","the team is good","practice is useless"],"Chapter 2: the <b>main clause</b> carries the main point; the &lsquo;although&rsquo; clause is subordinate. Writers bury the concession in the subordinate clause &mdash; here, the real news is <b>they lost</b>."],
+ ["<em>She passed the exam because she studied every night.</em> Which is the main idea, and which is the reason?","Main: she passed; reason: she studied",["Main: she passed; reason: she studied","Main: she studied; reason: she passed","They are equal","Neither is a reason"],"&lsquo;Because&rsquo; marks the subordinate <b>reason</b>. The main clause states the result: <b>she passed</b>. The book: subordination tells you which idea the writer treats as primary."],
+ ["<em>The bridge, which was built in 1890, finally collapsed.</em> What is the sentence mainly reporting?","the bridge collapsed",["the bridge collapsed","the bridge was built in 1890","bridges are old","1890 was important"],"The &lsquo;which&rsquo; clause is extra information. The main clause delivers the news: <b>the bridge collapsed</b>. Subordinate clauses add; main clauses assert."]
+];
+const MODIFY=[
+ ["Which sentence means she does it nearly every day? <em>(A)</em> She almost drove them to school every day. <em>(B)</em> She drove them to school almost every day.","B",["B","A","Both mean the same","Neither"],"Chapter 3: a modifier changes what it sits next to. &lsquo;Almost every day&rsquo; modifies frequency (B). &lsquo;Almost drove&rsquo; (A) means she nearly drove &mdash; but didn't. <b>Placement is meaning.</b>"],
+ ["<em>Covered in chocolate, the child ate the strawberry.</em> What does the book say is wrong here?","The modifier seems to describe the child",["The modifier seems to describe the child","Nothing &mdash; it's correct","The strawberry is plural","There is no verb"],"A <b>misplaced modifier</b>: &lsquo;covered in chocolate&rsquo; lands on &lsquo;the child,&rsquo; not the strawberry. The book shows how a stray modifier quietly rewrites who or what a sentence is about."],
+ ["<em>The man saw the bird with the telescope.</em> What is genuinely ambiguous?","Whether the man or the bird has the telescope",["Whether the man or the bird has the telescope","Whether a man exists","Whether birds fly","Nothing is unclear"],"Modifier attachment can be ambiguous: &lsquo;with the telescope&rsquo; could modify <i>saw</i> (the man's tool) or <i>bird</i>. The book trains readers to notice when a sentence allows two readings."]
+];
+const PRONOUN=[
+ ["<em>The dog dropped the bone because it was tired.</em> What does <em>it</em> refer to?","the dog",["the dog","the bone","the reader","nothing"],"Chapter 4: pronouns must point to a clear <b>antecedent</b>. &lsquo;Tired&rsquo; fits the dog, not the bone. The book teaches readers to resolve every pronoun before moving on."],
+ ["<em>The cities sued the company, but they later settled.</em> Who most likely settled?","both parties",["both parties","only the cities","only the company","the court"],"&lsquo;They&rsquo; is genuinely loose here &mdash; a lawsuit settlement involves <b>both sides</b>. The book warns that vague pronoun reference is a common comprehension trap; good readers flag it."],
+ ["<em>Maria told Lena that she had won.</em> Why is this sentence unclear?","&lsquo;She&rsquo; could mean Maria or Lena",["&lsquo;She&rsquo; could mean Maria or Lena","There is no verb","&lsquo;Won&rsquo; is misspelled","It is too short"],"Ambiguous reference: <b>she</b> has two possible antecedents. The book's point &mdash; cohesion breaks when a pronoun could grab more than one noun, and the reader must notice the gap."]
+];
+const CONNECT=[
+ ["<em>He studied hard ___ he still failed.</em> Which connector signals a surprising result?","but",["but","because","so","and"],"Chapter 5: connectors are signposts. <b>But</b> signals contrast &mdash; the result defies the effort. &lsquo;Because&rsquo; or &lsquo;so&rsquo; would wrongly make failure the expected outcome."],
+ ["<em>The road was icy, ___ the school closed.</em> Which connector shows cause and effect?","so",["so","but","although","or"],"<b>So</b> marks result: icy road &rarr; closure. The book: connectors tell you the logical relationship, and reading the wrong one reverses the meaning."],
+ ["<em>___ it rained all week, the festival went ahead.</em> Which connector fits?","Although",["Although","Because","Therefore","Since"],"<b>Although</b> signals concession &mdash; it happened <i>despite</i> the rain. The book teaches that &lsquo;although/because/so&rsquo; are not interchangeable; each rewires the sentence's logic."],
+ ["In <em>&lsquo;Do not drive after taking it because it may cause dizziness,&rsquo;</em> what does <em>because</em> tell you?","the reason for the warning",["the reason for the warning","the time of day","who is speaking","an opposite idea"],"&lsquo;Because&rsquo; introduces the <b>reason</b>: dizziness justifies the warning. The book uses real instructions to show connectors guide action, not just grammar."]
+];
+const GIVENNEW=[
+ ["Which sentence is the <em>main idea</em>? (a) Dogs were domesticated thousands of years ago. (b) They guard homes, herd animals, and assist people. (c) Dogs have served humans in many roles.","Dogs have served humans in many roles.",["Dogs have served humans in many roles.","Dogs were domesticated thousands of years ago.","They guard homes, herd animals, and assist people.","Dogs are animals."],"Chapter 6: the main idea is the umbrella the details sit under. The roles sentence is one example; the timing is another. <b>&lsquo;Served in many roles&rsquo;</b> is the claim they all support."],
+ ["A new sentence usually links to the one before by putting ___ first.","known (given) information",["known (given) information","brand-new information","the verb","a question"],"<b>Given-new</b> structure: sentences open with what's already known, then add the new. The book shows this flow is what makes a paragraph feel connected rather than like a list."],
+ ["Which detail does NOT support the main idea &lsquo;Exercise improves health&rsquo;?","Gyms can be expensive to join.",["Gyms can be expensive to join.","It strengthens the heart.","It lifts mood.","It improves sleep."],"The cost of gyms is off-topic &mdash; it doesn't support the health claim. The book trains readers to test each sentence: does it serve the main idea, or wander from it?"]
+];
+const RUNGS=[
+ {name:"What a Sentence Does",ch:"Chapter 1 \u00b7 The Sentence as Meaning",gen(){const[q,a,o,why]=R(CORE);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Main vs Subordinate",ch:"Chapter 2 \u00b7 Coordination & Subordination",gen(){const[q,a,o,why]=R(SUBORD);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Modifiers",ch:"Chapter 3 \u00b7 Where Modifiers Belong",gen(){const[q,a,o,why]=R(MODIFY);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Pronoun Reference",ch:"Chapter 4 \u00b7 Cohesion & Reference",gen(){const[q,a,o,why]=R(PRONOUN);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Logical Connectors",ch:"Chapter 5 \u00b7 Reading the Signals",gen(){const[q,a,o,why]=R(CONNECT);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Main Idea",ch:"Chapter 6 \u00b7 Given-New Structure",gen(){const[q,a,o,why]=R(GIVENNEW);return{q,answer:a,opts:shuffle(o.slice()),why}}}
+];
+
+const BADGES=[[0, "Apprentice"], [25, "Bronze Reader"], [60, "Silver Reader"], [120, "Gold Reader"], [250, "Platinum Comprehender"]];
+let rung=0,unlocked=1,streak=0,score=0,cur=null,locked=false,correctInRung=0;
+function badge(){let b=BADGES[0][1];for(const[n,t]of BADGES)if(score>=n)b=t;return b}
+function drawRungs(){document.getElementById('rungs').innerHTML=RUNGS.map((r,i)=>`<button class="rung ${i===rung?'on':''} ${i>=unlocked?'locked':''}" data-i="${i}" type="button">${i>=unlocked?'\u{1F512} ':''}${r.name}</button>`).join('');document.querySelectorAll('.rung').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i<unlocked){rung=i;correctInRung=0;ask()}})}
+function ask(){locked=false;cur=RUNGS[rung].gen();document.getElementById('qmeta').textContent=`Rung ${rung+1} \u00b7 ${RUNGS[rung].name} \u00b7 ${RUNGS[rung].ch}`;document.getElementById('q').innerHTML=cur.q;
+ const lb=document.getElementById('listen');lb.style.display=cur.say?'inline-flex':'none';
+ const o=document.getElementById('opts');o.innerHTML='';cur.opts.forEach(w=>{const b=document.createElement('button');b.className='opt';b.type='button';b.innerHTML=w;b.onclick=()=>choose(b,w);o.appendChild(b)});
+ document.getElementById('explain').style.display='none';document.getElementById('pausenote').style.display='none';document.getElementById('next').style.display='none';drawRungs()}
+function choose(btn,w){if(locked)return;locked=true;const ok=w===cur.answer;
+ document.querySelectorAll('.opt').forEach(b=>{if(b.innerHTML===cur.answer)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong')});
+ const ex=document.getElementById('explain');ex.innerHTML=cur.why;ex.style.display='block';
+ if(ok){streak++;score++;correctInRung++;if(correctInRung>=6&&unlocked<RUNGS.length){unlocked++;correctInRung=0}}
+ else{streak=0;document.getElementById('pausenote').style.display='block'}
+ document.getElementById('streak').textContent=streak;document.getElementById('score').textContent=score;document.getElementById('badge').textContent=badge();
+ document.getElementById('next').style.display='inline-block'}
+document.getElementById('next').onclick=ask;
+document.getElementById('listen').onclick=()=>cur&&cur.say&&speak(cur.say);
+ask();
+</script>
+</body>
+</html>

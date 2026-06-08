@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Words You Know — Play the Book | GSU Vocabulary Game</title>
+<meta name="description" content="Play the free GSU vocabulary book: grow real word power through six rungs — receptive vs expressive knowledge, the three tiers, context clues, roots, prefixes and suffixes, and word consciousness. Endless play, no clock, free forever.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the The Words You Know vocabulary game?", "acceptedAnswer": {"@type": "Answer", "text": "A free, endless vocabulary game built from the GSU book of the same name. Six rungs follow the book's sequence: word knowledge, Beck's three tiers, context clues, roots, prefixes and suffixes, and word consciousness."}}, {"@type": "Question", "name": "Is it free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — free forever, no login, from Global Sovereign University, a 501(c)(3) nonprofit. The full book is a free PDF on the Readification page."}}, {"@type": "Question", "name": "Can I get help while playing?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. GENO, GSU's AI tutor, is always available to answer questions about this book and every GSU book — find the call button on any page of globalsovereignuniversity.org."}}]}</script>
+<style>
+  :root{--navy:#1B2A4A;--teal:#1A8B7F;--gold:#C9A84C;--cream:#F5F1E8;--ink:#0A0907;--muted:#9CA3AF;--panel:#0e1830;--correct:#22C55E;--wrong:#EF4444}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--cream);font-family:'Inter',Arial,sans-serif;min-height:100vh}
+  .gsu-game-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(10,9,7,.96);border-bottom:1px solid var(--gold);padding:10px 16px;backdrop-filter:blur(6px)}
+  .gsu-game-nav a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:700;transition:all .2s}
+  .gn-back{color:var(--gold);border:1px solid rgba(201,168,76,.5);background:rgba(201,168,76,.08)}.gn-back:hover{background:var(--gold);color:#000}
+  .gn-brand{color:var(--cream);font-family:Georgia,serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;flex:1;justify-content:center;min-height:auto}.gn-brand:hover{color:var(--gold)}
+  .gn-dl{color:var(--teal);border:1px solid rgba(26,139,127,.55);background:rgba(26,139,127,.08)}.gn-dl:hover{background:var(--teal);color:#FFF}
+  @media(max-width:560px){.gn-brand{display:none}.gsu-game-nav a{font-size:13px;padding:8px 12px}}
+  .wrap{max-width:860px;margin:0 auto;padding:34px 18px 60px;text-align:center}
+  .eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+  h1{font-family:Georgia,serif;font-size:42px;margin:10px 0 6px}h1 em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){h1{font-size:28px}}
+  .sub{color:var(--muted);font-style:italic;font-family:Georgia,serif;margin-bottom:22px}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .pill{border:1px solid var(--navy);background:var(--panel);border-radius:999px;padding:8px 18px;font-size:13px;color:var(--cream)}
+  .pill b{color:var(--gold)}
+  .rungs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .rung{border:1px solid var(--navy);background:transparent;color:var(--muted);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+  .rung.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.1)}
+  .rung.locked{opacity:.45;cursor:default}
+  .card{background:linear-gradient(180deg,var(--panel),#000);border:1px solid var(--navy);border-radius:14px;padding:34px 26px;min-height:300px}
+  .qmeta{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  .q{font-family:Georgia,serif;font-size:25px;line-height:1.4;margin-bottom:22px}.q em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){.q{font-size:20px}}
+  .listen{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:22px}
+  .listen:hover{background:var(--teal);color:#FFF}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;max-width:680px;margin:0 auto}
+  .opt{background:#0a0f1f;border:1px solid var(--navy);border-radius:10px;padding:16px 14px;font-size:17px;font-family:Georgia,serif;color:var(--cream);cursor:pointer;transition:all .2s;min-height:56px;line-height:1.3}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:var(--correct);background:rgba(34,197,94,.13)}
+  .opt.wrong{border-color:var(--wrong);background:rgba(239,68,68,.13)}
+  .explain{margin:20px auto 0;max-width:620px;text-align:left;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);padding:14px 18px;border-radius:0 8px 8px 0;font-size:14.5px;line-height:1.65;color:#E5E5E5;display:none}
+  .explain b{color:var(--gold)}
+  .pausenote{color:var(--teal);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:14px;display:none}
+  .next{display:none;margin:22px auto 0;background:var(--gold);color:#000;border:none;border-radius:8px;padding:13px 34px;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:inherit}
+  .next:hover{background:#D9B85C}
+  .foot{margin-top:42px;color:var(--muted);font-size:13px;line-height:1.8}
+  .foot .quote{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-size:15px}
+  .foot a{color:var(--teal);text-decoration:none}.foot a:hover{text-decoration:underline}
+  .geno{margin-top:18px;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--navy);border-radius:999px;padding:8px 18px;font-size:13px;color:#E5E5E5}
+  .geno img{width:26px;height:26px;border-radius:50%}
+</style>
+</head>
+<body>
+<nav class="gsu-game-nav" aria-label="GSU game navigation">
+  <a class="gn-back" href="https://www.globalsovereignuniversity.org/readification">&larr; Readification Hub</a>
+  <a class="gn-brand" href="https://www.globalsovereignuniversity.org/">Global Sovereign University &middot; Free Education for All</a>
+  <a class="gn-dl" href="vocabulary-game.html" download>&#10515; Download Game</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Global Sovereign University &middot; Play the Book</div>
+  <h1>The Words You <em>Know</em></h1>
+  <p class="sub">Tiers, roots, and context &mdash; six rungs, endless, no clock.</p>
+
+  <div class="stats">
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Words Mastered <b id="score">0</b></span>
+    <span class="pill">Badge <b id="badge">Apprentice</b></span>
+  </div>
+  <div class="rungs" id="rungs"></div>
+
+  <div class="card">
+    <div class="qmeta" id="qmeta"></div>
+    <div class="q" id="q"></div>
+    <button class="listen" id="listen" type="button">&#128266; Listen</button>
+    <div class="opts" id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <div class="pausenote" id="pausenote">A working pause &mdash; mastery is built one rung at a time.</div>
+    <button class="next" id="next" type="button">Next &rarr;</button>
+  </div>
+
+  <div class="foot">
+    <div class="quote">&ldquo;The goal is to master the words that do the most work across the texts you actually need to read.&rdquo;</div>
+    &mdash; Dr. Gene A. Constant, <i>The Words You Know &mdash; Vocabulary</i><br>
+    <a href="https://www.globalsovereignuniversity.org/readification">&larr; Back to Readification</a> &middot; Free forever from <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>
+    <div><span class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">GENO AI Tutor available 24/7 &mdash; ask him anything about this book at globalsovereignuniversity.org</span></div>
+  </div>
+</div>
+
+<script>
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function pick4(correct,pool){const o=new Set([correct]);const p=shuffle(pool.filter(x=>x!==correct));for(const x of p){if(o.size>=4)break;o.add(x)}return shuffle([...o])}
+
+const KIND=[
+ ["You understand <em>ubiquitous</em> instantly when you read it, but you never use it yourself. That word lives in your &hellip;","Receptive vocabulary",["Receptive vocabulary","Expressive vocabulary","Tier 1 vocabulary","Sight-word list"],"<b>Receptive</b> vocabulary is what you understand when you hear or read it; <b>expressive</b> is what you actively use. The book stresses the gap: most readers understand far more than they produce, and growth means moving words from receptive to expressive."],
+ ["You can use the word <em>nuance</em> correctly in your own speech and writing. That word is part of your &hellip;","Expressive vocabulary",["Expressive vocabulary","Receptive vocabulary","Decoding skill","Prosody"],"<b>Expressive</b> vocabulary is the words you can produce, not just recognize. The book's aim is to push useful words across the line from merely understood to actively owned."],
+ ["What does it mean to <em>deeply</em> know a word, in the book's sense?","Knowing its shades of meaning and how to use it",["Knowing its shades of meaning and how to use it","Having seen it once","Being able to spell it","Knowing it rhymes with another word"],"Word knowledge is a depth, not a switch. The book describes a spectrum from never-seen to richly-owned. Real vocabulary is knowing a word's <b>nuances and uses</b>, not just recognizing its shape."]
+];
+const TIERS=[
+ ["dog","Tier 1","Tier 1 words are everyday words learned through conversation &mdash; <b>dog, run, happy</b>. The book (following Beck) says these rarely need teaching."],
+ ["analyze","Tier 2","Tier 2 words are high-use <b>academic</b> words that cross subjects &mdash; analyze, evaluate, contrast. The book calls these the highest-value words to teach: they unlock many texts."],
+ ["photosynthesis","Tier 3","Tier 3 words are <b>technical</b>, tied to one field &mdash; photosynthesis, mitosis, sonnet. The book says teach them in context, when the subject calls for them."],
+ ["happy","Tier 1","Everyday, conversational &mdash; a <b>Tier 1</b> word. Beck's system: these are learned naturally and seldom need direct instruction."],
+ ["interpret","Tier 2","A high-use <b>academic</b> word that appears across history, science, and literature &mdash; <b>Tier 2</b>, the book's priority tier."],
+ ["mitochondria","Tier 3","A <b>technical</b> term locked to biology &mdash; <b>Tier 3</b>. Useful, but taught when the content demands it."],
+ ["evaluate","Tier 2","Cross-curricular academic word &mdash; <b>Tier 2</b>. The book argues these earn the most teaching time because they appear everywhere."],
+ ["table","Tier 1","An everyday word &mdash; <b>Tier 1</b>. (It has technical meanings too, but its core use is conversational.)"]
+];
+const CONTEXT=[
+ ["The desert was utterly <em>arid</em> &mdash; no rain had fallen in years. <em>Arid</em> means &hellip;","dry",["dry","crowded","cold","loud"],"<b>Context clues</b> (Chapter 4): &lsquo;no rain in years&rsquo; points straight to <b>dry</b>. The book teaches readers to mine the surrounding sentence before reaching for a dictionary."],
+ ["Her <em>candid</em> answer surprised us; she hid nothing and softened nothing. <em>Candid</em> means &hellip;","honest and direct",["honest and direct","shy and quiet","angry","confused"],"The clue &lsquo;hid nothing, softened nothing&rsquo; defines it: <b>honest and direct</b>. Repeated exposure in rich contexts is how the book says most words are truly learned."],
+ ["The medicine had a <em>benign</em> effect &mdash; harmless and mild. <em>Benign</em> means &hellip;","harmless",["harmless","dangerous","expensive","bitter"],"&lsquo;Harmless and mild&rsquo; is the built-in clue. The book favors learning words <b>in context</b> over memorizing isolated definitions &mdash; context teaches use, not just meaning."],
+ ["After the long drought, the <em>parched</em> fields cracked open. <em>Parched</em> means &hellip;","very dry",["very dry","flooded","frozen","green"],"Drought and cracking ground signal <b>very dry</b>. Context does the teaching when you read widely enough to meet the word again and again."],
+ ["He was <em>reluctant</em> to go, dragging his feet the whole way. <em>Reluctant</em> means &hellip;","unwilling",["unwilling","eager","tired","afraid"],"&lsquo;Dragging his feet&rsquo; reveals <b>unwilling</b>. The book's method: let the sentence carry the meaning before you confirm it."]
+];
+const ROOTS=[
+ ["spect","to look / to see","Root <b>spect</b> = look/see &mdash; in <i>inspect, spectator, perspective</i>. The book (Chapter 5) shows morphology turns one root into a family of words you can decode for meaning."],
+ ["port","to carry","Root <b>port</b> = carry &mdash; <i>transport, portable, import</i>. Learn the root and a whole word family opens at once."],
+ ["dict","to say / to speak","Root <b>dict</b> = say &mdash; <i>dictate, predict, contradict</i>. Morphology is the book's multiplier: one root, many words."],
+ ["scrib / script","to write","Root <b>scrib/script</b> = write &mdash; <i>scribble, manuscript, describe</i>. Roots are the load-bearing meaning at a word's core."],
+ ["aqua","water","Root <b>aqua</b> = water &mdash; <i>aquarium, aquatic, aqueduct</i>. Recognizing the root lets you reason out unfamiliar words."],
+ ["bio","life","Root <b>bio</b> = life &mdash; <i>biology, biography, antibiotic</i>. The book treats roots as keys that unlock many doors at once."],
+ ["struct","to build","Root <b>struct</b> = build &mdash; <i>construct, structure, instruct</i>. Find the root, and the word's meaning stops being a mystery."],
+ ["tract","to pull / to draw","Root <b>tract</b> = pull &mdash; <i>tractor, attract, extract</i>. One root, a dozen guessable words."]
+];
+const AFFIX=[
+ ["mal-","bad / wrong","Prefix <b>mal-</b> = bad &mdash; <i>malfunction, malice, malnutrition</i>. The book shows prefixes flip or shade a root's meaning predictably."],
+ ["re-","again / back","Prefix <b>re-</b> = again &mdash; <i>redo, return, rewrite</i>. Learn the prefix and you can decode meaning, not just sound."],
+ ["sub-","under / below","Prefix <b>sub-</b> = under &mdash; <i>submarine, subway, substandard</i>. Morphology makes long words approachable."],
+ ["anti-","against","Prefix <b>anti-</b> = against &mdash; <i>antibody, antifreeze, antisocial</i>. A known prefix is a shortcut to meaning."],
+ ["-less","without","Suffix <b>-less</b> = without &mdash; <i>fearless, hopeless, harmless</i>. Suffixes often change a word's part of speech and meaning together."],
+ ["-ful","full of","Suffix <b>-ful</b> = full of &mdash; <i>hopeful, careful, joyful</i>. The book teaches affixes as reusable meaning-parts."],
+ ["trans-","across","Prefix <b>trans-</b> = across &mdash; <i>transport, translate, transfer</i>. Combine with a known root and meaning falls out."],
+ ["-ologist","one who studies","Suffix <b>-ologist</b> = one who studies &mdash; <i>biologist, geologist</i>. Affixes are the book's building blocks for reasoning about new words."]
+];
+const PRECISE=[
+ ["She didn't just walk in &mdash; she ___ in, proud and certain.","strode",["strode","walked","went","moved"],"<b>Word consciousness</b> (Chapter 6): precise words carry more meaning. <b>Strode</b> shows confidence; &lsquo;walked&rsquo; throws that away. The book trains readers to notice and choose the exact word."],
+ ["The soup wasn't merely warm &mdash; it was ___, almost too hot to touch.","scalding",["scalding","nice","okay","fine"],"Precision is the point. <b>Scalding</b> names the exact degree; vague words like &lsquo;nice&rsquo; tell the reader nothing. Word consciousness is caring which word does the work."],
+ ["He didn't simply dislike the plan &mdash; he ___ it completely.","loathed",["loathed","minded","noticed","saw"],"<b>Loathed</b> captures intensity that &lsquo;minded&rsquo; cannot. The book's habit of mind: always reach for the word that means precisely what you mean."],
+ ["The crowd wasn't just big &mdash; it was ___, filling every street.","immense",["immense","good","there","present"],"<b>Immense</b> carries scale; filler words don't. Word consciousness, the book argues, is what separates a reader who notices language from one who skates over it."]
+];
+const RUNGS=[
+ {name:"Receptive vs Expressive",ch:"Chapter 1 \u00b7 What Vocabulary Is",gen(){const[q,a,o,why]=R(KIND);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"The Three Tiers",ch:"Chapter 2 \u00b7 Beck's Tier System",gen(){const[w,a,why]=R(TIERS);return{q:`Which tier does <em>${w}</em> belong to?`,answer:a,opts:["Tier 1","Tier 2","Tier 3"],why}}},
+ {name:"Context Clues",ch:"Chapter 4 \u00b7 Exposure in Context",gen(){const[q,a,o,why]=R(CONTEXT);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Roots",ch:"Chapter 5 \u00b7 Morphology",gen(){const[r,a,why]=R(ROOTS);return{q:`What does the root <em>${r}</em> mean?`,answer:a,opts:shuffle([a,...shuffle(ROOTS.map(x=>x[1]).filter(m=>m!==a)).slice(0,3)]),why}}},
+ {name:"Prefixes & Suffixes",ch:"Chapter 5 \u00b7 Morphology",gen(){const[r,a,why]=R(AFFIX);return{q:`What does <em>${r}</em> mean?`,answer:a,opts:shuffle([a,...shuffle(AFFIX.map(x=>x[1]).filter(m=>m!==a)).slice(0,3)]),why}}},
+ {name:"Word Consciousness",ch:"Chapter 6 \u00b7 Choosing the Exact Word",gen(){const[q,a,o,why]=R(PRECISE);return{q,answer:a,opts:shuffle(o.slice()),why}}}
+];
+
+const BADGES=[[0, "Apprentice"], [25, "Bronze Wordsmith"], [60, "Silver Wordsmith"], [120, "Gold Wordsmith"], [250, "Platinum Lexicon"]];
+let rung=0,unlocked=1,streak=0,score=0,cur=null,locked=false,correctInRung=0;
+function badge(){let b=BADGES[0][1];for(const[n,t]of BADGES)if(score>=n)b=t;return b}
+function drawRungs(){document.getElementById('rungs').innerHTML=RUNGS.map((r,i)=>`<button class="rung ${i===rung?'on':''} ${i>=unlocked?'locked':''}" data-i="${i}" type="button">${i>=unlocked?'\u{1F512} ':''}${r.name}</button>`).join('');document.querySelectorAll('.rung').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i<unlocked){rung=i;correctInRung=0;ask()}})}
+function ask(){locked=false;cur=RUNGS[rung].gen();document.getElementById('qmeta').textContent=`Rung ${rung+1} \u00b7 ${RUNGS[rung].name} \u00b7 ${RUNGS[rung].ch}`;document.getElementById('q').innerHTML=cur.q;
+ const lb=document.getElementById('listen');lb.style.display=cur.say?'inline-flex':'none';
+ const o=document.getElementById('opts');o.innerHTML='';cur.opts.forEach(w=>{const b=document.createElement('button');b.className='opt';b.type='button';b.innerHTML=w;b.onclick=()=>choose(b,w);o.appendChild(b)});
+ document.getElementById('explain').style.display='none';document.getElementById('pausenote').style.display='none';document.getElementById('next').style.display='none';drawRungs()}
+function choose(btn,w){if(locked)return;locked=true;const ok=w===cur.answer;
+ document.querySelectorAll('.opt').forEach(b=>{if(b.innerHTML===cur.answer)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong')});
+ const ex=document.getElementById('explain');ex.innerHTML=cur.why;ex.style.display='block';
+ if(ok){streak++;score++;correctInRung++;if(correctInRung>=6&&unlocked<RUNGS.length){unlocked++;correctInRung=0}}
+ else{streak=0;document.getElementById('pausenote').style.display='block'}
+ document.getElementById('streak').textContent=streak;document.getElementById('score').textContent=score;document.getElementById('badge').textContent=badge();
+ document.getElementById('next').style.display='inline-block'}
+document.getElementById('next').onclick=ask;
+document.getElementById('listen').onclick=()=>cur&&cur.say&&speak(cur.say);
+ask();
+</script>
+</body>
+</html>

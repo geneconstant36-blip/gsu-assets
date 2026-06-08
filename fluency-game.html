@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading at the Speed of Thought — Play the Book | GSU Fluency Game</title>
+<meta name="description" content="Play the free GSU fluency book: master the four dimensions of fluent reading through six rungs — accuracy, automaticity, prosody, repeated reading, wide reading, and why speed alone is not fluency. Endless play, no clock, free forever.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the Reading at the Speed of Thought fluency game?", "acceptedAnswer": {"@type": "Answer", "text": "A free, endless reading-fluency game built from the GSU book of the same name. Six rungs follow the book's sequence: the four dimensions, automaticity, prosody, repeated reading, wide reading, and the limits of speed."}}, {"@type": "Question", "name": "Is it free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — free forever, no login, from Global Sovereign University, a 501(c)(3) nonprofit. The full book is a free PDF on the Readification page."}}, {"@type": "Question", "name": "Can I get help while playing?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. GENO, GSU's AI tutor, is always available to answer questions about this book and every GSU book — find the call button on any page of globalsovereignuniversity.org."}}]}</script>
+<style>
+  :root{--navy:#1B2A4A;--teal:#1A8B7F;--gold:#C9A84C;--cream:#F5F1E8;--ink:#0A0907;--muted:#9CA3AF;--panel:#0e1830;--correct:#22C55E;--wrong:#EF4444}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--cream);font-family:'Inter',Arial,sans-serif;min-height:100vh}
+  .gsu-game-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(10,9,7,.96);border-bottom:1px solid var(--gold);padding:10px 16px;backdrop-filter:blur(6px)}
+  .gsu-game-nav a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:700;transition:all .2s}
+  .gn-back{color:var(--gold);border:1px solid rgba(201,168,76,.5);background:rgba(201,168,76,.08)}.gn-back:hover{background:var(--gold);color:#000}
+  .gn-brand{color:var(--cream);font-family:Georgia,serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;flex:1;justify-content:center;min-height:auto}.gn-brand:hover{color:var(--gold)}
+  .gn-dl{color:var(--teal);border:1px solid rgba(26,139,127,.55);background:rgba(26,139,127,.08)}.gn-dl:hover{background:var(--teal);color:#FFF}
+  @media(max-width:560px){.gn-brand{display:none}.gsu-game-nav a{font-size:13px;padding:8px 12px}}
+  .wrap{max-width:860px;margin:0 auto;padding:34px 18px 60px;text-align:center}
+  .eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+  h1{font-family:Georgia,serif;font-size:42px;margin:10px 0 6px}h1 em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){h1{font-size:28px}}
+  .sub{color:var(--muted);font-style:italic;font-family:Georgia,serif;margin-bottom:22px}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .pill{border:1px solid var(--navy);background:var(--panel);border-radius:999px;padding:8px 18px;font-size:13px;color:var(--cream)}
+  .pill b{color:var(--gold)}
+  .rungs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .rung{border:1px solid var(--navy);background:transparent;color:var(--muted);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+  .rung.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.1)}
+  .rung.locked{opacity:.45;cursor:default}
+  .card{background:linear-gradient(180deg,var(--panel),#000);border:1px solid var(--navy);border-radius:14px;padding:34px 26px;min-height:300px}
+  .qmeta{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  .q{font-family:Georgia,serif;font-size:25px;line-height:1.4;margin-bottom:22px}.q em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){.q{font-size:20px}}
+  .listen{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:22px}
+  .listen:hover{background:var(--teal);color:#FFF}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;max-width:680px;margin:0 auto}
+  .opt{background:#0a0f1f;border:1px solid var(--navy);border-radius:10px;padding:16px 14px;font-size:17px;font-family:Georgia,serif;color:var(--cream);cursor:pointer;transition:all .2s;min-height:56px;line-height:1.3}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:var(--correct);background:rgba(34,197,94,.13)}
+  .opt.wrong{border-color:var(--wrong);background:rgba(239,68,68,.13)}
+  .explain{margin:20px auto 0;max-width:620px;text-align:left;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);padding:14px 18px;border-radius:0 8px 8px 0;font-size:14.5px;line-height:1.65;color:#E5E5E5;display:none}
+  .explain b{color:var(--gold)}
+  .pausenote{color:var(--teal);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:14px;display:none}
+  .next{display:none;margin:22px auto 0;background:var(--gold);color:#000;border:none;border-radius:8px;padding:13px 34px;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:inherit}
+  .next:hover{background:#D9B85C}
+  .foot{margin-top:42px;color:var(--muted);font-size:13px;line-height:1.8}
+  .foot .quote{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-size:15px}
+  .foot a{color:var(--teal);text-decoration:none}.foot a:hover{text-decoration:underline}
+  .geno{margin-top:18px;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--navy);border-radius:999px;padding:8px 18px;font-size:13px;color:#E5E5E5}
+  .geno img{width:26px;height:26px;border-radius:50%}
+</style>
+</head>
+<body>
+<nav class="gsu-game-nav" aria-label="GSU game navigation">
+  <a class="gn-back" href="https://www.globalsovereignuniversity.org/readification">&larr; Readification Hub</a>
+  <a class="gn-brand" href="https://www.globalsovereignuniversity.org/">Global Sovereign University &middot; Free Education for All</a>
+  <a class="gn-dl" href="fluency-game.html" download>&#10515; Download Game</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Global Sovereign University &middot; Play the Book</div>
+  <h1>Reading at the <em>Speed</em> of Thought</h1>
+  <p class="sub">Four dimensions, six rungs &mdash; endless practice, no clock.</p>
+
+  <div class="stats">
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Passages Read <b id="score">0</b></span>
+    <span class="pill">Badge <b id="badge">Apprentice</b></span>
+  </div>
+  <div class="rungs" id="rungs"></div>
+
+  <div class="card">
+    <div class="qmeta" id="qmeta"></div>
+    <div class="q" id="q"></div>
+    <button class="listen" id="listen" type="button">&#128266; Listen</button>
+    <div class="opts" id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <div class="pausenote" id="pausenote">A working pause &mdash; mastery is built one rung at a time.</div>
+    <button class="next" id="next" type="button">Next &rarr;</button>
+  </div>
+
+  <div class="foot">
+    <div class="quote">&ldquo;Accuracy is simply this: reading the words that are actually there.&rdquo;</div>
+    &mdash; Dr. Gene A. Constant, <i>Reading at the Speed of Thought &mdash; Fluency</i><br>
+    <a href="https://www.globalsovereignuniversity.org/readification">&larr; Back to Readification</a> &middot; Free forever from <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>
+    <div><span class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">GENO AI Tutor available 24/7 &mdash; ask him anything about this book at globalsovereignuniversity.org</span></div>
+  </div>
+</div>
+
+<script>
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function pick4(correct,pool){const o=new Set([correct]);const p=shuffle(pool.filter(x=>x!==correct));for(const x of p){if(o.size>=4)break;o.add(x)}return shuffle([...o])}
+
+const DIMS=["Accuracy","Rate","Prosody","Comprehension"];
+const DIMQ=[
+ ["A reader says every word correctly but so slowly that she forgets the start of a sentence by the end. Which dimension is weak?","Rate","Reading too slowly overloads memory. The four dimensions are accuracy, <b>rate</b>, prosody, and comprehension. Rate matters because working memory is small &mdash; too slow, and meaning leaks away before the sentence ends."],
+ ["A reader is fast and correct but reads in a flat, robotic monotone, ignoring every comma and question mark. Which dimension is weak?","Prosody","<b>Prosody</b> is the music of reading &mdash; stress, pitch, phrasing. The book argues it is not decoration but comprehension made audible. A reader who cannot phrase a sentence usually has not grasped its structure."],
+ ["A reader guesses <em>house</em> when the page says <em>horse</em>, swapping in words that merely look similar. Which dimension is weak?","Accuracy","<b>Accuracy</b> is reading the words that are actually there. The book is blunt: comprehension is built on the words truly decoded, not the words guessed. One wrong word can quietly derail a whole passage."],
+ ["A reader is accurate, fast, and expressive &mdash; yet cannot say what the passage was about. Which dimension is missing?","Comprehension","Fluency exists to serve <b>comprehension</b>. The other three dimensions are the bridge; comprehension is the far shore. Fluency without understanding is performance, not reading."],
+ ["A reader reads aloud with expression that rises for questions and slows for important points. Which dimension is on display?","Prosody","Expression that matches meaning is <b>prosody</b> in full bloom. The book treats expressive oral reading as evidence the reader is parsing the sentence correctly &mdash; the voice reveals the mind."]
+];
+const AUTOQ=[
+ ["When word recognition becomes <em>automatic</em>, what does it free up?","Attention for meaning",["Attention for meaning","Extra vocabulary","Faster eye movement","Sharper eyesight"],"From LaBerge &amp; Samuels: the mind has limited <b>bandwidth</b>. When decoding runs on autopilot, attention is freed for <b>meaning</b>. Effortful word-by-word reading spends that bandwidth on the words themselves."],
+ ["Which reader has reached <em>automaticity</em>?","Reads common words instantly without sounding them out",["Reads common words instantly without sounding them out","Reads every word very loudly","Has memorized the dictionary","Never makes a single mistake"],"<b>Automaticity</b> is instant, effortless recognition of words met many times &mdash; not perfection and not raw speed. It is built by <b>volume</b>: meeting the same words again and again."],
+ ["Why can a reader decode every word and still not understand the passage?","Decoding used up all their mental bandwidth",["Decoding used up all their mental bandwidth","The words were too short","They read too quietly","They skipped the title"],"This is the gap the book names: if decoding is effortful, there is <b>no bandwidth left</b> for meaning. Automaticity is what closes it."]
+];
+const PROSODY=[
+ ["Where should the longest pause fall when reading this aloud? <em>When the rain finally stopped, the children ran outside.</em>","after &lsquo;stopped&rsquo;",["after &lsquo;stopped&rsquo;","after &lsquo;the&rsquo;","after &lsquo;children&rsquo;","after &lsquo;rain&rsquo;"],"The comma marks the boundary between the opening clause and the main clause. Prosody follows structure: the natural pause falls <b>after &lsquo;stopped&rsquo;</b>, grouping the two ideas the way meaning intends.","When the rain finally stopped, the children ran outside."],
+ ["Read this so the meaning is clear. Which word should rise in pitch? <em>I never said she stole the money.</em> (meaning: someone else said it)","I",["I","said","stole","money"],"Prosody can change meaning. Stressing <b>&lsquo;I&rsquo;</b> signals that <i>someone else</i> made the accusation. The same words, differently phrased, carry different meaning &mdash; which is why prosody is comprehension you can hear.","I never said she stole the money."],
+ ["How should a question mark change your voice? <em>You finished the whole book?</em>","Pitch rises at the end",["Pitch rises at the end","Pitch falls flat","Volume drops to a whisper","Speed doubles"],"Rising pitch on a question is prosody doing its job. The book teaches that punctuation is a <b>score for the voice</b> &mdash; readers who ignore it flatten meaning into a monotone.","You finished the whole book?"]
+];
+const PRACTICE=[
+ ["Which practice builds fluency <em>fastest</em>?","Re-reading one short passage 3&ndash;4 times with feedback",["Re-reading one short passage 3&ndash;4 times with feedback","Reading a new hard text once","Reading silently as fast as possible","Copying the passage by hand"],"This is the heart of Chapter 4: <b>repeated reading</b>. Practicing the same passage until it flows builds automaticity and confidence on that text, and the gains transfer to new reading."],
+ ["A learner re-reads the same paragraph until it sounds smooth, then moves on. What is this called?","Repeated reading",["Repeated reading","Speed drilling","Skimming","Memorizing"],"<b>Repeated reading</b> &mdash; the book's most reliable fluency tool. Smoothness on the fourth pass is automaticity being built in real time."],
+ ["What should a learner do after a passage finally flows smoothly?","Move to a fresh passage at the same level",["Move to a fresh passage at the same level","Read it ten more times","Stop reading for the day","Skip to a much harder book"],"Repeated reading builds the rung; <b>wide reading</b> (Chapter 5) climbs it. Once a passage flows, move on &mdash; volume across many texts is what makes fluency general, not just local to one paragraph."]
+];
+const WIDE=[
+ ["What does <em>wide reading</em> give that re-reading one passage cannot?","Exposure to many words and sentence patterns",["Exposure to many words and sentence patterns","A louder reading voice","Faster eye muscles","A bigger vocabulary list to memorize"],"Chapter 5: <b>volume</b>. Repeated reading deepens one text; wide reading broadens the reader. Meeting thousands of words in varied contexts is what makes recognition truly automatic."],
+ ["Two readers practice equally. One re-reads the same story; the other reads many different easy books. Who builds broader fluency?","The one reading many different books",["The one reading many different books","The one re-reading one story","Neither &mdash; practice doesn't matter","Both exactly the same"],"<b>Wide reading</b> wins for breadth. The book's rule: depth from repetition, range from volume. A fluent reader needs both, but only volume generalizes."]
+];
+const SPEEDTRAP=[
+ ["A reader blazes through a page in record time but cannot say what it was about. What went wrong?","Speed without comprehension is not fluency",["Speed without comprehension is not fluency","They needed to read even faster","The page was too short","They should skip slow passages"],"Chapter 7's warning. <b>Fluency is not a race.</b> Speed only counts when it supports meaning. A fast reader who understands nothing has practiced the wrong thing."],
+ ["Why does the book distrust pure <em>speed drills</em>?","They can train fast reading that abandons meaning",["They can train fast reading that abandons meaning","They are too tiring","They cost too much money","They require special software"],"The book calls fluency the bridge between decoding and comprehension. A drill that boosts speed while dropping understanding has burned the bridge &mdash; faster, but going nowhere."],
+ ["Fluency is best described as a bridge between which two shores?","Decoding and comprehension",["Decoding and comprehension","Speed and silence","Phonics and spelling","Reading and writing"],"The book's central image: fluency is the <b>bridge</b> from decoding individual words to comprehending whole passages. Every dimension &mdash; accuracy, rate, prosody &mdash; exists to carry the reader across to meaning."]
+];
+const RUNGS=[
+ {name:"Four Dimensions",ch:"Chapter 1 \u00b7 The Four Dimensions",gen(){const[q,a,why]=R(DIMQ);return{q,answer:a,opts:shuffle(DIMS.slice()),why}}},
+ {name:"Automaticity",ch:"Chapter 2 \u00b7 Bandwidth of the Mind",gen(){const[q,a,o,why]=R(AUTOQ);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Prosody",ch:"Chapter 3 \u00b7 The Music of Reading",gen(){const it=R(PROSODY);return{q:it[0],answer:it[1],opts:shuffle(it[2].slice()),why:it[3],say:it[4]}}},
+ {name:"Repeated Reading",ch:"Chapter 4 \u00b7 Building Automaticity",gen(){const[q,a,o,why]=R(PRACTICE);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Wide Reading",ch:"Chapter 5 \u00b7 The Power of Volume",gen(){const[q,a,o,why]=R(WIDE);return{q,answer:a,opts:shuffle(o.slice()),why}}},
+ {name:"Speed Is Not Fluency",ch:"Chapter 7 \u00b7 The Limits of Speed",gen(){const[q,a,o,why]=R(SPEEDTRAP);return{q,answer:a,opts:shuffle(o.slice()),why}}}
+];
+
+const BADGES=[[0, "Apprentice"], [25, "Bronze Reader"], [60, "Silver Reader"], [120, "Gold Reader"], [250, "Platinum Fluent"]];
+let rung=0,unlocked=1,streak=0,score=0,cur=null,locked=false,correctInRung=0;
+function badge(){let b=BADGES[0][1];for(const[n,t]of BADGES)if(score>=n)b=t;return b}
+function drawRungs(){document.getElementById('rungs').innerHTML=RUNGS.map((r,i)=>`<button class="rung ${i===rung?'on':''} ${i>=unlocked?'locked':''}" data-i="${i}" type="button">${i>=unlocked?'\u{1F512} ':''}${r.name}</button>`).join('');document.querySelectorAll('.rung').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i<unlocked){rung=i;correctInRung=0;ask()}})}
+function ask(){locked=false;cur=RUNGS[rung].gen();document.getElementById('qmeta').textContent=`Rung ${rung+1} \u00b7 ${RUNGS[rung].name} \u00b7 ${RUNGS[rung].ch}`;document.getElementById('q').innerHTML=cur.q;
+ const lb=document.getElementById('listen');lb.style.display=cur.say?'inline-flex':'none';
+ const o=document.getElementById('opts');o.innerHTML='';cur.opts.forEach(w=>{const b=document.createElement('button');b.className='opt';b.type='button';b.innerHTML=w;b.onclick=()=>choose(b,w);o.appendChild(b)});
+ document.getElementById('explain').style.display='none';document.getElementById('pausenote').style.display='none';document.getElementById('next').style.display='none';drawRungs()}
+function choose(btn,w){if(locked)return;locked=true;const ok=w===cur.answer;
+ document.querySelectorAll('.opt').forEach(b=>{if(b.innerHTML===cur.answer)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong')});
+ const ex=document.getElementById('explain');ex.innerHTML=cur.why;ex.style.display='block';
+ if(ok){streak++;score++;correctInRung++;if(correctInRung>=6&&unlocked<RUNGS.length){unlocked++;correctInRung=0}}
+ else{streak=0;document.getElementById('pausenote').style.display='block'}
+ document.getElementById('streak').textContent=streak;document.getElementById('score').textContent=score;document.getElementById('badge').textContent=badge();
+ document.getElementById('next').style.display='inline-block'}
+document.getElementById('next').onclick=ask;
+document.getElementById('listen').onclick=()=>cur&&cur.say&&speak(cur.say);
+ask();
+</script>
+</body>
+</html>
