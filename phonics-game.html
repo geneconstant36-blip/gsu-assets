@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Code That Unlocks Reading — Play the Book | GSU Phonics Game</title>
+<meta name="description" content="Play the free GSU phonics book: crack the letter-sound code through six rungs — CVC words, silent e, vowel teams, blends, digraphs, and full decoding. Infinite play, no clock, free forever.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is The Code That Unlocks Reading game?","acceptedAnswer":{"@type":"Answer","text":"A free, endless phonics game built from the GSU book of the same name. Six rungs follow the book's teaching sequence: CVC words, silent e, vowel teams, blends and digraphs, r-controlled vowels, and full decoding."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free forever, no login, from Global Sovereign University, a 501(c)(3) nonprofit. The full book is a free PDF on the Readification page."}},{"@type":"Question","name":"Can I get help while playing?","acceptedAnswer":{"@type":"Answer","text":"Yes. GENO, GSU's AI tutor, is always available to answer questions about this book and every GSU book — find the call button on any page of globalsovereignuniversity.org."}}]}</script>
+<style>
+  :root{--navy:#1B2A4A;--teal:#1A8B7F;--gold:#C9A84C;--cream:#F5F1E8;--ink:#0A0907;--muted:#9CA3AF;--panel:#0e1830;--correct:#22C55E;--wrong:#EF4444}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--cream);font-family:'Inter',Arial,sans-serif;min-height:100vh}
+  .gsu-game-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(10,9,7,.96);border-bottom:1px solid var(--gold);padding:10px 16px;backdrop-filter:blur(6px)}
+  .gsu-game-nav a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:700;transition:all .2s}
+  .gn-back{color:var(--gold);border:1px solid rgba(201,168,76,.5);background:rgba(201,168,76,.08)}.gn-back:hover{background:var(--gold);color:#000}
+  .gn-brand{color:var(--cream);font-family:Georgia,serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;flex:1;justify-content:center;min-height:auto}.gn-brand:hover{color:var(--gold)}
+  .gn-dl{color:var(--teal);border:1px solid rgba(26,139,127,.55);background:rgba(26,139,127,.08)}.gn-dl:hover{background:var(--teal);color:#FFF}
+  @media(max-width:560px){.gn-brand{display:none}.gsu-game-nav a{font-size:13px;padding:8px 12px}}
+  .wrap{max-width:860px;margin:0 auto;padding:34px 18px 60px;text-align:center}
+  .eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+  h1{font-family:Georgia,serif;font-size:42px;margin:10px 0 6px}h1 em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){h1{font-size:28px}}
+  .sub{color:var(--muted);font-style:italic;font-family:Georgia,serif;margin-bottom:22px}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .pill{border:1px solid var(--navy);background:var(--panel);border-radius:999px;padding:8px 18px;font-size:13px;color:var(--cream)}
+  .pill b{color:var(--gold)}
+  .rungs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .rung{border:1px solid var(--navy);background:transparent;color:var(--muted);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+  .rung.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.1)}
+  .rung.locked{opacity:.45;cursor:default}
+  .card{background:linear-gradient(180deg,var(--panel),#000);border:1px solid var(--navy);border-radius:14px;padding:34px 26px;min-height:300px}
+  .qmeta{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  .q{font-family:Georgia,serif;font-size:25px;line-height:1.35;margin-bottom:22px}.q em{color:var(--gold);font-style:italic}
+  .listen{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:22px}
+  .listen:hover{background:var(--teal);color:#FFF}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:680px;margin:0 auto}
+  .opt{background:#0a0f1f;border:1px solid var(--navy);border-radius:10px;padding:16px 12px;font-size:19px;font-family:Georgia,serif;color:var(--cream);cursor:pointer;transition:all .2s;min-height:56px}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:var(--correct);background:rgba(34,197,94,.13)}
+  .opt.wrong{border-color:var(--wrong);background:rgba(239,68,68,.13)}
+  .explain{margin:20px auto 0;max-width:620px;text-align:left;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);padding:14px 18px;border-radius:0 8px 8px 0;font-size:14.5px;line-height:1.65;color:#E5E5E5;display:none}
+  .explain b{color:var(--gold)}
+  .pausenote{color:var(--teal);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:14px;display:none}
+  .next{display:none;margin:22px auto 0;background:var(--gold);color:#000;border:none;border-radius:8px;padding:13px 34px;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:inherit}
+  .next:hover{background:#D9B85C}
+  .foot{margin-top:42px;color:var(--muted);font-size:13px;line-height:1.8}
+  .foot .quote{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-size:15px}
+  .foot a{color:var(--teal);text-decoration:none}.foot a:hover{text-decoration:underline}
+  .geno{margin-top:18px;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--navy);border-radius:999px;padding:8px 18px;font-size:13px;color:#E5E5E5}
+  .geno img{width:26px;height:26px;border-radius:50%}
+</style>
+</head>
+<body>
+<nav class="gsu-game-nav" aria-label="GSU game navigation">
+  <a class="gn-back" href="https://www.globalsovereignuniversity.org/readification">← Readification Hub</a>
+  <a class="gn-brand" href="https://www.globalsovereignuniversity.org/">Global Sovereign University · Free Education for All</a>
+  <a class="gn-dl" href="phonics-game.html" download>⤓ Download Game</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Global Sovereign University · Play the Book</div>
+  <h1>The Code That <em>Unlocks</em> Reading</h1>
+  <p class="sub">Crack the letter-sound code — six rungs, endless practice, no clock.</p>
+
+  <div class="stats">
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Words Unlocked <b id="score">0</b></span>
+    <span class="pill">Badge <b id="badge">Apprentice</b></span>
+  </div>
+  <div class="rungs" id="rungs"></div>
+
+  <div class="card">
+    <div class="qmeta" id="qmeta"></div>
+    <div class="q" id="q"></div>
+    <button class="listen" id="listen" type="button">🔊 Listen</button>
+    <div class="opts" id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <div class="pausenote" id="pausenote">A working pause — the code is learned one lock at a time.</div>
+    <button class="next" id="next" type="button">Next →</button>
+  </div>
+
+  <div class="foot">
+    <div class="quote">"Phonics is not a method among methods. It is the code itself — and a code, once learned, opens everything written in it."</div>
+    — Dr. Gene A. Constant, <i>The Code That Unlocks Reading</i><br>
+    <a href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a> · Free forever from <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>
+    <div><span class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">GENO AI Tutor available 24/7 — ask him anything about this book at globalsovereignuniversity.org</span></div>
+  </div>
+</div>
+
+<script>
+// ===== Content engine — built from the book's Ch.4–6 teaching sequence =====
+const CVC=[["cat","c-a-t"],["sun","s-u-n"],["bed","b-e-d"],["pig","p-i-g"],["dog","d-o-g"],["cup","c-u-p"],["hat","h-a-t"],["pen","p-e-n"],["lip","l-i-p"],["pot","p-o-t"],["bug","b-u-g"],["map","m-a-p"],["net","n-e-t"],["fin","f-i-n"],["log","l-o-g"],["mud","m-u-d"],["ram","r-a-m"],["wig","w-i-g"],["jet","j-e-t"],["fox","f-o-x"],["van","v-a-n"],["zip","z-i-p"],["hum","h-u-m"],["sob","s-o-b"]];
+const SILENT_E=[["cap","cape"],["kit","kite"],["hop","hope"],["tub","tube"],["pin","pine"],["man","mane"],["rob","robe"],["cub","cube"],["rid","ride"],["not","note"],["tap","tape"],["fin","fine"],["plan","plane"],["dim","dime"],["mad","made"],["pet","Pete"],["us","use"],["rat","rate"]];
+const TEAMS=[["rain","ai","long a"],["play","ay","long a"],["seed","ee","long e"],["team","ea","long e"],["boat","oa","long o"],["night","igh","long i"],["moon","oo","the /oo/ sound"],["grow","ow","long o"],["pie","ie","long i"],["clay","ay","long a"],["dream","ea","long e"],["coast","oa","long o"],["bright","igh","long i"],["sleep","ee","long e"],["paint","ai","long a"]];
+const DIGRAPHS=[["ship","sh"],["chat","ch"],["thin","th"],["whip","wh"],["phone","ph"],["duck","ck"],["shed","sh"],["chest","ch"],["bath","th"],["wheel","wh"],["graph","ph"],["sock","ck"],["wish","sh"],["lunch","ch"],["moth","th"]];
+const BLENDS=[["st","op","stop"],["bl","ack","black"],["tr","ip","trip"],["cr","ab","crab"],["sp","in","spin"],["fl","ag","flag"],["dr","um","drum"],["gr","in","grin"],["sl","ed","sled"],["pl","um","plum"],["sn","ap","snap"],["sw","im","swim"],["cl","ap","clap"],["br","ick","brick"],["fr","og","frog"]];
+const RCTRL=[["car","ar"],["bird","ir"],["fork","or"],["hurt","ur"],["fern","er"],["star","ar"],["girl","ir"],["storm","or"],["turn","ur"],["herd","er"],["shark","ar"],["dirt","ir"],["porch","or"],["burst","ur"]];
+const ALLWORDS=[...CVC.map(x=>x[0]),...SILENT_E.flat(),...TEAMS.map(x=>x[0]),...DIGRAPHS.map(x=>x[0]),...BLENDS.map(x=>x[2]),...RCTRL.map(x=>x[0])];
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+function distract(pool,not,n){const out=new Set();while(out.size<n){const w=R(pool);if(w!==not&&!out.has(w))out.add(w)}return[...out]}
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+
+const RUNGS=[
+ {name:"Short Vowels",ch:"Chapter 4 · CVC Words",gen(){const[w]=R(CVC);return{say:w,q:`Which word did you hear? <em>(Listen first.)</em>`,answer:w,opts:shuffle([w,...distract(CVC.map(x=>x[0]),w,3)]),why:`<b>${w}</b> is a CVC word — consonant, short vowel, consonant. The book's Chapter 4 rule: in CVC, the vowel is always <b>short</b>. Sound each letter, then blend: ${R(CVC.filter(x=>x[0]===w))[1]}.`}}},
+ {name:"Silent E",ch:"Chapter 5 · The Magic E",gen(){const[a,b]=R(SILENT_E);const ask=Math.random()<.5;const w=ask?b:a;return{say:w,q:ask?`Add silent <em>e</em> to <em>${a}</em>. Which word do you get?`:`Take the silent <em>e</em> OFF <em>${b}</em>. Which word remains?`,answer:w,opts:shuffle([w,...distract(SILENT_E.flat(),w,3)]),why:`Silent <b>e</b> says nothing — but it makes the vowel <b>say its own name</b>. <b>${a}</b> (short vowel) ⇄ <b>${b}</b> (long vowel). One letter, two words.`}}},
+ {name:"Vowel Teams",ch:"Chapter 5 · Two Vowels, One Sound",gen(){const[w,t,s]=R(TEAMS);return{say:w,q:`Which word uses the vowel team <em>${t}</em>?`,answer:w,opts:shuffle([w,...distract(ALLWORDS.filter(x=>!x.includes(t)),w,3)]),why:`<b>${w}</b> spells ${s} with the team <b>${t}</b>. The book's rule of thumb: when two vowels walk together, they usually make <b>one</b> sound — and you learn each team as a unit, not letter by letter.`}}},
+ {name:"Digraph Hunt",ch:"Chapter 6 · Two Letters, One Sound",gen(){const[w,d]=R(DIGRAPHS);return{say:w,q:`Which word contains the digraph <em>${d}</em>?`,answer:w,opts:shuffle([w,...distract(ALLWORDS.filter(x=>!x.includes(d)),w,3)]),why:`<b>${d}</b> in <b>${w}</b> is a <b>digraph</b> — two letters spelling one brand-new sound, not a blend of two. That is why <i>ship</i> has three sounds, not four.`}}},
+ {name:"Blend Builder",ch:"Chapter 6 · Blends",gen(){const[b,r,w]=R(BLENDS);return{say:w,q:`Build the word: <em>${b}</em> + <em>${r}</em> = ?`,answer:w,opts:shuffle([w,...distract(BLENDS.map(x=>x[2]),w,3)]),why:`<b>${b}</b> is a <b>blend</b> — unlike a digraph, you can still hear <b>both</b> letters. ${b} + ${r} = <b>${w}</b>. Blends are sounded fast, never skipped.`}}},
+ {name:"Bossy R",ch:"Chapter 6 · R-Controlled Vowels",gen(){const[w,p]=R(RCTRL);return{say:w,q:`Which word has the r-controlled vowel <em>${p}</em>?`,answer:w,opts:shuffle([w,...distract(ALLWORDS.filter(x=>!x.includes(p)),w,3)]),why:`When <b>r</b> follows a vowel, it takes charge — the vowel is neither long nor short. <b>${p}</b> in <b>${w}</b> is one sound. The book calls r "the bossiest letter in English."`}}}
+];
+
+let rung=0,unlocked=1,streak=0,score=0,cur=null,locked=false;
+const BADGES=[[0,"Apprentice"],[25,"Bronze Locksmith"],[60,"Silver Locksmith"],[120,"Gold Locksmith"],[250,"Platinum Codebreaker"]];
+function badge(){let b=BADGES[0][1];for(const[n,t]of BADGES)if(score>=n)b=t;return b}
+function drawRungs(){document.getElementById('rungs').innerHTML=RUNGS.map((r,i)=>`<button class="rung ${i===rung?'on':''} ${i>=unlocked?'locked':''}" data-i="${i}" type="button">${i>=unlocked?'🔒 ':''}${r.name}</button>`).join('');document.querySelectorAll('.rung').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i<unlocked){rung=i;ask()}})}
+let correctInRung=0;
+function ask(){locked=false;cur=RUNGS[rung].gen();document.getElementById('qmeta').textContent=`Rung ${rung+1} · ${RUNGS[rung].name} · ${RUNGS[rung].ch}`;document.getElementById('q').innerHTML=cur.q;
+ const o=document.getElementById('opts');o.innerHTML='';cur.opts.forEach(w=>{const b=document.createElement('button');b.className='opt';b.type='button';b.textContent=w;b.onclick=()=>pick(b,w);o.appendChild(b)});
+ document.getElementById('explain').style.display='none';document.getElementById('pausenote').style.display='none';document.getElementById('next').style.display='none';drawRungs()}
+function pick(btn,w){if(locked)return;locked=true;const ok=w===cur.answer;
+ document.querySelectorAll('.opt').forEach(b=>{if(b.textContent===cur.answer)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong')});
+ const ex=document.getElementById('explain');ex.innerHTML=cur.why;ex.style.display='block';
+ if(ok){streak++;score++;correctInRung++;if(correctInRung>=6&&unlocked<RUNGS.length){unlocked++;correctInRung=0}}
+ else{streak=0;document.getElementById('pausenote').style.display='block'}
+ document.getElementById('streak').textContent=streak;document.getElementById('score').textContent=score;document.getElementById('badge').textContent=badge();
+ document.getElementById('next').style.display='inline-block'}
+document.getElementById('next').onclick=ask;
+document.getElementById('listen').onclick=()=>cur&&speak(cur.say);
+ask();
+</script>
+</body>
+</html>

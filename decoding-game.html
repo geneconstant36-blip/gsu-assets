@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Reader's Toolkit — Play the Book | GSU Decoding Game</title>
+<meta name="description" content="Play the free GSU decoding book: master the six syllable types, count and divide syllables, and assemble big words from chunks. Infinite play, no clock, free forever.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is The Reader's Toolkit game?","acceptedAnswer":{"@type":"Answer","text":"A free, endless decoding game built from the GSU book of the same name. Six rungs follow the book's sequence: the six syllable types, syllable counting, dividing words, and assembling multisyllabic words from chunks."}},{"@type":"Question","name":"Is it free?","acceptedAnswer":{"@type":"Answer","text":"Yes — free forever, no login, from Global Sovereign University, a 501(c)(3) nonprofit. The full book is a free PDF on the Readification page."}},{"@type":"Question","name":"Can I get help while playing?","acceptedAnswer":{"@type":"Answer","text":"Yes. GENO, GSU's AI tutor, is always available to answer questions about this book and every GSU book — find the call button on any page of globalsovereignuniversity.org."}}]}</script>
+<style>
+  :root{--navy:#1B2A4A;--teal:#1A8B7F;--gold:#C9A84C;--cream:#F5F1E8;--ink:#0A0907;--muted:#9CA3AF;--panel:#0e1830;--correct:#22C55E;--wrong:#EF4444}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--cream);font-family:'Inter',Arial,sans-serif;min-height:100vh}
+  .gsu-game-nav{position:sticky;top:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(10,9,7,.96);border-bottom:1px solid var(--gold);padding:10px 16px;backdrop-filter:blur(6px)}
+  .gsu-game-nav a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:15px;font-weight:700;transition:all .2s}
+  .gn-back{color:var(--gold);border:1px solid rgba(201,168,76,.5);background:rgba(201,168,76,.08)}.gn-back:hover{background:var(--gold);color:#000}
+  .gn-brand{color:var(--cream);font-family:Georgia,serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;flex:1;justify-content:center;min-height:auto}.gn-brand:hover{color:var(--gold)}
+  .gn-dl{color:var(--teal);border:1px solid rgba(26,139,127,.55);background:rgba(26,139,127,.08)}.gn-dl:hover{background:var(--teal);color:#FFF}
+  @media(max-width:560px){.gn-brand{display:none}.gsu-game-nav a{font-size:13px;padding:8px 12px}}
+  .wrap{max-width:860px;margin:0 auto;padding:34px 18px 60px;text-align:center}
+  .eyebrow{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
+  h1{font-family:Georgia,serif;font-size:42px;margin:10px 0 6px}h1 em{color:var(--gold);font-style:italic}
+  @media(max-width:560px){h1{font-size:28px}}
+  .sub{color:var(--muted);font-style:italic;font-family:Georgia,serif;margin-bottom:22px}
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .pill{border:1px solid var(--navy);background:var(--panel);border-radius:999px;padding:8px 18px;font-size:13px;color:var(--cream)}
+  .pill b{color:var(--gold)}
+  .rungs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .rung{border:1px solid var(--navy);background:transparent;color:var(--muted);border-radius:8px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+  .rung.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.1)}
+  .rung.locked{opacity:.45;cursor:default}
+  .card{background:linear-gradient(180deg,var(--panel),#000);border:1px solid var(--navy);border-radius:14px;padding:34px 26px;min-height:300px}
+  .qmeta{color:var(--teal);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  .q{font-family:Georgia,serif;font-size:25px;line-height:1.35;margin-bottom:24px}.q em{color:var(--gold);font-style:italic}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;max-width:700px;margin:0 auto}
+  .opt{background:#0a0f1f;border:1px solid var(--navy);border-radius:10px;padding:16px 12px;font-size:18px;font-family:Georgia,serif;color:var(--cream);cursor:pointer;transition:all .2s;min-height:56px}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:var(--correct);background:rgba(34,197,94,.13)}
+  .opt.wrong{border-color:var(--wrong);background:rgba(239,68,68,.13)}
+  .explain{margin:20px auto 0;max-width:640px;text-align:left;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);padding:14px 18px;border-radius:0 8px 8px 0;font-size:14.5px;line-height:1.65;color:#E5E5E5;display:none}
+  .explain b{color:var(--gold)}
+  .pausenote{color:var(--teal);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:14px;display:none}
+  .next{display:none;margin:22px auto 0;background:var(--gold);color:#000;border:none;border-radius:8px;padding:13px 34px;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:inherit}
+  .next:hover{background:#D9B85C}
+  .foot{margin-top:42px;color:var(--muted);font-size:13px;line-height:1.8}
+  .foot .quote{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-size:15px}
+  .foot a{color:var(--teal);text-decoration:none}.foot a:hover{text-decoration:underline}
+  .geno{margin-top:18px;display:inline-flex;align-items:center;gap:10px;border:1px solid var(--navy);border-radius:999px;padding:8px 18px;font-size:13px;color:#E5E5E5}
+  .geno img{width:26px;height:26px;border-radius:50%}
+</style>
+</head>
+<body>
+<nav class="gsu-game-nav" aria-label="GSU game navigation">
+  <a class="gn-back" href="https://www.globalsovereignuniversity.org/readification">← Readification Hub</a>
+  <a class="gn-brand" href="https://www.globalsovereignuniversity.org/">Global Sovereign University · Free Education for All</a>
+  <a class="gn-dl" href="decoding-game.html" download>⤓ Download Game</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Global Sovereign University · Play the Book</div>
+  <h1>The Reader's <em>Toolkit</em></h1>
+  <p class="sub">Every new word is a door — six rungs of decoding, endless practice, no clock.</p>
+
+  <div class="stats">
+    <span class="pill">Streak <b id="streak">0</b></span>
+    <span class="pill">Doors Opened <b id="score">0</b></span>
+    <span class="pill">Badge <b id="badge">Apprentice</b></span>
+  </div>
+  <div class="rungs" id="rungs"></div>
+
+  <div class="card">
+    <div class="qmeta" id="qmeta"></div>
+    <div class="q" id="q"></div>
+    <div class="opts" id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <div class="pausenote" id="pausenote">A working pause — flexible attempts are the toolkit, not a failure of it.</div>
+    <button class="next" id="next" type="button">Next →</button>
+  </div>
+
+  <div class="foot">
+    <div class="quote">"Without decoding, every new word is a wall. With it, every new word is a door."</div>
+    — Dr. Gene A. Constant, <i>The Reader's Toolkit — Decoding</i><br>
+    <a href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a> · Free forever from <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>
+    <div><span class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">GENO AI Tutor available 24/7 — ask him anything about this book at globalsovereignuniversity.org</span></div>
+  </div>
+</div>
+
+<script>
+// ===== Content engine — built from the book's Ch.3–5 sequence =====
+const TYPES={closed:["rabbit→rab","napkin→nap","sunset→sun","basket→bas","picnic→pic","mit (in mitten)","cat","wish","plan","dust"],open:["mu (in music)","ti (in tiger)","ro (in robot)","ba (in bacon)","he","go","she","pa (in paper)","si (in silent)","no"],silente:["cake","stripe","home","cube","plate","drive","stone","flame","prize","theme"],team:["rain","seed","boat","gleam","coach","sweet","paint","groan","sleet","plead"],rctrl:["car","fern","bird","fork","hurt","storm","chart","swirl","nurse","perch"],cle:["ble (in table)","dle (in candle)","tle (in little)","gle (in eagle)","ple (in purple)","fle (in rifle)","cle (in circle)","kle (in sparkle)","zle (in puzzle)","dle (in saddle)"]};
+const TYPENAMES={closed:"Closed",open:"Open",silente:"Silent-e",team:"Vowel Team",rctrl:"R-Controlled",cle:"Consonant-le"};
+const TYPEWHY={closed:"ends in a consonant, so the vowel is <b>short</b>",open:"ends in its vowel, so the vowel is <b>long</b> (says its name)",silente:"the final silent <b>e</b> makes the vowel long",team:"two vowels team up to make <b>one</b> sound",rctrl:"the <b>r</b> takes charge of the vowel — neither long nor short",cle:"a consonant + <b>le</b> grabs the final syllable, as in ta·ble"};
+const COUNTS=[["dog",1],["paper",2],["fantastic",3],["independent",4],["refrigerator",5],["map",1],["window",2],["umbrella",3],["calculator",4],["communicate",4],["cab",1],["robot",2],["establish",3],["information",4],["unbelievable",5],["strength",1],["target",2],["consider",3],["motivation",4],["organization",5]];
+const DIVIDE=[["rabbit","rab·bit","ra·bbit"],["napkin","nap·kin","na·pkin"],["sunset","sun·set","su·nset"],["basket","bas·ket","ba·sket"],["robot","ro·bot","rob·ot"],["tiger","ti·ger","tig·er"],["music","mu·sic","mus·ic"],["picnic","pic·nic","pi·cnic"],["candle","can·dle","cand·le"],["table","ta·ble","tab·le"],["pumpkin","pump·kin","pum·pkin"],["window","win·dow","wind·ow"],["paper","pa·per","pap·er"],["silent","si·lent","sil·ent"],["magnet","mag·net","ma·gnet"]];
+const BUILD=[["un","lock","ing","unlocking"],["re","read","ing","rereading"],["pre","view","","preview"],["dis","agree","ment","disagreement"],["un","help","ful","unhelpful"],["re","build","er","rebuilder"],["mis","spell","ing","misspelling"],["un","break","able","unbreakable"],["re","place","ment","replacement"],["dis","appear","ance","disappearance"],["pre","heat","ed","preheated"],["un","wash","able","unwashable"]];
+const FLEX=[["about","the first syllable softens to a schwa — uh·BOUT","a·bout"],["banana","two of three vowels relax to schwa — buh·NAN·uh","ba·na·na"],["problem","the second vowel relaxes — PROB·luhm","prob·lem"],["lemon","the o relaxes to schwa — LEM·uhn","lem·on"],["wagon","the o relaxes — WAG·uhn","wag·on"],["sofa","the a relaxes — SO·fuh","so·fa"],["pencil","the i relaxes — PEN·suhl","pen·cil"],["seven","the second e relaxes — SEV·uhn","sev·en"]];
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+function distract(pool,not,n){const out=new Set();while(out.size<n){const w=R(pool);if(String(w)!==String(not)&&!out.has(w))out.add(w)}return[...out]}
+
+const RUNGS=[
+ {name:"Syllable Types I",ch:"Chapter 3 · Closed vs Open",gen(){const k=R(["closed","open"]);const w=R(TYPES[k]);return{q:`The syllable <em>${w}</em> is which type?`,answer:TYPENAMES[k],opts:shuffle(["Closed","Open","Silent-e","Vowel Team"]),why:`<b>${w}</b> is a <b>${TYPENAMES[k]}</b> syllable — it ${TYPEWHY[k]}. The book's Chapter 3 promise: six types cover nearly every syllable in English.`}}},
+ {name:"Syllable Types II",ch:"Chapter 3 · The Other Four",gen(){const k=R(["silente","team","rctrl","cle"]);const w=R(TYPES[k]);return{q:`The syllable <em>${w}</em> is which type?`,answer:TYPENAMES[k],opts:shuffle(["Silent-e","Vowel Team","R-Controlled","Consonant-le"]),why:`<b>${w}</b> is a <b>${TYPENAMES[k]}</b> syllable — it ${TYPEWHY[k]}.`}}},
+ {name:"Beat Counter",ch:"Chapter 4 · How Many Syllables?",gen(){const[w,n]=R(COUNTS);const opts=shuffle([n,...distract([1,2,3,4,5].filter(x=>x!==n),n,3)]);return{q:`How many syllables in <em>${w}</em>?`,answer:String(n),opts:opts.map(String),why:`<b>${w}</b> has <b>${n}</b> — one beat per vowel <i>sound</i>. The book's trick: rest your hand under your chin; it drops once per syllable.`}}},
+ {name:"Divide It",ch:"Chapter 4 · Where to Split",gen(){const[w,good,bad]=R(DIVIDE);const wrong2=R(DIVIDE.filter(x=>x[0]!==w))[1];return{q:`Where does <em>${w}</em> divide?`,answer:good,opts:shuffle([good,bad,wrong2]),why:`<b>${good}</b>. The VC·CV rule from Chapter 4: two consonants between vowels usually split between them; one consonant usually goes with the second syllable (ro·bot). Split, sound each chunk, blend.`}}},
+ {name:"Word Assembler",ch:"Chapter 5 · Chunks Into Words",gen(){const[p,r,s,w]=R(BUILD);const label=s?`<em>${p}</em> + <em>${r}</em> + <em>${s}</em>`:`<em>${p}</em> + <em>${r}</em>`;return{q:`Assemble: ${label} = ?`,answer:w,opts:shuffle([w,...distract(BUILD.map(x=>x[3]),w,3)]),why:`<b>${w}</b> — decoded in chunks, never letter by letter. Chapter 5's point: a reader who chunks <i>un·lock·ing</i> never meets a word too long to open.`}}},
+ {name:"Flex It",ch:"Chapter 4 · The Flexible Try",gen(){const[w,hint,div]=R(FLEX);return{q:`Your first try at <em>${w}</em> sounds wrong. What does a flexible decoder do?`,answer:hint,opts:shuffle([hint,"Skip the word and guess from the picture","Memorize the word's shape instead","Give up and ask someone"]),why:`Right: <b>${div}</b> — ${hint}. The book's rule: when a try sounds off, <b>flex the vowel</b> (often to the lazy "uh" schwa) and try again. Self-correction IS decoding.`}}}
+];
+
+let rung=0,unlocked=1,streak=0,score=0,cur=null,locked=false,correctInRung=0;
+const BADGES=[[0,"Apprentice"],[25,"Bronze Key"],[60,"Silver Key"],[120,"Gold Key"],[250,"Platinum Master Key"]];
+function badge(){let b=BADGES[0][1];for(const[n,t]of BADGES)if(score>=n)b=t;return b}
+function drawRungs(){document.getElementById('rungs').innerHTML=RUNGS.map((r,i)=>`<button class="rung ${i===rung?'on':''} ${i>=unlocked?'locked':''}" data-i="${i}" type="button">${i>=unlocked?'🔒 ':''}${r.name}</button>`).join('');document.querySelectorAll('.rung').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i<unlocked){rung=i;ask()}})}
+function ask(){locked=false;cur=RUNGS[rung].gen();document.getElementById('qmeta').textContent=`Rung ${rung+1} · ${RUNGS[rung].name} · ${RUNGS[rung].ch}`;document.getElementById('q').innerHTML=cur.q;
+ const o=document.getElementById('opts');o.innerHTML='';cur.opts.forEach(w=>{const b=document.createElement('button');b.className='opt';b.type='button';b.innerHTML=w;b.onclick=()=>pick(b,w);o.appendChild(b)});
+ document.getElementById('explain').style.display='none';document.getElementById('pausenote').style.display='none';document.getElementById('next').style.display='none';drawRungs()}
+function pick(btn,w){if(locked)return;locked=true;const ok=String(w)===String(cur.answer);
+ document.querySelectorAll('.opt').forEach(b=>{if(b.innerHTML===String(cur.answer))b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong')});
+ const ex=document.getElementById('explain');ex.innerHTML=cur.why;ex.style.display='block';
+ if(ok){streak++;score++;correctInRung++;if(correctInRung>=6&&unlocked<RUNGS.length){unlocked++;correctInRung=0}}
+ else{streak=0;document.getElementById('pausenote').style.display='block'}
+ document.getElementById('streak').textContent=streak;document.getElementById('score').textContent=score;document.getElementById('badge').textContent=badge();
+ document.getElementById('next').style.display='inline-block'}
+document.getElementById('next').onclick=ask;
+ask();
+</script>
+</body>
+</html>
