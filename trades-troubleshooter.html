@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<!-- ===========================================================================
+   SOVEREIGN TRADES TROUBLESHOOTER  ·  v2 "STICKY"  ·  Global Sovereign University
+   Teach-Then-Play diagnostic game + the full stickiness stack:
+     · Live ANONYMOUS LEADERBOARD (daily + all-time) — you vs. the world
+     · Visible COMBO MULTIPLIER (streak -> bigger points)
+     · ADAPTIVE DIFFICULTY (challenge rises as you climb)
+     · SPACED REPETITION (missed repairs resurface until conquered)
+     · DAILY CHALLENGE + play STREAK
+     · Shareable RESULT CARD (brand-styled canvas)
+   Firebase anon auth + Firestore (gameScores). Endless. Mobile-first. Brand-locked.
+
+   ROUTING:  Standalone app -> GitHub (gsu-assets)
+   Serve at: https://read.globalsovereignuniversity.org/trades-troubleshooter.html
+   Embed on /tradification via the iframe snippet delivered alongside this file.
+
+   FIRESTORE NOTE: the live leaderboard reads the gameScores collection ordered by
+   tt_best / tt_daily. If your rules don't yet allow listing gameScores, the board
+   shows your own runs and degrades cleanly. To light up the GLOBAL board, allow
+   public read (anonymous, no PII):
+     match /gameScores/{uid} {
+       allow read: if true;
+       allow write: if request.auth != null && request.auth.uid == uid;
+     }
+=========================================================================== -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovereign Trades Troubleshooter — Learn to Diagnose Any Repair | GSU</title>
+<meta name="description" content="A free, hands-on diagnostic game from Global Sovereign University. Practice the real skill behind every trade — systematic troubleshooting for plumbing, electrical, appliances, small engines, and automotive — with a live global leaderboard, combos, daily challenges, and GENO coaching. No account, no cost.">
+<meta name="keywords" content="learn home repair, troubleshooting game, diagnose plumbing problems, electrical safety basics, small engine repair, appliance repair, automotive basics, free trades education, learning leaderboard">
+<meta property="og:title" content="Sovereign Trades Troubleshooter — Learn to Diagnose Any Repair">
+<meta property="og:description" content="Practice the core skill of every trade: systematic diagnosis. Free, endless, global leaderboard, guided by GENO.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://www.gstatic.com">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LearningResource","name":"Sovereign Trades Troubleshooter","description":"A free Teach-Then-Play diagnostic game that builds the core skill of every trade: systematic troubleshooting across plumbing, electrical, appliances, small engines, and automotive, with a live leaderboard and daily challenges.","learningResourceType":"Game","educationalLevel":"Beginner to Intermediate","isAccessibleForFree":true,"inLanguage":"en","provider":{"@type":"EducationalOrganization","name":"Global Sovereign University","url":"https://globalsovereignuniversity.org"},"teaches":["Diagnostic reasoning","Repair safety","Plumbing basics","Home electrical safety","Appliance repair","Small engine repair","Automotive basics"]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What does this game teach?","acceptedAnswer":{"@type":"Answer","text":"It teaches the one skill every trade shares: systematic diagnosis. You read a real symptom, choose the next best move — safety first, cheapest and most-likely cause first — and GENO explains the reasoning after every step."}},
+{"@type":"Question","name":"Is it free? Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"It is completely free and you can play instantly. Sign-in is anonymous and only saves your best score, tier, and leaderboard rank across devices."}},
+{"@type":"Question","name":"How does the leaderboard work?","acceptedAnswer":{"@type":"Answer","text":"It is fully anonymous. You pick a handle, and your best score competes head-to-head with learners worldwide on a daily and all-time board. No demographics, no income, no postal code — only merit."}},
+{"@type":"Question","name":"Will this make me a licensed tradesperson?","acceptedAnswer":{"@type":"Answer","text":"No. It builds safe, general diagnostic judgment and confidence. For gas, major electrical, or structural work, always call a licensed professional — the game says so throughout."}}
+]}
+</script>
+<style>
+  :root{--navy:#1B2A4A;--gold:#C9A84C;--teal:#1A8B7F;--cream:#F5F1E8;--black:#0A0907;--ink:#161310;
+    --line:rgba(201,168,76,.28);--good:#1A8B7F;--bad:#B4532F;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;padding:0 0 60px}
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px}
+  h1,h2,h3,.serif{font-family:Georgia,"Times New Roman",serif}
+  a{color:var(--gold)}
+  header{background:linear-gradient(180deg,#16243f 0%,#0e1830 100%);border-bottom:3px solid var(--gold);padding:24px 0 20px;text-align:center}
+  .kick{color:var(--gold);font-weight:700;letter-spacing:.18em;font-size:12px;text-transform:uppercase}
+  header h1{color:var(--gold);font-size:clamp(26px,6vw,44px);line-height:1.05;margin:6px 0 4px}
+  header .sub{color:var(--cream);font-style:italic;font-family:Georgia,serif;font-size:clamp(14px,3.3vw,19px);opacity:.92}
+  .pill{display:inline-flex;align-items:center;gap:7px;margin-top:11px;font-size:12px;font-weight:700;letter-spacing:.04em;background:rgba(26,139,127,.16);border:1px solid var(--teal);color:#7fd6c6;border-radius:999px;padding:5px 13px}
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:#5c6b7a}
+  .pill.live .dot{background:#3fd6a9;box-shadow:0 0 8px #3fd6a9}
+  .daily{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;background:linear-gradient(135deg,#15243f,#0e1830);border:1px solid var(--gold);border-radius:14px;padding:13px 16px;margin:18px 0 8px}
+  .daily .dl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .flame{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,.16);border:1px solid var(--gold);color:var(--gold);font-weight:700;font-size:12.5px;letter-spacing:.04em;border-radius:999px;padding:5px 11px;white-space:nowrap}
+  .daily .dtxt{font-size:14px;color:#dfe7f0}.daily .dtxt b{color:var(--gold);font-family:Georgia,serif}
+  .dbtn{background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13.5px;letter-spacing:.03em;cursor:pointer;white-space:nowrap}
+  .dbtn:disabled{opacity:.5;cursor:default}
+  .coach{display:flex;gap:14px;align-items:flex-start;background:#11203a;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:14px 16px;margin:14px 0}
+  .coach img{width:60px;height:60px;border-radius:50%;flex:0 0 auto;background:#0c1626;border:2px solid var(--teal)}
+  .coach .who{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+  .coach .say{font-size:clamp(15px,3.4vw,17px)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 16px;justify-content:center}
+  .chip{font-size:12.5px;font-weight:700;letter-spacing:.03em;border:1px solid var(--line);background:#101c33;color:var(--cream);border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--gold)}
+  .chip.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}
+  .stat{background:#11203a;border:1px solid var(--line);border-radius:12px;padding:11px 8px;text-align:center}
+  .stat .n{font-family:Georgia,serif;font-weight:700;font-size:23px;color:var(--gold);line-height:1}
+  .stat .l{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#9fb0c4;margin-top:5px}
+  .combo .n{color:#7fd6c6;transition:transform .18s;display:inline-block}
+  .combo.pulse .n{transform:scale(1.45)}
+  .combo.hot{border-color:var(--teal);box-shadow:0 0 14px rgba(26,139,127,.4)}
+  .tierbar{background:#0c1626;border:1px solid var(--line);border-radius:999px;height:28px;position:relative;overflow:hidden;margin-bottom:6px}
+  .tierfill{height:100%;width:0;background:linear-gradient(90deg,#5c4a22,var(--gold));transition:width .5s}
+  .tiertxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--cream);text-shadow:0 1px 2px #000}
+  .tiernext{text-align:center;font-size:11.5px;color:#9fb0c4;margin-bottom:14px;letter-spacing:.03em}
+  .card{background:#0f1b31;border:1px solid var(--line);border-radius:16px;padding:18px 18px 22px;margin-bottom:16px}
+  .cardtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .dtag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);background:var(--gold);border-radius:6px;padding:3px 9px}
+  .review{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#7fd6c6;border:1px solid var(--teal);border-radius:6px;padding:3px 8px}
+  .ddots{display:inline-flex;gap:4px;align-items:center}
+  .ddots i{width:8px;height:8px;border-radius:50%;background:#2a3a57;display:inline-block}
+  .ddots i.on{background:var(--gold)}
+  .card h2{font-size:clamp(18px,4.4vw,24px);color:var(--cream);margin-bottom:8px}
+  .symptom{background:#0a1424;border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:12px 14px;font-size:clamp(14.5px,3.4vw,16.5px);color:#dfe7f0;margin-bottom:16px}
+  .step{font-weight:700;font-size:clamp(15px,3.5vw,18px);margin-bottom:12px;color:var(--gold);font-family:Georgia,serif}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{text-align:left;width:100%;background:#13233f;border:1.5px solid var(--line);color:var(--cream);border-radius:11px;padding:13px 15px;font-size:clamp(14.5px,3.4vw,16px);cursor:pointer;transition:.13s;font-family:inherit}
+  .opt:hover:not(:disabled){border-color:var(--gold);transform:translateY(-1px)}
+  .opt:disabled{cursor:default;opacity:.95}
+  .opt.correct{border-color:var(--good);background:rgba(26,139,127,.22)}
+  .opt.wrong{border-color:var(--bad);background:rgba(180,83,47,.2)}
+  .opt .mark{font-weight:700;margin-right:6px}
+  .ptpop{display:inline-block;margin-left:8px;color:#7fd6c6;font-weight:700;font-size:13px}
+  .feedback{margin-top:14px;font-size:clamp(14px,3.3vw,16px);background:#0a1424;border:1px solid var(--line);border-radius:11px;padding:13px 15px;display:none}
+  .feedback.show{display:block}
+  .feedback .verdict{font-weight:700;font-family:Georgia,serif;font-size:17px;margin-bottom:5px}
+  .feedback.ok .verdict{color:#5fd6bf}.feedback.no .verdict{color:#e8a07f}
+  .next{margin-top:14px;display:none;width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:11px;padding:14px;font-weight:700;font-size:16px;letter-spacing:.03em;cursor:pointer;font-family:Georgia,serif}
+  .next.show{display:block}.next:hover{background:#dcbb5c}
+  .lb{background:#0f1b31;border:1px solid var(--line);border-radius:16px;padding:16px 16px 18px;margin-bottom:18px}
+  .lbhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+  .lbhead h3{color:var(--gold);font-size:20px}
+  .lbtabs{display:flex;gap:6px}
+  .lbtab{font-size:12.5px;font-weight:700;border:1px solid var(--line);background:#101c33;color:var(--cream);border-radius:999px;padding:6px 13px;cursor:pointer}
+  .lbtab.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+  .lbrow{display:grid;grid-template-columns:34px 1fr auto auto;gap:10px;align-items:center;padding:9px 10px;border-radius:9px;font-size:14px}
+  .lbrow+.lbrow{margin-top:5px}
+  .lbrow.head{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#9fb0c4;padding:2px 10px}
+  .lbrow.me{background:rgba(201,168,76,.14);border:1px solid var(--gold)}
+  .lbrow .rk{font-family:Georgia,serif;font-weight:700;color:var(--gold)}
+  .lbrow .al{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lbrow .sc{font-family:Georgia,serif;font-weight:700}
+  .lbrow .ti{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9fb0c4}
+  .lbrank{text-align:center;font-size:13px;color:#cdd7e3;margin-top:10px}
+  .lbrank b{color:var(--gold)}
+  .lbtools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:13px}
+  .ghost{background:transparent;border:1px solid var(--line);color:var(--cream);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer}
+  .ghost:hover{border-color:var(--gold)}
+  .alias-edit{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .alias-edit input{background:#0a1424;border:1px solid var(--line);color:var(--cream);border-radius:9px;padding:9px 12px;font-size:14px;max-width:200px}
+  .lbnote{font-size:11.5px;color:#8fa0b4;text-align:center;margin-top:10px}
+  .deeper{background:linear-gradient(135deg,#15243f,#0e1830);border:1px solid var(--gold);border-radius:16px;padding:20px;margin:8px 0 24px;text-align:center}
+  .deeper h3{color:var(--gold);font-size:21px;margin-bottom:8px}
+  .deeper p{font-size:15px;color:#dfe7f0;max-width:560px;margin:0 auto 14px}
+  .btn{display:inline-block;background:var(--gold);color:var(--navy);font-weight:700;text-decoration:none;border-radius:10px;padding:12px 22px;letter-spacing:.03em;font-size:15px}
+  .faq{margin:26px 0 10px}.faq h2{color:var(--gold);font-size:24px;text-align:center;margin-bottom:16px}
+  details{background:#0f1b31;border:1px solid var(--line);border-radius:11px;padding:4px 16px;margin-bottom:10px}
+  summary{cursor:pointer;font-weight:700;font-size:15.5px;padding:12px 0;color:var(--cream);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";float:right;color:var(--gold);font-size:20px;line-height:1}
+  details[open] summary::after{content:"\2212"}
+  details p{padding:0 0 14px;font-size:14.5px;color:#cdd7e3}
+  .safety{border-top:1px solid var(--line);margin-top:28px;padding-top:18px;font-size:12.5px;color:#8fa0b4;text-align:center}
+  .safety strong{color:var(--gold)}
+  .quote{text-align:center;font-family:Georgia,serif;font-style:italic;color:var(--cream);font-size:clamp(15px,3.6vw,19px);margin:24px auto 6px;max-width:640px;opacity:.92}
+  .quote span{display:block;font-style:normal;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:8px}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#11203a;border:1px solid var(--gold);color:var(--cream);padding:12px 18px;border-radius:12px;font-size:14px;opacity:0;transition:.3s;z-index:50;max-width:90%;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kick">A Global Sovereign University Game · Free Forever</div>
+    <h1>Sovereign Trades Troubleshooter</h1>
+    <div class="sub">You're the tradesperson. Read the symptom. Make the call.</div>
+    <div class="pill" id="savePill"><span class="dot"></span><span id="saveTxt">Connecting…</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="daily">
+    <div class="dl">
+      <span class="flame" id="streakPill">DAY STREAK 0</span>
+      <span class="dtxt" id="dailyTxt">Today's <b>Daily Repair</b> is waiting — solve it clean for bonus points.</span>
+    </div>
+    <button class="dbtn" id="dailyBtn">Play Daily Repair</button>
+  </div>
+
+  <div class="coach">
+    <img id="genoImg" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU tutor">
+    <div class="bubble">
+      <div class="who">GENO · Your Coach</div>
+      <div class="say" id="genoSay">Welcome to the workbench. I won't hand you answers — I'll teach you to think like a tradesperson. Build a <b>combo</b> by stringing correct calls together, and climb the global board. Golden rule: <b>safety first, cheapest likely cause next.</b></div>
+    </div>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="tierbar"><div class="tierfill" id="tierFill"></div><div class="tiertxt" id="tierTxt">BRONZE</div></div>
+  <div class="tiernext" id="tierNext">Diagnose to climb toward Silver.</div>
+
+  <div class="board">
+    <div class="stat"><div class="n" id="sScore">0</div><div class="l">Points</div></div>
+    <div class="stat combo" id="comboStat"><div class="n" id="sCombo">×1</div><div class="l">Combo</div></div>
+    <div class="stat"><div class="n" id="sStreak">0</div><div class="l">Streak</div></div>
+    <div class="stat"><div class="n" id="sSolved">0</div><div class="l">Solved</div></div>
+  </div>
+
+  <div class="card" id="card"><!-- scenario --></div>
+
+  <div class="lb" id="lb">
+    <div class="lbhead">
+      <h3>The Global Bench</h3>
+      <div class="lbtabs">
+        <button class="lbtab on" id="tabDaily">Today</button>
+        <button class="lbtab" id="tabAll">All-Time</button>
+      </div>
+    </div>
+    <div id="lbList"></div>
+    <div class="lbrank" id="lbRank">Play a repair to earn your place on the board.</div>
+    <div class="alias-edit">
+      <input id="aliasInput" maxlength="18" placeholder="Your handle">
+      <button class="ghost" id="aliasSave">Save handle</button>
+    </div>
+    <div class="lbtools">
+      <button class="ghost" id="refreshBtn">Refresh board</button>
+      <button class="ghost" id="shareBtn">Share my score card</button>
+    </div>
+    <div class="lbnote" id="lbNote">Fully anonymous — only a handle and a score. Merit, nothing else.</div>
+  </div>
+
+  <div class="deeper">
+    <h3>Want the full manual?</h3>
+    <p>This game builds your instinct. The <b>Sovereign Trades Series</b> takes each domain — plumbing, electrical, appliances, small engines, automotive, home safety, and the foundations of repair — and walks it out step by step. GENO is on call 24/7 to answer anything you get stuck on.</p>
+    <a class="btn" href="https://globalsovereignuniversity.org/tradification">Explore the Sovereign Trades Series</a>
+  </div>
+
+  <div class="faq">
+    <h2>Questions</h2>
+    <details><summary>What does this game actually teach?</summary><p>The one skill every trade shares: systematic diagnosis. You read a real symptom, choose the next best move — safety first, cheapest and most-likely cause first — and GENO explains the reasoning after every step. You learn by doing the thinking, not by memorizing trivia.</p></details>
+    <details><summary>How does the leaderboard work?</summary><p>It's fully anonymous. You pick a handle, and your best score competes head-to-head with learners worldwide on a Today board and an All-Time board. No demographics, no income, no postal code — only merit. A child with a borrowed phone can out-rank anyone on Earth.</p></details>
+    <details><summary>What are combos, streaks, and the daily repair?</summary><p>String correct calls together to raise your combo multiplier — bigger combos mean bigger points. The Daily Repair is a fresh challenge each day; solve it to keep your day streak alive. And any repair you get wrong will quietly come back until you conquer it.</p></details>
+    <details><summary>Will this make me a licensed tradesperson?</summary><p>No — and it isn't meant to. It builds safe, general judgment and confidence. For gas, major electrical, or structural work, always call a licensed professional. The game reminds you exactly where that line is.</p></details>
+  </div>
+
+  <div class="quote">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow."<span>Dr. Gene A. Constant</span></div>
+
+  <div class="safety"><strong>Safety note:</strong> This game teaches general, beginner-friendly diagnostic reasoning for educational purposes only. Always shut off power, water, or fuel before working on a system. For gas appliances, major electrical work, or anything you're unsure about, stop and call a licensed professional. When in doubt, don't.</div>
+</div>
+
+<div class="toast" id="toast"></div>
+<canvas id="shareCanvas" width="1200" height="630" style="display:none"></canvas>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script>
+/* ============================ DATA ============================ */
+var DOMAINS=[{key:"all",name:"All Trades"},{key:"safety",name:"Home Safety"},{key:"plumb",name:"Plumbing"},{key:"elec",name:"Electrical"},{key:"appl",name:"Appliances"},{key:"lawn",name:"Small Engines"},{key:"found",name:"Repair Basics"},{key:"auto",name:"Automotive"}];
+
+var SCENARIOS=[
+{id:"sa1",dom:"safety",diff:1,title:"The alarm that won't hush",symptom:"A smoke alarm in the hallway chirps once every minute or so. There's no smoke, no smell, nothing cooking.",steps:[
+ {q:"A single chirp on a one-minute cycle almost always means…",opts:[
+  {t:"The battery is low and needs replacing",ok:true,why:"Right. A periodic chirp is the low-battery warning. Replace the battery first — cheapest, most-likely cause, and a working alarm is not optional."},
+  {t:"There's a hidden fire inside the wall",ok:false,why:"A real fire triggers a loud continuous alarm, not a lone chirp. The chirp is a maintenance signal — almost always a dying battery."},
+  {t:"Ignore it; it'll stop on its own",ok:false,why:"Never ignore a life-safety device. Silence it the right way by fixing the cause."}]},
+ {q:"New battery in, still chirping. Next?",opts:[
+  {t:"Check the manufacture date — alarms expire after ~10 years",ok:true,why:"Exactly. Smoke alarms have a lifespan. Past date, the sensor is unreliable — replace the whole unit."},
+  {t:"Cover it with tape to muffle it",ok:false,why:"That disables the device meant to wake you. Diagnose the real cause instead."}]}]},
+{id:"sa2",dom:"safety",diff:1,title:"The cord under the rug",symptom:"You find an extension cord running a space heater, tucked under a hallway rug so no one trips on it.",steps:[
+ {q:"What's the real hazard?",opts:[
+  {t:"A cord under a rug can overheat and start a fire",ok:true,why:"Correct. Covered cords trap heat and hide damage; high-draw heaters make it worse. A leading cause of home fires."},
+  {t:"No hazard — hidden means safe",ok:false,why:"Hidden is the danger. You can't see fraying or feel heat building. Cords need open air."},
+  {t:"Add a second rug for padding",ok:false,why:"That traps even more heat. Get the cord out of foot traffic entirely."}]},
+ {q:"Best fix?",opts:[
+  {t:"Plug the heater straight into a wall outlet, never daisy-chained",ok:true,why:"Yes. High-wattage appliances run straight from a wall outlet — not an extension cord or strip not rated for sustained heater loads."},
+  {t:"Use a longer, thinner extension cord",ok:false,why:"Thinner gauge = more heat. Heaters shouldn't run on extension cords at all."}]}]},
+{id:"sa3",dom:"safety",diff:2,title:"The warm outlet",symptom:"A wall outlet feels warm to the touch and there's a faint plastic smell near it.",steps:[
+ {q:"First move?",opts:[
+  {t:"Stop using it, switch off its breaker, and call an electrician",ok:true,why:"Right. A warm outlet with a burning smell signals dangerous heat — loose wiring or a failing device. Kill the circuit and get a licensed electrician. Not a DIY moment."},
+  {t:"Keep using it but watch it closely",ok:false,why:"Heat plus a plastic smell is a fire warning. Continuing risks an arc fire. De-energize now."},
+  {t:"Spray it with water to cool it",ok:false,why:"Never put water near an outlet — electrocution and short hazard. Cut power at the breaker."}]}]},
+{id:"pl1",dom:"plumb",diff:1,title:"The toilet that never stops",symptom:"A toilet runs constantly — water trickles into the bowl long after the flush, and the bill is creeping up.",steps:[
+ {q:"What do you check first?",opts:[
+  {t:"Lift the tank lid and watch one full flush cycle",ok:true,why:"Right. Watch the mechanism work. One cycle shows whether the flapper won't seal or the fill valve won't shut — free, before buying a part."},
+  {t:"Buy and install a whole new toilet",ok:false,why:"Never start with the priciest fix. A running toilet is almost always a few-dollar part."},
+  {t:"Shut the home's main water off for good",ok:false,why:"That stops the waste and your showers. Diagnose first."}]},
+ {q:"Water keeps trickling in and the tank never reaches its fill line. The rubber flapper looks warped. Cause?",opts:[
+  {t:"A worn flapper not sealing the flush valve",ok:true,why:"Exactly. A warped flapper leaks tank water into the bowl, so the fill valve never shuts off — the #1 cause, and a cheap swap."},
+  {t:"The house has low water pressure",ok:false,why:"Low pressure slows refilling; it doesn't cause a constant trickle into the bowl. That points to the flapper."}]},
+ {q:"Before swapping the flapper, the smart step is…",opts:[
+  {t:"Close the shutoff behind the toilet and flush to empty the tank",ok:true,why:"Perfect. Isolate the fixture, not the house, then drain so the swap is dry. Match the new flapper to the old."},
+  {t:"Start unscrewing parts with the tank full",ok:false,why:"You'll flood the floor. Always isolate and drain a fixture first."}]}]},
+{id:"pl2",dom:"plumb",diff:1,title:"The sink that drains slow",symptom:"A bathroom sink drains slowly — water pools, then creeps away over a minute or two. Other drains are fine.",steps:[
+ {q:"Most likely cause when only one fixture is slow?",opts:[
+  {t:"A local clog of hair and soap scum in the trap or stopper",ok:true,why:"Right. One slow fixture means a local blockage — usually hair at the pop-up stopper or in the P-trap, not the main line."},
+  {t:"The city sewer is backing up",ok:false,why:"A sewer issue slows every drain at once. One slow sink = a local clog."}]},
+ {q:"Cheapest, safest first attempt?",opts:[
+  {t:"Remove and clean the stopper, then snake the trap",ok:true,why:"Yes. Most slow-sink clogs sit right at the stopper. Mechanical removal beats harsh chemicals."},
+  {t:"Pour a bottle of chemical drain cleaner first",ok:false,why:"Chemicals are a last resort — they can damage pipes and are dangerous if they don't clear. Try mechanical first."}]}]},
+{id:"pl3",dom:"plumb",diff:2,title:"No hot water at one faucet",symptom:"One faucet gives only cold water. Every other tap in the house has plenty of hot.",steps:[
+ {q:"Because only ONE faucet is affected, where's the problem?",opts:[
+  {t:"At that fixture — likely the cartridge or hot supply valve",ok:true,why:"Correct. A bad heater starves the whole house. One cold faucet means a local fault: a stuck mixing cartridge or a closed/blocked hot supply."},
+  {t:"The water heater has completely failed",ok:false,why:"A failed heater starves every tap, not one. Isolate to the fixture that's misbehaving."}]}]},
+{id:"el1",dom:"elec",diff:2,title:"The dead outlet",symptom:"A kitchen outlet suddenly has no power. The room lights still work.",steps:[
+ {q:"Safest, smartest first check?",opts:[
+  {t:"Look for a tripped GFCI outlet nearby and press RESET",ok:true,why:"Right. Kitchen and bath outlets are often GFCI-protected. One tripped GFCI kills several downstream. Resetting is free and fixes it most of the time."},
+  {t:"Open the outlet cover with power still on",ok:false,why:"Never open an energized outlet. If you must inspect, switch the breaker OFF first. Safety before diagnosis."}]},
+ {q:"No GFCI tripped. Next?",opts:[
+  {t:"Check the panel for a tripped breaker; reset fully (off, then on)",ok:true,why:"Yes. A tripped breaker sits between on and off; flip fully off, then on. If it trips again instantly, stop."},
+  {t:"Assume the outlet's fine and ignore it",ok:false,why:"A dead outlet means something interrupted the circuit. Work the simple checks first."}]},
+ {q:"The breaker trips again the instant you reset it. Now?",opts:[
+  {t:"Leave it off and call a licensed electrician",ok:true,why:"Exactly. Immediate re-trip means a short or ground fault — the breaker is doing its job. Licensed-electrician territory."},
+  {t:"Tape the breaker in the ON position",ok:false,why:"Defeating a breaker can cause a fire — it's the safety device. Never force it."}]}]},
+{id:"el2",dom:"elec",diff:3,title:"The breaker that keeps tripping",symptom:"A breaker trips every evening around the same time. Resetting works until later, when it trips again.",steps:[
+ {q:"The same-time-each-evening pattern points to…",opts:[
+  {t:"An overloaded circuit from too many devices at once",ok:true,why:"Right. A breaker tripping under a predictable load is usually overloaded, not faulty. Evening = more devices on. The breaker is protecting the wiring."},
+  {t:"A broken breaker that should be bypassed",ok:false,why:"Never bypass a breaker. A repeating trip is information: the circuit is carrying more than it's rated for."}]},
+ {q:"Best response to an overloaded circuit?",opts:[
+  {t:"Move some high-draw devices to a different circuit",ok:true,why:"Yes. Spread the load. If it keeps tripping, have an electrician evaluate — but reducing load is the safe first step."},
+  {t:"Install a bigger breaker so it stops tripping",ok:false,why:"Dangerous. A bigger breaker lets the wire carry more current than rated — that's how fires start. Breaker size matches the wire, always."}]}]},
+{id:"ap1",dom:"appl",diff:1,title:"The dishwasher that won't drain",symptom:"After a cycle, there's an inch of dirty water standing in the bottom of the dishwasher.",steps:[
+ {q:"Cheapest, most-likely first check?",opts:[
+  {t:"Pull and clean the filter basket at the bottom",ok:true,why:"Right. A clogged filter is the #1 cause of poor draining. Free to clean, two minutes — always start there."},
+  {t:"Replace the drain pump motor",ok:false,why:"An expensive late step. Most drainage problems are a clogged filter or hose, not a dead pump."}]},
+ {q:"Filter's clean, still won't drain. Next culprit?",opts:[
+  {t:"A kinked or clogged drain hose — or a plugged disposal knockout",ok:true,why:"Yes. The drain hose often loops to the disposal. A kink, clog, or un-removed knockout plug traps water. Follow the water's path."},
+  {t:"The dishwasher is simply worn out",ok:false,why:"Don't jump to replacement. Filter, then hose, then disposal — usually a simple blockage."}]}]},
+{id:"ap2",dom:"appl",diff:2,title:"The fridge that won't cool",symptom:"The refrigerator runs but everything inside is warm. The light comes on when you open it.",steps:[
+ {q:"Power's clearly on. A common cheap cause people overlook?",opts:[
+  {t:"Dusty condenser coils that can't shed heat",ok:true,why:"Right. Coils caked in dust can't release heat, so it runs but won't cool. Vacuuming them is free and revives many 'dying' fridges."},
+  {t:"It needs a new compressor immediately",ok:false,why:"The compressor is the priciest part — never the first guess. Check coils, vents, seal first."}]},
+ {q:"Coils are clean. What else blocks cooling cheaply?",opts:[
+  {t:"Blocked interior vents or a worn door seal",ok:true,why:"Yes. Overpacked shelves block airflow vents, and a loose gasket leaks cold air. Easy, low-cost fixes worth ruling out."},
+  {t:"Nothing else — replace the whole unit",ok:false,why:"Slow down. Vents and seals are common, cheap culprits."}]}]},
+{id:"ap3",dom:"appl",diff:1,title:"The dryer that won't dry",symptom:"The dryer runs a full cycle and tumbles fine, but clothes come out still damp.",steps:[
+ {q:"Most common, free thing to check first?",opts:[
+  {t:"Clean the lint filter and check the exhaust vent for blockage",ok:true,why:"Right. A clogged lint screen or blocked vent traps moist air so clothes never dry — and it's a serious fire hazard. Clean it first, every time."},
+  {t:"Buy a new heating element right away",ok:false,why:"The element may be fine. Restricted airflow from lint is the most common, cheapest, and safest thing to fix first."}]}]},
+{id:"lw1",dom:"lawn",diff:2,title:"The mower that won't start",symptom:"A gas push-mower that ran fine last fall won't start this spring. You pull and pull — nothing catches.",steps:[
+ {q:"After sitting all winter, the likely cause is…",opts:[
+  {t:"Stale fuel gone gummy in the tank and carburetor",ok:true,why:"Right. Gas degrades in months and varnishes the carb. Stale fuel is the #1 reason a stored mower won't start. Drain and refresh."},
+  {t:"The engine block has cracked",ok:false,why:"Rare and catastrophic — never the first guess. Start with the cheap seasonal cause: stale fuel."}]},
+ {q:"Fresh fuel, still no start. Next?",opts:[
+  {t:"Pull and inspect the spark plug; clean or replace if fouled",ok:true,why:"Yes. After fuel, spark is the next link. A fouled plug won't fire — a cheap part, five-minute check."},
+  {t:"Take it for a full rebuild",ok:false,why:"Too soon and too costly. Work fuel-spark-air first; most no-starts are one of those three."}]},
+ {q:"Good fuel and spark, still struggling. Last basic?",opts:[
+  {t:"A clogged air filter choking the engine",ok:true,why:"Exactly — fuel, spark, air. A dust-packed filter starves it. Clean or replace and you've covered the basics."},
+  {t:"The wheels are the wrong size",ok:false,why:"Wheels don't affect starting. Stay on the fuel-spark-air triangle."}]}]},
+{id:"lw2",dom:"lawn",diff:3,title:"The mower that dies after starting",symptom:"The mower fires up, runs 20–30 seconds, then sputters and dies. Restarting repeats it.",steps:[
+ {q:"Starts on choke then dies — classic sign of…",opts:[
+  {t:"A partially clogged carburetor not passing enough fuel",ok:true,why:"Right. It runs briefly on the rich choke, then starves on the main jet — a partial carb clog from old fuel. Cleaning the carb cures it."},
+  {t:"It needs premium high-octane gas",ok:false,why:"Small engines don't need premium. Start-then-die is a fuel-delivery clog, not octane."}]}]},
+{id:"fo1",dom:"found",diff:1,title:"The screw that won't grip",symptom:"You're driving a screw and the driver keeps slipping and chewing out the head. Now it barely turns.",steps:[
+ {q:"Why is the driver slipping ('camming out')?",opts:[
+  {t:"The bit doesn't match the screw's size or type",ok:true,why:"Right. A wrong-size or wrong-type bit won't seat fully and cams out, stripping the head. Matching the bit is the whole fix."},
+  {t:"You simply aren't strong enough",ok:false,why:"Rarely strength. A matched, fully seated bit drives smoothly with light pressure."}]},
+ {q:"Head's already stripped. Best recovery?",opts:[
+  {t:"Press firmly with the right bit, or add a rubber band/extractor for grip",ok:true,why:"Yes. Seat the right bit with steady downward force, or a wide rubber band over the head for bite. An extractor is next. Patience beats power."},
+  {t:"Hit it harder and faster with a drill",ok:false,why:"More speed chews it out completely. Get grip and back it out under control."}]}]},
+{id:"fo2",dom:"found",diff:1,title:"The door that squeaks",symptom:"A door hinge squeaks loudly every time it swings.",steps:[
+ {q:"Simplest correct fix?",opts:[
+  {t:"Lubricate the hinge pin and work the door",ok:true,why:"Right. A squeak is metal-on-metal friction at the pin. A little lubricant, worked in by swinging the door, silences it for cheap."},
+  {t:"Replace the entire door",ok:false,why:"Wildly over-fixing. The hinge just needs lubrication."}]}]},
+{id:"fo3",dom:"found",diff:2,title:"The wobbly chair",symptom:"A wooden chair wobbles, and one joint where a leg meets the seat feels loose.",steps:[
+ {q:"Right diagnosis before reaching for a fix?",opts:[
+  {t:"The glued joint has dried out and loosened over time",ok:true,why:"Right. Wood joints rely on glue that ages, especially with humidity swings. The loose joint tells you exactly where to re-glue or pin."},
+  {t:"The floor must be uneven everywhere",ok:false,why:"If the joint itself moves, the chair — not the floor — is the problem."}]}]},
+{id:"au1",dom:"auto",diff:2,title:"The car that just clicks",symptom:"You turn the key and hear rapid clicking, but the engine won't crank. The dash lights look dim.",steps:[
+ {q:"Rapid clicking + dim lights + no crank points to…",opts:[
+  {t:"A weak/dead battery or loose, corroded terminals",ok:true,why:"Right. Rapid clicking is the starter solenoid starved of current; dim lights confirm low voltage. The most common no-start by far."},
+  {t:"A blown engine needing replacement",ok:false,why:"Far too dramatic for a click and dim lights — textbook low-battery symptoms. Start at the battery."}]},
+ {q:"Before jumping it, the quick free check is…",opts:[
+  {t:"Inspect the battery terminals for looseness or corrosion",ok:true,why:"Yes. A loose or corroded terminal mimics a dead battery. Clean the posts first — sometimes that alone fixes it."},
+  {t:"Pour water over the engine",ok:false,why:"Never — risks shorts and damage. Check the dry things: terminals, then jump-start."}]}]},
+{id:"au2",dom:"auto",diff:3,title:"Cranks but won't fire",symptom:"The engine turns over strongly — rrr-rrr-rrr — but never catches and runs.",steps:[
+ {q:"Strong crank but no start means the battery's fine. The missing ingredient is…",opts:[
+  {t:"Fuel or spark — it's getting air and turning, but not igniting",ok:true,why:"Right. A strong crank rules out the battery. An engine needs air, fuel, spark; air is there, so suspect fuel delivery or ignition next."},
+  {t:"The battery is dead",ok:false,why:"A strong, steady crank proves the battery is fine. The fault is downstream — fuel or spark."}]}]},
+{id:"au3",dom:"auto",diff:1,title:"The low-tire warning",symptom:"A tire-pressure warning light glows on the dash on a cold morning.",steps:[
+ {q:"On a cold morning especially, first check…",opts:[
+  {t:"Actual tire pressures with a gauge — cold air lowers pressure",ok:true,why:"Right. Air contracts when cold, so pressure can dip enough overnight to trip the light. Check all four and add air to the door-sticker spec."},
+  {t:"Ignore it — probably just glitching",ok:false,why:"Under-inflated tires wear out, waste fuel, and can fail at speed. Treat the light as real."}]}]}
+];
+
+var TIERS=[{name:"BRONZE",at:0,color:"#8a6a2e"},{name:"SILVER",at:300,color:"#9aa0a6"},{name:"GOLD",at:700,color:"#C9A84C"},{name:"PLATINUM",at:1500,color:"#7fd6c6"}];
+
+/* ============================ STATE ============================ */
+var S={score:0,streak:0,solved:0,best:0,combo:1,filter:"all",queue:[],cur:null,step:0,locked:false,
+       missedThisScenario:false,isReview:false,isDaily:false,lastId:null};
+var GENO_GOOD=["Clean call. That's how a pro thinks.","Exactly right — reading the symptom, not guessing.","Yes. Cheapest likely cause first, every time.","That's the move. Safety and logic together.","Sharp. You just saved a service call."];
+var GENO_BAD=["Not quite — but this is how you learn. Here's the reasoning.","Easy to think that. Here's the smarter path.","That instinct costs time or money. Here's the pro move.","Hold on — let's think it through."];
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function $(id){return document.getElementById(id);}
+function say(t){$("genoSay").innerHTML=t;}
+function today(){return new Date().toISOString().slice(0,10);}
+function domName(k){for(var i=0;i<DOMAINS.length;i++){if(DOMAINS[i].key===k)return DOMAINS[i].name;}return"";}
+function byId(id){for(var i=0;i<SCENARIOS.length;i++){if(SCENARIOS[i].id===id)return SCENARIOS[i];}return null;}
+
+var LS={get:function(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}},
+        set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+var misses=LS.get("tt_misses",{});
+var alias=LS.get("tt_alias","");
+var dayStreak=LS.get("tt_streak",0);
+var lastPlay=LS.get("tt_lastPlay","");
+var dailyDone=LS.get("tt_dailyDone","");
+
+function ensureAlias(){
+  if(!alias){
+    var A=["Steady","Sharp","Sovereign","Handy","Iron","Calm","Keen","Bold","Quiet","True"];
+    var N=["Wrench","Volt","Gauge","Hammer","Circuit","Pipe","Spark","Gear","Anvil","Torque"];
+    alias=pick(A)+pick(N)+Math.floor(10+Math.random()*89);
+    LS.set("tt_alias",alias);
+  }
+  return alias;
+}
+function updateStreakOnPlay(){
+  var t=today(); if(lastPlay===t) return;
+  var y=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  dayStreak=(lastPlay===y)?dayStreak+1:1;
+  lastPlay=t; LS.set("tt_streak",dayStreak); LS.set("tt_lastPlay",t); renderStreak();
+}
+function renderStreak(){$("streakPill").textContent="DAY STREAK "+dayStreak;}
+
+function dailySeedIndex(){var t=today(),h=0;for(var i=0;i<t.length;i++){h=(h*31+t.charCodeAt(i))>>>0;}return h%SCENARIOS.length;}
+function refreshDailyUI(){
+  if(dailyDone===today()){$("dailyBtn").disabled=true;$("dailyBtn").textContent="Daily Repair done \u2713";$("dailyTxt").innerHTML="Daily Repair complete. Come back tomorrow to keep your streak alive.";}
+  else{$("dailyBtn").disabled=false;$("dailyBtn").textContent="Play Daily Repair";$("dailyTxt").innerHTML="Today's <b>Daily Repair</b> is waiting — solve it clean for bonus points.";}
+}
+
+function targetDiff(){if(S.score>=1500)return 3;if(S.score>=700)return 2.6;if(S.score>=300)return 2;return 1.4;}
+function buildQueue(){
+  var pool=SCENARIOS.filter(function(s){return S.filter==="all"||s.dom===S.filter;});
+  var td=targetDiff();
+  pool.sort(function(a,b){return (Math.abs(a.diff-td)-Math.abs(b.diff-td))+(Math.random()-0.5);});
+  S.queue=pool.map(function(s){return s.id;});
+}
+function nextScenario(forceId){
+  S.isReview=false; S.isDaily=false; S.missedThisScenario=false; S.step=0; S.locked=false;
+  var chosen=null;
+  if(forceId){ chosen=forceId; }
+  else{
+    var missIds=Object.keys(misses).filter(function(id){if(misses[id]<=0)return false;var sc=byId(id);return sc&&(S.filter==="all"||sc.dom===S.filter)&&id!==S.lastId;});
+    if(missIds.length && Math.random()<0.45){var bag=[];missIds.forEach(function(id){var w=Math.min(4,misses[id]);for(var k=0;k<w;k++)bag.push(id);});chosen=pick(bag);S.isReview=true;}
+    else{ if(!S.queue.length) buildQueue(); chosen=S.queue.shift(); if(chosen===S.lastId&&S.queue.length) chosen=S.queue.shift(); }
+  }
+  S.lastId=chosen; S.cur=byId(chosen); renderScenario();
+}
+
+function diffDots(n){var h='<span class="ddots">';for(var i=1;i<=3;i++)h+='<i class="'+(i<=n?'on':'')+'"></i>';return h+'</span>';}
+function renderScenario(){
+  var sc=S.cur, st=sc.steps[S.step];
+  var tags='<span class="dtag">'+domName(sc.dom)+'</span>';
+  if(S.isDaily) tags+=' <span class="review" style="color:#C9A84C;border-color:#C9A84C">Daily Repair</span>';
+  if(S.isReview) tags+=' <span class="review">Review · conquer it</span>';
+  var html='<div class="cardtop"><div>'+tags+'</div>'+diffDots(sc.diff)+'</div>';
+  html+='<h2>'+sc.title+'</h2>';
+  if(S.step===0) html+='<div class="symptom">'+sc.symptom+'</div>';
+  html+='<div class="step">Step '+(S.step+1)+' of '+sc.steps.length+': '+st.q+'</div>';
+  var opts=st.opts.map(function(o){return o;});
+  for(var i=opts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=opts[i];opts[i]=opts[j];opts[j]=t;}
+  html+='<div class="opts" id="opts">';
+  opts.forEach(function(o){html+='<button class="opt" data-ok="'+(o.ok?1:0)+'" data-why="'+encodeURIComponent(o.why)+'">'+o.t+'</button>';});
+  html+='</div><div class="feedback" id="fb"><div class="verdict" id="fbV"></div><div id="fbW"></div></div>';
+  html+='<button class="next" id="nextBtn"></button>';
+  $("card").innerHTML=html;
+  document.querySelectorAll("#opts .opt").forEach(function(b){b.addEventListener("click",function(){choose(b);});});
+  if(S.isReview && S.step===0) say("Here's that one again — let's conquer it this time. Read carefully.");
+}
+
+function choose(btn){
+  if(S.locked) return; S.locked=true;
+  if(S.score===0 && S.solved===0) updateStreakOnPlay();
+  var ok=btn.getAttribute("data-ok")==="1";
+  var why=decodeURIComponent(btn.getAttribute("data-why"));
+  document.querySelectorAll("#opts .opt").forEach(function(b){b.disabled=true;if(b.getAttribute("data-ok")==="1"){b.classList.add("correct");b.innerHTML='<span class="mark">\u2713</span>'+b.innerHTML;}});
+  var fb=$("fb"),fbV=$("fbV"),fbW=$("fbW"); fb.classList.add("show");
+  if(ok){
+    var mult=Math.min(3,1+Math.floor(S.streak/3)*0.5);
+    var pts=Math.round(20*mult);
+    S.score+=pts; S.streak++; S.combo=Math.min(3,1+Math.floor(S.streak/3)*0.5);
+    fb.classList.remove("no"); fb.classList.add("ok");
+    fbV.innerHTML="Correct <span class='ptpop'>+"+pts+(mult>1?(" (\u00D7"+mult+")"):"")+"</span>"; fbW.innerHTML=why;
+    say(pick(GENO_GOOD)); pulseCombo();
+  }else{
+    fb.classList.remove("ok"); fb.classList.add("no");
+    fbV.textContent="Here's the better move"; fbW.innerHTML=why;
+    btn.classList.add("wrong"); btn.innerHTML='<span class="mark">\u2717</span>'+btn.innerHTML;
+    S.streak=0; S.combo=1; S.missedThisScenario=true; say(pick(GENO_BAD));
+  }
+  updateBoard();
+  var nb=$("nextBtn"); nb.classList.add("show");
+  var last=(S.step>=S.cur.steps.length-1);
+  nb.textContent=last?"Next repair \u2192":"Continue \u2192";
+  nb.onclick=function(){ if(last){ finishScenario(); } else { S.step++; S.locked=false; renderScenario(); } };
+}
+
+function finishScenario(){
+  var id=S.cur.id, wasReview=S.isReview, wasDaily=S.isDaily;
+  if(S.missedThisScenario){ misses[id]=Math.min(5,(misses[id]||0)+1); }
+  else{
+    if(misses[id]){ misses[id]=misses[id]-1; if(misses[id]<=0) delete misses[id]; if(wasReview) toast("Conquered — "+S.cur.title+" mastered."); }
+    S.score+=30;
+  }
+  LS.set("tt_misses",misses);
+  if(wasDaily && !S.missedThisScenario){ S.score+=60; dailyDone=today(); LS.set("tt_dailyDone",dailyDone); refreshDailyUI(); toast("Daily Repair solved — +60 bonus. Day streak: "+dayStreak+"."); }
+  S.solved++; updateBoard(); nextScenario();
+}
+
+function pulseCombo(){var c=$("comboStat");c.classList.add("pulse");c.classList.toggle("hot",S.combo>1);setTimeout(function(){c.classList.remove("pulse");},190);}
+function currentTier(){var t=TIERS[0];for(var i=0;i<TIERS.length;i++){if(S.score>=TIERS[i].at)t=TIERS[i];}return t;}
+function nextTier(){for(var i=0;i<TIERS.length;i++){if(S.score<TIERS[i].at)return TIERS[i];}return null;}
+function updateBoard(){
+  $("sScore").textContent=S.score; $("sCombo").textContent="\u00D7"+S.combo; $("sStreak").textContent=S.streak; $("sSolved").textContent=S.solved;
+  var ct=currentTier(),nt=nextTier(); $("tierTxt").textContent=ct.name; var fill=$("tierFill");
+  if(nt){var span=nt.at-ct.at,into=S.score-ct.at;fill.style.width=Math.max(5,Math.min(100,(into/span)*100))+"%";$("tierNext").textContent=(nt.at-S.score)+" points to "+nt.name+".";}
+  else{fill.style.width="100%";$("tierNext").textContent="Platinum reached — master of the workbench.";}
+  fill.style.background="linear-gradient(90deg,#5c4a22,"+ct.color+")";
+  if(S.score>S.best){S.best=S.score; saveScore();}
+}
+
+function renderChips(){
+  var c=$("chips"); c.innerHTML="";
+  DOMAINS.forEach(function(d){var b=document.createElement("button");b.className="chip"+(d.key===S.filter?" on":"");b.textContent=d.name;
+    b.onclick=function(){S.filter=d.key;document.querySelectorAll(".chip").forEach(function(x){x.classList.remove("on");});b.classList.add("on");buildQueue();nextScenario();say("Good pick. "+(d.key==="all"?"Everything's on the table.":"Let's drill "+d.name+".")+" Read the symptom and make the call.");};
+    c.appendChild(b);});
+}
+
+var FIREBASE_CONFIG={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",storageBucket:"gsu-handshake.firebasestorage.app",messagingSenderId:"301089416765",appId:"1:301089416765:web:dff926a7aa52191e9a6c54",measurementId:"G-LZDRK48TL7"};
+var db=null,uid=null,lbMode="daily";
+function setPill(live,txt){$("savePill").classList.toggle("live",!!live);$("saveTxt").textContent=txt;}
+function initFirebase(){
+  try{
+    firebase.initializeApp(FIREBASE_CONFIG); db=firebase.firestore();
+    firebase.auth().signInAnonymously().catch(function(){setPill(false,"Playing locally (scores not saved)");});
+    firebase.auth().onAuthStateChanged(function(u){ if(u){uid=u.uid;setPill(true,"Scores saving \u2713");loadScore();loadBoard();} else setPill(false,"Playing locally"); });
+  }catch(e){ setPill(false,"Playing locally"); }
+}
+function saveScore(){
+  if(!db||!uid) return;
+  var t=today();
+  db.collection("gameScores").doc(uid).get().then(function(d){
+    var prevDaily=(d.exists&&d.data().tt_dailyDate===t&&d.data().tt_daily)?d.data().tt_daily:0;
+    db.collection("gameScores").doc(uid).set({alias:ensureAlias(),tt_best:S.best,tt_tier:currentTier().name,tt_solved:S.solved,tt_dailyDate:t,tt_daily:Math.max(prevDaily,S.score),tt_updated:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}).catch(function(){});
+  }).catch(function(){ db.collection("gameScores").doc(uid).set({alias:ensureAlias(),tt_best:S.best,tt_tier:currentTier().name,tt_solved:S.solved,tt_dailyDate:t,tt_daily:S.score},{merge:true}).catch(function(){}); });
+}
+function loadScore(){
+  if(!db||!uid) return;
+  db.collection("gameScores").doc(uid).get().then(function(d){
+    if(d.exists){var v=d.data();
+      if(v.alias){alias=v.alias;LS.set("tt_alias",alias);}
+      if(v.tt_best){S.best=v.tt_best; say("Welcome back, <b>"+ensureAlias()+"</b>. Your best is <b>"+S.best+"</b> ("+(v.tt_tier||"Bronze")+"). Beat it.");}
+    }
+    $("aliasInput").value=ensureAlias();
+  }).catch(function(){ $("aliasInput").value=ensureAlias(); });
+}
+function loadBoard(){
+  $("aliasInput").value=ensureAlias();
+  if(!db){ renderBoardLocalOnly(false); return; }
+  var field=(lbMode==="daily")?"tt_daily":"tt_best";
+  db.collection("gameScores").orderBy(field,"desc").limit(50).get().then(function(snap){
+    var rows=[];
+    snap.forEach(function(doc){var v=doc.data();var sc=(lbMode==="daily")?((v.tt_dailyDate===today())?v.tt_daily:null):v.tt_best;if(sc&&sc>0)rows.push({uid:doc.id,alias:v.alias||"Builder",score:sc,tier:v.tt_tier||"Bronze"});});
+    rows.sort(function(a,b){return b.score-a.score;});
+    renderBoard(rows.slice(0,25),rows);
+  }).catch(function(e){ renderBoardLocalOnly(true); });
+}
+function renderBoard(rows,allRows){
+  var html='<div class="lbrow head"><span>#</span><span>Builder</span><span>Score</span><span>Tier</span></div>';
+  if(!rows.length){ html+='<div class="lbnote" style="margin:14px 0">No scores on this board yet — be the first to post one.</div>'; }
+  var meSeen=false;
+  rows.forEach(function(r,i){var me=(uid&&r.uid===uid);if(me)meSeen=true;
+    html+='<div class="lbrow'+(me?' me':'')+'"><span class="rk">'+(i+1)+'</span><span class="al">'+escapeHtml(r.alias)+(me?' (you)':'')+'</span><span class="sc">'+r.score+'</span><span class="ti">'+r.tier+'</span></div>';});
+  $("lbList").innerHTML=html;
+  var myScore=(lbMode==="daily")?S.score:S.best;
+  if(myScore>0 && allRows && allRows.length){
+    var better=0; allRows.forEach(function(r){if(r.score>myScore)better++;});
+    var rank=better+1, pct=Math.max(1,Math.round((1-better/allRows.length)*100));
+    $("lbRank").innerHTML="You're <b>#"+rank+"</b> here — top <b>"+pct+"%</b> of ranked builders"+(meSeen?"":" (post a higher score to climb into view)")+".";
+  }else if(myScore>0){ $("lbRank").innerHTML="Your score is <b>"+myScore+"</b>. Refresh to see where you land."; }
+  else{ $("lbRank").textContent="Play a repair to earn your place on the board."; }
+}
+function renderBoardLocalOnly(denied){
+  var html='<div class="lbrow head"><span>#</span><span>Builder</span><span>Score</span><span>Tier</span></div>';
+  html+='<div class="lbrow me"><span class="rk">1</span><span class="al">'+escapeHtml(ensureAlias())+' (you)</span><span class="sc">'+(lbMode==="daily"?S.score:S.best)+'</span><span class="ti">'+currentTier().name+'</span></div>';
+  $("lbList").innerHTML=html;
+  $("lbRank").innerHTML="The global board lights up when you're connected.";
+  $("lbNote").textContent=denied?"Global board needs public read on gameScores (see file header). Your runs still save.":"Connect to compete worldwide. Fully anonymous — only a handle and a score.";
+}
+function escapeHtml(s){return (s+"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+
+function buildShareCard(){
+  var cv=$("shareCanvas"),x=cv.getContext("2d"),W=1200,H=630;
+  x.fillStyle="#1B2A4A";x.fillRect(0,0,W,H);
+  x.strokeStyle="#C9A84C";x.lineWidth=6;x.strokeRect(20,20,W-40,H-40);
+  x.textAlign="left";
+  x.fillStyle="#C9A84C";x.font="bold 30px Georgia, serif";x.fillText("SOVEREIGN TRADES TROUBLESHOOTER",54,86);
+  x.fillStyle="#7fd6c6";x.font="600 22px Arial";x.fillText("a Global Sovereign University game",54,120);
+  x.fillStyle="#F5F1E8";x.font="italic 34px Georgia, serif";x.fillText(ensureAlias(),54,200);
+  x.fillStyle="#C9A84C";x.font="bold 150px Georgia, serif";x.fillText(String(S.best),54,360);
+  x.fillStyle="#9fb0c4";x.font="600 26px Arial";x.fillText("POINTS",58,400);
+  var ct=currentTier();
+  x.fillStyle=ct.color;x.fillRect(54,440,250,56);x.fillStyle="#0A0907";x.font="bold 28px Arial";x.textAlign="center";x.fillText(ct.name,179,477);
+  x.textAlign="left";x.fillStyle="#F5F1E8";x.font="600 26px Arial";x.fillText(S.solved+" repairs solved",330,478);
+  x.fillStyle="#C9A84C";x.font="bold 26px Arial";x.fillText("Beat me \u2192 globalsovereignuniversity.org",54,576);
+  x.strokeStyle="#C9A84C";x.lineWidth=14;x.beginPath();x.arc(1040,210,120,0.5,Math.PI*2);x.stroke();
+  return cv;
+}
+function shareCard(){
+  if(S.best<=0){ toast("Solve a repair first, then share your card."); return; }
+  var cv=buildShareCard();
+  if(cv.toBlob){
+    cv.toBlob(function(blob){
+      var file=new File([blob],"my-trades-score.png",{type:"image/png"});
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        navigator.share({files:[file],title:"My Trades Troubleshooter score",text:"I scored "+S.best+" on the Sovereign Trades Troubleshooter. Beat me!"}).catch(function(){downloadCanvas(cv);});
+      }else{ downloadCanvas(cv); }
+    },"image/png");
+  }else{ downloadCanvas(cv); }
+}
+function downloadCanvas(cv){var a=document.createElement("a");a.download="my-trades-score.png";a.href=cv.toDataURL("image/png");a.click();toast("Score card saved — share it anywhere.");}
+
+var toastT=null;
+function toast(msg){var el=$("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove("show");},3200);}
+
+$("tabDaily").onclick=function(){lbMode="daily";$("tabDaily").classList.add("on");$("tabAll").classList.remove("on");loadBoard();};
+$("tabAll").onclick=function(){lbMode="all";$("tabAll").classList.add("on");$("tabDaily").classList.remove("on");loadBoard();};
+$("refreshBtn").onclick=function(){loadBoard();toast("Board refreshed.");};
+$("shareBtn").onclick=shareCard;
+$("dailyBtn").onclick=function(){ if(dailyDone===today())return; updateStreakOnPlay(); nextScenario(SCENARIOS[dailySeedIndex()].id); S.isDaily=true; renderScenario(); try{window.scrollTo({top:$("card").offsetTop-20,behavior:"smooth"});}catch(e){} say("This is today's Daily Repair. Solve it clean for a +60 bonus and keep your streak alive."); };
+$("aliasSave").onclick=function(){var v=$("aliasInput").value.trim().slice(0,18);if(v){alias=v;LS.set("tt_alias",alias);saveScore();toast("Handle saved: "+alias);loadBoard();}};
+
+/* ====================== BOOT ====================== */
+renderChips(); renderStreak(); refreshDailyUI(); updateBoard(); buildQueue(); nextScenario();
+$("aliasInput").value=ensureAlias(); renderBoardLocalOnly(false);
+if(typeof firebase!=="undefined"){ initFirebase(); } else { setPill(false,"Playing locally"); }
+
+/* auto-fit inside a Webflow embed iframe (no inner scrollbar) */
+function postH(){try{if(window.parent!==window)window.parent.postMessage({gsuTT:1,h:Math.ceil(document.body.scrollHeight)},"*");}catch(e){}}
+window.addEventListener("load",postH); window.addEventListener("resize",postH); setInterval(postH,500);
+</script>
+</body>
+</html>
