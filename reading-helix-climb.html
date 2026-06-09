@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<!-- ===========================================================================
+   GSU STICKY GAME TEMPLATE  ·  v1  ·  Global Sovereign University
+   The reference standard every GSU game is built to. Reskin it for any subject
+   by editing ONLY the three marked zones below — the engine never changes.
+
+   WHAT'S BUILT IN (do not remove):
+     · Teach-Then-Play scenarios (read symptom -> choose move -> GENO explains)
+     · COMBO multiplier (streak -> bigger points)        · ADAPTIVE difficulty
+     · SPACED REPETITION of missed items (resurface till conquered)
+     · DAILY CHALLENGE + play STREAK                     · Bronze/Silver/Gold/Platinum
+     · Live ANONYMOUS LEADERBOARD (Today + All-Time, rank + percentile)
+     · Shareable RESULT CARD (brand canvas)              · Auto-resize inside an iframe
+     · Firebase anon auth + Firestore persistence        · AEO/SEO + FAQ schema
+
+   ===== EDIT ZONE A: <head> meta + JSON-LD (search/answer-engine text) =====
+   ===== EDIT ZONE B: the CONFIG block (titles, copy, CTA, categories) ======
+   ===== EDIT ZONE C: the SCENARIOS bank (your teaching content) ============
+
+   ROUTING:  Standalone app -> GitHub (gsu-assets), served at read.globalsovereignuniversity.org
+   EMBED:    Pair with the auto-resizing Webflow Code Embed snippet.
+   FIRESTORE (shared gsu-handshake project). Each game stores its own fields
+   prefixed by CONFIG.key (e.g. mathhelix_best), so games never overwrite each
+   other. To light up the GLOBAL board, allow public read on gameScores:
+     match /gameScores/{uid} {
+       allow read: if true;                              // anonymous, no PII
+       allow write: if request.auth != null && request.auth.uid == uid;
+     }
+=========================================================================== -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ===== EDIT ZONE A — Reading Helix Climb ===== -->
+<title>The Reading Helix Climb — Practice Real Reading, Free &amp; Endless | GSU</title>
+<meta name="description" content="Climb eight pillars of reading — phonemic awareness, phonics, decoding, fluency, vocabulary, comprehension, critical reading, and morphology. Free, endless, leaderboard-driven, coached by GENO in 32 languages. No account needed.">
+<meta name="keywords" content="reading game, phonics game, decoding practice, reading comprehension game, vocabulary game, morphology roots, critical reading, science of reading, free reading practice, phonemic awareness">
+<meta property="og:title" content="The Reading Helix Climb — Practice Real Reading, Free &amp; Endless">
+<meta property="og:description" content="Eight pillars of reading, one endless climb. Do the skill, not trivia. Free forever from a 501(c)(3), coached by GENO.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://www.gstatic.com">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LearningResource","name":"The Reading Helix Climb","description":"A free, endless reading game across eight pillars where the learner performs the reading skill and GENO explains the reasoning after every move.","learningResourceType":"Game","educationalLevel":"Beginner to Intermediate","isAccessibleForFree":true,"inLanguage":"en","provider":{"@type":"EducationalOrganization","name":"Global Sovereign University","url":"https://globalsovereignuniversity.org"},"teaches":["Phonemic awareness","Phonics and decoding","Reading fluency","Vocabulary and morphology","Reading comprehension and critical reading"]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What does the Reading Helix Climb teach?","acceptedAnswer":{"@type":"Answer","text":"It builds the eight pillars of reading from the science of reading: phonemic awareness, phonics, decoding, fluency, vocabulary, comprehension, critical reading, and morphology. You perform each skill on real items and GENO explains the reasoning after every move."}},
+{"@type":"Question","name":"Is it free? Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"It is completely free and you can play instantly. Sign-in is anonymous and only saves your best score, tier, and leaderboard rank across devices."}},
+{"@type":"Question","name":"How does the leaderboard work?","acceptedAnswer":{"@type":"Answer","text":"It is fully anonymous. You pick a handle and your best score competes worldwide on a daily and an all-time board. No demographics, no income, no postal code — only merit."}},
+{"@type":"Question","name":"What are the Bronze, Silver, Gold, and Platinum tiers?","acceptedAnswer":{"@type":"Answer","text":"Tiers are score milestones on the climb. As you keep correct moves in a row your combo multiplier grows, your score climbs, and you rise from Bronze to Silver to Gold to Platinum."}}
+]}
+</script>
+<style>
+  :root{--navy:#1B2A4A;--gold:#C9A84C;--teal:#1A8B7F;--cream:#F5F1E8;--black:#0A0907;
+    --line:rgba(201,168,76,.28);--good:#1A8B7F;--bad:#B4532F;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;padding:0 0 60px}
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px}
+  h1,h2,h3,.serif{font-family:Georgia,"Times New Roman",serif}
+  a{color:var(--gold)}
+  header{background:linear-gradient(180deg,#16243f 0%,#0e1830 100%);border-bottom:3px solid var(--gold);padding:24px 0 20px;text-align:center}
+  .kick{color:var(--gold);font-weight:700;letter-spacing:.18em;font-size:12px;text-transform:uppercase}
+  header h1{color:var(--gold);font-size:clamp(26px,6vw,44px);line-height:1.05;margin:6px 0 4px}
+  header .sub{color:var(--cream);font-style:italic;font-family:Georgia,serif;font-size:clamp(14px,3.3vw,19px);opacity:.92}
+  .pill{display:inline-flex;align-items:center;gap:7px;margin-top:11px;font-size:12px;font-weight:700;letter-spacing:.04em;background:rgba(26,139,127,.16);border:1px solid var(--teal);color:#7fd6c6;border-radius:999px;padding:5px 13px}
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:#5c6b7a}
+  .pill.live .dot{background:#3fd6a9;box-shadow:0 0 8px #3fd6a9}
+  .daily{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;background:linear-gradient(135deg,#15243f,#0e1830);border:1px solid var(--gold);border-radius:14px;padding:13px 16px;margin:18px 0 8px}
+  .daily .dl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .flame{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,.16);border:1px solid var(--gold);color:var(--gold);font-weight:700;font-size:12.5px;letter-spacing:.04em;border-radius:999px;padding:5px 11px;white-space:nowrap}
+  .daily .dtxt{font-size:14px;color:#dfe7f0}.daily .dtxt b{color:var(--gold);font-family:Georgia,serif}
+  .dbtn{background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:10px 16px;font-weight:700;font-size:13.5px;letter-spacing:.03em;cursor:pointer;white-space:nowrap}
+  .dbtn:disabled{opacity:.5;cursor:default}
+  .coach{display:flex;gap:14px;align-items:flex-start;background:#11203a;border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:14px 16px;margin:14px 0}
+  .coach img{width:60px;height:60px;border-radius:50%;flex:0 0 auto;background:#0c1626;border:2px solid var(--teal)}
+  .coach .who{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+  .coach .say{font-size:clamp(15px,3.4vw,17px)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 16px;justify-content:center}
+  .chip{font-size:12.5px;font-weight:700;letter-spacing:.03em;border:1px solid var(--line);background:#101c33;color:var(--cream);border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--gold)}
+  .chip.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}
+  .stat{background:#11203a;border:1px solid var(--line);border-radius:12px;padding:11px 8px;text-align:center}
+  .stat .n{font-family:Georgia,serif;font-weight:700;font-size:23px;color:var(--gold);line-height:1}
+  .stat .l{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#9fb0c4;margin-top:5px}
+  .combo .n{color:#7fd6c6;transition:transform .18s;display:inline-block}
+  .combo.pulse .n{transform:scale(1.45)}
+  .combo.hot{border-color:var(--teal);box-shadow:0 0 14px rgba(26,139,127,.4)}
+  .tierbar{background:#0c1626;border:1px solid var(--line);border-radius:999px;height:28px;position:relative;overflow:hidden;margin-bottom:6px}
+  .tierfill{height:100%;width:0;background:linear-gradient(90deg,#5c4a22,var(--gold));transition:width .5s}
+  .tiertxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--cream);text-shadow:0 1px 2px #000}
+  .tiernext{text-align:center;font-size:11.5px;color:#9fb0c4;margin-bottom:14px;letter-spacing:.03em}
+  .card{background:#0f1b31;border:1px solid var(--line);border-radius:16px;padding:18px 18px 22px;margin-bottom:16px}
+  .cardtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .dtag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);background:var(--gold);border-radius:6px;padding:3px 9px}
+  .review{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#7fd6c6;border:1px solid var(--teal);border-radius:6px;padding:3px 8px}
+  .ddots{display:inline-flex;gap:4px;align-items:center}
+  .ddots i{width:8px;height:8px;border-radius:50%;background:#2a3a57;display:inline-block}
+  .ddots i.on{background:var(--gold)}
+  .card h2{font-size:clamp(18px,4.4vw,24px);color:var(--cream);margin-bottom:8px}
+  .symptom{background:#0a1424;border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:12px 14px;font-size:clamp(14.5px,3.4vw,16.5px);color:#dfe7f0;margin-bottom:16px}
+  .step{font-weight:700;font-size:clamp(15px,3.5vw,18px);margin-bottom:12px;color:var(--gold);font-family:Georgia,serif}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{text-align:left;width:100%;background:#13233f;border:1.5px solid var(--line);color:var(--cream);border-radius:11px;padding:13px 15px;font-size:clamp(14.5px,3.4vw,16px);cursor:pointer;transition:.13s;font-family:inherit}
+  .opt:hover:not(:disabled){border-color:var(--gold);transform:translateY(-1px)}
+  .opt:disabled{cursor:default;opacity:.95}
+  .opt.correct{border-color:var(--good);background:rgba(26,139,127,.22)}
+  .opt.wrong{border-color:var(--bad);background:rgba(180,83,47,.2)}
+  .opt .mark{font-weight:700;margin-right:6px}
+  .ptpop{display:inline-block;margin-left:8px;color:#7fd6c6;font-weight:700;font-size:13px}
+  .feedback{margin-top:14px;font-size:clamp(14px,3.3vw,16px);background:#0a1424;border:1px solid var(--line);border-radius:11px;padding:13px 15px;display:none}
+  .feedback.show{display:block}
+  .feedback .verdict{font-weight:700;font-family:Georgia,serif;font-size:17px;margin-bottom:5px}
+  .feedback.ok .verdict{color:#5fd6bf}.feedback.no .verdict{color:#e8a07f}
+  .next{margin-top:14px;display:none;width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:11px;padding:14px;font-weight:700;font-size:16px;letter-spacing:.03em;cursor:pointer;font-family:Georgia,serif}
+  .next.show{display:block}.next:hover{background:#dcbb5c}
+  .lb{background:#0f1b31;border:1px solid var(--line);border-radius:16px;padding:16px 16px 18px;margin-bottom:18px}
+  .lbhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+  .lbhead h3{color:var(--gold);font-size:20px}
+  .lbtabs{display:flex;gap:6px}
+  .lbtab{font-size:12.5px;font-weight:700;border:1px solid var(--line);background:#101c33;color:var(--cream);border-radius:999px;padding:6px 13px;cursor:pointer}
+  .lbtab.on{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+  .lbrow{display:grid;grid-template-columns:34px 1fr auto auto;gap:10px;align-items:center;padding:9px 10px;border-radius:9px;font-size:14px}
+  .lbrow+.lbrow{margin-top:5px}
+  .lbrow.head{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#9fb0c4;padding:2px 10px}
+  .lbrow.me{background:rgba(201,168,76,.14);border:1px solid var(--gold)}
+  .lbrow .rk{font-family:Georgia,serif;font-weight:700;color:var(--gold)}
+  .lbrow .al{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lbrow .sc{font-family:Georgia,serif;font-weight:700}
+  .lbrow .ti{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9fb0c4}
+  .lbrank{text-align:center;font-size:13px;color:#cdd7e3;margin-top:10px}
+  .lbrank b{color:var(--gold)}
+  .lbtools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:13px}
+  .ghost{background:transparent;border:1px solid var(--line);color:var(--cream);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer}
+  .ghost:hover{border-color:var(--gold)}
+  .alias-edit{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .alias-edit input{background:#0a1424;border:1px solid var(--line);color:var(--cream);border-radius:9px;padding:9px 12px;font-size:14px;max-width:200px}
+  .lbnote{font-size:11.5px;color:#8fa0b4;text-align:center;margin-top:10px}
+  .deeper{background:linear-gradient(135deg,#15243f,#0e1830);border:1px solid var(--gold);border-radius:16px;padding:20px;margin:8px 0 24px;text-align:center}
+  .deeper h3{color:var(--gold);font-size:21px;margin-bottom:8px}
+  .deeper p{font-size:15px;color:#dfe7f0;max-width:560px;margin:0 auto 14px}
+  .btn{display:inline-block;background:var(--gold);color:var(--navy);font-weight:700;text-decoration:none;border-radius:10px;padding:12px 22px;letter-spacing:.03em;font-size:15px}
+  .faq{margin:26px 0 10px}.faq h2{color:var(--gold);font-size:24px;text-align:center;margin-bottom:16px}
+  details{background:#0f1b31;border:1px solid var(--line);border-radius:11px;padding:4px 16px;margin-bottom:10px}
+  summary{cursor:pointer;font-weight:700;font-size:15.5px;padding:12px 0;color:var(--cream);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";float:right;color:var(--gold);font-size:20px;line-height:1}
+  details[open] summary::after{content:"\2212"}
+  details p{padding:0 0 14px;font-size:14.5px;color:#cdd7e3}
+  .safety{border-top:1px solid var(--line);margin-top:28px;padding-top:18px;font-size:12.5px;color:#8fa0b4;text-align:center}
+  .safety strong{color:var(--gold)}
+  .quote{text-align:center;font-family:Georgia,serif;font-style:italic;color:var(--cream);font-size:clamp(15px,3.6vw,19px);margin:24px auto 6px;max-width:640px;opacity:.92}
+  .quote span{display:block;font-style:normal;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:8px}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:#11203a;border:1px solid var(--gold);color:var(--cream);padding:12px 18px;border-radius:12px;font-size:14px;opacity:0;transition:.3s;z-index:50;max-width:90%;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kick" id="hKick"></div>
+    <h1 id="hTitle"></h1>
+    <div class="sub" id="hSub"></div>
+    <div class="pill" id="savePill"><span class="dot"></span><span id="saveTxt">Connecting…</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="daily">
+    <div class="dl">
+      <span class="flame" id="streakPill">DAY STREAK 0</span>
+      <span class="dtxt" id="dailyTxt">Today's <b>Daily Challenge</b> is waiting — solve it clean for bonus points.</span>
+    </div>
+    <button class="dbtn" id="dailyBtn">Play Daily Challenge</button>
+  </div>
+
+  <div class="coach">
+    <img id="genoImg" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU tutor">
+    <div class="bubble">
+      <div class="who">GENO · Your Coach</div>
+      <div class="say" id="genoSay"></div>
+    </div>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="tierbar"><div class="tierfill" id="tierFill"></div><div class="tiertxt" id="tierTxt">BRONZE</div></div>
+  <div class="tiernext" id="tierNext"></div>
+
+  <div class="board">
+    <div class="stat"><div class="n" id="sScore">0</div><div class="l">Points</div></div>
+    <div class="stat combo" id="comboStat"><div class="n" id="sCombo">×1</div><div class="l">Combo</div></div>
+    <div class="stat"><div class="n" id="sStreak">0</div><div class="l">Streak</div></div>
+    <div class="stat"><div class="n" id="sSolved">0</div><div class="l">Solved</div></div>
+  </div>
+
+  <div class="card" id="card"></div>
+
+  <div class="lb" id="lb">
+    <div class="lbhead">
+      <h3 id="boardTitle">The Global Bench</h3>
+      <div class="lbtabs">
+        <button class="lbtab on" id="tabDaily">Today</button>
+        <button class="lbtab" id="tabAll">All-Time</button>
+      </div>
+    </div>
+    <div id="lbList"></div>
+    <div class="lbrank" id="lbRank">Play a round to earn your place on the board.</div>
+    <div class="alias-edit">
+      <input id="aliasInput" maxlength="18" placeholder="Your handle">
+      <button class="ghost" id="aliasSave">Save handle</button>
+    </div>
+    <div class="lbtools">
+      <button class="ghost" id="refreshBtn">Refresh board</button>
+      <button class="ghost" id="shareBtn">Share my score card</button>
+    </div>
+    <div class="lbnote" id="lbNote">Fully anonymous — only a handle and a score. Merit, nothing else.</div>
+  </div>
+
+  <div class="deeper">
+    <h3 id="deeperTitle"></h3>
+    <p id="deeperBody"></p>
+    <a class="btn" id="deeperCTA" href="#"></a>
+  </div>
+
+  <div class="faq">
+    <h2>Questions</h2>
+    <div id="faqList"></div>
+  </div>
+
+  <div class="quote">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow."<span>Dr. Gene A. Constant</span></div>
+
+  <div class="safety" id="safetyNote"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<canvas id="shareCanvas" width="1200" height="630" style="display:none"></canvas>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script>
+/* =====================================================================
+   EDIT ZONE B — CONFIG. Change these per game. Nothing else needs editing
+   except the SCENARIOS bank (Edit Zone C) just below it.
+   ===================================================================== */
+var CONFIG={
+  key:"readhelix",
+  kicker:"A Global Sovereign University Game \u00b7 Free Forever",
+  title:"The Reading Helix Climb",
+  subtitle:"Eight pillars of reading, one endless climb \u2014 you do the skill, not memorize trivia.",
+  coachIntro:"I'm GENO. I won't hand you answers \u2014 I'll show you the reasoning after every move. Pick a pillar or take them all, build a <b>combo</b> by stringing correct calls together, and climb from Bronze to Platinum.",
+  itemWord:"item",
+  dailyWord:"Daily Climb",
+  boardTitle:"The Reading Bench",
+  deeperTitle:"Want the whole Helix?",
+  deeperBody:"This climb builds the instinct. Readification walks every pillar out in full \u2014 eight free textbooks to keep \u2014 and GENO is on call 24/7 in 32 languages to teach anything you get stuck on.",
+  deeperCTAtext:"Open Readification",
+  deeperCTAhref:"https://globalsovereignuniversity.org/readification",
+  safety:"",
+  categories:[
+    {key:"all",name:"All Pillars"},
+    {key:"pa",name:"Phonemic Awareness"},
+    {key:"ph",name:"Phonics"},
+    {key:"dec",name:"Decoding"},
+    {key:"flu",name:"Fluency"},
+    {key:"voc",name:"Vocabulary"},
+    {key:"comp",name:"Comprehension"},
+    {key:"crit",name:"Critical Reading"},
+    {key:"morph",name:"Morphology"}
+  ],
+  faqs:[
+    {q:"What does this game teach?",a:"The eight pillars of reading \u2014 phonemic awareness, phonics, decoding, fluency, vocabulary, comprehension, critical reading, and morphology. You perform the skill on real items and GENO explains the reasoning after each move, instead of memorizing trivia."},
+    {q:"How does the leaderboard work?",a:"It's fully anonymous. Pick a handle and your best score competes worldwide on a Today board and an All-Time board. No demographics \u2014 only merit."},
+    {q:"What are combos, streaks, and the Daily Climb?",a:"String correct calls together to raise your combo multiplier for bigger points. The Daily Climb is fresh each day; solve it to keep your day streak alive. Anything you miss quietly comes back until you conquer it."}
+  ]
+};
+
+/* =====================================================================
+   EDIT ZONE C — SCENARIOS. Your teaching content.
+   Each scenario: {id, dom (a category key), diff (1-3), title, symptom, steps[]}
+   Each step: {q, opts:[{t,ok,why}, ...]}  exactly one ok:true per step.
+   Aim for 1-3 steps; diff 1 = easy, 3 = hard (drives adaptive difficulty).
+   The placeholders below are intentionally generic — replace them.
+   ===================================================================== */
+var SCENARIOS=[
+{id:"pa1",dom:"pa",diff:1,title:"Take a sound away",symptom:"Listen with your ears only \u2014 no letters. Say the word cat, then take away the very first sound.",steps:[{q:"What word is left?",opts:[{t:"at",ok:true,why:"You deleted the /k/ phoneme and heard what remained. That's phoneme deletion \u2014 pure ear work, the foundation of reading."},{t:"ca",ok:false,why:"That keeps the beginning and drops the end \u2014 the opposite of what we did."},{t:"tac",ok:false,why:"That reverses all the sounds; we only removed the first one."}]}]},
+{id:"pa2",dom:"pa",diff:1,title:"Same beginning sound",symptom:"Sun, sock, and sand all begin with the same /s/ sound.",steps:[{q:"Which word also begins with that /s/ sound?",opts:[{t:"circle",ok:true,why:"Circle begins with /s/ even though it's spelled with a c \u2014 phonemic awareness is about sound, not spelling."},{t:"shoe",ok:false,why:"Shoe begins with /sh/, a different sound."},{t:"moon",ok:false,why:"Moon begins with /m/."}]}]},
+{id:"pa3",dom:"pa",diff:2,title:"Blend the sounds",symptom:"Blend these three sounds together smoothly: /f/ /i/ /sh/.",steps:[{q:"What word do they make?",opts:[{t:"fish",ok:true,why:"You blended three phonemes into one word. Blending is how separate sounds become a readable word."},{t:"fist",ok:false,why:"That ends in /t/, not /sh/."},{t:"wish",ok:false,why:"That begins with /w/."}]}]},
+{id:"pa4",dom:"pa",diff:2,title:"Count the sounds",symptom:"Count only the sounds you hear, not the letters you would write.",steps:[{q:"How many phonemes are in the word ship?",opts:[{t:"3",ok:true,why:"/sh/ /i/ /p/ \u2014 three sounds. The two letters s-h spell a single phoneme."},{t:"4",ok:false,why:"It looks like four letters, but sh is one sound."},{t:"2",ok:false,why:"There are three: /sh/ /i/ /p/."}]}]},
+{id:"pa5",dom:"pa",diff:2,title:"Swap a sound",symptom:"Start with the word bat. Swap its first sound /b/ for /h/.",steps:[{q:"What new word do you hear?",opts:[{t:"hat",ok:true,why:"Phoneme substitution: change one sound, get a new word. This is advanced ear work."},{t:"hot",ok:false,why:"That changes the middle vowel sound too."},{t:"bath",ok:false,why:"That adds a sound at the end."}]}]},
+{id:"pa6",dom:"pa",diff:3,title:"Inside a blend",symptom:"Say the word smile. Now drop the /m/ from the beginning blend.",steps:[{q:"What is left?",opts:[{t:"sile (s-eye-l)",ok:true,why:"You isolated and removed one sound inside a blend \u2014 the hardest phonemic-awareness move."},{t:"mile",ok:false,why:"That drops the /s/, not the /m/."},{t:"smie",ok:false,why:"That drops the /l/."}]}]},
+{id:"ph1",dom:"ph",diff:1,title:"Two letters, one sound",symptom:"In the word shop, the letters s and h work together.",steps:[{q:"How many sounds do 'sh' make?",opts:[{t:"One sound, /sh/",ok:true,why:"Two letters spelling one sound are a digraph: sh, ch, th, wh all work this way."},{t:"Two sounds, /s/ then /h/",ok:false,why:"Sounded separately you'd get s-hop; together they make a single /sh/."},{t:"No sound",ok:false,why:"They make the /sh/ sound."}]}]},
+{id:"ph2",dom:"ph",diff:1,title:"The silent worker",symptom:"Look at the silent e on the end of cake.",steps:[{q:"What is that final e doing?",opts:[{t:"Making the a say its long name, /\u0101/",ok:true,why:"Silent-e reaches back over one consonant and makes the vowel long. Compare cap \u2192 cape."},{t:"Making an /e/ sound",ok:false,why:"The e itself is silent \u2014 it changes the vowel before it."},{t:"Nothing at all",ok:false,why:"Drop it and you get 'cak' \u2014 the e is doing real work."}]}]},
+{id:"ph3",dom:"ph",diff:2,title:"Spell the long A",symptom:"You need the long-A sound, as in rain and pain.",steps:[{q:"Which letter pattern spells it here?",opts:[{t:"ai",ok:true,why:"ai is a vowel team that spells long A in the middle of a word \u2014 the first vowel does the talking."},{t:"r",ok:false,why:"r is a consonant; it doesn't make the vowel sound."},{t:"n",ok:false,why:"n is a consonant."}]}]},
+{id:"ph4",dom:"ph",diff:2,title:"Short-vowel pattern",symptom:"Sort these by spelling pattern.",steps:[{q:"Which word follows the short-vowel C-V-C (consonant-vowel-consonant) pattern?",opts:[{t:"pin",ok:true,why:"Consonant p, vowel i, consonant n \u2014 a closed syllable with a short vowel."},{t:"pine",ok:false,why:"That's C-V-C-e; the silent e makes the i long."},{t:"pie",ok:false,why:"That ends in a vowel team, not a consonant."}]}]},
+{id:"ph5",dom:"ph",diff:2,title:"A Greek spelling",symptom:"Look at the ph in phone and graph.",steps:[{q:"What single sound does ph spell?",opts:[{t:"/f/",ok:true,why:"ph is a Greek-origin spelling of /f/ \u2014 phone, graph, photo, elephant."},{t:"/p/",ok:false,why:"It isn't /p/ \u2014 say 'phone,' not 'pone.'"},{t:"two sounds, /p/ and /h/",ok:false,why:"It's one sound, /f/."}]}]},
+{id:"ph6",dom:"ph",diff:3,title:"Soft c",symptom:"The letter c can be hard (/k/) or soft (/s/).",steps:[{q:"In which word is c soft?",opts:[{t:"city",ok:true,why:"c followed by e, i, or y is usually soft /s/ \u2014 city, cent, cycle."},{t:"cat",ok:false,why:"c before a is hard /k/."},{t:"cup",ok:false,why:"c before u is hard /k/."}]}]},
+{id:"dec1",dom:"dec",diff:1,title:"Split a new word",symptom:"You meet a word you've never seen: napkin. Use syllable division to read it.",steps:[{q:"Where do you split it?",opts:[{t:"nap-kin",ok:true,why:"Two consonants between two vowels (VC/CV) split between them: nap-kin. Each chunk is easy to sound out."},{t:"na-pkin",ok:false,why:"That leaves an unreadable chunk, 'pkin.'"},{t:"napk-in",ok:false,why:"That breaks up the first syllable awkwardly."}]}]},
+{id:"dec2",dom:"dec",diff:2,title:"Open syllable",symptom:"Decode robot by syllables: ro-bot.",steps:[{q:"The first syllable 'ro' ends in a vowel. How does the o sound?",opts:[{t:"Long, /\u014d/ \u2014 an open syllable",ok:true,why:"A syllable that ends in a vowel is open, and the vowel is usually long: ro-bot, ti-ger, pa-per."},{t:"Short, /\u014f/",ok:false,why:"Open syllables make the vowel long; only a closed syllable would be short."},{t:"Silent",ok:false,why:"The o is pronounced \u2014 and it's long."}]}]},
+{id:"dec3",dom:"dec",diff:2,title:"Peel the affixes",symptom:"First-time read of the long word unhelpful.",steps:[{q:"What's the smartest way to chunk it?",opts:[{t:"un-help-ful",ok:true,why:"Peel off the prefix un- and suffix -ful; the root 'help' is left in the middle. Affixes make long words easy."},{t:"unh-elp-ful",ok:false,why:"That cuts across the prefix and the root."},{t:"un-helpf-ul",ok:false,why:"That splits the suffix -ful."}]}]},
+{id:"dec4",dom:"dec",diff:1,title:"Decode a non-word",symptom:"Sound out the made-up word 'blon' \u2014 just decode it.",steps:[{q:"Blon rhymes with\u2026",opts:[{t:"on / Ron",ok:true,why:"bl- is a blend, then -on. Decoding works even on words that don't exist \u2014 proof the skill is real, not memory."},{t:"bone",ok:false,why:"There's no silent e, so the o stays short."},{t:"balloon",ok:false,why:"That adds sounds that aren't there."}]}]},
+{id:"dec5",dom:"dec",diff:3,title:"Chunk a giant",symptom:"Decode the science word photosynthesis by chunking.",steps:[{q:"Best first chunk?",opts:[{t:"pho-to",ok:true,why:"Break long words into known parts: pho-to-syn-the-sis. You read it a chunk at a time, not all at once."},{t:"phot-osynthesis",ok:false,why:"That leaves an impossible chunk."},{t:"p-hotosynthesis",ok:false,why:"ph is one sound \u2014 don't split it."}]}]},
+{id:"dec6",dom:"dec",diff:2,title:"Flexible g",symptom:"The word giant starts with g.",steps:[{q:"How do you decode that g?",opts:[{t:"Soft /j/ \u2014 giant, gym, gentle",ok:true,why:"g before e, i, or y is often soft /j/. Good decoders try the soft sound when they see gi-, ge-, gy-."},{t:"Hard /g/ as in go",ok:false,why:"Try '/g/-iant' \u2014 it isn't a word you know. Flexible decoders switch to soft g."},{t:"Silent",ok:false,why:"The g is pronounced /j/."}]}]},
+{id:"flu1",dom:"flu",diff:1,title:"Where to pause",symptom:"A reader reads: 'The dog, who was soaking wet, ran inside.'",steps:[{q:"Where should a fluent reader pause briefly?",opts:[{t:"At the two commas",ok:true,why:"Commas mark phrase boundaries. Pausing there is prosody \u2014 it shows the reader is grouping words by meaning."},{t:"After every word",ok:false,why:"Word-by-word reading is the opposite of fluent."},{t:"Nowhere \u2014 read it in one breath",ok:false,why:"Ignoring the commas blurs the meaning."}]}]},
+{id:"flu2",dom:"flu",diff:1,title:"Name the gap",symptom:"A student reads every word correctly but slowly, in a flat, robotic monotone.",steps:[{q:"Which skill still needs work?",opts:[{t:"Fluency",ok:true,why:"Accuracy is there, but rate and expression (prosody) aren't \u2014 that's fluency, the bridge to comprehension."},{t:"Decoding",ok:false,why:"Decoding is fine \u2014 every word is read correctly."},{t:"Vocabulary",ok:false,why:"Nothing here shows a word-meaning gap."}]}]},
+{id:"flu3",dom:"flu",diff:2,title:"Build it",symptom:"A passage is too hard to read smoothly the first time.",steps:[{q:"What's the most reliable way to build fluency on it?",opts:[{t:"Reread the same passage a few times with feedback",ok:true,why:"Repeated reading with feedback is the best-evidenced fluency builder \u2014 each pass frees up attention."},{t:"Read it once as fast as possible",ok:false,why:"Speed without accuracy isn't fluency; it's guessing."},{t:"Skip it and find an easier one",ok:false,why:"Avoiding hard text never builds the skill."}]}]},
+{id:"flu4",dom:"flu",diff:2,title:"Read the punctuation",symptom:"A sentence ends with a question mark: 'You did what?'",steps:[{q:"A fluent reader signals the question by\u2026",opts:[{t:"Raising pitch toward the end",ok:true,why:"Intonation is part of prosody. Rising pitch marks a question \u2014 proof the reader is processing meaning."},{t:"Reading it louder throughout",ok:false,why:"Volume isn't what marks a question."},{t:"Pausing in the middle",ok:false,why:"The phrasing doesn't call for a mid-sentence pause."}]}]},
+{id:"flu5",dom:"flu",diff:3,title:"Why it matters",symptom:"Why does poor fluency hurt comprehension?",steps:[{q:"Best explanation:",opts:[{t:"Slow, effortful decoding uses up the attention needed for meaning",ok:true,why:"Working memory is limited. If decoding eats it all, none is left to understand \u2014 that's why fluency matters."},{t:"Fluent readers skip hard words",ok:false,why:"Fluent readers don't skip \u2014 they read accurately and smoothly."},{t:"Fluency only matters when reading aloud",ok:false,why:"It matters for silent comprehension too."}]}]},
+{id:"voc1",dom:"voc",diff:1,title:"Certain or avoidable",symptom:"Use what you know about word meaning.",steps:[{q:"If an outcome is inevitable, it\u2026",opts:[{t:"is certain to happen",ok:true,why:"Inevitable = unavoidable, bound to occur. Knowing the word changes how you read a warning or forecast."},{t:"can easily be avoided",ok:false,why:"That's the opposite."},{t:"happens only rarely",ok:false,why:"Inevitable is about certainty, not how often."}]}]},
+{id:"voc2",dom:"voc",diff:1,title:"Forest layers",symptom:"Forest words.",steps:[{q:"The canopy of a forest is\u2026",opts:[{t:"the upper layer of leaves and branches",ok:true,why:"Canopy = the leafy roof of the forest. Background word-knowledge like this powers comprehension."},{t:"the forest floor",ok:false,why:"That's the bottom layer, not the canopy."},{t:"a kind of animal",ok:false,why:"It's a layer of the forest, not an animal."}]}]},
+{id:"voc3",dom:"voc",diff:2,title:"Closest synonym",symptom:"Choose the closest synonym.",steps:[{q:"Someone described as meticulous is\u2026",opts:[{t:"very careful about details",ok:true,why:"Meticulous = painstakingly precise. The right synonym keeps the exact shade of meaning."},{t:"careless and rushed",ok:false,why:"That's the antonym."},{t:"unusually tall",ok:false,why:"Unrelated to size."}]}]},
+{id:"voc4",dom:"voc",diff:2,title:"Read the willingness",symptom:"Read for nuance.",steps:[{q:"A reluctant volunteer is one who\u2026",opts:[{t:"is unwilling or hesitant",ok:true,why:"Reluctant = holding back, unwilling. It colors how you read the character's choice."},{t:"is eager and excited",ok:false,why:"That's the opposite."},{t:"is highly skilled",ok:false,why:"Reluctance is about willingness, not skill."}]}]},
+{id:"voc5",dom:"voc",diff:3,title:"Connotation",symptom:"Words carry connotation, not just definition.",steps:[{q:"Calling a plan 'frugal' rather than 'cheap' suggests the writer feels it is\u2026",opts:[{t:"sensibly economical \u2014 a positive shade",ok:true,why:"Frugal and cheap share a meaning but not a tone. Connotation is meaning's emotional color \u2014 vital for careful reading."},{t:"wasteful",ok:false,why:"Both words are about spending little, not much."},{t:"exactly the same as cheap",ok:false,why:"They differ in tone \u2014 that's the whole point."}]}]},
+{id:"voc6",dom:"voc",diff:2,title:"Context clue",symptom:"Context can teach a new word.",steps:[{q:"'The arid desert hadn't seen rain in years.' Arid means\u2026",opts:[{t:"extremely dry",ok:true,why:"You used the context \u2014 desert, no rain \u2014 to unlock arid. Context clues are a core vocabulary tool."},{t:"freezing cold",ok:false,why:"Nothing in the sentence points to temperature."},{t:"crowded",ok:false,why:"Nothing suggests crowding."}]}]},
+{id:"comp1",dom:"comp",diff:1,title:"Find the main idea",symptom:"Read: 'Maria put a little of her allowance in a jar every week. She skipped candy and toys. After a year, she had enough to buy the bicycle herself.'",steps:[{q:"What is the main idea?",opts:[{t:"Saving a little steadily let Maria buy the bike on her own",ok:true,why:"The main idea is the central point all the details support \u2014 here, steady saving paid off."},{t:"Maria likes bicycles",ok:false,why:"Maybe true, but it's a small detail, not the main point."},{t:"Candy is a waste of money",ok:false,why:"The passage never says that."}]}]},
+{id:"comp2",dom:"comp",diff:1,title:"Read between the lines",symptom:"Read: 'The sky turned dark. People hurried to open their umbrellas and run for cover.'",steps:[{q:"What can you infer is happening?",opts:[{t:"It's starting to rain",ok:true,why:"Inference: the text never says 'rain,' but dark sky + umbrellas tells you. Good readers read between the lines."},{t:"It's nighttime",ok:false,why:"Umbrellas point to rain, not bedtime."},{t:"A parade is starting",ok:false,why:"Nothing suggests a parade."}]}]},
+{id:"comp3",dom:"comp",diff:2,title:"Cause and effect",symptom:"Read: 'Because the bridge was closed for repairs, the morning traffic backed up for miles.'",steps:[{q:"What caused the traffic?",opts:[{t:"The bridge being closed for repairs",ok:true,why:"The word 'because' signals the cause. Closed bridge = cause; the backup = effect."},{t:"The miles of cars",ok:false,why:"That's the effect, not the cause."},{t:"The time of morning",ok:false,why:"Time of day isn't the cause given."}]}]},
+{id:"comp4",dom:"comp",diff:2,title:"Follow the sequence",symptom:"Read: 'First, gather the dry ingredients. Next, beat the eggs. Then fold the two together. Finally, bake for thirty minutes.'",steps:[{q:"What do you do right after beating the eggs?",opts:[{t:"Fold them together with the dry ingredients",ok:true,why:"Sequence words \u2014 first, next, then, finally \u2014 order the steps. 'Then' comes right after 'next.'"},{t:"Bake for thirty minutes",ok:false,why:"Baking is last."},{t:"Gather the dry ingredients",ok:false,why:"That was the first step."}]}]},
+{id:"comp5",dom:"comp",diff:3,title:"Read the theme",symptom:"Read: 'The old lighthouse keeper never spoke much, but every night his lamp burned steady, guiding ships he would never meet safely home.'",steps:[{q:"What does the passage suggest about the keeper?",opts:[{t:"He cared for others quietly, through his work rather than words",ok:true,why:"Theme by inference: his silence plus his faithful lamp shows care expressed in action. You synthesized tone and detail."},{t:"He disliked ships",ok:false,why:"His lamp guides them safely home \u2014 the opposite."},{t:"He was a talkative man",ok:false,why:"The text says he never spoke much."}]}]},
+{id:"crit1",dom:"crit",diff:1,title:"Check the evidence",symptom:"An ad claims: '9 out of 10 dentists recommend BrightWhite!'",steps:[{q:"What key information is missing before you trust it?",opts:[{t:"How many dentists were asked, and who paid for the survey",ok:true,why:"Critical reading checks the evidence behind a claim. Without sample size and sponsor, '9 out of 10' means little."},{t:"The color of the toothpaste",ok:false,why:"That doesn't affect whether the claim is true."},{t:"Nothing \u2014 it sounds official",ok:false,why:"Sounding official is not the same as being evidence."}]}]},
+{id:"crit2",dom:"crit",diff:1,title:"Fact vs opinion",symptom:"Two sentences about a new law.",steps:[{q:"Which one is an OPINION, not a fact?",opts:[{t:"'The law is unfair to small businesses.'",ok:true,why:"'Unfair' is a judgment that can be argued. Facts can be checked; opinions express a viewpoint."},{t:"'The law took effect in January 2024.'",ok:false,why:"That's a checkable fact."},{t:"'The law has twelve sections.'",ok:false,why:"That's a verifiable fact."}]}]},
+{id:"crit3",dom:"crit",diff:2,title:"Spot the hype",symptom:"A headline reads: 'Miracle Berry MELTS Belly Fat Overnight \u2014 Doctors Stunned!'",steps:[{q:"What should a critical reader notice first?",opts:[{t:"Hype words like miracle, melts, and overnight signal a claim to doubt",ok:true,why:"Sensational language plus impossible speed are red flags. Critical readers slow down exactly here."},{t:"It must be true because doctors are mentioned",ok:false,why:"'Doctors stunned' is a vague appeal, not evidence."},{t:"Berries are healthy, so it's fine",ok:false,why:"That's unrelated to the fat-loss claim."}]}]},
+{id:"crit4",dom:"crit",diff:2,title:"Consider the source",symptom:"An article about a company is written by that company's own marketing team and quotes only happy customers.",steps:[{q:"What's the main concern?",opts:[{t:"Bias \u2014 the source has an interest and shows only one side",ok:true,why:"Consider the source and what's left out. A one-sided, self-interested source needs corroboration."},{t:"It's too long",ok:false,why:"Length isn't the issue."},{t:"It uses big words",ok:false,why:"Vocabulary isn't the credibility problem."}]}]},
+{id:"crit5",dom:"crit",diff:3,title:"Read the graph",symptom:"A graph shows sales 'soaring,' but the vertical axis runs only from 990 to 1000.",steps:[{q:"Why be cautious?",opts:[{t:"A truncated axis turns a tiny change into a dramatic-looking jump",ok:true,why:"Critical readers check the axes. Starting the scale near the data inflates small differences visually."},{t:"Graphs are always accurate",ok:false,why:"Presentation choices can mislead even with real numbers."},{t:"The colors are wrong",ok:false,why:"Color isn't the distortion here."}]}]},
+{id:"morph1",dom:"morph",diff:1,title:"The root 'spec'",symptom:"The root spec (also spect) appears in inspect, spectacle, and prospect.",steps:[{q:"What does spec mean?",opts:[{t:"to look or see",ok:true,why:"spec = look/see. Inspect = look into, spectacle = something to look at, prospect = a looking forward."},{t:"to build",ok:false,why:"That's the root struct."},{t:"to carry",ok:false,why:"That's the root port."}]}]},
+{id:"morph2",dom:"morph",diff:1,title:"A prefix flips meaning",symptom:"Add the prefix un- to the word kind.",steps:[{q:"What does unkind mean?",opts:[{t:"not kind",ok:true,why:"The prefix un- means 'not.' One morpheme flips the whole meaning \u2014 that's the power of morphology."},{t:"very kind",ok:false,why:"un- negates; it doesn't intensify."},{t:"kind again",ok:false,why:"That would be re-, meaning again."}]}]},
+{id:"morph3",dom:"morph",diff:2,title:"The root 'struct'",symptom:"The root struct shows up in construct, destruction, and structure.",steps:[{q:"Struct means\u2026",opts:[{t:"to build",ok:true,why:"struct = build. Construct = build together, destruction = un-building, structure = a built thing."},{t:"to break by hand",ok:false,why:"Destruction adds de- (down); the root itself still means build."},{t:"to measure",ok:false,why:"That's the root meter/metr."}]}]},
+{id:"morph4",dom:"morph",diff:2,title:"The suffix '-less'",symptom:"Look at the suffix -less in fearless, harmless, and tireless.",steps:[{q:"-less means\u2026",opts:[{t:"without",ok:true,why:"-less = without. Fearless = without fear. Suffixes change meaning and often the part of speech."},{t:"full of",ok:false,why:"That's -ful (fearful = full of fear)."},{t:"again",ok:false,why:"That's the prefix re-."}]}]},
+{id:"morph5",dom:"morph",diff:3,title:"The root 'port'",symptom:"The root port appears in transport, export, portable, and import.",steps:[{q:"Port means\u2026",opts:[{t:"to carry",ok:true,why:"port = carry. Transport = carry across, export = carry out, portable = able to be carried."},{t:"a door",ok:false,why:"Tempting \u2014 but in these words port means carry, not gate."},{t:"to look",ok:false,why:"That's the root spec."}]}]},
+{id:"morph6",dom:"morph",diff:2,title:"The ending '-ologist'",symptom:"A biologist studies life; a geologist studies the earth.",steps:[{q:"The ending -ologist tells you the word names\u2026",opts:[{t:"a person who studies something",ok:true,why:"-ology = study of; -ologist = one who studies it. Roots plus affixes let you decode words you've never met."},{t:"a place",ok:false,why:"-ologist names a person, not a place."},{t:"a tool",ok:false,why:"It names a person."}]}]}
+];
+
+/* =====================================================================
+   ENGINE — below this line is the locked GSU sticky standard. Don't edit
+   per game; improvements here should propagate to all games.
+   ===================================================================== */
+var K=CONFIG.key;
+var TIERS=[{name:"BRONZE",at:0,color:"#8a6a2e"},{name:"SILVER",at:300,color:"#9aa0a6"},{name:"GOLD",at:700,color:"#C9A84C"},{name:"PLATINUM",at:1500,color:"#7fd6c6"}];
+var S={score:0,streak:0,solved:0,best:0,combo:1,filter:"all",queue:[],cur:null,step:0,locked:false,missedThisScenario:false,isReview:false,isDaily:false,lastId:null};
+var GENO_GOOD=["Clean call. That's how a pro thinks.","Exactly right — reasoning, not guessing.","Yes. That's the move.","Sharp. Keep the combo alive.","That's the kind of thinking that compounds."];
+var GENO_BAD=["Not quite — but this is how you learn. Here's the reasoning.","Easy to think that. Here's the smarter path.","Hold on — let's think it through.","Close. Here's what a pro looks at."];
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function $(id){return document.getElementById(id);}
+function say(t){$("genoSay").innerHTML=t;}
+function today(){return new Date().toISOString().slice(0,10);}
+function domName(k){for(var i=0;i<CONFIG.categories.length;i++){if(CONFIG.categories[i].key===k)return CONFIG.categories[i].name;}return"";}
+function byId(id){for(var i=0;i<SCENARIOS.length;i++){if(SCENARIOS[i].id===id)return SCENARIOS[i];}return null;}
+
+var LS={get:function(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+var misses=LS.get(K+"_misses",{});
+var alias=LS.get("gsu_alias","");            // handle shared across all GSU games
+var dayStreak=LS.get(K+"_streak",0);
+var lastPlay=LS.get(K+"_lastPlay","");
+var dailyDone=LS.get(K+"_dailyDone","");
+
+function ensureAlias(){
+  if(!alias){var A=["Steady","Sharp","Sovereign","Keen","Bold","Quiet","True","Bright","Swift","Calm"];var N=["Mind","Spark","Path","Climb","Quill","Compass","Summit","Star","River","Forge"];alias=pick(A)+pick(N)+Math.floor(10+Math.random()*89);LS.set("gsu_alias",alias);}
+  return alias;
+}
+function updateStreakOnPlay(){var t=today();if(lastPlay===t)return;var y=new Date(Date.now()-86400000).toISOString().slice(0,10);dayStreak=(lastPlay===y)?dayStreak+1:1;lastPlay=t;LS.set(K+"_streak",dayStreak);LS.set(K+"_lastPlay",t);renderStreak();}
+function renderStreak(){$("streakPill").textContent="DAY STREAK "+dayStreak;}
+function dailySeedIndex(){var t=today(),h=0;for(var i=0;i<t.length;i++){h=(h*31+t.charCodeAt(i))>>>0;}return h%SCENARIOS.length;}
+function refreshDailyUI(){if(dailyDone===today()){$("dailyBtn").disabled=true;$("dailyBtn").textContent=CONFIG.dailyWord+" done \u2713";$("dailyTxt").innerHTML="Complete. Come back tomorrow to keep your streak alive.";}else{$("dailyBtn").disabled=false;$("dailyBtn").textContent="Play "+CONFIG.dailyWord;$("dailyTxt").innerHTML="Today's <b>"+CONFIG.dailyWord+"</b> is waiting — solve it clean for bonus points.";}}
+
+function targetDiff(){if(S.score>=1500)return 3;if(S.score>=700)return 2.6;if(S.score>=300)return 2;return 1.4;}
+function buildQueue(){var pool=SCENARIOS.filter(function(s){return S.filter==="all"||s.dom===S.filter;});var td=targetDiff();pool.sort(function(a,b){return (Math.abs(a.diff-td)-Math.abs(b.diff-td))+(Math.random()-0.5);});S.queue=pool.map(function(s){return s.id;});}
+function nextScenario(forceId){
+  S.isReview=false;S.isDaily=false;S.missedThisScenario=false;S.step=0;S.locked=false;
+  var chosen=null;
+  if(forceId){chosen=forceId;}
+  else{var missIds=Object.keys(misses).filter(function(id){if(misses[id]<=0)return false;var sc=byId(id);return sc&&(S.filter==="all"||sc.dom===S.filter)&&id!==S.lastId;});
+    if(missIds.length&&Math.random()<0.45){var bag=[];missIds.forEach(function(id){var w=Math.min(4,misses[id]);for(var k=0;k<w;k++)bag.push(id);});chosen=pick(bag);S.isReview=true;}
+    else{if(!S.queue.length)buildQueue();chosen=S.queue.shift();if(chosen===S.lastId&&S.queue.length)chosen=S.queue.shift();}}
+  S.lastId=chosen;S.cur=byId(chosen);renderScenario();
+}
+function diffDots(n){var h='<span class="ddots">';for(var i=1;i<=3;i++)h+='<i class="'+(i<=n?'on':'')+'"></i>';return h+'</span>';}
+function renderScenario(){
+  var sc=S.cur,st=sc.steps[S.step];
+  var tags='<span class="dtag">'+domName(sc.dom)+'</span>';
+  if(S.isDaily)tags+=' <span class="review" style="color:#C9A84C;border-color:#C9A84C">'+CONFIG.dailyWord+'</span>';
+  if(S.isReview)tags+=' <span class="review">Review · conquer it</span>';
+  var html='<div class="cardtop"><div>'+tags+'</div>'+diffDots(sc.diff)+'</div>';
+  html+='<h2>'+sc.title+'</h2>';
+  if(S.step===0)html+='<div class="symptom">'+sc.symptom+'</div>';
+  html+='<div class="step">Step '+(S.step+1)+' of '+sc.steps.length+': '+st.q+'</div>';
+  var opts=st.opts.map(function(o){return o;});
+  for(var i=opts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=opts[i];opts[i]=opts[j];opts[j]=t;}
+  html+='<div class="opts" id="opts">';
+  opts.forEach(function(o){html+='<button class="opt" data-ok="'+(o.ok?1:0)+'" data-why="'+encodeURIComponent(o.why)+'">'+o.t+'</button>';});
+  html+='</div><div class="feedback" id="fb"><div class="verdict" id="fbV"></div><div id="fbW"></div></div><button class="next" id="nextBtn"></button>';
+  $("card").innerHTML=html;
+  document.querySelectorAll("#opts .opt").forEach(function(b){b.addEventListener("click",function(){choose(b);});});
+  if(S.isReview&&S.step===0)say("Here's that one again — let's conquer it this time. Read carefully.");
+}
+function choose(btn){
+  if(S.locked)return;S.locked=true;
+  if(S.score===0&&S.solved===0)updateStreakOnPlay();
+  var ok=btn.getAttribute("data-ok")==="1",why=decodeURIComponent(btn.getAttribute("data-why"));
+  document.querySelectorAll("#opts .opt").forEach(function(b){b.disabled=true;if(b.getAttribute("data-ok")==="1"){b.classList.add("correct");b.innerHTML='<span class="mark">\u2713</span>'+b.innerHTML;}});
+  var fb=$("fb"),fbV=$("fbV"),fbW=$("fbW");fb.classList.add("show");
+  if(ok){var mult=Math.min(3,1+Math.floor(S.streak/3)*0.5),pts=Math.round(20*mult);S.score+=pts;S.streak++;S.combo=Math.min(3,1+Math.floor(S.streak/3)*0.5);fb.classList.remove("no");fb.classList.add("ok");fbV.innerHTML="Correct <span class='ptpop'>+"+pts+(mult>1?(" (\u00D7"+mult+")"):"")+"</span>";fbW.innerHTML=why;say(pick(GENO_GOOD));pulseCombo();}
+  else{fb.classList.remove("ok");fb.classList.add("no");fbV.textContent="Here's the better move";fbW.innerHTML=why;btn.classList.add("wrong");btn.innerHTML='<span class="mark">\u2717</span>'+btn.innerHTML;S.streak=0;S.combo=1;S.missedThisScenario=true;say(pick(GENO_BAD));}
+  updateBoard();
+  var nb=$("nextBtn");nb.classList.add("show");var last=(S.step>=S.cur.steps.length-1);nb.textContent=last?"Next "+CONFIG.itemWord+" \u2192":"Continue \u2192";
+  nb.onclick=function(){if(last){finishScenario();}else{S.step++;S.locked=false;renderScenario();}};
+}
+function finishScenario(){
+  var id=S.cur.id,wasReview=S.isReview,wasDaily=S.isDaily;
+  if(S.missedThisScenario){misses[id]=Math.min(5,(misses[id]||0)+1);}
+  else{if(misses[id]){misses[id]=misses[id]-1;if(misses[id]<=0)delete misses[id];if(wasReview)toast("Conquered — "+S.cur.title+" mastered.");}S.score+=30;}
+  LS.set(K+"_misses",misses);
+  if(wasDaily&&!S.missedThisScenario){S.score+=60;dailyDone=today();LS.set(K+"_dailyDone",dailyDone);refreshDailyUI();toast(CONFIG.dailyWord+" solved — +60 bonus. Day streak: "+dayStreak+".");}
+  S.solved++;updateBoard();nextScenario();
+}
+function pulseCombo(){var c=$("comboStat");c.classList.add("pulse");c.classList.toggle("hot",S.combo>1);setTimeout(function(){c.classList.remove("pulse");},190);}
+function currentTier(){var t=TIERS[0];for(var i=0;i<TIERS.length;i++){if(S.score>=TIERS[i].at)t=TIERS[i];}return t;}
+function nextTier(){for(var i=0;i<TIERS.length;i++){if(S.score<TIERS[i].at)return TIERS[i];}return null;}
+function updateBoard(){
+  $("sScore").textContent=S.score;$("sCombo").textContent="\u00D7"+S.combo;$("sStreak").textContent=S.streak;$("sSolved").textContent=S.solved;
+  var ct=currentTier(),nt=nextTier();$("tierTxt").textContent=ct.name;var fill=$("tierFill");
+  if(nt){var span=nt.at-ct.at,into=S.score-ct.at;fill.style.width=Math.max(5,Math.min(100,(into/span)*100))+"%";$("tierNext").textContent=(nt.at-S.score)+" points to "+nt.name+".";}
+  else{fill.style.width="100%";$("tierNext").textContent="Platinum reached — mastery.";}
+  fill.style.background="linear-gradient(90deg,#5c4a22,"+ct.color+")";
+  if(S.score>S.best){S.best=S.score;saveScore();}
+}
+function renderChips(){var c=$("chips");c.innerHTML="";CONFIG.categories.forEach(function(d){var b=document.createElement("button");b.className="chip"+(d.key===S.filter?" on":"");b.textContent=d.name;b.onclick=function(){S.filter=d.key;document.querySelectorAll(".chip").forEach(function(x){x.classList.remove("on");});b.classList.add("on");buildQueue();nextScenario();say("Good pick. "+(d.key==="all"?"Everything's on the table.":"Let's drill "+d.name+".")+" Make the call.");};c.appendChild(b);});}
+
+/* ---- Firebase + leaderboard (fields prefixed by CONFIG.key) ---- */
+var FIREBASE_CONFIG={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",storageBucket:"gsu-handshake.firebasestorage.app",messagingSenderId:"301089416765",appId:"1:301089416765:web:dff926a7aa52191e9a6c54",measurementId:"G-LZDRK48TL7"};
+var db=null,uid=null,lbMode="daily";
+var F_BEST=K+"_best",F_DAILY=K+"_daily",F_DDATE=K+"_dailyDate",F_TIER=K+"_tier",F_SOLVED=K+"_solved",F_UPD=K+"_updated";
+function setPill(live,txt){$("savePill").classList.toggle("live",!!live);$("saveTxt").textContent=txt;}
+function initFirebase(){try{firebase.initializeApp(FIREBASE_CONFIG);db=firebase.firestore();firebase.auth().signInAnonymously().catch(function(){setPill(false,"Playing locally (scores not saved)");});firebase.auth().onAuthStateChanged(function(u){if(u){uid=u.uid;setPill(true,"Scores saving \u2713");loadScore();loadBoard();}else setPill(false,"Playing locally");});}catch(e){setPill(false,"Playing locally");}}
+function saveScore(){
+  if(!db||!uid)return;var t=today();
+  db.collection("gameScores").doc(uid).get().then(function(d){
+    var prevDaily=(d.exists&&d.data()[F_DDATE]===t&&d.data()[F_DAILY])?d.data()[F_DAILY]:0;
+    var p={alias:ensureAlias()};p[F_BEST]=S.best;p[F_TIER]=currentTier().name;p[F_SOLVED]=S.solved;p[F_DDATE]=t;p[F_DAILY]=Math.max(prevDaily,S.score);p[F_UPD]=firebase.firestore.FieldValue.serverTimestamp();
+    db.collection("gameScores").doc(uid).set(p,{merge:true}).catch(function(){});
+  }).catch(function(){var p={alias:ensureAlias()};p[F_BEST]=S.best;p[F_TIER]=currentTier().name;p[F_SOLVED]=S.solved;p[F_DDATE]=t;p[F_DAILY]=S.score;db.collection("gameScores").doc(uid).set(p,{merge:true}).catch(function(){});});
+}
+function loadScore(){if(!db||!uid)return;db.collection("gameScores").doc(uid).get().then(function(d){if(d.exists){var v=d.data();if(v.alias){alias=v.alias;LS.set("gsu_alias",alias);}if(v[F_BEST]){S.best=v[F_BEST];say("Welcome back, <b>"+ensureAlias()+"</b>. Your best is <b>"+S.best+"</b> ("+(v[F_TIER]||"Bronze")+"). Beat it.");}}$("aliasInput").value=ensureAlias();}).catch(function(){$("aliasInput").value=ensureAlias();});}
+function loadBoard(){
+  $("aliasInput").value=ensureAlias();
+  if(!db){renderBoardLocalOnly(false);return;}
+  var field=(lbMode==="daily")?F_DAILY:F_BEST;
+  db.collection("gameScores").orderBy(field,"desc").limit(50).get().then(function(snap){
+    var rows=[];snap.forEach(function(doc){var v=doc.data();var sc=(lbMode==="daily")?((v[F_DDATE]===today())?v[F_DAILY]:null):v[F_BEST];if(sc&&sc>0)rows.push({uid:doc.id,alias:v.alias||"Builder",score:sc,tier:v[F_TIER]||"Bronze"});});
+    rows.sort(function(a,b){return b.score-a.score;});renderBoard(rows.slice(0,25),rows);
+  }).catch(function(){renderBoardLocalOnly(true);});
+}
+function renderBoard(rows,allRows){
+  var html='<div class="lbrow head"><span>#</span><span>Builder</span><span>Score</span><span>Tier</span></div>';
+  if(!rows.length)html+='<div class="lbnote" style="margin:14px 0">No scores on this board yet — be the first to post one.</div>';
+  var meSeen=false;
+  rows.forEach(function(r,i){var me=(uid&&r.uid===uid);if(me)meSeen=true;html+='<div class="lbrow'+(me?' me':'')+'"><span class="rk">'+(i+1)+'</span><span class="al">'+escapeHtml(r.alias)+(me?' (you)':'')+'</span><span class="sc">'+r.score+'</span><span class="ti">'+r.tier+'</span></div>';});
+  $("lbList").innerHTML=html;
+  var myScore=(lbMode==="daily")?S.score:S.best;
+  if(myScore>0&&allRows&&allRows.length){var better=0;allRows.forEach(function(r){if(r.score>myScore)better++;});var rank=better+1,pct=Math.max(1,Math.round((1-better/allRows.length)*100));$("lbRank").innerHTML="You're <b>#"+rank+"</b> here — top <b>"+pct+"%</b> of ranked players"+(meSeen?"":" (post a higher score to climb into view)")+".";}
+  else if(myScore>0){$("lbRank").innerHTML="Your score is <b>"+myScore+"</b>. Refresh to see where you land.";}
+  else{$("lbRank").textContent="Play a "+CONFIG.itemWord+" to earn your place on the board.";}
+}
+function renderBoardLocalOnly(denied){var html='<div class="lbrow head"><span>#</span><span>Builder</span><span>Score</span><span>Tier</span></div>';html+='<div class="lbrow me"><span class="rk">1</span><span class="al">'+escapeHtml(ensureAlias())+' (you)</span><span class="sc">'+(lbMode==="daily"?S.score:S.best)+'</span><span class="ti">'+currentTier().name+'</span></div>';$("lbList").innerHTML=html;$("lbRank").innerHTML="The global board lights up when you're connected.";$("lbNote").textContent=denied?"Global board needs public read on gameScores (see file header). Your runs still save.":"Connect to compete worldwide. Fully anonymous — only a handle and a score.";}
+function escapeHtml(s){return (s+"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+
+function buildShareCard(){
+  var cv=$("shareCanvas"),x=cv.getContext("2d"),W=1200,H=630;
+  x.fillStyle="#1B2A4A";x.fillRect(0,0,W,H);x.strokeStyle="#C9A84C";x.lineWidth=6;x.strokeRect(20,20,W-40,H-40);x.textAlign="left";
+  x.fillStyle="#C9A84C";x.font="bold 30px Georgia, serif";x.fillText(CONFIG.title.toUpperCase().slice(0,40),54,86);
+  x.fillStyle="#7fd6c6";x.font="600 22px Arial";x.fillText("a Global Sovereign University game",54,120);
+  x.fillStyle="#F5F1E8";x.font="italic 34px Georgia, serif";x.fillText(ensureAlias(),54,200);
+  x.fillStyle="#C9A84C";x.font="bold 150px Georgia, serif";x.fillText(String(S.best),54,360);
+  x.fillStyle="#9fb0c4";x.font="600 26px Arial";x.fillText("POINTS",58,400);
+  var ct=currentTier();x.fillStyle=ct.color;x.fillRect(54,440,250,56);x.fillStyle="#0A0907";x.font="bold 28px Arial";x.textAlign="center";x.fillText(ct.name,179,477);
+  x.textAlign="left";x.fillStyle="#F5F1E8";x.font="600 26px Arial";x.fillText(S.solved+" solved",330,478);
+  x.fillStyle="#C9A84C";x.font="bold 26px Arial";x.fillText("Beat me \u2192 globalsovereignuniversity.org",54,576);
+  x.strokeStyle="#C9A84C";x.lineWidth=14;x.beginPath();x.arc(1040,210,120,0.5,Math.PI*2);x.stroke();
+  return cv;
+}
+function shareCard(){if(S.best<=0){toast("Play a "+CONFIG.itemWord+" first, then share your card.");return;}var cv=buildShareCard();if(cv.toBlob){cv.toBlob(function(blob){var file=new File([blob],"my-score.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:"My "+CONFIG.title+" score",text:"I scored "+S.best+" on "+CONFIG.title+". Beat me!"}).catch(function(){downloadCanvas(cv);});}else{downloadCanvas(cv);}},"image/png");}else{downloadCanvas(cv);}}
+function downloadCanvas(cv){var a=document.createElement("a");a.download="my-score.png";a.href=cv.toDataURL("image/png");a.click();toast("Score card saved — share it anywhere.");}
+
+var toastT=null;function toast(msg){var el=$("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove("show");},3200);}
+
+/* ---- render CONFIG-driven copy ---- */
+function applyConfig(){
+  document.title=CONFIG.title+" — Global Sovereign University";
+  $("hKick").textContent=CONFIG.kicker;$("hTitle").textContent=CONFIG.title;$("hSub").textContent=CONFIG.subtitle;
+  say(CONFIG.coachIntro);$("boardTitle").textContent=CONFIG.boardTitle;
+  $("deeperTitle").textContent=CONFIG.deeperTitle;$("deeperBody").textContent=CONFIG.deeperBody;
+  $("deeperCTA").textContent=CONFIG.deeperCTAtext;$("deeperCTA").href=CONFIG.deeperCTAhref;
+  $("dailyBtn").textContent="Play "+CONFIG.dailyWord;
+  var fh="";CONFIG.faqs.forEach(function(f){fh+='<details><summary>'+f.q+'</summary><p>'+f.a+'</p></details>';});$("faqList").innerHTML=fh;
+  if(CONFIG.safety){$("safetyNote").innerHTML='<strong>Note:</strong> '+CONFIG.safety;}else{$("safetyNote").style.display="none";}
+}
+
+/* ---- wiring + boot ---- */
+$("tabDaily").onclick=function(){lbMode="daily";$("tabDaily").classList.add("on");$("tabAll").classList.remove("on");loadBoard();};
+$("tabAll").onclick=function(){lbMode="all";$("tabAll").classList.add("on");$("tabDaily").classList.remove("on");loadBoard();};
+$("refreshBtn").onclick=function(){loadBoard();toast("Board refreshed.");};
+$("shareBtn").onclick=shareCard;
+$("dailyBtn").onclick=function(){if(dailyDone===today())return;updateStreakOnPlay();nextScenario(SCENARIOS[dailySeedIndex()].id);S.isDaily=true;renderScenario();try{window.scrollTo({top:$("card").offsetTop-20,behavior:"smooth"});}catch(e){}say("This is today's "+CONFIG.dailyWord+". Solve it clean for a +60 bonus and keep your streak alive.");};
+$("aliasSave").onclick=function(){var v=$("aliasInput").value.trim().slice(0,18);if(v){alias=v;LS.set("gsu_alias",alias);saveScore();toast("Handle saved: "+alias);loadBoard();}};
+
+applyConfig();renderChips();renderStreak();refreshDailyUI();updateBoard();buildQueue();nextScenario();
+$("aliasInput").value=ensureAlias();renderBoardLocalOnly(false);
+if(typeof firebase!=="undefined"){initFirebase();}else{setPill(false,"Playing locally");}
+
+/* auto-fit inside a Webflow embed iframe (no inner scrollbar) */
+function postH(){try{if(window.parent!==window)window.parent.postMessage({gsuTT:1,h:Math.ceil(document.body.scrollHeight)},"*");}catch(e){}}
+window.addEventListener("load",postH);window.addEventListener("resize",postH);setInterval(postH,500);
+</script>
+</body>
+</html>
