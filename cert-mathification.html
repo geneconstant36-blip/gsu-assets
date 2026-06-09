@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+     GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
+     ROUTING: Standalone app -> commit to gsu-assets, served at
+              read.globalsovereignuniversity.org/cert-mathification.html
+              Then on /certification, set the Mathification card's button href
+              to that URL and flip its status to "Live".
+
+     THIS FILE IS ALSO THE MASTER TEMPLATE. To create the next subject's
+     certification (e.g. Writification), copy this file and edit ONLY:
+       ZONE B  — the CONFIG block (subject name, serialPrefix, prepHref).
+       ZONE C  — the QUESTIONS pool (author a real, checked bank for the subject).
+     Everything else (scoring, serials, Firebase recording, public verify,
+     the certificate, GENO, brand) is shared and never needs editing.
+
+     SPEC (matches the /certification page promise):
+       · 30 questions drawn at random from the pool, options shuffled
+       · a 30:00 countdown runs in the upper-right; time-out auto-submits
+       · the learner's score is saved on their own device (localStorage)
+       · 80% to pass for Silver, 90% for Gold (below 80% = keep studying)
+       · a unique serial number issued and recorded the moment you pass
+       · free, anonymous, no account, publicly verifiable by anyone
+     FIREBASE NOTE: certificates live in the "gsu-certification" project,
+       collection "certifications" (doc id = serial), governed by the rules
+       Gene set: public read; create requires anon auth + subject(string) +
+       score(number) + revoked==false; update/delete blocked (permanent;
+       admin-only revocation honored by the verify box via a "revoked:true"
+       field). This engine writes revoked:false and creates the record ONCE,
+       when the learner clicks "Issue My Certificate" — so the chosen name is
+       baked into the single immutable record and no client update is needed.
+     >>> SET CONFIG.firebase BELOW to the gsu-certification Web config. <<
+============================================================================ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mathification Comprehension Certification — Free & Verifiable | GSU</title>
+<meta name="description" content="Earn the free Mathification Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
+<meta property="og:title" content="Mathification Comprehension Certification — Free & Verifiable | GSU">
+<meta property="og:description" content="30 questions. 80% Silver, 90% Gold. A unique, publicly verifiable serial number. Free, anonymous, no login — from a 501(c)(3).">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Mathification Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of foundational mathematics: arithmetic, fractions, decimals, percents, ratios, basic algebra, geometry, and data."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is the Mathification certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
+{"@type":"Question","name":"How is the certificate verified?","acceptedAnswer":{"@type":"Answer","text":"When you pass, a unique serial number is issued and recorded. Anyone can confirm it is genuine using the Verify a Certificate box, with no login required."}},
+{"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Thirty questions are drawn at random. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}}]}
+</script>
+<style>
+  :root{--bg:#0A0907;--panel:#13110b;--gold:#C9A84C;--cream:#F5F1E8;--line:rgba(201,168,76,.28)}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 18px 56px}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--cream);line-height:1.18;margin:0 0 .4em}
+  .gold{color:var(--gold)}
+  .kick{letter-spacing:.18em;text-transform:uppercase;font-size:.74rem;font-weight:700;color:var(--gold);margin-bottom:8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .center{text-align:center}
+  .btn{display:inline-block;background:var(--gold);color:#0A0907;font-weight:800;border:0;padding:13px 26px;border-radius:8px;font-size:1rem;cursor:pointer;text-decoration:none}
+  .btn:hover{background:var(--cream)}
+  .btn.ghost{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+  .btn.ghost:hover{background:var(--gold);color:#0A0907}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .muted{color:rgba(245,241,232,.7);font-size:.92rem}
+  .rules{list-style:none;padding:0;margin:18px 0 24px;display:grid;gap:10px;text-align:left}
+  .rules li{background:rgba(10,9,7,.5);border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-size:.95rem}
+  .rules b{color:var(--gold)}
+  .bar{height:8px;background:rgba(245,241,232,.12);border-radius:99px;overflow:hidden;margin:0 0 6px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .25s}
+  .qmeta{display:flex;justify-content:space-between;font-size:.8rem;color:rgba(245,241,232,.65);margin-bottom:14px;letter-spacing:.04em}
+  .q{font-family:Georgia,serif;font-size:1.25rem;margin:0 0 18px}
+  .opts{display:grid;gap:10px}
+  .opt{background:rgba(10,9,7,.5);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:left;color:var(--cream);font-size:1rem;cursor:pointer;transition:border-color .15s,background .15s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:#7CB342;background:rgba(124,179,66,.12)}
+  .opt.wrong{border-color:#C0552F;background:rgba(192,85,47,.12)}
+  .opt[disabled]{cursor:default}
+  .why{margin-top:14px;border-left:3px solid var(--gold);padding:10px 14px;background:rgba(10,9,7,.5);border-radius:0 8px 8px 0;font-size:.95rem}
+  .why .geno{display:flex;gap:10px;align-items:flex-start}
+  .why img{width:34px;height:34px;border-radius:50%;border:2px solid var(--gold);flex:0 0 auto}
+  .next{margin-top:18px;text-align:right}
+  .scorebig{font-family:Georgia,serif;font-size:3rem;color:var(--gold);line-height:1}
+  .tierbadge{display:inline-block;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;padding:6px 14px;border-radius:99px;margin:10px 0}
+  .tier-gold{background:var(--gold);color:#0A0907}
+  .tier-silver{background:#cdd2da;color:#0A0907}
+  .tier-none{background:transparent;color:rgba(245,241,232,.7);border:1px solid var(--line)}
+  .field{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+  .field input{background:#0A0907;border:1px solid var(--line);color:var(--cream);border-radius:8px;padding:11px 13px;font-size:1rem;min-width:200px}
+  .serial{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--gold);font-size:1.15rem;letter-spacing:.06em;word-break:break-all}
+  canvas{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin-top:8px}
+  .hr{height:1px;background:var(--line);margin:30px 0}
+  .verify-result{margin-top:14px;font-size:.95rem}
+  .ok{color:#7CB342}.bad{color:#e0856f}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+  summary{font-family:Georgia,serif;font-weight:700;cursor:pointer;color:var(--cream)}
+  details p{margin:10px 0 0;color:rgba(245,241,232,.85);font-size:.93rem}
+  .foot{margin-top:30px;font-size:.82rem;color:rgba(245,241,232,.55);text-align:center}
+  .foot a{color:var(--gold)}
+  .hide{display:none}
+  .clock{position:fixed;top:14px;right:14px;z-index:60;background:#13110b;border:1px solid var(--line);border-radius:10px;padding:9px 14px 8px;text-align:center;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;font-size:1.1rem;color:var(--gold);letter-spacing:.06em;box-shadow:0 6px 22px rgba(0,0,0,.55)}
+  .clock .lbl{display:block;font-size:.5rem;letter-spacing:.2em;color:rgba(245,241,232,.55);font-weight:700;margin-bottom:2px}
+  .clock.warn{color:#e6b94f;border-color:#e6b94f}
+  .clock.danger{color:#e0856f;border-color:#e0856f;animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.55}}
+  @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
+</style>
+</head>
+<body>
+<div id="clock" class="clock hide"><span class="lbl">TIME LEFT</span><span id="clockT">30:00</span></div>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section id="intro" class="card center">
+    <div class="kick" id="k-subject">Mathification · Certificate of Comprehension</div>
+    <h1>Prove You <span class="gold">Comprehend It.</span></h1>
+    <p class="muted">Free, anonymous, no account — and when you pass, a unique serial number anyone on Earth can verify. This is competence on the record, not a participation ribbon.</p>
+    <ul class="rules">
+      <li><b>30 questions</b>, drawn at random — a fresh set every attempt.</li>
+      <li>A <b>30:00 timer</b> runs in the corner — when it reaches zero, the test submits automatically.</li>
+      <li><b>Silver</b> at 80% &nbsp;·&nbsp; <b>Gold</b> at 90%. Below 80%, keep studying and retake free.</li>
+      <li>Pass and you get a <b>serial-numbered certificate</b>, recorded for public verification.</li>
+      <li>GENO explains every answer as you go, in 32 languages.</li>
+    </ul>
+    <button class="btn" id="startBtn">Begin the Certification →</button>
+    <p class="muted" id="deviceNote" style="margin-top:12px"></p>
+    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/mathification">Prepare free at the Mathification campus →</a></p>
+  </section>
+
+  <!-- EXAM -->
+  <section id="exam" class="card hide">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="qmeta"><span id="qcount">Question 1 of 30</span><span id="scorerun">Score 0</span></div>
+    <p class="q" id="qtext">—</p>
+    <div class="opts" id="opts"></div>
+    <div id="whyBox" class="why hide"></div>
+    <div class="next"><button class="btn hide" id="nextBtn">Next →</button></div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card center hide">
+    <div class="kick">Result</div>
+    <div class="scorebig" id="r-score">0/30</div>
+    <div id="r-tier"></div>
+    <h2 id="r-head">—</h2>
+    <p class="muted" id="r-msg"></p>
+
+    <div id="passBlock" class="hide">
+      <div class="field">
+        <input id="aliasInput" maxlength="36" placeholder="Name for the certificate (optional)">
+        <button class="btn" id="issueBtn">Issue My Certificate →</button>
+      </div>
+      <p class="muted">Your serial number</p>
+      <p class="serial" id="r-serial">—</p>
+      <p class="muted" id="recordNote">Add your name if you like, then issue your certificate to record it for public verification.</p>
+      <canvas id="certCanvas" width="1200" height="800"></canvas>
+      <div style="margin-top:16px"><button class="btn ghost" id="dlBtn">Download Certificate (PNG)</button></div>
+    </div>
+
+    <div class="next center" style="margin-top:20px">
+      <button class="btn ghost" id="retakeBtn">Take It Again →</button>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- VERIFY -->
+  <section class="card">
+    <div class="kick">Public Verification</div>
+    <h3>Verify a Certificate</h3>
+    <p class="muted">Anyone can confirm a GSU certificate is genuine. Enter a serial number — no account, nothing to install.</p>
+    <div class="field" style="justify-content:flex-start">
+      <input id="verifyInput" placeholder="e.g. GSU-MATH-LXK3F9Q2">
+      <button class="btn" id="verifyBtn">Verify →</button>
+    </div>
+    <div class="verify-result muted" id="verifyResult"></div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- FAQ -->
+  <section>
+    <details><summary>Is this really free, with no account?</summary><p>Yes — free forever, anonymous, no login. The Foundation for Global Instruction is a 501(c)(3) nonprofit. The optional name on the certificate is the only thing you type, and it is your choice.</p></details>
+    <details><summary>How does the verification work?</summary><p>When you pass, a unique serial number is generated and recorded. Anyone can paste that serial into the box above to confirm the subject, the tier (Silver or Gold), and the date — proving the certificate is real without revealing any personal information.</p></details>
+    <details><summary>Can I retake it?</summary><p>As many times as you like, free. A new random set of 30 questions is drawn each attempt, so it rewards real comprehension, not memorizing one form.</p></details>
+  </section>
+
+  <p class="foot">A free certification of Global Sovereign University · The Foundation for Global Instruction, a 501(c)(3) public benefit nonprofit, Eugene, Oregon · <a href="/quid-pro-quo">Support the mission</a></p>
+</div>
+
+<!-- Firebase (compat) — guarded; the exam runs even if these fail to load -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+/* ====================== ZONE B — CONFIG (edit per subject) ================= */
+const CONFIG = {
+  subject: "Mathification",
+  serialPrefix: "GSU-MATH",
+  subjectLine: "Mathification · Certificate of Comprehension",
+  prepHref: "/mathification",
+  drawCount: 30,
+  timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
+  silverPct: 0.80,
+  goldPct: 0.90,
+  // CERTIFICATES LIVE IN THE "gsu-certification" PROJECT (not gsu-handshake).
+  // Paste that project's Web config below — get it from:
+  // Firebase Console -> gsu-certification -> Project settings -> "Your apps"
+  // -> Web app -> SDK setup and configuration. Only the 3 ALL-CAPS values
+  // need filling; the rest follow gsu-certification's standard naming.
+  firebase: {
+    apiKey: "AIzaSyAmFycf1iMeISLzjWgbxnuSB1BJ3BuWB_U",
+    authDomain: "gsu-certification.firebaseapp.com",
+    projectId: "gsu-certification",
+    storageBucket: "gsu-certification.firebasestorage.app",
+    messagingSenderId: "124413390849",
+    appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
+  }
+};
+
+/* ====================== ZONE C — QUESTION POOL (author per subject) ========
+   Each item: { q, opts:[4 strings], a: index of correct option, why }
+   Keep answers objectively correct and the "why" short and plain. The engine
+   draws CONFIG.drawCount at random and shuffles each question's options.
+=========================================================================== */
+const POOL = [
+  {q:"What is 6 + 2 × 5?", opts:["40","16","50","20"], a:1, why:"Multiply before you add: 2×5 is 10, then 6+10 = 16."},
+  {q:"What is 3/4 + 1/8?", opts:["4/12","7/8","1/2","5/8"], a:1, why:"Make the bottoms match: 3/4 is 6/8, plus 1/8 is 7/8."},
+  {q:"What is 25% of 80?", opts:["20","25","16","40"], a:0, why:"25% is one quarter, and 80 ÷ 4 = 20."},
+  {q:"What is 0.2 × 0.3?", opts:["0.6","0.06","0.5","0.006"], a:1, why:"2×3 = 6, and the two decimal places give 0.06."},
+  {q:"A recipe uses 2 cups of flour for every 3 cups of sugar. How much flour goes with 9 cups of sugar?", opts:["6 cups","4 cups","9 cups","5 cups"], a:0, why:"9 sugar is 3× the recipe (3×3), so flour is 3×2 = 6 cups."},
+  {q:"Solve for x:  x + 7 = 12", opts:["5","19","7","84"], a:0, why:"Subtract 7 from both sides: x = 12 − 7 = 5."},
+  {q:"Solve for x:  3x = 21", opts:["7","18","24","63"], a:0, why:"Divide both sides by 3: x = 21 ÷ 3 = 7."},
+  {q:"What is the area of a rectangle 5 by 8?", opts:["13","26","40","80"], a:2, why:"Area = length × width = 5 × 8 = 40."},
+  {q:"What is the perimeter of a square with side 6?", opts:["12","24","36","18"], a:1, why:"Four equal sides: 4 × 6 = 24."},
+  {q:"What is the area of a triangle with base 10 and height 4?", opts:["40","20","14","28"], a:1, why:"Area = ½ × base × height = ½ × 10 × 4 = 20."},
+  {q:"What is the mean (average) of 4, 8, 6, and 10?", opts:["6","7","8","28"], a:1, why:"Add them (28) and divide by 4: 28 ÷ 4 = 7."},
+  {q:"For one flip of a fair coin, what is the probability of heads?", opts:["1/2","1/4","1","1/6"], a:0, why:"Two equally likely results, one is heads: 1/2."},
+  {q:"On a standard six-sided die, what is the probability of rolling a 3?", opts:["1/2","1/3","1/6","3/6"], a:2, why:"One favorable face out of six equally likely faces: 1/6."},
+  {q:"What is −5 + 8?", opts:["−3","3","13","−13"], a:1, why:"Start at −5 and move up 8: you land on 3."},
+  {q:"What is (−4) × (−3)?", opts:["−12","12","−7","7"], a:1, why:"A negative times a negative is positive: 12."},
+  {q:"What is 2 to the 4th power (2⁴)?", opts:["8","16","6","24"], a:1, why:"2×2×2×2 = 16."},
+  {q:"Which number is the largest?", opts:["0.7","0.07","0.77","0.707"], a:2, why:"Compare tenths first: 0.77 has 7 tenths and 7 hundredths, the biggest here."},
+  {q:"Write 1/4 as a decimal.", opts:["0.14","0.25","0.4","0.5"], a:1, why:"1 ÷ 4 = 0.25."},
+  {q:"A $40 item goes up 10%. What is the new price?", opts:["$50","$44","$36","$4"], a:1, why:"10% of 40 is 4, so 40 + 4 = $44."},
+  {q:"A car travels 60 miles in 1.5 hours. What is its average speed?", opts:["90 mph","40 mph","45 mph","30 mph"], a:1, why:"Speed = distance ÷ time = 60 ÷ 1.5 = 40 mph."},
+  {q:"How many inches are in 3 feet?", opts:["36","30","12","24"], a:0, why:"12 inches per foot: 3 × 12 = 36."},
+  {q:"Round 4.67 to the nearest tenth.", opts:["4.6","4.7","5","4.67"], a:1, why:"The hundredths digit is 7, so round the tenths up: 4.7."},
+  {q:"What is the least common multiple (LCM) of 4 and 6?", opts:["24","12","10","2"], a:1, why:"12 is the smallest number both 4 and 6 divide into."},
+  {q:"What is the greatest common factor (GCF) of 12 and 18?", opts:["3","6","36","2"], a:1, why:"6 is the largest number that divides both 12 and 18."},
+  {q:"Solve for x:  2x + 3 = 11", opts:["4","7","14","5"], a:0, why:"Subtract 3 (2x = 8), then divide by 2: x = 4."},
+  {q:"What is 2/3 of 18?", opts:["6","9","12","18"], a:2, why:"18 ÷ 3 = 6, and 6 × 2 = 12."},
+  {q:"What is the area of a circle with radius 7? (use π ≈ 22/7)", opts:["44","154","49","14"], a:1, why:"Area = π r² = (22/7) × 49 = 154."},
+  {q:"What is 3 − (−5)?", opts:["−2","8","−8","2"], a:1, why:"Subtracting a negative adds: 3 + 5 = 8."},
+  {q:"If 4 pens cost $6, what do 10 pens cost?", opts:["$12","$15","$24","$9"], a:1, why:"One pen is $1.50, so 10 pens cost $15."},
+  {q:"What is the median of 3, 9, 4, 7, 5?", opts:["4","5","7","6"], a:1, why:"Sorted: 3,4,5,7,9 — the middle value is 5."},
+  {q:"What is 7 × 8?", opts:["54","56","48","64"], a:1, why:"7 × 8 = 56."},
+  {q:"What is 144 ÷ 12?", opts:["11","12","14","24"], a:1, why:"12 × 12 = 144, so 144 ÷ 12 = 12."},
+  {q:"What is 1/2 + 1/3?", opts:["2/5","5/6","1/6","3/5"], a:1, why:"Common denominator 6: 3/6 + 2/6 = 5/6."},
+  {q:"What is 15% of 200?", opts:["15","30","20","45"], a:1, why:"10% of 200 is 20 and 5% is 10, so 15% is 30."},
+  {q:"Round 3,482 to the nearest hundred.", opts:["3,400","3,480","3,500","3,000"], a:2, why:"The tens digit is 8, so the hundreds place rounds up to 3,500."},
+  {q:"What is 9 squared (9²)?", opts:["18","81","99","72"], a:1, why:"9² = 9 × 9 = 81."}
+];
+
+/* ====================== SHARED ENGINE (do not edit per subject) =========== */
+(function(){
+  // expose pure logic for testing (no answer key leaked)
+  window.GSUCERT = {
+    tier: function(correct,total){
+      const p = correct/total;
+      if(p >= CONFIG.goldPct) return "Gold";
+      if(p >= CONFIG.silverPct) return "Silver";
+      return null;
+    },
+    makeSerial: function(){
+      const t = Date.now().toString(36).toUpperCase();
+      const r = Math.random().toString(36).slice(2,6).toUpperCase();
+      return CONFIG.serialPrefix + "-" + t.slice(-5) + r.slice(0,2);
+    }
+  };
+
+  // ---- Firebase (guarded) ----
+  let db=null, authReady=false;
+  try{
+    if(window.firebase && firebase.initializeApp){
+      firebase.initializeApp(CONFIG.firebase);
+      db = firebase.firestore();
+      firebase.auth().signInAnonymously().then(()=>authReady=true).catch(()=>{});
+    }
+  }catch(e){ db=null; }
+
+  const $ = id => document.getElementById(id);
+  const shuffle = arr => { const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+  // apply config to copy
+  $("k-subject").textContent = CONFIG.subjectLine;
+  $("prepLink").href = CONFIG.prepHref;
+
+  let quiz=[], idx=0, correct=0, answered=false, lastTier=null, lastSerial="", alias="", issued=false;
+  let timerId=null, timeLeft=CONFIG.timeLimitSec;
+
+  // ---- on-device score (localStorage) ----
+  const LS_KEY = "gsu_cert_"+CONFIG.serialPrefix;
+  function saveLocal(extra){
+    try{
+      const tot=(quiz.length||CONFIG.drawCount);
+      const r=Object.assign({subject:CONFIG.subject,score:correct,total:tot,pct:Math.round(correct/tot*100),tier:lastTier,dateISO:new Date().toISOString()},extra||{});
+      localStorage.setItem(LS_KEY, JSON.stringify(r));
+    }catch(e){}
+  }
+  function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||"null"); }catch(e){ return null; } }
+  (function(){
+    const p=loadLocal(), el=$("deviceNote"); if(!el) return;
+    if(p && p.tier){ el.innerHTML='<b style="color:var(--gold)">On this device:</b> you earned <b>'+p.tier+'</b> ('+p.pct+'%)'+(p.serial?' \u00b7 <span style="font-family:monospace">'+p.serial+'</span>':'')+'. Your score is saved here \u2014 retake anytime to improve it.'; }
+    else if(p){ el.innerHTML='<b style="color:var(--gold)">On this device:</b> last score '+p.pct+'%, saved here \u2014 keep climbing.'; }
+  })();
+
+  // ---- countdown clock (counts down from CONFIG.timeLimitSec) ----
+  function fmtClock(s){ const m=Math.floor(s/60), ss=s%60; return m+":"+(ss<10?"0":"")+ss; }
+  function paintClock(){
+    const c=$("clock"); if(!c) return;
+    $("clockT").textContent=fmtClock(Math.max(0,timeLeft));
+    c.classList.toggle("warn", timeLeft<=300 && timeLeft>60);
+    c.classList.toggle("danger", timeLeft<=60);
+  }
+  function startClock(){
+    timeLeft=CONFIG.timeLimitSec;
+    const c=$("clock"); if(c) c.className="clock";
+    paintClock();
+    clearInterval(timerId);
+    timerId=setInterval(function(){ timeLeft--; paintClock(); if(timeLeft<=0){ stopClock(); finish(true); } },1000);
+  }
+  function stopClock(){ clearInterval(timerId); timerId=null; const c=$("clock"); if(c) c.className="clock hide"; }
+
+  function buildQuiz(){
+    const picked = shuffle(POOL).slice(0, Math.min(CONFIG.drawCount, POOL.length));
+    quiz = picked.map(item=>{
+      const order = shuffle([0,1,2,3]);
+      return {
+        q: item.q,
+        opts: order.map(i=>item.opts[i]),
+        a: order.indexOf(item.a),
+        why: item.why
+      };
+    });
+  }
+
+  function renderQ(){
+    answered=false;
+    const item = quiz[idx];
+    $("qcount").textContent = "Question "+(idx+1)+" of "+quiz.length;
+    $("scorerun").textContent = "Score "+correct;
+    $("barFill").style.width = ((idx)/quiz.length*100)+"%";
+    $("qtext").textContent = item.q;
+    const wrap = $("opts"); wrap.innerHTML="";
+    item.opts.forEach((txt,i)=>{
+      const b=document.createElement("button");
+      b.className="opt"; b.textContent=txt;
+      if(location.hash==="#test" && i===item.a) b.dataset.c="1";
+      b.onclick=()=>choose(i,b);
+      wrap.appendChild(b);
+    });
+    $("whyBox").className="why hide";
+    $("nextBtn").className="btn hide";
+    resize();
+  }
+
+  function choose(i, btn){
+    if(answered) return;
+    answered=true;
+    const item=quiz[idx];
+    const buttons=[...document.querySelectorAll(".opt")];
+    buttons.forEach(b=>b.disabled=true);
+    buttons[item.a].classList.add("correct");
+    if(i===item.a){ correct++; }
+    else { btn.classList.add("wrong"); }
+    $("scorerun").textContent="Score "+correct;
+    $("whyBox").className="why";
+    $("whyBox").innerHTML='<div class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"><div><b style="color:var(--gold)">GENO:</b> '+item.why+'</div></div>';
+    $("nextBtn").className="btn";
+    $("nextBtn").textContent = (idx+1<quiz.length) ? "Next →" : "See My Result →";
+    resize();
+  }
+
+  $("nextBtn").onclick=()=>{
+    if(idx+1<quiz.length){ idx++; renderQ(); }
+    else finish();
+  };
+
+  function finish(auto){
+    stopClock();
+    $("exam").className="card hide";
+    $("results").className="card center";
+    const total=quiz.length;
+    $("r-score").textContent = correct+"/"+total;
+    lastTier = window.GSUCERT.tier(correct,total);
+    const tb=$("r-tier");
+    if(lastTier==="Gold"){ tb.innerHTML='<span class="tierbadge tier-gold">Gold · Verified</span>'; }
+    else if(lastTier==="Silver"){ tb.innerHTML='<span class="tierbadge tier-silver">Silver · Verified</span>'; }
+    else { tb.innerHTML='<span class="tierbadge tier-none">Not yet — keep climbing</span>'; }
+
+    if(lastTier){
+      $("r-head").textContent = "You earned the "+CONFIG.subject+" Certificate.";
+      $("r-msg").textContent = "Add a name if you like, then issue your certificate to record it for public verification.";
+      $("passBlock").className="";
+      lastSerial = window.GSUCERT.makeSerial();
+      $("r-serial").textContent = lastSerial;
+      alias=""; issued=false;
+      $("aliasInput").value=""; $("aliasInput").disabled=false;
+      $("issueBtn").disabled=false; $("issueBtn").textContent="Issue My Certificate →";
+      $("recordNote").textContent="Add your name if you like, then issue your certificate to record it for public verification.";
+      drawCert();
+    } else {
+      const need = Math.ceil(CONFIG.silverPct*total);
+      $("r-head").textContent = "So close — "+need+"/"+total+" earns Silver.";
+      $("r-msg").textContent = "You missed "+(total-correct)+". Review with GENO or the campus, then retake free — a fresh set is drawn every time.";
+      $("passBlock").className="hide";
+    }
+    saveLocal(lastTier?{serial:lastSerial}:undefined);
+    $("barFill").style.width="100%";
+    resize();
+  }
+
+  function recordSerial(){
+    if(!db){ $("recordNote").textContent="(Offline — your certificate and serial are valid; public registry will sync when online.)"; return; }
+    const doc={ serial:lastSerial, subject:CONFIG.subject, tier:lastTier, score:correct, total:quiz.length,
+      pct:Math.round(correct/quiz.length*100), alias:alias||"Anonymous", revoked:false, dateISO:new Date().toISOString() };
+    db.collection("certifications").doc(lastSerial).set(doc)
+      .then(()=>{ $("recordNote").textContent="Recorded to the public registry — verifiable by serial."; })
+      .catch(()=>{ $("recordNote").textContent="(Certificate valid; registry write pending.)"; });
+  }
+
+  $("aliasInput").addEventListener("input",()=>{
+    if(issued) return;
+    alias = ($("aliasInput").value||"").trim().slice(0,36);
+    drawCert();
+  });
+  $("issueBtn").onclick=()=>{
+    if(issued) return;
+    alias = ($("aliasInput").value||"").trim().slice(0,36);
+    drawCert();
+    issued=true;
+    $("issueBtn").disabled=true; $("aliasInput").disabled=true;
+    $("issueBtn").textContent="Certificate Issued ✓";
+    recordSerial();
+    saveLocal({serial:lastSerial, alias:alias});
+  };
+
+  function drawCert(){
+    const c=$("certCanvas"), x=c.getContext("2d");
+    x.fillStyle="#0A0907"; x.fillRect(0,0,1200,800);
+    x.strokeStyle="#C9A84C"; x.lineWidth=6; x.strokeRect(26,26,1148,748);
+    x.strokeStyle="rgba(201,168,76,.5)"; x.lineWidth=2; x.strokeRect(44,44,1112,712);
+    x.textAlign="center";
+    x.fillStyle="#C9A84C"; x.font="700 26px Georgia"; x.fillText("GLOBAL SOVEREIGN UNIVERSITY", 600, 130);
+    x.fillStyle="rgba(245,241,232,.8)"; x.font="18px Arial"; x.fillText("The Foundation for Global Instruction · 501(c)(3)", 600, 162);
+    x.fillStyle="#F5F1E8"; x.font="italic 30px Georgia"; x.fillText("Certificate of Comprehension", 600, 250);
+    x.fillStyle="#C9A84C"; x.font="700 64px Georgia"; x.fillText(CONFIG.subject, 600, 332);
+    x.fillStyle="#F5F1E8"; x.font="24px Arial"; x.fillText("awarded to", 600, 400);
+    x.fillStyle="#F5F1E8"; x.font="700 44px Georgia"; x.fillText(alias||"Anonymous Learner", 600, 456);
+    x.fillStyle = lastTier==="Gold" ? "#C9A84C" : "#cdd2da";
+    x.font="700 30px Arial"; x.fillText((lastTier||"").toUpperCase()+"  ·  "+Math.round(correct/quiz.length*100)+"%", 600, 520);
+    x.fillStyle="rgba(245,241,232,.85)"; x.font="20px Arial";
+    x.fillText(new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}), 600, 600);
+    x.fillStyle="#C9A84C"; x.font="600 24px monospace"; x.fillText(lastSerial, 600, 660);
+    x.fillStyle="rgba(245,241,232,.6)"; x.font="16px Arial"; x.fillText("Verify this serial at globalsovereignuniversity.org/certification", 600, 712);
+  }
+
+  $("dlBtn").onclick=()=>{
+    const a=document.createElement("a");
+    a.download = CONFIG.serialPrefix+"-certificate.png";
+    a.href=$("certCanvas").toDataURL("image/png");
+    a.click();
+  };
+
+  $("startBtn").onclick=()=>{
+    buildQuiz(); idx=0; correct=0;
+    $("intro").className="card center hide";
+    $("results").className="card center hide";
+    $("exam").className="card";
+    renderQ();
+    startClock();
+  };
+  $("retakeBtn").onclick=()=>{ $("startBtn").click(); };
+
+  // ---- Public verify ----
+  $("verifyBtn").onclick=()=>{
+    const s=($("verifyInput").value||"").trim().toUpperCase();
+    const out=$("verifyResult");
+    if(!s){ out.innerHTML='<span class="bad">Enter a serial number.</span>'; return; }
+    if(!db){ out.innerHTML='<span class="muted">Verification is offline right now — try again when connected.</span>'; return; }
+    out.textContent="Checking…";
+    db.collection("certifications").doc(s).get().then(d=>{
+      if(d.exists){
+        const v=d.data();
+        if(v.revoked===true){
+          out.innerHTML='<span class="bad">✗ This certificate has been revoked and is no longer valid.</span>';
+        } else {
+          out.innerHTML='<span class="ok">✓ Valid.</span> '+v.subject+' · '+v.tier+' · '+v.pct+'% · '+(v.alias||"Anonymous")+' · '+new Date(v.dateISO).toLocaleDateString();
+        }
+      } else {
+        out.innerHTML='<span class="bad">✗ No certificate found with that serial.</span>';
+      }
+    }).catch(()=>{ out.innerHTML='<span class="bad">Could not reach the registry. Try again shortly.</span>'; });
+  };
+
+  // ---- iframe auto-resize (if embedded) ----
+  function resize(){
+    try{ parent.postMessage({gsuCert:true, h:document.body.scrollHeight}, "*"); }catch(e){}
+  }
+  window.addEventListener("load", resize);
+  window.addEventListener("resize", resize);
+})();
+</script>
+</body>
+</html>
