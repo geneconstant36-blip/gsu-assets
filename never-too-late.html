@@ -1,0 +1,126 @@
+<!-- ============================================================ -->
+<!-- GSU · "IT'S NEVER TOO LATE" — welcome page for adult learners -->
+<!-- (internally: "The Lost")  ·  Routing: paste-in → Webflow Embed -->
+<!-- Suggested slug: /never-too-late                                -->
+<!-- ============================================================ -->
+<section id="ntl" lang="en">
+<style>
+  #ntl{background:#000;color:#F5F1E8;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       line-height:1.55;padding:0 20px 70px;}
+  #ntl .w{max-width:680px;margin:0 auto;}
+  #ntl h1,#ntl h2{font-family:Georgia,"Times New Roman",serif;}
+  #ntl .top{text-align:center;padding:46px 0 8px;}
+  #ntl .kick{color:#C9A84C;letter-spacing:.2em;font-size:.8rem;font-weight:700;text-transform:uppercase;}
+  #ntl h1{font-size:2.9rem;color:#F5F1E8;margin:10px 0 6px;line-height:1.1;}
+  #ntl h1 .em{color:#C9A84C;}
+  #ntl .big{font-size:1.5rem;color:#efe9dc;margin:14px 0;}
+  #ntl p{font-size:1.25rem;margin:14px 0;color:#e7e1d4;}
+
+  /* listen button */
+  #ntl .listen{display:inline-flex;align-items:center;gap:10px;background:rgba(201,168,76,.10);
+       border:1px solid #C9A84C;color:#F5F1E8;border-radius:999px;padding:14px 22px;font-size:1.1rem;
+       cursor:pointer;font-family:inherit;font-weight:700;margin:8px 0;}
+  #ntl .listen:active{transform:scale(.98);}
+  #ntl .spk{background:transparent;border:none;color:#C9A84C;cursor:pointer;font-size:1.4rem;
+       vertical-align:middle;padding:4px 8px;line-height:1;}
+  #ntl .row{display:flex;align-items:flex-start;gap:6px;}
+
+  #ntl .card{background:#0b0b0b;border:1px solid rgba(201,168,76,.28);border-radius:20px;padding:26px;margin:26px 0;}
+
+  /* GENO */
+  #ntl .geno{display:flex;gap:18px;align-items:center;}
+  #ntl .geno img{width:84px;height:84px;border-radius:50%;border:3px solid #C9A84C;flex:0 0 auto;background:#111;}
+
+  /* big buttons */
+  #ntl .cta{display:block;width:100%;text-align:center;text-decoration:none;border-radius:16px;
+       padding:22px;font-size:1.5rem;font-weight:700;font-family:inherit;margin:16px 0;border:none;cursor:pointer;}
+  #ntl .cta-gold{background:#C9A84C;color:#1a1407;}
+  #ntl .cta-line{background:transparent;color:#F5F1E8;border:2px solid #C9A84C;}
+
+  #ntl .quiet{color:#9a948a;font-size:1.05rem;text-align:center;}
+  #ntl footer{margin-top:40px;text-align:center;color:#7d776c;font-size:1rem;border-top:1px solid rgba(201,168,76,.25);padding-top:24px;}
+  #ntl footer a{color:#E4CD86;text-decoration:none;}
+  @media(max-width:520px){#ntl h1{font-size:2.2rem;}#ntl .big{font-size:1.3rem;}#ntl p{font-size:1.15rem;}}
+</style>
+
+  <div class="w">
+    <div class="top">
+      <div class="kick">Global Sovereign University</div>
+      <h1>It&rsquo;s <span class="em">never</span> too late.</h1>
+      <div class="big">Did you grow up without learning to read? You can learn now. For free. Starting today.</div>
+      <button class="listen" id="readAll" type="button">&#128266; Listen to this page</button>
+      <div class="quiet">You don&rsquo;t have to read this. Press the button and we will read it to you.</div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <button class="spk" data-say="No one is going to grade you. No one is going to know. This is your private door, and it is open.">&#128266;</button>
+        <p style="margin-top:0;">No one is going to grade you. No one is going to know. This is your private door &mdash; and it is open.</p>
+      </div>
+      <div class="row">
+        <button class="spk" data-say="School ended too soon for a lot of good people. That was not your fault. And it is not the end of your story.">&#128266;</button>
+        <p>School ended too soon for a lot of good people. That was not your fault. And it is not the end of your story.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="geno">
+        <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, your free teacher">
+        <div>
+          <h2 style="color:#C9A84C;font-size:1.7rem;margin:0 0 6px;">Meet GENO</h2>
+          <div class="row">
+            <button class="spk" data-say="GENO is a teacher you can talk to. You do not have to type or read. Just talk, and GENO talks back. GENO is free, day and night, and speaks your language.">&#128266;</button>
+            <p style="margin:0;font-size:1.2rem;">A teacher you can <b>talk to</b>. You don&rsquo;t have to type or read &mdash; just <b>talk</b>, and GENO talks back. Free, day and night, in your language.</p>
+          </div>
+        </div>
+      </div>
+      <a class="cta cta-gold" href="/meet-geno">&#127908;&nbsp; Talk to GENO now</a>
+    </div>
+
+    <div class="card" style="text-align:center;">
+      <div class="row" style="justify-content:center;">
+        <button class="spk" data-say="When you are ready, we will show you where to start. One small step at a time. You can do this.">&#128266;</button>
+        <p style="font-size:1.3rem;margin-top:0;">When you&rsquo;re ready, we&rsquo;ll show you where to start. One small step at a time. <b>You can do this.</b></p>
+      </div>
+      <a class="cta cta-line" href="/first-steps">&#128073;&nbsp; Show me where to start</a>
+    </div>
+
+    <footer>
+      Everything here is <b>free</b>, always.<br>
+      <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a>
+      <div style="font-style:italic;color:#9a948a;margin-top:10px;font-size:.95rem;">
+        &ldquo;Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow.&rdquo;
+      </div>
+    </footer>
+  </div>
+
+<script>
+(function(){
+  var root=document.getElementById("ntl");
+  var supported=("speechSynthesis" in window);
+  function speak(text){
+    if(!supported) return;
+    try{ window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(text); u.rate=0.95; u.pitch=1; u.lang="en-US";
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  if(!supported){ // hide audio buttons if the browser can't speak
+    root.querySelectorAll(".listen,.spk").forEach(function(b){b.style.display="none";});
+  }
+  root.querySelectorAll(".spk").forEach(function(b){
+    b.addEventListener("click",function(){ speak(b.getAttribute("data-say")); });
+  });
+  var all=root.querySelector("#readAll");
+  if(all){ all.addEventListener("click",function(){
+     var t="It's never too late. Did you grow up without learning to read? You can learn now. For free. Starting today. "
+       +"No one is going to grade you. No one is going to know. This is your private door, and it is open. "
+       +"School ended too soon for a lot of good people. That was not your fault, and it is not the end of your story. "
+       +"Meet GENO: a teacher you can talk to. You do not have to type or read. Just talk, and GENO talks back. GENO is free, day and night, and speaks your language. "
+       +"When you are ready, we will show you where to start. One small step at a time. You can do this. "
+       +"Everything here is free, always.";
+     speak(t);
+  }); }
+})();
+</script>
+</section>
