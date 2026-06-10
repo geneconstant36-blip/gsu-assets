@@ -1,95 +1,494 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>The Wisdom Bridge | GSU BookGame</title>
-<style>:root{--nv:#0a192f;--md:#112240;--ac:#f59e0b;--gd:#d4af37;--gn:#22c55e;--rd:#ef4444;--tx:#e2e8f0;--mt:#8892b0;}
-*{box-sizing:border-box;margin:0;padding:0;}body{background:var(--nv);color:var(--tx);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
-.hdr{background:linear-gradient(135deg,#060e1c,#112240);padding:20px;text-align:center;border-bottom:2px solid color-mix(in srgb,#f59e0b 35%,transparent);}
-.hdr h1{font-size:clamp(1.4rem,4vw,2rem);color:var(--ac);font-weight:800;}.hdr p{color:var(--mt);font-size:.9rem;margin-top:4px;}
-.bb{display:flex;justify-content:center;gap:10px;padding:14px 16px;background:var(--md);flex-wrap:wrap;}
-.bp{padding:5px 16px;border-radius:20px;font-size:.78rem;font-weight:700;letter-spacing:.8px;border:2px solid;opacity:.35;transition:all .3s;}
-.bp.active,.bp.earned{opacity:1;}
-.br{border-color:#cd7f32;color:#cd7f32;}.br.active,.br.earned{background:rgba(205,127,50,.15);}
-.bs{border-color:#b0b0b0;color:#b0b0b0;}.bs.active,.bs.earned{background:rgba(176,176,176,.12);}
-.bgd{border-color:var(--gd);color:var(--gd);}.bgd.active,.bgd.earned{background:rgba(212,175,55,.15);}
-.bpl{border-color:#e5e4e2;color:#e5e4e2;}.bpl.active,.bpl.earned{background:rgba(229,228,226,.13);}
-.pb{background:rgba(255,255,255,.05);height:5px;border-radius:3px;margin:0 20px;}
-.pf{height:100%;border-radius:3px;background:linear-gradient(90deg,#f59e0b,var(--gd));transition:width .4s;}
-.pl{text-align:center;font-size:.78rem;color:var(--mt);padding:5px 0 10px;}
-.ss{display:flex;justify-content:center;gap:28px;padding:10px 20px;background:rgba(0,0,0,.2);}
-.si{text-align:center;}.si .v{font-size:1.25rem;font-weight:800;color:var(--ac);}.si .l{color:var(--mt);font-size:.68rem;text-transform:uppercase;letter-spacing:1px;}
-.qa{max-width:680px;margin:24px auto;padding:0 16px;}
-.tl{font-family:monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ac);margin-bottom:10px;}
-.qc{background:var(--md);border:1px solid color-mix(in srgb,#f59e0b 20%,transparent);border-radius:14px;padding:28px;margin-bottom:16px;}
-.qt{font-size:clamp(.95rem,2.4vw,1.15rem);color:var(--tx);line-height:1.6;}
-.og{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
-.ob{background:rgba(255,255,255,.03);border:2px solid rgba(255,255,255,.09);border-radius:9px;padding:14px 11px;color:var(--tx);font-size:.86rem;font-weight:600;cursor:pointer;transition:all .2s;text-align:left;line-height:1.4;}
-.ob:hover:not(:disabled){border-color:var(--ac);background:color-mix(in srgb,#f59e0b 8%,transparent);transform:translateY(-1px);}
-.ob.correct{border-color:var(--gn);background:rgba(34,197,94,.13);color:var(--gn);}
-.ob.wrong{border-color:var(--rd);background:rgba(239,68,68,.09);color:#fca5a5;}.ob:disabled{cursor:not-allowed;}
-.fb{text-align:center;padding:12px;border-radius:9px;font-size:.9rem;font-weight:600;margin-bottom:14px;display:none;}
-.fb.correct{background:rgba(34,197,94,.13);border:1px solid var(--gn);color:var(--gn);}
-.fb.wrong{background:rgba(239,68,68,.09);border:1px solid var(--rd);color:#fca5a5;}
-.nb{width:100%;padding:14px;background:linear-gradient(135deg,#f59e0b,var(--gd));color:#0a192f;font-size:.95rem;font-weight:800;border:none;border-radius:9px;cursor:pointer;display:none;letter-spacing:.8px;transition:all .2s;}
-.nb:hover{transform:translateY(-2px);box-shadow:0 5px 18px color-mix(in srgb,#f59e0b 35%,transparent);}
-.gc{background:color-mix(in srgb,#f59e0b 6%,transparent);border:1px solid color-mix(in srgb,#f59e0b 18%,transparent);border-radius:11px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px;}
-.gimg{width:44px;height:44px;border-radius:50%;border:2px solid var(--ac);flex-shrink:0;object-fit:cover;}
-.gt{font-size:.88rem;color:rgba(255,255,255,.82);line-height:1.5;}
-.bss{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:100;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;}
-.bss.show{display:flex;}.bi{font-size:76px;margin-bottom:18px;animation:pop .5s cubic-bezier(.68,-.55,.27,1.55);}
-@keyframes pop{from{transform:scale(0) rotate(-15deg);}to{transform:scale(1) rotate(0);}}
-.bss h2{font-size:1.8rem;color:var(--ac);margin-bottom:8px;}.bss p{color:var(--mt);max-width:380px;margin-bottom:26px;line-height:1.6;}
-.bc{background:var(--ac);color:#0a192f;border:none;padding:13px 34px;border-radius:9px;font-size:.95rem;font-weight:800;cursor:pointer;}
-.start{max-width:580px;margin:36px auto;padding:20px;text-align:center;}
-.start h2{font-size:1.7rem;color:var(--ac);margin-bottom:10px;}.start p{color:var(--mt);margin-bottom:22px;line-height:1.7;}
-.sb{background:linear-gradient(135deg,#f59e0b,var(--gd));color:#0a192f;border:none;padding:15px 38px;border-radius:9px;font-size:1.05rem;font-weight:800;cursor:pointer;}
-.done{display:none;max-width:560px;margin:36px auto;padding:20px;text-align:center;}
-.done h2{font-size:1.9rem;color:var(--ac);margin-bottom:14px;}.done p{color:var(--mt);line-height:1.7;margin-bottom:22px;}
-.rb{background:transparent;border:2px solid var(--ac);color:var(--ac);padding:11px 28px;border-radius:9px;font-size:.95rem;font-weight:700;cursor:pointer;}</style></head>
-<body>
-<div class="hdr"><h1>🌉 The Wisdom Bridge</h1><p>Transmit earned wisdom across generations · Build the bridge that lasts</p></div>
-<div class="bb"><div class="bp br active" id="pill-bronze">🥉 Bronze</div><div class="bp bs" id="pill-silver">🥈 Silver</div><div class="bp bgd" id="pill-gold">🥇 Gold</div><div class="bp bpl" id="pill-platinum">💎 Platinum</div></div>
-<div class="pb"><div class="pf" id="pf" style="width:0%"></div></div><div class="pl" id="pl">Question 1 of 60 · Bronze Level</div>
-<div class="ss"><div class="si"><div class="v" id="sc">0</div><div class="l">Correct</div></div><div class="si"><div class="v" id="st">0</div><div class="l">Streak</div></div><div class="si"><div class="v" id="sp">0%</div><div class="l">Accuracy</div></div></div>
-<div class="start" id="startDiv"><h2>🌉 The Wisdom Bridge</h2><p>Transmit earned wisdom across generations · Build the bridge that lasts</p><p style="color:var(--ac);font-weight:600;margin:0 0 22px;">Bronze: Mentorship Fundamentals · Silver: Knowledge Transmission · Gold: Deep Wisdom · Platinum: Legacy</p><button class="sb" onclick="startGame()">🌉 Cross the Wisdom Bridge!</button></div>
-<div class="qa" id="gameArea" style="display:none">
-<div class="gc"><img class="gimg" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"><div class="gt" id="gt">Wisdom that isn't passed on is wisdom that dies. Let's build the bridge.</div></div>
-<div class="tl" id="tl"></div><div class="qc"><div class="qt" id="qt">Loading...</div></div>
-<div class="og" id="og"></div><div class="fb" id="fb"></div>
-<button class="nb" id="nb" onclick="nextQ()">Next Question →</button></div>
-<div class="done" id="doneDiv"><div style="font-size:58px;margin-bottom:14px">💎</div><h2>Platinum Achieved!</h2><p>You've completed The Wisdom Bridge. You now understand how wisdom transmits, why mentorship matters, and how to both receive and give knowledge that lasts beyond a lifetime.</p><button class="rb" onclick="restart()">Play Again</button></div>
-<div class="bss" id="bss"><div class="bi" id="bsi">🥉</div><h2 id="bst">Badge Earned!</h2><p id="bsm"></p><button class="bc" onclick="contTier()">Continue →</button></div>
-<script>
-const T=[{"n": "Bronze", "l": "\ud83e\udd49 BRONZE \u2014 Mentorship Fundamentals", "i": "\ud83e\udd49", "m": "Mentorship fundamentals solid! On to knowledge transmission!"}, {"n": "Silver", "l": "\ud83e\udd48 SILVER \u2014 Knowledge Transmission", "i": "\ud83e\udd48", "m": "Transmission principles mastered. Time for deep wisdom!"}, {"n": "Gold", "l": "\ud83e\udd47 GOLD \u2014 Deep Wisdom", "i": "\ud83e\udd47", "m": "Deep wisdom unlocked. Final level: legacy and impact!"}, {"n": "Platinum", "l": "\ud83d\udc8e PLATINUM \u2014 Legacy & Impact", "i": "\ud83d\udc8e", "m": "The full bridge is built. You carry wisdom forward."}];const Q={"Bronze": [{"q": "What is a 'mentor'?", "a": "An experienced person who guides a less experienced person", "opts": ["A type of teacher", "An experienced person who guides a less experienced person", "A career counselor", "A parent or guardian"]}, {"q": "What is 'wisdom' different from 'knowledge'?", "a": "Knowledge is information; wisdom is knowing how and when to apply it well", "opts": ["They are the same thing", "Knowledge is information; wisdom is knowing how and when to apply it well", "Wisdom is more complex", "Knowledge requires study; wisdom doesn't"]}, {"q": "What is 'legacy'?", "a": "What you leave behind for others after you're gone \u2014 values, skills, and impact", "opts": ["A large inheritance", "What you leave behind for others after you're gone \u2014 values, skills, and impact", "An old tradition", "Fame and recognition"]}, {"q": "What is 'intergenerational knowledge'?", "a": "Wisdom and skills passed from older generations to younger ones", "opts": ["Ancient history", "Wisdom and skills passed from older generations to younger ones", "Shared family memories", "Traditional ceremonies"]}, {"q": "What is 'tacit knowledge'?", "a": "Knowledge that is difficult to express in words \u2014 learned through experience and practice", "opts": ["Secret knowledge", "Knowledge that is difficult to express in words \u2014 learned through experience and practice", "Unwritten rules", "Private information"]}, {"q": "What does 'the wisdom bridge' metaphor mean?", "a": "Building a connection between experienced elders and younger learners so knowledge flows across generations", "opts": ["A physical bridge built with wisdom", "Building a connection between experienced elders and younger learners so knowledge flows across generations", "A bridge to an ancient library", "A metaphor for education systems"]}, {"q": "What is 'life experience' as an educational resource?", "a": "The practical lessons learned from actually living through challenges, failures, and successes", "opts": ["A long biography", "The practical lessons learned from actually living through challenges, failures, and successes", "Years of formal education", "Travel and adventure"]}, {"q": "What happens when a generation's wisdom is not transmitted?", "a": "It dies with them, and the next generation must relearn painful lessons unnecessarily", "opts": ["The next generation invents better ideas", "It dies with them, and the next generation must relearn painful lessons unnecessarily", "Nothing \u2014 books preserve it", "The wisdom returns through culture"]}, {"q": "What is 'active listening' in a mentorship context?", "a": "Giving full attention to understand deeply, not just waiting to respond", "opts": ["Listening with headphones off", "Giving full attention to understand deeply, not just waiting to respond", "Taking notes during a conversation", "Being quiet during a meeting"]}, {"q": "What is the difference between 'advice' and 'wisdom'?", "a": "Advice tells you what to do; wisdom helps you understand why and develop your own judgment", "opts": ["They are the same", "Advice tells you what to do; wisdom helps you understand why and develop your own judgment", "Wisdom is better advice", "Advice comes from experts; wisdom from elders"]}, {"q": "What makes a mentor relationship valuable?", "a": "Trust, consistent presence, and the mentor's willingness to share hard-won truths", "opts": ["The mentor's credentials", "Trust, consistent presence, and the mentor's willingness to share hard-won truths", "Meeting frequency", "The mentor's age"]}, {"q": "What is 'reverse mentorship'?", "a": "When younger people share their knowledge of technology and culture with older mentors", "opts": ["When the student becomes the teacher permanently", "When younger people share their knowledge of technology and culture with older mentors", "Mentoring someone older than you", "An informal mentorship"]}, {"q": "What is 'modeling' in mentorship?", "a": "Demonstrating the behavior and thinking patterns you want the mentee to develop", "opts": ["Creating a physical model", "Demonstrating the behavior and thinking patterns you want the mentee to develop", "Fashion modeling", "Explaining concepts verbally"]}, {"q": "What is the 'Teach a Man to Fish' principle?", "a": "Building capability in people so they can solve their own problems rather than creating dependency", "opts": ["A fishing lesson", "Building capability in people so they can solve their own problems rather than creating dependency", "A proverb about hunger", "A metaphor for generosity"]}, {"q": "Why do retired professionals make particularly valuable mentors?", "a": "They have hard-won practical wisdom plus time to share it, with no competitive agenda", "opts": ["They have more free time", "They have hard-won practical wisdom plus time to share it, with no competitive agenda", "They are more patient", "They remember more"]}], "Silver": [{"q": "What is 'knowledge transfer' and why does it often fail?", "a": "Passing expertise from one person to another \u2014 it fails when tacit knowledge can't be put into words", "opts": ["Copying files between computers", "Passing expertise from one person to another \u2014 it fails when tacit knowledge can't be put into words", "Training programs", "Job shadowing"]}, {"q": "What is the 'curse of knowledge'?", "a": "When experts forget what it was like not to know something, making it hard to teach beginners", "opts": ["Knowing too much", "When experts forget what it was like not to know something, making it hard to teach beginners", "An overload of information", "A career blocked by expertise"]}, {"q": "What is 'deliberate practice' in skill development?", "a": "Focused repetition at the edge of your ability with immediate feedback", "opts": ["Practicing for long hours", "Focused repetition at the edge of your ability with immediate feedback", "Natural talent development", "Practicing what you already do well"]}, {"q": "What is 'experiential learning'?", "a": "Learning through direct experience and reflection rather than instruction alone", "opts": ["Learning by doing homework", "Learning through direct experience and reflection rather than instruction alone", "Field trips", "Practical exams"]}, {"q": "What is 'contextual knowledge'?", "a": "Knowing how and when to apply a skill based on the specific situation", "opts": ["Knowing the context of history", "Knowing how and when to apply a skill based on the specific situation", "Background information", "Cultural awareness"]}, {"q": "What does it mean to 'learn from failure'?", "a": "Extracting specific insights from what went wrong to improve future judgment", "opts": ["Not repeating a mistake", "Extracting specific insights from what went wrong to improve future judgment", "Accepting failure", "Being resilient after setbacks"]}, {"q": "What is the 'movement of multiplication' in mentorship?", "a": "One mentor creates many capable people who each go on to mentor others, multiplying impact exponentially", "opts": ["Teaching math through mentorship", "One mentor creates many capable people who each go on to mentor others, multiplying impact exponentially", "A large mentorship program", "Teaching many students at once"]}, {"q": "What is 'earned wisdom'?", "a": "Insights that come from personally surviving difficulty, failure, and complex decisions over time", "opts": ["Wisdom from expensive education", "Insights that come from personally surviving difficulty, failure, and complex decisions over time", "Inherited wisdom from parents", "Wisdom from reading many books"]}, {"q": "What is 'applied knowledge' versus 'theoretical knowledge'?", "a": "Applied knowledge works in real situations; theoretical knowledge describes how things should work in ideal conditions", "opts": ["Practical vs. academic", "Applied knowledge works in real situations; theoretical knowledge describes how things should work in ideal conditions", "Knowledge from books vs. the internet", "Memorized vs. understood"]}, {"q": "What does the Civilization Builders program do with retired expertise?", "a": "Creates structured pathways for retired professionals to transmit their knowledge to young learners", "opts": ["Gives retirees part-time work", "Creates structured pathways for retired professionals to transmit their knowledge to young learners", "Records interviews with experts", "Builds a senior center"]}, {"q": "What is 'narrative learning'?", "a": "Using stories about real experiences to transmit lessons that stick better than abstract instruction", "opts": ["Storytelling in class", "Using stories about real experiences to transmit lessons that stick better than abstract instruction", "Reading novels", "Learning history through stories"]}, {"q": "What is 'values transmission'?", "a": "The process by which a generation passes its moral and practical principles to the next", "opts": ["Teaching religion", "The process by which a generation passes its moral and practical principles to the next", "Family discussions", "Character education programs"]}, {"q": "Why is the 'wisdom gap' a crisis in underserved communities?", "a": "When experienced mentors are absent, young people must learn hard lessons alone at great personal cost", "opts": ["Underserved communities lack books", "When experienced mentors are absent, young people must learn hard lessons alone at great personal cost", "Schools in these areas are worse", "There are fewer opportunities"]}, {"q": "What is 'longitudinal mentorship'?", "a": "A long-term mentorship relationship that spans years and adapts as the mentee grows", "opts": ["Learning over a long period", "A long-term mentorship relationship that spans years and adapts as the mentee grows", "Monthly mentor meetings", "A formal mentorship program"]}, {"q": "What is the bridge that connects wisdom to impact?", "a": "Relationship \u2014 wisdom only transmits through genuine human connection and trust", "opts": ["Education programs", "Relationship \u2014 wisdom only transmits through genuine human connection and trust", "Technology", "Written materials"]}], "Gold": [{"q": "What is 'psychological safety' in a mentorship relationship?", "a": "The confidence that sharing honest struggles and questions will not result in judgment or rejection", "opts": ["Feeling safe physically", "The confidence that sharing honest struggles and questions will not result in judgment or rejection", "A formal agreement", "Confidentiality rules"]}, {"q": "What is the 'Prot\u00e9g\u00e9 Effect'?", "a": "Teaching others deepens your own mastery \u2014 explaining forces you to understand more deeply", "opts": ["A mentorship outcome", "Teaching others deepens your own mastery \u2014 explaining forces you to understand more deeply", "When the student surpasses the mentor", "Learning from a famous person"]}, {"q": "What is 'transformative learning'?", "a": "Learning that fundamentally changes how you see yourself and the world, not just what you know", "opts": ["Dramatic education reform", "Learning that fundamentally changes how you see yourself and the world, not just what you know", "A very difficult course", "Changing careers"]}, {"q": "What does 'paying it forward' mean in the context of mentorship?", "a": "Using what you received from your mentor to invest in someone coming behind you", "opts": ["Donating to education", "Using what you received from your mentor to invest in someone coming behind you", "Repaying your mentor financially", "Being grateful for help received"]}, {"q": "What is the 'zone of proximal development'?", "a": "The gap between what you can do alone and what you can do with guidance \u2014 where growth happens", "opts": ["A comfortable learning environment", "The gap between what you can do alone and what you can do with guidance \u2014 where growth happens", "A physical learning space", "Your highest possible achievement"]}, {"q": "What is 'epistemic humility' in a mentor?", "a": "Acknowledging the limits of their own knowledge and modeling continuous learning for the mentee", "opts": ["Being modest about achievements", "Acknowledging the limits of their own knowledge and modeling continuous learning for the mentee", "A polite teaching style", "Not bragging about accomplishments"]}, {"q": "What is the difference between a 'coach' and a 'mentor'?", "a": "A coach improves specific performance; a mentor guides overall development and shares life wisdom", "opts": ["Coaches are paid; mentors are not", "A coach improves specific performance; a mentor guides overall development and shares life wisdom", "Mentors are more experienced", "Coaches use formal techniques"]}, {"q": "What is 'cultural capital' in education?", "a": "The knowledge, skills, and behaviors that give access to social and economic opportunities", "opts": ["Money spent on culture", "The knowledge, skills, and behaviors that give access to social and economic opportunities", "Cultural awareness", "Traditional knowledge"]}, {"q": "What is 'intergenerational equity' in education?", "a": "Ensuring each generation has access to the accumulated wisdom and resources of those who came before", "opts": ["Equal pay across generations", "Ensuring each generation has access to the accumulated wisdom and resources of those who came before", "The same curriculum for all ages", "Equal education funding"]}, {"q": "What does 'sovereign mentorship' mean at GSU?", "a": "Mentorship aimed at building complete autonomy and judgment, not dependency on the mentor", "opts": ["Mentorship from government leaders", "Mentorship aimed at building complete autonomy and judgment, not dependency on the mentor", "Independent learning without any mentor", "Official mentorship certification"]}, {"q": "What is the 'compounding value' of wisdom transmission?", "a": "Each person who receives and transmits wisdom multiplies its reach across generations", "opts": ["Wisdom becoming more valuable over time", "Each person who receives and transmits wisdom multiplies its reach across generations", "Collecting wisdom from many sources", "The growing wisdom of an individual"]}, {"q": "What is 'noble teaching' in The Art and Practice of Teaching?", "a": "Teaching that aims at the student's complete development \u2014 intellectual, moral, and practical", "opts": ["Teaching famous subjects", "Teaching that aims at the student's complete development \u2014 intellectual, moral, and practical", "Expert-level instruction", "Free education"]}, {"q": "What is 'professional wisdom' that cannot be found in textbooks?", "a": "Judgment about handling complex situations \u2014 when rules apply, when they don't, and what to do when they conflict", "opts": ["Industry knowledge", "Judgment about handling complex situations \u2014 when rules apply, when they don't, and what to do when they conflict", "Technical expertise", "Business strategy"]}, {"q": "What is the 'legacy mindset'?", "a": "Acting today in ways that will benefit people who come after you, beyond your own lifespan", "opts": ["Planning your estate", "Acting today in ways that will benefit people who come after you, beyond your own lifespan", "Thinking about your reputation", "Leaving a written record"]}, {"q": "What is the ultimate purpose of The Wisdom Bridge?", "a": "To close the mentorship gap that education systems leave open, connecting those who have wisdom with those who need it", "opts": ["Publishing wisdom in books", "To close the mentorship gap that education systems leave open, connecting those who have wisdom with those who need it", "Creating formal education alternatives", "Building a mentorship organization"]}], "Platinum": [{"q": "What is 'phronesis' and why is it the summit of the wisdom tradition?", "a": "Practical wisdom \u2014 the ability to discern the right action in complex, specific situations where rules are insufficient", "opts": ["Greek word for knowledge", "Practical wisdom \u2014 the ability to discern the right action in complex, specific situations where rules are insufficient", "Advanced critical thinking", "A philosophical debate technique"]}, {"q": "What did Aristotle identify as the three types of knowledge?", "a": "Episteme (scientific), Techne (craft/skill), and Phronesis (practical wisdom)", "opts": ["Logic, rhetoric, and grammar", "Facts, theories, and opinions", "Episteme (scientific), Techne (craft/skill), and Phronesis (practical wisdom)", "Knowledge, wisdom, and understanding"]}, {"q": "What is the 'apprenticeship model' and why is it the oldest form of wisdom transmission?", "a": "Learning a craft or profession through direct practice under a master \u2014 wisdom transmitted through doing, not just instruction", "opts": ["On-the-job training", "Learning a craft or profession through direct practice under a master \u2014 wisdom transmitted through doing, not just instruction", "Internship programs", "Vocational school"]}, {"q": "What is 'moral imagination'?", "a": "The ability to envision how decisions affect others and generate creative ethical solutions", "opts": ["Imagining moral stories", "The ability to envision how decisions affect others and generate creative ethical solutions", "Creative thinking about rules", "Writing about ethics"]}, {"q": "What is the relationship between suffering and wisdom?", "a": "Difficulty, loss, and failure, when reflected on honestly, generate the deepest and most durable wisdom", "opts": ["Suffering is never educational", "Difficulty, loss, and failure, when reflected on honestly, generate the deepest and most durable wisdom", "Wisdom comes from avoiding mistakes", "Suffering only creates trauma"]}, {"q": "What is 'virtue ethics' and how does it relate to mentorship?", "a": "The cultivation of character virtues through practice \u2014 mentors transmit virtues through relationship, not instruction alone", "opts": ["Teaching rules of conduct", "The cultivation of character virtues through practice \u2014 mentors transmit virtues through relationship, not instruction alone", "Learning about historical virtues", "Religious moral education"]}, {"q": "What is the 'formation' model of education vs. the 'information' model?", "a": "Formation shapes character, judgment, and identity; information only transfers facts and procedures", "opts": ["Formation is slower than information", "Formation shapes character, judgment, and identity; information only transfers facts and procedures", "They are complementary approaches", "Formation is religious; information is secular"]}, {"q": "What is 'sovereign character'?", "a": "A stable inner identity grounded in values that persists and guides action regardless of external pressure", "opts": ["A dominant personality", "A stable inner identity grounded in values that persists and guides action regardless of external pressure", "Being resistant to influence", "Strong leadership skills"]}, {"q": "What is the 'wisdom paradox'?", "a": "The deeper a person's wisdom, the more they understand how little they know", "opts": ["Wise people are often wrong", "The deeper a person's wisdom, the more they understand how little they know", "Wisdom creates confusion", "Smart people overcomplicate things"]}, {"q": "What is 'intergenerational justice'?", "a": "The moral obligation of each generation to preserve and transmit accumulated knowledge to those who follow", "opts": ["Equal rights across age groups", "The moral obligation of each generation to preserve and transmit accumulated knowledge to those who follow", "Fair treatment of older people", "Equal pay across generations"]}, {"q": "What does GSU's Civilization Builders program represent in philosophical terms?", "a": "An institutional answer to the failure of modernity to preserve intergenerational wisdom transmission", "opts": ["A career counseling program", "An institutional answer to the failure of modernity to preserve intergenerational wisdom transmission", "A volunteer mentorship program", "An educational nonprofit"]}, {"q": "What is 'epistemic justice' in education?", "a": "Ensuring all people \u2014 regardless of background \u2014 have access to the knowledge needed to understand their world and act in it", "opts": ["Equal grades for all students", "Ensuring all people \u2014 regardless of background \u2014 have access to the knowledge needed to understand their world and act in it", "Justice for educated people", "Academic freedom"]}, {"q": "What is the 'sovereign legacy'?", "a": "Building something that outlasts you \u2014 knowledge, institutions, and values transmitted to those who come after", "opts": ["Financial inheritance", "Building something that outlasts you \u2014 knowledge, institutions, and values transmitted to those who come after", "A famous reputation", "A named scholarship"]}, {"q": "What is the deepest form of teaching according to the wisdom tradition?", "a": "Living in such a way that others are transformed by the relationship itself, not just the instruction", "opts": ["Perfect explanation of concepts", "Living in such a way that others are transformed by the relationship itself, not just the instruction", "Creating the best materials", "Challenging students rigorously"]}, {"q": "What is the ultimate message of The Wisdom Bridge?", "a": "The transmission of earned wisdom from those who have lived it to those who need it is the most powerful form of education", "opts": ["Books can replace mentors", "The transmission of earned wisdom from those who have lived it to those who need it is the most powerful form of education", "Technology will solve the mentorship gap", "Schools are the best path to wisdom"]}]};const OK=["Exactly right \u2014 sovereign thinking at work.", "Correct! That insight will serve you well.", "Sharp. You're building real understanding.", "Right on. That's the clarity this subject demands.", "Perfect \u2014 that's mastery-level thinking."];const BAD=["Study the correct answer \u2014 it contains a key insight.", "Close, but the distinction matters. Review and continue.", "The correct answer reveals something important. Take note.", "Precision matters here. The right answer is now shown."];const KEY='wisdomBridge';
-let tier=0,qi=0,corr=0,tot=0,streak=0,answered=false,qs=[];
-function startGame(){document.getElementById('startDiv').style.display='none';document.getElementById('gameArea').style.display='block';loadTier();}
-function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function loadTier(){qs=shuf([...Q[T[tier].n]]).slice(0,15);qi=0;updPills();showQ();}
-function showQ(){
-  answered=false;const q=qs[qi],n=(tier*15)+qi+1;
-  document.getElementById('tl').textContent=T[tier].l;
-  document.getElementById('qt').textContent=q.q;
-  document.getElementById('pf').style.width=((n-1)/60*100)+'%';
-  document.getElementById('pl').textContent=`Question ${n} of 60 · ${T[tier].n} Level`;
-  const og=document.getElementById('og');og.innerHTML='';
-  shuf([...q.opts]).forEach(o=>{const b=document.createElement('button');b.className='ob';b.textContent=o;b.onclick=()=>chk(b,o,q.a);og.appendChild(b);});
-  document.getElementById('fb').style.display='none';document.getElementById('nb').style.display='none';
-  document.getElementById('gt').textContent="What's your answer?";speak(q.q);
+<!-- ============================================================= -->
+<!-- GSU · /wisdom-bridge  ·  Routing: paste-in block → Webflow Embed -->
+<!-- COMPLETE FILE — select-all paste-over.                          -->
+<!-- Standards: pure black #000; navy/teal = accents only; gold trim; -->
+<!-- Georgia headings; FAQPage + LearningResource JSON-LD; GENO.      -->
+<!-- ============================================================= -->
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LearningResource",
+  "name":"The Wisdom Bridge",
+  "description":"A free program from Global Sovereign University that connects every nonfiction book it publishes to a digital mastery checkpoint: read the chapter, then prove comprehension before advancing. Applies the classical Trivium — Grammar, Logic, Rhetoric — to adult and homeschool learning.",
+  "educationalUse":"reading comprehension, mastery checkpoint",
+  "learningResourceType":"program",
+  "teaches":"reading comprehension, critical thinking, classical Trivium",
+  "isAccessibleForFree":true,
+  "audience":{"@type":"EducationalAudience","educationalRole":"homeschool families and adult learners"},
+  "provider":{"@type":"CollegeOrUniversity","name":"Global Sovereign University","url":"https://globalsovereignuniversity.org"}
 }
-function chk(btn,sel,a){
-  if(answered)return;answered=true;tot++;const ok=sel===a;
-  document.querySelectorAll('.ob').forEach(b=>{b.disabled=true;if(b.textContent===a)b.classList.add('correct');});
-  const fb=document.getElementById('fb');
-  if(ok){btn.classList.add('correct');corr++;streak++;const m=OK[Math.floor(Math.random()*OK.length)];fb.className='fb correct';fb.textContent='✓ '+m;document.getElementById('gt').textContent=m;speak('Correct! '+m);}
-  else{btn.classList.add('wrong');streak=0;const m=BAD[Math.floor(Math.random()*BAD.length)];fb.className='fb wrong';fb.textContent='✗ Correct answer: '+a;document.getElementById('gt').textContent=m;speak(m);}
-  fb.style.display='block';document.getElementById('nb').style.display='block';updStats();
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+   {"@type":"Question","name":"What exactly is the Wisdom Bridge?","acceptedAnswer":{"@type":"Answer","text":"It is GSU's method for connecting every printed book it publishes to a free digital mastery checkpoint. The book delivers the knowledge; the digital hub proves you absorbed it. You do not move forward until you can demonstrate comprehension."}},
+   {"@type":"Question","name":"Is this only for homeschooling families?","acceptedAnswer":{"@type":"Answer","text":"No. Homeschool families are the primary audience, but the program is open to every adult who wants real education and to every educator who wants a sequenced method. The materials are the same."}},
+   {"@type":"Question","name":"How much does this cost?","acceptedAnswer":{"@type":"Answer","text":"The digital companion for every Wisdom Bridge title is free — no login, no subscription, no advertising. The printed books are available on Amazon at the cost of printing, with royalties donated back to the Foundation for Global Instruction, a 501(c)(3)."}},
+   {"@type":"Question","name":"Why physical books at all? Why not go fully digital?","acceptedAnswer":{"@type":"Answer","text":"Deep comprehension requires deep focus, and digital environments are engineered to fragment focus. The printed page enforces sustained attention; the hub proves the book landed."}},
+   {"@type":"Question","name":"What's the connection to the Trivium?","acceptedAnswer":{"@type":"Answer","text":"The Trivium's three stages — Grammar (input), Logic (process), Rhetoric (output) — map onto the book, the digital checkpoint, and discussion and real-world application."}},
+   {"@type":"Question","name":"How is this different from a textbook with a QR code in the back?","acceptedAnswer":{"@type":"Answer","text":"A normal QR code points to bonus content. The Wisdom Bridge points to a checkpoint that requires you to demonstrate mastery before you can advance. It is accountability infrastructure, not a bonus."}},
+   {"@type":"Question","name":"What if I get stuck on a chapter?","acceptedAnswer":{"@type":"Answer","text":"GENO, GSU's free AI tutor, is available 24/7 to explain any concept a second way. GENO understands 70+ languages, 32 fully optimized — a robot you can actually talk to."}},
+   {"@type":"Question","name":"Who is Dr. Gene Constant?","acceptedAnswer":{"@type":"Answer","text":"Founder of Global Sovereign University and the Foundation for Global Instruction, a 501(c)(3). U.S. Navy and Marine Corps veteran, Doctor of Business Administration, and author of more than 200 published titles, all donated to the foundation."}},
+   {"@type":"Question","name":"How do I start?","acceptedAnswer":{"@type":"Answer","text":"Begin with the book that names the mission — The Wisdom Bridge — then move into a subject title that matches the gap you most need to cross."}}
+  ]
 }
-function nextQ(){qi++;if(qi>=15)awardBadge();else showQ();}
-function awardBadge(){
-  const t=T[tier];document.getElementById('bsi').textContent=t.i;document.getElementById('bst').textContent=t.n+' Badge Earned!';document.getElementById('bsm').textContent=t.m;
-  document.getElementById('bss').classList.add('show');localStorage.setItem(KEY+'_'+t.n.toLowerCase(),'1');document.getElementById('pill-'+t.n.toLowerCase()).classList.add('earned');
-  speak('Congratulations! You earned the '+t.n+' badge!');
+</script>
+
+<style>
+.wb-page{
+  --navy:#1B2A4A;          /* accent only */
+  --gold:#C9A84C;
+  --gold-bright:#E0BE5A;
+  --gold-soft:rgba(201,168,76,.14);
+  --teal:#1A8B7F;          /* accent only */
+  --cream:#F5F1E8;
+  --cream-dim:rgba(245,241,232,.78);
+  --cream-faintest:rgba(245,241,232,.35);
+  --border:rgba(201,168,76,.28);
+  --border-bright:rgba(201,168,76,.55);
+  --border-faint:rgba(245,241,232,.12);
+  --panel:#0b0b0b;
+  --panel-2:#0d0d0d;
+  background:#000;
 }
-function contTier(){document.getElementById('bss').classList.remove('show');tier++;if(tier>=4){document.getElementById('gameArea').style.display='none';document.getElementById('doneDiv').style.display='block';}else loadTier();}
-function updPills(){T.forEach((t,i)=>{const p=document.getElementById('pill-'+t.n.toLowerCase());p.classList.remove('active');if(i===tier)p.classList.add('active');});}
-function updStats(){document.getElementById('sc').textContent=corr;document.getElementById('st').textContent=streak;document.getElementById('sp').textContent=tot?Math.round(corr/tot*100)+'%':'0%';}
-function restart(){tier=0;qi=0;corr=0;tot=0;streak=0;document.getElementById('doneDiv').style.display='none';document.getElementById('gameArea').style.display='block';updStats();loadTier();}
-function speak(t){try{if('speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=.95;speechSynthesis.speak(u);}}catch(e){}}
-window.onload=()=>{['bronze','silver','gold','platinum'].forEach(t=>{if(localStorage.getItem(KEY+'_'+t))document.getElementById('pill-'+t).classList.add('earned');});};</script></body></html>
+.wb-page ::selection{background:var(--gold);color:#000}
+
+/* HERO — pure black with a gold glow */
+.wb-page .hero{background:#000;padding:100px 24px 80px;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.wb-page .hero::before{content:"";position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);width:1100px;height:1100px;background:radial-gradient(circle,var(--gold-soft) 0%,transparent 62%);pointer-events:none;opacity:.7}
+.wb-page .hero-inner{max-width:920px;margin:0 auto;position:relative;z-index:1}
+.wb-page .eyebrow{font-family:-apple-system,sans-serif;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.32em;text-transform:uppercase;margin-bottom:24px}
+.wb-page .hero h1{font-family:Georgia,serif;font-size:clamp(48px,8vw,96px);line-height:1.02;font-weight:700;margin-bottom:24px;color:var(--cream);letter-spacing:-.025em}
+.wb-page .hero h1 em{color:var(--gold);font-style:italic;font-weight:700}
+.wb-page .hero-sub{font-family:Georgia,serif;font-size:clamp(20px,2.6vw,26px);color:var(--cream-dim);font-style:italic;line-height:1.45;max-width:720px;margin:0 auto 24px}
+.wb-page .hero-sub strong{color:var(--cream);font-style:normal;font-weight:700}
+
+.wb-page .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:880px;margin:48px auto 0;text-align:left}
+@media (max-width:760px){.wb-page .stats-row{grid-template-columns:1fr;gap:16px}}
+.wb-page .stat{border-left:2px solid var(--gold);padding:8px 0 8px 18px}
+.wb-page .stat-num{font-family:Georgia,serif;font-size:32px;color:var(--gold);font-weight:700;line-height:1;margin-bottom:6px}
+.wb-page .stat-text{font-family:Georgia,serif;font-size:14px;color:var(--cream-dim);line-height:1.5}
+.wb-page .stat-source{font-family:-apple-system,sans-serif;font-size:10px;color:var(--cream-faintest);letter-spacing:.18em;text-transform:uppercase;margin-top:4px}
+
+/* BANDS — all pure black */
+.wb-page .answer-band{background:#000;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 24px}
+.wb-page .answer-inner{max-width:820px;margin:0 auto}
+.wb-page .answer-eyebrow{font-family:-apple-system,sans-serif;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:16px;text-align:center}
+.wb-page .answer-text{font-family:Georgia,serif;font-size:19px;line-height:1.7;color:var(--cream);text-align:center;margin-bottom:36px}
+.wb-page .answer-text strong{color:var(--gold-bright);font-weight:700}
+.wb-page .quick-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+@media (max-width:760px){.wb-page .quick-facts{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:440px){.wb-page .quick-facts{grid-template-columns:1fr}}
+.wb-page .fact{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px}
+.wb-page .fact-label{font-family:-apple-system,sans-serif;font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
+.wb-page .fact-value{font-family:Georgia,serif;font-size:16px;color:var(--cream);line-height:1.35}
+
+.wb-page .featured-book{background:#000;border-bottom:1px solid var(--border);padding:80px 24px}
+.wb-page .featured-inner{max-width:980px;margin:0 auto}
+.wb-page .featured-grid{display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center}
+@media (max-width:720px){.wb-page .featured-grid{grid-template-columns:1fr;gap:32px;text-align:center}}
+.wb-page .cover-frame{display:block;border-radius:8px;overflow:hidden;border:1px solid var(--border);box-shadow:0 24px 50px rgba(0,0,0,.6);background:#000;transition:transform .3s ease;max-width:280px;margin:0 auto}
+.wb-page .cover-frame:hover{transform:translateY(-4px)}
+.wb-page .featured-cover{display:block;width:100%;height:auto}
+.wb-page .featured-eyebrow{font-family:-apple-system,sans-serif;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.24em;text-transform:uppercase;margin-bottom:14px}
+.wb-page .featured-title{font-family:Georgia,serif;font-size:38px;color:var(--cream);font-weight:700;line-height:1.1;margin-bottom:12px;letter-spacing:-.015em}
+.wb-page .featured-byline{font-family:Georgia,serif;font-style:italic;font-size:17px;color:var(--cream-dim);margin-bottom:18px}
+.wb-page .featured-body{font-family:Georgia,serif;font-size:17px;line-height:1.7;color:var(--cream);margin-bottom:24px}
+.wb-page .featured-body strong{color:var(--gold-bright)}
+.wb-page .featured-buttons{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:720px){.wb-page .featured-buttons{justify-content:center}}
+
+.wb-page .section-eyebrow{font-family:-apple-system,sans-serif;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:16px;text-align:center}
+.wb-page .section-title{font-family:Georgia,serif;font-size:clamp(32px,4.6vw,46px);color:var(--cream);line-height:1.15;font-weight:700;margin-bottom:36px;text-align:center;letter-spacing:-.015em}
+.wb-page .section-title em{color:var(--gold);font-style:italic}
+
+.wb-page .problem-band{background:#000;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.wb-page .problem-inner{max-width:1080px;margin:0 auto;padding:80px 24px}
+.wb-page .problems-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
+@media (max-width:760px){.wb-page .problems-grid{grid-template-columns:1fr;gap:20px}}
+.wb-page .problem-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:36px 32px}
+.wb-page .problem-num{font-family:Georgia,serif;font-size:14px;color:var(--gold);font-weight:700;letter-spacing:.18em;margin-bottom:14px}
+.wb-page .problem-stat{font-family:Georgia,serif;font-size:42px;color:var(--cream);font-weight:700;line-height:1;margin-bottom:18px;letter-spacing:-.02em}
+.wb-page .problem-stat em{color:var(--gold);font-style:italic}
+.wb-page .problem-body{font-family:Georgia,serif;font-size:16px;line-height:1.65;color:var(--cream-dim);margin-bottom:18px}
+.wb-page .problem-body strong{color:var(--cream);font-weight:700}
+.wb-page .problem-source{font-family:-apple-system,sans-serif;font-size:10px;color:var(--cream-faintest);letter-spacing:.2em;text-transform:uppercase;padding-top:14px;border-top:1px dashed var(--border-faint)}
+
+.wb-page .pull-band{background:#000;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:64px 24px}
+.wb-page .pull-inner{max-width:820px;margin:0 auto}
+.wb-page .pull-quote{font-family:Georgia,serif;font-style:italic;font-size:clamp(22px,3vw,30px);line-height:1.45;color:var(--cream);margin-bottom:22px;border-left:3px solid var(--gold);padding:8px 0 8px 28px}
+.wb-page .pull-attribution{font-family:-apple-system,sans-serif;font-size:11px;color:var(--gold);letter-spacing:.22em;text-transform:uppercase;font-weight:700;padding-left:28px}
+
+.wb-page .who-section{background:#000;border-top:1px solid var(--border)}
+.wb-page .who-inner{max-width:820px;margin:0 auto;padding:80px 24px}
+.wb-page .who-inner p{font-family:Georgia,serif;font-size:18px;line-height:1.8;color:var(--cream);margin-bottom:24px}
+.wb-page .who-inner p strong{color:var(--gold-bright);font-weight:700}
+.wb-page .who-inner p em{color:var(--cream);font-style:italic}
+.wb-page .four-pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:48px}
+@media (max-width:680px){.wb-page .four-pillars{grid-template-columns:1fr}}
+.wb-page .pillar{border:1px solid var(--border);border-radius:12px;padding:28px 26px;background:var(--panel)}
+.wb-page .pillar-tag{font-family:-apple-system,sans-serif;font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.24em;text-transform:uppercase;margin-bottom:10px}
+.wb-page .pillar-title{font-family:Georgia,serif;font-size:22px;color:var(--cream);font-weight:700;margin-bottom:12px;line-height:1.25}
+.wb-page .pillar-body{font-family:Georgia,serif;font-size:15px;line-height:1.6;color:var(--cream-dim)}
+.wb-page .pillar-body strong{color:var(--cream)}
+
+.wb-page .trivium-section{background:#000;border-top:1px solid var(--border)}
+.wb-page .trivium-inner{max-width:1080px;margin:0 auto;padding:80px 24px}
+.wb-page .lead-c{text-align:center;max-width:680px;margin:0 auto;font-family:Georgia,serif;font-size:18px;color:var(--cream-dim);font-style:italic;line-height:1.7}
+.wb-page .trivium-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+@media (max-width:840px){.wb-page .trivium-grid{grid-template-columns:1fr;gap:20px}}
+.wb-page .trivium-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:36px 28px;text-align:center}
+.wb-page .trivium-numeral{font-family:Georgia,serif;font-size:48px;color:var(--gold);font-weight:700;font-style:italic;line-height:1;margin-bottom:14px;letter-spacing:.04em}
+.wb-page .trivium-stage{font-family:Georgia,serif;font-size:26px;color:var(--cream);font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+.wb-page .trivium-role{font-family:-apple-system,sans-serif;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.22em;text-transform:uppercase;margin-bottom:18px}
+.wb-page .trivium-body{font-family:Georgia,serif;font-size:15px;line-height:1.6;color:var(--cream-dim);margin-bottom:20px;text-align:left}
+.wb-page .trivium-form{font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--gold-bright);padding-top:16px;border-top:1px dashed var(--border-faint)}
+
+.wb-page .library-section{background:#000;border-top:1px solid var(--border)}
+.wb-page .library-inner{max-width:1080px;margin:0 auto;padding:80px 24px}
+.wb-page .two-books{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:48px}
+@media (max-width:760px){.wb-page .two-books{grid-template-columns:1fr;gap:28px}}
+.wb-page .book-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:36px 32px;text-align:center;transition:all .25s ease}
+.wb-page .book-card:hover{border-color:var(--border-bright);transform:translateY(-3px)}
+.wb-page .book-cover-link{display:block;width:200px;max-width:70%;margin:0 auto 24px;border-radius:6px;overflow:hidden;border:1px solid var(--border);box-shadow:0 16px 32px rgba(0,0,0,.6);background:#000}
+.wb-page .book-cover-img{display:block;width:100%;height:auto}
+.wb-page .book-tag{font-family:-apple-system,sans-serif;font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.24em;text-transform:uppercase;margin-bottom:10px}
+.wb-page .book-title{font-family:Georgia,serif;font-size:24px;color:var(--cream);font-weight:700;line-height:1.2;margin-bottom:8px}
+.wb-page .book-byline{font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--cream-dim);margin-bottom:16px}
+.wb-page .book-body{font-family:Georgia,serif;font-size:15px;line-height:1.6;color:var(--cream-dim);margin-bottom:20px;text-align:left}
+.wb-page .book-body strong{color:var(--cream)}
+
+.wb-page .faq-section{background:#000;border-top:1px solid var(--border)}
+.wb-page .faq-inner{max-width:820px;margin:0 auto;padding:80px 24px}
+.wb-page .faq-list{margin-top:48px}
+.wb-page .faq-item{border-top:1px solid var(--border-faint);padding:24px 0}
+.wb-page .faq-item:last-child{border-bottom:1px solid var(--border-faint)}
+.wb-page .faq-q{font-family:Georgia,serif;font-size:20px;color:var(--cream);font-weight:700;line-height:1.35;margin-bottom:12px;cursor:pointer;list-style:none;position:relative;padding-right:40px}
+.wb-page .faq-q::-webkit-details-marker{display:none}
+.wb-page .faq-q::after{content:"+";position:absolute;right:8px;top:-2px;color:var(--gold);font-size:28px;font-weight:400;transition:transform .2s ease}
+.wb-page details[open] .faq-q::after{content:"\2013"}
+.wb-page .faq-a{font-family:Georgia,serif;font-size:16px;line-height:1.7;color:var(--cream-dim);padding-top:6px}
+.wb-page .faq-a strong{color:var(--cream);font-weight:700}
+.wb-page .faq-a a{color:var(--gold-bright);text-decoration:none;border-bottom:1px solid var(--border)}
+
+/* CTA — black with gold glow + gold border (navy only as button text) */
+.wb-page .cta-section{background:#000;border-top:1px solid var(--border);padding:80px 24px;text-align:center;position:relative;overflow:hidden}
+.wb-page .cta-section::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(circle,var(--gold-soft) 0%,transparent 65%);pointer-events:none}
+.wb-page .cta-inner{max-width:880px;margin:0 auto;position:relative;z-index:1}
+.wb-page .cta-eyebrow{font-family:-apple-system,sans-serif;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.3em;text-transform:uppercase;margin-bottom:18px}
+.wb-page .cta-title{font-family:Georgia,serif;font-size:clamp(30px,4.4vw,44px);color:var(--cream);margin-bottom:18px;line-height:1.18;font-weight:700;letter-spacing:-.015em}
+.wb-page .cta-title em{color:var(--gold);font-style:italic}
+.wb-page .cta-text{font-family:Georgia,serif;font-size:19px;color:var(--cream-dim);margin-bottom:36px;line-height:1.6}
+.wb-page .cta-text strong{color:var(--cream);font-weight:700}
+.wb-page .cta-three{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:48px 0;text-align:left}
+@media (max-width:760px){.wb-page .cta-three{grid-template-columns:1fr}}
+.wb-page .cta-step{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:28px 26px}
+.wb-page .cta-step-num{font-family:Georgia,serif;font-size:30px;color:var(--gold);font-weight:700;font-style:italic;line-height:1;margin-bottom:14px}
+.wb-page .cta-step-title{font-family:Georgia,serif;font-size:20px;color:var(--cream);font-weight:700;margin-bottom:10px;line-height:1.25}
+.wb-page .cta-step-body{font-family:Georgia,serif;font-size:15px;line-height:1.6;color:var(--cream-dim)}
+.wb-page .geno-line{font-family:Georgia,serif;font-size:16px;color:var(--cream-dim);margin:8px 0 28px}
+.wb-page .geno-line a{color:var(--gold-bright);text-decoration:none;font-weight:700;border-bottom:1px solid var(--border)}
+.wb-page .cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.wb-page .sig{font-family:Georgia,serif;font-style:italic;font-size:15px;color:var(--cream-faintest);margin-top:36px;line-height:1.6}
+.wb-page .btn{display:inline-block;padding:16px 30px;border-radius:8px;font-family:-apple-system,sans-serif;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:all .2s;border:2px solid transparent;cursor:pointer}
+.wb-page .btn-primary{background:var(--gold);color:#1a1407}
+.wb-page .btn-primary:hover{background:var(--gold-bright)}
+.wb-page .btn-secondary{background:transparent;color:var(--cream);border-color:var(--border-bright)}
+.wb-page .btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+
+<div class="wb-page">
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Global Sovereign University &middot; The Wisdom Bridge</div>
+    <h1>The Wisdom <em>Bridge</em></h1>
+    <p class="hero-sub">Where the printed word meets digital mastery.<br><strong>This is how we turn the tide.</strong></p>
+    <p style="font-family:Georgia,serif;font-size:17px;color:var(--cream-dim);line-height:1.7;max-width:720px;margin:0 auto;font-style:italic">A crisis of comprehension is moving through the global population &mdash; quietly, generation by generation. GSU was built to correct it. The Wisdom Bridge is the method: every book we publish bridges the printed page to a digital mastery checkpoint. Not more content to consume. Proof that you can use what you read.</p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">54%</div>
+        <div class="stat-text">of U.S. adults read below a 6th-grade level</div>
+        <div class="stat-source">Nat'l Center for Education Statistics</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1 in 3</div>
+        <div class="stat-text">college students have not completed a full book</div>
+        <div class="stat-source">American Academy of Arts &amp; Sciences</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">$1.2T</div>
+        <div class="stat-text">in student debt for credentials that don't build competency</div>
+        <div class="stat-source">Federal Reserve</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="answer-band">
+  <div class="answer-inner">
+    <div class="answer-eyebrow">What the Wisdom Bridge Is</div>
+    <p class="answer-text">The Wisdom Bridge is a <strong>free educational program from Global Sovereign University</strong> that connects every printed nonfiction book GSU publishes to a digital mastery checkpoint. The reader reads the chapter, scans a QR code at the end, and completes interactive exercises that prove comprehension before unlocking the next module. The method applies the classical Trivium &mdash; Grammar, Logic, Rhetoric &mdash; to adult and homeschool learning. Every digital checkpoint is donated. No login. No tuition. No advertising.</p>
+
+    <div class="quick-facts">
+      <div class="fact"><div class="fact-label">Cost</div><div class="fact-value">Free &mdash; always</div></div>
+      <div class="fact"><div class="fact-label">Primary Audience</div><div class="fact-value">Homeschool families &amp; adult learners</div></div>
+      <div class="fact"><div class="fact-label">Founded</div><div class="fact-value">2025 &middot; Eugene, Oregon</div></div>
+      <div class="fact"><div class="fact-label">Organization</div><div class="fact-value">501(c)(3) nonprofit &middot; EIN 39-2716552</div></div>
+      <div class="fact"><div class="fact-label">Published Titles</div><div class="fact-value">200+ donated to GSU</div></div>
+      <div class="fact"><div class="fact-label">Free Tutor</div><div class="fact-value">GENO &mdash; 24/7, a robot you can TALK to</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="featured-book">
+  <div class="featured-inner">
+    <div class="featured-grid">
+      <a class="cover-frame" href="https://www.amazon.com/dp/B0FSX1CCZJ?tag=gsu2026-20" target="_blank" rel="noopener" aria-label="The Wisdom Bridge on Amazon">
+        <img class="featured-cover" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a15e5f55fd5536fe2184a66_the%20wisdom%20bridge%20book%20cover-%202x.png" alt="The Wisdom Bridge book cover" loading="lazy" />
+      </a>
+      <div class="featured-text">
+        <div class="featured-eyebrow">Now Available &middot; The Anchor Title</div>
+        <h2 class="featured-title">The Wisdom Bridge</h2>
+        <p class="featured-byline">Teach a Man to Fish: The Global Sovereignty Trilogy &middot; Dr. Gene A. Constant</p>
+        <p class="featured-body">The book that names the mission. The philosophical foundation of everything GSU builds &mdash; the argument that genuine education, freely given, is <strong>the most powerful act of sovereignty</strong> a person can receive or provide.</p>
+        <div class="featured-buttons">
+          <a href="https://www.amazon.com/dp/B0FSX1CCZJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn btn-primary">Get the Book on Amazon</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem-band">
+  <div class="problem-inner">
+    <div class="section-eyebrow">The Problem We Are Solving</div>
+    <h2 class="section-title">The Global Comprehension Crisis <em>Is Not Getting Better.</em></h2>
+    <p class="lead-c">The trend is measurable, documented, and accelerating. These are not projections. They are the current state of literacy in the world's most credentialed nation.</p>
+
+    <div class="problems-grid">
+      <div class="problem-card">
+        <div class="problem-num">01</div>
+        <div class="problem-stat">54%</div>
+        <p class="problem-body">More than half of American adults read below a sixth-grade level. <strong>They are not unintelligent.</strong> They were never correctly taught to decode written language &mdash; and no institution has gone back to fix it.</p>
+        <div class="problem-source">Source: National Center for Education Statistics</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">02</div>
+        <div class="problem-stat">1 <em>in</em> 3</div>
+        <p class="problem-body">College students who have not completed a single book in the past year. <strong>Grade inflation and social promotion</strong> have pushed tens of millions through schools without requiring sustained engagement with a complete text.</p>
+        <div class="problem-source">Source: American Academy of Arts &amp; Sciences</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">03</div>
+        <div class="problem-stat">Declining</div>
+        <p class="problem-body">Reading comprehension scores at every level have trended downward for two decades. <strong>The ability to read and the ability to comprehend what has been read are two different skills</strong> &mdash; and neither is systematically taught.</p>
+        <div class="problem-source">Source: NAEP Long-Term Trend Assessment</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-num">04</div>
+        <div class="problem-stat"><em>By Design</em></div>
+        <p class="problem-body">The system was not architected to produce capable, self-governing adults. <strong>It was architected to produce measurable outputs that justify institutions.</strong> The credential is issued. The competency is frequently not built.</p>
+        <div class="problem-source">Source: Dr. Gene A. Constant, The Fog-Industrial Complex</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pull-band">
+  <div class="pull-inner">
+    <p class="pull-quote">The most effective strategy is often to hijack the current &mdash; using the digital habits readers already have to lead them back to the deep, focused engagement of the printed word.</p>
+    <div class="pull-attribution">&mdash; The Strategic Insight Behind the Phygital Initiative</div>
+  </div>
+</section>
+
+<section class="who-section">
+  <div class="who-inner">
+    <div class="section-eyebrow">Who We Are</div>
+    <h2 class="section-title">Global Sovereign University <em>Was Built as the Answer.</em></h2>
+
+    <p>Global Sovereign University is a <strong>free 501(c)(3) nonprofit</strong> founded on a single conviction: the education the system withheld belongs to every person who was failed by that system. No tuition. No prior credential required. No debt.</p>
+
+    <p>GSU was launched by Dr. Gene A. Constant &mdash; U.S. Navy and Marine Corps veteran, Doctor of Business Administration, and author of more than <strong>200 published titles</strong>, all donated to the mission. The platform serves learners across every curriculum area: mathematics, literacy, financial literacy, digital safety, trades, civic reasoning, and more.</p>
+
+    <p>The Wisdom Bridge is the most ambitious program GSU has ever built. It takes every non-fiction title in the library and connects it to a digital mastery checkpoint that makes passive reading impossible. <strong>You do not move forward until you prove you understood what you read.</strong></p>
+
+    <p>This is not supplementary content. This is the Trivium applied to adult learning &mdash; the classical three-stage method that built the civilization we inherited, now restored and deployed at scale.</p>
+
+    <div class="four-pillars">
+      <div class="pillar">
+        <div class="pillar-tag">The Thesis</div>
+        <div class="pillar-title">A Second Chance at Real Education</div>
+        <p class="pillar-body">Every person the system failed is entitled to a second chance at real education. Not watered-down. Not credentialed without competency. The real thing.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-tag">The Method</div>
+        <div class="pillar-title">Deep Reading + Digital Accountability</div>
+        <p class="pillar-body">A focused book anchored to a digital accountability checkpoint. The book delivers knowledge. The hub proves mastery. Together they build sovereign minds.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-tag">The Scale</div>
+        <div class="pillar-title">One System, Unlimited Reach</div>
+        <p class="pillar-body"><em>The Wisdom Bridge</em> names the mission. The architecture supports dozens of titles across every GSU curriculum area. One system. Unlimited reach.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-tag">The Cost</div>
+        <div class="pillar-title">Free. That Is Not a Feature.</div>
+        <p class="pillar-body">Free. No login required. No subscription. No gatekeeping. The digital hubs, the games, the curriculum &mdash; all of it. Free. <strong>That is not a feature. That is the mission.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trivium-section">
+  <div class="trivium-inner">
+    <div class="section-eyebrow">The Architecture</div>
+    <h2 class="section-title">The Classical Foundation: <em>The Trivium</em></h2>
+    <p class="lead-c">Most publishers treat the digital hub as an appendix &mdash; more content to consume. GSU treats it as an accountability checkpoint. The difference is everything.</p>
+
+    <div class="trivium-grid">
+      <div class="trivium-card">
+        <div class="trivium-numeral">I</div>
+        <div class="trivium-stage">Grammar</div>
+        <div class="trivium-role">Input &middot; Foundation</div>
+        <p class="trivium-body">The book delivers knowledge &mdash; vocabulary, frameworks, facts, patterns. The reader absorbs foundational content through sustained, focused reading.</p>
+        <div class="trivium-form">The book</div>
+      </div>
+      <div class="trivium-card">
+        <div class="trivium-numeral">II</div>
+        <div class="trivium-stage">Logic</div>
+        <div class="trivium-role">Process &middot; Test</div>
+        <p class="trivium-body">The digital hub challenges the reader with interactive scenarios, mastery checkpoints, and critical-thinking exercises. Understanding is tested &mdash; not assumed.</p>
+        <div class="trivium-form">The digital checkpoint</div>
+      </div>
+      <div class="trivium-card">
+        <div class="trivium-numeral">III</div>
+        <div class="trivium-stage">Rhetoric</div>
+        <div class="trivium-role">Output &middot; Application</div>
+        <p class="trivium-body">Readers apply concepts in real-world scenarios and demonstrate the skill in their own words &mdash; with GENO, the free AI tutor, ready to explain anything a second way. Knowledge becomes capability.</p>
+        <div class="trivium-form">The GSU community</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="library-section">
+  <div class="library-inner">
+    <div class="section-eyebrow">The Library</div>
+    <h2 class="section-title">Two Books. <em>One Mission.</em></h2>
+    <p class="lead-c">The Wisdom Bridge names the why. The Trivium Expanded Edition delivers the how. Both are in print. Both are donated to GSU. Both ship free of advertising.</p>
+
+    <div class="two-books">
+      <div class="book-card">
+        <a href="https://www.amazon.com/dp/B0FSX1CCZJ?tag=gsu2026-20" target="_blank" rel="noopener" class="book-cover-link" aria-label="The Wisdom Bridge on Amazon">
+          <img class="book-cover-img" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a15e5f55fd5536fe2184a66_the%20wisdom%20bridge%20book%20cover-%202x.png" alt="The Wisdom Bridge book cover" loading="lazy" />
+        </a>
+        <div class="book-tag">The Mission</div>
+        <h3 class="book-title">The Wisdom Bridge</h3>
+        <p class="book-byline">Teach a Man to Fish: The Global Sovereignty Trilogy</p>
+        <p class="book-body">The argument that genuine education, freely given, is <strong>the most powerful act of sovereignty</strong> a person can receive or provide. Names the why behind everything GSU builds.</p>
+        <a href="https://www.amazon.com/dp/B0FSX1CCZJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn btn-secondary">Get on Amazon</a>
+      </div>
+
+      <div class="book-card">
+        <a href="https://www.amazon.com/dp/B0GNP46HWL?tag=gsu2026-20" target="_blank" rel="noopener" class="book-cover-link" aria-label="The Trivium Expanded Edition on Amazon">
+          <img class="book-cover-img" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a15e7c63f4ca5d1c0b3226e_the%20trivium%20book.jpg" alt="The Trivium Expanded Edition book cover" loading="lazy" />
+        </a>
+        <div class="book-tag">The Method &middot; Sovereign Trivium Vol. 1</div>
+        <h3 class="book-title">The Trivium &mdash; Expanded Edition</h3>
+        <p class="book-byline">Grammar, Logic, Rhetoric &mdash; Restored for the 21st Century</p>
+        <p class="book-body">The classical three-stage method that built the civilization we inherited, returned to working form. <strong>Volume One of the forthcoming Sovereign Trivium series</strong> &mdash; with Logic and Rhetoric to follow.</p>
+        <a href="https://www.amazon.com/dp/B0GNP46HWL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn btn-secondary">Get on Amazon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="section-eyebrow">Frequently Asked</div>
+    <h2 class="section-title">Questions <em>Worth Answering</em></h2>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary class="faq-q">What exactly is the Wisdom Bridge?</summary>
+        <div class="faq-a">The Wisdom Bridge is GSU's method for connecting every printed book it publishes to a free digital mastery checkpoint. The book delivers the knowledge. The digital hub proves you absorbed it. <strong>You do not move forward until you can demonstrate the comprehension.</strong> The book of the same name is the philosophical foundation of the program.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Is this only for homeschooling families?</summary>
+        <div class="faq-a">Homeschoolers are the primary audience because the Wisdom Bridge fits naturally into a family-led learning environment &mdash; one parent, one child, one book, one checkpoint at a time. But the program is open to every adult who wants real education and to every educator who wants a sequenced, science-grounded method they can hand a learner. <strong>The materials are the same. The bridge works for anyone willing to cross it.</strong></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">How much does this cost?</summary>
+        <div class="faq-a">The digital companion for every Wisdom Bridge title is free &mdash; no login, no subscription, no advertising. The printed books are available on Amazon at the cost of printing, with royalties donated back to the Foundation for Global Instruction, a 501(c)(3), to underwrite the free infrastructure. <strong>The learning itself is never behind a paywall.</strong></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Why physical books at all? Why not just go fully digital?</summary>
+        <div class="faq-a">Because deep comprehension requires deep focus, and deep focus is the one thing the digital environment is actively engineered to fragment. The printed page enforces sustained attention in a way no app can replicate. <strong>The hub is not a replacement for the book. It is proof that the book landed.</strong></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">What's the connection to the Trivium?</summary>
+        <div class="faq-a">The Trivium is the classical three-stage method of learning: Grammar (input), Logic (process), Rhetoric (output). The Wisdom Bridge applies that ancient sequence to modern adult learning. The book is the Grammar stage. The digital checkpoint is the Logic stage. Discussion, community, and real-world application are the Rhetoric stage. <strong>The Trivium Expanded Edition is the companion volume that teaches the method in full.</strong></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">How is this different from a textbook with a QR code in the back?</summary>
+        <div class="faq-a">A QR code in a textbook usually points to a video, an author interview, or a supplementary reading. <strong>The Wisdom Bridge points to a checkpoint that requires you to demonstrate mastery before you can advance.</strong> It is not bonus content. It is accountability infrastructure.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">What if I get stuck on a chapter?</summary>
+        <div class="faq-a">You are never stuck alone. <strong>GENO, GSU's free AI tutor, is available 24/7</strong> &mdash; a robot you can actually <em>talk</em> to. GENO will explain any concept a second way, in plain language, and understands 70+ languages (32 fully optimized). <a href="/meet-geno">Meet GENO &rarr;</a></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Who is Dr. Gene Constant?</summary>
+        <div class="faq-a">Founder of Global Sovereign University and the Foundation for Global Instruction (501(c)(3)). U.S. Navy and Marine Corps veteran. Doctor of Business Administration. Author of more than 200 published titles, all donated to the foundation. <strong>The full bio appears in every GSU Press book.</strong></div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">How do I start?</summary>
+        <div class="faq-a">Begin with the book that names the mission: <em>The Wisdom Bridge</em>. Read it. Then move into one of the subject-specific titles in the GSU library &mdash; <em>Grammar for the Real World</em>, <em>The Reader's Toolkit: Decoding</em>, <em>The Code That Unlocks Reading</em>, <em>The Trivium Expanded Edition</em>. Each one is its own bridge across its own gap. <strong>The first step is choosing the one that matches the bridge you most need to cross.</strong></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Your Next Move</div>
+    <h2 class="cta-title">This Is Not a <em>Passive</em> Reading Experience.</h2>
+    <p class="cta-text">
+      GSU was built for people who are ready to stop consuming and start mastering. <strong>The Wisdom Bridge makes that real</strong> &mdash; one chapter, one checkpoint, one proven skill at a time.
+    </p>
+
+    <div class="cta-three">
+      <div class="cta-step">
+        <div class="cta-step-num">I.</div>
+        <div class="cta-step-title">Get the Anchor Book</div>
+        <p class="cta-step-body">Start with <em>The Wisdom Bridge</em> &mdash; the book that names the mission and explains the method in full.</p>
+      </div>
+      <div class="cta-step">
+        <div class="cta-step-num">II.</div>
+        <div class="cta-step-title">Learn the Method</div>
+        <p class="cta-step-body">Read <em>The Trivium Expanded Edition</em> &mdash; the classical three-stage learning method, restored for the 21st century.</p>
+      </div>
+      <div class="cta-step">
+        <div class="cta-step-num">III.</div>
+        <div class="cta-step-title">Tell Someone</div>
+        <p class="cta-step-body">Share this page with one person who is struggling with literacy, who has a book they have not finished, or who gave up on reading. <strong>This was built for them.</strong></p>
+      </div>
+    </div>
+
+    <p class="geno-line">Stuck on a chapter at any point? <a href="/meet-geno">Ask GENO &mdash; the free 24/7 tutor you can talk to &rarr;</a></p>
+
+    <div class="cta-buttons">
+      <a href="https://www.amazon.com/dp/B0FSX1CCZJ?tag=gsu2026-20" target="_blank" rel="noopener" class="btn btn-primary">The Wisdom Bridge &mdash; Get the Book</a>
+      <a href="https://www.amazon.com/dp/B0GNP46HWL?tag=gsu2026-20" target="_blank" rel="noopener" class="btn btn-secondary">The Trivium &mdash; Expanded Edition</a>
+    </div>
+
+    <p class="sig">&ldquo;Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow.&rdquo; &mdash; Dr. Gene A. Constant</p>
+  </div>
+</section>
+
+</div>
