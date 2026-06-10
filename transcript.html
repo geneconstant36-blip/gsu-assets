@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Sovereign Transcript &amp; Homeschool Portfolio — Free, Private | Global Sovereign University</title>
+<meta name="description" content="Generate a free, printable homeschool transcript and portfolio from your child's progress on Global Sovereign University. Nothing leaves your device. No account, no cost — the record belongs to your family.">
+<meta property="og:title" content="The Sovereign Transcript &amp; Homeschool Portfolio | GSU">
+<meta property="og:description" content="A free, private, printable homeschool progress report. The record belongs to the family, not the institution.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;line-height:1.7}
+a{color:#C9A84C}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+header.top{border-bottom:1px solid #8A6D2F;padding:18px 0}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.crumb{font-size:.95rem;letter-spacing:.12em;color:#C9A84C;text-decoration:none}
+.crumb b{color:#F5F1E8}
+.hero{padding:60px 0 30px;text-align:center}
+.hero h1{font-size:clamp(2rem,5vw,3rem);color:#C9A84C;letter-spacing:.03em;margin-bottom:14px}
+.hero p.tag{font-size:1.15rem;max-width:780px;margin:0 auto;font-style:italic}
+.privacy{border:1px solid #1A8B7F;background:#06120f;padding:18px 22px;margin:26px 0;border-radius:2px}
+.privacy b{color:#C9A84C}
+.band{padding:34px 0;border-top:1px solid #1a1a1a}
+h2.sec{color:#C9A84C;font-size:1.5rem;margin-bottom:16px;letter-spacing:.03em}
+label{display:block;color:#C9A84C;font-size:.82rem;letter-spacing:.1em;margin:0 0 6px;text-transform:uppercase}
+input,select,textarea{width:100%;background:#0d0d0d;border:1px solid #8A6D2F;color:#F5F1E8;font-family:Georgia,serif;font-size:1rem;padding:11px;margin-bottom:16px}
+textarea{min-height:70px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 14px}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+.btn{background:#C9A84C;color:#000;border:0;padding:13px 30px;font-family:Georgia,serif;font-size:1rem;letter-spacing:.06em;cursor:pointer;margin:4px 8px 4px 0}
+.btn.ghost{background:transparent;color:#C9A84C;border:1px solid #C9A84C}
+.btn:hover{opacity:.9}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #2a2419;font-size:1rem}
+th{color:#C9A84C;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
+.subj-h{color:#C9A84C;font-size:1.15rem;margin:24px 0 4px;border-bottom:1px solid #8A6D2F;padding-bottom:6px}
+.badge{display:inline-block;padding:3px 11px;border:1px solid;font-size:.8rem;letter-spacing:.06em;border-radius:2px}
+.b-bronze{color:#cd9b62;border-color:#cd9b62}
+.b-silver{color:#cfd2d6;border-color:#cfd2d6}
+.b-gold{color:#C9A84C;border-color:#C9A84C}
+.b-platinum{color:#9fe3d6;border-color:#1A8B7F}
+.b-progress{color:#8a8377;border-color:#3a3527}
+.summary{display:flex;gap:30px;flex-wrap:wrap;margin:10px 0 4px}
+.summary div{font-size:1rem}.summary b{color:#C9A84C;font-size:1.7rem;display:block}
+.empty{border:1px dashed #8A6D2F;padding:24px;text-align:center;color:#8a8377}
+.note{font-size:.9rem;color:#8a8377;margin-top:10px;font-style:italic}
+.entry-row{display:grid;grid-template-columns:140px 1fr 1fr 40px;gap:10px;align-items:start}
+@media(max-width:640px){.entry-row{grid-template-columns:1fr}}
+.del{background:transparent;border:1px solid #7a2e2e;color:#caa;cursor:pointer;padding:10px;font-family:Georgia,serif}
+.report-only{display:none}
+footer{border-top:1px solid #8A6D2F;padding:30px 0;text-align:center;font-size:.92rem;margin-top:20px}
+
+/* ---------- PRINT ---------- */
+@media print{
+  @page{margin:0.7in}
+  body{background:#fff;color:#1a1a1a;font-size:12pt}
+  header.top,.hero,.privacy,.controls,.no-print,footer,.crumb,#optBtns{display:none!important}
+  .band{border:0;padding:10px 0}
+  .wrap{max-width:100%;padding:0}
+  h2.sec,.subj-h,.summary b,th{color:#000}
+  .subj-h{border-color:#000}
+  th,td{border-color:#999}
+  .report-only{display:block!important}
+  .report-head{text-align:center;border-bottom:2px solid #000;padding-bottom:12px;margin-bottom:16px}
+  .report-head h1{font-size:20pt;margin-bottom:4px}
+  .report-head .sub{font-size:10pt;letter-spacing:.08em}
+  .badge{border-color:#666!important;color:#000!important}
+  .sigblock{margin-top:40px;display:flex;justify-content:space-between;gap:40px}
+  .sigline{flex:1;border-top:1px solid #000;padding-top:6px;font-size:10pt}
+  .pfoot{margin-top:30px;font-size:9pt;text-align:center;border-top:1px solid #999;padding-top:10px}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="crumb" href="https://globalsovereignuniversity.org/homeschool">&#8592; HOMESCHOOL CAMPUS</a>
+<span class="crumb"><b>GLOBAL SOVEREIGN UNIVERSITY</b> &middot; FREE FOREVER</span>
+</div></header>
+
+<section class="hero"><div class="wrap">
+<h1>The Sovereign Transcript</h1>
+<p class="tag">Your child's learning, recorded as a transcript and portfolio you can print, sign, and keep &mdash; built entirely on your own device. The record belongs to your family, not to any institution.</p>
+</div></section>
+
+<div class="wrap">
+<div class="privacy no-print">
+<b>How this works &mdash; and why it is different.</b> This page reads your child's game and lesson progress straight from <b>this browser, on this device</b>, where Global Sovereign University already saved it with no account required. By default this tool makes <b>no network calls at all</b> &mdash; nothing is uploaded, nothing is tracked, nothing leaves your computer. You add the student's name and your own portfolio entries, then print or save a clean report. Because the data lives on this device, the transcript reflects the work done <em>here</em>; if your child also studied on a tablet or library computer, run this tool there too and combine the printouts.
+</div>
+</div>
+
+<!-- ===== STUDENT / GUARDIAN ===== -->
+<section class="band no-print"><div class="wrap">
+<h2 class="sec">1 &middot; Whose record is this?</h2>
+<div class="grid2">
+<div><label>Student name</label><input id="f-student" placeholder="e.g., Sarah Constant"></div>
+<div><label>Parent / guardian</label><input id="f-guardian" placeholder="e.g., Christina Constant"></div>
+</div>
+<div class="grid3">
+<div><label>School year</label><input id="f-year" placeholder="e.g., 2025–2026"></div>
+<div><label>Grade level</label><input id="f-grade" placeholder="e.g., 9th grade"></div>
+<div><label>Home school / family name</label><input id="f-school" placeholder="e.g., Constant Family Academy"></div>
+</div>
+<p class="note">These details are saved on this device only, so the page remembers them next time. They never leave your browser.</p>
+</div></section>
+
+<!-- ===== AUTO-DETECTED PROGRESS ===== -->
+<section class="band"><div class="wrap">
+<h2 class="sec no-print">2 &middot; What GSU recorded on this device</h2>
+<div class="summary no-print" id="summary"></div>
+<div id="games"></div>
+<p class="note no-print">Badges are earned by lifetime correct answers in each game: Bronze at 10, Silver at 25, Gold at 50, Platinum at 100.</p>
+<div class="no-print" id="optBtns" style="margin-top:18px">
+<button class="btn ghost" id="cloudBtn">Also check cloud-saved scores (optional)</button>
+<span class="note" id="cloudNote" style="display:inline-block;margin-left:6px"></span>
+</div>
+</div></section>
+
+<!-- ===== PORTFOLIO ENTRIES ===== -->
+<section class="band"><div class="wrap">
+<h2 class="sec no-print">3 &middot; Your portfolio &mdash; everything else they learned</h2>
+<p class="note no-print" style="margin-bottom:16px">A real portfolio is more than game scores. Add the books they read, the field trips you took, the projects they built, the volunteer hours, the experiments that worked (and the ones that didn't). These become part of the printed record.</p>
+<div class="no-print">
+<div class="entry-row">
+<div><label>Date</label><input id="e-date" type="text" placeholder="e.g., Oct 2025"></div>
+<div><label>Subject / area</label><input id="e-subject" placeholder="e.g., Botany"></div>
+<div><label>Activity, project, or book</label><input id="e-activity" placeholder="e.g., Grew bean seeds; kept a 2-week growth journal"></div>
+<div style="align-self:end"><button class="btn" style="margin:0;width:100%;padding:11px 0" id="addEntry">Add</button></div>
+</div>
+</div>
+<table id="entryTable"><tbody></tbody></table>
+<div class="empty no-print" id="entryEmpty">No portfolio entries yet. Add your first above.</div>
+</div></section>
+
+<!-- ===== CONTROLS ===== -->
+<section class="band controls no-print"><div class="wrap">
+<h2 class="sec">4 &middot; Print or save your record</h2>
+<button class="btn" onclick="window.print()">Print / Save as PDF</button>
+<button class="btn ghost" id="exportBtn">Download as text backup</button>
+<button class="btn ghost" id="resetBtn" style="border-color:#7a2e2e;color:#caa">Clear my saved info</button>
+<p class="note">"Print / Save as PDF" opens your browser's print dialog &mdash; choose your printer, or choose "Save as PDF" as the destination to keep a digital copy. The signed paper copy is your official family record.</p>
+</div></section>
+
+<!-- ===== PRINT-ONLY REPORT BLOCK ===== -->
+<div class="report-only">
+  <div class="report-head">
+    <h1 id="r-title">Homeschool Progress Report</h1>
+    <div class="sub" id="r-sub">GLOBAL SOVEREIGN UNIVERSITY &middot; THE FOUNDATION FOR GLOBAL INSTRUCTION</div>
+  </div>
+  <div id="r-meta" style="margin-bottom:14px;font-size:11pt"></div>
+  <div id="r-games"></div>
+  <div id="r-entries"></div>
+  <div class="sigblock">
+    <div class="sigline">Parent / guardian signature</div>
+    <div class="sigline" style="max-width:200px">Date</div>
+  </div>
+  <div class="pfoot">
+    This record was generated by the family on their own device from activity at Global Sovereign University, a free 501(c)(3) educational nonprofit (EIN 39-2716552), Eugene, Oregon. No data was transmitted in the making of this report. globalsovereignuniversity.org
+  </div>
+</div>
+
+<footer class="no-print"><div class="wrap">
+<p>&copy; Global Sovereign University &middot; The Foundation for Global Instruction &middot; <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
+<p style="margin-top:8px"><a href="https://globalsovereignuniversity.org/homeschool">Return to the Homeschool Campus &#8594;</a></p>
+</div></footer>
+
+<script>
+// ---- subject + unit naming ----
+const SUBJECTS={bio:'Biology',biology:'Biology',math:'Mathematics',mathification:'Mathematics',
+read:'Reading',readification:'Reading',reading:'Reading',spell:'Spelling',spelling:'Spelling',spellification:'Spelling',
+civ:'Civics',civics:'Civics',sci:'Science',science:'Science',scientification:'Science',
+writ:'Writing',write:'Writing',writing:'Writing',writification:'Writing',
+trade:'Trades',trades:'Trades',trad:'Trades',tradification:'Trades',
+fin:'Financial Literacy',financ:'Financial Literacy',financification:'Financial Literacy',
+lang:'Language',language:'Language',geo:'Geography',geography:'Geography',
+hist:'History',history:'History',think:'Critical Thinking',thinkification:'Critical Thinking',
+law:'Law',lawification:'Law'};
+const BIO={'gsu-bio-lab-skills':'The Scientific Method & the Home Laboratory','gsu-bio-chemistry-of-life':'The Chemistry of Life',
+'gsu-bio-cell-biology':'Cell Structure & Function','gsu-bio-cellular-energy':'Cellular Energy: Photosynthesis & Respiration',
+'gsu-bio-genetics':'Genetics & Heredity','gsu-bio-classification':'Classification & the Diversity of Life',
+'gsu-bio-ecology':'Ecology: How Life Fits Together','gsu-bio-botany':'Plant Biology','gsu-bio-zoology':'Animal Biology',
+'gsu-bio-human-body':'The Human Body: Anatomy & Physiology'};
+const PROFILE_KEY='gsu_transcript_data';
+
+function num(v){const n=parseFloat(v);return isNaN(n)?null:n;}
+function titleCase(s){return s.replace(/[-_]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase()).trim();}
+function subjectOf(k){const p=k.toLowerCase().split('-');const tok=p[1]||'';return SUBJECTS[tok]||titleCase(tok)||'Other';}
+function unitOf(k){if(BIO[k.toLowerCase()])return BIO[k.toLowerCase()];const p=k.split('-');return p.length>2?titleCase(p.slice(2).join('-')):titleCase(p.slice(1).join('-'))||'General';}
+function badge(r){if(r==null)return['In progress','b-progress'];if(r>=100)return['Platinum','b-platinum'];if(r>=50)return['Gold','b-gold'];if(r>=25)return['Silver','b-silver'];if(r>=10)return['Bronze','b-bronze'];return['Started','b-progress'];}
+
+function readGames(){
+  const out=[];
+  for(let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(!k||!k.toLowerCase().startsWith('gsu-'))continue;
+    if(k.toLowerCase().includes('transcript'))continue;
+    let raw=localStorage.getItem(k),obj=null;try{obj=JSON.parse(raw);}catch(e){}
+    let rungs=null,best=null;
+    if(obj&&typeof obj==='object'){
+      rungs=num(obj.tot)??num(obj.rungs)??num(obj.lifetimeRungs)??num(obj.lifetime)??num(obj.score)??num(obj.correct);
+      best=num(obj.best)??num(obj.bestStreak)??num(obj.streak);
+    }else{rungs=num(raw);}
+    out.push({key:k,subject:subjectOf(k),unit:unitOf(k),rungs,best});
+  }
+  out.sort((a,b)=>a.subject.localeCompare(b.subject)||a.unit.localeCompare(b.unit));
+  return out;
+}
+
+let GAMES=[];
+function renderGames(){
+  GAMES=readGames();
+  const host=document.getElementById('games');
+  const rhost=document.getElementById('r-games');
+  if(!GAMES.length){
+    host.innerHTML='<div class="empty">No GSU game progress found in this browser yet. Play any game at <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a> and your progress will appear here automatically.</div>';
+    rhost.innerHTML='<p style="font-size:11pt">No recorded game activity on this device.</p>';
+    document.getElementById('summary').innerHTML='';
+    return;
+  }
+  // summary
+  const subjects=[...new Set(GAMES.map(g=>g.subject))];
+  const totalRungs=GAMES.reduce((s,g)=>s+(g.rungs||0),0);
+  const badges=GAMES.filter(g=>(g.rungs||0)>=10).length;
+  document.getElementById('summary').innerHTML=
+    `<div><b>${subjects.length}</b>subjects studied</div>`+
+    `<div><b>${GAMES.length}</b>units / games engaged</div>`+
+    `<div><b>${totalRungs.toLocaleString()}</b>correct answers logged</div>`+
+    `<div><b>${badges}</b>badges earned</div>`;
+  // grouped tables (screen + print)
+  let html='',rhtml='';
+  subjects.forEach(sub=>{
+    const rows=GAMES.filter(g=>g.subject===sub);
+    html+=`<div class="subj-h">${sub}</div><table><tr><th>Unit / Game</th><th>Correct answers</th><th>Best streak</th><th>Badge</th></tr>`;
+    rhtml+=`<div class="subj-h">${sub}</div><table><tr><th>Unit / Game</th><th>Correct</th><th>Best streak</th><th>Badge</th></tr>`;
+    rows.forEach(g=>{
+      const[bn,bc]=badge(g.rungs);
+      const cell=`<td>${g.unit}</td><td>${g.rungs==null?'&mdash;':g.rungs}</td><td>${g.best==null?'&mdash;':g.best}</td><td><span class="badge ${bc}">${bn}</span></td>`;
+      html+=`<tr>${cell}</tr>`;rhtml+=`<tr>${cell}</tr>`;
+    });
+    html+='</table>';rhtml+='</table>';
+  });
+  host.innerHTML=html;rhost.innerHTML=rhtml;
+}
+
+// ---- profile + entries persistence ----
+function loadData(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY))||{};}catch(e){return{};}}
+function saveData(d){localStorage.setItem(PROFILE_KEY,JSON.stringify(d));}
+let DATA=loadData();DATA.entries=DATA.entries||[];
+
+['student','guardian','year','grade','school'].forEach(f=>{
+  const el=document.getElementById('f-'+f);
+  if(DATA[f])el.value=DATA[f];
+  el.addEventListener('input',()=>{DATA[f]=el.value;saveData(DATA);buildReportMeta();});
+});
+
+function renderEntries(){
+  const tb=document.querySelector('#entryTable tbody');
+  const empty=document.getElementById('entryEmpty');
+  const rhost=document.getElementById('r-entries');
+  tb.innerHTML='';
+  if(!DATA.entries.length){empty.style.display='block';rhost.innerHTML='';}
+  else{
+    empty.style.display='none';
+    DATA.entries.forEach((e,idx)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td style="white-space:nowrap">${e.date||''}</td><td>${e.subject||''}</td><td>${e.activity||''}</td>`;
+      const td=document.createElement('td');const b=document.createElement('button');
+      b.className='del';b.textContent='Remove';b.onclick=()=>{DATA.entries.splice(idx,1);saveData(DATA);renderEntries();};
+      td.appendChild(b);tr.appendChild(td);tb.appendChild(tr);
+    });
+    let r='<div class="subj-h">Portfolio &mdash; Additional Learning Activities</div><table><tr><th>Date</th><th>Subject</th><th>Activity / Project / Book</th></tr>';
+    DATA.entries.forEach(e=>{r+=`<tr><td style="white-space:nowrap">${e.date||''}</td><td>${e.subject||''}</td><td>${e.activity||''}</td></tr>`;});
+    rhost.innerHTML=r+'</table>';
+  }
+}
+document.getElementById('addEntry').onclick=()=>{
+  const d=document.getElementById('e-date').value.trim();
+  const s=document.getElementById('e-subject').value.trim();
+  const a=document.getElementById('e-activity').value.trim();
+  if(!s&&!a)return;
+  DATA.entries.push({date:d,subject:s,activity:a});saveData(DATA);
+  document.getElementById('e-date').value='';document.getElementById('e-subject').value='';document.getElementById('e-activity').value='';
+  renderEntries();
+};
+
+function buildReportMeta(){
+  const today=new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('r-title').textContent=(DATA.school||'Homeschool')+' — Progress Report';
+  const bits=[];
+  if(DATA.student)bits.push('<b>Student:</b> '+DATA.student);
+  if(DATA.grade)bits.push('<b>Grade:</b> '+DATA.grade);
+  if(DATA.year)bits.push('<b>School year:</b> '+DATA.year);
+  if(DATA.guardian)bits.push('<b>Parent / guardian:</b> '+DATA.guardian);
+  bits.push('<b>Report generated:</b> '+today);
+  document.getElementById('r-meta').innerHTML=bits.join(' &nbsp;&middot;&nbsp; ');
+}
+
+// ---- export backup ----
+document.getElementById('exportBtn').onclick=()=>{
+  let t='GLOBAL SOVEREIGN UNIVERSITY — HOMESCHOOL PROGRESS REPORT\n';
+  t+='Generated '+new Date().toLocaleString()+' on this device. No data transmitted.\n\n';
+  ['student','guardian','year','grade','school'].forEach(f=>{if(DATA[f])t+=titleCase(f)+': '+DATA[f]+'\n';});
+  t+='\n--- RECORDED GSU ACTIVITY ---\n';
+  if(!GAMES.length)t+='(none on this device)\n';
+  GAMES.forEach(g=>{const[bn]=badge(g.rungs);t+=`${g.subject} | ${g.unit} | correct: ${g.rungs==null?'-':g.rungs} | best streak: ${g.best==null?'-':g.best} | ${bn}\n`;});
+  t+='\n--- PORTFOLIO ENTRIES ---\n';
+  if(!DATA.entries.length)t+='(none yet)\n';
+  DATA.entries.forEach(e=>{t+=`${e.date||''} | ${e.subject||''} | ${e.activity||''}\n`;});
+  t+='\nThe Foundation for Global Instruction · EIN 39-2716552 · globalsovereignuniversity.org\n';
+  const blob=new Blob([t],{type:'text/plain'});const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='gsu-transcript-'+(DATA.student||'student').replace(/\s+/g,'-').toLowerCase()+'.txt';a.click();
+};
+
+document.getElementById('resetBtn').onclick=()=>{
+  if(confirm('This clears the student info and portfolio entries you typed on this device. Your game progress is NOT affected. Continue?')){
+    localStorage.removeItem(PROFILE_KEY);DATA={entries:[]};
+    ['student','guardian','year','grade','school'].forEach(f=>document.getElementById('f-'+f).value='');
+    renderEntries();buildReportMeta();
+  }
+};
+
+// ---- optional Firebase cloud cross-check (opt-in, only network call) ----
+document.getElementById('cloudBtn').onclick=function(){
+  const note=document.getElementById('cloudNote');note.textContent='Checking…';this.disabled=true;
+  const cfg={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",storageBucket:"gsu-handshake.firebasestorage.app",messagingSenderId:"301089416765",appId:"1:301089416765:web:dff926a7aa52191e9a6c54",measurementId:"G-LZDRK48TL7"};
+  function load(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+  load("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js")
+   .then(()=>load("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"))
+   .then(()=>load("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"))
+   .then(()=>{firebase.initializeApp(cfg);return firebase.auth().signInAnonymously();})
+   .then(c=>firebase.firestore().collection("gameScores").where("uid","==",c.user.uid).get())
+   .then(snap=>{
+     let added=0;
+     snap.forEach(doc=>{const d=doc.data();const key=(d.game||doc.id);
+       if(!GAMES.some(g=>g.key===key)){GAMES.push({key,subject:subjectOf(key),unit:unitOf(key),rungs:num(d.rungs)??num(d.score),best:num(d.bestStreak)??num(d.best)});added++;}});
+     if(added){GAMES.sort((a,b)=>a.subject.localeCompare(b.subject)||a.unit.localeCompare(b.unit));
+       // re-render with merged set
+       const host=document.getElementById('games');host.innerHTML='';renderMerged();note.textContent='Added '+added+' cloud-saved item(s).';}
+     else note.textContent='No additional cloud scores found for this device.';
+   })
+   .catch(()=>{note.textContent='Cloud check unavailable right now — your on-device record above is complete.';});
+};
+function renderMerged(){
+  const host=document.getElementById('games'),rhost=document.getElementById('r-games');
+  const subjects=[...new Set(GAMES.map(g=>g.subject))];let html='',rhtml='';
+  subjects.forEach(sub=>{const rows=GAMES.filter(g=>g.subject===sub);
+    html+=`<div class="subj-h">${sub}</div><table><tr><th>Unit / Game</th><th>Correct answers</th><th>Best streak</th><th>Badge</th></tr>`;
+    rhtml+=`<div class="subj-h">${sub}</div><table><tr><th>Unit / Game</th><th>Correct</th><th>Best streak</th><th>Badge</th></tr>`;
+    rows.forEach(g=>{const[bn,bc]=badge(g.rungs);const cell=`<td>${g.unit}</td><td>${g.rungs==null?'&mdash;':g.rungs}</td><td>${g.best==null?'&mdash;':g.best}</td><td><span class="badge ${bc}">${bn}</span></td>`;html+=`<tr>${cell}</tr>`;rhtml+=`<tr>${cell}</tr>`;});
+    html+='</table>';rhtml+='</table>';});
+  host.innerHTML=html;rhost.innerHTML=rhtml;
+}
+
+// init
+renderGames();renderEntries();buildReportMeta();
+</script>
+</body>
+</html>
