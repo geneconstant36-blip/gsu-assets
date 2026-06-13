@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Decoding Climb — Reading Helix | Global Sovereign University</title>
+<meta name="description" content="Climb the Decoding ladder — 52 questions, four tiers, Bronze to Platinum. Learn to read any unfamiliar word by working it in parts. Free, no login. Part of the Reading Helix at Global Sovereign University.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/decoding-climb.html">
+<meta name="theme-color" content="#0B0E14">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1B2A4A;--gold:#C9A84C;--teal:#1A8B7F;--cream:#F5F1E8;--bg:#0B0E14;--card:#141a26;--muted:#9aa6b8;--good:#39b88b;--bad:#d9596b;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{background:var(--bg);color:var(--cream);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.6;min-height:100vh;}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 20px 80px;}
+  .head{text-align:center;margin-bottom:22px;}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+  h1{font-family:'Lora',serif;font-weight:700;font-size:clamp(1.9rem,5vw,2.6rem);color:var(--cream);line-height:1.1;}
+  .sub{color:var(--muted);font-size:.98rem;margin-top:10px;max-width:46ch;margin-left:auto;margin-right:auto;}
+  .panel{background:var(--card);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:26px;box-shadow:0 18px 50px -28px #000;}
+  .barwrap{height:8px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;margin:0 0 6px;}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .35s ease;}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);letter-spacing:.04em;margin-bottom:20px;}
+  .tier{font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+  .tier.bronze{color:#cd7f4d;} .tier.silver{color:#c7d0db;} .tier.gold{color:var(--gold);} .tier.platinum{color:#7fe9d6;}
+  .q{font-family:'Lora',serif;font-size:1.35rem;font-weight:600;line-height:1.4;color:#fff;margin-bottom:22px;}
+  .opts{display:flex;flex-direction:column;gap:12px;}
+  .opt{text-align:left;background:#1b2433;border:1.5px solid rgba(255,255,255,.1);color:var(--cream);font-family:inherit;font-size:1rem;font-weight:400;padding:15px 18px;border-radius:12px;cursor:pointer;transition:.15s;}
+  .opt:hover:not(:disabled){border-color:var(--gold);background:#212b3d;}
+  .opt:disabled{cursor:default;}
+  .opt.correct{border-color:var(--good);background:rgba(57,184,139,.14);color:#bff3df;}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,89,107,.14);color:#f6c9d1;}
+  .fb{margin-top:18px;padding:15px 18px;border-radius:12px;font-size:.95rem;line-height:1.55;display:none;}
+  .fb.show{display:block;}
+  .fb.ok{background:rgba(57,184,139,.1);border:1px solid rgba(57,184,139,.35);}
+  .fb.no{background:rgba(217,89,107,.1);border:1px solid rgba(217,89,107,.35);}
+  .fb b{color:var(--gold);}
+  .next{margin-top:18px;display:none;width:100%;background:var(--gold);color:#0A0907;font-family:inherit;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;}
+  .next.show{display:block;} .next:hover{transform:translateY(-1px);}
+  .btn{display:inline-block;background:var(--gold);color:#0A0907;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px 32px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;font-family:inherit;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold);}
+  .center{text-align:center;}
+  .best{margin-top:16px;font-size:13px;color:var(--muted);}
+  .best b{color:var(--gold);}
+  .medals{display:flex;justify-content:center;gap:10px;margin:18px 0;flex-wrap:wrap;}
+  .medal{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);border-radius:999px;padding:7px 13px;color:var(--muted);}
+  .medal.on{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.1);}
+  .scorebig{font-family:'Lora',serif;font-size:3.4rem;font-weight:700;color:var(--gold);line-height:1;}
+  .tierbadge{font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:8px 0 4px;}
+  .geno-hint{margin-top:22px;text-align:center;font-size:13px;color:var(--muted);}
+  .geno-hint b{color:var(--teal);}
+  .status{text-align:center;font-size:11px;color:#5b6678;margin-top:18px;letter-spacing:.04em;}
+  a{color:var(--teal);} a:hover{color:var(--gold);}
+
+  /* ---- Chapter reading + GENO banner (added) ---- */
+  .geno-banner{display:flex;align-items:center;gap:16px;background:linear-gradient(180deg,#15202e,#10161f);border:1px solid var(--gold);border-radius:16px;padding:16px 20px;margin:0 0 26px;}
+  .geno-banner img{width:54px;height:54px;border-radius:50%;border:2px solid var(--gold);flex:0 0 auto;background:#000;}
+  .geno-banner .gb-txt{font-size:.95rem;line-height:1.5;color:var(--cream);}
+  .geno-banner .gb-txt b{color:var(--gold);}
+  .reader{margin:0 0 30px;}
+  .reader .eyebrow{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+  .reader h2{font-family:'Lora',serif;font-weight:700;font-size:clamp(1.5rem,4vw,2rem);color:var(--gold);line-height:1.2;margin-bottom:6px;}
+  .reader .booktag{font-size:.9rem;color:var(--muted);font-style:italic;margin-bottom:20px;}
+  .reader h3{font-family:'Lora',serif;font-weight:700;font-size:1.18rem;color:#fff;margin:26px 0 10px;}
+  .reader p{font-size:1.02rem;line-height:1.72;color:#e8e3d6;margin-bottom:16px;}
+  .reader p:first-of-type::first-letter{font-family:'Lora',serif;font-size:3.1rem;line-height:.8;float:left;color:var(--gold);padding:6px 10px 0 0;}
+  .climb-divider{text-align:center;border-top:1px solid rgba(201,168,76,.3);margin:34px 0 26px;padding-top:26px;}
+  .climb-divider .eyebrow{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .climb-divider p{color:var(--muted);font-size:.98rem;max-width:46ch;margin:0 auto;}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="geno-banner"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, your AI reading tutor"><div class="gb-txt"><b>Ask GENO if you have any questions about this chapter.</b> Ask him to tutor you any time — he’s free, 24/7, and speaks 32 languages. He’s waiting in the lower-right corner.</div></div>
+  <div class="head">
+    <div class="eyebrow">Reading Helix · Element 03 · Free</div>
+    <h1>The Decoding Climb</h1>
+    <p class="sub">Fifty-two questions. Four tiers — Bronze, Silver, Gold, Platinum. Climb as far as you can; your best is saved.</p>
+  </div>
+  <div class="reader">
+<div class="eyebrow">Reading Helix · Volume 3 · Chapter One · Read First</div>
+<h2>From Rules to Reading</h2>
+<div class="booktag">From <i>The Reader&#x27;s Toolkit: Decoding</i> — free to keep, by Dr. Gene A. Constant</div>
+<p>If you have ever watched someone study phonics carefully and still stumble when the word changes, you have seen the difference this book is about. Knowing phonics is being able to say what the letters can do. Using phonics is being able to make the letters do it in real time while the sentence keeps moving. That gap is not a character flaw. It is not laziness. It is not proof that phonics “doesn’t work.” It is a normal gap between two kinds of knowledge: knowledge you can explain and knowledge you can perform. A learner might know, for example, that a silent e often makes the vowel say its name. They may be able to point to “cap” and “cape” and explain the difference. They may even get 10 out of 10 on a worksheet that asks them to add an e and read the new word. But then the learner meets “complete” in an article, and suddenly none of that knowledge feels available. They hesitate, their eyes dart, their voice goes quiet, and then they either guess or skip. This is the moment where many readers silently decide, “I don’t really know phonics.” But that diagnosis is usually wrong. What they are missing is not the rule. What they are missing is the ability to deploy the rule under realistic conditions: unknown words, real sentences, limited time, and the pressure of meaning. Phonics knowledge is like owning tools. Decoding is the skilled use of the tools while the work is actually happening. Consider what it means to “know” a rule. Knowing is often verbal. It lives in the front of the mind. It shows up when a teacher asks, “What does this vowel team usually say?” and the learner answers, &quot;&#x27;ea&#x27; can say long &#x27;e.&#x27;&quot; Using that rule is different. Using the rule means your eyes land on “speaking,” you notice the &quot;ea,&quot; you decide on a sound quickly, you blend through &quot;speak,&quot; you handle the suffix &quot;-ing&quot; without stopping, and you keep the meaning of the sentence in your head at the same time. It is a coordinated act. In real reading, several things are happening at once: You are scanning left to right. You are grouping letters into patterns. You are choosing sounds. You are blending. You are checking whether the result is a real word you know. You are checking whether it makes sense in the sentence. You are moving on before you lose the thread. When a learner can explain phonics but cannot decode smoothly, it is often because their knowledge is trapped in slow motion. They can do it, but only if the world pauses and the word is isolated and the stakes are low. Reading does not offer those conditions. This is why a child can ace a phonics lesson at 10:00 and struggle in a story at 10:15. It is why an adult can nod through a review of vowel teams and then freeze on the first unfamiliar word in a workplace email. The reading situation is asking for a different form of mastery. There is a useful way to name the difference: declarative knowledge versus procedural knowledge. Declarative knowledge is “I know that.”</p>
+<p>Procedural knowledge is “I know how.” Declarative knowledge sounds like this: “ch can say /ch/.” Procedural knowledge sounds like this inside the brain, at the speed of life: “This looks like a word with &#x27;ch&#x27; at the beginning. I’ll try /ch/. Now blend: check. Does that make sense here? Yes, ‘Check the form.’ Move on.” When decoding is not yet procedural, the learner often experiences it as a series of interruptions. The rule has to be pulled up intentionally, like searching for a file. That search takes time. Time breaks comprehension. And once comprehension breaks, reading stops feeling like reading and starts feeling like labor. This is one reason “guessing” becomes tempting. Guessing is fast. Skipping is fast. Using context to fill in a word is fast. But fast is not the same as skilled, and those habits quietly prevent the brain from practicing the one thing that would make reading easier next time: accurate decoding. In the earlier books in The Reading Helix, you built the ingredients: phoneme awareness, letter-sound knowledge, and the major spelling patterns that drive English. That is like learning the notes on a piano and understanding which keys correspond to which sounds. This volume is about playing the music. It is about the shift from “I can identify the parts” to “I can perform the whole act.” The shift matters most when words get longer. A reader can rely on memory for a while. Many short, high-frequency words are learned early and repeated often. A learner may read everyday text and appear fine because the vocabulary stays in the “already memorized” zone. Then school, work, or adulthood introduces new terrain: “consequence,” “procedure,” “independent,” “relationship,” “eligibility,” “respiratory.” Suddenly the reader’s sight-word bank is not enough, and the text is full of words that must be built on the spot. This is why decoding is not a beginner skill. It is an intermediate and advanced skill. It is how you handle the words you have not yet met. Notice what happens when a reader meets a word like “consequentialist.” Even strong readers do not recognize it instantly if they have never seen it. They do something active, even if it is so fast it feels invisible. They spot familiar chunks: &quot;con,&quot; &quot;sequence,&quot; &quot;al,&quot; and &quot;ist.&quot; They decide how to pronounce each chunk. They blend: con-se-quen-tial-ist. They check: Does that match something I’ve heard? Does it make sense in this sentence? That is decoding. It is not guessing, and it is not memorization. It is on-the-fly construction. A learner who “knows phonics” but cannot do this often falls into predictable patterns: They treat every unfamiliar word as a whole unit, instead of breaking it into parts. They try one sound, it doesn’t work instantly, and they abandon it. They over-rely on the first letter and the general shape of the word. They substitute a word that would fit the sentence but is not on the page. They sound out letter by letter, slowly, without grouping, and run out of working memory before the word becomes recognizable. Each of these patterns makes sense as a coping strategy. Each one also blocks growth. Because the most important hidden fact about decoding is this: successful decoding is how words become easy later.</p>
+<p>When you decode a word accurately, you are not just getting through the sentence. You are training the brain to store that word. In the next chapter, we will talk about orthographic mapping, the process that turns a decoded word into a sight word. For now, you only need the practical takeaway: the struggle you feel while decoding is not wasted effort. When it is done accurately, it is the effort that pays you back. A reader who guesses robs themselves of that payoff. A reader who skips robs themselves of that payoff. A reader who waits for someone else to tell them the word robs themselves of that payoff. Not because those choices are morally wrong, but because they short-circuit the mechanism that builds reading power. This is why, in this book, we will keep coming back to one core message: your job is not to be fast at first. Your job is to be accurate, strategic, and persistent. Here is how the difference can sound in a real exchange. A teacher points to the word “complete.” The learner says, “I know that one. I mean… I think I know it.” “What do you notice?” “It has magic e at the end.” “Good. Now use that information. Where would you split it?” The learner pauses. This is the moment. Because knowing about magic e does not automatically tell you how to handle a longer word with more than one vowel. The learner needs a procedure, not another fact. They try, &quot;com… plete.” Now they can read the second part: plete, like “pleat” or “plate”? They try “plete.” They recognize it: complete. The word clicks. That click is what we are building toward, again and again: a process that leads to recognition. And notice something else: the learner did not need perfect knowledge to begin. They needed a starting point, a way to try, a way to adjust, and permission to take a second pass. Using phonics is messy at first. Real decoding often involves a first attempt that is slightly off, then a correction. Skilled readers correct themselves constantly, quietly. They do not interpret the need to adjust as failure. They interpret it as part of reading. Many struggling readers, especially older ones, have learned the opposite interpretation. They believe reading is supposed to be immediate. If it is not immediate, they assume they are doing it wrong. That belief produces freezing, and freezing produces guessing, and guessing produces long-term fragility. So the difference between knowing and using phonics is not just technical. It is emotional and mental. Using phonics requires a particular stance toward uncertainty. When you see a word you do not know, you do not panic and you do not perform. You work with the word. In the pages ahead, you will learn how to make that work feel structured instead of random. You will learn how to chunk words into syllables, how to recognize common prefixes and suffixes, how to identify the six syllable types quickly, and how to use context the right way: not as a substitute for decoding, but as a confirmation that you decoded accurately.</p>
+<p>But for now, hold on to this: the goal of this book is not to add more rules to your head. It is to convert what you already know into action you can trust. When you can do that, the unknown word stops being a threat. It becomes an opportunity: one more word you can decode today and recognize instantly tomorrow. The moment you meet an unfamiliar word, something happens before you ever say a sound out loud. Some readers lean in. Others lean away. Leaning away can look polite. It can look like speed. It can even look like comprehension for a while. The reader glides past the word, guesses it from the sentence, or swaps in a simpler word that “fits.” If you are listening, it might sound fluent. But inside the reader’s mind, a quiet decision has been made: “This word is not mine.” The decoding mindset is the opposite decision. It is the decision that the word on the page is solvable. It is the belief that you have tools and that using them is what readers do. That belief sounds simple, but it is not automatic. Many learners have years of experience that taught them the wrong lesson. They learned that reading is a performance, not a process. They learned that hesitation equals failure. They learned that the goal is to get through the sentence quickly, not to build the word accurately. So when a big word shows up, they feel a flash of danger: “If I stop, everyone will notice.” This is why we named the difference earlier between declarative knowledge and procedural knowledge. You may have the rule. You may even have many rules. But if your mindset tells you “don’t stop, don’t try, don’t be wrong,” you will not use the rules when you need them most. A decoding mindset gives you permission to do what skilled readers actually do: slow down briefly, take a first pass, adjust, and keep going. If you watch a skilled reader encounter an unfamiliar word, you might not see much. Their eyes pause for a fraction of a second. Their voice may not change at all. But under the surface, a set of habits kicks in: They commit to the word instead of skipping it. They look for chunks instead of individual letters. They try a likely pronunciation rather than waiting for certainty. They notice if the result is not a real word they know. They try again with a different syllable break or vowel sound. They use the sentence to confirm the final result, not to invent it. This book is about giving you those habits on purpose. To develop the mindset, you need to replace three common reflexes: guessing, skipping, and freezing. Guessing is what happens when you treat a word as a picture. You glance at the first letter or two, you glance at the length, and you pick a word you already know. This is especially tempting in sentences where meaning is predictable. If the sentence says, “The doctor prescribed a new…” your brain wants to finish it. It may throw out “medicine” even if the word is “medication” or “antibiotic” or “inhaler.” The sentence is not nothing. Meaning matters. But when you guess, you practice the wrong skill. You practice being approximate. Skipping is a close cousin. The reader simply removes the word. They do not say it aloud, or they slide over it silently. Many adult readers become expert skippers because skipping is socially useful. It keeps the conversation moving. It avoids embarrassment.</p>
+<p>But it has a hidden cost: every skipped word is a word that never gets mapped into memory. It stays unfamiliar forever, which makes the next encounter just as hard. Freezing is the most painful reflex. The reader stops completely. They stare at the word. They feel the pressure rising. Their mind goes blank, even though they know the pieces. Freezing is often interpreted as lack of ability, but it is frequently a lack of procedure plus a surge of emotion. When your brain treats the moment as a threat, it does not access skills smoothly. It protects itself. The decoding mindset is a different reflex: engage. &quot;Engage&quot; means you do not require instant success to begin. You begin with what you notice. Earlier, we used “complete” as a small example of the moment where a learner pauses and realizes that knowledge about magic e does not automatically solve a longer word. That moment is not a dead end. It is the doorway. The decoding mindset turns that pause into a plan. A plan can be simple, almost like a script you repeat until it becomes automatic: 1. “I will not skip this word.” 2. “I will find the vowel pattern and the syllable chunks.” 3. “I will try a pronunciation that matches what I see.” 4. “If it sounds wrong, I will adjust and try again.” 5. “I will use context to check after I decode.” When a learner adopts that script, the power dynamic changes. The word stops being the judge, and you become the problem-solver. This matters because long words do not ask you to know them in advance. They ask you to work with them. Think about the earlier example “consequentialist.” A reader who guesses might say “consequences” and keep moving. A reader who skips might say nothing at all and hope the rest of the sentence is enough. A reader who freezes might get stuck on the first syllable, turning con into a tunnel. But a decoder says, “I see con. I see sequence. I see -al and -ist.” They do not need to be a linguist. They just need to recognize that long words are often made of meaningful parts and pronounceable syllables. The decoding mindset is also a shift in what you think a mistake means. Many learners carry an invisible rule: “If I say it wrong the first time, I am bad at reading.” That rule is poison to growth. Skilled readers do not follow it. They follow a different rule: “A first attempt is information.” When you try a word and it does not click, that is not failure. That is the normal first draft of decoding. You are testing a hypothesis: Is this vowel long or short? Is this syllable open or closed? Is that a prefix or just letters that look like one? You test, then you revise. The goal is not to avoid revisions. The goal is to revise quickly and calmly. This is why, in this book, we will treat self-correction as a sign of strength. Self-correction means you are monitoring your reading. It means you are not just making sounds; you are evaluating whether those sounds match a word you know and a meaning that fits the sentence. That monitoring is the heart of real reading. Here is what this can look like in a real moment.</p>
+<p>An adult learner is reading a workplace email. The sentence says, “Please review the confidentiality agreement before signing.” They get to confidentiality and hesitate. Old reflex: “con… con… I don’t know.” Skip it. Or guess: “Please review the… contract… agreement.” Decoding mindset: “I don’t know this word yet, but it is built. &quot;Let me work it.” They might try, slowly at first: con-fin-den-ti-al-i-ty. Maybe the first attempt comes out slightly tangled: “con-fin-den-shul… con-fin-den…” They pause. They try again. Now they recognize the word &quot;confidential,&quot; which they have heard, and the ending &quot;ity,&quot; which they begin to understand as “the state of.” The word clicks into place: confidentiality. Notice what changed. They did not suddenly become smarter. They changed what they did when they did not know. This mindset also changes what you are aiming for in the short term. In early decoding practice, speed is not the goal. Control is the goal. Many learners, especially adults, have a painful history with being told to “sound it out,” as if that instruction were enough. Sometimes “sound it out” meant letter-by-letter labor that produced a string of sounds with no payoff. Sometimes it meant public struggle. So learners concluded that decoding is slow and humiliating. They decided they would rather guess. The decoding mindset reframes the task. You are not doing letter-by-letter labor. You are doing pattern-based construction. You are using chunks, syllables, and meaningful parts. That is why the next chapters matter. The six syllable types, chunking, prefixes and suffixes, and root words are not extra content for advanced students. They are the tools that make decoding feel doable. But even before you learn those tools in detail, you can adopt the stance that makes tools usable. One practical way to build this stance is to decide in advance what you will do when you hit trouble. The brain performs better when the plan is already rehearsed. If you wait to invent a strategy in the moment of pressure, you will often default to your oldest habit. So here is a simple, repeatable routine that fits right now, even before the toolkit chapters: First, pause on purpose. A small pause is not a breakdown. It is you taking control. Second, look for something you know in the word. A familiar prefix, a vowel team, a known smaller word inside it, a suffix you have seen. If all you can find is the first syllable, that is still a start. Third, try it. Say the parts and blend. Fourth, if it does not sound like a real word, adjust one thing. Change the vowel sound. Shift the syllable break. Try again. Do not change five things at once. Skilled readers make small adjustments. Fifth, once you have a candidate pronunciation, check it against meaning. Does the sentence make sense now? Do you recognize the word as something you have heard? That is context in its proper role: confirmation, not substitution.</p>
+<p>There is one more piece of mindset that matters, especially for older learners: dignity. Decoding is sometimes treated as childish because it is associated with early reading instruction. But decoding multisyllabic words is not childish at all. It is what educated adults do when they meet technical language, academic vocabulary, medical terms, legal phrasing, and unfamiliar names. Even a strong reader pauses at “Schenectady” if they have never seen it. They do not pause because they are weak. They pause because the word is new. When you adopt the decoding mindset, you stop treating “new word” as an accusation. You treat it as normal. And you begin to see the larger payoff that was introduced at the end of the last section: accurate decoding is how reading gets easier. Every time you engage with an unfamiliar word and decode it accurately, you are not just surviving the sentence. You are building your future reading. You are giving your brain the precise information it needs to store the word for next time. You are expanding the portion of text that becomes effortless. So the decoding mindset is not grim determination. It is an investment. It is choosing the slow path once so you can take the fast path later. In the next section of this chapter, we are going to name decoding for what it truly is: an active process. Not a talent, not a guessing game, not a memory test, but a series of actions you can learn, practice, and trust. Because when you believe that, you stop waiting for words to be familiar before you can read them. You make them familiar by reading them anyway. Decoding is often described as if it were a simple instruction: “Sound it out.” But if it were that simple, the gap we described in the first two sections would not exist. Learners would learn the rules once and automatically use them forever. Instead, many people can explain phonics clearly and still freeze when a new word appears in a real sentence. That is because decoding is not a fact you remember. It is a set of actions you perform. When you read a word you already know by sight, it feels passive. Your eyes land on it, and meaning arrives. Nothing seems to happen. This is one of the great illusions of skilled reading: once you are fluent, the work becomes invisible. Decoding is the opposite experience. Decoding makes the work visible again because the word is not yet stored in memory. You have to build it. To see why decoding is an active process, it helps to name what the reader is doing in those brief moments of effort. Even for a short unfamiliar word, there is a sequence: You look at the letters in order. You notice patterns, not just individual letters. You choose sounds that match those patterns. You blend the sounds into something pronounceable. You check whether what you said matches a word you know or could be a word in English. You check whether it makes sense in the sentence. If it does not, you adjust and try again. None of that is passive. It is decision-making. And those decisions happen under pressure. Real reading does not stop and wait for you. The sentence continues. Meaning has to be held in working memory while you do the construction work on the word. This is why decoding feels effortful at first. It is not just pronunciation. It is coordination.</p>
+<p>Think back to the earlier examples: &quot;complete&quot; in a simple text, &quot;confidentiality&quot; in a workplace email, and &quot;consequentialist&quot; in a more academic sentence. In each case, the reader is not being asked to recall a flashcard. They are being asked to operate a toolkit. The toolkit includes phonics rules, yes, but it also includes the habits we just built in the decoding mindset: pause on purpose, find what you know, try, adjust, confirm. A helpful way to understand this is to compare decoding to solving a small puzzle. If someone hands you a puzzle you have solved many times before, it is not really a puzzle anymore. You recognize it instantly. That is what a sight word is like: the solution is already stored. But if someone hands you a new puzzle, you do not stare at it and wait for it to solve itself. You try something. You test. You revise. You use what you know about how puzzles work. You engage. That is decoding. This is also why guessing is so seductive. Guessing feels like the passive, effortless version of reading. It allows you to keep moving and preserve the appearance of fluency. But guessing is not the same mental act as decoding. Guessing skips the puzzle-solving steps. It replaces the word on the page with a word from your own mind. When you guess “contract” for confidentiality, you may keep the sentence moving. But you have not practiced the actions that would make confidentiality easier next time. You have practiced avoiding the hard part. And the hard part is the part that creates growth. To make this even clearer, let’s slow down a single moment and watch what happens inside a reader’s head. Imagine the sentence: “The committee reached a unanimous decision.” A learner who is still building decoding skills may know the word &quot;decision&quot; by sight. &quot;Unanimous&quot; may be new. If decoding were passive, the learner would either know unanimous or not know it. That would be the end of the story. But decoding gives them a third option: work it. What does “work it” look like? First, the learner commits: “I will not skip this word.” Then they scan the word for anchors, the parts that look familiar or structured. They may notice the beginning &quot;un-&quot; and remember that &quot;un-&quot; is a prefix meaning “not.” They may not know the meaning yet, but noticing &quot;un-&quot; is still useful because it helps chunk the word. They may see -ous at the end, a common suffix in English. Already, without any pronunciation, the learner has done something active: they have divided the word into likely parts. Now they attempt pronunciation. They try: you-NAN-ih-mus, or you-NAH-nuh-mus. The first attempt may be off. That is normal. The learner is not failing; they are gathering information. They adjust: maybe the middle is -AN- not -NAN-. They try again. They get close enough that the word clicks: &quot;unanimous.&quot; Now the sentence makes sense. Notice what made the click possible. The reader did not wait to be told. They did not require instant certainty. They used a process.</p>
+<p>That process is active even when it is fast, and it is active even when it is imperfect. In fact, one of the most important truths for learners to hear is this: decoding often works through approximation. Skilled readers do not always produce a perfect pronunciation on the first attempt when a word is truly new. They produce a plausible version that obeys the code, then they refine it based on recognition and context. This is why self-correction is so important and why we named it as a strength in the decoding mindset. Self-correction is not a sign that you cannot read. It is a sign that you are reading actively. It means you are monitoring your output and comparing it to meaning. A passive reader does not self-correct because a passive reader is not evaluating. A passive reader either recognizes instantly or moves on. Active decoding includes the built-in question: “Does this sound like a real word, and does it fit here?” That question is the bridge between phonics and comprehension. It is also the reason decoding is not just “saying sounds.” Decoding is constructing a word in a way that is accurate enough to connect to a stored word or to create a new stored word. That last part matters, and it connects directly to what we previewed at the end of the first section: successful decoding is how words become easy later. There is a reason this book will soon take you into orthographic mapping. If you decode accurately, you feed the brain the exact information it needs to store the spelling, pronunciation, and meaning connection. If you guess, you feed the brain noise. So decoding is active not only because it requires effort in the moment, but because it is the engine of long-term change. Every time you work a word instead of dodging it, you are not just getting through that sentence. You are changing what will be automatic tomorrow. This is also why “sound it out” can fail as an instruction if it is not paired with tools. Some learners interpret “sound it out” as letter-by-letter reading. They produce something like kuh-uh-n-s-eh-kw-eh-n-t-ee-uh-l-ih-s-t for consequentialist. By the time they reach the end, the beginning has evaporated from working memory. The sounds do not blend. No word clicks. The learner concludes, again, “I can’t do this.” But the problem is not that they cannot decode. The problem is that they are using the wrong unit size. Decoding is active, yes, but it is not supposed to be chaotic. It is structured activity. It works best when you operate on chunks: syllables, spelling patterns, prefixes and suffixes, known word parts. That is why this book will spend so much time teaching chunking and the six syllable types. Those tools change decoding from brute force to strategy. Even before we get to those chapters, you can start treating decoding as a process with controllable moves. When you meet a long word, you are not obligated to attack it from left to right in single-letter steps. You are allowed to look for the architecture of the word. That word architecture is one reason English looks more irregular than it is. English spelling is not just a sound system. It is also a meaning system. Many long words are built from familiar pieces: prefixes that shift meaning, roots that carry core meaning, suffixes that signal part of speech and grammar. When you learn to see that structure, you stop seeing long words as random strings. And this is where the decoding mindset becomes practical, not just inspirational. “Engage” is not just bravery. It is a decision to start doing the next action in the sequence.</p>
+<p>If you find yourself freezing, it is often because you are trying to do everything at once. You are trying to pronounce, recognize, and understand simultaneously, with no steps. Freezing is what happens when the task feels like a single leap. An active process turns the leap into steps. “I will find the vowels.” “I will find a prefix or suffix if I can.” “I will split the word into pronounceable parts.” “I will try the first syllable.” “I will keep going.” “I will adjust if needed.” “I will confirm the sentence after I have a candidate.” This is not overcomplicating reading. This is what skilled readers do automatically. The only difference is that, for now, you will do it deliberately. There is a final reason decoding must be active, and it is especially relevant to adult learners: many of the words you need most are words you will not see often enough to memorize by repetition alone. A child reading simple stories may see the same short words hundreds of times. An adult reading medical forms might see a word like &quot;respiratory&quot; or &quot;hypertension&quot; only occasionally, but those words matter. They carry high stakes. They show up when you are tired, stressed, or rushed. In those moments, you need a process you can trust, not a memory that may or may not be there. Decoding gives you that trust. It gives you a way to say, “I have not met this word before, but I can still read it.” That is the real promise of literacy, and it is why this book treats decoding not as a remedial skill but as a lifelong one. In the next chapter, we will explain why this active work is not wasted effort. We will look at what happens when you decode a word successfully and how that single successful encounter begins to store the word so that next time it feels passive. The goal is not to stay in effort forever. The goal is to use active decoding as the path to effortless reading. But right here, at the end of this first chapter, the key shift is simple: reading unfamiliar words is not a test of what you already know. It is a task you can do. You are not waiting for the word to become familiar before you can read it. You are using a process that makes it familiar.</p>
+</div>
+<div class="climb-divider">
+      <div class="eyebrow">Now Climb It</div>
+      <p>You've read the chapter. Lock it in by climbing — fifty-two questions, four tiers, each answer explained.</p>
+    </div>
+  <div id="app" class="panel"></div>
+  <p class="status" id="status">Connecting…</p>
+  <p class="geno-hint">Stuck on one? <b>Ask GENO</b> — your free AI tutor, lower-right. He explains any answer in 32 languages.</p>
+</div>
+
+<!-- GENO LIVE WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+
+let db=null, uid=null, best=null;
+const statusEl=document.getElementById('status');
+try{
+  const app=initializeApp(firebaseConfig);
+  const auth=getAuth(app); db=getFirestore(app);
+  onAuthStateChanged(auth, async (user)=>{
+    if(user){
+      uid=user.uid;
+      try{
+        const snap=await getDoc(doc(db,'decoding_climb',uid));
+        if(snap.exists()){ best=snap.data(); }
+      }catch(e){}
+      statusEl.textContent='Scores save automatically. Start on a phone, finish on a laptop.';
+      renderStart();
+    }
+  });
+  signInAnonymously(auth).catch(()=>{ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); });
+}catch(e){ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); }
+
+async function saveScore(score,tier){
+  if(!db||!uid) return;
+  try{
+    const prevBest = best && best.bestScore ? best.bestScore : 0;
+    if(score>=prevBest){
+      best={bestScore:score,bestTier:tier,updatedAt:Date.now()};
+      await setDoc(doc(db,'decoding_climb',uid), best, {merge:true});
+    }
+  }catch(e){}
+}
+
+/* ===== 52 QUESTIONS · grounded in "The Reader's Toolkit: Decoding" ===== */
+const QUESTIONS=[
+ {t:'Bronze',q:'Decoding is the skill of reading an unfamiliar word by…',o:["working it out in parts", "guessing from the picture", "skipping it"],a:0,why:'Decoding means <b>working a word out in parts</b> — not guessing, skipping, or memorizing it.'},
+ {t:'Bronze',q:'Knowing phonics is being able to SAY what letters can do. Decoding is…',o:["making the letters do it in real time", "reciting the alphabet", "memorizing words"],a:0,why:'Decoding is <b>making the letters do it in real time</b>, in a real sentence, while meaning keeps moving.'},
+ {t:'Bronze',q:'When you meet a word you\'ve never seen, the reader\'s move is to…',o:["guess from the first letter", "sound it out in parts", "wait for someone to say it"],a:1,why:'<b>Sound it out in parts.</b> Decoding is what lets you read words you were never taught.'},
+ {t:'Bronze',q:'Guessing a word from the picture or first letter is a habit that…',o:["builds strong readers", "breaks down on hard text", "is the same as decoding"],a:1,why:'Guessing <b>breaks down</b> the moment text gets hard and there\'s no picture to lean on.'},
+ {t:'Bronze',q:'To decode "flag," you blend the sounds…',o:["/f/ /l/ /a/ /g/", "f-l-a-g letter names", "the whole word at once"],a:0,why:'Blend the <b>sounds</b> /f/ /l/ /a/ /g/ — not the letter names.'},
+ {t:'Bronze',q:'Decoding turns phonics knowledge into…',o:["reading you can trust", "spelling tests", "handwriting"],a:0,why:'Decoding turns what you know about letters into <b>reading you can trust</b> on new words.'},
+ {t:'Bronze',q:'A reader who decodes well no longer needs to…',o:["memorize every word as a picture", "know any sounds", "read slowly forever"],a:0,why:'Decoding frees you from <b>memorizing every word as a picture</b> — the code does the work.'},
+ {t:'Bronze',q:'The word "sunset" is easier to decode if you read it as…',o:["one long blur", "sun + set", "s-u-n-s-e-t one letter at a time"],a:1,why:'Break it into chunks: <b>sun + set</b>. Parts are manageable; the blur is not.'},
+ {t:'Bronze',q:'Decoding is a bridge from knowing the code to…',o:["reading fluently", "forgetting phonics", "writing essays"],a:0,why:'Decoding bridges phonics knowledge to <b>fluent reading</b>.'},
+ {t:'Bronze',q:'When decoding, your eyes move through a word…',o:["left to right, in order", "randomly", "right to left"],a:0,why:'<b>Left to right, in order</b> — decoding follows the word\'s actual sound sequence.'},
+ {t:'Bronze',q:'"Sounding out" works best when you blend the sounds…',o:["smoothly together", "one at a time with long pauses", "backwards"],a:0,why:'Blend <b>smoothly together</b> so the parts become a word, not separate noises.'},
+ {t:'Bronze',q:'A learner who can decode "map" can also decode…',o:["nap, tap, lap", "only map", "nothing new"],a:0,why:'The skill <b>transfers</b>: map → nap, tap, lap. Decoding scales.'},
+ {t:'Bronze',q:'The goal of decoding practice is for it to eventually feel…',o:["automatic", "impossible", "slower"],a:0,why:'With practice, decoding becomes <b>automatic</b> — the reader stops noticing they\'re doing it.'},
+ {t:'Silver',q:'Every syllable in English contains exactly one…',o:["vowel sound", "consonant", "silent letter"],a:0,why:'Each syllable has exactly one <b>vowel sound</b>. Counting vowel sounds counts syllables.'},
+ {t:'Silver',q:'To decode a long word, the first strategic move is to…',o:["break it into syllables", "read every letter separately", "guess the ending"],a:0,why:'<b>Break it into syllables.</b> Long words are just short chunks in a row.'},
+ {t:'Silver',q:'In "napkin," the natural split is…',o:["nap · kin", "na · pkin", "napk · in"],a:0,why:'<b>nap · kin</b> — split between the two consonants (VC/CV).'},
+ {t:'Silver',q:'A prefix like "re-" is best decoded as…',o:["a single known chunk", "three separate letters", "skipped"],a:0,why:'Decode "re-" as <b>one known chunk</b>. Affixes repeat across thousands of words.'},
+ {t:'Silver',q:'The suffix "-ing" in "jumping" should be read as…',o:["one chunk", "i-n-g letters", "ignored"],a:0,why:'<b>-ing</b> is one reliable chunk. Pulling it off leaves the base word "jump" easy to read.'},
+ {t:'Silver',q:'In a blend like "st" in "stop," you hear…',o:["both sounds, /s/ and /t/", "one new sound", "no sound"],a:0,why:'In a blend you hear <b>both sounds</b> — unlike a digraph, where two letters make one.'},
+ {t:'Silver',q:'The digraph "ch" in "chip" stands for…',o:["one sound /ch/", "two sounds", "the letter c then h"],a:0,why:'A digraph = two letters, <b>one sound</b> /ch/. Decode it as a single unit.'},
+ {t:'Silver',q:'A "closed" syllable ends in a consonant and its vowel is usually…',o:["short", "long", "silent"],a:0,why:'Closed syllable (cap, nap, hot) → <b>short</b> vowel. Knowing the type predicts the sound.'},
+ {t:'Silver',q:'Decoding "rabbit," the double letters tell you to split…',o:["rab · bit", "ra · bbit", "rabb · it"],a:0,why:'Split between doubles: <b>rab · bit</b>. Each part is a clean closed syllable.'},
+ {t:'Silver',q:'Reading "unhelpful" is easiest when you see…',o:["un + help + ful", "u-n-h-e-l-p...", "one long word"],a:0,why:'<b>un + help + ful</b> — prefix, base, suffix. Meaning parts are decoding parts.'},
+ {t:'Silver',q:'When a chunk strategy and a guess disagree, the trained reader trusts…',o:["the chunks", "the guess", "whichever is faster"],a:0,why:'Trust the <b>chunks</b> — they\'re built on the code; guesses are built on hope.'},
+ {t:'Silver',q:'Vowel teams like "ea" in "team" are decoded as…',o:["one vowel sound", "two separate vowels", "a consonant"],a:0,why:'A vowel team makes <b>one</b> vowel sound. "ea" → /ē/.'},
+ {t:'Silver',q:'Breaking words into syllables matters most for…',o:["longer, unfamiliar words", "three-letter words", "words you've memorized"],a:0,why:'Chunking pays off most on <b>longer, unfamiliar words</b> — exactly where guessing fails.'},
+ {t:'Gold',q:'An "open" syllable ends in a vowel, which then usually says…',o:["its long name", "a short sound", "nothing"],a:0,why:'Open syllable (me, go, hi) → vowel says its <b>long name</b>.'},
+ {t:'Gold',q:'The silent-e (VCe) syllable in "cape" makes the vowel…',o:["long", "short", "an /uh/"],a:0,why:'Silent-e makes the vowel <b>long</b>: cap → cape. One of the six syllable types.'},
+ {t:'Gold',q:'An r-controlled syllable ("car," "her") has a vowel that is…',o:["bent by the r", "silent", "long"],a:0,why:'The r <b>bends</b> the vowel — neither clearly long nor short. A distinct syllable type.'},
+ {t:'Gold',q:'The consonant-le syllable appears at the END of words like…',o:["table, little, purple", "apple alone", "start words"],a:0,why:'Consonant-le (ta-<b>ble</b>, lit-<b>tle</b>) is the sixth syllable type, always final.'},
+ {t:'Gold',q:'In an unstressed syllable, a vowel often relaxes into the schwa sound…',o:["/uh/", "/ee/", "/oh/"],a:0,why:'The schwa <b>/uh/</b> appears in unstressed syllables: the \'a\' in \'about,\' the \'o\' in \'lemon.\''},
+ {t:'Gold',q:'"Set for variability" means when a decoded word sounds off, you…',o:["flex the vowel and try again", "abandon the word", "read it the wrong way anyway"],a:0,why:'<b>Flex the vowel</b> (try long, then short, then schwa) until it matches a real word you know.'},
+ {t:'Gold',q:'In the VCCV word "basket," you divide between…',o:["the two middle consonants: bas · ket", "before both: ba · sket", "after both: bask · et"],a:0,why:'VCCV → split between the consonants: <b>bas · ket</b>.'},
+ {t:'Gold',q:'In a VCV word like "begin," trying the OPEN split first gives…',o:["be · gin (correct)", "beg · in", "b · egin"],a:0,why:'Try open first: <b>be · gin</b>. If that\'s not a word, shift the split and re-flex.'},
+ {t:'Gold',q:'A morpheme is the smallest unit of…',o:["meaning", "sound", "print"],a:0,why:'A morpheme is the smallest unit of <b>meaning</b> — and meaningful chunks are decoding gold.'},
+ {t:'Gold',q:'Reading "replayed" by morphemes gives…',o:["re + play + ed", "rep + lay + ed", "re + pla + yed"],a:0,why:'<b>re + play + ed.</b> Morpheme boundaries are reliable decoding boundaries.'},
+ {t:'Gold',q:'Knowing syllable types matters because it lets you predict the…',o:["vowel sound before you say it", "word's meaning", "author's intent"],a:0,why:'The syllable type predicts the <b>vowel sound</b> — turning guesswork into a decision.'},
+ {t:'Gold',q:'The reason "flexing" works is that English vowels are…',o:["the most variable part of the code", "always long", "always short"],a:0,why:'Vowels are the <b>most variable</b> graphemes, so a skilled decoder expects to flex them.'},
+ {t:'Gold',q:'When two strategies are needed, decode by syllable type AND by…',o:["meaningful morphemes", "picture clues", "sentence length"],a:0,why:'Combine <b>syllable types and morphemes</b> — sound chunks and meaning chunks together unlock long words.'},
+ {t:'Platinum',q:'Each time you successfully decode a word, you move it toward becoming…',o:["an instantly recognized word", "a guessed word", "a forgotten word"],a:0,why:'Successful decoding feeds <b>orthographic mapping</b> — the word becomes instantly recognized.'},
+ {t:'Platinum',q:'David Share\'s "self-teaching hypothesis" says decoding lets a reader…',o:["teach themselves new words independently", "need a teacher for every word", "memorize lists"],a:0,why:'Decoding is a <b>self-teaching</b> mechanism — each word decoded is a word learned for life.'},
+ {t:'Platinum',q:'A word becomes a "sight word" not by photographing its shape but by…',o:["being mapped through decoding", "being guessed often", "being colorful"],a:0,why:'Sight words are built by <b>decoding and mapping</b>, not by memorizing shapes.'},
+ {t:'Platinum',q:'The decoding "bottleneck" hurts comprehension because slow word reading…',o:["uses up attention meaning needs", "improves memory", "helps focus"],a:0,why:'Effortful decoding <b>consumes the attention</b> that comprehension requires. Automaticity frees it.'},
+ {t:'Platinum',q:'Fluency is the bridge between decoding and…',o:["comprehension", "spelling", "handwriting"],a:0,why:'Fluency — fast, accurate decoding — is the bridge to <b>comprehension</b>.'},
+ {t:'Platinum',q:'To decode "photosynthesis," the expert reads it as…',o:["pho · to · syn · the · sis", "one impossible word", "by guessing 'plant'"],a:0,why:'Chunk even the giants: <b>pho · to · syn · the · sis</b>. No word is too long for the strategy.'},
+ {t:'Platinum',q:'Guessing-based reading fails advanced readers because hard text has…',o:["few context clues and no pictures", "too many pictures", "short words"],a:0,why:'Advanced text strips away the crutches, leaving only the reader\'s <b>decoding</b>.'},
+ {t:'Platinum',q:'Automatic decoding is the difference between reading the words and…',o:["reading the meaning", "reading aloud", "reading fast only"],a:0,why:'When decoding is automatic, attention shifts from the words to the <b>meaning</b>.'},
+ {t:'Platinum',q:'The Greek root "graph" (write) helps decode AND understand…',o:["autograph, paragraph, graphic", "random words", "short words"],a:0,why:'A known root unlocks a family: <b>autograph, paragraph, graphic</b> — decoding meets vocabulary.'},
+ {t:'Platinum',q:'A strong decoder meeting an unknown word feels…',o:["equipped, not stuck", "panicked", "the urge to skip"],a:0,why:'Decoding replaces the panic of the unknown word with the calm of being <b>equipped</b>.'},
+ {t:'Platinum',q:'Repeated successful decoding of a word eventually makes sounding it out…',o:["unnecessary", "permanent", "louder"],a:0,why:'The aim is to make sounding out <b>unnecessary</b> — the word is now mapped and instant.'},
+ {t:'Platinum',q:'Decoding is ultimately a tool whose success is measured by how often it becomes…',o:["invisible", "slower", "spoken"],a:0,why:'The best decoding becomes <b>invisible</b> — the mark of a reader who has truly arrived.'},
+ {t:'Platinum',q:'The reader who can decode anything has gained a kind of…',o:["independence", "luck", "memory trick"],a:0,why:'Decoding is <b>independence</b>: no word, no text, and no gatekeeper can shut them out.'}
+];
+
+const app=document.getElementById('app');
+let order=[], idx=0, score=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildOrder(){
+  const tiers=['Bronze','Silver','Gold','Platinum']; let o=[];
+  tiers.forEach(t=>{ o=o.concat(shuffle(QUESTIONS.filter(q=>q.t===t))); });
+  return o;
+}
+function renderStart(){
+  const bestLine = best && best.bestScore!=null
+    ? `<p class="best">Your best climb: <b>${best.bestScore}/52</b> — ${best.bestTier||''}</p>` : '';
+  app.innerHTML=`
+    <div class="center">
+      <div class="medals">
+        <span class="medal">🥉 Bronze</span><span class="medal">🥈 Silver</span>
+        <span class="medal">🥇 Gold</span><span class="medal">💎 Platinum</span>
+      </div>
+      <p style="color:var(--muted);margin-bottom:22px;max-width:44ch;margin-left:auto;margin-right:auto;">
+        Thirteen questions per tier, drawn from <i>The Reader's Toolkit: Decoding</i>. Fresh order every climb. Answer to see why.
+      </p>
+      <button class="btn" id="startBtn">Start the Climb →</button>
+      ${bestLine}
+    </div>`;
+  document.getElementById('startBtn').addEventListener('click',start);
+}
+function start(){ order=buildOrder(); idx=0; score=0; renderQ(); }
+function renderQ(){
+  const item=order[idx];
+  const pct=Math.round((idx/order.length)*100);
+  app.innerHTML=`
+    <div class="barwrap"><div class="bar" style="width:${pct}%"></div></div>
+    <div class="meta"><span class="tier ${item.t.toLowerCase()}">${item.t} Tier</span><span>Question ${idx+1} / ${order.length} · Score ${score}</span></div>
+    <div class="q">${item.q}</div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <button class="next" id="nextBtn"></button>`;
+  const opts=document.getElementById('opts');
+  item.o.forEach((text,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=text;
+    b.addEventListener('click',()=>choose(i));
+    opts.appendChild(b);
+  });
+}
+function choose(i){
+  const item=order[idx];
+  const buttons=[...document.querySelectorAll('.opt')];
+  buttons.forEach(b=>b.disabled=true);
+  const correct = i===item.a;
+  if(correct) score++;
+  buttons[item.a].classList.add('correct');
+  if(!correct) buttons[i].classList.add('wrong');
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(correct?'ok':'no');
+  fb.innerHTML=(correct?'✓ Correct. ':'✗ Not quite. ')+item.why;
+  const nb=document.getElementById('nextBtn');
+  nb.className='next show';
+  nb.textContent = idx+1<order.length ? 'Next →' : 'See your result →';
+  nb.addEventListener('click',()=>{ idx++; idx<order.length?renderQ():finish(); });
+}
+function tierFor(s){
+  if(s>=47) return {name:'Platinum',cls:'platinum',icon:'💎',msg:'A near-perfect climb. No word can lock you out now.'};
+  if(s>=39) return {name:'Gold',cls:'gold',icon:'🥇',msg:'Strong command of decoding. Long words hold no fear.'};
+  if(s>=27) return {name:'Silver',cls:'silver',icon:'🥈',msg:'Solid. You're working words in parts, not guessing.'};
+  if(s>=13) return {name:'Bronze',cls:'bronze',icon:'🥉',msg:'You got through — the decoding habit is taking root.'};
+  return {name:'Keep Climbing',cls:'bronze',icon:'⛰️',msg:'Run it again — every climb builds the skill deeper.'};
+}
+function finish(){
+  const tr=tierFor(score);
+  saveScore(score,tr.name);
+  app.innerHTML=`
+    <div class="center">
+      <div style="font-size:2.6rem">${tr.icon}</div>
+      <div class="tierbadge tier ${tr.cls}">${tr.name}</div>
+      <div class="scorebig">${score}<span style="font-size:1.4rem;color:var(--muted)"> / 52</span></div>
+      <p style="color:var(--muted);margin:14px auto 0;max-width:42ch;">${tr.msg}</p>
+      <div class="medals" style="margin-top:22px;">
+        <span class="medal ${score>=13?'on':''}">🥉 Bronze</span>
+        <span class="medal ${score>=27?'on':''}">🥈 Silver</span>
+        <span class="medal ${score>=39?'on':''}">🥇 Gold</span>
+        <span class="medal ${score>=47?'on':''}">💎 Platinum</span>
+      </div>
+      <p style="margin-top:18px;"><button class="btn" id="again">Climb Again →</button></p>
+      <p style="margin-top:14px;"><a href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a></p>
+    </div>`;
+  document.getElementById('again').addEventListener('click',start);
+}
+</script>
+</body>
+</html>

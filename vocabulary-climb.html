@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vocabulary Climb — Reading Helix | Global Sovereign University</title>
+<meta name="description" content="Climb the Vocabulary ladder — 52 questions, four tiers, Bronze to Platinum. Learn how words really grow and which words open the rooms of adult life. Free, no login. Part of the Reading Helix at Global Sovereign University.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/vocabulary-climb.html">
+<meta name="theme-color" content="#0B0E14">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1B2A4A;--gold:#C9A84C;--teal:#1A8B7F;--cream:#F5F1E8;--bg:#0B0E14;--card:#141a26;--muted:#9aa6b8;--good:#39b88b;--bad:#d9596b;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{background:var(--bg);color:var(--cream);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.6;min-height:100vh;}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 20px 80px;}
+  .head{text-align:center;margin-bottom:22px;}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+  h1{font-family:'Lora',serif;font-weight:700;font-size:clamp(1.9rem,5vw,2.6rem);color:var(--cream);line-height:1.1;}
+  .sub{color:var(--muted);font-size:.98rem;margin-top:10px;max-width:46ch;margin-left:auto;margin-right:auto;}
+  .panel{background:var(--card);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:26px;box-shadow:0 18px 50px -28px #000;}
+  .barwrap{height:8px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;margin:0 0 6px;}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .35s ease;}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);letter-spacing:.04em;margin-bottom:20px;}
+  .tier{font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+  .tier.bronze{color:#cd7f4d;} .tier.silver{color:#c7d0db;} .tier.gold{color:var(--gold);} .tier.platinum{color:#7fe9d6;}
+  .q{font-family:'Lora',serif;font-size:1.35rem;font-weight:600;line-height:1.4;color:#fff;margin-bottom:22px;}
+  .opts{display:flex;flex-direction:column;gap:12px;}
+  .opt{text-align:left;background:#1b2433;border:1.5px solid rgba(255,255,255,.1);color:var(--cream);font-family:inherit;font-size:1rem;font-weight:400;padding:15px 18px;border-radius:12px;cursor:pointer;transition:.15s;}
+  .opt:hover:not(:disabled){border-color:var(--gold);background:#212b3d;}
+  .opt:disabled{cursor:default;}
+  .opt.correct{border-color:var(--good);background:rgba(57,184,139,.14);color:#bff3df;}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,89,107,.14);color:#f6c9d1;}
+  .fb{margin-top:18px;padding:15px 18px;border-radius:12px;font-size:.95rem;line-height:1.55;display:none;}
+  .fb.show{display:block;}
+  .fb.ok{background:rgba(57,184,139,.1);border:1px solid rgba(57,184,139,.35);}
+  .fb.no{background:rgba(217,89,107,.1);border:1px solid rgba(217,89,107,.35);}
+  .fb b{color:var(--gold);}
+  .next{margin-top:18px;display:none;width:100%;background:var(--gold);color:#0A0907;font-family:inherit;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;}
+  .next.show{display:block;} .next:hover{transform:translateY(-1px);}
+  .btn{display:inline-block;background:var(--gold);color:#0A0907;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px 32px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;font-family:inherit;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold);}
+  .center{text-align:center;}
+  .best{margin-top:16px;font-size:13px;color:var(--muted);}
+  .best b{color:var(--gold);}
+  .medals{display:flex;justify-content:center;gap:10px;margin:18px 0;flex-wrap:wrap;}
+  .medal{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);border-radius:999px;padding:7px 13px;color:var(--muted);}
+  .medal.on{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.1);}
+  .scorebig{font-family:'Lora',serif;font-size:3.4rem;font-weight:700;color:var(--gold);line-height:1;}
+  .tierbadge{font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:8px 0 4px;}
+  .geno-hint{margin-top:22px;text-align:center;font-size:13px;color:var(--muted);}
+  .geno-hint b{color:var(--teal);}
+  .status{text-align:center;font-size:11px;color:#5b6678;margin-top:18px;letter-spacing:.04em;}
+  a{color:var(--teal);} a:hover{color:var(--gold);}
+
+  /* ---- Chapter reading + GENO banner (added) ---- */
+  .geno-banner{display:flex;align-items:center;gap:16px;background:linear-gradient(180deg,#15202e,#10161f);border:1px solid var(--gold);border-radius:16px;padding:16px 20px;margin:0 0 26px;}
+  .geno-banner img{width:54px;height:54px;border-radius:50%;border:2px solid var(--gold);flex:0 0 auto;background:#000;}
+  .geno-banner .gb-txt{font-size:.95rem;line-height:1.5;color:var(--cream);}
+  .geno-banner .gb-txt b{color:var(--gold);}
+  .reader{margin:0 0 30px;}
+  .reader .eyebrow{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+  .reader h2{font-family:'Lora',serif;font-weight:700;font-size:clamp(1.5rem,4vw,2rem);color:var(--gold);line-height:1.2;margin-bottom:6px;}
+  .reader .booktag{font-size:.9rem;color:var(--muted);font-style:italic;margin-bottom:20px;}
+  .reader h3{font-family:'Lora',serif;font-weight:700;font-size:1.18rem;color:#fff;margin:26px 0 10px;}
+  .reader p{font-size:1.02rem;line-height:1.72;color:#e8e3d6;margin-bottom:16px;}
+  .reader p:first-of-type::first-letter{font-family:'Lora',serif;font-size:3.1rem;line-height:.8;float:left;color:var(--gold);padding:6px 10px 0 0;}
+  .climb-divider{text-align:center;border-top:1px solid rgba(201,168,76,.3);margin:34px 0 26px;padding-top:26px;}
+  .climb-divider .eyebrow{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .climb-divider p{color:var(--muted);font-size:.98rem;max-width:46ch;margin:0 auto;}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="geno-banner"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, your AI reading tutor"><div class="gb-txt"><b>Ask GENO if you have any questions about this chapter.</b> Ask him to tutor you any time — he’s free, 24/7, and speaks 32 languages. He’s waiting in the lower-right corner.</div></div>
+  <div class="head">
+    <div class="eyebrow">Reading Helix · Element 05 · Free</div>
+    <h1>The Vocabulary Climb</h1>
+    <p class="sub">Fifty-two questions. Four tiers — Bronze, Silver, Gold, Platinum. Climb as far as you can; your best is saved.</p>
+  </div>
+  <div class="reader">
+<div class="eyebrow">Reading Helix · Volume 5 · Chapter One · Read First</div>
+<h2>What Vocabulary Actually Is</h2>
+<div class="booktag">From <i>The Words You Know: Vocabulary</i> — free to keep, by Dr. Gene A. Constant</div>
+<h3>Receptive vs. Expressive Vocabulary</h3>
+<p>Expressive Vocabulary. If you have ever read a paragraph, nodded along, and then realized you could not have explained it to someone else in your own words, you have felt the difference between two kinds of vocabulary. One is the set of words you can recognize and understand when you meet them in print or hear them spoken. The other is the set of words you can summon on demand when you speak or write. Those two sets overlap, but they are not the same. And the gap between them is not a sign that something is wrong. It is a normal feature of how language works. Receptive vocabulary is what you understand. It is the vocabulary you receive through reading and listening. Expressive vocabulary is what you use. It is the vocabulary you express through speaking and writing. Receptive comes first, and it grows larger. Expressive lags behind, sometimes by a lot. A reader might understand the word “fundamental” every time it appears, yet still default to “basic” when speaking. They might recognize “reluctant” instantly in a novel but say “I don’t really want to” in conversation. They might understand “consequently” in an article and still write “so” in an email. This is not hypocrisy or laziness. It is efficiency. Your mind treats understanding and producing language as related but different jobs. Understanding a word when you see it is like recognizing a face in a crowd. Producing a word when you need it is like recalling a name under pressure, in real time, with other people watching. Recognition is easier than retrieval. Recognition can happen even if your knowledge is partial: you might not be able to define the word perfectly, but you can grasp it well enough in that sentence. Retrieval requires stronger, cleaner connections. You have to find the word, pronounce it, fit it into a sentence, and commit to it. This is why you can often follow an intelligent conversation that you could not imitate. It is why a student can understand a teacher’s explanation of photosynthesis and still struggle to explain it back. It is why an adult learner can read “The committee reached a consensus” and understand it but hesitate to say “consensus” out loud, worrying it will sound stiff, formal, or incorrect. Expressive vocabulary carries social risk in a way receptive vocabulary does not. No one hears the words you understand silently. If you have ever learned a second language, you know this gap intimately. You can watch a show and understand far more than you can say. You can read a news headline and get the point, but when you try to speak, your mind offers only the simplest, safest words. That same pattern exists inside your first language as well. We just notice it less because the baseline is higher. For reading, receptive vocabulary is the immediate bottleneck. This matters because this book sits in the Reading Helix after decoding and fluency. Once the reader can turn print into speech and can do it smoothly, comprehension starts to depend heavily on whether the words mean anything to them. If decoding is the door and fluency is the speed at which you can walk through it, vocabulary is the number of rooms you can actually enter. A reader can pronounce “meticulous” perfectly and still not understand a character described that way. They can read “The results were inconclusive” at full speed and still miss the whole point of the paragraph. In those moments, the failure is not in sounding out. It has meaning. But there is another twist: even inside receptive vocabulary there are degrees.</p>
+<p>You might “know” a word in the sense that you recognize it and it feels familiar, but your knowledge is thin. You know the general mood of it, not the precise shape. Take “significant.” Many readers sense it means “important,” but in academic writing it often carries a more specific meaning tied to statistics. Or take “theory.” In everyday speech, it can mean a guess. In science, it means an explanation supported by a large body of evidence. A reader might understand a sentence well enough to keep going and still misunderstand what the author is really claiming. Vocabulary is not just word counts. It is depth. Now, consider what this means for instruction and self-study. Many people assume the goal of vocabulary learning is to move as many words as possible from “unknown” to “used in a sentence.” That sounds logical. It also sets you up to feel like you are failing, because expressive vocabulary grows slowly. You can understand hundreds of new words over a year of reading and still feel like you do not use any “better words” when you speak. That does not mean the learning did not happen. It means the learning is living in the receptive system first, where it belongs. Imagine an adult learner, Mara, who is returning to school after a decade away. She reads an assigned chapter and notices that the author uses words like “convey,” “retain,” “interpret,” and “contrast.” She understands them while reading. But when she writes her discussion post, she keeps typing “show,” “keep,” “think,” and “compare.” Later she rereads her work and feels disappointed. “I know those words,” she thinks. “Why don’t I use them?” The answer is that knowing a word receptively is like having it on a shelf in your mind where you can recognize it when someone else picks it up. Expressive vocabulary is having the habit of reaching for it yourself at the right moment and trusting it will fit. That habit develops through repeated successful retrieval, not through a single definition. Mara’s reading is not wasted. It is the foundation. With time and the right kind of practice, the shelf words become hand words. Children show the same pattern. A fourth grader may understand “exhausted” when a teacher reads it aloud, laugh at the scene, and answer questions correctly but still say “really tired” in their own story. The child is not missing the word; the child is missing retrieval strength and confidence. When we treat this as a defect, we sometimes push children into unnatural language, as if speaking should sound like a textbook. But expressive vocabulary is shaped by context and audience. A child writing a formal report might eventually use “exhausted.” In casual speech, “really tired” may remain the better choice. Expressive vocabulary is not simply “more advanced”; it is also “more fitting.” This is one reason the gap between receptive and expressive vocabulary is useful. It lets you understand language that is above the level you can comfortably produce. It lets authors and teachers pull you upward. You can live for a long time with receptive knowledge that you do not yet express. That receptive knowledge still improves your life: it lets you read more complex texts, follow more nuanced arguments, and absorb more information. It expands what you can enter, even before it changes how you speak. At the same time, if you are trying to change your writing and speaking for school or work, you do need expressive growth. The mistake is thinking that expressive growth comes from memorizing lists and forcing yourself to use a new word once. Expressive vocabulary grows when you repeatedly meet a word in meaningful contexts, notice how it behaves, and then practice retrieving it in low-stakes ways until it becomes natural.</p>
+<p>Building the Vocabulary That Unlocks Reading—The Three Tiers, and How Word Knowledge Really Grows for Adults and the Children They Teach</p>
+<p>Low-stakes retrieval can be as simple as this: after you encounter a useful word while reading, pause and say aloud a sentence that would make sense in your life. Not a stiff “dictionary sentence,” but something you would actually say or write. If you meet “reluctant,” you might say, “I’m reluctant to sign up because I don’t know the schedule yet.” If you meet “sustain,” you might say, “It’s hard to sustain a habit when my evenings are chaotic.” The point is not to perform sophistication. The point is to build a pathway from meaning to use. Another way to see the receptive-expressive difference is to listen to your own speech. Most of us rely on a small set of high-frequency words for everyday life. That is not a flaw; it is how fluent conversation works. But when you write, especially in academic or professional settings, you often need more precise tools. You need words that compress meaning, that let you say in one term what would otherwise take a whole phrase. “Reluctant” is a compressed version of “not wanting to do something and holding back.” “Contrast” is a compressed version of “show how two things are different in a meaningful way.” Tier 2 words, the high-utility academic words we will return to in the next chapter, live in this space. They are not technical terms; they are precision tools. So when you feel the gap, treat it as information, not an indictment. It tells you which words are in your receptive warehouse but not yet on your expressive workbench. It tells you what kind of practice you need. It also explains why so much vocabulary instruction misses the mark. If you judge learning only by whether a student can produce a word on command, you will underestimate what they understand. If you judge learning only by whether a student can match a word to a definition, you will overestimate what they can actually do with it. Real vocabulary knowledge shows up in comprehension first, and in expression later, when the mind has had enough encounters to make retrieval easy and safe. In the pages ahead, we will keep returning to this distinction because it changes how you read your own progress. Vocabulary growth is not a switch that flips. It is a gradual migration of words: from unknown to familiar, from familiar to understood in context, from understood to retrievable, and from retrievable to automatic. Receptive vocabulary is the leading edge of that migration, and it is the edge that most directly determines how much you can understand when you read. Expressive vocabulary is the trailing edge, and it is the edge that changes how you sound when you speak and write. Both matter. But if you want to understand what vocabulary actually is, you begin by separating what you recognize from what you can reliably use. Once you can name the two systems, receptive and expressive, you start to see why the gap between them matters. Not because the gap is bad, but because it explains a lot of confusion that learners, parents, and teachers carry around for years. The first confusion is emotional. People often judge their vocabulary by what they can produce on demand. “If I can’t say it, I don’t know it.” That feels reasonable until you notice how much of your daily competence depends on recognition rather than recall. You recognize hundreds of faces you could not name. You recognize melodies you could not hum perfectly. You recognize routes you could not describe turn by turn. Language works the same way. The words you understand are already doing real work in your life, even if they are not yet the words you reach for when you speak. That matters for motivation. Think of Mara, returning to school after ten years away, reading “convey,” “retain,” “interpret,” and “contrast” in her assigned chapter.</p>
+<h3>Bridging the Gap: Why Differences Matter</h3>
+<p>If she evaluates her growth only by whether those words appear in her discussion post, she will conclude she is stuck. But if she evaluates her growth by whether she can follow the argument in the chapter, whether she can track distinctions, or whether she can tell what the author is doing with evidence, she will see progress quickly. The receptive gains show up first, and they show up where school actually measures you most often: reading comprehension, not spontaneous speech. The second confusion is educational. Many classrooms and many self-study plans treat vocabulary as if the goal is immediate production. A student is given a list, asked to copy definitions, and then told to “use each word in a sentence.” This seems like a bridge from recognition to use, but it often becomes a performance of shallow knowledge. Learners produce stiff, unnatural sentences that prove only that they can force the word into a grammatical slot. “I was reluctant to eat my dinner.” “The fundamental rule is to be nice.” These are not wrong, but they do not demonstrate the kind of understanding that helps you read, write, and think. They are often disconnected from any meaningful context, so the word never attaches to a rich network of ideas. Bridging the gap requires understanding what you are bridging toward. The real difference is not simply “I know it” versus “I can say it.” The deeper difference is between vague familiarity and usable precision. When you meet a word like “significant,” you might feel you know it because you can paraphrase it as “important.” But when a research article says “the results were not statistically significant,” “important” is the wrong meaning. The bridge you need is not from silence to speech; it is from a fuzzy sense to a clear one. That kind of clarity is built by repeated exposure in varied contexts, the very thing most vocabulary instruction fails to provide. The gap also matters because it affects how we interpret assessments. A child might not use the word “exhausted” in their own story and still understand it perfectly when the teacher reads it aloud. An adult might not choose “consequently” in an email and still understand it instantly in a contract. If we only measure expressive use, we underestimate what the learner understands. If we only measure definition matching, we overestimate what the learner can do with the word in real reading. A learner can memorize a definition long enough to pass a quiz and still stumble when the word appears in a new sentence with a slightly different meaning. This is one reason vocabulary can feel slippery. People think they either know a word or they do not, when in reality, word knowledge is layered. You can recognize it. You can get the general idea. You can understand it in familiar contexts. You can define it. You can use it correctly. You can use it flexibly. You can hear it with irony, or in a metaphor, or in a technical argument and still keep your footing. Each layer is a different kind of knowing, and each layer takes time. So why bridge the gap at all? If receptive vocabulary is the leading edge and it already improves comprehension, why not leave expressive vocabulary alone? Because life demands expression in the places that matter most for opportunity. Reading is private; you can look up words, reread, and hide confusion. Writing and speaking are public. They are evaluated. They are graded. They decide whether you sound credible in a meeting, whether your email is taken seriously, whether your job application reads as &quot;professional,&quot; or whether your argument in a community meeting sounds coherent rather than scattered.</p>
+<p>Building the Vocabulary That Unlocks Reading—The Three Tiers, and How Word Knowledge Really Grows for Adults and the Children They Teach</p>
+<p>This is where vocabulary becomes a gatekeeper, a theme we will confront directly later in the book. For now, it is enough to say that bridging the receptive-expressive gap is not about sounding fancy. It is about having access to the register of language that school and many professions expect. You can hear this difference in the simplest pairs. “Show” versus “demonstrate.” “Use” versus “employ.” “Keep” versus “retain.” “Think” versus “infer.” “Help” versus “facilitate.” These Tier 2 words, the high-utility academic words we will explore in Chapter 2, compress meaning. They let you write with precision and efficiency. They also carry the tone that academic and professional environments often reward. If you can read them but never use them, you can understand a textbook but struggle to produce a paper that sounds like it belongs in that world. At the same time, bridging the gap should not mean replacing your natural voice with a parade of formal words. Many learners make this mistake when they become self-conscious. They begin to overreach. Mara might force “consequently” into every paragraph or use “fundamental” where “basic” would be clearer. A child might sprinkle “moreover” and “therefore” into a narrative that would be better served by simple “and” and “so.” Bridging the gap is not a costume change. It is learning to choose the tool that fits the job. A useful way to think about it is range. The goal is not to abandon Tier 1 words; the goal is to add Tier 2 options so you can move along the spectrum of formality and precision. In casual conversation, “I don’t really want to” may be the best phrasing. In a workplace email, “I’m reluctant to commit until I confirm the schedule” may be clearer and more appropriate. The bridge is not from “simple” to “advanced.” It is from “only one setting” to “many settings.” And bridging is possible because the mind is already doing half the work for you. Every time you understand a word in context, you strengthen a network: the word’s typical neighbors, the situations it appears in, the tone it carries, the kinds of claims it makes. This is why reading widely is not just “exposure”; it is construction. Your brain is quietly building the scaffolding for later expressive use. When Mara hesitates to write “contrast” but understands it while reading, she is closer than she thinks. She has the concept. She has seen the word &quot;behave&quot; in sentences. What she lacks is retrieval strength and confidence. Confidence matters more than people admit. Expressive vocabulary carries social risk. When you say a word out loud, you can mispronounce it. You can use it slightly wrong. You can sound as though you are trying too hard. Many adults have been corrected, mocked, or subtly judged for word choices, especially adults who are re-entering school or working in environments where they feel watched. Children feel this too, especially in peer groups. So they retreat to the safest words, the words that will never draw attention. This is not laziness. It is self-protection. Bridging the gap, then, is partly technical and partly emotional. Technically, you need repeated, varied encounters and low-stakes retrieval practice, the kind we hinted at earlier when we suggested pausing to say a real sentence from your own life. Emotionally, you need permission to sound like a learner. You need to treat a slightly awkward first use as a normal step, not as evidence that you should go back to simpler language forever. A practical bridge begins by noticing which words are already in your receptive warehouse but not on your expressive workbench.</p>
+<p>You can catch them by paying attention to small moments: when you read a word and think, “That is exactly what I mean,” but you know you would not have chosen it yourself. Or when you are speaking and you circle around an idea with a long phrase, and later you realize there was a single word that would have said it cleanly. Those moments are not failures. They are signals. They identify the next words as most worth strengthening because the meaning is already there. For a child, a bridge might look like hearing “exhausted” in a read-aloud, laughing at the scene, and then later, when they are tired after soccer practice, a parent says, “You look exhausted,” and the child says, “Yeah, exhausted,” and the word takes one step forward. For Mara, the bridge might be reading “interpret” and then, in a low-stakes note to herself, writing, “My interpretation is that the author thinks stress affects memory.” Not to impress anyone. Just to practice placing the word where it belongs. These differences matter because they change what you aim for and how you measure progress. If you aim to “use new words” as your main marker, you will either force words unnaturally or conclude you are failing. If you aim to understand more of what you read, you will see progress sooner and build the foundation that actually makes expressive growth possible. The bridge is real, but it is built from the reading side outward. Receptive vocabulary is not the lesser form of knowledge. It is the entry point. And when you treat it that way, the gap stops looking like a problem and starts looking like a map: a clear picture of where you are, what is already growing, and what, with time and the right practice, will become available to you when you need it. Subchapter 3: Misconceptions in Vocabulary Instruction. Once you understand that receptive vocabulary leads and expressive vocabulary follows, a lot of familiar vocabulary advice starts to look suspicious. Not because the people giving it are trying to mislead you, but because most of what passes for “vocabulary instruction” is built on an outdated picture of what it means to know a word. It treats word knowledge as a simple object you can hand to someone: definition delivered, word learned. But earlier we described vocabulary as a migration: from unknown to familiar, from familiar to understood in context, from understood to retrievable, and from retrievable to automatic. If that is the real shape of learning, then many common methods are not just inefficient. They are pointed at the wrong target. The first misconception is the neatest one: that learning a word means being able to recite its definition. This belief is so widespread that it hides in plain sight. Students are assigned ten words, told to look them up, write the dictionary definition, and then take a quiz where they match words to meanings. Adults do the same thing to themselves with flashcards and apps. It feels productive because it produces paperwork. It produces something you can check off. But dictionary definitions are not designed to teach beginners. They are designed to be precise and compact for people who already have a lot of language. They often use unfamiliar words to define unfamiliar words, or they give multiple senses with subtle differences that only make sense after you have already met the word in the wild. A learner reads the definition, nods, and thinks they know it. Then the word appears in a real sentence, and they realize their knowledge is thin. Think about the word “interpret,” which Mara met in her assigned reading. A dictionary might say “to explain the meaning of. That is not wrong, but it is also not enough. &quot;Interpret&quot; can mean to explain a text, understand someone’s intentions, perform a piece of music, translate spoken language, or read a situation.</p>
+<p>Building the Vocabulary That Unlocks Reading—The Three Tiers, and How Word Knowledge Really Grows for Adults and the Children They Teach</p>
+<p>In academic writing it often signals that there is room for judgment: the facts are here, and now we have to make sense of them. That flavor matters. A student who memorizes “to explain the meaning of” may still miss what a professor means when they say, “Interpret the results.” Or take “significant,” the example we used earlier. A definition like “important” will get you through casual conversation. It will not get you through scientific writing. The learner who believes definitions equal knowledge is set up to misunderstand confident, precise prose while feeling confident. That is the worst combination. The second misconception is the mirror image of the first: that using a word in a sentence proves you know it. This is why the dictionary-definition-and-sentence routine is so popular. It feels like it bridges receptive to expressive. But in practice it often creates sentences that are technically grammatical and conceptually empty. “I was reluctant to eat my dinner.” “The fundamental rule is to be nice.” These sentences do not show that the learner understands the word’s typical situations, tone, or constraints. They show that the learner knows where an adjective can go. A deeper problem is that the “use it in a sentence” requirement often pushes learners into performative language. They choose the safest, blandest context because they are trying not to be wrong. They produce sentences that no one would actually say. That is not a moral failure. It is what you do when you are being evaluated. Notice how different that is from the low-stakes retrieval we talked about earlier. When Mara reads “sustain” and pauses to say, “It’s hard to sustain a habit when my evenings are chaotic,” she is doing something fundamentally different from writing, “I will sustain my pencil.” One is practice in meaning. The other is practice in compliance. The third misconception is that vocabulary is mainly a list problem: if you can just cover enough words, comprehension will take care of itself. This is where “word of the day” calendars and weekly word lists quietly mislead people. They assume vocabulary growth is like collecting stamps: one word per day, one definition per word, and after a year you have 365 new tools. But word knowledge does not accumulate that neatly. Without repeated encounters, most words evaporate. Without context, many words never attach to anything useful. More importantly, comprehension does not fail because readers lack random words. It fails because readers lack the particular words that carry the meaning in that kind of text. Academic language relies heavily on Tier 2 words, the high-utility words that show up across subjects: analyze, contrast, sustain, infer, interpret, and formulate. These are not rare, but they are not everyday conversation either. They do a specific kind of work: they signal relationships, claims, degrees of certainty, and logical movement. A random “word of the day” might teach you “gargantuan” or “effervescent.” Those are fun. They are also not the words that unlock a history chapter or a workplace policy document. The list-problem misconception makes people spend time polishing words that rarely pay rent. The fourth misconception is that vocabulary instruction should target what is easiest to teach and easiest to test.</p>
+<p>What is easiest to test is a word-to-definition match. What is easiest to teach is a quick explanation. What is easiest to grade is a worksheet. So that is what schools and programs often do. But what is easiest is not what is most powerful. Earlier we said vocabulary knowledge is layered. A worksheet can touch the thinnest layer: recognition of a definition. It rarely builds the deeper layers: knowing the word’s typical collocations (the words it tends to travel with), its register (formal, informal, or technical), its shades of meaning, and its behavior across contexts. Those layers are what you need for reading comprehension. They are also what you need to write and speak with precision later. A child can pass a vocabulary quiz on Monday and still not understand the same words on Wednesday in a new story. An adult can study flashcards and still feel lost reading an editorial because the problem is not that the word is unknown. The problem is that the word is known in a thin, brittle way. The fifth misconception is a particularly harmful one for adult learners: that “good vocabulary” is synonymous with “fancy words.” This misconception creates two traps. The first trap is avoidance. Adults who have been judged for their language often decide, consciously or not, that using unfamiliar words is dangerous. They stick to the smallest safe set. This keeps expressive vocabulary from growing, not because the adult is incapable, but because the social cost feels too high. We touched on this earlier when we said expressive vocabulary carries risk. The “fancy words” misconception amplifies that risk by framing Tier 2 language as pretension rather than as precision. The second trap is overreach. A learner tries to sound academic and begins using words slightly wrong or in places where simpler language would be clearer. This can lead to correction and embarrassment, which then feeds avoidance. It is a painful loop: you try, you stumble, you retreat. The healthier frame is the one we have been building: vocabulary is not decoration. It is access. A word like “contrast” is not fancy. It is efficient. It lets you name a thinking move. A word like “retain” is not showing off. It is exact. It distinguishes keeping information in memory from simply keeping something in your pocket. When you treat words as tools rather than status symbols, practice becomes less emotionally loaded. You are not trying to become a different person. You are trying to become more precise when the situation requires it. A sixth misconception, common in well-meaning instruction, is that you can teach vocabulary without teaching word learning. This is subtle. Many programs focus on delivering words but do not teach the learner how to continue building vocabulary on their own. The student is dependent on the teacher’s list. The adult is dependent on the app’s algorithm. But vocabulary growth is lifelong. No course can preload your brain with everything you will ever need. The real goal is to teach the process: how to notice unknown words, how to use context without guessing wildly, how to confirm meaning, how to track and revisit words, how to strengthen retrieval. In other words, you do not just need more words. You need more word-learning skills. That is where this book is headed in Part Two: repeated exposure in context, morphology, and word consciousness. Those are the engines of vocabulary growth. Without them, “instruction” becomes a temporary performance that fades after the test.</p>
+<p>Building the Vocabulary That Unlocks Reading—The Three Tiers, and How Word Knowledge Really Grows for Adults and the Children They Teach</p>
+<p>And finally, there is the misconception that vocabulary is separate from reading, as if it can be built in a side room. It is tempting to believe this because it fits school schedules: ten minutes of vocabulary, then reading. But vocabulary is not an add-on to comprehension. It is one of the main ingredients of comprehension. Words are not labels attached to ideas. Words are the handles you use to pick ideas up and move them around. When a text uses the word “consequently,” it is not merely showing off. It is telling you that a cause-and-effect relationship is coming. When a text uses “however,” it is telling you to pivot. When it uses “fundamental,” it is telling you to look for a base principle. These are reading signals. This is why the biggest misconception of all is the belief that vocabulary instruction is mainly about memory. It is more accurate to say it is about attention. Attention to words as you read. Attention to how they work. Attention to the differences between near-synonyms. Attention to tone. Attention to the way meaning shifts across contexts. Memory follows attention, but attention has to come first. If you want a practical way to see these misconceptions in action, listen for the moment when you, or a child you are teaching, says, “I know that word.” Then ask a gentler follow-up question: “What does it mean here?” Not “What is the definition?” but “What is the author doing with it in this sentence?” That single question reveals the difference between thin knowledge and functional knowledge. It also reinforces the most important correction to all the misconceptions above: words are learned in use. Mara does not need to become the kind of person who sprinkles formal words into casual conversation. She needs to become the kind of reader who notices “interpret” and understands what is being asked of her and the kind of writer who can reach for “interpretation” when that is the precise tool. A fourth grader does not need to sound like a dictionary. They need repeated, meaningful encounters with words like “exhausted” until those words become part of how stories make sense. The good news is that once you stop chasing the wrong targets, vocabulary instruction becomes simpler and more humane. It stops being a weekly ritual of short-term memorization and starts being what it always should have been: guided attention, repeated exposure, and practice that respects the way words actually take root.</p>
+</div>
+<div class="climb-divider">
+      <div class="eyebrow">Now Climb It</div>
+      <p>You've read the chapter. Lock it in by climbing — fifty-two questions, four tiers, each answer explained.</p>
+    </div>
+  <div id="app" class="panel"></div>
+  <p class="status" id="status">Connecting…</p>
+  <p class="geno-hint">Stuck on one? <b>Ask GENO</b> — your free AI tutor, lower-right. He explains any answer in 32 languages.</p>
+</div>
+
+<!-- GENO LIVE WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+
+let db=null, uid=null, best=null;
+const statusEl=document.getElementById('status');
+try{
+  const app=initializeApp(firebaseConfig);
+  const auth=getAuth(app); db=getFirestore(app);
+  onAuthStateChanged(auth, async (user)=>{
+    if(user){
+      uid=user.uid;
+      try{
+        const snap=await getDoc(doc(db,'vocabulary_climb',uid));
+        if(snap.exists()){ best=snap.data(); }
+      }catch(e){}
+      statusEl.textContent='Scores save automatically. Start on a phone, finish on a laptop.';
+      renderStart();
+    }
+  });
+  signInAnonymously(auth).catch(()=>{ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); });
+}catch(e){ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); }
+
+async function saveScore(score,tier){
+  if(!db||!uid) return;
+  try{
+    const prevBest = best && best.bestScore ? best.bestScore : 0;
+    if(score>=prevBest){
+      best={bestScore:score,bestTier:tier,updatedAt:Date.now()};
+      await setDoc(doc(db,'vocabulary_climb',uid), best, {merge:true});
+    }
+  }catch(e){}
+}
+
+/* ===== 52 QUESTIONS · grounded in "The Words You Know: Vocabulary" ===== */
+const QUESTIONS=[
+ {t:'Bronze',q:'Vocabulary is the store of words a person…',o:["knows and can use", "can spell only", "has heard once"],a:0,why:'Vocabulary is the words you <b>know and can use</b> — your working bank of meaning.'},
+ {t:'Bronze',q:'A child reads the word "canopy" perfectly but doesn\'t know its meaning. Comprehension…',o:["halts", "continues fine", "speeds up"],a:0,why:'Decoding without meaning <b>halts comprehension</b>. You can say a word and still miss it.'},
+ {t:'Bronze',q:'The book compares vocabulary to a…',o:["bank account that grows", "fixed list", "photograph"],a:0,why:'Vocabulary is an <b>ever-expanding bank account</b>, built through wide reading.'},
+ {t:'Bronze',q:'A "shelf word" is one you…',o:["recognize but can't really use", "use easily every day", "never saw"],a:0,why:'A <b>shelf word</b> sits unused; the goal is to turn it into a "hand word" you reach for.'},
+ {t:'Bronze',q:'A "hand word" is one you…',o:["use comfortably in your own speech and writing", "only recognize", "look up each time"],a:0,why:'A <b>hand word</b> is fully yours — you use it without thinking.'},
+ {t:'Bronze',q:'Reading every word in a sentence and still missing the point usually means a gap in…',o:["vocabulary or language comprehension", "eyesight", "handwriting"],a:0,why:'If decoding is fine but meaning is missing, the gap is <b>vocabulary or language comprehension</b>.'},
+ {t:'Bronze',q:'The bigger your vocabulary, the more of the world\'s text you can…',o:["actually understand", "read aloud", "spell"],a:0,why:'Vocabulary is the gate to <b>understanding</b> — more words, more comprehension.'},
+ {t:'Bronze',q:'Two readers see themselves in this book: the struggling adult, and the…',o:["parent of a child who reads fluently but misses meaning", "spelling champion", "fast typist"],a:0,why:'The second reader is the <b>parent</b> who\'s watched a child read smoothly yet miss the point.'},
+ {t:'Bronze',q:'Vocabulary controls access to adult life because contracts, forms, and the news all demand…',o:["the right words", "fast reading", "neat handwriting"],a:0,why:'Rental agreements, medical instructions, and policies all hinge on knowing <b>the right words</b>.'},
+ {t:'Bronze',q:'The fastest way to grow vocabulary over a lifetime is…',o:["wide reading", "one big word list", "watching the clock"],a:0,why:'<b>Wide reading</b> exposes you to far more words than any list ever could.'},
+ {t:'Bronze',q:'Knowing a word deeply means knowing more than its definition — it means knowing…',o:["how to use it", "how to spell it only", "its letter count"],a:0,why:'Real word knowledge is <b>using it</b> correctly, not reciting a dictionary line.'},
+ {t:'Bronze',q:'When you meet an unknown word while reading, a strong reader first tries to…',o:["use the surrounding context", "stop reading", "ignore the sentence"],a:0,why:'Use the <b>context</b> — the sentence around a word often reveals its meaning.'},
+ {t:'Bronze',q:'Vocabulary growth is mostly…',o:["gradual, through many encounters", "instant, from one lesson", "impossible after childhood"],a:0,why:'It\'s <b>gradual</b> — words sink in across many meetings, not one sitting.'},
+ {t:'Silver',q:'The Three Tiers framework in this book comes from…',o:["Isabel Beck", "Noah Webster", "a dictionary"],a:0,why:'<b>Isabel Beck\'s</b> Three Tiers is the spine of the book.'},
+ {t:'Silver',q:'Tier 1 words are…',o:["everyday words learned through living", "rare technical terms", "made-up words"],a:0,why:'<b>Tier 1</b>: everyday words (dog, run, happy) picked up just by living.'},
+ {t:'Silver',q:'Tier 3 words are…',o:["specialized words learned when you enter a field", "common words", "slang"],a:0,why:'<b>Tier 3</b>: specialized terms (photosynthesis, mortgage) learned inside a specific field.'},
+ {t:'Silver',q:'Tier 2 words are the…',o:["high-utility middle band that travels across serious texts", "easiest words", "rarest words"],a:0,why:'<b>Tier 2</b>: high-utility words that appear across every kind of serious text.'},
+ {t:'Silver',q:'Which is a classic Tier 2 word?',o:["analyze", "cat", "stethoscope"],a:0,why:'<b>analyze</b> — Tier 2: academic, high-utility, everywhere in serious text.'},
+ {t:'Silver',q:'"Consequently," "significant," and "perspective" are examples of which tier?',o:["Tier 2", "Tier 1", "Tier 3"],a:0,why:'All <b>Tier 2</b> — the band that quietly controls access to adult life.'},
+ {t:'Silver',q:'This book focuses its energy on teaching…',o:["Tier 2 words", "Tier 1 words", "Tier 3 words"],a:0,why:'<b>Tier 2</b> gives the biggest payoff — it unlocks the most text for the effort.'},
+ {t:'Silver',q:'Tier 1 words usually don\'t need teaching because they\'re…',o:["learned naturally through living", "too hard", "unimportant"],a:0,why:'Tier 1 is absorbed <b>naturally</b> — no instruction required.'},
+ {t:'Silver',q:'Tier 3 words are best learned…',o:["when you actually study that field", "before everything else", "never"],a:0,why:'Tier 3 is learned <b>in context of its field</b> — you meet \'allele\' when you study genetics.'},
+ {t:'Silver',q:'The reason Tier 2 is the priority is that those words…',o:["appear across many subjects", "are the shortest", "are the oldest"],a:0,why:'Tier 2 words <b>travel across subjects</b>, so each one learned unlocks reading everywhere.'},
+ {t:'Silver',q:'A reader strong in Tier 1 but weak in Tier 2 will struggle most with…',o:["serious, academic, or official text", "casual conversation", "picture books"],a:0,why:'The Tier 2 gap shows up in <b>serious text</b> — the news, contracts, textbooks.'},
+ {t:'Silver',q:'The Three Tiers help a teacher decide…',o:["which words are worth teaching directly", "how to spell", "reading speed"],a:0,why:'The tiers guide <b>which words deserve direct teaching</b> — mostly Tier 2.'},
+ {t:'Silver',q:'"Interpret" belongs to which tier?',o:["Tier 2", "Tier 1", "Tier 3"],a:0,why:'<b>Tier 2</b> — high-utility academic vocabulary.'},
+ {t:'Gold',q:'The book says words stick through…',o:["repeated meaningful encounters", "one-time memorization", "spelling drills"],a:0,why:'Words are learned through <b>repeated meaningful encounters</b> in context, not single exposures.'},
+ {t:'Gold',q:'The same word met four times in four sentences beats the same word…',o:["memorized once for a quiz", "read aloud loudly", "spelled correctly"],a:0,why:'Four meaningful encounters <b>beat one memorized definition</b>. Context builds durable knowledge.'},
+ {t:'Gold',q:'Word lists tend to fail because they assume learning happens by…',o:["memorization", "reading", "listening"],a:0,why:'Lists assume <b>memorization</b> — but the brain learns words through use, not recitation.'},
+ {t:'Gold',q:'Morphology helps vocabulary because knowing one root unlocks…',o:["a whole family of words", "only that word", "spelling"],a:0,why:'One root (port = carry) unlocks <b>a family</b>: transport, portable, export.'},
+ {t:'Gold',q:'Knowing the prefix "un-" means "not" lets you understand…',o:["unhappy, unfair, unknown at once", "only 'un'", "nothing new"],a:0,why:'A known prefix <b>multiplies</b> understanding across many words at once.'},
+ {t:'Gold',q:'Context clues work best when the surrounding sentence…',o:["gives hints about the word's meaning", "is in another language", "is very short"],a:0,why:'Strong context <b>hints at meaning</b>, letting a reader infer a new word without stopping.'},
+ {t:'Gold',q:'"Depth" of word knowledge means…',o:["knowing a word's shades, uses, and relatives", "knowing it exists", "spelling it"],a:0,why:'<b>Depth</b> is rich knowledge — connotations, uses, word relatives — beyond a bare definition.'},
+ {t:'Gold',q:'"Breadth" of vocabulary means…',o:["the number of words you know", "how deeply you know one word", "reading speed"],a:0,why:'<b>Breadth</b> is how many words; depth is how well. Strong readers grow both.'},
+ {t:'Gold',q:'The suffix "-able" added to "read" tells you the word means…',o:["able to be read", "past tense", "plural"],a:0,why:'Morphology in action: read + <b>-able</b> = able to be read. Parts carry meaning.'},
+ {t:'Gold',q:'Teaching a word well includes giving learners a chance to…',o:["use it in their own sentences", "copy it ten times", "spell it backwards"],a:0,why:'<b>Using it</b> turns a shelf word into a hand word — the real test of learning.'},
+ {t:'Gold',q:'The Latin root "spect" (look) connects spectator, inspect, and…',o:["perspective", "spectacle only", "random words"],a:0,why:'<b>perspective</b> — a literal \'way of looking.\' Roots tie meaning across a family.'},
+ {t:'Gold',q:'Generative vocabulary learning means using parts to…',o:["unlock words you've never been taught", "memorize lists faster", "spell better"],a:0,why:'<b>Generative</b> knowledge (roots, affixes) lets you decode meaning of brand-new words.'},
+ {t:'Gold',q:'Reading widely grows vocabulary because it provides…',o:["many words in rich context", "a fixed list", "fast results"],a:0,why:'Wide reading supplies <b>many words in context</b> — the natural engine of vocabulary growth.'},
+ {t:'Platinum',q:'Tier 2 vocabulary is said to quietly control…',o:["access to adult life", "spelling tests", "reading speed"],a:0,why:'Tier 2 words gate <b>adult life</b> — the contracts, news, and forms that decide outcomes.'},
+ {t:'Platinum',q:'"Academic language" refers mostly to which tier?',o:["Tier 2", "Tier 1", "slang"],a:0,why:'Academic language is largely <b>Tier 2</b> — the cross-disciplinary words of serious text.'},
+ {t:'Platinum',q:'The "vocabulary gap" between readers tends to widen over time because…',o:["strong readers read more and learn more words", "words shrink", "schools fix it"],a:0,why:'Strong readers read more, learn more words, and read still more — the gap <b>widens</b>.'},
+ {t:'Platinum',q:'This widening-advantage pattern in reading is often called the…',o:["Matthew effect", "domino effect", "ripple effect"],a:0,why:'The <b>Matthew effect</b>: the word-rich get richer, the word-poor fall further behind.'},
+ {t:'Platinum',q:'The most powerful long-term vocabulary strategy is therefore to…',o:["build a lifelong reading habit", "memorize one big list", "read faster"],a:0,why:'A <b>lifelong reading habit</b> is the engine that keeps the bank account growing.'},
+ {t:'Platinum',q:'Morphological awareness is powerful because English vocabulary is largely…',o:["built from reusable parts", "random", "borrowed from one language"],a:0,why:'English words are <b>built from reusable parts</b> — roots and affixes you can learn once and reuse.'},
+ {t:'Platinum',q:'A reader who knows "bene" (good) can approach benefit, benevolent, and benefactor with…',o:["a meaning head-start", "no advantage", "more confusion"],a:0,why:'A known root gives a <b>head-start</b> on every word in its family.'},
+ {t:'Platinum',q:'Deep vocabulary supports comprehension because meaning is built from…',o:["the words and how they combine", "pictures", "punctuation"],a:0,why:'Comprehension is built from <b>words and their combination</b> — thin vocabulary caps understanding.'},
+ {t:'Platinum',q:'The honest limit of context clues is that they…',o:["don't always reveal a word reliably", "always work", "replace reading"],a:0,why:'Context helps but is <b>not always reliable</b> — which is why morphology and direct teaching matter too.'},
+ {t:'Platinum',q:'Volume 6 picks up where vocabulary ends, moving to how meaning lives in…',o:["sentence structure", "spelling", "fonts"],a:0,why:'Volume 6 — <i>How Sentences Carry Meaning</i> — moves from words to <b>sentence structure</b>.'},
+ {t:'Platinum',q:'You can know every word in a sentence and still miss its meaning because meaning also lives in…',o:["how the words are arranged", "the font", "the page number"],a:0,why:'Meaning lives in <b>arrangement</b> too — vocabulary is necessary but not sufficient.'},
+ {t:'Platinum',q:'The ultimate aim of growing Tier 2 vocabulary is to…',o:["open the rooms of adult life", "win spelling bees", "read quickly"],a:0,why:'Tier 2 words <b>open the rooms</b> — the book\'s own image for the doors vocabulary unlocks.'},
+ {t:'Platinum',q:'A truly word-rich reader experiences difficult text as…',o:["navigable, not locked", "impossible", "boring"],a:0,why:'With deep vocabulary, hard text becomes <b>navigable</b> — the reader holds the keys.'}
+];
+
+const app=document.getElementById('app');
+let order=[], idx=0, score=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildOrder(){
+  const tiers=['Bronze','Silver','Gold','Platinum']; let o=[];
+  tiers.forEach(t=>{ o=o.concat(shuffle(QUESTIONS.filter(q=>q.t===t))); });
+  return o;
+}
+function renderStart(){
+  const bestLine = best && best.bestScore!=null
+    ? `<p class="best">Your best climb: <b>${best.bestScore}/52</b> — ${best.bestTier||''}</p>` : '';
+  app.innerHTML=`
+    <div class="center">
+      <div class="medals">
+        <span class="medal">🥉 Bronze</span><span class="medal">🥈 Silver</span>
+        <span class="medal">🥇 Gold</span><span class="medal">💎 Platinum</span>
+      </div>
+      <p style="color:var(--muted);margin-bottom:22px;max-width:44ch;margin-left:auto;margin-right:auto;">
+        Thirteen questions per tier, drawn from <i>The Words You Know: Vocabulary</i>. Fresh order every climb. Answer to see why.
+      </p>
+      <button class="btn" id="startBtn">Start the Climb →</button>
+      ${bestLine}
+    </div>`;
+  document.getElementById('startBtn').addEventListener('click',start);
+}
+function start(){ order=buildOrder(); idx=0; score=0; renderQ(); }
+function renderQ(){
+  const item=order[idx];
+  const pct=Math.round((idx/order.length)*100);
+  app.innerHTML=`
+    <div class="barwrap"><div class="bar" style="width:${pct}%"></div></div>
+    <div class="meta"><span class="tier ${item.t.toLowerCase()}">${item.t} Tier</span><span>Question ${idx+1} / ${order.length} · Score ${score}</span></div>
+    <div class="q">${item.q}</div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <button class="next" id="nextBtn"></button>`;
+  const opts=document.getElementById('opts');
+  item.o.forEach((text,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=text;
+    b.addEventListener('click',()=>choose(i));
+    opts.appendChild(b);
+  });
+}
+function choose(i){
+  const item=order[idx];
+  const buttons=[...document.querySelectorAll('.opt')];
+  buttons.forEach(b=>b.disabled=true);
+  const correct = i===item.a;
+  if(correct) score++;
+  buttons[item.a].classList.add('correct');
+  if(!correct) buttons[i].classList.add('wrong');
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(correct?'ok':'no');
+  fb.innerHTML=(correct?'✓ Correct. ':'✗ Not quite. ')+item.why;
+  const nb=document.getElementById('nextBtn');
+  nb.className='next show';
+  nb.textContent = idx+1<order.length ? 'Next →' : 'See your result →';
+  nb.addEventListener('click',()=>{ idx++; idx<order.length?renderQ():finish(); });
+}
+function tierFor(s){
+  if(s>=47) return {name:'Platinum',cls:'platinum',icon:'💎',msg:'A near-perfect climb. The rooms of adult life are open to you.'};
+  if(s>=39) return {name:'Gold',cls:'gold',icon:'🥇',msg:'Strong vocabulary command. Tier 2 is becoming yours.'};
+  if(s>=27) return {name:'Silver',cls:'silver',icon:'🥈',msg:'Solid. The Three Tiers are taking hold.'};
+  if(s>=13) return {name:'Bronze',cls:'bronze',icon:'🥉',msg:'You got through — your word bank is growing.'};
+  return {name:'Keep Climbing',cls:'bronze',icon:'⛰️',msg:'Run it again — every climb builds the skill deeper.'};
+}
+function finish(){
+  const tr=tierFor(score);
+  saveScore(score,tr.name);
+  app.innerHTML=`
+    <div class="center">
+      <div style="font-size:2.6rem">${tr.icon}</div>
+      <div class="tierbadge tier ${tr.cls}">${tr.name}</div>
+      <div class="scorebig">${score}<span style="font-size:1.4rem;color:var(--muted)"> / 52</span></div>
+      <p style="color:var(--muted);margin:14px auto 0;max-width:42ch;">${tr.msg}</p>
+      <div class="medals" style="margin-top:22px;">
+        <span class="medal ${score>=13?'on':''}">🥉 Bronze</span>
+        <span class="medal ${score>=27?'on':''}">🥈 Silver</span>
+        <span class="medal ${score>=39?'on':''}">🥇 Gold</span>
+        <span class="medal ${score>=47?'on':''}">💎 Platinum</span>
+      </div>
+      <p style="margin-top:18px;"><button class="btn" id="again">Climb Again →</button></p>
+      <p style="margin-top:14px;"><a href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a></p>
+    </div>`;
+  document.getElementById('again').addEventListener('click',start);
+}
+</script>
+</body>
+</html>
