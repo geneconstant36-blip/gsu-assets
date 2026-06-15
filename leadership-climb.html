@@ -193,5 +193,37 @@ function cloudStatus(on, msg) {
 
 paint(); ask();
 </script>
+
+<!-- ===== GSU 5-STAR RATING WIDGET · paste-anywhere · auto-keyed by page filename ===== -->
+<div id="gsu-rate" style="max-width:640px;margin:30px auto;padding:22px 24px;background:#000;border:1px solid #C9A84C;border-radius:14px;font-family:Inter,system-ui,Arial,sans-serif;color:#F5F1E8;text-align:center;box-shadow:0 6px 22px rgba(201,168,76,.12);">
+  <div style="font-family:Georgia,serif;color:#C9A84C;font-size:1.1rem;letter-spacing:.3px;margin-bottom:6px;">Rate this game</div>
+  <div id="gsu-rate-avg" style="font-size:.95rem;color:#B0A06E;margin-bottom:12px;">Loading ratings&hellip;</div>
+  <div id="gsu-rate-stars" role="radiogroup" aria-label="Rate this game" style="font-size:2.1rem;line-height:1;letter-spacing:8px;cursor:pointer;user-select:none;">
+    <span data-v="1" role="radio" aria-label="1 star">&#9734;</span><span data-v="2" role="radio" aria-label="2 stars">&#9734;</span><span data-v="3" role="radio" aria-label="3 stars">&#9734;</span><span data-v="4" role="radio" aria-label="4 stars">&#9734;</span><span data-v="5" role="radio" aria-label="5 stars">&#9734;</span>
+  </div>
+  <div id="gsu-rate-msg" style="font-size:.84rem;color:#8A8460;margin-top:12px;min-height:1.1em;">Tap a star to rate</div>
+</div>
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",appId:"1:301089416765:web:dff926a7aa52191e9a6c54"};
+const app = getApps().length ? getApp() : initializeApp(cfg);
+const auth = getAuth(app), db = getFirestore(app);
+const GAME_ID = (location.pathname.split("/").pop()||"game").replace(/\.html?$/i,"") || "game";
+const aRef = doc(db,"lesson_ratings",GAME_ID);
+const stars=[...document.querySelectorAll("#gsu-rate-stars span")];
+const avgEl=document.getElementById("gsu-rate-avg"), msgEl=document.getElementById("gsu-rate-msg");
+let uid=null, myVote=0, hover=0;
+function paint(n){stars.forEach(s=>{const on=(+s.dataset.v)<=n;s.innerHTML=on?"&#9733;":"&#9734;";s.style.color=on?"#C9A84C":"#5b5430";});}
+function showAvg(sum,count){if(!count){avgEl.textContent="Be the first to rate this game";paint(hover||myVote);return;}const a=sum/count;paint(hover||myVote||Math.round(a));avgEl.innerHTML='<span style="color:#C9A84C;font-weight:600;">'+a.toFixed(1)+' &#9733;</span> &middot; '+count+' rating'+(count==1?"":"s");}
+stars.forEach(s=>{s.addEventListener("mouseenter",()=>{hover=+s.dataset.v;paint(hover);});s.addEventListener("mouseleave",()=>{hover=0;paint(myVote);});s.addEventListener("click",()=>vote(+s.dataset.v));});
+async function load(){try{const snap=await getDoc(aRef);const d=snap.exists()?snap.data():{sum:0,count:0};showAvg(d.sum||0,d.count||0);}catch(e){avgEl.textContent="Ratings unavailable right now";}}
+async function vote(n){if(!uid){msgEl.textContent="Connecting&hellip; tap again in a moment";return;}msgEl.textContent="Saving&hellip;";try{await runTransaction(db,async(tx)=>{const vRef=doc(db,"lesson_ratings",GAME_ID,"votes",uid);const aS=await tx.get(aRef);const vS=await tx.get(vRef);let sum=(aS.exists()&&aS.data().sum)||0,count=(aS.exists()&&aS.data().count)||0;const prev=vS.exists()?(vS.data().stars||0):0;if(prev){sum=sum-prev+n;}else{sum+=n;count+=1;}tx.set(aRef,{sum,count},{merge:true});tx.set(vRef,{stars:n});});myVote=n;msgEl.textContent="Thank you &mdash; your rating is saved!";await load();}catch(e){msgEl.textContent="Could not save your rating";}}
+onAuthStateChanged(auth,(u)=>{if(u){uid=u.uid;getDoc(doc(db,"lesson_ratings",GAME_ID,"votes",u.uid)).then(s=>{if(s.exists()){myVote=s.data().stars||0;paint(myVote);msgEl.textContent="You rated this game &mdash; tap a star to change it";}}).catch(()=>{});}else{signInAnonymously(auth).catch(()=>{msgEl.textContent="Sign-in unavailable";});}});
+load();
+</script>
+<!-- ===== /GSU 5-STAR RATING WIDGET ===== -->
+
 </body>
 </html>
