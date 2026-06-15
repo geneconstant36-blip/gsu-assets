@@ -2,8 +2,8 @@
 <!-- ============================================================================
      GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
      ROUTING: Standalone app -> commit to gsu-assets, served at
-              read.globalsovereignuniversity.org/cert-civics.html
-              Then on /certification, set the Civics card's button href
+              read.globalsovereignuniversity.org/cert-geography.html
+              Then on /certification, set the Geography card's button href
               to that URL and flip its status to "Live".
 
      THIS FILE IS ALSO THE MASTER TEMPLATE. To create the next subject's
@@ -34,17 +34,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Civics Comprehension Certification — Free & Verifiable | GSU</title>
-<meta name="description" content="Earn the free Civics Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
-<meta property="og:title" content="Civics Comprehension Certification — Free & Verifiable | GSU">
+<title>Geography Comprehension Certification — Free & Verifiable | GSU</title>
+<meta name="description" content="Earn the free Geography Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
+<meta property="og:title" content="Geography Comprehension Certification — Free & Verifiable | GSU">
 <meta property="og:description" content="30 questions. 80% Silver, 90% Gold. A unique, publicly verifiable serial number. Free, anonymous, no login — from a 501(c)(3).">
 <meta property="og:type" content="website">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Civics Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of American civics: the founding documents, the three branches and separation of powers, the Bill of Rights, federalism, elections, and the duties of citizenship."}
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Geography Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of world and United States geography: continents and oceans, countries and capitals, major landforms and rivers, and essential map skills."}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Is the Civics certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
+{"@type":"Question","name":"Is the Geography certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
 {"@type":"Question","name":"How is the certificate verified?","acceptedAnswer":{"@type":"Answer","text":"When you pass, a unique serial number is issued and recorded. Anyone can confirm it is genuine using the Verify a Certificate box, with no login required."}},
 {"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Thirty questions are drawn at random. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}}]}
 </script>
@@ -114,7 +114,7 @@
 
   <!-- INTRO -->
   <section id="intro" class="card center">
-    <div class="kick" id="k-subject">Civics · Certificate of Comprehension</div>
+    <div class="kick" id="k-subject">Geography · Certificate of Comprehension</div>
     <h1>Prove You <span class="gold">Comprehend It.</span></h1>
     <p class="muted">Free, anonymous, no account — and when you pass, a unique serial number anyone on Earth can verify. This is competence on the record, not a participation ribbon.</p>
     <ul class="rules">
@@ -126,7 +126,7 @@
     </ul>
     <button class="btn" id="startBtn">Begin the Certification →</button>
     <p class="muted" id="deviceNote" style="margin-top:12px"></p>
-    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/civics">Prepare free at the Civics campus →</a></p>
+    <p class="muted" style="margin-top:16px">New here? <a class="gold" id="prepLink" href="/">Explore the free GSU campus →</a></p>
   </section>
 
   <!-- EXAM -->
@@ -172,7 +172,7 @@
     <h3>Verify a Certificate</h3>
     <p class="muted">Anyone can confirm a GSU certificate is genuine. Enter a serial number — no account, nothing to install.</p>
     <div class="field" style="justify-content:flex-start">
-      <input id="verifyInput" placeholder="e.g. GSU-CIV-LXK3F9Q2">
+      <input id="verifyInput" placeholder="e.g. GSU-GEO-LXK3F9Q2">
       <button class="btn" id="verifyBtn">Verify →</button>
     </div>
     <div class="verify-result muted" id="verifyResult"></div>
@@ -203,10 +203,10 @@
 <script>
 /* ====================== ZONE B — CONFIG (edit per subject) ================= */
 const CONFIG = {
-  subject: "Civics",
-  serialPrefix: "GSU-CIV",
-  subjectLine: "Civics · Certificate of Comprehension",
-  prepHref: "/civics",
+  subject: "Geography",
+  serialPrefix: "GSU-GEO",
+  subjectLine: "Geography · Certificate of Comprehension",
+  prepHref: "/",
   drawCount: 30,
   timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
   silverPct: 0.80,
@@ -232,42 +232,42 @@ const CONFIG = {
    draws CONFIG.drawCount at random and shuffles each question's options.
 =========================================================================== */
 const POOL = [
-  {q:"Which document begins “We hold these truths to be self-evident, that all men are created equal”?", opts:["The Constitution","The Declaration of Independence","The Bill of Rights","The Federalist Papers"], a:1, why:"Those words open the Declaration of Independence, adopted July 4, 1776."},
-  {q:"In what year was the U.S. Constitution signed?", opts:["1776","1787","1791","1801"], a:1, why:"The Constitution was signed in Philadelphia on September 17, 1787."},
-  {q:"The first ten amendments to the Constitution are known as the…", opts:["Articles of Confederation","Bill of Rights","Preamble","Federalist Papers"], a:1, why:"The first ten amendments are the Bill of Rights, ratified in 1791."},
-  {q:"The opening words “We the People…” begin which part of the Constitution?", opts:["The Preamble","The First Amendment","The Bill of Rights","Article I"], a:0, why:"“We the People” opens the Preamble, the Constitution’s statement of purpose."},
-  {q:"What was the United States’ first constitution, replaced when the current one took effect in 1789?", opts:["The Magna Carta","The Articles of Confederation","The Mayflower Compact","The Bill of Rights"], a:1, why:"The Articles of Confederation governed first; the Constitution replaced them in 1789."},
-  {q:"Who is often called the “Father of the Constitution”?", opts:["George Washington","Thomas Jefferson","James Madison","Benjamin Franklin"], a:2, why:"James Madison earned the title for his central role in drafting and defending it."},
-  {q:"The Declaration names three unalienable rights: life, liberty, and the pursuit of…", opts:["Property","Happiness","Justice","Equality"], a:1, why:"The phrase is “life, liberty, and the pursuit of happiness.”"},
-  {q:"How many branches does the federal government have?", opts:["Two","Three","Four","One"], a:1, why:"Three: legislative, executive, and judicial."},
-  {q:"Which branch makes the laws?", opts:["Executive","Legislative","Judicial","Electoral"], a:1, why:"The legislative branch — Congress — writes and passes laws."},
-  {q:"Which branch enforces the laws?", opts:["Legislative","Judicial","Executive","Federal"], a:2, why:"The executive branch, led by the President, carries out and enforces laws."},
-  {q:"Which branch interprets the laws?", opts:["Legislative","Judicial","Executive","Electoral"], a:1, why:"The judicial branch — the courts — interprets laws and applies them to cases."},
-  {q:"The U.S. Congress is made up of which two chambers?", opts:["The Senate and the House of Representatives","The House and the Cabinet","The Senate and the Supreme Court","The House and the Electoral College"], a:0, why:"Congress is bicameral: the Senate and the House of Representatives."},
-  {q:"How many U.S. Senators does each state have?", opts:["One","Two","Based on population","Four"], a:1, why:"Every state has exactly two Senators, regardless of size."},
-  {q:"What determines how many Representatives a state has in the House?", opts:["Its land area","Its population","Two per state","Its year of admission"], a:1, why:"House seats are apportioned by each state’s population."},
-  {q:"The system that lets each branch limit the powers of the others is called…", opts:["Federalism","Checks and balances","Due process","Popular sovereignty"], a:1, why:"Checks and balances keep any one branch from growing too powerful."},
-  {q:"Who is the head of the executive branch?", opts:["The Speaker of the House","The Chief Justice","The President","The Senate Majority Leader"], a:2, why:"The President heads the executive branch."},
-  {q:"The highest court in the United States is the…", opts:["Court of Appeals","Supreme Court","District Court","Federal Circuit"], a:1, why:"The Supreme Court is the highest court in the land."},
-  {q:"How many justices serve on the U.S. Supreme Court?", opts:["Seven","Nine","Twelve","Five"], a:1, why:"Nine justices currently serve on the Supreme Court."},
-  {q:"Which amendment protects freedom of speech, religion, press, assembly, and petition?", opts:["First","Second","Fourth","Tenth"], a:0, why:"The First Amendment protects these five core freedoms."},
-  {q:"The right not to be forced to testify against yourself comes from which amendment?", opts:["Fourth","Fifth","Sixth","Eighth"], a:1, why:"The Fifth Amendment protects against self-incrimination — “pleading the Fifth.”"},
-  {q:"Which amendment protects against unreasonable searches and seizures?", opts:["Third","Fourth","Fifth","Seventh"], a:1, why:"The Fourth Amendment guards against unreasonable searches and seizures."},
-  {q:"The amendment that abolished slavery is the…", opts:["Eleventh","Thirteenth","Fifteenth","Nineteenth"], a:1, why:"The Thirteenth Amendment (1865) abolished slavery."},
-  {q:"Which amendment guaranteed women the right to vote?", opts:["Fifteenth","Eighteenth","Nineteenth","Twenty-first"], a:2, why:"The Nineteenth Amendment (1920) secured women’s suffrage."},
-  {q:"A trial by an impartial jury in criminal cases is guaranteed by the…", opts:["Fourth Amendment","Sixth Amendment","Eighth Amendment","Tenth Amendment"], a:1, why:"The Sixth Amendment guarantees a speedy, public trial by jury."},
-  {q:"“Cruel and unusual punishment” is prohibited by which amendment?", opts:["Sixth","Seventh","Eighth","Ninth"], a:2, why:"The Eighth Amendment bars cruel and unusual punishment."},
-  {q:"Powers not given to the federal government are reserved to the states or the people by the…", opts:["First Amendment","Tenth Amendment","Fourteenth Amendment","Preamble"], a:1, why:"The Tenth Amendment reserves remaining powers to the states and the people."},
-  {q:"How long is one term for a U.S. President?", opts:["Two years","Four years","Six years","Eight years"], a:1, why:"A presidential term is four years."},
-  {q:"How long is one term for a U.S. Senator?", opts:["Two years","Four years","Six years","Eight years"], a:2, why:"Senators serve six-year terms."},
-  {q:"How long is one term for a member of the U.S. House of Representatives?", opts:["Two years","Four years","Six years","Eight years"], a:0, why:"Representatives serve two-year terms."},
-  {q:"The minimum age to vote in U.S. federal elections is…", opts:["16","18","21","25"], a:1, why:"The Twenty-sixth Amendment set the voting age at 18."},
-  {q:"The body that formally elects the U.S. President is the…", opts:["Senate","Electoral College","Supreme Court","House of Representatives"], a:1, why:"The Electoral College formally elects the President."},
-  {q:"A formal change or addition to the Constitution is called a(n)…", opts:["Statute","Amendment","Ordinance","Executive order"], a:1, why:"Changes to the Constitution are called amendments."},
-  {q:"The President can reject a bill passed by Congress using a…", opts:["Filibuster","Veto","Pardon","Subpoena"], a:1, why:"The veto is the President’s power to reject a bill."},
-  {q:"Congress can override a presidential veto with what vote in both houses?", opts:["A simple majority","Two-thirds","Three-fourths","A unanimous vote"], a:1, why:"A two-thirds vote in both the House and Senate overrides a veto."},
-  {q:"The idea that government’s power comes from the consent of the governed is called…", opts:["Monarchy","Popular sovereignty","Aristocracy","Federalism"], a:1, why:"Popular sovereignty means the people are the source of government’s authority."},
-  {q:"Who wrote the first draft of the Declaration of Independence?", opts:["George Washington","Thomas Jefferson","John Adams","Alexander Hamilton"], a:1, why:"Thomas Jefferson was the principal author of the Declaration."},
+  {q:"How many continents are there on Earth?", opts:["five","six","seven","eight"], a:2, why:"There are seven continents."},
+  {q:"The largest ocean on Earth is the…", opts:["Atlantic","Indian","Arctic","Pacific"], a:3, why:"The Pacific is the largest and deepest ocean."},
+  {q:"The world’s largest hot desert is the…", opts:["Gobi","Sahara","Mojave","Kalahari"], a:1, why:"The Sahara, in North Africa, is the largest hot desert."},
+  {q:"The tallest mountain above sea level is…", opts:["K2","Mount Everest","Denali","Kilimanjaro"], a:1, why:"Mount Everest is Earth’s highest peak above sea level."},
+  {q:"Which is the largest continent by land area?", opts:["Africa","Asia","North America","Europe"], a:1, why:"Asia is the largest continent."},
+  {q:"Which continent is almost entirely covered by ice?", opts:["Australia","Africa","Antarctica","Europe"], a:2, why:"Antarctica is covered by a vast ice sheet."},
+  {q:"The capital of the United States is…", opts:["New York","Washington, D.C.","Los Angeles","Chicago"], a:1, why:"Washington, D.C. is the U.S. capital."},
+  {q:"The capital of France is…", opts:["Lyon","Paris","Marseille","Nice"], a:1, why:"Paris is the capital of France."},
+  {q:"The capital of Japan is…", opts:["Osaka","Kyoto","Tokyo","Nagoya"], a:2, why:"Tokyo is Japan’s capital."},
+  {q:"The imaginary line at 0° latitude around the middle of the Earth is the…", opts:["Prime Meridian","Equator","Tropic of Cancer","axis"], a:1, why:"The Equator is the 0° latitude line."},
+  {q:"The imaginary line at 0° longitude is the…", opts:["Equator","Prime Meridian","International Date Line","Tropic of Capricorn"], a:1, why:"The Prime Meridian marks 0° longitude."},
+  {q:"Which U.S. state is the largest by land area?", opts:["Texas","California","Alaska","Montana"], a:2, why:"Alaska is the largest U.S. state by area."},
+  {q:"The Great Lakes lie along the border of the U.S. and…", opts:["Mexico","Canada","Russia","Greenland"], a:1, why:"The Great Lakes sit on the U.S.–Canada border."},
+  {q:"The largest country in the world by land area is…", opts:["China","United States","Canada","Russia"], a:3, why:"Russia is the largest country by area."},
+  {q:"The continent directly south of Europe is…", opts:["Asia","Africa","Australia","Antarctica"], a:1, why:"Africa lies just south of Europe across the Mediterranean."},
+  {q:"Mount Everest is part of which mountain range?", opts:["Andes","Alps","Himalayas","Rockies"], a:2, why:"Everest is in the Himalayas."},
+  {q:"The river that flows through Egypt is the…", opts:["Amazon","Nile","Thames","Ganges"], a:1, why:"The Nile flows through Egypt."},
+  {q:"Which ocean borders the East Coast of the United States?", opts:["Pacific","Atlantic","Indian","Arctic"], a:1, why:"The Atlantic Ocean borders the U.S. East Coast."},
+  {q:"The capital of the United Kingdom is…", opts:["Manchester","Liverpool","London","Birmingham"], a:2, why:"London is the capital of the U.K."},
+  {q:"A large area of flat, treeless, frozen Arctic land is called…", opts:["desert","tundra","savanna","prairie"], a:1, why:"Tundra is cold, treeless land found in the Arctic."},
+  {q:"Which country is also a continent of its own?", opts:["Greenland","Australia","Madagascar","India"], a:1, why:"Australia is both a country and a continent."},
+  {q:"Besides Canada, which country shares a land border with the United States?", opts:["Cuba","Mexico","Guatemala","Brazil"], a:1, why:"Mexico borders the U.S. to the south."},
+  {q:"The Sahara Desert is located on which continent?", opts:["Asia","Africa","Australia","South America"], a:1, why:"The Sahara is in northern Africa."},
+  {q:"The capital of Italy is…", opts:["Milan","Venice","Rome","Naples"], a:2, why:"Rome is the capital of Italy."},
+  {q:"Which is the smallest of Earth’s oceans?", opts:["Atlantic","Indian","Arctic","Pacific"], a:2, why:"The Arctic Ocean is the smallest."},
+  {q:"A narrow strip of land connecting two larger land areas is an…", opts:["island","isthmus","archipelago","peninsula"], a:1, why:"An isthmus links two larger landmasses, like Panama."},
+  {q:"Land surrounded by water on three sides is a…", opts:["peninsula","island","plateau","delta"], a:0, why:"A peninsula is bordered by water on three sides."},
+  {q:"The largest tropical rainforest in the world is the…", opts:["Congo","Amazon","Daintree","Borneo"], a:1, why:"The Amazon rainforest in South America is the largest."},
+  {q:"On which continent is the Amazon River found?", opts:["Africa","Asia","South America","Australia"], a:2, why:"The Amazon flows through South America."},
+  {q:"The capital of Canada is…", opts:["Toronto","Vancouver","Ottawa","Montreal"], a:2, why:"Ottawa is Canada’s capital."},
+  {q:"Map lines that run east–west and measure distance north or south of the Equator are…", opts:["longitude","latitude","meridians","contours"], a:1, why:"Latitude lines run east–west, measuring north–south position."},
+  {q:"The world’s largest island is…", opts:["Australia","Greenland","Madagascar","Iceland"], a:1, why:"Greenland is the largest island (Australia is a continent)."},
+  {q:"Which mountain range runs along the western United States?", opts:["Appalachians","Rocky Mountains","Alps","Andes"], a:1, why:"The Rocky Mountains run through the western U.S."},
+  {q:"Which continent has the most countries?", opts:["Asia","Europe","Africa","South America"], a:2, why:"Africa has 54 countries, the most of any continent."},
+  {q:"The part of a map that explains its symbols is called the…", opts:["scale","legend","compass rose","grid"], a:1, why:"The legend (or key) explains a map’s symbols."},
+  {q:"The four cardinal directions are north, south, east, and…", opts:["up","west","center","down"], a:1, why:"North, south, east, and west are the cardinal directions."},
 ];
 
 /* ====================== SHARED ENGINE (do not edit per subject) =========== */

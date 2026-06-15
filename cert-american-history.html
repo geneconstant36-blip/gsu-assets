@@ -2,8 +2,8 @@
 <!-- ============================================================================
      GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
      ROUTING: Standalone app -> commit to gsu-assets, served at
-              read.globalsovereignuniversity.org/cert-civics.html
-              Then on /certification, set the Civics card's button href
+              read.globalsovereignuniversity.org/cert-american-history.html
+              Then on /certification, set the American History card's button href
               to that URL and flip its status to "Live".
 
      THIS FILE IS ALSO THE MASTER TEMPLATE. To create the next subject's
@@ -34,17 +34,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Civics Comprehension Certification — Free & Verifiable | GSU</title>
-<meta name="description" content="Earn the free Civics Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
-<meta property="og:title" content="Civics Comprehension Certification — Free & Verifiable | GSU">
+<title>American History Comprehension Certification — Free & Verifiable | GSU</title>
+<meta name="description" content="Earn the free American History Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
+<meta property="og:title" content="American History Comprehension Certification — Free & Verifiable | GSU">
 <meta property="og:description" content="30 questions. 80% Silver, 90% Gold. A unique, publicly verifiable serial number. Free, anonymous, no login — from a 501(c)(3).">
 <meta property="og:type" content="website">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Civics Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of American civics: the founding documents, the three branches and separation of powers, the Bill of Rights, federalism, elections, and the duties of citizenship."}
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"American History Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of United States history: colonization, the Revolution and Founding, the Constitution, westward expansion, the Civil War, and the major events that shaped the nation."}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Is the Civics certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
+{"@type":"Question","name":"Is the American History certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
 {"@type":"Question","name":"How is the certificate verified?","acceptedAnswer":{"@type":"Answer","text":"When you pass, a unique serial number is issued and recorded. Anyone can confirm it is genuine using the Verify a Certificate box, with no login required."}},
 {"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Thirty questions are drawn at random. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}}]}
 </script>
@@ -114,7 +114,7 @@
 
   <!-- INTRO -->
   <section id="intro" class="card center">
-    <div class="kick" id="k-subject">Civics · Certificate of Comprehension</div>
+    <div class="kick" id="k-subject">American History · Certificate of Comprehension</div>
     <h1>Prove You <span class="gold">Comprehend It.</span></h1>
     <p class="muted">Free, anonymous, no account — and when you pass, a unique serial number anyone on Earth can verify. This is competence on the record, not a participation ribbon.</p>
     <ul class="rules">
@@ -126,7 +126,7 @@
     </ul>
     <button class="btn" id="startBtn">Begin the Certification →</button>
     <p class="muted" id="deviceNote" style="margin-top:12px"></p>
-    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/civics">Prepare free at the Civics campus →</a></p>
+    <p class="muted" style="margin-top:16px">New here? <a class="gold" id="prepLink" href="/">Explore the free GSU campus →</a></p>
   </section>
 
   <!-- EXAM -->
@@ -172,7 +172,7 @@
     <h3>Verify a Certificate</h3>
     <p class="muted">Anyone can confirm a GSU certificate is genuine. Enter a serial number — no account, nothing to install.</p>
     <div class="field" style="justify-content:flex-start">
-      <input id="verifyInput" placeholder="e.g. GSU-CIV-LXK3F9Q2">
+      <input id="verifyInput" placeholder="e.g. GSU-HIST-LXK3F9Q2">
       <button class="btn" id="verifyBtn">Verify →</button>
     </div>
     <div class="verify-result muted" id="verifyResult"></div>
@@ -203,10 +203,10 @@
 <script>
 /* ====================== ZONE B — CONFIG (edit per subject) ================= */
 const CONFIG = {
-  subject: "Civics",
-  serialPrefix: "GSU-CIV",
-  subjectLine: "Civics · Certificate of Comprehension",
-  prepHref: "/civics",
+  subject: "American History",
+  serialPrefix: "GSU-HIST",
+  subjectLine: "American History · Certificate of Comprehension",
+  prepHref: "/",
   drawCount: 30,
   timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
   silverPct: 0.80,
@@ -232,42 +232,42 @@ const CONFIG = {
    draws CONFIG.drawCount at random and shuffles each question's options.
 =========================================================================== */
 const POOL = [
-  {q:"Which document begins “We hold these truths to be self-evident, that all men are created equal”?", opts:["The Constitution","The Declaration of Independence","The Bill of Rights","The Federalist Papers"], a:1, why:"Those words open the Declaration of Independence, adopted July 4, 1776."},
-  {q:"In what year was the U.S. Constitution signed?", opts:["1776","1787","1791","1801"], a:1, why:"The Constitution was signed in Philadelphia on September 17, 1787."},
-  {q:"The first ten amendments to the Constitution are known as the…", opts:["Articles of Confederation","Bill of Rights","Preamble","Federalist Papers"], a:1, why:"The first ten amendments are the Bill of Rights, ratified in 1791."},
-  {q:"The opening words “We the People…” begin which part of the Constitution?", opts:["The Preamble","The First Amendment","The Bill of Rights","Article I"], a:0, why:"“We the People” opens the Preamble, the Constitution’s statement of purpose."},
-  {q:"What was the United States’ first constitution, replaced when the current one took effect in 1789?", opts:["The Magna Carta","The Articles of Confederation","The Mayflower Compact","The Bill of Rights"], a:1, why:"The Articles of Confederation governed first; the Constitution replaced them in 1789."},
-  {q:"Who is often called the “Father of the Constitution”?", opts:["George Washington","Thomas Jefferson","James Madison","Benjamin Franklin"], a:2, why:"James Madison earned the title for his central role in drafting and defending it."},
-  {q:"The Declaration names three unalienable rights: life, liberty, and the pursuit of…", opts:["Property","Happiness","Justice","Equality"], a:1, why:"The phrase is “life, liberty, and the pursuit of happiness.”"},
-  {q:"How many branches does the federal government have?", opts:["Two","Three","Four","One"], a:1, why:"Three: legislative, executive, and judicial."},
-  {q:"Which branch makes the laws?", opts:["Executive","Legislative","Judicial","Electoral"], a:1, why:"The legislative branch — Congress — writes and passes laws."},
-  {q:"Which branch enforces the laws?", opts:["Legislative","Judicial","Executive","Federal"], a:2, why:"The executive branch, led by the President, carries out and enforces laws."},
-  {q:"Which branch interprets the laws?", opts:["Legislative","Judicial","Executive","Electoral"], a:1, why:"The judicial branch — the courts — interprets laws and applies them to cases."},
-  {q:"The U.S. Congress is made up of which two chambers?", opts:["The Senate and the House of Representatives","The House and the Cabinet","The Senate and the Supreme Court","The House and the Electoral College"], a:0, why:"Congress is bicameral: the Senate and the House of Representatives."},
-  {q:"How many U.S. Senators does each state have?", opts:["One","Two","Based on population","Four"], a:1, why:"Every state has exactly two Senators, regardless of size."},
-  {q:"What determines how many Representatives a state has in the House?", opts:["Its land area","Its population","Two per state","Its year of admission"], a:1, why:"House seats are apportioned by each state’s population."},
-  {q:"The system that lets each branch limit the powers of the others is called…", opts:["Federalism","Checks and balances","Due process","Popular sovereignty"], a:1, why:"Checks and balances keep any one branch from growing too powerful."},
-  {q:"Who is the head of the executive branch?", opts:["The Speaker of the House","The Chief Justice","The President","The Senate Majority Leader"], a:2, why:"The President heads the executive branch."},
-  {q:"The highest court in the United States is the…", opts:["Court of Appeals","Supreme Court","District Court","Federal Circuit"], a:1, why:"The Supreme Court is the highest court in the land."},
-  {q:"How many justices serve on the U.S. Supreme Court?", opts:["Seven","Nine","Twelve","Five"], a:1, why:"Nine justices currently serve on the Supreme Court."},
-  {q:"Which amendment protects freedom of speech, religion, press, assembly, and petition?", opts:["First","Second","Fourth","Tenth"], a:0, why:"The First Amendment protects these five core freedoms."},
-  {q:"The right not to be forced to testify against yourself comes from which amendment?", opts:["Fourth","Fifth","Sixth","Eighth"], a:1, why:"The Fifth Amendment protects against self-incrimination — “pleading the Fifth.”"},
-  {q:"Which amendment protects against unreasonable searches and seizures?", opts:["Third","Fourth","Fifth","Seventh"], a:1, why:"The Fourth Amendment guards against unreasonable searches and seizures."},
-  {q:"The amendment that abolished slavery is the…", opts:["Eleventh","Thirteenth","Fifteenth","Nineteenth"], a:1, why:"The Thirteenth Amendment (1865) abolished slavery."},
-  {q:"Which amendment guaranteed women the right to vote?", opts:["Fifteenth","Eighteenth","Nineteenth","Twenty-first"], a:2, why:"The Nineteenth Amendment (1920) secured women’s suffrage."},
-  {q:"A trial by an impartial jury in criminal cases is guaranteed by the…", opts:["Fourth Amendment","Sixth Amendment","Eighth Amendment","Tenth Amendment"], a:1, why:"The Sixth Amendment guarantees a speedy, public trial by jury."},
-  {q:"“Cruel and unusual punishment” is prohibited by which amendment?", opts:["Sixth","Seventh","Eighth","Ninth"], a:2, why:"The Eighth Amendment bars cruel and unusual punishment."},
-  {q:"Powers not given to the federal government are reserved to the states or the people by the…", opts:["First Amendment","Tenth Amendment","Fourteenth Amendment","Preamble"], a:1, why:"The Tenth Amendment reserves remaining powers to the states and the people."},
-  {q:"How long is one term for a U.S. President?", opts:["Two years","Four years","Six years","Eight years"], a:1, why:"A presidential term is four years."},
-  {q:"How long is one term for a U.S. Senator?", opts:["Two years","Four years","Six years","Eight years"], a:2, why:"Senators serve six-year terms."},
-  {q:"How long is one term for a member of the U.S. House of Representatives?", opts:["Two years","Four years","Six years","Eight years"], a:0, why:"Representatives serve two-year terms."},
-  {q:"The minimum age to vote in U.S. federal elections is…", opts:["16","18","21","25"], a:1, why:"The Twenty-sixth Amendment set the voting age at 18."},
-  {q:"The body that formally elects the U.S. President is the…", opts:["Senate","Electoral College","Supreme Court","House of Representatives"], a:1, why:"The Electoral College formally elects the President."},
-  {q:"A formal change or addition to the Constitution is called a(n)…", opts:["Statute","Amendment","Ordinance","Executive order"], a:1, why:"Changes to the Constitution are called amendments."},
-  {q:"The President can reject a bill passed by Congress using a…", opts:["Filibuster","Veto","Pardon","Subpoena"], a:1, why:"The veto is the President’s power to reject a bill."},
-  {q:"Congress can override a presidential veto with what vote in both houses?", opts:["A simple majority","Two-thirds","Three-fourths","A unanimous vote"], a:1, why:"A two-thirds vote in both the House and Senate overrides a veto."},
-  {q:"The idea that government’s power comes from the consent of the governed is called…", opts:["Monarchy","Popular sovereignty","Aristocracy","Federalism"], a:1, why:"Popular sovereignty means the people are the source of government’s authority."},
-  {q:"Who wrote the first draft of the Declaration of Independence?", opts:["George Washington","Thomas Jefferson","John Adams","Alexander Hamilton"], a:1, why:"Thomas Jefferson was the principal author of the Declaration."},
+  {q:"In what year did the Declaration of Independence declare the colonies free from Britain?", opts:["1492","1776","1812","1865"], a:1, why:"The Declaration of Independence was adopted on July 4, 1776."},
+  {q:"Who was the first President of the United States?", opts:["Thomas Jefferson","Benjamin Franklin","George Washington","John Adams"], a:2, why:"George Washington served as the first U.S. president, 1789–1797."},
+  {q:"The first permanent English settlement in America was…", opts:["Plymouth","Jamestown","Roanoke","Boston"], a:1, why:"Jamestown, Virginia (1607) was the first permanent English settlement."},
+  {q:"In 1620 the Pilgrims sailed to America aboard the…", opts:["Santa Maria","Mayflower","Endeavour","Niña"], a:1, why:"The Pilgrims crossed on the Mayflower, landing at Plymouth in 1620."},
+  {q:"The document that begins ‘We the People’ is the…", opts:["Declaration of Independence","U.S. Constitution","Bill of Rights","Articles of Confederation"], a:1, why:"The U.S. Constitution’s preamble opens with ‘We the People.’"},
+  {q:"The first ten amendments to the Constitution are known as the…", opts:["Federalist Papers","Bill of Rights","Emancipation Proclamation","Mayflower Compact"], a:1, why:"The first ten amendments are the Bill of Rights, ratified 1791."},
+  {q:"The Revolutionary War was fought between the American colonies and…", opts:["France","Spain","Great Britain","Mexico"], a:2, why:"The colonies fought Great Britain for independence."},
+  {q:"Who was the principal author of the Declaration of Independence?", opts:["George Washington","Thomas Jefferson","Alexander Hamilton","James Madison"], a:1, why:"Thomas Jefferson drafted the Declaration."},
+  {q:"The American Civil War was fought mainly over slavery and the…", opts:["price of tea","preservation of the Union","Louisiana border","Panama Canal"], a:1, why:"The Civil War (1861–65) centered on slavery and preserving the Union."},
+  {q:"Who was President during the American Civil War?", opts:["Andrew Jackson","Abraham Lincoln","Ulysses S. Grant","Theodore Roosevelt"], a:1, why:"Abraham Lincoln led the Union during the Civil War."},
+  {q:"The Emancipation Proclamation (1863) declared freedom for…", opts:["all immigrants","enslaved people in the rebelling states","factory workers","veterans"], a:1, why:"Lincoln’s 1863 proclamation freed enslaved people in the Confederate states."},
+  {q:"The 1803 purchase that doubled the size of the United States was the…", opts:["Gadsden Purchase","Louisiana Purchase","Alaska Purchase","Florida Purchase"], a:1, why:"The Louisiana Purchase from France in 1803 doubled the nation’s size."},
+  {q:"The Constitution divides the federal government into how many branches?", opts:["two","three","four","five"], a:1, why:"Three branches: legislative, executive, and judicial."},
+  {q:"The Boston Tea Party (1773) was a protest against British…", opts:["taxes","forts","churches","ships"], a:0, why:"Colonists dumped tea to protest taxation without representation."},
+  {q:"The Revolutionary War formally ended with the 1783 Treaty of…", opts:["Ghent","Paris","Versailles","Tordesillas"], a:1, why:"The 1783 Treaty of Paris ended the Revolutionary War."},
+  {q:"Who is called the ‘Father of the Constitution’?", opts:["George Washington","James Madison","Patrick Henry","John Jay"], a:1, why:"James Madison earned the title for his central role in drafting it."},
+  {q:"The 13th Amendment to the Constitution…", opts:["gave women the vote","abolished slavery","created the income tax","set term limits"], a:1, why:"The 13th Amendment (1865) abolished slavery."},
+  {q:"The 19th Amendment (1920) secured the right to vote for…", opts:["18-year-olds","women","new immigrants","property owners"], a:1, why:"The 19th Amendment guaranteed women the right to vote."},
+  {q:"The first battles of the American Revolution were fought at…", opts:["Yorktown","Lexington and Concord","Saratoga","New Orleans"], a:1, why:"The war began at Lexington and Concord in April 1775."},
+  {q:"The U.S. entered World War II after the 1941 attack on…", opts:["New York","Pearl Harbor","Los Angeles","Washington, D.C."], a:1, why:"Japan’s attack on Pearl Harbor (Dec 7, 1941) brought the U.S. into WWII."},
+  {q:"The Great Depression began with the stock market crash of…", opts:["1919","1929","1941","1955"], a:1, why:"The crash of October 1929 triggered the Great Depression."},
+  {q:"Dr. Martin Luther King Jr. was a leader of the…", opts:["labor movement","civil rights movement","space program","temperance movement"], a:1, why:"Dr. King was a central leader of the 1950s–60s civil rights movement."},
+  {q:"Before the Constitution, the United States was governed by the…", opts:["Magna Carta","Articles of Confederation","Bill of Rights","Northwest Ordinance"], a:1, why:"The Articles of Confederation were the first U.S. governing framework."},
+  {q:"Which President launched the ‘New Deal’ to fight the Great Depression?", opts:["Herbert Hoover","Franklin D. Roosevelt","Harry Truman","Calvin Coolidge"], a:1, why:"FDR’s New Deal responded to the Great Depression."},
+  {q:"The Civil War effectively ended in 1865 when Lee surrendered at…", opts:["Gettysburg","Appomattox Court House","Fort Sumter","Antietam"], a:1, why:"Gen. Lee surrendered at Appomattox in April 1865."},
+  {q:"The first person to walk on the Moon (1969), an American, was…", opts:["Buzz Aldrin","Neil Armstrong","John Glenn","Alan Shepard"], a:1, why:"Neil Armstrong stepped onto the Moon on July 20, 1969."},
+  {q:"In 1867 the United States purchased Alaska from…", opts:["Canada","Russia","Britain","France"], a:1, why:"The U.S. bought Alaska from Russia in 1867."},
+  {q:"The 1863 speech beginning ‘Four score and seven years ago’ is the…", opts:["First Inaugural","Gettysburg Address","Farewell Address","State of the Union"], a:1, why:"Lincoln’s Gettysburg Address opens with those words."},
+  {q:"The branch of government that makes federal laws is the…", opts:["executive","legislative (Congress)","judicial","diplomatic"], a:1, why:"Congress, the legislative branch, makes federal laws."},
+  {q:"The convention that wrote the U.S. Constitution met in 1787 in…", opts:["New York","Philadelphia","Boston","Richmond"], a:1, why:"The Constitutional Convention met in Philadelphia in 1787."},
+  {q:"‘No taxation without representation’ was a rallying cry of the…", opts:["Civil War South","American colonists before the Revolution","New Deal","Gold Rush"], a:1, why:"Colonists protested being taxed by a Parliament in which they had no vote."},
+  {q:"The two sides in the Civil War were the Union and the…", opts:["Confederacy","Loyalists","Allies","Patriots"], a:0, why:"The Southern states formed the Confederacy."},
+  {q:"Who delivered the ‘I Have a Dream’ speech in 1963?", opts:["Malcolm X","Martin Luther King Jr.","Frederick Douglass","Booker T. Washington"], a:1, why:"Dr. King gave the speech at the 1963 March on Washington."},
+  {q:"The Cold War was a decades-long rivalry between the U.S. and the…", opts:["Soviet Union","British Empire","Empire of Japan","Ottoman Empire"], a:0, why:"The Cold War pitted the U.S. against the Soviet Union."},
+  {q:"The U.S. independence holiday is celebrated each year on…", opts:["July 4","December 25","November 11","January 1"], a:0, why:"Independence Day marks the July 4, 1776 Declaration."},
+  {q:"The executive branch of the federal government is led by the…", opts:["Chief Justice","Speaker of the House","President","Senate Majority Leader"], a:2, why:"The President heads the executive branch."},
 ];
 
 /* ====================== SHARED ENGINE (do not edit per subject) =========== */
