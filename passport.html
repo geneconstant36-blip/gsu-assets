@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Climber's Passport — Your GSU Transcript | Global Sovereign University</title>
+<meta name="description" content="Your personal record of every climb and badge across Global Sovereign University. Best scores from the cloud, four badge tiers per lesson, printable as a certificate. Free, no login, yours to keep.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/passport.html">
+<style>
+:root{--bg:#000;--gold:#C9A84C;--gold-b:#FFE9A8;--cream:#F5F1E8;--muted:#8A8460;--line:#2a2a2a;--teal:#1A8B7F;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--cream);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.55;}
+.wrap{max-width:1040px;margin:0 auto;padding:28px 20px 80px;}
+a{color:var(--gold);}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;color:var(--cream);margin:0 0 .4em;}
+.eyebrow{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.hero{text-align:center;border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:26px;}
+.hero h1{font-size:2.5rem;margin:.15em 0 .2em;}
+.hero p{color:#cfc6ad;max-width:680px;margin:.4em auto 0;}
+.namecard{display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:center;background:#000;border:1px solid var(--gold);border-radius:14px;padding:16px 20px;margin:0 auto 26px;max-width:680px;}
+.namecard label{font-family:Georgia,serif;color:var(--gold);font-size:1.05rem;}
+.namecard input{flex:1;min-width:220px;background:#0a0a0a;border:1px solid var(--line);border-radius:9px;color:var(--cream);font-size:1.05rem;padding:10px 14px;font-family:Georgia,serif;}
+.namecard input:focus{outline:none;border-color:var(--gold);}
+.summary{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:center;margin:0 auto 30px;}
+.stat{text-align:center;min-width:150px;background:#000;border:1px solid var(--line);border-radius:12px;padding:14px 18px;}
+.stat .n{font-family:Georgia,serif;font-size:2rem;color:var(--gold-b);line-height:1;}
+.stat .l{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+.bar{height:12px;background:#161616;border:1px solid var(--line);border-radius:99px;overflow:hidden;max-width:680px;margin:0 auto 34px;}
+.bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-b));transition:width .6s ease;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+.card{background:#000;border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s;}
+.card:hover{border-color:var(--gold);}
+.card .subj{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);}
+.card h3{font-size:1.18rem;margin:.1em 0 0;}
+.cloud{font-size:.92rem;color:#cfc6ad;}
+.cloud b{color:var(--gold-b);font-family:Georgia,serif;}
+.tiers{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;}
+.chip{flex:1;min-width:60px;cursor:pointer;user-select:none;text-align:center;border:1px solid var(--line);border-radius:9px;padding:8px 4px;font-size:.74rem;color:var(--muted);background:#070707;transition:.15s;}
+.chip .m{display:block;font-size:1.1rem;line-height:1.2;filter:grayscale(1) opacity(.6);}
+.chip.on{color:#000;background:linear-gradient(180deg,var(--gold-b),var(--gold));border-color:var(--gold);font-weight:700;}
+.chip.on .m{filter:none;}
+.play{align-self:flex-start;font-size:.86rem;text-decoration:none;border:1px solid var(--gold);color:var(--gold);border-radius:8px;padding:6px 14px;margin-top:4px;}
+.play:hover{background:var(--gold);color:#000;}
+.actions{text-align:center;margin:38px 0 10px;}
+.btn{display:inline-block;background:linear-gradient(180deg,var(--gold-b),var(--gold));color:#000;font-weight:700;border:none;border-radius:10px;padding:14px 30px;font-size:1.02rem;cursor:pointer;font-family:Inter,sans-serif;}
+.note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:10px;}
+.geno{max-width:760px;margin:40px auto 0;background:#000;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:16px 20px;color:#cfc6ad;font-size:.95rem;}
+.geno b{color:var(--gold);}
+.faq{max-width:820px;margin:46px auto 0;}
+.faq h2{text-align:center;}
+.faq details{border-bottom:1px solid var(--line);padding:14px 4px;}
+.faq summary{cursor:pointer;font-family:Georgia,serif;color:var(--gold);font-size:1.06rem;}
+.faq p{color:#cfc6ad;margin:.6em 0 0;}
+footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:54px;border-top:1px solid var(--line);padding-top:20px;}
+.cert-only{display:none;}
+@media print{
+  body{background:#fff;color:#111;}
+  .noprint{display:none !important;}
+  .wrap{max-width:100%;padding:0;}
+  .hero{border-color:#bbb;}
+  .hero h1,h1,h2,h3{color:#111;}
+  .eyebrow,.card .subj,.card .cloud b{color:#9A7B1E;}
+  .card{border:1px solid #ccc;break-inside:avoid;}
+  .chip{border:1px solid #ccc;color:#999;background:#fff;}
+  .chip.on{background:#fff;color:#111;border-color:#9A7B1E;font-weight:700;}
+  .chip.on .m{filter:none;}
+  .cert-only{display:block;text-align:center;margin:0 0 18px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="cert-only">
+    <div class="eyebrow">Global Sovereign University &middot; The Foundation for Global Instruction</div>
+    <h2 style="font-size:1.6rem;margin-top:8px;">Certificate of Progress</h2>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">Global Sovereign University</div>
+    <h1>The Climber's Passport</h1>
+    <p>Your personal record of every climb and badge across the campus. Best scores come straight from your play; the four badge tiers are yours to mark as you earn them. It saves to any device you sign in from &mdash; a tool you own, not a token anyone can revoke.</p>
+  </header>
+
+  <div class="namecard noprint">
+    <label for="pname">This Passport belongs to</label>
+    <input id="pname" type="text" placeholder="Type your name" autocomplete="name" maxlength="48">
+  </div>
+  <h2 class="cert-only" id="certName" style="font-size:1.5rem;"></h2>
+
+  <div class="summary">
+    <div class="stat"><div class="n" id="statClimbs">0</div><div class="l">Climbs begun</div></div>
+    <div class="stat"><div class="n" id="statBadges">0</div><div class="l">Badges earned</div></div>
+    <div class="stat"><div class="n" id="statPoints">0</div><div class="l">Best points total</div></div>
+  </div>
+  <div class="bar noprint"><i id="bar"></i></div>
+
+  <div class="grid" id="grid"><p style="grid-column:1/-1;text-align:center;color:var(--muted);">Loading your Passport&hellip;</p></div>
+
+  <div class="actions noprint">
+    <button class="btn" onclick="window.print()">🖨 Print my Passport</button>
+    <div class="note">Prints as a clean certificate of everything you've earned, dated today.</div>
+  </div>
+
+  <div class="geno noprint">
+    <b>GENO is here to help.</b> Your free 24/7 tutor has read every GSU book cover to cover &mdash; not just the first chapter &mdash; and can explain any climb a second way, in dozens of languages. Stuck on a rung? Ask GENO.
+  </div>
+
+  <section class="faq noprint">
+    <h2>Questions</h2>
+    <details><summary>What is the Climber's Passport?</summary><p>It's your personal record of progress across Global Sovereign University's free games and lessons. Every climb you begin and every badge you earn lives here, ready on any device you sign in from. It's yours to keep &mdash; a tool, not a token someone can take away.</p></details>
+    <details><summary>How do I earn a badge?</summary><p>Each lesson awards four badges. Bronze is for finishing the lesson itself; Silver, Gold, and Platinum are earned by doing real things in the world &mdash; the homework reps that turn knowledge into a habit. Mark each one here as you earn it, and your Passport remembers it for good.</p></details>
+    <details><summary>Do I need an account or a password?</summary><p>No. The Passport signs you in anonymously and saves your progress to a private space automatically. There's nothing to buy, no email to give, and no one else can see or change your record.</p></details>
+    <details><summary>Where do the best scores come from?</summary><p>Straight from your own play. Each climb saves your best score to the cloud under your private ID, and the Passport reads it back. Beat your best in any game and it updates here automatically.</p></details>
+    <details><summary>Can I print it?</summary><p>Yes &mdash; tap "Print my Passport" for a clean, dated certificate of everything you've earned. Show it to a parent, a co-op, or an employer. Finishing every climb completes the campus.</p></details>
+  </section>
+
+  <footer>The Foundation for Global Instruction &middot; a 501(c)(3) nonprofit &middot; Eugene, Oregon &middot; globalsovereignuniversity.org</footer>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is the Climber's Passport?","acceptedAnswer":{"@type":"Answer","text":"It is your personal record of progress across Global Sovereign University's free games and lessons. Every climb you begin and every badge you earn lives here, ready on any device you sign in from. It is yours to keep — a tool, not a token someone can take away."}},
+{"@type":"Question","name":"How do I earn a badge?","acceptedAnswer":{"@type":"Answer","text":"Each lesson awards four badges. Bronze is for finishing the lesson itself; Silver, Gold, and Platinum are earned by doing real things in the world — the homework reps that turn knowledge into a habit. Mark each one as you earn it and your Passport remembers it."}},
+{"@type":"Question","name":"Do I need an account or a password?","acceptedAnswer":{"@type":"Answer","text":"No. The Passport signs you in anonymously and saves your progress to a private space automatically. There is nothing to buy, no email to give, and no one else can see or change your record."}},
+{"@type":"Question","name":"Where do the best scores come from?","acceptedAnswer":{"@type":"Answer","text":"Straight from your own play. Each climb saves your best score to the cloud under your private ID, and the Passport reads it back. Beat your best in any game and it updates here automatically."}},
+{"@type":"Question","name":"Can I print it?","acceptedAnswer":{"@type":"Answer","text":"Yes — tap Print my Passport for a clean, dated certificate of everything you have earned. Finishing every climb completes the campus."}}
+]}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const cfg={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",appId:"1:301089416765:web:dff926a7aa52191e9a6c54"};
+const app=initializeApp(cfg), auth=getAuth(app), db=getFirestore(app);
+
+const ROSTER=[
+  {id:"leadership-climb",name:"The Leadership Climb",subj:"Leadership & Influence"},
+  {id:"phonics-climb",name:"The Phonics Climb",subj:"Reading"},
+  {id:"decoding-climb",name:"The Decoding Climb",subj:"Reading"},
+  {id:"vocabulary-climb",name:"The Vocabulary Climb",subj:"Reading"},
+  {id:"comprehension-climb",name:"The Comprehension Climb",subj:"Reading"},
+  {id:"reading-helix-climb",name:"The Reading Helix Climb",subj:"Reading"},
+  {id:"trades-climb",name:"The Trades Climb",subj:"Trades & Repair"},
+  {id:"manipulation-gauntlet",name:"The Manipulation Gauntlet",subj:"Critical Thinking"},
+  {id:"thinkification-climb",name:"The Thinkification Climb",subj:"Critical Thinking"}
+];
+const TIERS=[["bronze","🥉","Bronze"],["silver","🥈","Silver"],["gold","🥇","Gold"],["platinum","💎","Platinum"]];
+const BASE="https://read.globalsovereignuniversity.org/";
+
+let uid=null, state={name:"",badges:{}}, bests={};
+const $=id=>document.getElementById(id);
+const pRef=()=>doc(db,"users",uid,"meta","passport");
+
+function recompute(){
+  let climbs=0,badges=0,points=0;
+  ROSTER.forEach(g=>{ if(bests[g.id]>0)climbs++; points+=(bests[g.id]||0); const b=state.badges[g.id]||{}; TIERS.forEach(([k])=>{if(b[k])badges++;}); });
+  $("statClimbs").textContent=climbs; $("statBadges").textContent=badges; $("statPoints").textContent=points;
+  const maxB=ROSTER.length*4; $("bar").style.width=Math.round(badges/maxB*100)+"%";
+}
+function render(){
+  const grid=$("grid"); grid.innerHTML="";
+  ROSTER.forEach(g=>{
+    const best=bests[g.id]||0, b=state.badges[g.id]||{};
+    const card=document.createElement("div"); card.className="card";
+    const chips=TIERS.map(([k,m,lbl])=>`<div class="chip ${b[k]?'on':''}" data-g="${g.id}" data-k="${k}"><span class="m">${m}</span>${lbl}</div>`).join("");
+    card.innerHTML=`<div class="subj">${g.subj}</div><h3>${g.name}</h3>
+      <div class="cloud">${best>0?`Best score: <b>${best}</b> &middot; climbed ✓`:`Not yet climbed`}</div>
+      <a class="play noprint" href="${BASE+g.id}.html">${best>0?'Climb again ▸':'Play ▸'}</a>
+      <div class="tiers">${chips}</div>`;
+    grid.appendChild(card);
+  });
+  grid.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>toggle(c.dataset.g,c.dataset.k,c)));
+  recompute();
+}
+async function toggle(gid,key,el){
+  if(!uid)return;
+  state.badges[gid]=state.badges[gid]||{}; state.badges[gid][key]=!state.badges[gid][key];
+  el.classList.toggle("on",state.badges[gid][key]); recompute();
+  try{ await setDoc(pRef(),{badges:state.badges,updated:Date.now()},{merge:true}); }catch(e){}
+}
+$("pname").addEventListener("input",e=>{ state.name=e.target.value; $("certName").textContent=state.name?("Awarded to "+state.name):""; });
+$("pname").addEventListener("blur",async()=>{ if(!uid)return; try{ await setDoc(pRef(),{name:state.name,updated:Date.now()},{merge:true}); }catch(e){} });
+
+async function loadAll(){
+  // passport doc
+  try{ const s=await getDoc(pRef()); if(s.exists()){ const d=s.data(); state.name=d.name||""; state.badges=d.badges||{}; if(state.name){$("pname").value=state.name; $("certName").textContent="Awarded to "+state.name;} } }catch(e){}
+  // best scores (own gameScores docs)
+  await Promise.all(ROSTER.map(async g=>{
+    try{ const s=await getDoc(doc(db,"gameScores",uid+"_"+g.id)); if(s.exists()){ const d=s.data(); bests[g.id]=Math.max(d.best||0,d.score||0); } }catch(e){}
+  }));
+  render();
+}
+onAuthStateChanged(auth,u=>{ if(u){ uid=u.uid; loadAll(); } else { signInAnonymously(auth).catch(()=>{ $("grid").innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--muted);">Sign-in unavailable — check your connection and reload.</p>'; }); } });
+</script>
+</body>
+</html>
