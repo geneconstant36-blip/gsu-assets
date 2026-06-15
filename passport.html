@@ -66,6 +66,39 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:54px;bord
   .chip.on .m{filter:none;}
   .cert-only{display:block;text-align:center;margin:0 0 18px;}
 }
+/* ===== Passport artifact (downloadable image) ===== */
+.art-wrap{max-width:960px;margin:0 auto 30px;overflow-x:auto;}
+#passportArtifact{width:920px;margin:0 auto;background:#000;}
+.pp-border{border:3px double #C9A84C;border-radius:16px;padding:30px 38px 26px;background:radial-gradient(120% 120% at 50% 0%,#0b0b0b 0%,#000 60%);}
+.pp-head{display:flex;align-items:center;gap:20px;}
+.pp-crest{width:84px;height:84px;flex:0 0 84px;border-radius:50%;border:2.5px solid #C9A84C;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;}
+.pp-crest span{font-family:Georgia,serif;font-size:25px;font-weight:700;color:#C9A84C;line-height:1;}
+.pp-crest small{font-family:Arial,sans-serif;font-size:7.5px;letter-spacing:2px;color:#C9A84C;margin-top:3px;}
+.pp-uni{font-family:Arial,sans-serif;font-size:12px;letter-spacing:3px;color:#C9A84C;text-transform:uppercase;}
+.pp-ti{font-family:Georgia,serif;font-size:34px;color:#F5F1E8;line-height:1.1;margin:2px 0;}
+.pp-org{font-family:Arial,sans-serif;font-size:10.5px;letter-spacing:1px;color:#8A8460;text-transform:uppercase;}
+.pp-rule{height:1px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);margin:20px 0;opacity:.7;}
+.pp-data{display:flex;flex-wrap:wrap;gap:10px 40px;}
+.pp-data > div{display:flex;flex-direction:column;min-width:200px;}
+.pp-data .k{font-family:Arial,sans-serif;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:#8A8460;}
+.pp-data .v{font-family:Georgia,serif;font-size:17px;color:#F5F1E8;}
+.pp-stats{display:flex;gap:14px;justify-content:space-between;margin-top:18px;}
+.pp-stat{flex:1;text-align:center;border:1px solid #2a2a2a;border-radius:12px;padding:14px 8px;background:#070707;}
+.pp-stat .num{font-family:Georgia,serif;font-size:30px;color:#FFE9A8;line-height:1;}
+.pp-stat .lab{font-family:Arial,sans-serif;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:#8A8460;margin-top:6px;}
+.pp-stamps-title{font-family:Arial,sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#C9A84C;margin-bottom:12px;}
+.pp-stamps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.pp-stamp{border:1px solid #2a2a2a;border-radius:10px;padding:10px 12px;background:#060606;}
+.pp-st-subj{font-family:Arial,sans-serif;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:#C9A84C;}
+.pp-st-name{font-family:Georgia,serif;font-size:13.5px;color:#F5F1E8;margin:2px 0 8px;line-height:1.2;}
+.pp-st-tiers{display:flex;gap:5px;}
+.pp-t{width:26px;height:24px;display:flex;align-items:center;justify-content:center;border:1px solid #2a2a2a;border-radius:6px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;color:#4a4636;background:#000;}
+.pp-t.on{color:#000;background:linear-gradient(180deg,#FFE9A8,#C9A84C);border-color:#C9A84C;}
+.pp-empty{grid-column:1/-1;text-align:center;color:#8A8460;font-family:Georgia,serif;font-style:italic;padding:10px;}
+.pp-quote{font-family:Georgia,serif;font-style:italic;font-size:14.5px;color:#cfc6ad;text-align:center;max-width:640px;margin:0 auto;}
+.pp-sign{text-align:center;margin-top:16px;}
+.pp-sigline{font-family:Georgia,serif;font-size:13px;color:#C9A84C;}
+@media (max-width:560px){ .actions .btn{display:block;margin:8px auto;} }
 </style>
 </head>
 <body>
@@ -88,6 +121,44 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:54px;bord
   </div>
   <h2 class="cert-only" id="certName" style="font-size:1.5rem;"></h2>
 
+  <section class="art-wrap noprint">
+    <div id="passportArtifact">
+      <div class="pp-border">
+        <div class="pp-head">
+          <div class="pp-crest"><span>GSU</span><small>SOVEREIGN</small></div>
+          <div>
+            <div class="pp-uni">Global Sovereign University</div>
+            <div class="pp-ti">Climber's Passport</div>
+            <div class="pp-org">The Foundation for Global Instruction &middot; 501(c)(3)</div>
+          </div>
+        </div>
+        <div class="pp-rule"></div>
+        <div class="pp-data">
+          <div><span class="k">Holder</span><span class="v" id="ppName">Unsigned Climber</span></div>
+          <div><span class="k">Passport No.</span><span class="v" id="ppNo">GSU-&mdash;&mdash;&mdash;</span></div>
+          <div><span class="k">Issued</span><span class="v" id="ppDate">&mdash;</span></div>
+          <div><span class="k">Campus</span><span class="v">read.globalsovereignuniversity.org</span></div>
+        </div>
+        <div class="pp-stats">
+          <div class="pp-stat"><div class="num" id="ppClimbs">0</div><div class="lab">Climbs Begun</div></div>
+          <div class="pp-stat"><div class="num" id="ppBadges">0</div><div class="lab">Badges Earned</div></div>
+          <div class="pp-stat"><div class="num" id="ppPoints">0</div><div class="lab">Best Points</div></div>
+        </div>
+        <div class="pp-rule"></div>
+        <div class="pp-stamps-title">Stamps Earned</div>
+        <div class="pp-stamps" id="ppStamps"></div>
+        <div class="pp-rule"></div>
+        <div class="pp-quote">&ldquo;Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow.&rdquo;</div>
+        <div class="pp-sign"><div class="pp-sigline">Dr. Gene A. Constant &middot; Founding Chancellor</div></div>
+      </div>
+    </div>
+    <div class="actions" style="margin-top:18px;">
+      <button class="btn" id="dlBtn">&#11015; Download my Passport</button>
+      <button class="btn" style="background:transparent;border:1px solid var(--gold);color:var(--gold);margin-left:8px;" onclick="window.print()">&#128424; Print</button>
+      <div class="note">&#9679; Live &mdash; your Passport updates automatically as you climb. Tap Download for a shareable image.</div>
+    </div>
+  </section>
+
   <div class="summary">
     <div class="stat"><div class="n" id="statClimbs">0</div><div class="l">Climbs begun</div></div>
     <div class="stat"><div class="n" id="statBadges">0</div><div class="l">Badges earned</div></div>
@@ -96,11 +167,6 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:54px;bord
   <div class="bar noprint"><i id="bar"></i></div>
 
   <div class="grid" id="grid"><p style="grid-column:1/-1;text-align:center;color:var(--muted);">Loading your Passport&hellip;</p></div>
-
-  <div class="actions noprint">
-    <button class="btn" onclick="window.print()">🖨 Print my Passport</button>
-    <div class="note">Prints as a clean certificate of everything you've earned, dated today.</div>
-  </div>
 
   <div class="geno noprint">
     <b>GENO is here to help.</b> Your free 24/7 tutor has read every GSU book cover to cover &mdash; not just the first chapter &mdash; and can explain any climb a second way, in dozens of languages. Stuck on a rung? Ask GENO.
@@ -128,6 +194,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:54px;bord
 ]}
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
@@ -159,6 +226,7 @@ function recompute(){
   ROSTER.forEach(g=>{ if(bests[g.id]>0)climbs++; points+=(bests[g.id]||0); const b=state.badges[g.id]||{}; TIERS.forEach(([k])=>{if(b[k])badges++;}); });
   $("statClimbs").textContent=climbs; $("statBadges").textContent=badges; $("statPoints").textContent=points;
   const maxB=ROSTER.length*4; $("bar").style.width=Math.round(badges/maxB*100)+"%";
+  renderArtifact();
 }
 function render(){
   const grid=$("grid"); grid.innerHTML="";
@@ -181,18 +249,54 @@ async function toggle(gid,key,el){
   el.classList.toggle("on",state.badges[gid][key]); recompute();
   try{ await setDoc(pRef(),{badges:state.badges,updated:Date.now()},{merge:true}); }catch(e){}
 }
-$("pname").addEventListener("input",e=>{ state.name=e.target.value; $("certName").textContent=state.name?("Awarded to "+state.name):""; });
+$("pname").addEventListener("input",e=>{ state.name=e.target.value; $("certName").textContent=state.name?("Awarded to "+state.name):""; $("ppName").textContent=state.name||"Unsigned Climber"; });
 $("pname").addEventListener("blur",async()=>{ if(!uid)return; try{ await setDoc(pRef(),{name:state.name,updated:Date.now()},{merge:true}); }catch(e){} });
 
 async function loadAll(){
   // passport doc
-  try{ const s=await getDoc(pRef()); if(s.exists()){ const d=s.data(); state.name=d.name||""; state.badges=d.badges||{}; if(state.name){$("pname").value=state.name; $("certName").textContent="Awarded to "+state.name;} } }catch(e){}
+  try{ const s=await getDoc(pRef()); if(s.exists()){ const d=s.data(); state.name=d.name||""; state.badges=d.badges||{}; state.issued=d.issued||""; if(state.name){$("pname").value=state.name; $("certName").textContent="Awarded to "+state.name;} } }catch(e){}
+  if(!state.issued){ state.issued=todayStr(); try{ await setDoc(pRef(),{issued:state.issued},{merge:true}); }catch(e){} }
   // best scores (own gameScores docs)
   await Promise.all(ROSTER.map(async g=>{
     try{ const s=await getDoc(doc(db,"gameScores",uid+"_"+g.id)); if(s.exists()){ const d=s.data(); bests[g.id]=Math.max(d.best||0,d.score||0); } }catch(e){}
   }));
   render();
 }
+function todayStr(){return new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});}
+function ppShort(u){let h=0;for(let i=0;i<u.length;i++)h=(h*31+u.charCodeAt(i))>>>0;return 'GSU-'+h.toString(36).toUpperCase().padStart(6,'0').slice(0,6);}
+function renderArtifact(){
+  if(!$("ppName"))return;
+  $("ppName").textContent=state.name||"Unsigned Climber";
+  if(uid)$("ppNo").textContent=ppShort(uid);
+  $("ppDate").textContent=state.issued||todayStr();
+  let c=0,bd=0,pt=0;
+  ROSTER.forEach(g=>{ if(bests[g.id]>0)c++; pt+=(bests[g.id]||0); const b=state.badges[g.id]||{}; TIERS.forEach(([k])=>{if(b[k])bd++;}); });
+  $("ppClimbs").textContent=c; $("ppBadges").textContent=bd; $("ppPoints").textContent=pt;
+  const wrap=$("ppStamps"); wrap.innerHTML="";
+  const earned=ROSTER.filter(g=>(bests[g.id]>0)||Object.values(state.badges[g.id]||{}).some(Boolean));
+  if(!earned.length){ wrap.innerHTML='<div class="pp-empty">Begin a climb to earn your first stamp.</div>'; return; }
+  earned.forEach(g=>{ const b=state.badges[g.id]||{};
+    const tiers=TIERS.map(([k,,lbl])=>`<span class="pp-t ${b[k]?'on':''}">${lbl[0]}</span>`).join("");
+    const st=document.createElement("div"); st.className="pp-stamp";
+    st.innerHTML=`<div class="pp-st-subj">${g.subj}</div><div class="pp-st-name">${g.name}</div><div class="pp-st-tiers">${tiers}</div>`;
+    wrap.appendChild(st); });
+}
+const dl=$("dlBtn");
+if(dl)dl.addEventListener("click",async()=>{
+  if(typeof html2canvas!=="function"){alert("Image tool is still loading — try again in a second.");return;}
+  const node=$("passportArtifact"); dl.disabled=true; const t=dl.innerHTML; dl.textContent="Rendering…";
+  try{ const canvas=await html2canvas(node,{backgroundColor:"#000000",scale:2,useCORS:true,logging:false});
+    const a=document.createElement("a");
+    a.download=(state.name?state.name.replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,''):'My')+"-GSU-Passport.png";
+    a.href=canvas.toDataURL("image/png"); a.click();
+  }catch(e){ alert("Could not render the image. Please try again."); }
+  dl.innerHTML=t; dl.disabled=false;
+});
+async function refreshScores(){ if(!uid)return; await Promise.all(ROSTER.map(async g=>{ try{ const s=await getDoc(doc(db,"gameScores",uid+"_"+g.id)); if(s.exists()){const d=s.data();bests[g.id]=Math.max(d.best||0,d.score||0);} }catch(e){} })); render(); }
+setInterval(()=>{ if(document.visibilityState==='visible') refreshScores(); },25000);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') refreshScores(); });
+window.addEventListener('focus',refreshScores);
+
 onAuthStateChanged(auth,u=>{ if(u){ uid=u.uid; loadAll(); } else { signInAnonymously(auth).catch(()=>{ $("grid").innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--muted);">Sign-in unavailable — check your connection and reload.</p>'; }); } });
 </script>
 </body>
