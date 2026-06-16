@@ -2,8 +2,8 @@
 <!-- ============================================================================
      GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
      ROUTING: Standalone app -> commit to gsu-assets, served at
-              read.globalsovereignuniversity.org/cert-geography.html
-              Then on /certification, set the Geography card's button href
+              read.globalsovereignuniversity.org/cert-lawification.html
+              Then on /certification, set the Lawification card's button href
               to that URL and flip its status to "Live".
 
      THIS FILE IS ALSO THE MASTER TEMPLATE. To create the next subject's
@@ -34,17 +34,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Geography Comprehension Certification — Free & Verifiable | GSU</title>
-<meta name="description" content="Earn the free Geography Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
-<meta property="og:title" content="Geography Comprehension Certification — Free & Verifiable | GSU">
+<title>Lawification Comprehension Certification — Free & Verifiable | GSU</title>
+<meta name="description" content="Earn the free Lawification Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
+<meta property="og:title" content="Lawification Comprehension Certification — Free & Verifiable | GSU">
 <meta property="og:description" content="30 questions. 80% Silver, 90% Gold. A unique, publicly verifiable serial number. Free, anonymous, no login — from a 501(c)(3).">
 <meta property="og:type" content="website">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Geography Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of world and United States geography: continents and oceans, countries and capitals, major landforms and rivers, and essential map skills."}
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Lawification Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of practical legal literacy: the Constitution and Bill of Rights, contracts and leases, your rights during police encounters, the courts, and small claims."}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Is the Geography certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
+{"@type":"Question","name":"Is the Lawification certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
 {"@type":"Question","name":"How is the certificate verified?","acceptedAnswer":{"@type":"Answer","text":"When you pass, a unique serial number is issued and recorded. Anyone can confirm it is genuine using the Verify a Certificate box, with no login required."}},
 {"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Thirty questions are drawn at random. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}}]}
 </script>
@@ -114,7 +114,7 @@
 
   <!-- INTRO -->
   <section id="intro" class="card center">
-    <div class="kick" id="k-subject">Geography · Certificate of Comprehension</div>
+    <div class="kick" id="k-subject">Lawification · Certificate of Comprehension</div>
     <h1>Prove You <span class="gold">Comprehend It.</span></h1>
     <p class="muted">Free, anonymous, no account — and when you pass, a unique serial number anyone on Earth can verify. This is competence on the record, not a participation ribbon.</p>
     <ul class="rules">
@@ -126,7 +126,7 @@
     </ul>
     <button class="btn" id="startBtn">Begin the Certification →</button>
     <p class="muted" id="deviceNote" style="margin-top:12px"></p>
-    <p class="muted" style="margin-top:16px">New here? <a class="gold" id="prepLink" href="/">Explore the free GSU campus →</a></p>
+    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/lawification">Prepare free at the Lawification campus →</a></p>
   </section>
 
   <!-- EXAM -->
@@ -172,7 +172,7 @@
     <h3>Verify a Certificate</h3>
     <p class="muted">Anyone can confirm a GSU certificate is genuine. Enter a serial number — no account, nothing to install.</p>
     <div class="field" style="justify-content:flex-start">
-      <input id="verifyInput" placeholder="e.g. GSU-GEO-LXK3F9Q2">
+      <input id="verifyInput" placeholder="e.g. GSU-LAW-LXK3F9Q2">
       <button class="btn" id="verifyBtn">Verify →</button>
     </div>
     <div class="verify-result muted" id="verifyResult"></div>
@@ -203,10 +203,10 @@
 <script>
 /* ====================== ZONE B — CONFIG (edit per subject) ================= */
 const CONFIG = {
-  subject: "Geography",
-  serialPrefix: "GSU-GEO",
-  subjectLine: "Geography · Certificate of Comprehension",
-  prepHref: "/",
+  subject: "Lawification",
+  serialPrefix: "GSU-LAW",
+  subjectLine: "Lawification · Certificate of Comprehension",
+  prepHref: "/lawification",
   drawCount: 30,
   timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
   silverPct: 0.80,
@@ -232,42 +232,42 @@ const CONFIG = {
    draws CONFIG.drawCount at random and shuffles each question's options.
 =========================================================================== */
 const POOL = [
-  {q:"How many continents are there on Earth?", opts:["five","six","seven","eight"], a:2, why:"There are seven continents."},
-  {q:"The largest ocean on Earth is the…", opts:["Atlantic","Indian","Arctic","Pacific"], a:3, why:"The Pacific is the largest and deepest ocean."},
-  {q:"The world’s largest hot desert is the…", opts:["Gobi","Sahara","Mojave","Kalahari"], a:1, why:"The Sahara, in North Africa, is the largest hot desert."},
-  {q:"The tallest mountain above sea level is…", opts:["K2","Mount Everest","Denali","Kilimanjaro"], a:1, why:"Mount Everest is Earth’s highest peak above sea level."},
-  {q:"Which is the largest continent by land area?", opts:["Africa","Asia","North America","Europe"], a:1, why:"Asia is the largest continent."},
-  {q:"Which continent is almost entirely covered by ice?", opts:["Australia","Africa","Antarctica","Europe"], a:2, why:"Antarctica is covered by a vast ice sheet."},
-  {q:"The capital of the United States is…", opts:["New York","Washington, D.C.","Los Angeles","Chicago"], a:1, why:"Washington, D.C. is the U.S. capital."},
-  {q:"The capital of France is…", opts:["Lyon","Paris","Marseille","Nice"], a:1, why:"Paris is the capital of France."},
-  {q:"The capital of Japan is…", opts:["Osaka","Kyoto","Tokyo","Nagoya"], a:2, why:"Tokyo is Japan’s capital."},
-  {q:"The imaginary line at 0° latitude around the middle of the Earth is the…", opts:["Prime Meridian","Equator","Tropic of Cancer","axis"], a:1, why:"The Equator is the 0° latitude line."},
-  {q:"The imaginary line at 0° longitude is the…", opts:["Equator","Prime Meridian","International Date Line","Tropic of Capricorn"], a:1, why:"The Prime Meridian marks 0° longitude."},
-  {q:"Which U.S. state is the largest by land area?", opts:["Texas","California","Alaska","Montana"], a:2, why:"Alaska is the largest U.S. state by area."},
-  {q:"The Great Lakes lie along the border of the U.S. and…", opts:["Mexico","Canada","Russia","Greenland"], a:1, why:"The Great Lakes sit on the U.S.–Canada border."},
-  {q:"The largest country in the world by land area is…", opts:["China","United States","Canada","Russia"], a:3, why:"Russia is the largest country by area."},
-  {q:"The continent directly south of Europe is…", opts:["Asia","Africa","Australia","Antarctica"], a:1, why:"Africa lies just south of Europe across the Mediterranean."},
-  {q:"Mount Everest is part of which mountain range?", opts:["Andes","Alps","Himalayas","Rockies"], a:2, why:"Everest is in the Himalayas."},
-  {q:"The river that flows through Egypt is the…", opts:["Amazon","Nile","Thames","Ganges"], a:1, why:"The Nile flows through Egypt."},
-  {q:"Which ocean borders the East Coast of the United States?", opts:["Pacific","Atlantic","Indian","Arctic"], a:1, why:"The Atlantic Ocean borders the U.S. East Coast."},
-  {q:"The capital of the United Kingdom is…", opts:["Manchester","Liverpool","London","Birmingham"], a:2, why:"London is the capital of the U.K."},
-  {q:"A large area of flat, treeless, frozen Arctic land is called…", opts:["desert","tundra","savanna","prairie"], a:1, why:"Tundra is cold, treeless land found in the Arctic."},
-  {q:"Which country is also a continent of its own?", opts:["Greenland","Australia","Madagascar","India"], a:1, why:"Australia is both a country and a continent."},
-  {q:"Besides Canada, which country shares a land border with the United States?", opts:["Cuba","Mexico","Guatemala","Brazil"], a:1, why:"Mexico borders the U.S. to the south."},
-  {q:"The Sahara Desert is located on which continent?", opts:["Asia","Africa","Australia","South America"], a:1, why:"The Sahara is in northern Africa."},
-  {q:"The capital of Italy is…", opts:["Milan","Venice","Rome","Naples"], a:2, why:"Rome is the capital of Italy."},
-  {q:"Which is the smallest of Earth’s oceans?", opts:["Atlantic","Indian","Arctic","Pacific"], a:2, why:"The Arctic Ocean is the smallest."},
-  {q:"A narrow strip of land connecting two larger land areas is an…", opts:["island","isthmus","archipelago","peninsula"], a:1, why:"An isthmus links two larger landmasses, like Panama."},
-  {q:"Land surrounded by water on three sides is a…", opts:["peninsula","island","plateau","delta"], a:0, why:"A peninsula is bordered by water on three sides."},
-  {q:"The largest tropical rainforest in the world is the…", opts:["Congo","Amazon","Daintree","Borneo"], a:1, why:"The Amazon rainforest in South America is the largest."},
-  {q:"On which continent is the Amazon River found?", opts:["Africa","Asia","South America","Australia"], a:2, why:"The Amazon flows through South America."},
-  {q:"The capital of Canada is…", opts:["Toronto","Vancouver","Ottawa","Montreal"], a:2, why:"Ottawa is Canada’s capital."},
-  {q:"Map lines that run east–west and measure distance north or south of the Equator are…", opts:["longitude","latitude","meridians","contours"], a:1, why:"Latitude lines run east–west, measuring north–south position."},
-  {q:"The world’s largest island is…", opts:["Australia","Greenland","Madagascar","Iceland"], a:1, why:"Greenland is the largest island (Australia is a continent)."},
-  {q:"Which mountain range runs along the western United States?", opts:["Appalachians","Rocky Mountains","Alps","Andes"], a:1, why:"The Rocky Mountains run through the western U.S."},
-  {q:"Which continent has the most countries?", opts:["Asia","Europe","Africa","South America"], a:2, why:"Africa has 54 countries, the most of any continent."},
-  {q:"The part of a map that explains its symbols is called the…", opts:["scale","legend","compass rose","grid"], a:1, why:"The legend (or key) explains a map’s symbols."},
-  {q:"The four cardinal directions are north, south, east, and…", opts:["up","west","center","down"], a:1, why:"North, south, east, and west are the cardinal directions."},
+  {q:"The supreme law of the United States is the…", opts:["Bill of Rights","U.S. Constitution","federal budget","Declaration of Independence"], a:1, why:"The Constitution is the supreme law of the land; all other laws must conform to it."},
+  {q:"The first ten amendments to the Constitution are called the…", opts:["Articles","Bill of Rights","Federalist Papers","statutes"], a:1, why:"The Bill of Rights (1791) lists fundamental protections."},
+  {q:"The First Amendment protects speech, religion, press, assembly, and the right to…", opts:["bear arms","petition the government","a jury trial","own property"], a:1, why:"It also protects the right to petition the government for redress."},
+  {q:"The right to remain silent when questioned by police comes from the…", opts:["First Amendment","Fourth Amendment","Fifth Amendment","Tenth Amendment"], a:2, why:"The Fifth Amendment protects against self-incrimination."},
+  {q:"‘Miranda’ warnings must generally be given when a person is…", opts:["pulled over","in custody and about to be questioned","issued a parking ticket","filing taxes"], a:1, why:"Miranda warnings apply to custodial interrogation."},
+  {q:"The Fourth Amendment protects against…", opts:["unreasonable searches and seizures","cruel punishment","double jeopardy","excessive bail"], a:0, why:"It guards against unreasonable searches and seizures."},
+  {q:"A legally binding agreement between two parties is a…", opts:["tort","contract","statute","subpoena"], a:1, why:"A contract is an enforceable agreement."},
+  {q:"For most contracts to be valid there must be an offer, acceptance, and…", opts:["a lawyer present","consideration (value exchanged)","a notary stamp","two witnesses"], a:1, why:"Consideration — something of value exchanged — is a core element."},
+  {q:"A residential lease is a contract between a tenant and a…", opts:["lender","landlord","judge","real-estate agent"], a:1, why:"A lease is an agreement between the tenant and the landlord."},
+  {q:"A security deposit is generally meant to cover…", opts:["the first month’s rent","damage beyond normal wear and tear","the landlord’s property taxes","monthly utilities"], a:1, why:"Deposits typically cover damage beyond ordinary wear and tear."},
+  {q:"Small claims court is designed to…", opts:["try major felonies","resolve smaller money disputes simply, often without a lawyer","hear constitutional appeals","prosecute federal crimes"], a:1, why:"Small claims handles minor monetary disputes in a streamlined process."},
+  {q:"In a U.S. criminal trial, the accused is presumed…", opts:["guilty until proven innocent","innocent until proven guilty","guilty by default","neither"], a:1, why:"The presumption of innocence is foundational to criminal justice."},
+  {q:"To convict in a criminal case, guilt must be proven…", opts:["by a preponderance of evidence","beyond a reasonable doubt","with probable cause","by any evidence at all"], a:1, why:"Criminal conviction requires proof beyond a reasonable doubt."},
+  {q:"The right to an attorney in a criminal case is guaranteed by the…", opts:["Second Amendment","Sixth Amendment","Eighth Amendment","Tenth Amendment"], a:1, why:"The Sixth Amendment guarantees the right to counsel."},
+  {q:"If you cannot afford a lawyer in a criminal case, the court may appoint…", opts:["no one","a public defender","a notary","a court reporter"], a:1, why:"Indigent defendants are entitled to appointed counsel."},
+  {q:"The branch of government that interprets laws is the…", opts:["legislative","executive","judicial","administrative"], a:2, why:"Courts — the judicial branch — interpret the law."},
+  {q:"A law passed by a legislature is called a…", opts:["statute","verdict","tort","deed"], a:0, why:"Laws enacted by a legislature are statutes."},
+  {q:"The Eighth Amendment prohibits…", opts:["unreasonable searches","cruel and unusual punishment","self-incrimination","quartering soldiers"], a:1, why:"It bars cruel and unusual punishment and excessive bail and fines."},
+  {q:"‘Double jeopardy’ means a person cannot be…", opts:["tried twice for the same offense","both fined and jailed","denied bail","searched twice"], a:0, why:"The Fifth Amendment bars being tried twice for the same crime."},
+  {q:"A document that transfers ownership of real estate is a…", opts:["lease","deed","warrant","subpoena"], a:1, why:"A deed transfers title to real property."},
+  {q:"In most U.S. states, the age of legal adulthood (majority) is…", opts:["16","18","21","25"], a:1, why:"Most states set the age of majority at 18."},
+  {q:"A court order requiring someone to appear or produce evidence is a…", opts:["deed","subpoena","lease","warranty"], a:1, why:"A subpoena compels appearance or the production of evidence."},
+  {q:"The party who brings a civil lawsuit is the…", opts:["defendant","plaintiff","bailiff","juror"], a:1, why:"The plaintiff initiates a civil suit; the defendant responds."},
+  {q:"A wrongful act causing harm that can lead to a civil lawsuit is a…", opts:["statute","tort","deed","writ"], a:1, why:"A tort is a civil wrong that causes harm."},
+  {q:"The Second Amendment concerns the right to…", opts:["vote","keep and bear arms","a speedy trial","free speech"], a:1, why:"It addresses the right to keep and bear arms."},
+  {q:"Searching a private home usually requires a warrant or a…", opts:["parking permit","recognized legal exception","witness","receipt"], a:1, why:"A home search generally needs a warrant or a recognized exception."},
+  {q:"The amendment that abolished slavery is the…", opts:["13th","14th","15th","19th"], a:0, why:"The 13th Amendment (1865) abolished slavery."},
+  {q:"The 14th Amendment guarantees equal protection of the laws and…", opts:["the right to bear arms","due process of law","freedom of the press","the right to vote at 18"], a:1, why:"It guarantees due process and equal protection of the laws."},
+  {q:"Why does reading a lease before signing matter?", opts:["police require it","you are legally bound by its terms once you sign","it cancels the rent","landlords get a discount"], a:1, why:"Signing binds you to the lease terms, so understand them first."},
+  {q:"A last will and testament directs…", opts:["how taxes are filed","how a person’s property is distributed after death","how to register to vote","local traffic rules"], a:1, why:"A will directs the distribution of an estate after death."},
+  {q:"The right to a trial by an impartial jury in serious criminal cases is in the…", opts:["First Amendment","Sixth Amendment","Eighth Amendment","Fourth Amendment"], a:1, why:"The Sixth Amendment guarantees a speedy, public jury trial."},
+  {q:"‘Probable cause’ is generally the standard police need to…", opts:["greet someone","make an arrest or obtain a warrant","direct traffic","close a street"], a:1, why:"Probable cause is required for arrests and most warrants."},
+  {q:"In a civil dispute, the usual standard of proof is…", opts:["beyond a reasonable doubt","a preponderance of the evidence","absolute certainty","probable cause"], a:1, why:"Civil cases use the preponderance — more likely than not — standard."},
+  {q:"A written promise that a product will be repaired or replaced is a…", opts:["deed","warranty","subpoena","tort"], a:1, why:"A warranty is a guarantee about a product’s condition or performance."},
+  {q:"The power of courts to strike down unconstitutional laws is called…", opts:["due process","judicial review","double jeopardy","habeas corpus"], a:1, why:"Judicial review lets courts invalidate unconstitutional laws."},
+  {q:"If you are sued and simply ignore it, the court may enter a…", opts:["mistrial","default judgment against you","dismissal","pardon"], a:1, why:"Failing to respond can result in a default judgment."},
 ];
 
 /* ====================== SHARED ENGINE (do not edit per subject) =========== */
