@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Spelling Climb — Five Books, One Staircase | Global Sovereign University</title>
+<meta name="description" content="Climb the Spelling staircase by spelling — not guessing. Five free book-decks (Sound First, Morphones, The Spelling Code, Word Archaeology, When Spelling Won't Stick), four tiers Bronze to Platinum, a live champions board, and GENO the AI tutor who has read every book. No login. No cost.">
+<meta property="og:title" content="The Spelling Climb — Global Sovereign University">
+<meta property="og:description" content="Type the word, climb the tiers. Five free spelling decks, GENO coaching, Bronze to Platinum. Free forever.">
+<meta property="og:type" content="website">
+<link rel="icon" href="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Course","name":"The Spelling Climb","description":"A free, infinite, teach-then-spell game across five spelling books: phonics, morphology, spelling rules, etymology, and a no-fail deck for struggling and dyslexic learners.","provider":{"@type":"CollegeOrUniversity","name":"Global Sovereign University","sameAs":"https://www.globalsovereignuniversity.org"},"isAccessibleForFree":true,"hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT15M"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I play The Spelling Climb?","acceptedAnswer":{"@type":"Answer","text":"Pick one of the five books. You read a short lesson, then you spell — you actually type each word from its clue and pronunciation, rather than picking from a list. Every correct spelling lifts you up the ladder from Bronze to Platinum. Play is infinite; you choose when to stop and bank your score."}},
+{"@type":"Question","name":"Is it really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every book, every game, GENO the tutor, and the Certificate of Comprehension are free. Global Sovereign University is a nonprofit and never charges, never advertises, and never asks you to log in."}},
+{"@type":"Question","name":"What is the no-fail deck for?","acceptedAnswer":{"@type":"Answer","text":"The When Spelling Won't Stick deck is built for dyslexic, dysgraphic, and struggling spellers. There is no clock and no losing — if a word slips, it shows itself letter by letter and you try again, gently, until it sticks."}},
+{"@type":"Question","name":"Who is GENO?","acceptedAnswer":{"@type":"Answer","text":"GENO is the GSU AI tutor, available 24/7. He has read all five spelling books cover to cover and can explain any word, pattern, or rule in dozens of languages. If a word stumps you, ask him."}},
+{"@type":"Question","name":"What does it mean to spell, not guess?","acceptedAnswer":{"@type":"Answer","text":"Research shows spelling sticks when the learner produces the letters from memory, not when they recognize a correct option in a list. The Spelling Climb makes you build every word yourself — that is what wires it in."}}
+]}
+</script>
+<style>
+:root{
+ --bg:#000000; --card:#0a0a0a; --gold:#C9A84C; --gold-b:#DDBE62; --cream:#F5F1E8;
+ --muted:#cdbf90; --navy:#16324f; --teal:#1f5f5b;
+ --bronze:#a9743f; --silver:#bfc4cc; --gold-t:#C9A84C; --plat:#7fd6e0;
+ --good:#69c187; --bad:#d98a7a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--cream);
+ font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%}
+body{padding:0 0 80px 0}
+.wrap{max-width:760px;margin:0 auto;padding:22px 18px}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;color:var(--cream);margin:0 0 8px}
+h1{font-size:30px;line-height:1.15}
+.kick{font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+a{color:var(--gold-b)}
+.bar{height:3px;background:var(--gold);width:100%}
+.sub{color:var(--muted);font-style:italic;font-size:15.5px;line-height:1.55;margin:0 0 18px}
+.panel{background:var(--card);border:1px solid rgba(201,168,76,.35);border-radius:14px;padding:20px;margin:16px 0}
+.btn{display:inline-block;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;
+ color:#000;background:var(--gold);border:1px solid var(--gold);border-radius:9px;padding:11px 18px;margin:6px 8px 6px 0}
+.btn.ghost{color:var(--gold);background:transparent}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.45;cursor:default}
+/* deck picker */
+.decks{display:flex;flex-wrap:wrap;gap:12px}
+.deck{flex:1 1 220px;min-width:200px;text-align:left;background:var(--card);
+ border:1px solid rgba(201,168,76,.35);border-radius:14px;padding:16px 18px;cursor:pointer;color:var(--cream)}
+.deck:hover{border-color:var(--gold)}
+.deck .dk{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.deck h3{font-size:18px;margin:0 0 4px}
+.deck p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.45}
+/* play */
+#clue{font-family:Georgia,serif;font-size:21px;line-height:1.4;color:var(--cream);margin:6px 0 4px}
+#hint{font-size:14px;color:var(--gold-b);min-height:20px;margin:0 0 14px}
+#answer{width:100%;font-size:24px;letter-spacing:2px;text-align:center;font-family:Georgia,serif;
+ color:var(--cream);background:#000;border:2px solid var(--gold);border-radius:10px;padding:14px 12px;outline:none}
+#answer::placeholder{color:#5b5640;letter-spacing:1px;font-size:16px}
+#fb{min-height:30px;font-size:16px;font-weight:700;margin:12px 0 2px;text-align:center}
+.reveal span{display:inline-block;font-family:Georgia,serif;font-size:26px;letter-spacing:1px;
+ padding:2px 5px;margin:1px;border-radius:6px;background:#111;color:var(--gold-b);border:1px solid rgba(201,168,76,.4)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:6px}
+.statline{display:flex;justify-content:space-between;align-items:baseline;margin:2px 0 6px}
+.score{font-family:Georgia,serif;font-size:18px;color:var(--cream)}
+.score b{color:var(--gold-b);font-size:22px}
+.tiername{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+/* ladder */
+.ladder{position:relative;height:14px;background:#141414;border:1px solid rgba(201,168,76,.3);border-radius:9px;overflow:hidden;margin:10px 0 4px}
+.ladder .fill{position:absolute;top:0;left:0;bottom:0;width:0;background:linear-gradient(90deg,var(--bronze),var(--gold),var(--plat));transition:width .35s ease}
+.marks{position:relative;height:16px;font-size:9.5px;color:var(--muted)}
+.marks span{position:absolute;transform:translateX(-50%);letter-spacing:.5px}
+/* board */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid rgba(201,168,76,.18)}
+th{color:var(--gold);font-size:11px;letter-spacing:1px;text-transform:uppercase}
+td.s{text-align:right;color:var(--gold-b);font-weight:700}
+.me{background:rgba(201,168,76,.08)}
+/* geno */
+.geno{display:flex;gap:14px;align-items:center;background:#0c0c0c;border:1px solid rgba(201,168,76,.35);border-radius:14px;padding:14px 16px;margin:16px 0}
+.geno img{width:54px;height:54px;border-radius:50%;flex:0 0 auto}
+.geno p{margin:0;font-size:14.5px;color:var(--cream);line-height:1.5}
+/* faq */
+details{border-bottom:1px solid rgba(201,168,76,.2);padding:12px 0}
+summary{cursor:pointer;font-family:Georgia,serif;font-size:17px;color:var(--cream);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+ ";color:var(--gold)}
+details[open] summary::before{content:"– "}
+details p{color:var(--muted);font-size:14.5px;line-height:1.6;margin:8px 0 0}
+.hide{display:none!important}
+.foot{color:#6f6a52;font-size:12.5px;text-align:center;margin-top:26px;line-height:1.6}
+.foot a{color:var(--gold)}
+.speakbtn{font-size:13px;color:var(--gold);background:transparent;border:1px solid rgba(201,168,76,.5);border-radius:8px;padding:7px 12px;cursor:pointer}
+.help{font-size:13px;color:var(--muted);background:transparent;border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:7px 12px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="wrap">
+
+  <div class="kick">Global Sovereign University · Spellification</div>
+  <h1>The Spelling Climb</h1>
+  <p class="sub">Five free books. One staircase. You don't guess here — you <em>spell</em>. Read the lesson, hear the word, build every letter yourself. That's how it sticks.</p>
+
+  <!-- ===== DECK PICKER ===== -->
+  <section id="pickScreen">
+    <div class="decks" id="decks"></div>
+    <div class="geno">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+      <p><b>Stuck on a word?</b> Ask GENO, your 24/7 tutor — he has read all five spelling books cover to cover and can explain any pattern in dozens of languages. Tap the circle in the corner anytime.</p>
+    </div>
+  </section>
+
+  <!-- ===== TEACH ===== -->
+  <section id="teachScreen" class="hide">
+    <div class="panel">
+      <div class="kick" id="teachKick">Sound First</div>
+      <h2 id="teachTitle">Learn it, then climb.</h2>
+      <p id="teachBody" class="sub" style="font-style:normal;color:var(--cream)"></p>
+      <button class="btn" id="startBtn">Start Climbing →</button>
+      <button class="btn ghost" id="backBtn1">← Pick another book</button>
+    </div>
+  </section>
+
+  <!-- ===== PLAY ===== -->
+  <section id="playScreen" class="hide">
+    <div class="statline">
+      <div class="score">Score <b id="score">0</b></div>
+      <div class="tiername" id="tierName">Climbing</div>
+    </div>
+    <div class="ladder"><div class="fill" id="ladderFill"></div></div>
+    <div class="marks">
+      <span id="tk-b" style="left:13%">Bronze</span>
+      <span id="tk-s" style="left:33%">Silver</span>
+      <span id="tk-g" style="left:60%">Gold</span>
+      <span id="tk-p" style="left:100%">Platinum</span>
+    </div>
+
+    <div class="panel">
+      <div class="kick" id="playKick"></div>
+      <div id="clue">—</div>
+      <div id="hint"></div>
+      <input id="answer" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="type the word…" enterkeyhint="go">
+      <div id="fb"></div>
+      <div class="row">
+        <button class="btn" id="checkBtn">Check</button>
+        <button class="speakbtn" id="speakBtn">🔊 Hear it</button>
+        <button class="help" id="helpBtn">Show a letter</button>
+      </div>
+      <div class="row" id="nextRow" style="margin-top:10px">
+        <button class="btn ghost hide" id="nextBtn">Next word →</button>
+        <button class="btn ghost" id="stopBtn">Bank score &amp; see the board</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BOARD ===== -->
+  <section id="boardScreen" class="hide">
+    <div class="panel">
+      <h2 id="boardTitle">Champions</h2>
+      <p class="sub" id="boardSub"></p>
+      <table><thead><tr><th>#</th><th>Climber</th><th style="text-align:right">Best</th></tr></thead>
+      <tbody id="boardBody"><tr><td colspan="3" style="color:var(--muted)">Loading the board…</td></tr></tbody></table>
+      <div class="row" style="justify-content:flex-start;margin-top:14px">
+        <button class="btn" id="againBtn">Climb again →</button>
+        <button class="btn ghost" id="backBtn2">← Pick another book</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="panel" style="margin-top:26px">
+    <h2>Questions, answered.</h2>
+    <details><summary>How do I play?</summary><p>Pick a book. Read the short lesson, then spell: you type each word from its clue and pronunciation — you build it yourself, you don't pick from a list. Every correct word lifts you from Bronze toward Platinum. Play is infinite; bank your score whenever you like.</p></details>
+    <details><summary>Is it really free?</summary><p>Yes — every book, every game, GENO, and the certificate. GSU is a nonprofit. No cost, no ads, no login, ever.</p></details>
+    <details><summary>What is the "When Spelling Won't Stick" deck?</summary><p>It's the no-fail deck, built for dyslexic, dysgraphic, and struggling spellers. No clock, no losing — if a word slips, it reveals itself letter by letter and you try again, gently, until it sticks.</p></details>
+    <details><summary>What if a word stumps me?</summary><p>Tap "Show a letter" for a nudge, or ask GENO in the corner — he's read every book and will walk you through the pattern in your language.</p></details>
+  </section>
+
+  <div class="foot">
+    Global Sovereign University · The Foundation for Global Instruction, a 501(c)(3) nonprofit.<br>
+    Free education in dozens of languages. <a href="https://www.globalsovereignuniversity.org/spellification">← Back to Spellification</a> · <a href="https://www.globalsovereignuniversity.org/certification">Earn your Certificate of Comprehension</a>
+  </div>
+</div>
+
+<!-- GENO -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",storageBucket:"gsu-handshake.firebasestorage.app",messagingSenderId:"301089416765",appId:"1:301089416765:web:dff926a7aa52191e9a6c54"};
+let db=null, uid=null;
+try{
+  const app=initializeApp(firebaseConfig);
+  db=getFirestore(app);
+  const auth=getAuth(app);
+  const cred=await signInAnonymously(auth);
+  uid=cred.user.uid;
+}catch(e){ console.warn("Firebase offline — scores won't save this session.",e); }
+
+/* ===== DECKS ===== */
+const DECKS={
+ "sound-first":{kick:"Sound First · Phonics",title:"Sound becomes print, predictably.",
+  teach:"Phonics is sound → letters. Say the word slowly, hear each sound in order, and write the letters that make it. The catch: one sound can wear different clothes. The /ay/ sound is <b>ai</b> in rain, <b>ay</b> in play, and <b>a–e</b> in cake. Listen first, then spell.",
+  words:[["rain","water that falls from clouds"],["play","what children do for fun"],["cake","a sweet treat for a birthday"],["boat","it floats on the water"],["snow","white and cold, it falls in winter"],["light","the opposite of dark"],["night","when the sky is dark"],["green","the color of grass"],["moon","it glows in the night sky"],["star","it twinkles far away in the sky"],["train","it runs along the tracks"],["cloud","white and fluffy, up in the sky"],["spoon","you eat your soup with it"],["chair","you sit down on it"],["sheep","a farm animal covered in wool"]]},
+ "morphones":{kick:"Morphones · Morphology",title:"Spell the parts; the word clicks together.",
+  teach:"Long words are built from parts: a <b>prefix</b> at the front, a <b>root</b> in the middle, a <b>suffix</b> at the end. Spell each part and the whole word assembles itself. un + happy = unhappy. teach + er = teacher. Hear the parts, then build it.",
+  words:[["unhappy","not happy — un + happy"],["replay","to play it again — re + play"],["teacher","a person who teaches — teach + er"],["kindness","the state of being kind — kind + ness"],["careful","full of care — care + ful"],["hopeless","without hope — hope + less"],["rebuild","to build it again — re + build"],["darkness","the state of being dark — dark + ness"],["helpful","full of help — help + ful"],["preview","to view beforehand — pre + view"],["painter","a person who paints — paint + er"],["friendship","the bond of being friends — friend + ship"],["disagree","to not agree — dis + agree"],["powerful","full of power — power + ful"],["sadness","the state of being sad — sad + ness"]]},
+ "spelling-code":{kick:"The Spelling Code · Rules",title:"Learn the rule; the exceptions shrink.",
+  teach:"English spelling follows rules. Three big ones: <b>drop the silent e</b> before a vowel suffix (hope → hoping); <b>double the final consonant</b> after a short vowel (run → running); and <b>i before e, except after c</b> (believe, receive). Spot the rule, then spell.",
+  words:[["hoping","wishing for — hope + ing, drop the e"],["running","moving fast on foot — run + ning, double the n"],["believe","to hold it true — i before e"],["receive","to be given — e before i, after c"],["making","creating — make + ing, drop the e"],["swimming","moving through water — swim + ming, double the m"],["happiness","deep joy — happy → i + ness"],["stopped","brought to an end — stop + ped, double the p"],["writing","putting words on paper — write + ing, drop the e"],["shining","giving off light — shine + ing, drop the e"],["planning","making a plan — plan + ning, double the n"],["achieve","to reach a goal — i before e"],["using","putting to work — use + ing, drop the e"],["dined","ate dinner — dine + d, drop the e"]]},
+ "word-archaeology":{kick:"Word Archaeology · Etymology",title:"Dig out the root; spell the whole family.",
+  teach:"Under an English word sits an ancient root, and the root spells the same way across its whole family. <b>aqua</b> = water → aquarium. <b>bio</b> = life → biology. <b>tele</b> = far → telephone. <b>port</b> = carry → transport. Find the root, then spell.",
+  words:[["aquarium","a glass tank for fish — aqua = water"],["biology","the study of life — bio = life"],["telephone","a device to speak far away — tele = far"],["transport","to carry across — port = carry"],["microscope","a tool to see tiny things — micro = small"],["geography","the study of the earth — geo = earth"],["dictionary","a book that says what words mean — dict = to say"],["photograph","a picture drawn with light — photo = light"],["spectator","one who watches — spect = to look"],["audible","able to be heard — audi = to hear"],["manual","done by hand — manu = hand"],["visible","able to be seen — vis = to see"],["thermometer","a tool that measures heat — therm = heat"],["chronology","the order of time — chron = time"]]},
+ "wont-stick":{kick:"When Spelling Won't Stick · No-Fail",title:"No clock. No losing. Just one letter at a time.",
+  teach:"Take a breath. There's no timer here and no way to fail. Say the word slowly, hear each sound, and build it one letter at a time. If it slips, the word shows itself — and you simply try again. Spelling sticks when it feels safe.",
+  noFail:true,
+  words:[["because","the reason something happens"],["friend","a person you like and trust"],["said","spoke — the past of say"],["people","more than one person"],["there","in that place"],["where","in what place"],["could","was able to"],["enough","as much as is needed"],["beautiful","very lovely to look at"],["favorite","the one you like best of all"],["different","not the same"],["important","mattering a great deal"],["tomorrow","the day after today"],["believe","to hold something true"],["building","a place with walls and a roof"]]}
+};
+const ORDER=["sound-first","morphones","spelling-code","word-archaeology","wont-stick"];
+
+/* ===== TIERS ===== */
+const T={bronze:10,silver:25,gold:45,plat:75};
+function tierFor(s){
+  if(s>=T.plat)return{name:"Platinum",icon:"\u{1F48E}"};
+  if(s>=T.gold)return{name:"Gold",icon:"\u{1F3C5}"};
+  if(s>=T.silver)return{name:"Silver",icon:"\u{1F948}"};
+  if(s>=T.bronze)return{name:"Bronze",icon:"\u{1F949}"};
+  return{name:"Climbing",icon:""};
+}
+
+/* ===== STATE ===== */
+let curDeck=null, bag=[], cur=null, score=0, awaiting=false, helpShown=0;
+const $=id=>document.getElementById(id);
+
+/* tag (shared across the Climb family) */
+function myTag(){
+  let t=localStorage.getItem('gsu_climb_tag');
+  if(!t){ t=(prompt("Name for the champions board (3–14 letters):")||"Climber").trim().slice(0,14)||"Climber";
+    localStorage.setItem('gsu_climb_tag',t); }
+  return t;
+}
+
+/* ===== PICKER ===== */
+function renderPicker(){
+  $("decks").innerHTML="";
+  ORDER.forEach(id=>{
+    const d=DECKS[id];
+    const el=document.createElement("div");
+    el.className="deck"; el.tabIndex=0;
+    el.innerHTML=`<div class="dk">${d.kick}</div><h3>${id==="wont-stick"?"When Spelling Won't Stick":d.kick.split(" · ")[0]}</h3><p>${d.title}</p>`;
+    el.onclick=()=>chooseDeck(id);
+    el.onkeydown=e=>{if(e.key==="Enter")chooseDeck(id);};
+    $("decks").appendChild(el);
+  });
+}
+function show(id){["pickScreen","teachScreen","playScreen","boardScreen"].forEach(s=>$(s).classList.toggle("hide",s!==id));}
+
+function chooseDeck(id){
+  curDeck=id; const d=DECKS[id];
+  history.replaceState(null,"","#"+id);
+  $("teachKick").textContent=d.kick;
+  $("teachTitle").textContent=d.title;
+  $("teachBody").innerHTML=d.teach;
+  show("teachScreen"); window.scrollTo(0,0);
+}
+
+/* ===== PLAY ===== */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startPlay(){
+  score=0; bag=[]; awaiting=false;
+  $("playKick").textContent=DECKS[curDeck].kick;
+  updateLadder(); show("playScreen"); nextWord(); window.scrollTo(0,0);
+}
+function nextWord(){
+  if(bag.length===0) bag=shuffle(DECKS[curDeck].words);
+  cur=bag.pop(); helpShown=0; awaiting=true;
+  $("answer").value=""; $("answer").disabled=false; $("fb").textContent=""; $("fb").className="";
+  $("clue").textContent=cur[1];
+  $("hint").innerHTML=DECKS[curDeck].noFail?"Say it slowly. Build it one letter at a time.":`${cur[0].length} letters. Tap 🔊 to hear it.`;
+  $("nextBtn").classList.add("hide"); $("checkBtn").disabled=false;
+  $("answer").focus(); speak(cur[0]);
+}
+function speak(w){ try{ if(!window.speechSynthesis)return; const u=new SpeechSynthesisUtterance(w); u.rate=.85; u.lang="en-US"; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} }
+function revealWord(w){
+  return '<div class="reveal">'+w.split("").map(c=>`<span>${c}</span>`).join("")+'</div>';
+}
+function check(){
+  if(!awaiting)return;
+  const guess=$("answer").value.trim().toLowerCase();
+  if(!guess)return;
+  const ans=cur[0].toLowerCase();
+  if(guess===ans){
+    awaiting=false; score++; $("score").textContent=score;
+    $("fb").style.color="var(--good)"; $("fb").innerHTML="✓ Right — "+cur[0];
+    $("answer").disabled=true; $("checkBtn").disabled=true; $("nextBtn").classList.remove("hide");
+    updateLadder(); maybeSave();
+    speak(cur[0]);
+  } else {
+    if(DECKS[curDeck].noFail){
+      $("fb").style.color="var(--gold-b)";
+      $("fb").innerHTML="Almost — here it is. Say it, then type it again:"+revealWord(cur[0]);
+      $("answer").value=""; $("answer").focus();
+    } else {
+      awaiting=false;
+      $("fb").style.color="var(--bad)";
+      $("fb").innerHTML="Not yet — the word was:"+revealWord(cur[0]);
+      $("answer").disabled=true; $("checkBtn").disabled=true; $("nextBtn").classList.remove("hide");
+    }
+  }
+}
+function helpLetter(){
+  if(!awaiting)return;
+  helpShown=Math.min(helpShown+1,cur[0].length);
+  const shown=cur[0].slice(0,helpShown);
+  const rest=cur[0].length-helpShown;
+  $("hint").innerHTML=`Starts with <b style="color:var(--gold-b);letter-spacing:1px">${shown}</b>${rest>0?" · "+rest+" more letter"+(rest>1?"s":""):" · that's the whole word!"}`;
+  $("answer").focus();
+}
+function updateLadder(){
+  const pct=Math.min(100, score/T.plat*100);
+  $("ladderFill").style.width=pct+"%";
+  const t=tierFor(score);
+  $("tierName").textContent=(t.icon?t.icon+" ":"")+t.name;
+}
+
+/* ===== FIRESTORE ===== */
+function coll(){ return "spellClimb_"+curDeck; }
+async function maybeSave(){
+  if(!db||!uid)return;
+  const key="gsu_spell_best_"+curDeck;
+  let localBest=parseInt(localStorage.getItem(key)||"0",10);
+  if(score<=localBest)return;
+  localBest=score; localStorage.setItem(key,String(localBest));
+  try{
+    await setDoc(doc(db,coll(),uid),{tag:myTag(),bestScore:localBest,tier:tierFor(localBest).name,ts:Date.now()},{merge:true});
+  }catch(e){ console.warn("save failed",e); }
+}
+async function loadBoard(){
+  $("boardTitle").textContent=DECKS[curDeck].kick.split(" · ")[0]+" — Champions";
+  $("boardSub").textContent="The ten highest climbers on this book. Your best is "+(localStorage.getItem("gsu_spell_best_"+curDeck)||"0")+".";
+  const body=$("boardBody");
+  if(!db){ body.innerHTML='<tr><td colspan="3" style="color:var(--muted)">Board is offline right now — your score is saved locally.</td></tr>'; return; }
+  try{
+    const snap=await getDocs(query(collection(db,coll()),orderBy("bestScore","desc"),limit(10)));
+    if(snap.empty){ body.innerHTML='<tr><td colspan="3" style="color:var(--muted)">Be the first name on this board.</td></tr>'; return; }
+    let i=0,html="";
+    snap.forEach(d=>{ i++; const v=d.data(); const me=(d.id===uid);
+      html+=`<tr class="${me?'me':''}"><td>${i}</td><td>${(v.tag||"Climber").replace(/[<>]/g,"")}${me?" · you":""}</td><td class="s">${v.bestScore||0}</td></tr>`;});
+    body.innerHTML=html;
+  }catch(e){ body.innerHTML='<tr><td colspan="3" style="color:var(--muted)">Couldn\'t load the board just now.</td></tr>'; }
+}
+function toBoard(){ show("boardScreen"); loadBoard(); window.scrollTo(0,0); }
+
+/* ===== WIRING ===== */
+$("startBtn").onclick=startPlay;
+$("backBtn1").onclick=()=>{show("pickScreen");history.replaceState(null,"","#");};
+$("backBtn2").onclick=()=>{show("pickScreen");history.replaceState(null,"","#");};
+$("checkBtn").onclick=check;
+$("nextBtn").onclick=nextWord;
+$("speakBtn").onclick=()=>cur&&speak(cur[0]);
+$("helpBtn").onclick=helpLetter;
+$("stopBtn").onclick=toBoard;
+$("againBtn").onclick=startPlay;
+$("answer").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); if(awaiting)check(); else if(!$("nextBtn").classList.contains("hide"))nextWord(); }});
+
+renderPicker();
+/* deep link: #sound-first etc. */
+const hash=location.hash.replace("#","");
+if(DECKS[hash]) chooseDeck(hash); else show("pickScreen");
+</script>
+</body>
+</html>
