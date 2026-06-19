@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+     GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
+     ROUTING: Standalone app -> commit to gsu-assets, served at
+              read.globalsovereignuniversity.org/cert-first-aid.html
+              Then on /certification, set the First Aid card's button href
+              to that URL and flip its status to "Live".
+
+     THIS FILE IS ALSO THE MASTER TEMPLATE. To create the next subject's
+     certification (e.g. Writification), copy this file and edit ONLY:
+       ZONE B  — the CONFIG block (subject name, serialPrefix, prepHref).
+       ZONE C  — the QUESTIONS pool (author a real, checked bank for the subject).
+     Everything else (scoring, serials, Firebase recording, public verify,
+     the certificate, GENO, brand) is shared and never needs editing.
+
+     SPEC (matches the /certification page promise):
+       · 30 questions drawn at random from the pool, options shuffled
+       · a 30:00 countdown runs in the upper-right; time-out auto-submits
+       · the learner's score is saved on their own device (localStorage)
+       · 80% to pass for Silver, 90% for Gold (below 80% = keep studying)
+       · a unique serial number issued and recorded the moment you pass
+       · free, anonymous, no account, publicly verifiable by anyone
+     FIREBASE NOTE: certificates live in the "gsu-certification" project,
+       collection "certifications" (doc id = serial), governed by the rules
+       Gene set: public read; create requires anon auth + subject(string) +
+       score(number) + revoked==false; update/delete blocked (permanent;
+       admin-only revocation honored by the verify box via a "revoked:true"
+       field). This engine writes revoked:false and creates the record ONCE,
+       when the learner clicks "Issue My Certificate" — so the chosen name is
+       baked into the single immutable record and no client update is needed.
+     >>> SET CONFIG.firebase BELOW to the gsu-certification Web config. <<
+============================================================================ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First Aid Comprehension Certification — Free & Verifiable | GSU</title>
+<meta name="description" content="Earn the free First Aid Certificate of Comprehension from Global Sovereign University. 30 questions across the fundamentals — CPR, choking, bleeding control, shock, stroke, burns, and Good Samaritan basics. 80% for Silver, 90% for Gold. A comprehension credential, not a substitute for hands-on training. Anonymous, no account, publicly verifiable.">
+<meta property="og:title" content="First Aid Comprehension Certification — Free & Verifiable | GSU">
+<meta property="og:description" content="30 questions. 80% Silver, 90% Gold. A unique, publicly verifiable serial number. Free, anonymous, no login — from a 501(c)(3).">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"First Aid Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of first-aid fundamentals: CPR, choking, bleeding control, shock, stroke recognition, burns, and Good Samaritan basics. A comprehension credential, not a substitute for hands-on certification."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is the First Aid certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
+{"@type":"Question","name":"How is the certificate verified?","acceptedAnswer":{"@type":"Answer","text":"When you pass, a unique serial number is issued and recorded. Anyone can confirm it is genuine using the Verify a Certificate box, with no login required."}},
+{"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Thirty questions are drawn at random. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}},
+{"@type":"Question","name":"Does this certificate make me a certified first responder?","acceptedAnswer":{"@type":"Answer","text":"No. It proves you comprehend first-aid knowledge. It is not a substitute for hands-on certification from the American Heart Association or the Red Cross, and it is not medical advice. In an emergency, call 911."}}]}
+</script>
+<style>
+  :root{--bg:#000000;--panel:#13110b;--gold:#C9A84C;--cream:#F5F1E8;--line:rgba(201,168,76,.28)}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 18px 56px}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--cream);line-height:1.18;margin:0 0 .4em}
+  .gold{color:var(--gold)}
+  .kick{letter-spacing:.18em;text-transform:uppercase;font-size:.74rem;font-weight:700;color:var(--gold);margin-bottom:8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .center{text-align:center}
+  .btn{display:inline-block;background:var(--gold);color:#000000;font-weight:800;border:0;padding:13px 26px;border-radius:8px;font-size:1rem;cursor:pointer;text-decoration:none}
+  .btn:hover{background:var(--cream)}
+  .btn.ghost{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+  .btn.ghost:hover{background:var(--gold);color:#000000}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .muted{color:rgba(245,241,232,.7);font-size:.92rem}
+  .rules{list-style:none;padding:0;margin:18px 0 24px;display:grid;gap:10px;text-align:left}
+  .rules li{background:rgba(10,9,7,.5);border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-size:.95rem}
+  .rules b{color:var(--gold)}
+  .bar{height:8px;background:rgba(245,241,232,.12);border-radius:99px;overflow:hidden;margin:0 0 6px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .25s}
+  .qmeta{display:flex;justify-content:space-between;font-size:.8rem;color:rgba(245,241,232,.65);margin-bottom:14px;letter-spacing:.04em}
+  .q{font-family:Georgia,serif;font-size:1.25rem;margin:0 0 18px}
+  .opts{display:grid;gap:10px}
+  .opt{background:rgba(10,9,7,.5);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:left;color:var(--cream);font-size:1rem;cursor:pointer;transition:border-color .15s,background .15s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:#7CB342;background:rgba(124,179,66,.12)}
+  .opt.wrong{border-color:#C0552F;background:rgba(192,85,47,.12)}
+  .opt[disabled]{cursor:default}
+  .why{margin-top:14px;border-left:3px solid var(--gold);padding:10px 14px;background:rgba(10,9,7,.5);border-radius:0 8px 8px 0;font-size:.95rem}
+  .why .geno{display:flex;gap:10px;align-items:flex-start}
+  .why img{width:34px;height:34px;border-radius:50%;border:2px solid var(--gold);flex:0 0 auto}
+  .next{margin-top:18px;text-align:right}
+  .scorebig{font-family:Georgia,serif;font-size:3rem;color:var(--gold);line-height:1}
+  .tierbadge{display:inline-block;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;padding:6px 14px;border-radius:99px;margin:10px 0}
+  .tier-gold{background:var(--gold);color:#000000}
+  .tier-silver{background:#cdd2da;color:#000000}
+  .tier-none{background:transparent;color:rgba(245,241,232,.7);border:1px solid var(--line)}
+  .field{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+  .field input{background:#000000;border:1px solid var(--line);color:var(--cream);border-radius:8px;padding:11px 13px;font-size:1rem;min-width:200px}
+  .serial{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--gold);font-size:1.15rem;letter-spacing:.06em;word-break:break-all}
+  canvas{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin-top:8px}
+  .hr{height:1px;background:var(--line);margin:30px 0}
+  .verify-result{margin-top:14px;font-size:.95rem}
+  .ok{color:#7CB342}.bad{color:#e0856f}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+  summary{font-family:Georgia,serif;font-weight:700;cursor:pointer;color:var(--cream)}
+  details p{margin:10px 0 0;color:rgba(245,241,232,.85);font-size:.93rem}
+  .foot{margin-top:30px;font-size:.82rem;color:rgba(245,241,232,.55);text-align:center}
+  .foot a{color:var(--gold)}
+  .hide{display:none}
+  .clock{position:fixed;top:14px;right:14px;z-index:60;background:#13110b;border:1px solid var(--line);border-radius:10px;padding:9px 14px 8px;text-align:center;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;font-size:1.1rem;color:var(--gold);letter-spacing:.06em;box-shadow:0 6px 22px rgba(0,0,0,.55)}
+  .clock .lbl{display:block;font-size:.5rem;letter-spacing:.2em;color:rgba(245,241,232,.55);font-weight:700;margin-bottom:2px}
+  .clock.warn{color:#e6b94f;border-color:#e6b94f}
+  .clock.danger{color:#e0856f;border-color:#e0856f;animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.55}}
+  @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
+</style>
+</head>
+<body>
+<div id="clock" class="clock hide"><span class="lbl">TIME LEFT</span><span id="clockT">30:00</span></div>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section id="intro" class="card center">
+    <div class="kick" id="k-subject">First Aid · Certificate of Comprehension</div>
+    <h1>Prove You <span class="gold">Comprehend It.</span></h1>
+    <p class="muted">Free, anonymous, no account — and when you pass, a unique serial number anyone on Earth can verify. This is competence on the record, not a participation ribbon.</p>
+    <ul class="rules">
+      <li><b>30 questions</b>, drawn at random — a fresh set every attempt.</li>
+      <li>A <b>30:00 timer</b> runs in the corner — when it reaches zero, the test submits automatically.</li>
+      <li><b>Silver</b> at 80% &nbsp;·&nbsp; <b>Gold</b> at 90%. Below 80%, keep studying and retake free.</li>
+      <li>Pass and you get a <b>serial-numbered certificate</b>, recorded for public verification.</li>
+      <li>GENO explains every answer as you go, in 32 languages.</li>
+    </ul>
+    <p class="muted" style="background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:12px 14px;margin:4px 0 16px;font-size:14px;line-height:1.55"><b style="color:#C9A84C">Before you begin —</b> this certifies that you <b>understand</b> first-aid knowledge. It is <b>not</b> a substitute for hands-on certification from the American Heart Association or the Red Cross, and it is not medical advice. In a real emergency, call <b>911</b> first.</p>
+    <button class="btn" id="startBtn">Begin the Certification →</button>
+    <p class="muted" id="deviceNote" style="margin-top:12px"></p>
+    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/first-aid">Read the free books at the First Aid library →</a></p>
+  </section>
+
+  <!-- EXAM -->
+  <section id="exam" class="card hide">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="qmeta"><span id="qcount">Question 1 of 30</span><span id="scorerun">Score 0</span></div>
+    <p class="q" id="qtext">—</p>
+    <div class="opts" id="opts"></div>
+    <div id="whyBox" class="why hide"></div>
+    <div class="next"><button class="btn hide" id="nextBtn">Next →</button></div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card center hide">
+    <div class="kick">Result</div>
+    <div class="scorebig" id="r-score">0/30</div>
+    <div id="r-tier"></div>
+    <h2 id="r-head">—</h2>
+    <p class="muted" id="r-msg"></p>
+
+    <div id="passBlock" class="hide">
+      <div class="field">
+        <input id="aliasInput" maxlength="36" placeholder="Name for the certificate (optional)">
+        <button class="btn" id="issueBtn">Issue My Certificate →</button>
+      </div>
+      <p class="muted">Your serial number</p>
+      <p class="serial" id="r-serial">—</p>
+      <p class="muted" id="recordNote">Add your name if you like, then issue your certificate to record it for public verification.</p>
+      <canvas id="certCanvas" width="1200" height="800"></canvas>
+      <div style="margin-top:16px"><button class="btn ghost" id="dlBtn">Download Certificate (PNG)</button></div>
+    </div>
+
+    <div class="next center" style="margin-top:20px">
+      <button class="btn ghost" id="retakeBtn">Take It Again →</button>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- VERIFY -->
+  <section class="card">
+    <div class="kick">Public Verification</div>
+    <h3>Verify a Certificate</h3>
+    <p class="muted">Anyone can confirm a GSU certificate is genuine. Enter a serial number — no account, nothing to install.</p>
+    <div class="field" style="justify-content:flex-start">
+      <input id="verifyInput" placeholder="e.g. GSU-FA-LXK3F9Q2">
+      <button class="btn" id="verifyBtn">Verify →</button>
+    </div>
+    <div class="verify-result muted" id="verifyResult"></div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- FAQ -->
+  <section>
+    <details><summary>Is this really free, with no account?</summary><p>Yes — free forever, anonymous, no login. The Foundation for Global Instruction is a 501(c)(3) nonprofit. The optional name on the certificate is the only thing you type, and it is your choice.</p></details>
+    <details><summary>How does the verification work?</summary><p>When you pass, a unique serial number is generated and recorded. Anyone can paste that serial into the box above to confirm the subject, the tier (Silver or Gold), and the date — proving the certificate is real without revealing any personal information.</p></details>
+    <details><summary>Can I retake it?</summary><p>As many times as you like, free. A new random set of 30 questions is drawn each attempt, so it rewards real comprehension, not memorizing one form.</p></details>
+    <details><summary>Does this make me a certified first responder?</summary><p>No — it proves you <b>understand</b> first-aid knowledge. It is not a substitute for hands-on certification from the American Heart Association or the Red Cross, and it is not medical advice. In a real emergency, call <b>911</b> first.</p></details>
+  </section>
+
+  <div style="height:1px;background:rgba(201,168,76,.25);max-width:760px;margin:40px auto 0"></div>
+<section style="max-width:760px;margin:28px auto 0;border:1px solid rgba(201,168,76,.28);border-radius:14px;background:#000000;padding:26px 28px;text-align:center;font-family:Georgia,serif">
+  <div style="color:#C9A84C;letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;font-family:Arial,sans-serif">More Free Certifications</div>
+  <p style="color:#cdbf90;margin:10px 0 16px;font-size:15px;line-height:1.6">Every GSU Certificate of Comprehension is free, anonymous, and publicly verifiable. Prove what you know across the campus:</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center"><a href="cert-readification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Readification</a><a href="cert-writification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Writification</a><a href="cert-spellification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Spellification</a><a href="cert-mathification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Mathification</a><a href="cert-financification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Financification</a><a href="cert-tradification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Tradification</a><a href="cert-thinkification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Thinkification</a><a href="cert-civics.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Civics</a><a href="cert-american-history.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">American History</a><a href="cert-geography.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Geography</a><a href="cert-science.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Science</a><a href="cert-lawification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Lawification</a></div>
+</section>
+<p class="foot">A free certification of Global Sovereign University · The Foundation for Global Instruction, a 501(c)(3) public benefit nonprofit, Eugene, Oregon · <a href="/quid-pro-quo">Support the mission</a></p>
+</div>
+
+<!-- Firebase (compat) — guarded; the exam runs even if these fail to load -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+/* ====================== ZONE B — CONFIG (edit per subject) ================= */
+const CONFIG = {
+  subject: "First Aid",
+  serialPrefix: "GSU-FA",
+  subjectLine: "First Aid · Certificate of Comprehension",
+  prepHref: "/first-aid",
+  drawCount: 30,
+  timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
+  silverPct: 0.80,
+  goldPct: 0.90,
+  // CERTIFICATES LIVE IN THE "gsu-certification" PROJECT (not gsu-handshake).
+  // Paste that project's Web config below — get it from:
+  // Firebase Console -> gsu-certification -> Project settings -> "Your apps"
+  // -> Web app -> SDK setup and configuration. Only the 3 ALL-CAPS values
+  // need filling; the rest follow gsu-certification's standard naming.
+  firebase: {
+    apiKey: "AIzaSyAmFycf1iMeISLzjWgbxnuSB1BJ3BuWB_U",
+    authDomain: "gsu-certification.firebaseapp.com",
+    projectId: "gsu-certification",
+    storageBucket: "gsu-certification.firebasestorage.app",
+    messagingSenderId: "124413390849",
+    appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
+  }
+};
+
+/* ====================== ZONE C — QUESTION POOL (author per subject) ========
+   Each item: { q, opts:[4 strings], a: index of correct option, why }
+   Keep answers objectively correct and the "why" short and plain. The engine
+   draws CONFIG.drawCount at random and shuffles each question's options.
+=========================================================================== */
+const POOL = [
+  {q:"What is the first thing to do when you arrive at the scene of an emergency?", opts:["Rush in and start treatment","Make sure the scene is safe for you","Move the victim to your car","Give the victim water"], a:1, why:"Check the scene first — you cannot help anyone if you become the next victim."},
+  {q:"An adult has collapsed, is unresponsive, and is not breathing normally. After someone calls 911, an untrained bystander should:", opts:["Wait for paramedics to arrive","Give hands-only CPR — push hard and fast on the center of the chest","Give the person water","Sit the person up in a chair"], a:1, why:"Hands-only CPR — hard, fast pushes on the center of the chest — keeps blood moving until help arrives."},
+  {q:"The recommended rate for chest compressions during CPR is about:", opts:["40 to 60 per minute","100 to 120 per minute","As fast as humanly possible","200 per minute"], a:1, why:"Push at 100 to 120 compressions per minute — the tempo of many well-known songs."},
+  {q:"How deep should chest compressions be for an average adult?", opts:["About half an inch","At least 2 inches (about 5 cm)","About 4 inches","As shallow as possible"], a:1, why:"Compress at least 2 inches (about 5 cm), letting the chest rise fully between pushes."},
+  {q:"When an AED says a shock is advised and is about to deliver it, everyone must:", opts:["Hold the patient still","Stand clear and not touch the patient","Pour water on the chest","Pull off the pads"], a:1, why:"No one may touch the patient during analysis or the shock — contact is dangerous and spoils the reading."},
+  {q:"If an AED is available during cardiac arrest, the right move is to:", opts:["Avoid it unless a doctor is present","Turn it on and follow its spoken prompts","Wait at least 10 minutes first","Use it only on people over 50"], a:1, why:"Turn the AED on and follow the voice prompts — early defibrillation greatly improves survival."},
+  {q:"The universal sign that a person is choking is:", opts:["Rubbing the stomach","Both hands clutched to the throat","Waving the arms overhead","Closing the eyes tightly"], a:1, why:"Hands clutched to the throat is the recognized signal for choking."},
+  {q:"A conscious adult is choking and cannot speak, cough, or breathe. You should:", opts:["Offer a drink of water","Give abdominal thrusts (the Heimlich maneuver)","Lay the person flat on the floor","Wait and watch for a minute"], a:1, why:"For a conscious choking adult, abdominal thrusts and back blows can force the blockage out."},
+  {q:"For most bleeding wounds, the first and most important action is to:", opts:["Apply a tourniquet right away","Apply firm, direct pressure to the wound","Rinse the wound with alcohol","Identify the blood type"], a:1, why:"Firm, direct pressure controls the large majority of bleeding — it comes before any tourniquet."},
+  {q:"A tourniquet is appropriate when:", opts:["Any wound bleeds even a little","Life-threatening limb bleeding will not stop with direct pressure","Someone has a simple nosebleed","Someone has a bruise"], a:1, why:"A tourniquet is for life-threatening limb bleeding that direct pressure cannot control."},
+  {q:"Once a tourniquet is correctly applied to stop life-threatening bleeding, you should:", opts:["Loosen it every few minutes","Leave it in place and note the time for EMS","Remove it as soon as bleeding slows","Hide it under clothing"], a:1, why:"Leave the tourniquet on, note the time applied, and let EMS or hospital staff manage its removal."},
+  {q:"A tourniquet should NOT be used for which of these?", opts:["A deep arterial wound in the arm","A snakebite","A crushed, heavily bleeding leg","Uncontrolled bleeding from the thigh"], a:1, why:"Tourniquets are for life-threatening limb bleeding — never for snakebite, where they can worsen the injury."},
+  {q:"Pale, cool, clammy skin with a rapid, weak pulse are signs of shock. While waiting for EMS you should:", opts:["Sit the person up and give coffee","Lay them down, keep them warm, and reassure them","Have them walk around","Give them a large meal"], a:1, why:"Lay the person down, keep them warm, reassure them — and call 911. Shock is life-threatening."},
+  {q:"The memory aid B.E.F.A.S.T. helps you recognize:", opts:["A heart attack","A stroke","A broken bone","An allergic reaction"], a:1, why:"B.E.F.A.S.T. — Balance, Eyes, Face, Arms, Speech, Time — helps you spot a stroke and act fast."},
+  {q:"When you suspect a stroke, the single most important thing to record is:", opts:["The person's weight","The time the symptoms started","The person's address","The person's age"], a:1, why:"Note when symptoms began — treatment options depend heavily on how long ago the stroke started. Call 911."},
+  {q:"A common warning sign of a heart attack is:", opts:["Itchy feet","Chest pain or pressure, sometimes spreading to the arm or jaw","Sudden hiccups alone","Bright red cheeks"], a:1, why:"Chest pain or pressure — which can spread to the arm, jaw, or back — is a classic warning. Call 911."},
+  {q:"Along with unresponsiveness and very slow or absent breathing, a key sign of opioid overdose is:", opts:["Very wide, dilated pupils","Pinpoint (very small) pupils","Bright yellow skin","A racing heartbeat alone"], a:1, why:"Pinpoint pupils with slow or stopped breathing are hallmark signs of opioid overdose."},
+  {q:"After giving naloxone (Narcan) for a suspected overdose, you should:", opts:["Consider the emergency over and leave","Still call 911 and support breathing — give rescue breaths or CPR if needed","Give a new dose every 10 seconds","Make the person walk it off"], a:1, why:"Naloxone is layered on top of calling 911 and supporting breathing — never a replacement for them."},
+  {q:"The best first step for a minor thermal burn is to:", opts:["Press ice directly on it","Cool it under clean, cool running water","Rub butter or ointment into it","Pop the blisters"], a:1, why:"Cool a burn with running water — not ice, butter, or grease, which trap heat or invite infection."},
+  {q:"An unresponsive person who IS breathing normally should generally be placed:", opts:["Flat on their back","In the recovery position (on their side)","Sitting upright in a chair","Face-down on the floor"], a:1, why:"The recovery position keeps the airway open and lets fluids drain, lowering the choking risk."},
+  {q:"A person in severe allergic reaction (anaphylaxis) who carries an epinephrine auto-injector should:", opts:["Wait to see if it improves","Use the auto-injector in the outer thigh, then call 911","Drink a glass of milk","Take an antacid tablet"], a:1, why:"Epinephrine into the outer thigh is the life-saving treatment for anaphylaxis — then call 911."},
+  {q:"If someone is having a seizure, you should:", opts:["Hold them down firmly","Place a spoon between their teeth","Clear the area, protect their head, and time the seizure","Splash cold water on their face"], a:2, why:"Never restrain them or put anything in their mouth — protect them from injury and time the seizure."},
+  {q:"Good Samaritan laws generally protect a bystander who:", opts:["Acts recklessly for payment","Helps in good faith and within their training","Refuses to get involved","Attempts surgery on the street"], a:1, why:"These laws protect people who help voluntarily, in good faith, and within the limits of their training."},
+  {q:"To care for a nosebleed, you should have the person:", opts:["Tilt the head far back","Lean forward and pinch the soft part of the nose","Lie flat on their back","Blow the nose hard and often"], a:1, why:"Lean forward and pinch the soft part of the nose — tilting back lets blood run down the throat."},
+  {q:"The first-aid memory aid R.I.C.E. for a sprain stands for:", opts:["Run, Ice, Climb, Eat","Rest, Ice, Compression, Elevation","Rub, Inspect, Cover, Examine","Rest, Inject, Cool, Exercise"], a:1, why:"Rest, Ice, Compression, Elevation — the standard early care for a sprain or strain."},
+  {q:"If you suspect a broken bone, you should:", opts:["Try to push the bone back into place","Keep the area still and supported","Have the person walk on it","Massage the injured spot"], a:1, why:"Do not try to realign a fracture — keep it still and supported, and get medical help."},
+  {q:"Heat stroke — hot skin, confusion, and collapse — is a true emergency. You should:", opts:["Give a hot drink","Start cooling the body quickly and call 911","Have them exercise to sweat it out","Wrap them in heavy blankets"], a:1, why:"Heat stroke can kill fast — begin rapid cooling and call 911 right away."},
+  {q:"Modern guidance after someone swallows a poison is to:", opts:["Force the person to vomit","NOT induce vomiting, and call Poison Control or 911","Pour in lots of milk to neutralize it","Wait a full day before acting"], a:1, why:"Forcing vomiting can cause more harm — call Poison Control or 911 and follow their directions."},
+  {q:"For a snakebite, the correct care is to:", opts:["Cut the wound and suck out venom","Keep the person calm and still and get medical help","Apply a tight tourniquet above it","Pack the bite in ice"], a:1, why:"Keep calm and still, keep the bite below heart level, and get help — do not cut, suck, or tourniquet."},
+  {q:"When helping someone in emotional crisis (Mental Health First Aid), an important first step is to:", opts:["Tell them to snap out of it","Listen without judgment and offer calm reassurance","Walk away and leave them alone","Argue them out of their feelings"], a:1, why:"Listening calmly and without judgment, then connecting them to help, is the heart of Mental Health First Aid."},
+  {q:"To check whether an adult is responsive, you should:", opts:["Shake them hard by the shoulders","Tap them and shout to ask if they are okay","Pour water over them","Slap their face"], a:1, why:"Tap and shout — 'Are you okay?' — to check responsiveness without causing harm."},
+  {q:"Someone is short of breath and has a prescribed inhaler. You can best help by:", opts:["Telling them to hold their breath","Helping them sit up and use their own inhaler","Giving them a paper bag to breathe into","Making them lie flat"], a:1, why:"Help them into a comfortable upright position and use their own prescribed inhaler."},
+  {q:"A person with diabetes becomes shaky, sweaty, and confused but is awake and able to swallow. You should:", opts:["Give them insulin","Give a fast sugar such as juice or glucose","Make them run to warm up","Give nothing and wait it out"], a:1, why:"These are signs of low blood sugar — give a quick sugar source if the person is awake and can swallow safely."},
+  {q:"If you suspect a neck or spine injury, you should:", opts:["Move the person quickly to a bed","Avoid moving them unless they are in danger","Sit them upright immediately","Have them stand to test for pain"], a:1, why:"Unneeded movement can worsen a spinal injury — keep them still unless they face immediate danger."},
+  {q:"The Chain of Survival for cardiac arrest begins with:", opts:["Advanced care at the hospital","Early recognition and calling 911","A long period of rest","Food and water"], a:1, why:"It starts with recognizing the emergency and calling for help, then early CPR and early defibrillation."},
+  {q:"Passing this First Aid certification proves that you:", opts:["Are a licensed paramedic","Understand first-aid knowledge — though it does not replace hands-on training","Are cleared to perform surgery","May give professional medical advice"], a:1, why:"It is a comprehension credential. It is not hands-on certification (like AHA or Red Cross) and is not medical advice — in an emergency, call 911."}
+];
+
+/* ====================== SHARED ENGINE (do not edit per subject) =========== */
+(function(){
+  // expose pure logic for testing (no answer key leaked)
+  window.GSUCERT = {
+    tier: function(correct,total){
+      const p = correct/total;
+      if(p >= CONFIG.goldPct) return "Gold";
+      if(p >= CONFIG.silverPct) return "Silver";
+      return null;
+    },
+    makeSerial: function(){
+      const t = Date.now().toString(36).toUpperCase();
+      const r = Math.random().toString(36).slice(2,6).toUpperCase();
+      return CONFIG.serialPrefix + "-" + t.slice(-5) + r.slice(0,2);
+    }
+  };
+
+  // ---- Firebase (guarded) ----
+  let db=null, authReady=false;
+  try{
+    if(window.firebase && firebase.initializeApp){
+      firebase.initializeApp(CONFIG.firebase);
+      db = firebase.firestore();
+      firebase.auth().signInAnonymously().then(()=>authReady=true).catch(()=>{});
+    }
+  }catch(e){ db=null; }
+
+  const $ = id => document.getElementById(id);
+  const shuffle = arr => { const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+  // apply config to copy
+  $("k-subject").textContent = CONFIG.subjectLine;
+  $("prepLink").href = CONFIG.prepHref;
+
+  let quiz=[], idx=0, correct=0, answered=false, lastTier=null, lastSerial="", alias="", issued=false;
+  let timerId=null, timeLeft=CONFIG.timeLimitSec;
+
+  // ---- on-device score (localStorage) ----
+  const LS_KEY = "gsu_cert_"+CONFIG.serialPrefix;
+  function saveLocal(extra){
+    try{
+      const tot=(quiz.length||CONFIG.drawCount);
+      const r=Object.assign({subject:CONFIG.subject,score:correct,total:tot,pct:Math.round(correct/tot*100),tier:lastTier,dateISO:new Date().toISOString()},extra||{});
+      localStorage.setItem(LS_KEY, JSON.stringify(r));
+    }catch(e){}
+  }
+  function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||"null"); }catch(e){ return null; } }
+  (function(){
+    const p=loadLocal(), el=$("deviceNote"); if(!el) return;
+    if(p && p.tier){ el.innerHTML='<b style="color:var(--gold)">On this device:</b> you earned <b>'+p.tier+'</b> ('+p.pct+'%)'+(p.serial?' \u00b7 <span style="font-family:monospace">'+p.serial+'</span>':'')+'. Your score is saved here \u2014 retake anytime to improve it.'; }
+    else if(p){ el.innerHTML='<b style="color:var(--gold)">On this device:</b> last score '+p.pct+'%, saved here \u2014 keep climbing.'; }
+  })();
+
+  // ---- countdown clock (counts down from CONFIG.timeLimitSec) ----
+  function fmtClock(s){ const m=Math.floor(s/60), ss=s%60; return m+":"+(ss<10?"0":"")+ss; }
+  function paintClock(){
+    const c=$("clock"); if(!c) return;
+    $("clockT").textContent=fmtClock(Math.max(0,timeLeft));
+    c.classList.toggle("warn", timeLeft<=300 && timeLeft>60);
+    c.classList.toggle("danger", timeLeft<=60);
+  }
+  function startClock(){
+    timeLeft=CONFIG.timeLimitSec;
+    const c=$("clock"); if(c) c.className="clock";
+    paintClock();
+    clearInterval(timerId);
+    timerId=setInterval(function(){ timeLeft--; paintClock(); if(timeLeft<=0){ stopClock(); finish(true); } },1000);
+  }
+  function stopClock(){ clearInterval(timerId); timerId=null; const c=$("clock"); if(c) c.className="clock hide"; }
+
+  function buildQuiz(){
+    const picked = shuffle(POOL).slice(0, Math.min(CONFIG.drawCount, POOL.length));
+    quiz = picked.map(item=>{
+      const order = shuffle([0,1,2,3]);
+      return {
+        q: item.q,
+        opts: order.map(i=>item.opts[i]),
+        a: order.indexOf(item.a),
+        why: item.why
+      };
+    });
+  }
+
+  function renderQ(){
+    answered=false;
+    const item = quiz[idx];
+    $("qcount").textContent = "Question "+(idx+1)+" of "+quiz.length;
+    $("scorerun").textContent = "Score "+correct;
+    $("barFill").style.width = ((idx)/quiz.length*100)+"%";
+    $("qtext").textContent = item.q;
+    const wrap = $("opts"); wrap.innerHTML="";
+    item.opts.forEach((txt,i)=>{
+      const b=document.createElement("button");
+      b.className="opt"; b.textContent=txt;
+      if(location.hash==="#test" && i===item.a) b.dataset.c="1";
+      b.onclick=()=>choose(i,b);
+      wrap.appendChild(b);
+    });
+    $("whyBox").className="why hide";
+    $("nextBtn").className="btn hide";
+    resize();
+  }
+
+  function choose(i, btn){
+    if(answered) return;
+    answered=true;
+    const item=quiz[idx];
+    const buttons=[...document.querySelectorAll(".opt")];
+    buttons.forEach(b=>b.disabled=true);
+    buttons[item.a].classList.add("correct");
+    if(i===item.a){ correct++; }
+    else { btn.classList.add("wrong"); }
+    $("scorerun").textContent="Score "+correct;
+    $("whyBox").className="why";
+    $("whyBox").innerHTML='<div class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"><div><b style="color:var(--gold)">GENO:</b> '+item.why+'</div></div>';
+    $("nextBtn").className="btn";
+    $("nextBtn").textContent = (idx+1<quiz.length) ? "Next →" : "See My Result →";
+    resize();
+  }
+
+  $("nextBtn").onclick=()=>{
+    if(idx+1<quiz.length){ idx++; renderQ(); }
+    else finish();
+  };
+
+  function finish(auto){
+    stopClock();
+    $("exam").className="card hide";
+    $("results").className="card center";
+    const total=quiz.length;
+    $("r-score").textContent = correct+"/"+total;
+    lastTier = window.GSUCERT.tier(correct,total);
+    const tb=$("r-tier");
+    if(lastTier==="Gold"){ tb.innerHTML='<span class="tierbadge tier-gold">Gold · Verified</span>'; }
+    else if(lastTier==="Silver"){ tb.innerHTML='<span class="tierbadge tier-silver">Silver · Verified</span>'; }
+    else { tb.innerHTML='<span class="tierbadge tier-none">Not yet — keep climbing</span>'; }
+
+    if(lastTier){
+      $("r-head").textContent = "You earned the "+CONFIG.subject+" Certificate.";
+      $("r-msg").textContent = "Add a name if you like, then issue your certificate to record it for public verification.";
+      $("passBlock").className="";
+      lastSerial = window.GSUCERT.makeSerial();
+      $("r-serial").textContent = lastSerial;
+      alias=""; issued=false;
+      $("aliasInput").value=""; $("aliasInput").disabled=false;
+      $("issueBtn").disabled=false; $("issueBtn").textContent="Issue My Certificate →";
+      $("recordNote").textContent="Add your name if you like, then issue your certificate to record it for public verification.";
+      drawCert();
+    } else {
+      const need = Math.ceil(CONFIG.silverPct*total);
+      $("r-head").textContent = "So close — "+need+"/"+total+" earns Silver.";
+      $("r-msg").textContent = "You missed "+(total-correct)+". Review with GENO or the campus, then retake free — a fresh set is drawn every time.";
+      $("passBlock").className="hide";
+    }
+    saveLocal(lastTier?{serial:lastSerial}:undefined);
+    $("barFill").style.width="100%";
+    resize();
+  }
+
+  function recordSerial(){
+    if(!db){ $("recordNote").textContent="(Offline — your certificate and serial are valid; public registry will sync when online.)"; return; }
+    const doc={ serial:lastSerial, subject:CONFIG.subject, tier:lastTier, score:correct, total:quiz.length,
+      pct:Math.round(correct/quiz.length*100), alias:alias||"Anonymous", revoked:false, dateISO:new Date().toISOString() };
+    db.collection("certifications").doc(lastSerial).set(doc)
+      .then(()=>{ $("recordNote").textContent="Recorded to the public registry — verifiable by serial."; })
+      .catch(()=>{ $("recordNote").textContent="(Certificate valid; registry write pending.)"; });
+  }
+
+  $("aliasInput").addEventListener("input",()=>{
+    if(issued) return;
+    alias = ($("aliasInput").value||"").trim().slice(0,36);
+    drawCert();
+  });
+  $("issueBtn").onclick=()=>{
+    if(issued) return;
+    alias = ($("aliasInput").value||"").trim().slice(0,36);
+    drawCert();
+    issued=true;
+    $("issueBtn").disabled=true; $("aliasInput").disabled=true;
+    $("issueBtn").textContent="Certificate Issued ✓";
+    recordSerial();
+    saveLocal({serial:lastSerial, alias:alias});
+  };
+
+  function drawCert(){
+    const c=$("certCanvas"), x=c.getContext("2d");
+    x.fillStyle="#000000"; x.fillRect(0,0,1200,800);
+    x.strokeStyle="#C9A84C"; x.lineWidth=6; x.strokeRect(26,26,1148,748);
+    x.strokeStyle="rgba(201,168,76,.5)"; x.lineWidth=2; x.strokeRect(44,44,1112,712);
+    x.textAlign="center";
+    x.fillStyle="#C9A84C"; x.font="700 26px Georgia"; x.fillText("GLOBAL SOVEREIGN UNIVERSITY", 600, 130);
+    x.fillStyle="rgba(245,241,232,.8)"; x.font="18px Arial"; x.fillText("The Foundation for Global Instruction · 501(c)(3)", 600, 162);
+    x.fillStyle="#F5F1E8"; x.font="italic 30px Georgia"; x.fillText("Certificate of Comprehension", 600, 250);
+    x.fillStyle="#C9A84C"; x.font="700 64px Georgia"; x.fillText(CONFIG.subject, 600, 332);
+    x.fillStyle="#F5F1E8"; x.font="24px Arial"; x.fillText("awarded to", 600, 400);
+    x.fillStyle="#F5F1E8"; x.font="700 44px Georgia"; x.fillText(alias||"Anonymous Learner", 600, 456);
+    x.fillStyle = lastTier==="Gold" ? "#C9A84C" : "#cdd2da";
+    x.font="700 30px Arial"; x.fillText((lastTier||"").toUpperCase()+"  ·  "+Math.round(correct/quiz.length*100)+"%", 600, 520);
+    x.fillStyle="rgba(245,241,232,.85)"; x.font="20px Arial";
+    x.fillText(new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}), 600, 600);
+    x.fillStyle="#C9A84C"; x.font="600 24px monospace"; x.fillText(lastSerial, 600, 660);
+    x.fillStyle="rgba(245,241,232,.55)"; x.font="13px Arial"; x.fillText("A credential of comprehension — not a substitute for hands-on first-aid training.", 600, 688);
+    x.fillStyle="rgba(245,241,232,.6)"; x.font="16px Arial"; x.fillText("Verify this serial at globalsovereignuniversity.org/certification", 600, 712);
+  }
+
+  $("dlBtn").onclick=()=>{
+    const a=document.createElement("a");
+    a.download = CONFIG.serialPrefix+"-certificate.png";
+    a.href=$("certCanvas").toDataURL("image/png");
+    a.click();
+  };
+
+  $("startBtn").onclick=()=>{
+    buildQuiz(); idx=0; correct=0;
+    $("intro").className="card center hide";
+    $("results").className="card center hide";
+    $("exam").className="card";
+    renderQ();
+    startClock();
+  };
+  $("retakeBtn").onclick=()=>{ $("startBtn").click(); };
+
+  // ---- Public verify ----
+  $("verifyBtn").onclick=()=>{
+    const s=($("verifyInput").value||"").trim().toUpperCase();
+    const out=$("verifyResult");
+    if(!s){ out.innerHTML='<span class="bad">Enter a serial number.</span>'; return; }
+    if(!db){ out.innerHTML='<span class="muted">Verification is offline right now — try again when connected.</span>'; return; }
+    out.textContent="Checking…";
+    db.collection("certifications").doc(s).get().then(d=>{
+      if(d.exists){
+        const v=d.data();
+        if(v.revoked===true){
+          out.innerHTML='<span class="bad">✗ This certificate has been revoked and is no longer valid.</span>';
+        } else {
+          out.innerHTML='<span class="ok">✓ Valid.</span> '+v.subject+' · '+v.tier+' · '+v.pct+'% · '+(v.alias||"Anonymous")+' · '+new Date(v.dateISO).toLocaleDateString();
+        }
+      } else {
+        out.innerHTML='<span class="bad">✗ No certificate found with that serial.</span>';
+      }
+    }).catch(()=>{ out.innerHTML='<span class="bad">Could not reach the registry. Try again shortly.</span>'; });
+  };
+
+  // ---- iframe auto-resize (if embedded) ----
+  function resize(){
+    try{ parent.postMessage({gsuCert:true, h:document.body.scrollHeight}, "*"); }catch(e){}
+  }
+  window.addEventListener("load", resize);
+  window.addEventListener("resize", resize);
+})();
+</script>
+</body>
+</html>
