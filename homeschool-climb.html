@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Homeschool Climb — Global Sovereign University</title>
+<meta name="description" content="Teach-then-play learning games for the GSU Homeschool library. Learn the idea, then prove it — Bronze to Platinum. A free game for every book.">
+<style>
+  :root{
+    --black:#000000; --cream:#F5F1E8; --gold:#C9A84C; --gold-dim:#9c823b;
+    --navy:#1B2A4A; --teal:#1A8B7F;
+    --bronze:#cd7f32; --silver:#c0c0c0; --platinum:#e5e4e2;
+    --line:rgba(201,168,76,.28); --panel:#0c0c0c; --panel2:#111;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--black);color:var(--cream);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.6}
+  h1,h2,h3,.serif{font-family:Georgia,"Times New Roman",serif}
+  a{color:var(--gold)}
+  .wrap{max-width:880px;margin:0 auto;padding:22px 18px 40px}
+  .top{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);
+    padding-bottom:16px;margin-bottom:8px}
+  .top .badge{font-family:Georgia,serif;font-weight:700;color:var(--gold);font-size:1.05rem;letter-spacing:.3px}
+  .top .sub{color:#bfb9aa;font-size:.82rem}
+  .kicker{color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-size:.72rem;font-weight:700;margin:18px 0 4px}
+  h1.title{font-size:2rem;margin:.1em 0 .15em;color:var(--cream)}
+  h1.title .gold{color:var(--gold)}
+  .lead{color:#d8d2c4;font-size:1.02rem;margin:.2em 0 1em}
+
+  /* index grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .card .bk{font-family:Georgia,serif;color:var(--cream);font-size:1.08rem;font-weight:700;line-height:1.25}
+  .card .bs{color:#a9a293;font-size:.82rem;flex:1}
+  .card .go{align-self:flex-start;background:var(--gold);color:#1a1407;border:none;border-radius:8px;
+    padding:8px 14px;font-weight:700;font-size:.85rem;cursor:pointer;text-decoration:none}
+  .card .go:hover{background:#d8b95c}
+
+  /* play */
+  .bar{height:8px;background:#1c1c1c;border-radius:99px;overflow:hidden;margin:6px 0 4px}
+  .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .35s}
+  .meta{display:flex;justify-content:space-between;color:#a9a293;font-size:.78rem;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;margin-bottom:14px}
+  .learn-tag{display:inline-block;background:rgba(26,139,127,.16);color:#5fd0c0;border:1px solid rgba(26,139,127,.4);
+    border-radius:99px;font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;margin-bottom:10px}
+  .teach{font-size:1.06rem;color:#e9e3d6;margin:0}
+  .q{font-family:Georgia,serif;font-size:1.18rem;color:var(--cream);margin:4px 0 14px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{text-align:left;background:var(--panel2);border:1px solid #2a2a2a;color:var(--cream);
+    border-radius:10px;padding:13px 15px;font-size:1rem;cursor:pointer;transition:border-color .12s,background .12s}
+  .opt:hover{border-color:var(--gold)}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:#37a06b;background:rgba(55,160,107,.14);color:#bfe6cf}
+  .opt.wrong{border-color:#b4452f;background:rgba(180,69,47,.14);color:#f0c4ba}
+
+  .geno{display:flex;gap:12px;align-items:flex-start;background:rgba(27,42,74,.35);
+    border:1px solid rgba(201,168,76,.25);border-radius:12px;padding:12px 14px;margin-top:14px}
+  .geno img{width:42px;height:42px;border-radius:50%;flex:0 0 auto;border:1px solid var(--gold)}
+  .geno .gn{color:var(--gold);font-weight:700;font-size:.8rem;letter-spacing:.3px;margin-bottom:1px}
+  .geno .gt{color:#e3ddcf;font-size:.95rem}
+
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .btn{background:var(--gold);color:#1a1407;border:none;border-radius:9px;padding:11px 20px;font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none;display:inline-block}
+  .btn:hover{background:#d8b95c}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+  .btn.ghost:hover{background:rgba(201,168,76,.1)}
+  .hidden{display:none!important}
+
+  /* finish */
+  .medal{text-align:center;padding:8px 0 4px}
+  .medal .ring{width:110px;height:110px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;
+    font-family:Georgia,serif;font-weight:700;font-size:1.5rem;color:#15110a;border:4px solid rgba(255,255,255,.25)}
+  .medal h2{margin:.2em 0 .1em;color:var(--cream)}
+  .medal .score{color:#d8d2c4;font-size:1.05rem}
+  .board{margin-top:18px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .board h3{margin:0;background:var(--panel);color:var(--gold);font-size:.95rem;padding:11px 14px;border-bottom:1px solid var(--line)}
+  .board ol{margin:0;padding:6px 0;list-style:none;counter-reset:r}
+  .board li{counter-increment:r;display:flex;justify-content:space-between;padding:8px 14px;font-size:.92rem;border-bottom:1px solid #161616}
+  .board li:last-child{border-bottom:none}
+  .board li::before{content:counter(r);color:var(--gold);font-weight:700;width:22px;display:inline-block}
+  .board li .nm{flex:1}
+  .board li .sc{color:#bfb9aa}
+  .board .empty{padding:14px;color:#9a9486;font-size:.88rem;text-align:center}
+  .name-row{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+  .name-row input{flex:1;min-width:160px;background:#141414;border:1px solid #2a2a2a;color:var(--cream);
+    border-radius:9px;padding:11px 13px;font-size:1rem}
+  .note{color:#8f897b;font-size:.78rem;margin-top:10px}
+
+  .footer{border-top:1px solid var(--line);margin-top:30px;padding-top:18px;color:#8f897b;font-size:.82rem;text-align:center}
+  .footer .quote{font-family:Georgia,serif;font-style:italic;color:#bfb9aa;max-width:560px;margin:0 auto 10px}
+
+  .geno-promo{display:flex;gap:12px;align-items:center;justify-content:center;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:18px;flex-wrap:wrap;text-align:left}
+  .geno-promo img{width:48px;height:48px;border-radius:50%;border:1px solid var(--gold)}
+  .geno-promo b{color:var(--gold)}
+  .geno-promo span{color:#cfc9bb;font-size:.9rem}
+  @media(max-width:560px){ h1.title{font-size:1.6rem} .wrap{padding:18px 14px 36px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO" style="width:40px;height:40px;border-radius:50%;border:1px solid var(--gold)">
+    <div>
+      <div class="badge">The Homeschool Climb</div>
+      <div class="sub">Global Sovereign University · Learn the idea, then prove it</div>
+    </div>
+  </div>
+
+  <div id="app"><!-- engine renders here --></div>
+
+  <div class="geno-promo">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+    <span><b>Stuck on a question?</b> GENO AI Tutor is available 24/7 — a robot you can actually TALK to. He has read every one of these books cover to cover. Tap the chat bubble and ask him anything.</span>
+  </div>
+
+  <div class="footer">
+    <p class="quote">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant</p>
+    <p>© Global Sovereign University · The Foundation for Global Instruction · Building a Bridge to Freedom Through Education — Not Handouts.</p>
+  </div>
+</div>
+
+<!-- ============================ FIREBASE (champions boards) ============================
+     One-time setup: open your LIVE phonemic-awareness.html, copy the apiKey and appId
+     from its window.GSU_FIREBASE_CONFIG block, and paste them below — then re-commit.
+     Until then the game plays perfectly; scores just save for the current session only.
+     The Firebase apiKey is NOT a secret; it is meant to live in public client code. -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script>
+  window.GSU_FIREBASE_CONFIG = window.GSU_FIREBASE_CONFIG || {
+    apiKey: "PASTE_YOUR_API_KEY",
+    authDomain: "gsu-handshake.firebaseapp.com",
+    projectId: "gsu-handshake",
+    appId: "PASTE_YOUR_APP_ID"
+  };
+</script>
+
+<!-- ============================ GENO voice widget (site law) ============================ -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<script>
+/* ============================================================================
+   THE HOMESCHOOL CLIMB — self-contained teach-then-play engine
+   Add a future book = drop one deck object below. No new plumbing.
+   ============================================================================ */
+var GENO_PNG = "https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png";
+
+var DECKS = {
+  "kitchen-lab": { title:"The Kitchen Table Laboratory", sub:"Real science at your own table",
+    intro:"Become a home scientist — learn how a real experiment works, then run the method in your head.",
+    items:[
+      {teach:"A scientist starts with a question, then makes a testable guess called a HYPOTHESIS — a prediction you can check.",q:"What do we call a scientist's testable guess?",opts:["A conclusion","A hypothesis","An accident","A recipe"],a:1,geno:"A hypothesis is just a smart guess you can test. Even being wrong teaches you something!"},
+      {teach:"A fair experiment changes only ONE thing at a time — the variable — so you know exactly what caused the result.",q:"To run a fair test, how many things should you change at once?",opts:["As many as possible","One","Zero","Three"],a:1,geno:"Change one thing at a time — that's the secret to a fair test."},
+      {teach:"We watch closely and write down what happens. Those notes and measurements are our DATA — the facts the experiment gives us.",q:"The facts and measurements you collect are called…",opts:["Data","Opinions","Wishes","Magic"],a:0,geno:"Real scientists trust data over opinions. Write it down!"},
+      {teach:"A CONTROL is the version you DON'T change, so you have a 'normal' to compare your results against.",q:"The unchanged version you compare against is the…",opts:["Variable","Control","Result","Sample"],a:1,geno:"No control, no comparison. The control is your 'normal' to measure against."},
+      {teach:"Baking soda is a base and vinegar is an acid. Mix them and they make carbon dioxide gas — the fizzy bubbles.",q:"The fizzy 'volcano' works because vinegar and baking soda make what gas?",opts:["Oxygen","Helium","Carbon dioxide","Steam"],a:2,geno:"Those bubbles are carbon dioxide — the same gas in your soda pop!"},
+      {teach:"If the results don't match your hypothesis, that isn't failure — it's a discovery. You update your idea and test again.",q:"If your experiment proves your hypothesis wrong, you should…",opts:["Quit","Hide it","Learn from it and test again","Pretend it worked"],a:2,geno:"Every 'wrong' answer is a clue. Real scientists love surprises."}
+    ]},
+
+  "biology": { title:"Biology", sub:"The science of living things",
+    intro:"Discover what makes something alive — from the tiniest cell to a whole living world.",
+    items:[
+      {teach:"Every living thing is built from tiny building blocks called CELLS. Some creatures are a single cell; you have trillions.",q:"The basic building block of all living things is the…",opts:["Atom","Cell","Brick","Seed"],a:1,geno:"Cells are life's LEGO bricks — everything alive is built from them."},
+      {teach:"Living things share traits: they grow, use energy, respond to their world, and reproduce.",q:"Which is something ALL living things do?",opts:["Use electricity","Grow and reproduce","Speak words","Stay the same forever"],a:1,geno:"Grow, use energy, react, reproduce — that's the living-things checklist."},
+      {teach:"Plants make their own food from sunlight, water, and air through PHOTOSYNTHESIS — and release the oxygen we breathe.",q:"Plants make food from sunlight in a process called…",opts:["Digestion","Photosynthesis","Evaporation","Hibernation"],a:1,geno:"Thank a plant for your next breath — photosynthesis makes our oxygen."},
+      {teach:"Scientists sort living things into groups. Mushrooms aren't plants or animals — they belong to the FUNGI group.",q:"A mushroom belongs to which group?",opts:["Plants","Animals","Fungi","Minerals"],a:2,geno:"Mushrooms are fungi — their very own kingdom of life."},
+      {teach:"An ECOSYSTEM is a community of living things and their environment, all connected. Remove one part and the rest feel it.",q:"A community of living things and their surroundings is an…",opts:["Ecosystem","Aquarium","Equation","Atmosphere"],a:0,geno:"Everything's connected. Pull one thread and the whole web shifts."},
+      {teach:"A FOOD CHAIN shows who eats whom. It begins with producers — plants — then the animals that depend on them.",q:"A food chain usually STARTS with…",opts:["Lions","Plants","Humans","Sharks"],a:1,geno:"It all starts with plants — the producers that feed everyone else."}
+    ]},
+
+  "genetics": { title:"Genetics", sub:"How life passes on its code",
+    intro:"Crack the code of heredity — why you look like your family, and what makes you you.",
+    items:[
+      {teach:"Inside almost every cell is DNA — a set of instructions, like a recipe book, for building and running a living thing.",q:"The instruction code inside your cells is called…",opts:["DNA","Wi-Fi","Plasma","Static"],a:0,geno:"DNA is your body's recipe book — written in just four letters: A, T, C, G."},
+      {teach:"You inherit traits from your parents through GENES — about half from each. That's why you might have your dad's eyes and mom's smile.",q:"We inherit traits from our parents through…",opts:["Genes","Wishes","Food","Habits"],a:0,geno:"Half from each parent — that's why families share looks."},
+      {teach:"Gregor Mendel, a monk who studied pea plants, discovered the basic rules of heredity. He's called the 'father of genetics.'",q:"Who studied pea plants to discover how traits pass on?",opts:["Newton","Mendel","Edison","Columbus"],a:1,geno:"Mendel and his peas cracked the code of heredity — patience pays off."},
+      {teach:"Some genes are DOMINANT (they show up easily) and some are RECESSIVE (hidden unless paired with another).",q:"A gene that shows its trait easily is called…",opts:["Recessive","Dominant","Silent","Broken"],a:1,geno:"Dominant genes grab the spotlight; recessive ones wait their turn."},
+      {teach:"DNA is shaped like a twisted ladder called a DOUBLE HELIX.",q:"DNA's twisted-ladder shape is called a…",opts:["Spiral staircase","Double helix","Pretzel","Triangle"],a:1,geno:"A double helix — a ladder with a twist. Nature's elegant design."},
+      {teach:"Traits are shaped by your ENVIRONMENT and choices too — not just genes. Nature AND nurture both matter.",q:"Besides genes, what else shapes who you become?",opts:["Only luck","Your environment and choices","Nothing","The weather only"],a:1,geno:"Genes deal the cards; your choices play the hand."}
+    ]},
+
+  "living-map": { title:"The Living Map", sub:"Geography you can read",
+    intro:"Learn to read the world — maps, directions, and the big shapes of our planet.",
+    items:[
+      {teach:"A MAP is a drawing of a place seen from above. A globe shows the whole round Earth.",q:"A flat drawing of a place seen from above is a…",opts:["Map","Photo","Painting","Letter"],a:0,geno:"A map is the world from a bird's view — handy for finding your way."},
+      {teach:"A COMPASS ROSE shows directions: North, East, South, West. 'Never Eat Soggy Waffles' helps you remember them clockwise.",q:"Which part of a map shows direction?",opts:["Compass rose","Title","Border","Page number"],a:0,geno:"North, East, South, West — Never Eat Soggy Waffles!"},
+      {teach:"Earth has seven CONTINENTS — huge land masses — and five OCEANS.",q:"How many continents does Earth have?",opts:["Five","Seven","Ten","Three"],a:1,geno:"Seven continents, five oceans — your home planet at a glance."},
+      {teach:"The EQUATOR is an imaginary line around Earth's middle. Places near it are usually hot.",q:"The imaginary line around Earth's middle is the…",opts:["Equator","Border","Horizon","Axis"],a:0,geno:"Near the equator? Pack shorts — it's warm at the world's waistline."},
+      {teach:"A map's KEY (or legend) explains what its symbols mean — blue for water, a star for a capital city.",q:"The part of a map that explains its symbols is the…",opts:["Key or legend","Scale","Title","Frame"],a:0,geno:"Lost in symbols? The key unlocks the map's secret language."},
+      {teach:"A map's SCALE tells you how real distance shrinks to fit the paper — like one inch standing for one mile.",q:"What tells you how real distances fit on a map?",opts:["Scale","Color","Compass","Title"],a:0,geno:"Scale shrinks the whole world to pocket size without changing its shape."}
+    ]},
+
+  "history": { title:"History You Can Touch", sub:"How we know what happened",
+    intro:"Be a history detective — learn how we uncover the past from the clues people left behind.",
+    items:[
+      {teach:"History is the true story of the past. We learn it from clues people left behind — PRIMARY SOURCES like letters, photos, and tools.",q:"A real letter written long ago is a…",opts:["Primary source","Fairy tale","Guess","Rumor"],a:0,geno:"Primary sources are eyewitnesses from the past — history you can touch."},
+      {teach:"Objects from the past — coins, pottery, tools — are ARTIFACTS. They show us how people really lived.",q:"An old tool dug up from the ground is an…",opts:["Artifact","Accident","Invention","Opinion"],a:0,geno:"Every artifact is a tiny time machine. Hold it and you hold the past."},
+      {teach:"A TIMELINE lines up events in the order they happened, from oldest to newest.",q:"What shows events in the order they happened?",opts:["Timeline","Map","Recipe","Poem"],a:0,geno:"Timelines turn history into a road you can follow, step by step."},
+      {teach:"People who dig up and study old objects are ARCHAEOLOGISTS. They piece the past together like a puzzle.",q:"A scientist who digs up the past is an…",opts:["Astronomer","Archaeologist","Architect","Author"],a:1,geno:"Archaeologists read the ground like a book. Dirt has stories!"},
+      {teach:"We count years with B.C. and A.D. (or BCE/CE). With B.C., a BIGGER number means LONGER ago.",q:"Which happened longer ago — 500 B.C. or 100 B.C.?",opts:["500 B.C.","100 B.C.","The same time","Can't tell"],a:0,geno:"With B.C., bigger means older. 500 B.C. is way, way back!"},
+      {teach:"We study history to learn from mistakes and honor brave deeds — so we can build a better tomorrow.",q:"One big reason we study history is to…",opts:["Memorize for fun only","Learn from the past","Forget it","Copy it exactly"],a:1,geno:"Those who learn from history get to write a better future."}
+    ]},
+
+  "civic-workshop": { title:"The Civic Workshop", sub:"How your government works",
+    intro:"Open the hood on American government — the three branches and how power stays shared.",
+    items:[
+      {teach:"GOVERNMENT is how a community makes rules and decisions together. In America, the people hold the power.",q:"In a democracy, who ultimately holds the power?",opts:["A king","The people","The army","One judge"],a:1,geno:"'We the People' — in America, power starts with you."},
+      {teach:"The U.S. government has THREE BRANCHES so no one person rules: Legislative makes laws, Executive carries them out, Judicial decides what's fair.",q:"How many branches does the U.S. government have?",opts:["One","Two","Three","Seven"],a:2,geno:"Three branches, like a three-legged stool — balanced so none tips over."},
+      {teach:"CONGRESS — the Legislative branch — makes the laws. It has two parts: the House and the Senate.",q:"Which branch MAKES the laws?",opts:["Legislative","Executive","Judicial","Royal"],a:0,geno:"Congress writes the rulebook. That's the legislative branch at work."},
+      {teach:"The PRESIDENT leads the Executive branch and makes sure the laws are carried out.",q:"Who leads the Executive branch?",opts:["A senator","The President","A judge","The mayor"],a:1,geno:"The President runs the plays the lawmakers call. That's the executive branch."},
+      {teach:"COURTS and judges — the Judicial branch — decide whether laws are fair and follow the Constitution.",q:"Which branch decides if laws are fair?",opts:["Judicial","Executive","Legislative","Military"],a:0,geno:"Judges are the referees of government — calling fair or foul."},
+      {teach:"CHECKS AND BALANCES let each branch limit the others, so power stays shared and safe.",q:"The system that lets each branch limit the others is called…",opts:["Checks and balances","Tug of war","Free-for-all","Majority only"],a:0,geno:"Checks and balances keep any one branch from grabbing too much. Smart design!"}
+    ]},
+
+  "civic-literacy": { title:"Civic Literacy for Kids", sub:"Rights, responsibilities, and you",
+    intro:"Learn what it means to be a free citizen — the freedoms you hold and the duties you carry.",
+    items:[
+      {teach:"A CITIZEN is a member of a country with both RIGHTS (freedoms) and RESPONSIBILITIES (duties).",q:"Being a citizen means you have rights AND…",opts:["Responsibilities","Nothing else","Only fun","A crown"],a:0,geno:"Rights and responsibilities ride together — freedom comes with duty."},
+      {teach:"The first ten amendments to the Constitution are the BILL OF RIGHTS. They protect freedoms like speech and religion.",q:"The first ten amendments are called the…",opts:["Bill of Rights","Rule Book","Top Ten","Pledge"],a:0,geno:"The Bill of Rights is freedom's shield — the first ten promises to you."},
+      {teach:"VOTING is how citizens choose their leaders and have a say. Every vote counts.",q:"How do citizens choose their leaders?",opts:["By voting","By guessing","By fighting","By waiting"],a:0,geno:"Voting is your voice. Use it — elections have been decided by a single vote!"},
+      {teach:"Good citizens follow fair laws, respect others, and help their community.",q:"Which is a responsibility of a good citizen?",opts:["Ignoring rules","Helping the community","Littering","Cheating"],a:1,geno:"A great citizen leaves their community better than they found it."},
+      {teach:"The RULE OF LAW means the rules apply to EVERYONE — even leaders. No one is above the law.",q:"'Rule of law' means the rules apply to…",opts:["Only kids","Only leaders","Everyone","No one"],a:2,geno:"Rule of law: the same rules for the powerful and the rest. That's fairness."},
+      {teach:"Freedom of SPEECH lets you share ideas and disagree peacefully — a cornerstone of a free country.",q:"Freedom of speech lets you…",opts:["Break laws","Share your ideas","Skip school","Never listen"],a:1,geno:"Speak your mind, hear others out — that's how free people solve problems."}
+    ]},
+
+  "moral-values": { title:"Teaching Moral Values", sub:"The compass inside you",
+    intro:"Build the inner compass that guides good choices — honesty, courage, kindness, and grit.",
+    items:[
+      {teach:"HONESTY means telling the truth, even when it's hard. Trust is built one honest choice at a time.",q:"Honesty means…",opts:["Telling the truth","Winning at all costs","Staying silent always","Guessing"],a:0,geno:"The truth can be hard, but it builds something stronger than any lie: trust."},
+      {teach:"RESPONSIBILITY means owning your actions and doing what you said you'd do.",q:"A responsible person…",opts:["Blames others","Keeps their promises","Gives up","Hides mistakes"],a:1,geno:"Owning your choices — good and bad — is the mark of someone people can count on."},
+      {teach:"RESPECT means treating others the way you'd want to be treated, even when you disagree.",q:"Respect means…",opts:["Treating others kindly","Always agreeing","Ignoring people","Bossing them around"],a:0,geno:"Disagree all you want — but treat people with respect. That's strength, not weakness."},
+      {teach:"COURAGE isn't the absence of fear — it's doing what's right even when you're afraid.",q:"Courage is…",opts:["Never feeling afraid","Doing right despite fear","Showing off","Avoiding everything"],a:1,geno:"Brave people feel fear too. Courage is acting rightly anyway."},
+      {teach:"COMPASSION means caring about others' feelings and helping when they hurt.",q:"Showing compassion means…",opts:["Laughing at others","Helping someone in need","Walking away","Keeping it all"],a:1,geno:"A kind word costs nothing and can change someone's whole day."},
+      {teach:"PERSEVERANCE means not quitting when things get hard. Every expert was once a beginner who kept going.",q:"Perseverance means…",opts:["Quitting fast","Keeping going when it's hard","Cheating","Waiting forever"],a:1,geno:"Fall down seven times, get up eight. That's how winners are made."}
+    ]},
+
+  "character": { title:"Morals, Character & Values", sub:"Who you are when no one's watching",
+    intro:"Strengthen the character that lasts — integrity, discipline, gratitude, and servant leadership.",
+    items:[
+      {teach:"CHARACTER is who you are when no one is watching. Your private choices shape your public reputation.",q:"Character shows most clearly when…",opts:["Everyone watches","No one is watching","You win a prize","You're rewarded"],a:1,geno:"Anyone can be good for an audience. Character is who you are alone."},
+      {teach:"INTEGRITY means your actions match your values — you do what's right even when it costs you.",q:"Integrity means…",opts:["Your words and actions match","Saying anything","Following the crowd","Avoiding work"],a:0,geno:"Integrity is wholeness — your inside and outside telling the same true story."},
+      {teach:"SELF-DISCIPLINE is choosing what's important over what's easy — like finishing homework before games.",q:"Self-discipline means choosing…",opts:["Easy over important","Important over easy","Always fun","Never working"],a:1,geno:"Discipline now buys freedom later. Do the hard thing first."},
+      {teach:"GRATITUDE means noticing and thanking others for the good in your life. Grateful people are happier.",q:"Gratitude means…",opts:["Always wanting more","Being thankful","Complaining","Forgetting help"],a:1,geno:"Counting your blessings turns what you have into enough."},
+      {teach:"HUMILITY means being confident without bragging — and being willing to learn from anyone.",q:"A humble person…",opts:["Brags constantly","Is willing to learn from others","Never listens","Must always win"],a:1,geno:"Stay humble enough to learn, confident enough to lead. Both at once."},
+      {teach:"A true LEADER serves others and sets a good example, lifting people up instead of pushing them down.",q:"A real leader mainly…",opts:["Serves and uplifts others","Bosses everyone","Takes all the credit","Hides from work"],a:0,geno:"The best leaders carry the heaviest load and share the brightest credit."}
+    ]},
+
+  "americans": { title:"History of the Americans for Kids", sub:"The American story, start to now",
+    intro:"Walk the whole American story — from the first peoples to a free and growing nation.",
+    items:[
+      {teach:"Long before towns and cities, NATIVE AMERICANS lived across the land in hundreds of nations, each with its own language and culture.",q:"Who lived in America first, long before others arrived?",opts:["Native Americans","Pilgrims","Pirates","Astronauts"],a:0,geno:"The first Americans were here for thousands of years — rich cultures coast to coast."},
+      {teach:"In 1620 the PILGRIMS crossed the ocean on the Mayflower, seeking freedom, and started a colony at Plymouth.",q:"The Pilgrims sailed to America on a ship called the…",opts:["Titanic","Mayflower","Santa Maria","Endeavour"],a:1,geno:"The Mayflower carried people chasing freedom — a very American idea from the very start."},
+      {teach:"America began as THIRTEEN COLONIES ruled by Britain. They grew tired of unfair taxes and rules imposed without their say.",q:"How many original colonies became the first United States?",opts:["Thirteen","Fifty","Seven","Three"],a:0,geno:"Thirteen colonies — that's why Old Glory still has thirteen stripes today!"},
+      {teach:"On JULY 4, 1776, the colonies signed the Declaration of Independence, announcing they were a free nation.",q:"What year did America declare its independence?",opts:["1492","1776","1865","1969"],a:1,geno:"July 4, 1776 — the birthday of a brand-new free country."},
+      {teach:"George WASHINGTON led the army to win independence and then became the first President of the United States.",q:"Who was the FIRST President of the United States?",opts:["Lincoln","Washington","Jefferson","Franklin"],a:1,geno:"Washington could have been king but chose to be a citizen. That set the tone forever."},
+      {teach:"The CONSTITUTION (1787) set the rules for the new government. It begins with three famous words: 'We the People.'",q:"The document that set up America's government is the…",opts:["Constitution","Treasure map","Almanac","Pledge"],a:0,geno:"'We the People' — three words that put the country in your hands."},
+      {teach:"President Abraham LINCOLN led the nation through the Civil War and helped end SLAVERY, making freedom real for millions more.",q:"Which President helped end slavery during the Civil War?",opts:["Washington","Lincoln","Roosevelt","Kennedy"],a:1,geno:"Lincoln held the country together and helped extend freedom to millions more."},
+      {teach:"America grew as MILLIONS of immigrants arrived seeking a better life — many first glimpsing the Statue of Liberty.",q:"Many immigrants were welcomed to America by which famous statue?",opts:["Statue of Liberty","Lincoln Memorial","Mount Rushmore","Big Ben"],a:0,geno:"The Statue of Liberty says: bring your dreams. That's the American promise."}
+    ]},
+
+  "old-glory": { title:"Old Glory", sub:"The story of the American flag",
+    intro:"Learn the secrets stitched into the Stars and Stripes — then prove you're a true flag expert.",
+    items:[
+      {teach:"The American flag's nickname is 'OLD GLORY.' A sea captain named William Driver gave his beloved flag that name long ago, and it stuck.",q:"What is the American flag's famous nickname?",opts:["Old Glory","Big Red","The Banner Boy","Star Sail"],a:0,geno:"'Old Glory' — a sea captain's pet name for his flag that the whole nation adopted."},
+      {teach:"The flag has 13 STRIPES — seven red and six white — one for each of the original thirteen colonies.",q:"The 13 stripes stand for the original…",opts:["Thirteen colonies","Thirteen presidents","Thirteen states today","Thirteen battles"],a:0,geno:"Thirteen stripes for thirteen colonies — the flag wears its own history."},
+      {teach:"The flag has 50 STARS — one for each state in the United States today. Every time a state joined, a star was added.",q:"How many stars are on the flag, and why?",opts:["50 — one for each state","13 — one per colony","100 — one per year","7 — one per ocean"],a:0,geno:"Fifty stars for fifty states. The flag has changed many times as America grew!"},
+      {teach:"The colors carry meaning: RED for valor and bravery, WHITE for purity and innocence, BLUE for vigilance, perseverance, and justice.",q:"On the flag, the color RED stands for…",opts:["Valor and bravery","Sadness","Money","Winter"],a:0,geno:"Red for courage, white for purity, blue for justice — a flag of values."},
+      {teach:"A famous story says BETSY ROSS sewed an early American flag. True or not in every detail, she became a beloved symbol of its making.",q:"Which person is famous in the STORY of sewing an early flag?",opts:["Betsy Ross","Clara Barton","Martha Washington","Pocahontas"],a:0,geno:"Betsy Ross is the legend of the first flag — a great story stitched into history."},
+      {teach:"FLAG DAY is June 14. It marks the day in 1777 when the Continental Congress adopted the Stars and Stripes.",q:"Flag Day is celebrated on…",opts:["June 14","July 4","December 25","January 1"],a:0,geno:"June 14 — the flag's very own birthday. Fly it proud!"},
+      {teach:"We treat the flag with RESPECT: never let it touch the ground, and fold it into a neat triangle when storing it.",q:"When we store the flag, we fold it into a…",opts:["Triangle","Square","Ball","Tube"],a:0,geno:"Folded into a tidy triangle, like a tricorn hat — respect you can hold in your hands."},
+      {teach:"When Americans first landed on the MOON in 1969, they planted the flag there — the Stars and Stripes truly reaching the stars.",q:"In 1969, astronauts planted the American flag on the…",opts:["Moon","North Pole","Mount Everest","Mars"],a:0,geno:"The flag went all the way to the Moon. The American spirit aims high!"}
+    ]}
+};
+
+/* ---------- order shown on the index ---------- */
+var ORDER = ["old-glory","americans","kitchen-lab","biology","genetics","living-map","history","civic-workshop","civic-literacy","moral-values","character"];
+
+/* ---------- Firebase (optional, graceful) ---------- */
+var DB=null, AUTH=null, sessionOnly=true;
+(function initFB(){
+  try{
+    var c = window.GSU_FIREBASE_CONFIG || {};
+    if(!c.apiKey || /PASTE/i.test(c.apiKey)){ sessionOnly=true; return; }
+    if(!firebase.apps.length) firebase.initializeApp(c);
+    DB=firebase.firestore(); AUTH=firebase.auth();
+    AUTH.signInAnonymously().catch(function(){});
+    sessionOnly=false;
+  }catch(e){ sessionOnly=true; }
+})();
+function saveScore(slug,name,score,total){
+  if(sessionOnly||!DB) return Promise.resolve();
+  var pct=Math.round(score/total*100);
+  return DB.collection('hsClimb_'+slug).add({
+    name:(name||'Climber').slice(0,24), score:score, total:total, pct:pct,
+    ts: firebase.firestore.FieldValue.serverTimestamp()
+  }).catch(function(){});
+}
+function topScores(slug){
+  if(sessionOnly||!DB) return Promise.resolve(null);
+  return DB.collection('hsClimb_'+slug).orderBy('score','desc').limit(10).get()
+    .then(function(s){ return s.docs.map(function(d){return d.data();}); })
+    .catch(function(){ return null; });
+}
+
+/* ---------- helpers ---------- */
+var TIERS=[{n:"Platinum",m:1,c:"#e5e4e2"},{n:"Gold",m:.75,c:"#C9A84C"},{n:"Silver",m:.5,c:"#c0c0c0"},{n:"Bronze",m:0,c:"#cd7f32"}];
+function tierFor(pct){ for(var i=0;i<TIERS.length;i++){ if(pct>=TIERS[i].m) return TIERS[i]; } return TIERS[3]; }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+var app=document.getElementById('app');
+var state=null;
+
+/* ---------- INDEX ---------- */
+function renderIndex(){
+  var cards=ORDER.map(function(slug){
+    var d=DECKS[slug]; if(!d) return '';
+    return '<div class="card"><div class="bk">'+esc(d.title)+'</div>'+
+      '<div class="bs">'+esc(d.sub)+'</div>'+
+      '<a class="go" href="#'+slug+'">Play the Book &rarr;</a></div>';
+  }).join('');
+  app.innerHTML=
+    '<div class="kicker">Play the Book</div>'+
+    '<h1 class="title">The Homeschool <span class="gold">Climb</span></h1>'+
+    '<p class="lead">Pick a book below. Each game teaches the big ideas, then lets you prove them — no-fail, with GENO cheering you on. Climb from Bronze to Platinum.</p>'+
+    '<div class="grid">'+cards+'</div>';
+}
+
+/* ---------- START A DECK ---------- */
+function startDeck(slug){
+  var d=DECKS[slug];
+  state={slug:slug, deck:d, i:0, score:0, answered:false};
+  renderItem();
+}
+function renderItem(){
+  var d=state.deck, it=d.items[state.i], n=d.items.length;
+  var pct=Math.round((state.i)/n*100);
+  app.innerHTML=
+    '<div class="kicker">'+esc(d.title)+'</div>'+
+    '<h1 class="title" style="font-size:1.5rem">'+esc(d.sub)+'</h1>'+
+    '<div class="bar"><i style="width:'+pct+'%"></i></div>'+
+    '<div class="meta"><span>Question '+(state.i+1)+' of '+n+'</span><span>Score: '+state.score+'</span></div>'+
+    '<div class="panel">'+
+      '<span class="learn-tag">Learn</span>'+
+      '<p class="teach">'+esc(it.teach)+'</p>'+
+    '</div>'+
+    '<p class="q">'+esc(it.q)+'</p>'+
+    '<div class="opts" id="opts">'+
+      it.opts.map(function(o,idx){ return '<button class="opt" onclick="choose('+idx+')">'+esc(o)+'</button>'; }).join('')+
+    '</div>'+
+    '<div id="after"></div>';
+  state.answered=false;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.choose=function(idx){
+  if(state.answered) return;
+  state.answered=true;
+  var it=state.deck.items[state.i];
+  var btns=document.querySelectorAll('#opts .opt');
+  for(var k=0;k<btns.length;k++){
+    btns[k].disabled=true;
+    if(k===it.a) btns[k].classList.add('correct');
+    if(k===idx && idx!==it.a) btns[k].classList.add('wrong');
+  }
+  if(idx===it.a) state.score++;
+  var last=(state.i===state.deck.items.length-1);
+  document.getElementById('after').innerHTML=
+    '<div class="geno"><img src="'+GENO_PNG+'" alt="GENO"><div>'+
+      '<div class="gn">GENO</div><div class="gt">'+esc(it.geno)+'</div></div></div>'+
+    '<div class="row"><button class="btn" onclick="next()">'+(last?'See my result &rarr;':'Next &rarr;')+'</button></div>';
+};
+window.next=function(){
+  if(state.i < state.deck.items.length-1){ state.i++; renderItem(); }
+  else finish();
+};
+
+/* ---------- FINISH ---------- */
+function finish(){
+  var d=state.deck, n=d.items.length, s=state.score, pct=s/n, t=tierFor(pct);
+  app.innerHTML=
+    '<div class="kicker">'+esc(d.title)+'</div>'+
+    '<div class="medal">'+
+      '<div class="ring" style="background:'+t.c+'">'+s+'/'+n+'</div>'+
+      '<h2 class="serif">'+t.n+' Climber!</h2>'+
+      '<div class="score">You scored '+s+' of '+n+' ('+Math.round(pct*100)+'%).</div>'+
+    '</div>'+
+    '<div class="name-row">'+
+      '<input id="who" maxlength="24" placeholder="Your name for the champions board">'+
+      '<button class="btn" onclick="submitScore()">Save my score</button>'+
+    '</div>'+
+    '<div id="boardWrap"></div>'+
+    '<div class="row" style="margin-top:14px">'+
+      '<a class="btn ghost" href="#'+state.slug+'" onclick="setTimeout(function(){startDeck(\''+state.slug+'\')},0)">Play again</a>'+
+      '<a class="btn ghost" href="#">All books</a>'+
+    '</div>'+
+    (sessionOnly?'<p class="note">Scores are saving for this session. Add the Firebase keys to keep a permanent cross-device champions board.</p>':'');
+  showBoard();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.submitScore=function(){
+  var name=(document.getElementById('who')||{}).value||'Climber';
+  saveScore(state.slug,name,state.score,state.deck.items.length).then(function(){ showBoard(name); });
+};
+function showBoard(justAdded){
+  var wrap=document.getElementById('boardWrap'); if(!wrap) return;
+  topScores(state.slug).then(function(list){
+    var rows;
+    if(list===null){ // session only
+      rows='<li class="empty">Champions board goes live once the Firebase keys are added.</li>';
+    } else if(!list.length){
+      rows='<li class="empty">No champions yet — you could be first!</li>';
+    } else {
+      rows=list.map(function(r){ return '<li><span class="nm">'+esc(r.name||'Climber')+'</span><span class="sc">'+r.score+'/'+(r.total||'?')+'</span></li>'; }).join('');
+    }
+    wrap.innerHTML='<div class="board"><h3>Champions — '+esc(state.deck.title)+'</h3><ol>'+rows+'</ol></div>';
+  });
+}
+
+/* ---------- ROUTER ---------- */
+function route(){
+  var slug=(location.hash||'').replace(/^#/,'').toLowerCase();
+  if(slug && DECKS[slug]) startDeck(slug);
+  else renderIndex();
+}
+window.addEventListener('hashchange',route);
+route();
+</script>
+</body>
+</html>
