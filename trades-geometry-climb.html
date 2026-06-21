@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trades Geometry Climb — Teach-Then-Play | Global Sovereign University</title>
+<meta name="description" content="A free Teach-Then-Play game from Global Sovereign University. Learn the working math of the trades one beat at a time — level and plumb, the 3-4-5 triangle, diagonals, rise and run, area, volume, and tolerance — then climb Bronze to Platinum. No fail, infinite play, with GENO as your 24/7 mentor." />
+<meta name="robots" content="index,follow" />
+<meta property="og:title" content="Trades Geometry Climb — Teach-Then-Play" />
+<meta property="og:description" content="Learn the math every trade runs on: a short teach, then a play, climbing Bronze to Platinum. Free from Global Sovereign University." />
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/trades-geometry-climb.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the Trades Geometry Climb?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is a free Teach-Then-Play learning game from Global Sovereign University. Each round teaches one real beat of jobsite geometry in a short card, then asks you to use it. Correct answers carry you up a Bronze, Silver, Gold, and Platinum climb. There is no way to fail and you can play forever."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to be good at math to play?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Every idea is tied to a real task — squaring a corner, sloping a drain, ordering concrete — and the short lesson always comes before the question. If you can read a tape measure you can play, and you will leave understanding why the math works."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The game, the full book it is based on, and GENO the mentor are all free from Global Sovereign University. GSU's mission is a hand up, not a handout."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is GENO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GENO is GSU's free 24/7 AI mentor. He has read the entire Trades Geometry book, not just a preview, so you can ask him anything — about a question you missed, the 3-4-5 triangle, rise and run, or how to square a real foundation."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --black:#000000; --gold:#C9A84C; --cream:#F5F1E8;
+    --ink:#0d0d0d; --line:rgba(201,168,76,.28); --dim:#bdb6a6;
+    --bronze:#b5743a; --silver:#c8c8d0; --gold-t:#C9A84C; --plat:#7fd8e6;
+    --good:#7BC47F; --bad:#d98b7a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--black);color:var(--cream);font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;display:flex;flex-direction:column}
+  a{color:var(--gold)}
+  .wrap{width:100%;max-width:880px;margin:0 auto;padding:22px 18px 60px;flex:1 0 auto}
+  header.top{text-align:center;padding:30px 18px 10px}
+  .kicker{letter-spacing:.32em;text-transform:uppercase;font-size:.66rem;color:var(--gold);font-family:Arial,Helvetica,sans-serif}
+  h1{font-size:clamp(1.9rem,6vw,3rem);color:var(--cream);margin:.25em 0 .15em;line-height:1.05}
+  h1 .sub{display:block;color:var(--gold);font-size:.5em;margin-top:.4em;font-style:italic}
+  .tagline{color:var(--dim);font-size:.98rem;max-width:560px;margin:8px auto 0}
+
+  /* progress / tier bar */
+  .climb{display:flex;align-items:center;gap:6px;justify-content:center;margin:22px auto 6px;flex-wrap:wrap}
+  .tier{font-family:Arial,Helvetica,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+        border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--dim);opacity:.5}
+  .tier.on{opacity:1;color:var(--black);font-weight:700}
+  .tier.bronze.on{background:var(--bronze);border-color:var(--bronze)}
+  .tier.silver.on{background:var(--silver);border-color:var(--silver)}
+  .tier.gold.on{background:var(--gold-t);border-color:var(--gold-t)}
+  .tier.platinum.on{background:var(--plat);border-color:var(--plat)}
+  .meterbar{height:7px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:10px auto 0;max-width:560px}
+  .meterfill{height:100%;width:0;background:linear-gradient(90deg,var(--bronze),var(--gold));transition:width .5s ease}
+  .stat{text-align:center;color:var(--dim);font-family:Arial,Helvetica,sans-serif;font-size:.74rem;margin-top:8px;letter-spacing:.05em}
+
+  .card{background:linear-gradient(180deg,#0a0a0a,#050505);border:1px solid var(--line);border-radius:16px;
+        padding:26px 22px;margin:22px auto 0;box-shadow:0 18px 50px rgba(0,0,0,.6)}
+  .phase{font-family:Arial,Helvetica,sans-serif;font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .teach h2{font-size:1.35rem;color:var(--cream);margin-bottom:12px;line-height:1.2}
+  .teach p{color:#e8e2d4;line-height:1.65;font-size:1.04rem}
+  .chiplabel{display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+             color:var(--black);background:var(--gold);border-radius:6px;padding:3px 9px;margin-bottom:14px}
+
+  .qtext{font-size:1.2rem;line-height:1.35;color:var(--cream);margin:4px 0 18px}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--cream);
+       font-family:Georgia,serif;font-size:1.02rem;line-height:1.4;padding:15px 16px;border-radius:11px;cursor:pointer;transition:all .15s}
+  .opt:hover{border-color:var(--gold);background:rgba(201,168,76,.07)}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:var(--good);background:rgba(123,196,127,.14);color:#dff0e0}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,139,122,.13);color:#f0ddd7}
+
+  .coach{margin-top:18px;border-left:3px solid var(--gold);background:rgba(201,168,76,.06);padding:13px 16px;border-radius:0 10px 10px 0;
+         color:#efe9da;line-height:1.55;font-size:1.0rem;display:none}
+  .coach.show{display:block}
+  .coach b{color:var(--gold)}
+
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .btn{font-family:Arial,Helvetica,sans-serif;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+       border-radius:10px;padding:14px 22px;cursor:pointer;border:1px solid var(--gold);background:var(--gold);color:var(--black);transition:all .15s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;color:var(--gold)}
+  .btn.ghost:hover{background:rgba(201,168,76,.1)}
+  .btn.wide{width:100%;text-align:center}
+
+  /* champions board */
+  .board{margin-top:30px;border:1px solid var(--line);border-radius:16px;padding:22px;background:rgba(255,255,255,.015)}
+  .board h3{font-size:1.15rem;color:var(--gold);margin-bottom:14px;text-align:center;letter-spacing:.02em}
+  .rowc{display:flex;justify-content:space-between;align-items:center;padding:9px 4px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.98rem}
+  .rowc:last-child{border-bottom:0}
+  .rowc .rk{color:var(--gold);font-family:Arial,Helvetica,sans-serif;font-size:.8rem;width:34px}
+  .rowc .nm{flex:1;color:var(--cream)}
+  .rowc .sc{color:var(--dim);font-family:Arial,Helvetica,sans-serif;font-size:.82rem}
+  .rowc.me{background:rgba(201,168,76,.08);border-radius:8px}
+  .loadc{color:var(--dim);text-align:center;font-size:.86rem;padding:10px;font-family:Arial,Helvetica,sans-serif}
+  input.nm-in{width:100%;background:#0a0a0a;border:1px solid var(--line);color:var(--cream);font-family:Georgia,serif;
+              font-size:1rem;padding:12px 14px;border-radius:10px;margin-bottom:12px}
+
+  /* faq + footer */
+  .faq{margin-top:42px}
+  .faq h2{color:var(--gold);font-size:1.3rem;margin-bottom:14px;text-align:center}
+  .faq details{border:1px solid var(--line);border-radius:11px;padding:4px 16px;margin-bottom:10px;background:rgba(255,255,255,.012)}
+  .faq summary{cursor:pointer;padding:13px 0;font-size:1.05rem;color:var(--cream);list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::before{content:"+ ";color:var(--gold);font-weight:700}
+  .faq details[open] summary::before{content:"\2212 "}
+  .faq p{color:var(--dim);line-height:1.6;padding:0 0 14px;font-size:.98rem}
+
+  footer{flex-shrink:0;text-align:center;padding:30px 18px 26px;border-top:1px solid var(--line);color:var(--dim);font-size:.84rem;line-height:1.7}
+  footer a{color:var(--gold);text-decoration:none}
+  .backbar{text-align:center;margin-top:30px}
+  .geno-cta{display:inline-flex;align-items:center;gap:10px;margin-top:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);
+            font-family:Arial,Helvetica,sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+            padding:12px 20px;border-radius:10px;cursor:pointer}
+  .geno-cta:hover{background:rgba(201,168,76,.1)}
+  .geno-cta img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+  .center{text-align:center}
+  .hide{display:none!important}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="kicker">Global Sovereign University · Teach-Then-Play</div>
+  <h1>Trades Geometry Climb<span class="sub">The working math every trade runs on, one beat at a time</span></h1>
+  <p class="tagline">A short lesson, then a play. Climb Bronze to Platinum. You cannot fail — a miss just teaches you again.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- climb / progress -->
+  <div class="climb" id="climb">
+    <span class="tier bronze on">Bronze</span>
+    <span class="tier silver">Silver</span>
+    <span class="tier gold">Gold</span>
+    <span class="tier platinum">Platinum</span>
+  </div>
+  <div class="meterbar"><div class="meterfill" id="meter"></div></div>
+  <div class="stat" id="stat">Score 0 · Beat 1 of 14 · Lap 1</div>
+
+  <!-- game card -->
+  <div class="card" id="card"><!-- filled by JS --></div>
+
+  <!-- champions board -->
+  <div class="board" id="board">
+    <h3>Champions Board</h3>
+    <div class="loadc" id="boardload">Connecting…</div>
+    <div id="rows"></div>
+  </div>
+
+  <div class="backbar">
+    <button class="geno-cta" id="askGeno">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/690b3e2f_geno-avatar.png" alt="GENO" onerror="this.style.display='none'">
+      Ask GENO about this craft
+    </button>
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>About this game</h2>
+    <details><summary>What is the Trades Geometry Climb?</summary><p>It is a free Teach-Then-Play learning game from Global Sovereign University. Each round teaches one real beat of jobsite geometry in a short card, then asks you to use it. Correct answers carry you up a Bronze, Silver, Gold, and Platinum climb. There is no way to fail, and you can play forever.</p></details>
+    <details><summary>Do I need to be good at math?</summary><p>No. Every idea is tied to a real task — squaring a corner, sloping a drain, ordering concrete — and the short lesson always comes before the question. If you can read a tape measure, you can play, and you will leave understanding why the math works.</p></details>
+    <details><summary>Is it really free?</summary><p>Yes. The game, the full book it is based on, and GENO the mentor are all free from Global Sovereign University. GSU's mission is a hand up, not a handout — the tools of competence belong to anyone willing to pick them up.</p></details>
+    <details><summary>Who is GENO?</summary><p>GENO is GSU's free 24/7 AI mentor. He has read the entire Trades Geometry book, not just a preview, so you can ask him anything — about a question you missed, the 3-4-5 triangle, rise and run, or how to square a real foundation.</p></details>
+  </section>
+
+</div>
+
+<footer>
+  <strong style="color:var(--cream)">Global Sovereign University</strong><br>
+  Built on the free book <em>Trades Geometry</em> · A hand up, not a handout<br>
+  <a href="https://www.globalsovereignuniversity.org/tradification">← Back to Tradification</a> &nbsp;·&nbsp;
+  <a href="https://www.globalsovereignuniversity.org/library">The Library</a>
+</footer>
+
+<!-- GENO widget (ConvAI) -->
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+<!-- Firebase (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+/* ---------------- GENO opener ---------------- */
+document.getElementById('askGeno').addEventListener('click', function(){
+  window.dispatchEvent(new CustomEvent('geno:open'));
+  var w = document.querySelector('elevenlabs-convai');
+  if(w){ try{ (w.shadowRoot && w.shadowRoot.querySelector('button') || w.querySelector('button') || w).click(); }catch(e){} }
+});
+
+/* ---------------- Book-grounded content ---------------- */
+const BEATS = [{"tier": "bronze","ch": "Ch.1 · Level & Plumb","teach": "Every job locks to gravity in two directions: level (horizontal) and plumb (vertical). Gravity is the one reference that is always present and never lies — your tools are just different ways of reading it.","q": "What two directions do you “lock to gravity” on a job?","opts": ["Left and right","Level (horizontal) and plumb (vertical)","Hot and cold","Inside and outside"],"a": 1,"coach": "Level is perpendicular to gravity; plumb is the direction it pulls. Everything else builds on those two."},{"tier": "bronze","ch": "Ch.1 · Calibrate the Level","teach": "A spirit level is only as honest as its condition. Before trusting one, read the bubble, then spin the level 180° in the same spot. Same reading means it is calibrated. A different reading means the tool is lying to you.","q": "How do you check that a spirit level is telling the truth?","opts": ["Shake it","Rotate it 180° and see if the bubble reads the same","Put it in water","Trust it always"],"a": 1,"coach": "The flip test takes seconds and saves hours. A dropped level can read confidently wrong."},{"tier": "bronze","ch": "Ch.1 · The Benchmark","teach": "A benchmark is a chosen reference point you protect and never move — a mark on a wall, a nail in a stake. You measure everything from that one truth so errors do not wander across the job.","q": "Why measure everything from a single benchmark instead of point to point?","opts": ["It is faster to ignore it","So errors do not accumulate and wander","Because the law requires it","To use more chalk"],"a": 1,"coach": "Measure from the same truth and small errors can't chain into a big one."},{"tier": "silver","ch": "Ch.2 · The 3-4-5 Triangle","teach": "A triangle is the one shape that cannot be pushed out of square. Measure 3 along one line and 4 along the other; if the diagonal between them is exactly 5, the corner is a true 90°. It scales: 6-8-10, 9-12-15.","q": "You measure 3 ft and 4 ft along two lines from a corner. What diagonal proves it is square?","opts": ["4 ft","5 ft","6 ft","7 ft"],"a": 1,"coach": "3-4-5 — a right angle you can prove with a tape and nothing else."},{"tier": "silver","ch": "Ch.1 · Diagonals Prove Square","teach": "On a rectangle you rarely measure angles directly — you measure diagonals. If corner A to C equals corner B to D, the shape is square. If they differ, it is a skewed parallelogram.","q": "Your rectangular form has two diagonals that don't match. What does that tell you?","opts": ["It is perfectly square","It is skewed and out of square","The tape is too long","Nothing — diagonals don't matter"],"a": 1,"coach": "Equal diagonals mean square. Slide one corner until they match."},{"tier": "silver","ch": "Ch.1 · Line vs Edge","teach": "A line is an ideal: infinitely thin and straight. An edge of lumber or concrete has thickness, bows, and scars. Good practice is to snap your own line and measure from it, because lines are precise and edges are merely physical.","q": "Why snap your own line instead of measuring off an existing edge?","opts": ["It looks more professional","Edges have bows and scars; a snapped line is precise","It uses the chalk up","Edges are always perfectly straight"],"a": 1,"coach": "Measure off a scar and you inherit it. Make your own line and trust that."},{"tier": "silver","ch": "Ch.4 · Measure Two Ways","teach": "The book's rule: never trust a single path to truth if you can build a second. If a wall should be 18 ft from the baseline and 12 ft from a perpendicular line, locate it both ways and confirm they agree — catching a mistake while it is still a pencil line.","q": "What is the point of locating something by two different measurements?","opts": ["To waste time","To catch a mistake before it is built","To use two tapes","Because one tape is broken"],"a": 1,"coach": "Two paths to the same point catch the error while it is cheap to fix."},{"tier": "gold","ch": "Ch.2 · Rise Over Run","teach": "Slope is rise over run — how much a surface climbs (rise) for each unit it travels horizontally (run). Drain lines must fall at a specified slope so water moves; a roof pitch and a stair stringer are the same idea.","q": "“Rise over run” describes what?","opts": ["The weight of a beam","The slope of a surface","The color of concrete","The width of a board"],"a": 1,"coach": "Rise ÷ run = slope. A drain that doesn't fall doesn't drain."},{"tier": "gold","ch": "Ch.3 · Circles and π","teach": "For any circle, the distance around it (the circumference) is π — about 3.14 — times the diameter. Change the diameter and the wrap length, the material, and the cut all change with it. Circles aren't decorative; they're calculable.","q": "A circle's circumference equals π times what?","opts": ["Its area","Its diameter","Its weight","Its height"],"a": 1,"coach": "C = π × d. Know the diameter and you know the wrap."},{"tier": "gold","ch": "Ch.4 · Area by Decomposition","teach": "To estimate material for an odd shape, break it into simple rectangles and triangles, find each area, and add them up. Complex floors, patios, and walls all yield to this decompose-and-sum method.","q": "How do you find the area of an irregular patio for a material estimate?","opts": ["Guess high","Break it into rectangles and triangles, then add the areas","Measure only the longest side","Weigh it"],"a": 1,"coach": "Decompose into simple shapes and sum the parts. Odd shapes become arithmetic."},{"tier": "gold","ch": "Ch.5 · Volume for Concrete","teach": "Concrete is ordered by volume — length × width × depth — usually converted to cubic yards. Get the depth wrong by an inch across a big slab and you can be off by a whole load. Volume mastery is money.","q": "To order concrete for a slab, what do you calculate?","opts": ["Only its length","Length × width × depth (volume)","Its color","Its weight in pounds only"],"a": 1,"coach": "L × W × D = volume. An inch of depth across a slab is real cubic yards."},{"tier": "platinum","ch": "Ch.1 · Cumulative Error","teach": "One bad measurement rarely ruins a build; ten small ones leaning the same way can. Mark studs by chaining off your last mark and a 1/16-inch error repeats until you're an inch out at the end. Reset to a control line to break the chain.","q": "Why is “chained measuring” (each mark off the last) dangerous over a long wall?","opts": ["It is faster","Tiny repeated errors add up to a big one","It uses more pencils","It can't be done"],"a": 1,"coach": "Errors that all lean the same way accumulate. Reset to your control line to stop the drift."},{"tier": "platinum","ch": "Ch.6 · Roof Pitch","teach": "A roof's pitch is rise over run expressed as “X in 12” — a 6:12 roof rises 6 inches for every 12 of run. The rafter is just the hypotenuse of that triangle, so the same geometry that squares a corner cuts a roof.","q": "A “6 in 12” roof pitch rises how much per 12 inches of run?","opts": ["12 inches","6 inches","3 inches","60 inches"],"a": 1,"coach": "6:12 — rise 6 per 12 of run. The rafter is the hypotenuse of that right triangle."},{"tier": "platinum","ch": "Ch.4 · Tolerance","teach": "Tolerance is the allowed gap between ideal geometry and physical reality. A shed floor can be off 1/4 inch over 12 ft; a tiled shower cannot. You set the tolerance band by how sensitive the finish is — “close enough” is a decision, not an excuse.","q": "What does “tolerance” actually mean on a job?","opts": ["Permission to be sloppy","The allowed gap between ideal and reality for that job","The strength of concrete","The price of materials"],"a": 1,"coach": "You decide the band by finish sensitivity. Tolerance is managed, not assumed."}];
+
+const TIER_ORDER=['bronze','silver','gold','platinum'];
+const TIER_LABEL={bronze:'Bronze',silver:'Silver',gold:'Gold',platinum:'Platinum'};
+
+/* ---------------- State ---------------- */
+let idx=0, score=0, lap=1, firstTry=true, answered=false;
+const total=BEATS.length;
+
+const card=document.getElementById('card');
+const meter=document.getElementById('meter');
+const statEl=document.getElementById('stat');
+
+function setTiers(t){
+  document.querySelectorAll('.tier').forEach(el=>{
+    el.classList.toggle('on', el.classList.contains(t));
+  });
+}
+function updateHUD(){
+  const beat=BEATS[idx];
+  setTiers(beat.tier);
+  meter.style.width = Math.round(((idx)/total)*100)+'%';
+  statEl.textContent = `Score ${score} · Beat ${idx+1} of ${total} · Lap ${lap}`;
+}
+
+function renderTeach(){
+  answered=false; firstTry=true;
+  const b=BEATS[idx];
+  updateHUD();
+  card.innerHTML = `
+    <div class="phase">Teach · ${b.ch}</div>
+    <div class="teach"><p>${b.teach}</p></div>
+    <div class="btnrow"><button class="btn wide" id="ready">I've got it — play \u2192</button></div>`;
+  document.getElementById('ready').onclick=renderPlay;
+}
+
+function renderPlay(){
+  const b=BEATS[idx];
+  let optsHtml = b.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('');
+  card.innerHTML = `
+    <div class="phase">Play · ${TIER_LABEL[b.tier]}</div>
+    <div class="qtext">${b.q}</div>
+    <div class="opts">${optsHtml}</div>
+    <div class="coach" id="coach"></div>
+    <div class="btnrow hide" id="nextrow"><button class="btn wide" id="next">Next beat \u2192</button></div>`;
+  card.querySelectorAll('.opt').forEach(btn=>{
+    btn.onclick=()=>choose(parseInt(btn.dataset.i,10),btn);
+  });
+}
+
+function choose(i,btn){
+  if(answered) return;
+  const b=BEATS[idx];
+  const coach=document.getElementById('coach');
+  if(i===b.a){
+    answered=true;
+    btn.classList.add('correct');
+    card.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    const pts = firstTry?100:40;
+    score+=pts;
+    coach.innerHTML=`<b>Correct${firstTry?'':' — got it on the retry'}.</b> ${b.coach} <span style="color:var(--gold)">+${pts}</span>`;
+    coach.classList.add('show');
+    document.getElementById('nextrow').classList.remove('hide');
+    document.getElementById('next').onclick=advance;
+    meter.style.width = Math.round(((idx+1)/total)*100)+'%';
+    statEl.textContent = `Score ${score} · Beat ${idx+1} of ${total} · Lap ${lap}`;
+  } else {
+    firstTry=false;
+    btn.classList.add('wrong'); btn.disabled=true;
+    coach.innerHTML=`<b>Not quite — try again.</b> ${b.coach}`;
+    coach.classList.add('show');
+  }
+}
+
+function advance(){
+  idx++;
+  if(idx>=total){
+    idx=0; lap++;
+    BEATS.sort(()=>Math.random()-0.5);
+    BEATS.sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier)); // keep climb order
+    showLapComplete();
+    return;
+  }
+  renderTeach();
+}
+
+function showLapComplete(){
+  setTiers('platinum');
+  meter.style.width='100%';
+  statEl.textContent=`Score ${score} · Climb complete · Lap ${lap-1} done`;
+  card.innerHTML = `
+    <div class="phase">Platinum \u2605 Climb complete</div>
+    <div class="teach">
+      <h2>You ran the whole layout — from a single benchmark to a squared, sloped, estimated build.</h2>
+      <p>That's the whole climb, Bronze to Platinum, with a score of <b style="color:var(--gold)">${score}</b>. Put your name on the Champions Board, then keep climbing — the beats reshuffle and your score keeps building.</p>
+    </div>
+    <div style="margin-top:18px">
+      <input class="nm-in" id="champName" maxlength="22" placeholder="Your name for the board" />
+      <div class="btnrow">
+        <button class="btn" id="saveScore">Post my score</button>
+        <button class="btn ghost" id="keepGoing">Keep climbing \u2192</button>
+      </div>
+    </div>`;
+  document.getElementById('keepGoing').onclick=()=>renderTeach();
+  document.getElementById('saveScore').onclick=saveScore;
+}
+
+/* ---------------- Firebase champions board ---------------- */
+const firebaseConfig = {
+  apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain:"gsu-handshake.firebaseapp.com",
+  projectId:"gsu-handshake",
+  storageBucket:"gsu-handshake.firebasestorage.app",
+  messagingSenderId:"301089416765",
+  appId:"1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+let db=null, uid=null, ready=false;
+const COLLECTION='geometry_climb';
+
+try{
+  firebase.initializeApp(firebaseConfig);
+  db=firebase.firestore();
+  firebase.auth().signInAnonymously().catch(e=>console.warn('anon auth',e));
+  firebase.auth().onAuthStateChanged(u=>{ if(u){ uid=u.uid; ready=true; loadBoard(); } });
+}catch(e){
+  document.getElementById('boardload').textContent='Champions Board offline — play still works.';
+}
+
+function tierForScore(s){
+  if(s>=1200) return 'Platinum';
+  if(s>=800) return 'Gold';
+  if(s>=400) return 'Silver';
+  return 'Bronze';
+}
+
+async function saveScore(){
+  const nm=(document.getElementById('champName').value||'').trim().slice(0,22)||'Anonymous Mason';
+  const btn=document.getElementById('saveScore');
+  if(!ready||!db){ btn.textContent='Board offline'; return; }
+  btn.textContent='Posting…'; btn.disabled=true;
+  try{
+    await db.collection(COLLECTION).add({
+      name:nm, score:score, tier:tierForScore(score), uid:uid,
+      ts: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    window._lastName=nm;
+    btn.textContent='Posted \u2713';
+    loadBoard(nm);
+  }catch(e){ console.warn(e); btn.textContent='Try again'; btn.disabled=false; }
+}
+
+async function loadBoard(highlight){
+  const rows=document.getElementById('rows');
+  const load=document.getElementById('boardload');
+  if(!db){ load.textContent='Champions Board offline.'; return; }
+  load.textContent='Loading champions…';
+  try{
+    const snap=await db.collection(COLLECTION).orderBy('score','desc').limit(10).get();
+    if(snap.empty){ load.textContent='Be the first name on the board.'; rows.innerHTML=''; return; }
+    load.textContent='';
+    let html='', r=1;
+    snap.forEach(doc=>{
+      const d=doc.data();
+      const me=(highlight&&d.name===highlight)?' me':'';
+      html+=`<div class="rowc${me}"><span class="rk">${r}</span><span class="nm">${escapeHtml(d.name||'Anonymous')}</span><span class="sc">${d.score||0} · ${d.tier||''}</span></div>`;
+      r++;
+    });
+    rows.innerHTML=html;
+  }catch(e){ load.textContent='Champions Board offline — play still works.'; }
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ---------------- Boot ---------------- */
+renderTeach();
+</script>
+</body>
+</html>

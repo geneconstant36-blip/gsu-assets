@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Solar PV Climb — Teach-Then-Play | Global Sovereign University</title>
+<meta name="description" content="A free Teach-Then-Play game from Global Sovereign University. Learn how solar works and how to work it safely, one beat at a time — photons and the bandgap, the p-n junction, Voc and Isc, the maximum power point, heat and voltage, and high-voltage DC safety — then climb Bronze to Platinum. No fail, infinite play, with GENO as your 24/7 mentor." />
+<meta name="robots" content="index,follow" />
+<meta property="og:title" content="Solar PV Climb — Teach-Then-Play" />
+<meta property="og:description" content="Learn how a solar panel makes power and how to install it safely: a short teach, then a play, climbing Bronze to Platinum. Free from Global Sovereign University." />
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/solar-pv-climb.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the Solar PV Climb?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is a free Teach-Then-Play learning game from Global Sovereign University. Each round teaches one real beat of solar — the physics of a panel and the safety of the trade — in a short card, then asks you to use it. Correct answers carry you up a Bronze, Silver, Gold, and Platinum climb. There is no way to fail and you can play forever."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to be an electrician to play?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The game starts with how sunlight becomes electricity and builds toward strings, voltage, and rooftop safety, always teaching before it tests. It makes you a far more informed learner, but it is not a substitute for licensed training or local code where a professional is required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The game, the full book it is based on, and GENO the mentor are all free from Global Sovereign University. GSU's mission is a hand up, not a handout."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is GENO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GENO is GSU's free 24/7 AI mentor. He has read the entire Solar Photovoltaic Installers book, not just a preview, so you can ask him anything — about a question you missed, the p-n junction, Voc and Isc, or why rooftop DC must be treated as live."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --black:#000000; --gold:#C9A84C; --cream:#F5F1E8;
+    --ink:#0d0d0d; --line:rgba(201,168,76,.28); --dim:#bdb6a6;
+    --bronze:#b5743a; --silver:#c8c8d0; --gold-t:#C9A84C; --plat:#7fd8e6;
+    --good:#7BC47F; --bad:#d98b7a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--black);color:var(--cream);font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;display:flex;flex-direction:column}
+  a{color:var(--gold)}
+  .wrap{width:100%;max-width:880px;margin:0 auto;padding:22px 18px 60px;flex:1 0 auto}
+  header.top{text-align:center;padding:30px 18px 10px}
+  .kicker{letter-spacing:.32em;text-transform:uppercase;font-size:.66rem;color:var(--gold);font-family:Arial,Helvetica,sans-serif}
+  h1{font-size:clamp(1.9rem,6vw,3rem);color:var(--cream);margin:.25em 0 .15em;line-height:1.05}
+  h1 .sub{display:block;color:var(--gold);font-size:.5em;margin-top:.4em;font-style:italic}
+  .tagline{color:var(--dim);font-size:.98rem;max-width:560px;margin:8px auto 0}
+
+  /* progress / tier bar */
+  .climb{display:flex;align-items:center;gap:6px;justify-content:center;margin:22px auto 6px;flex-wrap:wrap}
+  .tier{font-family:Arial,Helvetica,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+        border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--dim);opacity:.5}
+  .tier.on{opacity:1;color:var(--black);font-weight:700}
+  .tier.bronze.on{background:var(--bronze);border-color:var(--bronze)}
+  .tier.silver.on{background:var(--silver);border-color:var(--silver)}
+  .tier.gold.on{background:var(--gold-t);border-color:var(--gold-t)}
+  .tier.platinum.on{background:var(--plat);border-color:var(--plat)}
+  .meterbar{height:7px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:10px auto 0;max-width:560px}
+  .meterfill{height:100%;width:0;background:linear-gradient(90deg,var(--bronze),var(--gold));transition:width .5s ease}
+  .stat{text-align:center;color:var(--dim);font-family:Arial,Helvetica,sans-serif;font-size:.74rem;margin-top:8px;letter-spacing:.05em}
+
+  .card{background:linear-gradient(180deg,#0a0a0a,#050505);border:1px solid var(--line);border-radius:16px;
+        padding:26px 22px;margin:22px auto 0;box-shadow:0 18px 50px rgba(0,0,0,.6)}
+  .phase{font-family:Arial,Helvetica,sans-serif;font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .teach h2{font-size:1.35rem;color:var(--cream);margin-bottom:12px;line-height:1.2}
+  .teach p{color:#e8e2d4;line-height:1.65;font-size:1.04rem}
+  .chiplabel{display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+             color:var(--black);background:var(--gold);border-radius:6px;padding:3px 9px;margin-bottom:14px}
+
+  .qtext{font-size:1.2rem;line-height:1.35;color:var(--cream);margin:4px 0 18px}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--cream);
+       font-family:Georgia,serif;font-size:1.02rem;line-height:1.4;padding:15px 16px;border-radius:11px;cursor:pointer;transition:all .15s}
+  .opt:hover{border-color:var(--gold);background:rgba(201,168,76,.07)}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:var(--good);background:rgba(123,196,127,.14);color:#dff0e0}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,139,122,.13);color:#f0ddd7}
+
+  .coach{margin-top:18px;border-left:3px solid var(--gold);background:rgba(201,168,76,.06);padding:13px 16px;border-radius:0 10px 10px 0;
+         color:#efe9da;line-height:1.55;font-size:1.0rem;display:none}
+  .coach.show{display:block}
+  .coach b{color:var(--gold)}
+
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .btn{font-family:Arial,Helvetica,sans-serif;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+       border-radius:10px;padding:14px 22px;cursor:pointer;border:1px solid var(--gold);background:var(--gold);color:var(--black);transition:all .15s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;color:var(--gold)}
+  .btn.ghost:hover{background:rgba(201,168,76,.1)}
+  .btn.wide{width:100%;text-align:center}
+
+  /* champions board */
+  .board{margin-top:30px;border:1px solid var(--line);border-radius:16px;padding:22px;background:rgba(255,255,255,.015)}
+  .board h3{font-size:1.15rem;color:var(--gold);margin-bottom:14px;text-align:center;letter-spacing:.02em}
+  .rowc{display:flex;justify-content:space-between;align-items:center;padding:9px 4px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.98rem}
+  .rowc:last-child{border-bottom:0}
+  .rowc .rk{color:var(--gold);font-family:Arial,Helvetica,sans-serif;font-size:.8rem;width:34px}
+  .rowc .nm{flex:1;color:var(--cream)}
+  .rowc .sc{color:var(--dim);font-family:Arial,Helvetica,sans-serif;font-size:.82rem}
+  .rowc.me{background:rgba(201,168,76,.08);border-radius:8px}
+  .loadc{color:var(--dim);text-align:center;font-size:.86rem;padding:10px;font-family:Arial,Helvetica,sans-serif}
+  input.nm-in{width:100%;background:#0a0a0a;border:1px solid var(--line);color:var(--cream);font-family:Georgia,serif;
+              font-size:1rem;padding:12px 14px;border-radius:10px;margin-bottom:12px}
+
+  /* faq + footer */
+  .faq{margin-top:42px}
+  .faq h2{color:var(--gold);font-size:1.3rem;margin-bottom:14px;text-align:center}
+  .faq details{border:1px solid var(--line);border-radius:11px;padding:4px 16px;margin-bottom:10px;background:rgba(255,255,255,.012)}
+  .faq summary{cursor:pointer;padding:13px 0;font-size:1.05rem;color:var(--cream);list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::before{content:"+ ";color:var(--gold);font-weight:700}
+  .faq details[open] summary::before{content:"\2212 "}
+  .faq p{color:var(--dim);line-height:1.6;padding:0 0 14px;font-size:.98rem}
+
+  footer{flex-shrink:0;text-align:center;padding:30px 18px 26px;border-top:1px solid var(--line);color:var(--dim);font-size:.84rem;line-height:1.7}
+  footer a{color:var(--gold);text-decoration:none}
+  .backbar{text-align:center;margin-top:30px}
+  .geno-cta{display:inline-flex;align-items:center;gap:10px;margin-top:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);
+            font-family:Arial,Helvetica,sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+            padding:12px 20px;border-radius:10px;cursor:pointer}
+  .geno-cta:hover{background:rgba(201,168,76,.1)}
+  .geno-cta img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+  .center{text-align:center}
+  .hide{display:none!important}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="kicker">Global Sovereign University · Teach-Then-Play</div>
+  <h1>Solar PV Climb<span class="sub">The newest trade on the roof, one beat at a time</span></h1>
+  <p class="tagline">A short lesson, then a play. Climb Bronze to Platinum. You cannot fail — a miss just teaches you again.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- climb / progress -->
+  <div class="climb" id="climb">
+    <span class="tier bronze on">Bronze</span>
+    <span class="tier silver">Silver</span>
+    <span class="tier gold">Gold</span>
+    <span class="tier platinum">Platinum</span>
+  </div>
+  <div class="meterbar"><div class="meterfill" id="meter"></div></div>
+  <div class="stat" id="stat">Score 0 · Beat 1 of 14 · Lap 1</div>
+
+  <!-- game card -->
+  <div class="card" id="card"><!-- filled by JS --></div>
+
+  <!-- champions board -->
+  <div class="board" id="board">
+    <h3>Champions Board</h3>
+    <div class="loadc" id="boardload">Connecting…</div>
+    <div id="rows"></div>
+  </div>
+
+  <div class="backbar">
+    <button class="geno-cta" id="askGeno">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/690b3e2f_geno-avatar.png" alt="GENO" onerror="this.style.display='none'">
+      Ask GENO about this craft
+    </button>
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>About this game</h2>
+    <details><summary>What is the Solar PV Climb?</summary><p>It is a free Teach-Then-Play learning game from Global Sovereign University. Each round teaches one real beat of solar — the physics of a panel and the safety of the trade — in a short card, then asks you to use it. Correct answers carry you up a Bronze, Silver, Gold, and Platinum climb. There is no way to fail, and you can play forever.</p></details>
+    <details><summary>Do I need to be an electrician?</summary><p>No. The game starts with how sunlight becomes electricity and builds toward strings, voltage, and rooftop safety, always teaching before it tests. It makes you a far more informed learner, but it is not a substitute for licensed training or local code where a professional is required.</p></details>
+    <details><summary>Is it really free?</summary><p>Yes. The game, the full book it is based on, and GENO the mentor are all free from Global Sovereign University. GSU's mission is a hand up, not a handout — the tools of competence belong to anyone willing to pick them up.</p></details>
+    <details><summary>Who is GENO?</summary><p>GENO is GSU's free 24/7 AI mentor. He has read the entire Solar Photovoltaic Installers book, not just a preview, so you can ask him anything — about a question you missed, the p-n junction, Voc and Isc, or why rooftop DC must be treated as live.</p></details>
+  </section>
+
+</div>
+
+<footer>
+  <strong style="color:var(--cream)">Global Sovereign University</strong><br>
+  Built on the free book <em>Solar Photovoltaic (PV) Installers</em> · A hand up, not a handout<br>
+  <a href="https://www.globalsovereignuniversity.org/tradification">← Back to Tradification</a> &nbsp;·&nbsp;
+  <a href="https://www.globalsovereignuniversity.org/library">The Library</a>
+</footer>
+
+<!-- GENO widget (ConvAI) -->
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+<!-- Firebase (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+/* ---------------- GENO opener ---------------- */
+document.getElementById('askGeno').addEventListener('click', function(){
+  window.dispatchEvent(new CustomEvent('geno:open'));
+  var w = document.querySelector('elevenlabs-convai');
+  if(w){ try{ (w.shadowRoot && w.shadowRoot.querySelector('button') || w.querySelector('button') || w).click(); }catch(e){} }
+});
+
+/* ---------------- Book-grounded content ---------------- */
+const BEATS = [{"tier": "bronze","ch": "Ch.1 · Sunlight is Photons","teach": "Sunlight isn't just brightness — it is energy delivered in tiny packets called photons. A solar cell works by absorbing photons, and a photon's energy depends on its color: bluer light carries more energy per photon than redder light.","q": "In the view that explains how solar cells work, what is sunlight made of?","opts": ["Heat only","Photons — packets of energy","Wind","Plain white light with no structure"],"a": 1,"coach": "Photons. The cell absorbs them and turns their energy into moving charge."},{"tier": "bronze","ch": "Ch.1 · The Bandgap","teach": "Silicon has a bandgap — an energy threshold of about 1.12 eV. A photon below that energy passes through unused; a photon at or above it can knock an electron loose and make current. The cell is, in effect, sorting photons by energy.","q": "What happens to a photon carrying LESS energy than silicon's bandgap?","opts": ["It creates extra power","It can't free an electron and is wasted as current","It explodes","It becomes blue light"],"a": 1,"coach": "Below the threshold, no electron is freed. The cell only harvests photons with enough energy."},{"tier": "bronze","ch": "Ch.2 · “Breaker Off” Isn't Proof","teach": "Solar DC is live whenever the sun shines, and the trade's first rule is to verify, not assume. Treating “the breaker is off” as proof a circuit is dead is how people get hurt. You test it to confirm it is truly de-energized.","q": "A tech flips a breaker off. Why isn't that proof the circuit is safe?","opts": ["Breakers never fail","You must verify de-energization, not assume it","The sun turns it off","It is always safe in daylight"],"a": 1,"coach": "Verify, don't assume. DC is live in sunlight — your meter confirms dead, not the switch position."},{"tier": "silver","ch": "Ch.1 · Electron-Hole Pairs","teach": "When a photon with enough energy is absorbed, it lifts an electron free and leaves behind a positively charged “hole.” This electron-hole pair is the basic charge-separation event — the seed of every watt a panel makes.","q": "Absorbing a photon creates which pair of charge carriers?","opts": ["Two electrons","An electron and a hole","Two holes","A proton and a neutron"],"a": 1,"coach": "One electron freed, one hole left behind. Separate them and you have current."},{"tier": "silver","ch": "Ch.1 · The p-n Junction","teach": "A solar cell joins p-type and n-type silicon. At the boundary — the p-n junction — a built-in electric field forms that pushes electrons one way and holes the other, separating them before they can recombine. That separation is the start of current.","q": "What does the built-in field at the p-n junction do?","opts": ["Heats the panel","Separates electrons and holes before they recombine","Reflects sunlight","Stores water"],"a": 1,"coach": "The junction's field sweeps the pair apart. No separation, no current."},{"tier": "silver","ch": "Ch.1 · Voc and Isc","teach": "Two datasheet numbers anchor everything. Open the circuit and you read the maximum voltage with no current flowing — Voc. Short it and you read the maximum current with almost no voltage — Isc. Real power lives between those extremes.","q": "Open-circuit voltage (Voc) is measured when…","opts": ["The panel is shorted","No current is allowed to flow","It is dark","The panel is removed"],"a": 1,"coach": "Voc = open circuit, max voltage, no flow. Isc = shorted, max current. Power is in between."},{"tier": "silver","ch": "Ch.1 · Maximum Power Point","teach": "On a panel's current-voltage curve there is a “knee” where voltage × current is greatest — the maximum power point. The inverter constantly hunts for it (MPPT) as light and heat change, because that is where the most power is.","q": "Why does an inverter constantly track the maximum power point?","opts": ["To waste energy","Because that is where voltage × current is greatest","To make noise","To turn the panel off"],"a": 1,"coach": "MPPT keeps the array at its sweet spot as clouds and heat move the curve."},{"tier": "gold","ch": "Ch.1 · Heat Lowers Voltage","teach": "As a module heats up, its voltage drops. That is why a cold, bright spring morning can out-produce a blazing summer afternoon — and why production peaks in cool, sunny conditions rather than the hottest ones.","q": "What happens to a module's voltage as it gets hotter?","opts": ["It rises","It drops","Nothing changes","It turns into current"],"a": 1,"coach": "Hot means lower voltage. Cool and bright is the panel's happy place."},{"tier": "gold","ch": "Ch.1 · Design for the Cold","teach": "Because cold raises Voc, you size a string for the COLDEST expected day, not a hot one — that is when voltage is highest and could exceed the inverter's limit or the wire's insulation rating. The physics that drops voltage in heat raises it in cold.","q": "When sizing a string's maximum voltage for code, which condition do you design for?","opts": ["The hottest day","The coldest expected day","An average day","It doesn't matter"],"a": 1,"coach": "Cold pushes Voc highest. Design for the cold or risk overvolting the inverter."},{"tier": "gold","ch": "Ch.6 · Bypass Diodes","teach": "Cells are wired in series, so one shaded cell limits the whole string and can be forced into reverse bias, heating up into a hot spot. Bypass diodes route current around the shaded group, protecting the module. That is why one small leaf can cost so much.","q": "What do bypass diodes protect a module from when a cell is shaded?","opts": ["Rain","Reverse bias and hot spots","Theft","Too much voltage from the grid"],"a": 1,"coach": "Series wiring means a shaded cell drags the string; the diode reroutes current around it."},{"tier": "gold","ch": "Ch.3 · The Sticker Lies (STC)","teach": "Panels are rated at Standard Test Conditions — 1000 W/m², a 25°C cell temperature, and a clean reference spectrum. Real roofs are hotter, dustier, and tilted, so actual output is always below the sticker. STC is a benchmark, not a promise.","q": "Why does a real rooftop array produce less than its STC nameplate rating?","opts": ["The panels are defective","Real conditions (heat, angle, dust) differ from the lab benchmark","The grid steals it","STC is a guarantee"],"a": 1,"coach": "STC is a controlled lab number. Heat, tilt, and dust make the roof produce less."},{"tier": "platinum","ch": "Ch.2 · High-Voltage DC","teach": "A live PV array produces high-voltage DC whenever it is illuminated, and DC arcs don't self-extinguish the way AC does. The trade treats safety as the first skill: never trust a single indicator with your life.","q": "Why is live PV DC especially dangerous compared with switching AC?","opts": ["It is colder","DC arcs don't self-extinguish like AC, and the array is live in any light","It can't shock you","It only flows at night"],"a": 1,"coach": "DC is live in any daylight and its arcs sustain. One indicator is never enough — verify."},{"tier": "platinum","ch": "Ch.6 · Rapid Shutdown","teach": "Code requires rapid shutdown so first responders aren't facing a live rooftop. A button drops conductor voltage to a safe level quickly. It isn't paperwork — it is a safety behavior built into the system for the people who arrive in an emergency.","q": "What is the purpose of rapid shutdown on a rooftop array?","opts": ["To lower the power bill","To quickly de-energize rooftop conductors for safety","To make panels brighter","To track the sun"],"a": 1,"coach": "It protects firefighters and responders by dropping rooftop voltage fast."},{"tier": "platinum","ch": "Ch.5 · “Metal Touches Metal”","teach": "The book warns against assuming metal-to-metal contact equals a proper bond. Paint, anodizing, and corrosion break the path. Real grounding and bonding use listed connectors and are verified — assumption is how a system fails inspection or, worse, energizes a rail.","q": "Why is “metal touches metal, so it's bonded” a dangerous assumption?","opts": ["Metal never conducts","Coatings and corrosion can break the path; bonding must use listed parts and be verified","Bonding isn't needed","Metal is an insulator"],"a": 1,"coach": "Anodizing and corrosion interrupt the path. Use listed bonding hardware and verify it."}];
+
+const TIER_ORDER=['bronze','silver','gold','platinum'];
+const TIER_LABEL={bronze:'Bronze',silver:'Silver',gold:'Gold',platinum:'Platinum'};
+
+/* ---------------- State ---------------- */
+let idx=0, score=0, lap=1, firstTry=true, answered=false;
+const total=BEATS.length;
+
+const card=document.getElementById('card');
+const meter=document.getElementById('meter');
+const statEl=document.getElementById('stat');
+
+function setTiers(t){
+  document.querySelectorAll('.tier').forEach(el=>{
+    el.classList.toggle('on', el.classList.contains(t));
+  });
+}
+function updateHUD(){
+  const beat=BEATS[idx];
+  setTiers(beat.tier);
+  meter.style.width = Math.round(((idx)/total)*100)+'%';
+  statEl.textContent = `Score ${score} · Beat ${idx+1} of ${total} · Lap ${lap}`;
+}
+
+function renderTeach(){
+  answered=false; firstTry=true;
+  const b=BEATS[idx];
+  updateHUD();
+  card.innerHTML = `
+    <div class="phase">Teach · ${b.ch}</div>
+    <div class="teach"><p>${b.teach}</p></div>
+    <div class="btnrow"><button class="btn wide" id="ready">I've got it — play \u2192</button></div>`;
+  document.getElementById('ready').onclick=renderPlay;
+}
+
+function renderPlay(){
+  const b=BEATS[idx];
+  let optsHtml = b.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('');
+  card.innerHTML = `
+    <div class="phase">Play · ${TIER_LABEL[b.tier]}</div>
+    <div class="qtext">${b.q}</div>
+    <div class="opts">${optsHtml}</div>
+    <div class="coach" id="coach"></div>
+    <div class="btnrow hide" id="nextrow"><button class="btn wide" id="next">Next beat \u2192</button></div>`;
+  card.querySelectorAll('.opt').forEach(btn=>{
+    btn.onclick=()=>choose(parseInt(btn.dataset.i,10),btn);
+  });
+}
+
+function choose(i,btn){
+  if(answered) return;
+  const b=BEATS[idx];
+  const coach=document.getElementById('coach');
+  if(i===b.a){
+    answered=true;
+    btn.classList.add('correct');
+    card.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    const pts = firstTry?100:40;
+    score+=pts;
+    coach.innerHTML=`<b>Correct${firstTry?'':' — got it on the retry'}.</b> ${b.coach} <span style="color:var(--gold)">+${pts}</span>`;
+    coach.classList.add('show');
+    document.getElementById('nextrow').classList.remove('hide');
+    document.getElementById('next').onclick=advance;
+    meter.style.width = Math.round(((idx+1)/total)*100)+'%';
+    statEl.textContent = `Score ${score} · Beat ${idx+1} of ${total} · Lap ${lap}`;
+  } else {
+    firstTry=false;
+    btn.classList.add('wrong'); btn.disabled=true;
+    coach.innerHTML=`<b>Not quite — try again.</b> ${b.coach}`;
+    coach.classList.add('show');
+  }
+}
+
+function advance(){
+  idx++;
+  if(idx>=total){
+    idx=0; lap++;
+    BEATS.sort(()=>Math.random()-0.5);
+    BEATS.sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier)); // keep climb order
+    showLapComplete();
+    return;
+  }
+  renderTeach();
+}
+
+function showLapComplete(){
+  setTiers('platinum');
+  meter.style.width='100%';
+  statEl.textContent=`Score ${score} · Climb complete · Lap ${lap-1} done`;
+  card.innerHTML = `
+    <div class="phase">Platinum \u2605 Climb complete</div>
+    <div class="teach">
+      <h2>You followed the whole chain — from a single photon to a safe, measured rooftop system.</h2>
+      <p>That's the whole climb, Bronze to Platinum, with a score of <b style="color:var(--gold)">${score}</b>. Put your name on the Champions Board, then keep climbing — the beats reshuffle and your score keeps building.</p>
+    </div>
+    <div style="margin-top:18px">
+      <input class="nm-in" id="champName" maxlength="22" placeholder="Your name for the board" />
+      <div class="btnrow">
+        <button class="btn" id="saveScore">Post my score</button>
+        <button class="btn ghost" id="keepGoing">Keep climbing \u2192</button>
+      </div>
+    </div>`;
+  document.getElementById('keepGoing').onclick=()=>renderTeach();
+  document.getElementById('saveScore').onclick=saveScore;
+}
+
+/* ---------------- Firebase champions board ---------------- */
+const firebaseConfig = {
+  apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain:"gsu-handshake.firebaseapp.com",
+  projectId:"gsu-handshake",
+  storageBucket:"gsu-handshake.firebasestorage.app",
+  messagingSenderId:"301089416765",
+  appId:"1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+let db=null, uid=null, ready=false;
+const COLLECTION='solar_climb';
+
+try{
+  firebase.initializeApp(firebaseConfig);
+  db=firebase.firestore();
+  firebase.auth().signInAnonymously().catch(e=>console.warn('anon auth',e));
+  firebase.auth().onAuthStateChanged(u=>{ if(u){ uid=u.uid; ready=true; loadBoard(); } });
+}catch(e){
+  document.getElementById('boardload').textContent='Champions Board offline — play still works.';
+}
+
+function tierForScore(s){
+  if(s>=1200) return 'Platinum';
+  if(s>=800) return 'Gold';
+  if(s>=400) return 'Silver';
+  return 'Bronze';
+}
+
+async function saveScore(){
+  const nm=(document.getElementById('champName').value||'').trim().slice(0,22)||'Anonymous Mason';
+  const btn=document.getElementById('saveScore');
+  if(!ready||!db){ btn.textContent='Board offline'; return; }
+  btn.textContent='Posting…'; btn.disabled=true;
+  try{
+    await db.collection(COLLECTION).add({
+      name:nm, score:score, tier:tierForScore(score), uid:uid,
+      ts: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    window._lastName=nm;
+    btn.textContent='Posted \u2713';
+    loadBoard(nm);
+  }catch(e){ console.warn(e); btn.textContent='Try again'; btn.disabled=false; }
+}
+
+async function loadBoard(highlight){
+  const rows=document.getElementById('rows');
+  const load=document.getElementById('boardload');
+  if(!db){ load.textContent='Champions Board offline.'; return; }
+  load.textContent='Loading champions…';
+  try{
+    const snap=await db.collection(COLLECTION).orderBy('score','desc').limit(10).get();
+    if(snap.empty){ load.textContent='Be the first name on the board.'; rows.innerHTML=''; return; }
+    load.textContent='';
+    let html='', r=1;
+    snap.forEach(doc=>{
+      const d=doc.data();
+      const me=(highlight&&d.name===highlight)?' me':'';
+      html+=`<div class="rowc${me}"><span class="rk">${r}</span><span class="nm">${escapeHtml(d.name||'Anonymous')}</span><span class="sc">${d.score||0} · ${d.tier||''}</span></div>`;
+      r++;
+    });
+    rows.innerHTML=html;
+  }catch(e){ load.textContent='Champions Board offline — play still works.'; }
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ---------------- Boot ---------------- */
+renderTeach();
+</script>
+</body>
+</html>
