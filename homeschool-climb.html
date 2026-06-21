@@ -124,19 +124,21 @@
 </div>
 
 <!-- ============================ FIREBASE (champions boards) ============================
-     One-time setup: open your LIVE phonemic-awareness.html, copy the apiKey and appId
-     from its window.GSU_FIREBASE_CONFIG block, and paste them below — then re-commit.
-     Until then the game plays perfectly; scores just save for the current session only.
-     The Firebase apiKey is NOT a secret; it is meant to live in public client code. -->
+     Configured for the gsu-handshake project (Helix Climb web app). Each book's board
+     is a collection named hs_<deck>_climb, already covered by your existing ".*_climb"
+     Firestore rule — no rules changes needed. The apiKey is NOT a secret; your
+     Firestore security rules are what actually protect the data. -->
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script>
   window.GSU_FIREBASE_CONFIG = window.GSU_FIREBASE_CONFIG || {
-    apiKey: "PASTE_YOUR_API_KEY",
+    apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
     authDomain: "gsu-handshake.firebaseapp.com",
     projectId: "gsu-handshake",
-    appId: "PASTE_YOUR_APP_ID"
+    storageBucket: "gsu-handshake.firebasestorage.app",
+    messagingSenderId: "301089416765",
+    appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
   };
 </script>
 
@@ -296,14 +298,14 @@ var DB=null, AUTH=null, sessionOnly=true;
 function saveScore(slug,name,score,total){
   if(sessionOnly||!DB) return Promise.resolve();
   var pct=Math.round(score/total*100);
-  return DB.collection('hsClimb_'+slug).add({
+  return DB.collection('hs_'+slug+'_climb').add({
     name:(name||'Climber').slice(0,24), score:score, total:total, pct:pct,
     ts: firebase.firestore.FieldValue.serverTimestamp()
   }).catch(function(){});
 }
 function topScores(slug){
   if(sessionOnly||!DB) return Promise.resolve(null);
-  return DB.collection('hsClimb_'+slug).orderBy('score','desc').limit(10).get()
+  return DB.collection('hs_'+slug+'_climb').orderBy('score','desc').limit(10).get()
     .then(function(s){ return s.docs.map(function(d){return d.data();}); })
     .catch(function(){ return null; });
 }
