@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Story Climb — Free Creative-Writing Teach-Then-Play Game | GSU</title>
+<meta name="description" content="A free Teach-Then-Play creative-writing game from Global Sovereign University. Learn the craft of storytelling one beat at a time — character and want, show-don't-tell, vivid detail, conflict and stakes, strong verbs, revision, and voice — then climb Bronze to Platinum. No fail, infinite play, spaced repetition, with GENO as your free 24/7 writing mentor." />
+<meta name="robots" content="index,follow" />
+<meta property="og:title" content="The Story Climb — Free Creative-Writing Teach-Then-Play" />
+<meta property="og:description" content="Build a story, beat by beat: a short lesson, then you make the call, climbing Bronze to Platinum. Free from Global Sovereign University." />
+<meta property="og:type" content="website" />
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/writification-climb.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is The Story Climb?","acceptedAnswer":{"@type":"Answer","text":"It is a free Teach-Then-Play creative-writing game from Global Sovereign University. Each round teaches one beat of storytelling craft in a short card, then asks you to use it on real writing. Correct calls carry you up a Bronze, Silver, Gold, and Platinum climb. There is no way to fail, you can play forever, and spaced repetition brings the beats you miss back around more often."}},
+    {"@type":"Question","name":"Will this actually make me a better writer?","acceptedAnswer":{"@type":"Answer","text":"It builds the instincts behind good storytelling — character and want, tension and stakes, vivid detail, strong verbs, and your own voice — and the habit of writing without fear. It is a coach for the moves, not a replacement for the one thing every author must do: write your own stories. Use it alongside putting real words on your own page."}},
+    {"@type":"Question","name":"Is it good for kids and homeschoolers?","acceptedAnswer":{"@type":"Answer","text":"Yes. It is plain enough for a young writer and deep enough for the adult beside them, and every question asks you to judge real writing rather than recall trivia. It is ideal for families, homeschoolers, and anyone rebuilding confidence on the page."}},
+    {"@type":"Question","name":"Who is GENO?","acceptedAnswer":{"@type":"Answer","text":"GENO is GSU's free 24/7 AI writing mentor — a robot you can actually talk to, in 32 languages. Ask him to explain show-don't-tell, suggest a stronger verb, help you find your character's want, or talk through any beat you missed."}}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"DefinedTermSet",
+  "name":"The Story Climb — Storytelling Craft Glossary",
+  "hasDefinedTerm":[
+    {"@type":"DefinedTerm","name":"Protagonist","description":"The character whose want and struggle drive the story."},
+    {"@type":"DefinedTerm","name":"Conflict","description":"The obstacle between a character and what they want; the engine of every story."},
+    {"@type":"DefinedTerm","name":"Stakes","description":"What the character stands to lose if they fail — the reason the reader cares."},
+    {"@type":"DefinedTerm","name":"Show, Don't Tell","description":"Revealing emotion and meaning through action and detail rather than stating it outright."},
+    {"@type":"DefinedTerm","name":"Turning Point","description":"The moment a character can no longer return to how things were."},
+    {"@type":"DefinedTerm","name":"Voice","description":"A writer's own honest way of seeing and saying things — the one element no one else can copy."}
+  ]
+}
+</script>
+<style>
+  :root{
+    --black:#000000; --gold:#C9A84C; --cream:#F5F1E8;
+    --ink:#0d0d0d; --line:rgba(201,168,76,.28); --dim:#bdb6a6;
+    --bronze:#b5743a; --silver:#c8c8d0; --gold-t:#C9A84C; --plat:#7fd8e6;
+    --good:#7BC47F; --bad:#d98b7a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--black);color:var(--cream);font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;display:flex;flex-direction:column}
+  a{color:var(--gold)}
+  .wrap{width:100%;max-width:880px;margin:0 auto;padding:22px 18px 60px;flex:1 0 auto}
+  header.top{text-align:center;padding:30px 18px 10px}
+  .kicker{letter-spacing:.32em;text-transform:uppercase;font-size:.66rem;color:var(--gold);font-family:Arial,Helvetica,sans-serif}
+  h1{font-size:clamp(1.9rem,6vw,3rem);color:var(--cream);margin:.25em 0 .15em;line-height:1.05}
+  h1 .sub{display:block;color:var(--gold);font-size:.5em;margin-top:.4em;font-style:italic}
+  .tagline{color:var(--dim);font-size:.98rem;max-width:560px;margin:8px auto 0}
+
+  /* progress / tier bar */
+  .climb{display:flex;align-items:center;gap:6px;justify-content:center;margin:22px auto 6px;flex-wrap:wrap}
+  .tier{font-family:Arial,Helvetica,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+        border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--dim);opacity:.5}
+  .tier.on{opacity:1;color:var(--black);font-weight:700}
+  .tier.bronze.on{background:var(--bronze);border-color:var(--bronze)}
+  .tier.silver.on{background:var(--silver);border-color:var(--silver)}
+  .tier.gold.on{background:var(--gold-t);border-color:var(--gold-t)}
+  .tier.platinum.on{background:var(--plat);border-color:var(--plat)}
+  .meterbar{height:7px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:10px auto 0;max-width:560px}
+  .meterfill{height:100%;width:0;background:linear-gradient(90deg,var(--bronze),var(--gold));transition:width .5s ease}
+  .stat{text-align:center;color:var(--dim);font-family:Arial,Helvetica,sans-serif;font-size:.74rem;margin-top:8px;letter-spacing:.05em}
+
+  .card{background:linear-gradient(180deg,#0a0a0a,#050505);border:1px solid var(--line);border-radius:16px;
+        padding:26px 22px;margin:22px auto 0;box-shadow:0 18px 50px rgba(0,0,0,.6)}
+  .phase{font-family:Arial,Helvetica,sans-serif;font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+  .teach h2{font-size:1.35rem;color:var(--cream);margin-bottom:12px;line-height:1.2}
+  .teach p{color:#e8e2d4;line-height:1.65;font-size:1.04rem}
+  .chiplabel{display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+             color:var(--black);background:var(--gold);border-radius:6px;padding:3px 9px;margin-bottom:14px}
+
+  .qtext{font-size:1.2rem;line-height:1.35;color:var(--cream);margin:4px 0 18px}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--cream);
+       font-family:Georgia,serif;font-size:1.02rem;line-height:1.4;padding:15px 16px;border-radius:11px;cursor:pointer;transition:all .15s}
+  .opt:hover{border-color:var(--gold);background:rgba(201,168,76,.07)}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:var(--good);background:rgba(123,196,127,.14);color:#dff0e0}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,139,122,.13);color:#f0ddd7}
+
+  .coach{margin-top:18px;border-left:3px solid var(--gold);background:rgba(201,168,76,.06);padding:13px 16px;border-radius:0 10px 10px 0;
+         color:#efe9da;line-height:1.55;font-size:1.0rem;display:none}
+  .coach.show{display:block}
+  .coach b{color:var(--gold)}
+
+  .btnrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .btn{font-family:Arial,Helvetica,sans-serif;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+       border-radius:10px;padding:14px 22px;cursor:pointer;border:1px solid var(--gold);background:var(--gold);color:var(--black);transition:all .15s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;color:var(--gold)}
+  .btn.ghost:hover{background:rgba(201,168,76,.1)}
+  .btn.wide{width:100%;text-align:center}
+
+  /* champions board */
+  .board{margin-top:30px;border:1px solid var(--line);border-radius:16px;padding:22px;background:rgba(255,255,255,.015)}
+  .board h3{font-size:1.15rem;color:var(--gold);margin-bottom:14px;text-align:center;letter-spacing:.02em}
+  .rowc{display:flex;justify-content:space-between;align-items:center;padding:9px 4px;border-bottom:1px solid rgba(255,255,255,.05);font-size:.98rem}
+  .rowc:last-child{border-bottom:0}
+  .rowc .rk{color:var(--gold);font-family:Arial,Helvetica,sans-serif;font-size:.8rem;width:34px}
+  .rowc .nm{flex:1;color:var(--cream)}
+  .rowc .sc{color:var(--dim);font-family:Arial,Helvetica,sans-serif;font-size:.82rem}
+  .rowc.me{background:rgba(201,168,76,.08);border-radius:8px}
+  .loadc{color:var(--dim);text-align:center;font-size:.86rem;padding:10px;font-family:Arial,Helvetica,sans-serif}
+  input.nm-in{width:100%;background:#0a0a0a;border:1px solid var(--line);color:var(--cream);font-family:Georgia,serif;
+              font-size:1rem;padding:12px 14px;border-radius:10px;margin-bottom:12px}
+
+  /* faq + footer */
+  .faq{margin-top:42px}
+  .faq h2{color:var(--gold);font-size:1.3rem;margin-bottom:14px;text-align:center}
+  .faq details{border:1px solid var(--line);border-radius:11px;padding:4px 16px;margin-bottom:10px;background:rgba(255,255,255,.012)}
+  .faq summary{cursor:pointer;padding:13px 0;font-size:1.05rem;color:var(--cream);list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::before{content:"+ ";color:var(--gold);font-weight:700}
+  .faq details[open] summary::before{content:"\2212 "}
+  .faq p{color:var(--dim);line-height:1.6;padding:0 0 14px;font-size:.98rem}
+
+  footer{flex-shrink:0;text-align:center;padding:30px 18px 26px;border-top:1px solid var(--line);color:var(--dim);font-size:.84rem;line-height:1.7}
+  footer a{color:var(--gold);text-decoration:none}
+  .backbar{text-align:center;margin-top:30px}
+  .geno-cta{display:inline-flex;align-items:center;gap:10px;margin-top:6px;border:1px solid var(--gold);background:transparent;color:var(--gold);
+            font-family:Arial,Helvetica,sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+            padding:12px 20px;border-radius:10px;cursor:pointer}
+  .geno-cta:hover{background:rgba(201,168,76,.1)}
+  .geno-cta img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+  .center{text-align:center}
+  .hide{display:none!important}
+</style>
+</head>
+<body>
+
+<style>
+.gsu-rbar{position:sticky;top:0;z-index:9000;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#000;border-bottom:1px solid rgba(201,168,76,.28);box-shadow:0 2px 14px rgba(0,0,0,.5);padding:11px 20px;font-family:Arial,Helvetica,sans-serif}
+.gsu-rbar a{color:#C9A84C;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:.3px;transition:color .15s}
+.gsu-rbar a:hover{color:#FFE9A8}
+.gsu-rbar .gsu-rbar-home{font-family:Georgia,'Times New Roman',serif;font-size:15.5px}
+.gsu-rbar .gsu-rbar-links{display:flex;gap:18px}
+@media (max-width:520px){.gsu-rbar{padding:9px 14px}.gsu-rbar a{font-size:12.5px}.gsu-rbar .gsu-rbar-links{gap:13px}}
+</style>
+<nav class="gsu-rbar" id="gsuRbar" aria-label="Return to Global Sovereign University">
+  <a class="gsu-rbar-home" href="https://www.globalsovereignuniversity.org/">&#9666; Global Sovereign University</a>
+  <span class="gsu-rbar-links">
+    <a href="https://www.globalsovereignuniversity.org/writification">Writing</a>
+    <a href="https://www.globalsovereignuniversity.org/library">The Library</a>
+  </span>
+</nav>
+
+<header class="top">
+  <div class="kicker">Global Sovereign University · Teach-Then-Play</div>
+  <h1>The Story Climb<span class="sub">Build a story, beat by beat — the craft behind every page you couldn’t put down</span></h1>
+  <p class="tagline">A short lesson, then you make the call. Climb Bronze to Platinum. You cannot fail — a miss just brings that craft back around.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- climb / progress -->
+  <div class="climb" id="climb">
+    <span class="tier bronze on">Bronze</span>
+    <span class="tier silver">Silver</span>
+    <span class="tier gold">Gold</span>
+    <span class="tier platinum">Platinum</span>
+  </div>
+  <div class="meterbar"><div class="meterfill" id="meter"></div></div>
+  <div class="stat" id="stat">Score 0 · Beat 1 of 16 · Lap 1</div>
+
+  <!-- game card -->
+  <div class="card" id="card"><!-- filled by JS --></div>
+
+  <!-- champions board -->
+  <div class="board" id="board">
+    <h3>Champions Board</h3>
+    <div class="loadc" id="boardload">Connecting…</div>
+    <div id="rows"></div>
+  </div>
+
+  <div class="backbar">
+    <button class="geno-cta" id="askGeno">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO" onerror="this.style.display='none'">
+      Ask GENO about your writing
+    </button>
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>About this game</h2>
+    <details><summary>What is The Story Climb?</summary><p>It is a free Teach-Then-Play creative-writing game from Global Sovereign University. Each round teaches one beat of storytelling craft in a short card, then asks you to use it on real writing. Correct calls carry you up a Bronze, Silver, Gold, and Platinum climb. There is no way to fail, you can play forever, and spaced repetition brings the beats you miss back around more often so they stick.</p></details>
+    <details><summary>Will this actually make me a better writer?</summary><p>It builds the instincts behind good storytelling — character and want, tension and stakes, vivid detail, strong verbs, and your own voice — and the habit of writing without fear. It is a coach for the moves, not a replacement for the one thing every author must do: write your own stories. Use it alongside putting real words on your own page.</p></details>
+    <details><summary>Is it good for kids and homeschoolers?</summary><p>Yes. It is plain enough for a young writer and deep enough for the adult beside them, and every question asks you to judge real writing rather than recall trivia. It is ideal for families, homeschoolers, and anyone rebuilding confidence on the page.</p></details>
+    <details><summary>Who is GENO?</summary><p>GENO is GSU's free 24/7 AI writing mentor — a robot you can actually talk to, in 32 languages. Ask him to explain show-don't-tell, suggest a stronger verb, help you find your character's want, or talk through any beat you missed.</p></details>
+  </section>
+
+</div>
+
+<footer>
+  <strong style="color:var(--cream)">Global Sovereign University</strong><br>
+  Part of <em>Writification</em> — learn to write, free · A hand up, not a handout<br>
+  <a href="https://www.globalsovereignuniversity.org/writification">Explore Writification</a> &nbsp;·&nbsp;
+  <a href="https://www.globalsovereignuniversity.org/library">The Library</a><br>
+  <span style="opacity:.62;font-size:.82em;line-height:1.5;display:inline-block;margin-top:10px;max-width:640px">This game teaches the craft of storytelling through real writing choices. The next step is the same one every author takes — write your own story.</span>
+</footer>
+
+<!-- GENO widget (ConvAI) -->
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+<!-- Firebase (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+/* ---------------- GENO opener ---------------- */
+document.getElementById('askGeno').addEventListener('click', function(){
+  window.dispatchEvent(new CustomEvent('geno:open'));
+  var w = document.querySelector('elevenlabs-convai');
+  if(w){ try{ (w.shadowRoot && w.shadowRoot.querySelector('button') || w.querySelector('button') || w).click(); }catch(e){} }
+});
+
+/* ---------------- Book-grounded content ---------------- */
+const BEATS = [{"tier": "bronze", "ch": "The Spark · The Blank Page", "teach": "Every story you love started as nothing — a blank page that scared its writer too. The cure is one true sentence. You can revise anything later; you can't revise an empty page. So write badly on purpose, and write now.", "q": "What's the writer's first move against a blank page?", "opts": ["Wait for perfect inspiration to strike", "Write one true sentence, even a rough one", "Outline for a month before starting", "Read someone else's book instead"], "a": 1, "coach": "Motion beats perfection. One honest sentence gives the next one somewhere to stand."}, {"tier": "bronze", "ch": "The Spark · A Story Asks a Question", "teach": "A story is a question the reader can't put down: Will she make it home? What's behind the door? Open a question early, then make the reader wait for the answer — that waiting is what turns the page.", "q": "Which opening line pulls a reader in hardest?", "opts": ["It was a normal, pleasant Tuesday.", "The house had four bedrooms and a garage.", "The letter said she had three days to disappear.", "My name is Sam and I am ten years old."], "a": 2, "coach": "A question is a debt the reader needs you to repay. That debt is suspense."}, {"tier": "bronze", "ch": "The Spark · A Character Is a Want", "teach": "A character isn't a description — it's a desire. Someone who wants something badly and has trouble getting it is already a story. Give your character one clear want and one thing standing in the way.", "q": "Which sentence gives you an actual character?", "opts": ["Mia had brown hair and green eyes.", "Mia wanted the scholarship more than she'd ever wanted anything.", "Mia was twelve years old.", "Mia lived in a tall white house."], "a": 1, "coach": "Appearance is a costume. Wanting is a heartbeat — that's where the reader leans in."}, {"tier": "bronze", "ch": "The Spark · Show the Want", "teach": "Don't announce what a character feels — let them act it out. Instead of “he was determined,” show him lacing his shoes at 5 a.m. in the rain. Readers trust what they see far more than what you tell them.", "q": "Which best shows a boy is nervous, without using the word?", "opts": ["He was very nervous about the test.", "He felt nervous and scared inside.", "He read the first question three times, and his pencil kept tapping.", "He was not calm at all."], "a": 2, "coach": "Show-don't-tell isn't a classroom rule — it's how you make a reader feel it instead of be told it."}, {"tier": "silver", "ch": "The Build · Setting Is a Feeling", "teach": "Setting isn't a real-estate listing — it's a mood. You don't need every detail of a room, just the two or three that make the reader feel something. Choose details that carry emotion, not facts.", "q": "Which detail makes a kitchen feel lonely?", "opts": ["The kitchen was twelve by fourteen feet.", "One cold plate sat at the long, empty table.", "The kitchen had a refrigerator and a stove.", "It was a standard kitchen with tile floors."], "a": 1, "coach": "Three chosen details beat thirty listed ones. Choose for feeling."}, {"tier": "silver", "ch": "The Build · Specific Beats Vague", "teach": "Specific writing is vivid writing. “A rusted blue bike with a torn seat” lives in the mind; “a bike” evaporates. When a sentence feels flat, the fix is almost always to get more specific.", "q": "Which is the strongest, most vivid detail?", "opts": ["She ate some food.", "She ate a meal.", "She ate cold ramen straight from the pot at midnight.", "She ate something in the kitchen."], "a": 2, "coach": "The concrete detail is the one a reader can see, taste, and remember."}, {"tier": "silver", "ch": "The Build · The Other Senses", "teach": "Most beginners write only what the eye sees. Real scenes have sound, smell, texture, and taste. Add one non-visual sense and a scene suddenly feels real — the crunch of gravel, rain on hot pavement.", "q": "Which sentence reaches a sense beyond sight?", "opts": ["The room was large and bright.", "The bread smelled of warm cinnamon as she opened the door.", "The walls were painted white.", "He looked at the tall green trees."], "a": 1, "coach": "Sight tells the reader where they are. The other senses put them there."}, {"tier": "silver", "ch": "The Build · Dialogue That Works", "teach": "Good dialogue isn't how people really talk — it's the interesting parts, sharpened. Cut the “hello, how are you” and start where the tension is. Every line should reveal character or push the story.", "q": "Which line of dialogue does the most work?", "opts": ["“Hello. How are you today?”", "“Fine, thanks. And you?”", "“You promised you'd never tell anyone — and you did.”", "“Nice weather we're having.”"], "a": 2, "coach": "If a line could be cut and nothing is lost, cut it. Keep the lines that carry weight."}, {"tier": "gold", "ch": "The Turn · Conflict Is the Engine", "teach": "No obstacle, no story. A character who easily gets what they want is dull; one who must fight, fail, and try again is gripping. Conflict isn't always a villain — it can be fear, time, a rule, or themselves.", "q": "Which premise has a real story engine?", "opts": ["A girl has a perfect, easy day and goes to bed happy.", "A boy wants to win the race, but his old injury flares the morning of it.", "A family eats dinner and watches TV.", "A man buys his groceries with no trouble."], "a": 1, "coach": "Trouble is the gift you give your character. Without it, there's nothing to root for."}, {"tier": "gold", "ch": "The Turn · Stakes Make Us Care", "teach": "Stakes answer the reader's question “so what?” Show what the character loses if they fail, and suddenly every scene matters. Raise the stakes and you raise the reader's pulse.", "q": "Which version makes us care the most?", "opts": ["She had to find her dog.", "She had to find her dog before the shelter closed for good at five — he was all she had left of her mom.", "She was looking for a dog.", "There was a dog somewhere."], "a": 1, "coach": "Stakes are what's at risk. Name the loss, and the reader leans all the way in."}, {"tier": "gold", "ch": "The Turn · Scene and Breath", "teach": "Stories breathe in two beats: a scene where something happens, then a breath where the character reacts and decides what's next. Action, then reaction. Skip the breath and readers feel rushed; live only in it and they feel stuck.", "q": "What should follow a big, dramatic scene?", "opts": ["Immediately another explosion", "A quiet beat where the character reacts and chooses what to do next", "A list of facts about the setting", "The end of the story"], "a": 1, "coach": "Rhythm is craft. Punch, then breath, then punch again."}, {"tier": "gold", "ch": "The Turn · The Point of No Return", "teach": "Every strong story has a moment the character can't walk back — a door that locks behind them. They say the thing, take the risk, cross the line. After that turning point, the old normal is gone for good.", "q": "What makes a moment a true turning point?", "opts": ["The character could easily undo it later", "Nothing really changes afterward", "After it, the character can't return to how things were", "It happens off the page where we don't see it"], "a": 2, "coach": "A turning point shuts a door behind the character. That closed door is what makes the ending matter."}, {"tier": "platinum", "ch": "The Finish · Strong Verbs", "teach": "The verb is the muscle of the sentence. “Sprinted” beats “ran quickly”; “whispered” beats “said softly.” When you catch yourself propping up a weak verb with an adverb, reach for one strong verb instead.", "q": "Which is the strongest sentence?", "opts": ["She walked quickly and angrily to the door.", "She went fast to the door.", "She stormed to the door.", "She moved in a fast way to the door."], "a": 2, "coach": "One strong verb does the work of a verb plus two adverbs — and hits harder."}, {"tier": "platinum", "ch": "The Finish · Cut What You Don't Need", "teach": "First drafts are generous; good revision is ruthless. If a word, a line, or a whole scene doesn't earn its place, cut it — even if you love it. Tight writing respects the reader's time.", "q": "In revision, what earns a word the right to stay?", "opts": ["You worked hard on it", "It sounds impressive", "It does a job the story actually needs", "It happens to be a long word"], "a": 2, "coach": "Cut your darlings. What remains is leaner, and every surviving word pulls its weight."}, {"tier": "platinum", "ch": "The Finish · Voice Is You on the Page", "teach": "Your voice is the way only you see the world, set down in words. It's the one thing no other writer — and no machine — can copy. Don't sand it off trying to sound like a textbook; lean into it.", "q": "What is a writer's “voice”?", "opts": ["Using the biggest words you can find", "Sounding exactly like every other author", "Your own honest way of seeing and saying things", "Writing everything in capital letters"], "a": 2, "coach": "Technique can be taught; voice is yours alone. Protect it — it's your signature."}, {"tier": "platinum", "ch": "The Finish · Endings Echo Beginnings", "teach": "A satisfying ending answers the question the opening asked — often by circling back to where you began, now changed. An image or line from page one returns, and the reader feels the whole story click shut.", "q": "What makes an ending feel satisfying?", "opts": ["It introduces brand-new characters at the last second", "It answers the story's opening question, often echoing the beginning", "It stops abruptly in the middle of a scene", "It explains the moral in a short lecture"], "a": 1, "coach": "Beginning and ending are bookends. When they rhyme, the reader feels the story was whole."}];
+
+const TIER_ORDER=['bronze','silver','gold','platinum'];
+const TIER_LABEL={bronze:'Bronze',silver:'Silver',gold:'Gold',platinum:'Platinum'};
+
+/* ---------------- Spaced repetition (Leitner) ----------------
+   Each beat carries a mastery box (0 = weak … 5 = mastered) and a "due" lap.
+   Nail a beat on the first try and it climbs a box and spaces out; miss it and
+   it drops a box and returns next lap. Intervals grow 1,1,2,3,5,8 laps.
+   Progress persists per game in localStorage so it survives a reload. */
+const INTERVAL=[1,1,2,3,5,8];
+const SR_MIN=Math.min(6,BEATS.length);
+BEATS.forEach((b,i)=>{ if(b._id===undefined){ b._id=i; b._box=0; b._due=1; } });
+
+/* ---------------- State ---------------- */
+let order=[], idx=0, score=0, lap=0, firstTry=true, answered=false;
+const total=BEATS.length;
+
+const card=document.getElementById('card');
+const meter=document.getElementById('meter');
+const statEl=document.getElementById('stat');
+
+function srSave(){
+  try{ var m={}; BEATS.forEach(b=>{ m[b._id]=[b._box,b._due]; });
+    localStorage.setItem('gsu_sr_'+COLLECTION, JSON.stringify({lap:lap,m:m})); }catch(e){}
+}
+function srLoad(){
+  try{ var raw=localStorage.getItem('gsu_sr_'+COLLECTION); if(!raw) return;
+    var d=JSON.parse(raw);
+    if(d&&d.m){ BEATS.forEach(b=>{ var s=d.m[b._id]; if(s){ b._box=s[0]; b._due=s[1]; } }); }
+    if(typeof d.lap==='number' && d.lap>0){ lap=d.lap; } }catch(e){}
+}
+function masteredCount(){ return BEATS.filter(b=>b._box>=3).length; }
+
+function buildLap(){
+  lap++;
+  var pool;
+  if(lap===1){ pool=BEATS.slice(); }
+  else{
+    pool=BEATS.filter(b=>b._due<=lap);
+    if(pool.length<SR_MIN){
+      var extra=BEATS.filter(b=>pool.indexOf(b)<0).sort((a,b)=>a._due-b._due);
+      while(pool.length<SR_MIN && extra.length){ pool.push(extra.shift()); }
+    }
+  }
+  pool.sort(()=>Math.random()-0.5);
+  pool.sort((a,b)=>a._box-b._box);
+  pool.sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier));
+  order=pool; idx=0;
+}
+
+function setTiers(t){
+  document.querySelectorAll('.tier').forEach(el=>{
+    el.classList.toggle('on', el.classList.contains(t));
+  });
+}
+function updateHUD(){
+  const beat=order[idx];
+  setTiers(beat.tier);
+  meter.style.width = Math.round(((idx)/order.length)*100)+'%';
+  statEl.textContent = `Score ${score} \u00b7 Beat ${idx+1} of ${order.length} \u00b7 Lap ${lap} \u00b7 Mastered ${masteredCount()}/${total}`;
+}
+
+function renderTeach(){
+  answered=false; firstTry=true;
+  const b=order[idx];
+  updateHUD();
+  const review=(lap>1 && b._box>0);
+  card.innerHTML = `
+    <div class="phase">${review?'Review':'Teach'} \u00b7 ${b.ch}</div>
+    <div class="teach"><p>${b.teach}</p></div>
+    <div class="btnrow"><button class="btn wide" id="ready">${review?'Ready \u2014 play \u2192':'I\u2019ve got it \u2014 play \u2192'}</button></div>`;
+  document.getElementById('ready').onclick=renderPlay;
+}
+
+function renderPlay(){
+  const b=order[idx];
+  let optsHtml = b.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('');
+  card.innerHTML = `
+    <div class="phase">Play \u00b7 ${TIER_LABEL[b.tier]}</div>
+    <div class="qtext">${b.q}</div>
+    <div class="opts">${optsHtml}</div>
+    <div class="coach" id="coach"></div>
+    <div class="btnrow hide" id="nextrow"><button class="btn wide" id="next">Next beat \u2192</button></div>`;
+  card.querySelectorAll('.opt').forEach(btn=>{
+    btn.onclick=()=>choose(parseInt(btn.dataset.i,10),btn);
+  });
+}
+
+function choose(i,btn){
+  if(answered) return;
+  const b=order[idx];
+  const coach=document.getElementById('coach');
+  if(i===b.a){
+    answered=true;
+    btn.classList.add('correct');
+    card.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+    const pts = firstTry?100:40;
+    score+=pts;
+    if(firstTry){ b._box=Math.min(5,b._box+1); } else { b._box=Math.max(0,b._box-1); }
+    b._due = lap + INTERVAL[b._box];
+    srSave();
+    coach.innerHTML=`<b>Correct${firstTry?'':' \u2014 got it on the retry'}.</b> ${b.coach} <span style="color:var(--gold)">+${pts}</span>`;
+    coach.classList.add('show');
+    document.getElementById('nextrow').classList.remove('hide');
+    document.getElementById('next').onclick=advance;
+    meter.style.width = Math.round(((idx+1)/order.length)*100)+'%';
+    statEl.textContent = `Score ${score} \u00b7 Beat ${idx+1} of ${order.length} \u00b7 Lap ${lap} \u00b7 Mastered ${masteredCount()}/${total}`;
+  } else {
+    firstTry=false;
+    btn.classList.add('wrong'); btn.disabled=true;
+    coach.innerHTML=`<b>Not quite \u2014 try again.</b> ${b.coach}`;
+    coach.classList.add('show');
+  }
+}
+
+function advance(){
+  idx++;
+  if(idx>=order.length){ showLapComplete(); return; }
+  renderTeach();
+}
+
+function showLapComplete(){
+  setTiers('platinum');
+  meter.style.width='100%';
+  statEl.textContent=`Score ${score} · Lap ${lap} complete · Mastered ${masteredCount()}/${total}`;
+  card.innerHTML = `
+    <div class="phase">Platinum \u2605 Climb complete</div>
+    <div class="teach">
+      <h2>You climbed the whole craft — from the blank page to your own voice.</h2>
+      <p>That's the full climb — blank page to voice — with a score of <b style="color:var(--gold)">${score}</b>. Put your name on the Champions Board, then keep climbing — the climb adapts to what you’ve mastered and your score keeps building.</p>
+    </div>
+    <div style="margin-top:18px">
+      <input class="nm-in" id="champName" maxlength="22" placeholder="Your name for the board" />
+      <div class="btnrow">
+        <button class="btn" id="saveScore">Post my score</button>
+        <button class="btn ghost" id="keepGoing">Keep climbing \u2192</button>
+      </div>
+    </div>`;
+  document.getElementById('keepGoing').onclick=()=>{ buildLap(); renderTeach(); };
+  document.getElementById('saveScore').onclick=saveScore;
+}
+
+/* ---------------- Firebase champions board ---------------- */
+const firebaseConfig = {
+  apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain:"gsu-handshake.firebaseapp.com",
+  projectId:"gsu-handshake",
+  storageBucket:"gsu-handshake.firebasestorage.app",
+  messagingSenderId:"301089416765",
+  appId:"1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+let db=null, uid=null, ready=false;
+const COLLECTION='writification_story_climb';
+
+try{
+  firebase.initializeApp(firebaseConfig);
+  db=firebase.firestore();
+  firebase.auth().signInAnonymously().catch(e=>console.warn('anon auth',e));
+  firebase.auth().onAuthStateChanged(u=>{ if(u){ uid=u.uid; ready=true; loadBoard(); } });
+}catch(e){
+  document.getElementById('boardload').textContent='Champions Board offline — play still works.';
+}
+
+function tierForScore(s){
+  if(s>=1200) return 'Platinum';
+  if(s>=800) return 'Gold';
+  if(s>=400) return 'Silver';
+  return 'Bronze';
+}
+
+async function saveScore(){
+  const nm=(document.getElementById('champName').value||'').trim().slice(0,22)||'Anonymous Climber';
+  const btn=document.getElementById('saveScore');
+  if(!ready||!db){ btn.textContent='Board offline'; return; }
+  btn.textContent='Posting…'; btn.disabled=true;
+  try{
+    await db.collection(COLLECTION).add({
+      name:nm, score:score, tier:tierForScore(score), uid:uid,
+      ts: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    window._lastName=nm;
+    btn.textContent='Posted \u2713';
+    loadBoard(nm);
+  }catch(e){ console.warn(e); btn.textContent='Try again'; btn.disabled=false; }
+}
+
+async function loadBoard(highlight){
+  const rows=document.getElementById('rows');
+  const load=document.getElementById('boardload');
+  if(!db){ load.textContent='Champions Board offline.'; return; }
+  load.textContent='Loading champions…';
+  try{
+    const snap=await db.collection(COLLECTION).orderBy('score','desc').limit(10).get();
+    if(snap.empty){ load.textContent='Be the first name on the board.'; rows.innerHTML=''; return; }
+    load.textContent='';
+    let html='', r=1;
+    snap.forEach(doc=>{
+      const d=doc.data();
+      const me=(highlight&&d.name===highlight)?' me':'';
+      html+=`<div class="rowc${me}"><span class="rk">${r}</span><span class="nm">${escapeHtml(d.name||'Anonymous')}</span><span class="sc">${d.score||0} · ${d.tier||''}</span></div>`;
+      r++;
+    });
+    rows.innerHTML=html;
+  }catch(e){ load.textContent='Champions Board offline — play still works.'; }
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ---------------- Boot ---------------- */
+srLoad(); buildLap(); renderTeach();
+</script>
+</body>
+</html>
