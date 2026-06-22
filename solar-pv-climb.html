@@ -239,13 +239,51 @@ const BEATS = [{"tier": "bronze","ch": "Ch.1 · Sunlight is Photons","teach": "S
 const TIER_ORDER=['bronze','silver','gold','platinum'];
 const TIER_LABEL={bronze:'Bronze',silver:'Silver',gold:'Gold',platinum:'Platinum'};
 
+/* ---------------- Spaced repetition (Leitner) ----------------
+   Each beat carries a mastery box (0 = weak … 5 = mastered) and a "due" lap.
+   Nail a beat on the first try and it climbs a box and spaces out; miss it and
+   it drops a box and returns next lap. Intervals grow 1,1,2,3,5,8 laps.
+   Progress persists per game in localStorage so it survives a reload. */
+const INTERVAL=[1,1,2,3,5,8];
+const SR_MIN=Math.min(6,BEATS.length);
+BEATS.forEach((b,i)=>{ if(b._id===undefined){ b._id=i; b._box=0; b._due=1; } });
+
 /* ---------------- State ---------------- */
-let idx=0, score=0, lap=1, firstTry=true, answered=false;
+let order=[], idx=0, score=0, lap=0, firstTry=true, answered=false;
 const total=BEATS.length;
 
 const card=document.getElementById('card');
 const meter=document.getElementById('meter');
 const statEl=document.getElementById('stat');
+
+function srSave(){
+  try{ var m={}; BEATS.forEach(b=>{ m[b._id]=[b._box,b._due]; });
+    localStorage.setItem('gsu_sr_'+COLLECTION, JSON.stringify({lap:lap,m:m})); }catch(e){}
+}
+function srLoad(){
+  try{ var raw=localStorage.getItem('gsu_sr_'+COLLECTION); if(!raw) return;
+    var d=JSON.parse(raw);
+    if(d&&d.m){ BEATS.forEach(b=>{ var s=d.m[b._id]; if(s){ b._box=s[0]; b._due=s[1]; } }); }
+    if(typeof d.lap==='number' && d.lap>0){ lap=d.lap; } }catch(e){}
+}
+function masteredCount(){ return BEATS.filter(b=>b._box>=3).length; }
+
+function buildLap(){
+  lap++;
+  var pool;
+  if(lap===1){ pool=BEATS.slice(); }
+  else{
+    pool=BEATS.filter(b=>b._due<=lap);
+    if(pool.length<SR_MIN){
+      var extra=BEATS.filter(b=>pool.indexOf(b)<0).sort((a,b)=>a._due-b._due);
+      while(pool.length<SR_MIN && extra.length){ pool.push(extra.shift()); }
+    }
+  }
+  pool.sort(()=>Math.random()-0.5);
+  pool.sort((a,b)=>a._box-b._box);
+  pool.sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier));
+  order=pool; idx=0;
+}
 
 function setTiers(t){
   document.querySelectorAll('.tier').forEach(el=>{
@@ -253,28 +291,29 @@ function setTiers(t){
   });
 }
 function updateHUD(){
-  const beat=BEATS[idx];
+  const beat=order[idx];
   setTiers(beat.tier);
-  meter.style.width = Math.round(((idx)/total)*100)+'%';
-  statEl.textContent = `Score ${score} · Beat ${idx+1} of ${total} · Lap ${lap}`;
+  meter.style.width = Math.round(((idx)/order.length)*100)+'%';
+  statEl.textContent = `Score ${score} \u00b7 Beat ${idx+1} of ${order.length} \u00b7 Lap ${lap} \u00b7 Mastered ${masteredCount()}/${total}`;
 }
 
 function renderTeach(){
   answered=false; firstTry=true;
-  const b=BEATS[idx];
+  const b=order[idx];
   updateHUD();
+  const review=(lap>1 && b._box>0);
   card.innerHTML = `
-    <div class="phase">Teach · ${b.ch}</div>
+    <div class="phase">${review?'Review':'Teach'} \u00b7 ${b.ch}</div>
     <div class="teach"><p>${b.teach}</p></div>
-    <div class="btnrow"><button class="btn wide" id="ready">I've got it — play \u2192</button></div>`;
+    <div class="btnrow"><button class="btn wide" id="ready">${review?'Ready \u2014 play \u2192':'I\u2019ve got it \u2014 play \u2192'}</button></div>`;
   document.getElementById('ready').onclick=renderPlay;
 }
 
 function renderPlay(){
-  const b=BEATS[idx];
+  const b=order[idx];
   let optsHtml = b.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('');
   card.innerHTML = `
-    <div class="phase">Play · ${TIER_LABEL[b.tier]}</div>
+    <div class="phase">Play \u00b7 ${TIER_LABEL[b.tier]}</div>
     <div class="qtext">${b.q}</div>
     <div class="opts">${optsHtml}</div>
     <div class="coach" id="coach"></div>
@@ -286,7 +325,7 @@ function renderPlay(){
 
 function choose(i,btn){
   if(answered) return;
-  const b=BEATS[idx];
+  const b=order[idx];
   const coach=document.getElementById('coach');
   if(i===b.a){
     answered=true;
@@ -294,41 +333,38 @@ function choose(i,btn){
     card.querySelectorAll('.opt').forEach(o=>o.disabled=true);
     const pts = firstTry?100:40;
     score+=pts;
-    coach.innerHTML=`<b>Correct${firstTry?'':' — got it on the retry'}.</b> ${b.coach} <span style="color:var(--gold)">+${pts}</span>`;
+    if(firstTry){ b._box=Math.min(5,b._box+1); } else { b._box=Math.max(0,b._box-1); }
+    b._due = lap + INTERVAL[b._box];
+    srSave();
+    coach.innerHTML=`<b>Correct${firstTry?'':' \u2014 got it on the retry'}.</b> ${b.coach} <span style="color:var(--gold)">+${pts}</span>`;
     coach.classList.add('show');
     document.getElementById('nextrow').classList.remove('hide');
     document.getElementById('next').onclick=advance;
-    meter.style.width = Math.round(((idx+1)/total)*100)+'%';
-    statEl.textContent = `Score ${score} · Beat ${idx+1} of ${total} · Lap ${lap}`;
+    meter.style.width = Math.round(((idx+1)/order.length)*100)+'%';
+    statEl.textContent = `Score ${score} \u00b7 Beat ${idx+1} of ${order.length} \u00b7 Lap ${lap} \u00b7 Mastered ${masteredCount()}/${total}`;
   } else {
     firstTry=false;
     btn.classList.add('wrong'); btn.disabled=true;
-    coach.innerHTML=`<b>Not quite — try again.</b> ${b.coach}`;
+    coach.innerHTML=`<b>Not quite \u2014 try again.</b> ${b.coach}`;
     coach.classList.add('show');
   }
 }
 
 function advance(){
   idx++;
-  if(idx>=total){
-    idx=0; lap++;
-    BEATS.sort(()=>Math.random()-0.5);
-    BEATS.sort((a,b)=>TIER_ORDER.indexOf(a.tier)-TIER_ORDER.indexOf(b.tier)); // keep climb order
-    showLapComplete();
-    return;
-  }
+  if(idx>=order.length){ showLapComplete(); return; }
   renderTeach();
 }
 
 function showLapComplete(){
   setTiers('platinum');
   meter.style.width='100%';
-  statEl.textContent=`Score ${score} · Climb complete · Lap ${lap-1} done`;
+  statEl.textContent=`Score ${score} · Lap ${lap} complete · Mastered ${masteredCount()}/${total}`;
   card.innerHTML = `
     <div class="phase">Platinum \u2605 Climb complete</div>
     <div class="teach">
       <h2>You followed the whole chain — from a single photon to a safe, measured rooftop system.</h2>
-      <p>That's the whole climb, Bronze to Platinum, with a score of <b style="color:var(--gold)">${score}</b>. Put your name on the Champions Board, then keep climbing — the beats reshuffle and your score keeps building.</p>
+      <p>That's the whole climb, Bronze to Platinum, with a score of <b style="color:var(--gold)">${score}</b>. Put your name on the Champions Board, then keep climbing — the climb adapts to what you’ve mastered and your score keeps building.</p>
     </div>
     <div style="margin-top:18px">
       <input class="nm-in" id="champName" maxlength="22" placeholder="Your name for the board" />
@@ -337,7 +373,7 @@ function showLapComplete(){
         <button class="btn ghost" id="keepGoing">Keep climbing \u2192</button>
       </div>
     </div>`;
-  document.getElementById('keepGoing').onclick=()=>renderTeach();
+  document.getElementById('keepGoing').onclick=()=>{ buildLap(); renderTeach(); };
   document.getElementById('saveScore').onclick=saveScore;
 }
 
@@ -370,7 +406,7 @@ function tierForScore(s){
 }
 
 async function saveScore(){
-  const nm=(document.getElementById('champName').value||'').trim().slice(0,22)||'Anonymous Mason';
+  const nm=(document.getElementById('champName').value||'').trim().slice(0,22)||'Anonymous Climber';
   const btn=document.getElementById('saveScore');
   if(!ready||!db){ btn.textContent='Board offline'; return; }
   btn.textContent='Posting…'; btn.disabled=true;
@@ -407,7 +443,7 @@ async function loadBoard(highlight){
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 /* ---------------- Boot ---------------- */
-renderTeach();
+srLoad(); buildLap(); renderTeach();
 </script>
 </body>
 </html>
