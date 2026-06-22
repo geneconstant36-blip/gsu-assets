@@ -1,0 +1,120 @@
+<!-- ================================================================
+     GSU · LIVING GENO v2  (animated + VOICE-REACTIVE avatar)
+     ROUTING: Webflow Code Embed. Paste anywhere GENO should greet people.
+     Loads NO second ConvAI script — it opens the ONE sitewide GENO widget
+     (geno:open + widget click) and tees that widget's audio so GENO
+     visibly pulses to his own voice. One-loader law intact.
+     ================================================================ -->
+<script>
+/* Audio tee — installs as early as possible. Whenever any Web Audio node
+   connects to its context's speakers, we also feed an analyser, so we can
+   read GENO's live speech amplitude without touching the widget. Safe + silent. */
+(function(){
+  if(window.__genoAudioTee) return; window.__genoAudioTee=true;
+  window.__genoAnalysers = window.__genoAnalysers || [];
+  try{
+    var orig = AudioNode.prototype.connect;
+    AudioNode.prototype.connect = function(target){
+      try{
+        var ctx=this.context;
+        if(ctx && target && target===ctx.destination){
+          if(!ctx.__genoAn){ var an=ctx.createAnalyser(); an.fftSize=256; an.smoothingTimeConstant=.75;
+            ctx.__genoAn=an; window.__genoAnalysers.push(an); }
+          try{ orig.call(this, ctx.__genoAn); }catch(e){}
+        }
+      }catch(e){}
+      return orig.apply(this, arguments);
+    };
+  }catch(e){}
+})();
+</script>
+<style>
+  .gsu-gl-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;
+    padding:46px 16px;background:#000;font-family:Georgia,'Times New Roman',serif;text-align:center}
+  .gsu-gl-stage{position:relative;width:210px;height:210px;display:flex;align-items:center;
+    justify-content:center;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent;--amp:0}
+  .gsu-gl-halo{position:absolute;z-index:1;width:188px;height:188px;border-radius:50%;
+    background:conic-gradient(from 0deg,rgba(201,168,76,0) 0%,rgba(201,168,76,.55) 18%,
+      rgba(201,168,76,0) 40%,rgba(201,168,76,.40) 64%,rgba(201,168,76,0) 86%,rgba(201,168,76,.5) 100%);
+    filter:blur(7px);opacity:.5;animation:gnoSpin 9s linear infinite;will-change:transform}
+  .gsu-gl-react{position:absolute;z-index:2;width:152px;height:152px;border-radius:50%;pointer-events:none;
+    box-shadow:0 0 calc(16px + var(--amp)*72px) rgba(201,168,76, calc(.14 + var(--amp)*.66));
+    transform:scale(calc(1 + var(--amp)*0.07));transition:box-shadow .06s linear,transform .06s linear}
+  .gsu-gl-ring{position:absolute;z-index:2;width:152px;height:152px;border-radius:50%;
+    border:1px solid rgba(201,168,76,.5);animation:gnoPulse 3.6s ease-out infinite;will-change:transform,opacity}
+  .gsu-gl-ring.r2{animation-delay:1.2s}
+  .gsu-gl-ring.r3{animation-delay:2.4s}
+  .gsu-gl-tilt{position:relative;z-index:3;transition:transform .5s ease}
+  .gsu-gl-blink{transition:transform .12s ease}
+  .gsu-gl-head{display:block;width:152px;height:152px;border-radius:50%;object-fit:cover;
+    box-shadow:0 0 30px rgba(201,168,76,.42),0 6px 26px rgba(0,0,0,.6);
+    animation:gnoBreathe 4.7s ease-in-out infinite;will-change:transform;transition:box-shadow .35s ease}
+  .gsu-gl-stage.is-tilt  .gsu-gl-tilt{transform:rotate(3deg)}
+  .gsu-gl-stage.is-blink .gsu-gl-blink{transform:scaleY(.88)}
+  .gsu-gl-stage.is-active .gsu-gl-ring,.gsu-gl-stage.is-speaking .gsu-gl-ring{animation-duration:1.5s;border-color:rgba(201,168,76,.8)}
+  .gsu-gl-stage.is-speaking .gsu-gl-ring{animation-duration:1.15s}
+  .gsu-gl-stage.is-active .gsu-gl-halo,.gsu-gl-stage.is-speaking .gsu-gl-halo{opacity:.95;animation-duration:4.2s}
+  .gsu-gl-stage.is-active .gsu-gl-head,.gsu-gl-stage:hover .gsu-gl-head{box-shadow:0 0 50px rgba(201,168,76,.72),0 6px 26px rgba(0,0,0,.6)}
+  @keyframes gnoBreathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-9px) scale(1.025)}}
+  @keyframes gnoPulse{0%{transform:scale(.84);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+  @keyframes gnoSpin{to{transform:rotate(360deg)}}
+  @keyframes gnoDot{0%,100%{opacity:1}50%{opacity:.35}}
+  .gsu-gl-name{font-family:Arial,Helvetica,sans-serif;font-weight:700;letter-spacing:.04em;
+    color:#F5F1E8;font-size:1.08rem;display:flex;align-items:center;gap:9px;justify-content:center}
+  .gsu-gl-status{font-weight:400;font-size:.74rem;color:#9b9482;letter-spacing:.14em;text-transform:uppercase}
+  .gsu-gl-dot{width:9px;height:9px;border-radius:50%;background:#7BC47F;box-shadow:0 0 8px #7BC47F;animation:gnoDot 2.4s ease-in-out infinite}
+  .gsu-gl-hint{font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#bdb6a6;max-width:360px;line-height:1.55}
+  @media (prefers-reduced-motion:reduce){.gsu-gl-head,.gsu-gl-halo,.gsu-gl-ring,.gsu-gl-dot{animation:none!important}}
+</style>
+
+<div class="gsu-gl-wrap">
+  <div class="gsu-gl-stage" id="gsuGenoLive" role="button" tabindex="0" aria-label="Talk to GENO, your free AI tutor">
+    <div class="gsu-gl-halo"></div>
+    <div class="gsu-gl-react"></div>
+    <div class="gsu-gl-ring r1"></div>
+    <div class="gsu-gl-ring r2"></div>
+    <div class="gsu-gl-ring r3"></div>
+    <div class="gsu-gl-tilt"><div class="gsu-gl-blink">
+      <img class="gsu-gl-head" src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor" />
+    </div></div>
+  </div>
+  <div class="gsu-gl-meta">
+    <div class="gsu-gl-name"><span class="gsu-gl-dot"></span> GENO <span class="gsu-gl-status">online · 24/7</span></div>
+    <div class="gsu-gl-hint">Tap GENO to talk — a robot you can actually talk to, in 32 languages.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var stage=document.getElementById('gsuGenoLive'); if(!stage) return;
+  var et, speaking=false;
+  function energize(ms){ stage.classList.add('is-active'); clearTimeout(et);
+    et=setTimeout(function(){ stage.classList.remove('is-active'); }, ms||15000); }
+  function openGeno(){
+    try{ window.dispatchEvent(new CustomEvent('geno:open')); }catch(e){}
+    try{ var w=document.querySelector('elevenlabs-convai');
+      if(w){ ((w.shadowRoot&&w.shadowRoot.querySelector('button'))||w.querySelector('button')||w).click(); } }catch(e){}
+    energize(25000);
+  }
+  stage.addEventListener('click',openGeno);
+  stage.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openGeno(); }});
+  stage.addEventListener('mouseenter',function(){ energize(2600); });
+  (function tilt(){ setTimeout(function(){ stage.classList.add('is-tilt');
+    setTimeout(function(){ stage.classList.remove('is-tilt'); },700); tilt(); }, 4200+Math.random()*5200); })();
+  (function blink(){ setTimeout(function(){ stage.classList.add('is-blink');
+    setTimeout(function(){ stage.classList.remove('is-blink'); },140); blink(); }, 3200+Math.random()*4200); })();
+  /* voice reactivity — read GENO's live amplitude and drive the glow */
+  function amp(){ var a=window.__genoAnalysers||[],max=0;
+    for(var i=0;i<a.length;i++){ var an=a[i];
+      try{ var b=an.__b||(an.__b=new Uint8Array(an.fftSize)); an.getByteTimeDomainData(b);
+        var s=0; for(var j=0;j<b.length;j++){ var v=(b[j]-128)/128; s+=v*v; }
+        var r=Math.sqrt(s/b.length); if(r>max)max=r; }catch(e){} }
+    return max; }
+  var sm=0;
+  (function tick(){ var v=amp(); sm+=(v-sm)*0.35; var lvl=Math.max(0,Math.min(1,sm*3.4));
+    stage.style.setProperty('--amp', lvl.toFixed(3));
+    if(lvl>0.04){ if(!speaking){speaking=true; stage.classList.add('is-speaking');} energize(1400); }
+    else if(speaking){ speaking=false; stage.classList.remove('is-speaking'); }
+    requestAnimationFrame(tick); })();
+})();
+</script>
