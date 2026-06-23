@@ -128,6 +128,21 @@
       {q:"Which of these is a hard igneous stone prized for durability?",o:["Limestone","Sandstone","Granite","Slate"],a:2,e:"Granite is igneous \u2014 dense and weather-resistant. Limestone and sandstone are softer sedimentary stones; slate is metamorphic."},
       {q:"To \u201cdress\u201d a stone means to:",o:["Clean off the dirt","Shape and finish its face and edges","Seal it against rain","Lay it in mortar"],a:1,e:"Dressing is working the stone to size and finish with chisel and mallet \u2014 the skill that separates a mason from a stacker."},
       {q:"A wall that is \u201cplumb\u201d is:",o:["Perfectly horizontal","Perfectly vertical","Slightly curved","Filled solid with mortar"],a:1,e:"Plumb means truly vertical (level means truly horizontal). A mason checks plumb constantly \u2014 gravity is unforgiving over many courses."}
+    ]},
+
+  "residential-framing":{series:"Tradification",title:"The Residential Framing Challenge",bookUrl:"/residential-framing",badges:TB("Master Framer"),
+    genoOpen:"I have read all of Residential Framing — The Geometry of Shelter. Ten questions on studs, plates, and the load path. I will explain every one.",
+    questions:[
+      {q:"The three softwoods blended together in “SPF” framing lumber are:",o:["steel, pine, and fir","spruce, pine, and fir","sycamore, poplar, and fir","spruce, plywood, and foam"],a:1,e:"SPF is spruce-pine-fir — a blend that balances strength, workability, and cost, which is why it is so common in residential framing."},
+      {q:"For most framing, which SPF grades give the best balance of strength and cost?",o:["No. 3 only","Select Structural only","No. 1 and No. 2","any grade works the same"],a:2,e:"Grades run from Select Structural (highest) down to No. 3. For framing you generally want No. 1 and No. 2 — strong enough, without overpaying."},
+      {q:"The sill plate — the first wood anchored to the concrete foundation — should be:",o:["standard untreated SPF","pressure-treated lumber","Hem-Fir","plywood"],a:1,e:"Pressure-treated resists rot and insects and blocks moisture rising from the concrete. It is often a building-code requirement for that very reason."},
+      {q:"In a wall frame, the horizontal board on the subfloor that the studs stand on is the:",o:["top plate","sole plate","ridge board","header"],a:1,e:"The sole plate ties the wall to the floor system and carries the wall’s weight down toward the foundation — the floor’s version of the sill plate."},
+      {q:"The horizontal member that caps the studs at the top of a wall is the:",o:["sill plate","top plate","sole plate","joist"],a:1,e:"The top plate ties the studs together and distributes the load from the roof and upper floors down through them."},
+      {q:"Why do builders often install a DOUBLE top plate?",o:["to use up extra lumber","for greater stiffness, and to carry the joists or rafters above","purely for appearance","top plates are never doubled"],a:1,e:"The second plate adds stiffness and gives the ceiling joists and rafters a solid place to land and tie into."},
+      {q:"On a framing (rafter) square, “rise” and “run” mean:",o:["length and width","vertical distance and horizontal distance","price and weight","two grades of wood"],a:1,e:"Rise is how far the roof goes up; run is how far it goes across. Together they set the pitch."},
+      {q:"A roof that rises 4 inches for every 12 inches of run has a pitch of:",o:["12:4","4:12","1:4","4:1"],a:1,e:"Rise-over-run: 4 inches up per 12 across is a 4:12 pitch — a common, balanced residential roof slope."},
+      {q:"Rafters carry the roof load down and transfer it to:",o:["the sill plate directly","the top plates of the walls","the foundation directly","the window headers"],a:1,e:"Rafters run from the ridge down to the top plates — that is where the roof’s weight (plus snow and wind) first hands off to the walls."},
+      {q:"The complete “load path” carries a building’s weight:",o:["only along the roof","from roof to rafters to top plates to studs to sole plate to foundation to the ground","sideways into the walls and out","up from the foundation to the roof"],a:1,e:"Gravity travels a well-defined path down through the frame to the ground — exactly what the Load-Path Sandbox on this page lets you watch and feel."}
     ]}
 
   };
