@@ -1,0 +1,134 @@
+/* ============================================================
+   GSU CHALLENGE BANKS  ·  gsu-book-banks.js
+   ROUTING: host on GitHub (gsu-assets root) →
+     https://read.globalsovereignuniversity.org/gsu-book-banks.js
+   Every question is drawn from the book's own text. To add a book,
+   copy one block and fill it in. Load this BEFORE gsu-challenge.js.
+   ============================================================ */
+(function(){
+  // Reading-pillar badge ladder
+  var RB=[
+    {min:90,name:"Platinum Reader",line:"Flawless. You understand reading the way the science of reading does."},
+    {min:75,name:"Gold Reader",line:"Strong command of how reading really works."},
+    {min:55,name:"Silver Reader",line:"Solid footing \u2014 a little more and it\u2019s yours."},
+    {min:35,name:"Bronze Reader",line:"You\u2019ve started the climb. Run it again to rise."},
+    {min:0,name:"Keep Climbing",line:"Every reader starts here. Try again \u2014 GENO will walk you through it."}
+  ];
+  // Trades badge ladder (pass the top title)
+  function TB(master){return [
+    {min:90,name:master,line:"Master-level. You read this trade like a seasoned pro."},
+    {min:75,name:"Journeyman",line:"Strong, dependable command of the craft."},
+    {min:55,name:"Apprentice",line:"Good footing \u2014 keep building the hours."},
+    {min:35,name:"Pre-Apprentice",line:"You\u2019ve started. Run it again to rise."},
+    {min:0,name:"Keep Climbing",line:"Every tradesperson starts here. Try again \u2014 GENO will coach you."}
+  ];}
+
+  window.GSU_BANKS={
+
+  "phonics":{series:"Reading Helix \u00b7 Vol. 2",title:"The Phonics Challenge",bookUrl:"/phonics",badges:RB,
+    genoOpen:"I\u2019ve read all of The Code That Unlocks Reading. Ten questions on how letters become sounds \u2014 I\u2019ll explain each one.",
+    questions:[
+      {q:"The \u201calphabetic principle\u201d is the idea that written English\u2026",o:["stands for whole ideas, like little pictures","represents spoken sounds \u2014 letters stand for phonemes","is mostly random and must be memorized","is read by word shape, not letters"],a:1,e:"English writing represents sound first, and meaning comes after the sound. That\u2019s why learning the code lets you read words you\u2019ve never seen."},
+      {q:"A \u201cgrapheme\u201d is\u2026",o:["always a single letter","a letter or letter-group that spells one sound","a whole syllable","a punctuation mark"],a:1,e:"A grapheme can be one letter (t), two (sh), three (tch), even four (igh) \u2014 all spelling a single phoneme."},
+      {q:"How many sounds (phonemes) are in the word \u201cship\u201d?",o:["2","3","4","5"],a:1,e:"Three: /sh/ /i/ /p/. Four letters, but \u201csh\u201d is one grapheme for one sound."},
+      {q:"For a beginning reader, the most useful thing about a letter is its\u2026",o:["name","sound","shape","color"],a:1,e:"The name \u201ca\u201d (ay) isn\u2019t the sound you need in \u201ccat.\u201d Phonics teaches sound values, not the alphabet names."},
+      {q:"\u201cSynthetic phonics\u201d teaches reading by\u2026",o:["memorizing whole-word shapes","blending sounds together to build words","guessing from the pictures","reading only already-familiar words"],a:1,e:"Synthetic means synthesize: you blend /k/ /a/ /t/ into \u201ccat.\u201d The code is taught directly, then practiced in words that use it."},
+      {q:"Once you know the patterns, roughly how predictable is English spelling?",o:["about 25%","about 50%","about 84%","exactly 100%"],a:2,e:"English looks chaotic but is about 84% predictable \u2014 most words decode if you know the patterns and where they apply."},
+      {q:"The /k/ sound is spelled \u201cc\u201d in cat, \u201ck\u201d in kit, and \u201cck\u201d in back. This shows English\u2026",o:["is purely random","spells one sound several predictable ways","has no rules at all","only ever uses \u201cc\u201d for /k/"],a:1,e:"c before a/o/u, k before e/i/y, ck after a short vowel \u2014 many spellings, but each has its place. That\u2019s the kind of order phonics reveals."},
+      {q:"\u201cOrthographic mapping\u201d (Ehri) is how\u2026",o:["you memorize words as pictures","decoded words become instant sight words in memory","you guess words from context","you skip the hard words"],a:1,e:"Sight reading isn\u2019t visual memorizing \u2014 it\u2019s the result of bonding a word\u2019s spelling to its sound and meaning through accurate decoding."},
+      {q:"A learner who reads \u201ccat\u201d but spells it \u201ckat\u201d has\u2026",o:["failed at phonics","grasped the principle and is still learning English\u2019s spelling conventions","simply guessed","memorized it wrong"],a:1,e:"They proved sounds map to letters \u2014 the principle. Now they learn which grapheme English prefers. Spelling actually strengthens reading."},
+      {q:"Why does phonics \u201cscale\u201d when memorizing whole words does not?",o:["phonics is just faster to test","one small set of patterns can read endless new words","memorizing is against the rules","phonics needs no practice"],a:1,e:"Learn the code once and every new word is a fresh combination of the same patterns. Memorizing makes every single word a brand-new task."}
+    ]},
+
+  "decoding":{series:"Reading Helix \u00b7 Vol. 3",title:"The Decoding Challenge",bookUrl:"/decoding",badges:RB,
+    genoOpen:"From The Reader\u2019s Toolkit. Knowing a rule and using it under pressure are two different things \u2014 let\u2019s test the difference.",
+    questions:[
+      {q:"What\u2019s the difference between knowing phonics and decoding?",o:["there is no real difference","knowing is explaining the rule; decoding is using it while you read","decoding is the easier of the two","decoding is only for young children"],a:1,e:"Knowing phonics is being able to say what letters can do. Decoding is making them do it in real time, while the sentence keeps moving."},
+      {q:"\u201cDeclarative\u201d knowledge is \u201cI know that.\u201d \u201cProcedural\u201d knowledge is\u2026",o:["\u201cI know that\u201d too","\u201cI know how\u201d","\u201cI know why\u201d","\u201cI know when\u201d"],a:1,e:"Procedural is \u201cI know how\u201d \u2014 the rule performed at the speed of life, not just recited."},
+      {q:"The decoding mindset replaces guessing, skipping, and freezing with one move:",o:["guess faster","engage \u2014 work the word","skip and keep going","memorize its shape"],a:1,e:"Engage means you don\u2019t need instant success to begin. You start with what you notice and build the word."},
+      {q:"Meeting a long word like \u201cconsequentialist,\u201d the skilled move is to\u2026",o:["guess from the first letter","break it into chunks: con\u00b7se\u00b7quen\u00b7tial\u00b7ist","skip it entirely","memorize the whole shape"],a:1,e:"Long words are made of pronounceable parts. Find the chunks and you can build a word you\u2019ve never seen."},
+      {q:"Used the right way, context (the sentence) is for\u2026",o:["inventing the word before you read it","confirming the word after you decode it","replacing hard words with easy ones","ignoring the meaning"],a:1,e:"Context confirms an accurate decode \u2014 it shouldn\u2019t be used to substitute a guess for the word on the page."},
+      {q:"Catching your own mistake and fixing it mid-sentence is\u2026",o:["a sign you can\u2019t read","a sign of strength \u2014 you\u2019re monitoring meaning","a waste of time","cheating"],a:1,e:"Self-correction means you\u2019re evaluating whether the sounds match a real word and fit the sentence. That monitoring is the heart of real reading."},
+      {q:"Reading \u201ccat\u201d as k-uh\u2026a\u2026t-uh and getting nothing usually means\u2026",o:["English is just irregular","the unit is too small \u2014 blend by chunks, not single letters","the vowels are silent","the word must be memorized"],a:1,e:"Letter-by-letter labor overloads working memory. Decoding works best on chunks and syllables."},
+      {q:"Why is the effort of accurate decoding \u201cworth it\u201d?",o:["it just wastes time","each accurate decode helps store the word as an instant sight word","it impresses other people","it\u2019s required by law"],a:1,e:"The struggle isn\u2019t wasted \u2014 when it\u2019s accurate, it\u2019s the very effort that makes the word effortless next time."},
+      {q:"Guessing \u201ccontract\u201d for \u201cconfidentiality\u201d is risky because\u2026",o:["it\u2019s faster and perfectly fine","you practice being approximate and never map the real word","guessing is always grammatically wrong","context is useless"],a:1,e:"A skipped or guessed word never gets stored \u2014 so it stays unfamiliar forever, just as hard the next time."},
+      {q:"Decoding is best described as\u2026",o:["a fact you recall","an active process you perform","a talent you\u2019re born with","a memory test"],a:1,e:"Decoding isn\u2019t passive recognition \u2014 it\u2019s a series of actions: scan, chunk, try, adjust, confirm. You can learn and trust it."}
+    ]},
+
+  "vocabulary":{series:"Reading Helix \u00b7 Vol. 5",title:"The Vocabulary Challenge",bookUrl:"/vocabulary",badges:RB,
+    genoOpen:"From The Words You Know. Vocabulary isn\u2019t memorizing lists \u2014 it\u2019s how words really take root. Let\u2019s see what you\u2019ve got.",
+    questions:[
+      {q:"\u201cReceptive\u201d vocabulary is the words you ____; \u201cexpressive\u201d is the words you ____.",o:["use / understand","understand / use","read / spell","hear / see"],a:1,e:"Receptive is what you understand (reading, listening). Expressive is what you can summon to speak and write."},
+      {q:"Why do you understand far more words than you actually use?",o:["retrieval is easier than recognition","recognition is easier than retrieval","they\u2019re exactly the same","neither one matters"],a:1,e:"Recognizing a word is like spotting a face in a crowd; producing one is like recalling a name under pressure. Recognition is easier."},
+      {q:"\u201cShelf words\u201d become \u201chand words\u201d mainly through\u2026",o:["memorizing a definition once","repeated meaningful encounters and low-stakes practice","copying the word ten times","reading it silently a single time"],a:1,e:"A word met four times in four real sentences sticks; a word memorized once for a quiz does not."},
+      {q:"Isabel Beck\u2019s \u201cTier 2\u201d words are\u2026",o:["everyday words learned through living","rare, showy words","narrow technical jargon","high-utility academic words that cross every subject"],a:3,e:"Tier 2 \u2014 analyze, interpret, consequently, significant \u2014 is the middle band that travels across serious text and quietly controls access to adult life."},
+      {q:"In scientific writing, \u201csignificant\u201d usually means\u2026",o:["very loud","tied to statistics or evidence \u2014 a specific meaning","large in size","colorful"],a:1,e:"\u201cImportant\u201d gets you through conversation but not science. A reader who only knows the casual meaning can misread confident prose while feeling confident."},
+      {q:"Being able to recite a word\u2019s dictionary definition is\u2026",o:["the deepest kind of word knowledge","only the thinnest layer of knowing a word","proof you can use it fluently","completely unnecessary"],a:1,e:"Word knowledge is layered. A definition touches the surface; real knowing shows up in comprehension and flexible use."},
+      {q:"\u201cUse it in a sentence\u201d can mislead because\u2026",o:["it proves deep understanding","it often produces empty, grammatical sentences with no real grasp","it\u2019s the fastest way to learn","it always fails"],a:1,e:"\u201cI was reluctant to eat my dinner\u201d shows you know where an adjective goes \u2014 not that you understand the word\u2019s situations and tone."},
+      {q:"\u201cGood vocabulary\u201d mostly means\u2026",o:["using fancy words","precision and access, not fancy words","speaking quickly","knowing a bigger alphabet"],a:1,e:"A word like \u201ccontrast\u201d isn\u2019t fancy \u2014 it\u2019s efficient. Treat words as tools, not status symbols, and practice stops being scary."},
+      {q:"When a text uses the word \u201cconsequently,\u201d it is signaling that\u2026",o:["a list is starting","a cause-and-effect result is coming","the author disagrees","the subject is changing"],a:1,e:"Words like consequently, however, and fundamental are reading signals \u2014 they tell you what kind of move the text is making."},
+      {q:"Vocabulary growth is best understood as\u2026",o:["a switch that flips on","a gradual migration from unknown to automatic","pure memory work","fixed at birth"],a:1,e:"Words migrate: unknown \u2192 familiar \u2192 understood in context \u2192 retrievable \u2192 automatic. Receptive growth leads; expressive follows."}
+    ]},
+
+  "real-reading-comprehension":{series:"Reading Helix \u00b7 The Summit",title:"The Comprehension Challenge",bookUrl:"/real-reading-comprehension",badges:RB,
+    genoOpen:"This is the capstone of the Reading Helix. Comprehension is where everything beneath it finally converges \u2014 let\u2019s test it.",
+    questions:[
+      {q:"The Simple View of Reading is close to a formula. Reading comprehension =",o:["decoding + language comprehension","decoding \u00d7 language comprehension","vocabulary \u00d7 speed","phonics + fluency"],a:1,e:"Decoding multiplied by language comprehension \u2014 and because it\u2019s multiplied, the two must BOTH be present."},
+      {q:"Because the two factors are multiplied, not added\u2026",o:["you can safely skip one","a zero in either one collapses comprehension","addition would give the same result","only decoding matters"],a:1,e:"Flawless word-reading with weak understanding fails; rich understanding with weak decoding fails just the same."},
+      {q:"\u201cI can read every word aloud but can\u2019t answer questions about it.\u201d This is usually\u2026",o:["a sign of low intelligence","a fluency-and-decoding bottleneck \u2014 no energy left for meaning","a vision problem","simple boredom"],a:1,e:"When the mind spends all its energy sounding out words, there\u2019s nothing left to follow meaning. It\u2019s the most misdiagnosed problem in reading."},
+      {q:"The usual fix for that bottleneck is\u2026",o:["more comprehension worksheets","shore up decoding and fluency until reading is automatic","just read faster","avoid hard texts"],a:1,e:"It\u2019s rarely more comprehension drills \u2014 it\u2019s strengthening the lower pillars until the mind is finally free to think."},
+      {q:"\u201cNarration\u201d as a comprehension method means\u2026",o:["copying the text out","telling back what you read, in your own words","answering multiple-choice questions","underlining the nouns"],a:1,e:"Narration is more honest than any quiz because it forces the mind to attend, select, sequence, and express."},
+      {q:"Socratic discussion pushes a reader past \u201cwhat happened\u201d toward\u2026",o:["spelling and grammar","why, what if, and how do you know","reading speed","memorizing facts"],a:1,e:"Those questions turn comprehension from a test into a habit of thinking."},
+      {q:"In the book\u2019s framework, comprehension is\u2026",o:["a separate worksheet skill","the product of decoding, fluency, and vocabulary coming together","a trick bolted on top of reading","guessing the theme"],a:1,e:"Comprehension is what happens when everything beneath it converges so the mind is free to interpret, infer, and synthesize."},
+      {q:"Where does Comprehension sit in the Reading Helix?",o:["the very first step","the summit the other pillars were always building toward","an optional extra","the same thing as phonics"],a:1,e:"Phonics built the code, Decoding put it to work, Fluency made it automatic, Vocabulary supplied meaning \u2014 Comprehension is the last climb."},
+      {q:"A reader with rich understanding but very weak decoding will\u2026",o:["comprehend perfectly anyway","still fail \u2014 a zero in one factor collapses the result","just read more slowly","no longer need vocabulary"],a:1,e:"That\u2019s the power of the multiplication: weak decoding drags the whole product toward zero, no matter how strong understanding is."},
+      {q:"The view from the top of the Reading Helix is\u2026",o:["a faster reader","a reader who can no longer be misled","a bigger vocabulary list","a perfect speller"],a:1,e:"Understanding, judgment, and the freedom to think for yourself on the page \u2014 that\u2019s what reading was always for."}
+    ]},
+
+  "trades-geometry":{series:"Sovereign Trades",title:"The Trades Geometry Challenge",bookUrl:"/trades-geometry",badges:TB("Master of Layout"),
+    genoOpen:"The working math every trade runs on. Lock the job to gravity and everything else follows \u2014 let\u2019s test your lines and levels.",
+    questions:[
+      {q:"A line that is \u201clevel\u201d is\u2026",o:["vertical","perpendicular to gravity (horizontal)","at a 45-degree angle","parallel to the nearest wall"],a:1,e:"True level is perpendicular to gravity everywhere along it. Plumb is the other direction \u2014 the way gravity pulls."},
+      {q:"\u201cPlumb\u201d means\u2026",o:["perfectly horizontal","the direction gravity pulls (vertical)","a slight, intentional slope","square to the floor"],a:1,e:"Plumb is vertical \u2014 the direction a hanging weight points. Level and plumb together lock the project to gravity."},
+      {q:"How do you check whether a spirit level is telling the truth?",o:["shake it and listen","read the bubble, rotate it 180\u00b0 in the same spot \u2014 it should read the same","dunk it in water","just trust it, always"],a:1,e:"If the bubble shifts when you flip it end-for-end, the vial is out of calibration and the tool is lying to you. The check takes seconds."},
+      {q:"A \u201cbenchmark\u201d on a job site is\u2026",o:["the most expensive tool in the truck","a chosen reference elevation everyone agrees not to move","exactly sea level","a kind of saw"],a:1,e:"It doesn\u2019t need to be sea level \u2014 it needs to be your level, the one point everyone works from and nobody moves."},
+      {q:"Why measure everything from one benchmark?",o:["it looks more professional","so errors don\u2019t wander and accumulate across the job","to use more tools","because code requires it"],a:1,e:"Measure each point independently and small errors drift. Measure from one truth and the whole job stays tied together."},
+      {q:"A simple \u201cwater level\u201d works because\u2026",o:["water is heavy and settles","in a connected tube, water seeks the same height at both ends \u2014 a level plane","water freezes perfectly flat","the tube is always straight"],a:1,e:"That equal-height fact makes the humble water level perfect for wrapping a level mark around corners and past obstacles."},
+      {q:"Holding your thumb over one end of a water level\u2026",o:["makes it more accurate","makes it lie \u2014 both ends must share the same air pressure","is the correct way to use it","helps clean the tube"],a:1,e:"Seal one end and you break the open-to-the-same-air condition the tool depends on. Keep both ends open."},
+      {q:"On any site, the one reference that is always present and unforgiving is\u2026",o:["the foreman","gravity","the blueprint","the tape measure"],a:1,e:"Gravity doesn\u2019t care about your slab or the last crew\u2019s layout. Your tools just read that one constant reference and transfer it."},
+      {q:"A straight, true line on a job site is really\u2026",o:["just a drawing habit","an agreement every following trade builds on","purely decorative","optional"],a:1,e:"That line tells every trade after you where the floor starts, where the wall stands, and where \u201cgood enough\u201d stops."},
+      {q:"The water level shines especially when\u2026",o:["the sun is bright","lines of sight are blocked or you must wrap level around corners","you have a laser handy","measuring very small parts"],a:1,e:"Where a laser can\u2019t see around a corner, water still finds its own level. Old tool, powerful geometry."}
+    ]},
+
+  "solar-photovoltaic-pv-installers":{series:"Sovereign Trades",title:"The Solar PV Challenge",bookUrl:"/solar-photovoltaic-pv-installers",badges:TB("Master Installer"),
+    genoOpen:"The newest trade on the roof. Before a single rail is leveled, you have to know what\u2019s arriving from the sun \u2014 let\u2019s test the physics.",
+    questions:[
+      {q:"For understanding a solar cell, sunlight is best pictured as\u2026",o:["a steady beam of pure heat","a stream of photons, each carrying energy","visible light only","sound waves"],a:1,e:"The particle view maps cleanly onto solar cells: sunlight is photons, and a cell harvests them one packet of energy at a time."},
+      {q:"A single photon\u2019s energy depends on its\u2026",o:["brightness","frequency \u2014 higher frequency means higher energy","distance from the sun","the panel\u2019s color"],a:1,e:"Energy = Planck\u2019s constant \u00d7 frequency (E = h f). Higher frequency, more energy per photon."},
+      {q:"Which light carries MORE energy per photon?",o:["redder, longer-wavelength light","bluer, shorter-wavelength light","infrared","they\u2019re equal"],a:1,e:"Shorter wavelength = higher frequency = more energy. Blue photons pack more punch than red ones."},
+      {q:"The \u201cbandgap\u201d of a solar cell is\u2026",o:["a gap between two panels","an energy threshold a photon must meet to free an electron","the warranty period","a gap in the wiring"],a:1,e:"Think of the bandgap as a doorway. Below that energy, the photon can\u2019t lift an electron into a conducting state."},
+      {q:"Silicon \u2014 the workhorse of rooftop modules \u2014 has a bandgap of about\u2026",o:["0.12 electron-volts","1.12 electron-volts","11.2 electron-volts","112 electron-volts"],a:1,e:"About 1.12 eV at room temperature. That single number sets which photons silicon can and cannot use."},
+      {q:"A photon with LESS energy than the bandgap\u2026",o:["produces the most power","cannot free an electron \u2014 it passes through or becomes heat","destroys the cell","doubles the output"],a:1,e:"Too little energy and it can\u2019t do photovoltaic work. That\u2019s one reason modules have real, physical limits on efficiency."},
+      {q:"Photovoltaics produces current through\u2026",o:["reflecting light","absorbing photons in the semiconductor","heating the glass","spinning a magnet"],a:1,e:"Absorption is the key: the photon\u2019s energy transfers into the semiconductor and helps free an electron to flow."},
+      {q:"The sun radiates roughly like a\u2026",o:["candle at 500 K","blackbody at about 5,800 K","laser at one single wavelength","cold gas cloud"],a:1,e:"The photosphere glows near 5,800 K, giving a broad blackbody-like spectrum peaking in visible light and spilling into UV and infrared."},
+      {q:"When you feel warmth from sunlight on your hand, you\u2019re mostly sensing\u2026",o:["ultraviolet","infrared","visible blue light","x-rays"],a:1,e:"Warmth is mostly infrared; squinting from brightness is visible light; fading over time is often UV. A module lives in all of it."},
+      {q:"Why does the solar spectrum matter to an installer?",o:["it doesn\u2019t \u2014 light is light","a module can only harvest photons that meet the cell\u2019s energy requirement","panels behave identically in any light","the spectrum sets the price"],a:1,e:"A PV module isn\u2019t fed by \u201clight\u201d in general \u2014 it\u2019s fed by a distribution of photon energies, and only some of them can be converted."}
+    ]},
+
+  "stonemasons":{series:"Sovereign Trades",title:"The Stonemasons Challenge",bookUrl:"/stonemasons",badges:TB("Master Mason"),
+    genoOpen:"I\u2019ve read every page of Stonemasons \u2014 answer in your own time, and I\u2019ll teach you the why behind each one.",
+    questions:[
+      {q:"In stone masonry, what is a \u201ccourse\u201d?",o:["A single large foundation stone","A horizontal row of stones laid at one level","A type of lime mortar","The tool used to split stone"],a:1,e:"A course is one horizontal layer of stone. Walls rise course by course \u2014 keep each one level and the whole wall stays true."},
+      {q:"The wedge-shaped stones that form an arch are called:",o:["Quoins","Cobbles","Voussoirs","Lintels"],a:2,e:"Voussoirs are the tapered wedges of an arch. Their angled faces let each press on its neighbor instead of sliding."},
+      {q:"The single stone at the very top that locks an arch together is the:",o:["Keystone","Cornerstone","Capstone","Footing"],a:0,e:"The keystone is set last. Once it drops in, every voussoir squeezes against it and the arch becomes self-supporting."},
+      {q:"An arch carries its load mainly through:",o:["Tension (pulling apart)","Compression (squeezing)","Bending","Friction alone"],a:1,e:"Stone is enormously strong in compression and weak in tension. The arch turns downward weight into pure squeeze."},
+      {q:"The temporary support that holds an arch\u2019s stones until the keystone is placed is the:",o:["Scaffold","Shoring","Centering","Cribbing"],a:2,e:"Centering is the curved form the voussoirs rest on while you build. Pull it once the keystone is in \u2014 and the arch stands on its own."},
+      {q:"What is mortar\u2019s main job between stones?",o:["To glue stones so they can never move","To bed the stones and spread the load evenly","To make the wall waterproof","To add color to the joint"],a:1,e:"Straight from the book: mortar levels, beds, and distributes load \u2014 it\u2019s the sacrificial layer, not super-glue."},
+      {q:"\u201cQuoins\u201d are:",o:["Roofing stones","The dressed cornerstones of a wall","Floor pavers","Chimney caps"],a:1,e:"Quoins are the worked corner stones that tie two walls together and carry the corner load."},
+      {q:"Which of these is a hard igneous stone prized for durability?",o:["Limestone","Sandstone","Granite","Slate"],a:2,e:"Granite is igneous \u2014 dense and weather-resistant. Limestone and sandstone are softer sedimentary stones; slate is metamorphic."},
+      {q:"To \u201cdress\u201d a stone means to:",o:["Clean off the dirt","Shape and finish its face and edges","Seal it against rain","Lay it in mortar"],a:1,e:"Dressing is working the stone to size and finish with chisel and mallet \u2014 the skill that separates a mason from a stacker."},
+      {q:"A wall that is \u201cplumb\u201d is:",o:["Perfectly horizontal","Perfectly vertical","Slightly curved","Filled solid with mortar"],a:1,e:"Plumb means truly vertical (level means truly horizontal). A mason checks plumb constantly \u2014 gravity is unforgiving over many courses."}
+    ]}
+
+  };
+})();
