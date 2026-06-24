@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mouth That Makes the Sound — GSU Readification</title>
+<meta name="description" content="A free interactive that shows how your mouth forms every English sound — lips, tongue, teeth, and voice. Teach-then-play, no login, runs on any device. Global Sovereign University.">
+<style>
+  :root{ --black:#000; --gold:#C9A84C; --dim:#5C502A; --cream:#F5F1E8; --teal:#1f5f5b; }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:22px 18px 40px}
+  .kick{color:var(--gold);letter-spacing:.18em;font-size:.74rem;text-transform:uppercase;font-family:Georgia,serif}
+  h1{font-size:1.9rem;line-height:1.15;margin:.25rem 0 .2rem;color:var(--cream)}
+  .sub{color:#cabfa6;font-size:1rem;margin:0 0 18px;max-width:60ch}
+  .rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:14px 0 18px}
+  .toggle{display:inline-flex;border:1px solid var(--dim);border-radius:999px;overflow:hidden;margin-bottom:16px}
+  .toggle button{background:transparent;color:#cabfa6;border:0;padding:9px 20px;font-family:Georgia,serif;font-size:.95rem;cursor:pointer}
+  .toggle button[aria-pressed="true"]{background:var(--gold);color:#000;font-weight:bold}
+  .stage{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start}
+  @media (max-width:760px){ .stage{grid-template-columns:1fr} }
+  .canvaswrap{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:10px;position:relative}
+  canvas{width:100%;height:auto;display:block;border-radius:8px;background:radial-gradient(120% 120% at 60% 40%,#11100c 0%,#050505 70%)}
+  .caption{font-size:.86rem;color:#bdb293;margin-top:8px;min-height:2.4em;line-height:1.35}
+  .panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:16px}
+  .bigsym{font-size:2.4rem;color:var(--gold);font-weight:bold;line-height:1}
+  .word{font-size:1.5rem;color:var(--cream);margin:.3rem 0 .1rem;letter-spacing:.02em}
+  .word b{color:var(--gold);border-bottom:3px solid var(--gold)}
+  .meta{font-size:.82rem;color:#9c916f;text-transform:uppercase;letter-spacing:.08em;margin:.2rem 0 .6rem}
+  .how{font-size:1rem;color:#e7dec9;line-height:1.5}
+  .replay{margin-top:12px;background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 16px;border-radius:8px;font-family:Georgia,serif;cursor:pointer;font-size:.9rem}
+  .replay:hover{background:var(--gold);color:#000}
+  .grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .pbtn{min-width:52px;background:#111;border:1px solid var(--dim);color:var(--cream);padding:10px 8px;border-radius:9px;font-family:Georgia,serif;font-size:1.05rem;cursor:pointer;text-align:center}
+  .pbtn small{display:block;font-size:.62rem;color:#8d835f;letter-spacing:.04em;margin-top:2px}
+  .pbtn:hover{border-color:var(--gold)}
+  .pbtn[aria-pressed="true"]{background:var(--gold);color:#000;border-color:var(--gold)}
+  .pbtn[aria-pressed="true"] small{color:#3a3208}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  .choice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:14px;border-radius:10px;font-family:Georgia,serif;font-size:1.15rem;cursor:pointer}
+  .choice:hover{border-color:var(--gold)}
+  .choice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
+  .choice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
+  .score{display:flex;gap:18px;align-items:baseline;margin:4px 0 10px;flex-wrap:wrap}
+  .score b{color:var(--gold);font-size:1.3rem}
+  .badge{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}
+  .badge.plat{background:var(--gold);color:#000}
+  .prompt{font-size:1.02rem;color:#e7dec9;margin:2px 0 12px}
+  .geno{margin-top:22px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:.95rem;color:#d9cfb4}
+  .geno b{color:var(--gold)}
+  .foot{margin-top:20px;color:#7c7458;font-size:.8rem;line-height:1.5}
+  .foot em{color:#a99f7e}
+  .nojs{display:none}
+  .pulse{animation:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">GSU · Readification · Interactive Lab</div>
+  <h1>The Mouth That Makes the Sound</h1>
+  <p class="sub">Every letter is a picture of a sound your mouth already knows how to make. Watch how the lips, tongue, teeth, and voice build each one — then test your eye. Free, no login, on any device.</p>
+  <div class="rule"></div>
+
+  <div class="toggle" role="tablist" aria-label="Mode">
+    <button id="tabTeach" role="tab" aria-pressed="true">Teach</button>
+    <button id="tabPlay" role="tab" aria-pressed="false">Play</button>
+  </div>
+
+  <div class="stage">
+    <div>
+      <div class="canvaswrap">
+        <canvas id="c" width="560" height="440" role="img" aria-label="Side view of a mouth forming a speech sound"></canvas>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+    </div>
+
+    <!-- TEACH PANEL -->
+    <div class="panel" id="teachPanel">
+      <div class="bigsym" id="tSym">m</div>
+      <div class="word" id="tWord"></div>
+      <div class="meta" id="tMeta"></div>
+      <div class="how" id="tHow"></div>
+      <button class="replay" id="replayBtn">▶ Show the motion again</button>
+    </div>
+
+    <!-- PLAY PANEL -->
+    <div class="panel" id="playPanel" style="display:none">
+      <div class="score">
+        <span>Streak <b id="streak">0</b></span>
+        <span>Best <b id="best">0</b></span>
+        <span class="badge" id="badge">Warming up</span>
+      </div>
+      <div class="prompt" id="prompt">Read the mouth. Which sound is it forming?</div>
+      <div class="choices" id="choices"></div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid" aria-label="Choose a sound"></div>
+
+  <div class="geno">
+    <b>GENO AI Tutor</b> available 24/7 — a robot you can actually TALK to. Stuck on a sound? Ask GENO to explain how to make it, out loud, in any of 32 languages. He has memorized this whole lab and every book behind it.
+  </div>
+
+  <p class="foot">
+    Teach-then-play, infinite practice, free forever from <em>Global Sovereign University</em>, a 501(c)(3).
+    “Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow.” — Dr. Gene A. Constant
+  </p>
+  <noscript><p class="foot" style="display:block">This lab animates with JavaScript. Each English sound is formed by a position of the lips, tongue, teeth, and voice — for example, <b>/m/</b> closes the lips and sends the voice through the nose, while <b>/s/</b> lifts the tongue near the ridge behind the top teeth to make a hiss. Ask GENO to walk you through any sound aloud.</p></noscript>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  // ---------- Phoneme data (articulatory phonetics) ----------
+  // lips: closed|open|rounded|spread|teeth   tip: low|alveolar|dental|retro
+  // back: low|mid|high|velar   manner: stop|fricative|nasal|lateral|approx|vowel
+  var P = [
+    {s:"m", g:"m", w:"man", gi:0, place:"Bilabial", manner:"nasal", voiced:true, lips:"closed", tip:"low", back:"low", nasal:true, how:"Press your lips together and hum — the air comes out your nose."},
+    {s:"n", g:"n", w:"net", gi:0, place:"Alveolar", manner:"nasal", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:true, how:"Tongue tip up behind your top teeth, and hum through your nose."},
+    {s:"p", g:"p", w:"pat", gi:0, place:"Bilabial", manner:"stop", voiced:false, lips:"closed", tip:"low", back:"low", nasal:false, how:"Lips together, build a little air, then pop them open with a puff. No voice."},
+    {s:"b", g:"b", w:"bat", gi:0, place:"Bilabial", manner:"stop", voiced:true, lips:"closed", tip:"low", back:"low", nasal:false, how:"Lips together, then pop them open — with your voice switched on."},
+    {s:"t", g:"t", w:"top", gi:0, place:"Alveolar", manner:"stop", voiced:false, lips:"open", tip:"alveolar", back:"low", nasal:false, how:"Tap your tongue tip behind your top teeth, then release. No voice."},
+    {s:"d", g:"d", w:"dog", gi:0, place:"Alveolar", manner:"stop", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:false, how:"Same tap behind the teeth — but voice on."},
+    {s:"k", g:"c", w:"cat", gi:0, place:"Velar", manner:"stop", voiced:false, lips:"open", tip:"low", back:"velar", nasal:false, how:"The back of your tongue lifts to the roof, then releases. No voice."},
+    {s:"g", g:"g", w:"go", gi:0, place:"Velar", manner:"stop", voiced:true, lips:"open", tip:"low", back:"velar", nasal:false, how:"Back of the tongue to the roof — voice on."},
+    {s:"f", g:"f", w:"fan", gi:0, place:"Labiodental", manner:"fricative", voiced:false, lips:"teeth", tip:"low", back:"low", nasal:false, how:"Rest your top teeth on your bottom lip and push air through. No voice."},
+    {s:"v", g:"v", w:"van", gi:0, place:"Labiodental", manner:"fricative", voiced:true, lips:"teeth", tip:"low", back:"low", nasal:false, how:"Top teeth on bottom lip — now buzz it with your voice."},
+    {s:"th", g:"th", w:"thin", gi:0, place:"Dental", manner:"fricative", voiced:false, lips:"open", tip:"dental", back:"low", nasal:false, how:"Put your tongue tip lightly between your teeth and push air. No voice."},
+    {s:"s", g:"s", w:"sun", gi:0, place:"Alveolar", manner:"fricative", voiced:false, lips:"spread", tip:"alveolar", back:"low", nasal:false, how:"Tongue close behind your top teeth — hiss like a snake."},
+    {s:"z", g:"z", w:"zip", gi:0, place:"Alveolar", manner:"fricative", voiced:true, lips:"spread", tip:"alveolar", back:"low", nasal:false, how:"Same hiss position — turn your voice on so it buzzes."},
+    {s:"sh", g:"sh", w:"ship", gi:0, place:"Post-alveolar", manner:"fricative", voiced:false, lips:"rounded", tip:"retro", back:"mid", nasal:false, how:"Pull the tongue back a little, push your lips out, and make a quiet 'shhh'."},
+    {s:"l", g:"l", w:"lip", gi:0, place:"Alveolar", manner:"lateral", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:false, how:"Tongue tip up behind your teeth; let the air slide around the sides."},
+    {s:"r", g:"r", w:"red", gi:0, place:"Alveolar", manner:"approx", voiced:true, lips:"rounded", tip:"retro", back:"mid", nasal:false, how:"Bunch your tongue back without touching anything; voice on."},
+    {s:"h", g:"h", w:"hat", gi:0, place:"Glottal", manner:"fricative", voiced:false, lips:"open", tip:"low", back:"low", nasal:false, how:"Just breathe out from your throat with your mouth open."},
+    {s:"w", g:"w", w:"win", gi:0, place:"Labio-velar", manner:"approx", voiced:true, lips:"rounded", tip:"low", back:"high", nasal:false, how:"Round your lips tight, then glide them open. Voice on."},
+    {s:"ee", g:"ee", w:"see", gi:1, place:"High front vowel", manner:"vowel", voiced:true, lips:"spread", tip:"low", back:"high", nasal:false, how:"Smile wide, tongue high and forward: 'eee'."},
+    {s:"a", g:"a", w:"cat", gi:1, place:"Low front vowel", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"low", nasal:false, how:"Open your mouth, tongue low and forward: short 'a'."},
+    {s:"ah", g:"a", w:"father", gi:1, place:"Low back vowel", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"mid", nasal:false, how:"Drop your jaw, tongue low and back: 'ah'."},
+    {s:"oo", g:"oo", w:"moon", gi:1, place:"High back vowel", manner:"vowel", voiced:true, lips:"rounded", tip:"low", back:"velar", nasal:false, how:"Round your lips, tongue high and back: 'oo'."}
+  ];
+
+  var cv=document.getElementById('c'), ctx=cv.getContext('2d');
+  var W=cv.width, H=cv.height;
+  var cur=P[0], from=snapshot(P[0]), to=snapshot(P[0]), t=1, raf=null, manner="nasal", voiced=true, nasal=true, tAnim=0;
+
+  // target numeric state per phoneme (for smooth interpolation)
+  function snapshot(p){
+    return {
+      lipGap: p.lips==="closed"?0 : p.lips==="rounded"?10 : p.lips==="spread"?22 : p.lips==="teeth"?6 : 18,
+      lipRound: p.lips==="rounded"?1 : p.lips==="spread"?-1 : 0,
+      teeth: p.lips==="teeth"?1:0,
+      tipY: p.tip==="alveolar"?1 : p.tip==="dental"?1 : p.tip==="retro"?0.55 : 0,
+      tipX: p.tip==="dental"?1 : p.tip==="retro"?-1 : 0,
+      backY: p.back==="velar"?1 : p.back==="high"?0.8 : p.back==="mid"?0.4 : 0,
+      jaw: (p.lips==="open"|| p.manner==="vowel")? (p.back==="low"?1:0.55) : 0.2
+    };
+  }
+  function lerp(a,b,k){return a+(b-a)*k;}
+  function blend(){ var o={}; for(var k in from){ o[k]=lerp(from[k],to[k], ease(t)); } return o; }
+  function ease(x){ return x<0?0:x>1?1:(1-Math.cos(Math.PI*x))/2; }
+
+  function setPhoneme(p, animate){
+    cur=p; from=blend(); to=snapshot(p); manner=p.manner; voiced=p.voiced; nasal=p.nasal;
+    t = animate? 0 : 1; tAnim=0;
+    // caption
+    var cap = "/"+p.s+"/ as in “"+p.w+"”. "+p.place+" "+p.manner+", "+(p.voiced?"voiced":"voiceless")+
+              (p.nasal?", air through the nose":"")+". "+p.how;
+    document.getElementById('caption').textContent = cap;
+    if(animate){ if(raf) cancelAnimationFrame(raf); loop(); } else { draw(blend()); }
+  }
+
+  function loop(){
+    t += 0.045; tAnim += 1;
+    if(t>1) t=1;
+    draw(blend());
+    if(t<1 || manner==="fricative" || manner==="nasal" || (voiced) ){
+      // keep animating a little for friction/voicing shimmer, then idle
+      if(t<1 || tAnim<240){ raf=requestAnimationFrame(loop); }
+    }
+  }
+
+  // ---------- drawing ----------
+  function draw(st){
+    ctx.clearRect(0,0,W,H);
+    var GOLD="#C9A84C", DIM="#5C502A", CREAM="#F5F1E8", TEAL="#2a7d77", pink="#caa6a0";
+    // anatomy reference frame (profile faces RIGHT)
+    var midY=H*0.5;
+    // --- head profile (back at left, face/lips at right) ---
+    ctx.lineWidth=2; ctx.strokeStyle="#2a2722"; ctx.fillStyle="#0d0c0a";
+    ctx.beginPath();
+    ctx.moveTo(60,40);
+    ctx.bezierCurveTo(330,20, 470,70, 486,170);    // forehead -> nose bridge
+    ctx.lineTo(516,196);                            // nose tip
+    ctx.lineTo(486,212);                            // under nose
+    ctx.bezierCurveTo(486,212, 500,250, 470,300);   // upper lip region (right edge)
+    ctx.bezierCurveTo(500,360, 470,400, 420,410);   // chin
+    ctx.bezierCurveTo(300,440, 110,430, 60,380);    // jaw to neck
+    ctx.lineTo(60,40); ctx.closePath(); ctx.stroke();
+
+    // nasal cavity
+    ctx.strokeStyle=DIM; ctx.lineWidth=1.4;
+    ctx.beginPath(); ctx.moveTo(300,120); ctx.bezierCurveTo(380,108,440,120,470,150); ctx.stroke();
+    // hard palate (roof)
+    var palY=midY-44;
+    ctx.strokeStyle="#7d6f3f"; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.moveTo(150,palY+14); ctx.bezierCurveTo(280,palY-6,360,palY-2,430,palY+18); ctx.stroke();
+    // alveolar ridge bump (behind upper teeth)
+    ctx.beginPath(); ctx.arc(432,palY+24,7,Math.PI*1.1,Math.PI*2.1); ctx.strokeStyle=GOLD; ctx.lineWidth=2; ctx.stroke();
+    // velum (soft palate gate) — opens for nasals
+    var velOpen = nasal ? 1 : 0;
+    ctx.strokeStyle = velOpen? TEAL : "#7d6f3f"; ctx.lineWidth=3;
+    ctx.beginPath();
+    if(velOpen){ ctx.moveTo(150,palY+14); ctx.quadraticCurveTo(150,palY-8,138,palY-26); }
+    else { ctx.moveTo(150,palY+14); ctx.quadraticCurveTo(150,palY+30,168,palY+44); }
+    ctx.stroke();
+
+    // upper teeth
+    ctx.fillStyle=CREAM;
+    ctx.fillRect(452,palY+28,10,18);
+    // lower jaw drop
+    var jaw = st.jaw*30;
+    var floorY = midY+54+jaw;
+
+    // --- tongue (root left -> tip right) ---
+    var rootX=120, rootY=floorY-6;
+    var backX=250, backY=floorY-18 - st.backY*64;          // back hump (velar/high)
+    var bladeX=370, bladeY=floorY-14 - (st.backY*30);
+    var tipX=452 + st.tipX*8, tipY=floorY-10 - st.tipY*52;  // tip raise for alveolar/dental
+    ctx.beginPath();
+    ctx.moveTo(rootX,floorY+20);
+    ctx.lineTo(rootX,rootY);
+    ctx.quadraticCurveTo(190,backY+6, backX,backY);
+    ctx.quadraticCurveTo(315,bladeY-6, bladeX,bladeY);
+    ctx.quadraticCurveTo(425,tipY-4, tipX,tipY);
+    ctx.lineTo(tipX,floorY+20);
+    ctx.closePath();
+    var tg=ctx.createLinearGradient(0,floorY-60,0,floorY+20);
+    tg.addColorStop(0,"#c98b86"); tg.addColorStop(1,"#7d4f4c");
+    ctx.fillStyle=tg; ctx.strokeStyle="#5a3a37"; ctx.lineWidth=1.5; ctx.fill(); ctx.stroke();
+
+    // lower teeth
+    ctx.fillStyle=CREAM; ctx.fillRect(452,floorY-2,10,16);
+
+    // --- lips (right opening) ---
+    var lx=500, gap=st.lipGap, round=st.lipRound;
+    ctx.strokeStyle=pink; ctx.lineWidth= st.teeth>0.5? 4:6; ctx.lineCap="round";
+    // upper lip
+    ctx.beginPath();
+    ctx.moveTo(470,palY+22);
+    ctx.quadraticCurveTo(lx+round*8, midY-gap, lx+14+round*6, midY-gap*0.5);
+    ctx.stroke();
+    // lower lip
+    ctx.beginPath();
+    ctx.moveTo(456,floorY+6);
+    ctx.quadraticCurveTo(lx+round*8, midY+gap, lx+14+round*6, midY+gap*0.5);
+    ctx.stroke();
+    // labiodental: show top teeth touching lower lip
+    if(st.teeth>0.5){ ctx.fillStyle=CREAM; ctx.fillRect(486,midY-10,9,15); }
+
+    // --- voicing (larynx glow, lower-left throat) ---
+    var lvx=92, lvy=floorY+34;
+    var vib = voiced? (0.5+0.5*Math.sin(tAnim*0.5)) : 0;
+    ctx.beginPath(); ctx.arc(lvx,lvy,12+vib*4,0,Math.PI*2);
+    ctx.fillStyle = voiced? "rgba(201,168,76,"+(0.35+vib*0.5)+")" : "rgba(120,110,80,0.18)";
+    ctx.fill();
+    ctx.fillStyle = voiced? GOLD : "#6f6750"; ctx.font="11px Georgia"; ctx.textAlign="center";
+    ctx.fillText(voiced?"voice on":"voice off", lvx, lvy+30);
+
+    // --- airflow cues ---
+    ctx.strokeStyle="rgba(120,200,255,0.55)"; ctx.lineWidth=2;
+    if(nasal){
+      // arrow up through nose
+      ctx.beginPath(); ctx.moveTo(150,palY); ctx.quadraticCurveTo(380,90,500,176); ctx.stroke();
+      puff(ctx,500,176,"rgba(150,210,255,0.5)");
+    } else if(manner==="fricative"){
+      // friction turbulence at constriction near lips/teeth/tongue
+      var cxp = st.teeth>0.5?490 : (cur.tip==="alveolar"?452 : cur.place==="Glottal"?120 : cur.place.indexOf("alveolar")>-1?452:500);
+      for(var i=0;i<7;i++){ var a=Math.random()*6.28, r=4+Math.random()*10;
+        ctx.globalAlpha=0.5; ctx.beginPath(); ctx.arc(cxp+Math.cos(a)*r, midY+Math.sin(a)*r-2, 1.4,0,6.28);
+        ctx.fillStyle="#bfe3ff"; ctx.fill(); }
+      ctx.globalAlpha=1;
+    } else if(manner==="stop"){
+      if(t>0.78){ puff(ctx,520,midY,"rgba(190,220,255,0.55)"); } // release burst
+    } else { // vowel / approx: open steady flow
+      ctx.beginPath(); ctx.moveTo(200,midY+10); ctx.quadraticCurveTo(420,midY,520,midY-2); ctx.globalAlpha=0.4; ctx.stroke(); ctx.globalAlpha=1;
+    }
+
+    // labels
+    ctx.fillStyle="#6f6750"; ctx.font="11px Georgia"; ctx.textAlign="left";
+    ctx.fillText("nose", 300,96);
+    ctx.fillText("ridge", 405,palY+6);
+    ctx.fillText("tongue", 250,floorY+34);
+    ctx.textAlign="right"; ctx.fillText("lips", 540,midY-gap-6);
+  }
+  function puff(ctx,x,y,col){ for(var i=0;i<8;i++){ var a=(i/8)*6.28; ctx.beginPath();
+    ctx.arc(x+Math.cos(a)*(8+Math.random()*8), y+Math.sin(a)*(8+Math.random()*8),1.6,0,6.28);
+    ctx.fillStyle=col; ctx.fill(); } }
+
+  // ---------- TEACH ----------
+  var grid=document.getElementById('grid');
+  P.forEach(function(p,idx){
+    var b=document.createElement('button'); b.className='pbtn'; b.setAttribute('aria-pressed', idx===0?'true':'false');
+    b.innerHTML = p.g + "<small>"+p.w+"</small>";
+    b.addEventListener('click', function(){ selectTeach(idx, b); });
+    p._btn=b; grid.appendChild(b);
+  });
+  function selectTeach(idx,btn){
+    P.forEach(function(p){ p._btn.setAttribute('aria-pressed','false'); });
+    btn.setAttribute('aria-pressed','true');
+    var p=P[idx];
+    document.getElementById('tSym').textContent = "/"+p.s+"/";
+    var w=p.w, parts;
+    // highlight the grapheme in the example word (first occurrence of grapheme letters)
+    var gi = w.toLowerCase().indexOf(p.g.toLowerCase());
+    if(gi>=0){ parts = w.slice(0,gi)+"<b>"+w.slice(gi,gi+p.g.length)+"</b>"+w.slice(gi+p.g.length); }
+    else parts=w;
+    document.getElementById('tWord').innerHTML = parts;
+    document.getElementById('tMeta').textContent = p.place+" · "+p.manner+" · "+(p.voiced?"voiced":"voiceless");
+    document.getElementById('tHow').textContent = p.how;
+    setPhoneme(p,true);
+  }
+  document.getElementById('replayBtn').addEventListener('click',function(){ setPhoneme(cur,true); });
+
+  // ---------- PLAY ----------
+  var streak=0, best=0, answer=null, lock=false;
+  function rand(n){return Math.floor(Math.random()*n);}
+  function newRound(){
+    lock=false;
+    answer=P[rand(P.length)];
+    setPhoneme(answer,true);
+    document.getElementById('prompt').textContent="Read the mouth. Which sound is it forming?";
+    // build 4 choices incl answer
+    var opts=[answer], guard=0;
+    while(opts.length<4 && guard<100){ var c=P[rand(P.length)]; if(opts.indexOf(c)<0) opts.push(c); guard++; }
+    shuffle(opts);
+    var box=document.getElementById('choices'); box.innerHTML="";
+    opts.forEach(function(o){
+      var b=document.createElement('button'); b.className='choice'; b.textContent="/"+o.s+"/  ("+o.w+")";
+      b.addEventListener('click', function(){ guess(o,b); });
+      box.appendChild(b);
+    });
+  }
+  function guess(o,btn){
+    if(lock) return; lock=true;
+    if(o===answer){
+      btn.classList.add('right'); streak++; if(streak>best){best=streak;}
+      document.getElementById('prompt').textContent="Yes — /"+answer.s+"/ as in “"+answer.w+"”. "+answer.how;
+      setTimeout(newRound,1100);
+    } else {
+      btn.classList.add('wrong');
+      // reveal correct
+      var box=document.getElementById('choices');
+      Array.prototype.forEach.call(box.children,function(ch){ if(ch.textContent.indexOf("/"+answer.s+"/")===0) ch.classList.add('right'); });
+      document.getElementById('prompt').textContent="That was /"+o.s+"/. This mouth is /"+answer.s+"/ — "+answer.how;
+      streak=0;
+      setTimeout(newRound,1900);
+    }
+    updateScore();
+  }
+  function updateScore(){
+    document.getElementById('streak').textContent=streak;
+    document.getElementById('best').textContent=best;
+    var bd=document.getElementById('badge'), label, plat=false;
+    if(best>=50){label="Platinum";plat=true;} else if(best>=25)label="Gold";
+    else if(best>=12)label="Silver"; else if(best>=5)label="Bronze"; else label="Warming up";
+    bd.textContent=label; bd.className="badge"+(plat?" plat":"");
+  }
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=rand(i+1),tmp=a[i];a[i]=a[j];a[j]=tmp; } }
+
+  // ---------- mode toggle ----------
+  var tabT=document.getElementById('tabTeach'), tabP=document.getElementById('tabPlay');
+  function mode(play){
+    tabT.setAttribute('aria-pressed', play?'false':'true');
+    tabP.setAttribute('aria-pressed', play?'true':'false');
+    document.getElementById('teachPanel').style.display = play?'none':'block';
+    document.getElementById('playPanel').style.display = play?'block':'none';
+    document.getElementById('grid').style.display = play?'none':'flex';
+    if(play){ updateScore(); newRound(); } else { selectTeach(0,P[0]._btn); }
+  }
+  tabT.addEventListener('click',function(){mode(false);});
+  tabP.addEventListener('click',function(){mode(true);});
+
+  // init
+  selectTeach(0,P[0]._btn);
+})();
+</script>
+</body>
+</html>
