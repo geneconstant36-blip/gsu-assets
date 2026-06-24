@@ -17,6 +17,11 @@
   .toggle{display:inline-flex;border:1px solid var(--dim);border-radius:999px;overflow:hidden;margin-bottom:16px}
   .toggle button{background:transparent;color:#cabfa6;border:0;padding:9px 20px;font-family:Georgia,serif;font-size:.95rem;cursor:pointer}
   .toggle button[aria-pressed="true"]{background:var(--gold);color:#000;font-weight:bold}
+  .controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  .controls .toggle{margin-bottom:0}
+  .snd{background:transparent;border:1px solid var(--dim);color:#cabfa6;padding:8px 14px;border-radius:999px;font-family:Georgia,serif;font-size:.86rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .snd:hover{border-color:var(--gold);color:var(--gold)}
+  .snd[aria-pressed="false"]{opacity:.65}
   .stage{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:start}
   @media (max-width:760px){ .stage{grid-template-columns:1fr} }
   .canvaswrap{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:10px;position:relative}
@@ -58,12 +63,15 @@
 <div class="wrap">
   <div class="kick">GSU · Readification · Interactive Lab</div>
   <h1>The Mouth That Makes the Sound</h1>
-  <p class="sub">Every letter is a picture of a sound your mouth already knows how to make. Watch how the lips, tongue, teeth, and voice build each one — then test your eye. Free, no login, on any device.</p>
+  <p class="sub">Every letter is a picture of a sound your mouth already knows how to make. Watch how the lips, tongue, teeth, and voice build each one — hear it spoken aloud, then test your eye. Free, no login, on any device.</p>
   <div class="rule"></div>
 
-  <div class="toggle" role="tablist" aria-label="Mode">
-    <button id="tabTeach" role="tab" aria-pressed="true">Teach</button>
-    <button id="tabPlay" role="tab" aria-pressed="false">Play</button>
+  <div class="controls">
+    <div class="toggle" role="tablist" aria-label="Mode">
+      <button id="tabTeach" role="tab" aria-pressed="true">Teach</button>
+      <button id="tabPlay" role="tab" aria-pressed="false">Play</button>
+    </div>
+    <button id="soundBtn" class="snd" aria-pressed="true" title="Turn the spoken sound on or off" aria-label="Sound on">🔊 Sound on</button>
   </div>
 
   <div class="stage">
@@ -80,6 +88,7 @@
       <div class="word" id="tWord"></div>
       <div class="meta" id="tMeta"></div>
       <div class="how" id="tHow"></div>
+      <button class="replay" id="hearBtn" style="margin-right:8px">🔊 Hear it</button>
       <button class="replay" id="replayBtn">▶ Show the motion again</button>
     </div>
 
@@ -111,6 +120,32 @@
 <script>
 (function(){
   "use strict";
+  // ---------- Speech (no audio files; uses the browser's built-in voice) ----------
+  var soundOn = true;
+  try{ if(localStorage.getItem('gsuMouthSound')==='off') soundOn=false; }catch(e){}
+  var started=false; // first user gesture unlocks auto-speak (mobile autoplay policy)
+  document.addEventListener('pointerdown', function(){ started=true; }, {once:true});
+  var _voices=[];
+  function loadVoices(){ try{ _voices = window.speechSynthesis ? (speechSynthesis.getVoices()||[]) : []; }catch(e){ _voices=[]; } }
+  if(window.speechSynthesis){ loadVoices(); try{ speechSynthesis.onvoiceschanged=loadVoices; }catch(e){} }
+  function pickVoice(){
+    if(!_voices.length) loadVoices();
+    var i,v;
+    for(i=0;i<_voices.length;i++){ v=_voices[i]; if(v.lang && v.lang.toLowerCase()==='en-us') return v; }
+    for(i=0;i<_voices.length;i++){ v=_voices[i]; if(v.lang && v.lang.toLowerCase().indexOf('en')===0) return v; }
+    return null;
+  }
+  function speak(text){
+    if(!soundOn || !text || !window.speechSynthesis) return;
+    try{
+      speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(String(text));
+      u.lang='en-US'; u.rate=0.82; u.pitch=1;
+      var v=pickVoice(); if(v) u.voice=v;
+      speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  function sayPhoneme(p){ if(p) speak(p.w); }
   // ---------- Phoneme data (articulatory phonetics) ----------
   // lips: closed|open|rounded|spread|teeth   tip: low|alveolar|dental|retro
   // back: low|mid|high|velar   manner: stop|fricative|nasal|lateral|approx|vowel
@@ -318,8 +353,10 @@
     document.getElementById('tMeta').textContent = p.place+" · "+p.manner+" · "+(p.voiced?"voiced":"voiceless");
     document.getElementById('tHow').textContent = p.how;
     setPhoneme(p,true);
+    if(started) sayPhoneme(p);
   }
   document.getElementById('replayBtn').addEventListener('click',function(){ setPhoneme(cur,true); });
+  document.getElementById('hearBtn').addEventListener('click',function(){ started=true; sayPhoneme(cur); });
 
   // ---------- PLAY ----------
   var streak=0, best=0, answer=null, lock=false;
@@ -345,6 +382,7 @@
     if(o===answer){
       btn.classList.add('right'); streak++; if(streak>best){best=streak;}
       document.getElementById('prompt').textContent="Yes — /"+answer.s+"/ as in “"+answer.w+"”. "+answer.how;
+      sayPhoneme(answer);
       setTimeout(newRound,1100);
     } else {
       btn.classList.add('wrong');
@@ -352,6 +390,7 @@
       var box=document.getElementById('choices');
       Array.prototype.forEach.call(box.children,function(ch){ if(ch.textContent.indexOf("/"+answer.s+"/")===0) ch.classList.add('right'); });
       document.getElementById('prompt').textContent="That was /"+o.s+"/. This mouth is /"+answer.s+"/ — "+answer.how;
+      sayPhoneme(answer);
       streak=0;
       setTimeout(newRound,1900);
     }
@@ -379,6 +418,25 @@
   }
   tabT.addEventListener('click',function(){mode(false);});
   tabP.addEventListener('click',function(){mode(true);});
+
+  // ---------- sound toggle ----------
+  (function(){
+    var sb=document.getElementById('soundBtn');
+    function paint(){
+      sb.setAttribute('aria-pressed', soundOn?'true':'false');
+      sb.setAttribute('aria-label', soundOn?'Sound on':'Sound off');
+      sb.textContent = soundOn? '🔊 Sound on' : '🔇 Sound off';
+    }
+    sb.addEventListener('click', function(){
+      started=true; soundOn=!soundOn;
+      try{ localStorage.setItem('gsuMouthSound', soundOn?'on':'off'); }catch(e){}
+      if(!soundOn){ try{ speechSynthesis.cancel(); }catch(e){} }
+      paint();
+      if(soundOn) sayPhoneme(cur);
+    });
+    paint();
+    if(!window.speechSynthesis){ sb.style.display='none'; } // hide if the browser has no voice
+  })();
 
   // init
   selectTeach(0,P[0]._btn);
