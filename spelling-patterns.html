@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spelling Patterns Forge — GSU Spellification</title>
+<meta name="description" content="Free phonics tool from GSU. All 74 grapheme-phoneme correspondences with mouth diagrams, spelling rules, and the five-step sound-first method. The complete code of English spelling. No login.">
+<style>
+:root{--gold:#C9A84C;--dim:#5C502A;--cream:#F5F1E8;--teal:#1A8B7F;--cons:#285bac;--vowl:#1a6b3a;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:22px 18px 48px}
+.kick{color:var(--gold);letter-spacing:.18em;font-size:.74rem;text-transform:uppercase;margin-bottom:6px}
+h1{font-size:1.85rem;line-height:1.15;margin:.2rem 0 .2rem;color:var(--cream)}
+.sub{color:#cabfa6;font-size:.97rem;margin:0 0 14px;max-width:64ch;line-height:1.55}
+.rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:12px 0 18px}
+
+/* FIVE STEPS BANNER */
+.steps-banner{display:flex;gap:0;margin-bottom:20px;border:1px solid var(--dim);border-radius:12px;overflow:hidden}
+.step-block{flex:1;padding:12px 8px;text-align:center;font-size:.8rem;font-weight:bold;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:all .2s;border-right:1px solid var(--dim)}
+.step-block:last-child{border-right:0}
+.step-block.inactive{background:#0a0a0a;color:#5a4a2a}
+.step-block.active{background:var(--gold);color:#000}
+.step-block:hover:not(.active){background:#111;color:var(--gold)}
+.step-num{font-size:1.4rem;display:block;margin-bottom:2px}
+
+/* PATTERN CATEGORIES */
+.cat-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.cat-btn{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:7px 14px;border-radius:8px;font-family:Georgia,serif;font-size:.85rem;cursor:pointer;transition:all .15s}
+.cat-btn:hover{border-color:var(--gold);color:var(--cream)}
+.cat-btn.active{font-weight:bold;border-color:var(--gold);background:#111;color:var(--gold)}
+
+/* PATTERN CARD GRID */
+.pattern-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;margin-bottom:20px}
+.pbtn{background:#111;border:2px solid var(--dim);color:var(--cream);padding:10px 6px 8px;border-radius:10px;font-family:Georgia,serif;font-size:1.1rem;cursor:pointer;text-align:center;transition:all .15s}
+.pbtn small{display:block;font-size:.58rem;color:#7a6a40;letter-spacing:.04em;margin-top:2px}
+.pbtn:hover{border-color:var(--gold)}
+.pbtn[aria-pressed="true"]{background:var(--gold);color:#000;border-color:var(--gold);font-weight:bold}
+.pbtn[aria-pressed="true"] small{color:#3a3208}
+
+/* MAIN STAGE */
+.stage{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-bottom:22px}
+@media(max-width:680px){.stage{grid-template-columns:1fr}}
+.canvaswrap{background:#0a0a0a;border:1px solid var(--dim);border-top:3px solid var(--gold);border-radius:14px;padding:10px}
+canvas{width:100%;height:auto;display:block;border-radius:8px;background:radial-gradient(120% 120% at 60% 40%,#11100c 0%,#050505 70%)}
+.caption{font-size:.82rem;color:#bdb293;margin-top:7px;min-height:2.4em;line-height:1.35}
+
+/* FIVE STEPS DRILL PANEL */
+.drill-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:18px}
+.drill-step-label{font-size:.7rem;color:var(--teal);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+.drill-content{font-size:1rem;color:#e7dec9;line-height:1.5;min-height:5em}
+.drill-word{font-size:2rem;color:var(--gold);font-weight:bold;margin:8px 0;letter-spacing:.06em}
+.drill-word b{border-bottom:3px solid var(--gold)}
+.grapheme-sym{font-size:2.8rem;font-weight:bold;color:var(--gold);line-height:1}
+.phoneme-sym{font-size:1.4rem;color:#9c916f;font-style:italic}
+.tap-bubbles{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
+.tap-bubble{width:40px;height:40px;border-radius:50%;background:#111;border:2px solid var(--dim);display:flex;align-items:center;justify-content:center;font-size:.9rem;color:var(--cream);cursor:pointer;transition:all .15s}
+.tap-bubble.tapped{background:var(--gold);color:#000;border-color:var(--gold)}
+.spelling-rule{background:#0f0f0f;border:1px solid var(--dim);border-left:3px solid var(--teal);border-radius:8px;padding:10px 12px;font-size:.85rem;color:#cabfa6;line-height:1.5;margin-top:10px}
+.spelling-rule strong{color:var(--teal)}
+.step-nav{display:flex;gap:8px;margin-top:14px}
+.step-nav-btn{flex:1;background:transparent;border:1px solid var(--dim);color:#9c916f;padding:9px;border-radius:8px;font-family:Georgia,serif;cursor:pointer;font-size:.85rem;transition:all .15s}
+.step-nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+.step-nav-btn.go{background:var(--gold);color:#000;border-color:var(--gold);font-weight:bold}
+
+/* GAMES */
+.modetabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.modetab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;font-family:Georgia,serif;font-size:.88rem;cursor:pointer}
+.modetab.active{background:var(--gold);color:#000;font-weight:bold;border-color:var(--gold)}
+.game-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:20px;margin-bottom:22px}
+.score-row{display:flex;gap:16px;align-items:baseline;margin:0 0 10px;flex-wrap:wrap}
+.score-row b{color:var(--gold);font-size:1.2rem}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
+.badge.plat{background:var(--gold);color:#000}
+.feedback{font-size:.92rem;color:#e7dec9;min-height:2.2em;line-height:1.4;margin-bottom:10px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:13px 10px;border-radius:10px;font-family:Georgia,serif;font-size:1rem;cursor:pointer;text-align:center;transition:all .15s}
+.choice:hover{border-color:var(--gold)}
+.choice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
+.choice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
+.geno{margin-top:22px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:.93rem;color:#d9cfb4}
+.geno b{color:var(--gold)}
+.cross-links{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.cross-links a{display:inline-block;border:1px solid var(--dim);color:#9c916f;padding:7px 14px;border-radius:8px;text-decoration:none;font-size:.83rem}
+.cross-links a:hover{border-color:var(--gold);color:var(--gold)}
+.foot{margin-top:14px;color:#7c7458;font-size:.8rem;line-height:1.5}
+.foot em{color:#a99f7e}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">GSU · Spellification · Spelling Patterns Forge</div>
+  <h1>Spelling Patterns Forge</h1>
+  <p class="sub">English spelling is not chaos — it is a code of 74 grapheme-phoneme correspondences. Learn each one the sound-first way: HEAR the sound, SAY it, TAP its phonemes, BUILD with letters, WRITE it. Every pattern, free, forever.</p>
+  <div class="rule"></div>
+
+  <!-- FIVE STEPS BANNER -->
+  <div class="steps-banner" id="stepsBanner">
+    <div class="step-block active" data-step="0"><span class="step-num">1</span>HEAR</div>
+    <div class="step-block inactive" data-step="1"><span class="step-num">2</span>SAY</div>
+    <div class="step-block inactive" data-step="2"><span class="step-num">3</span>TAP</div>
+    <div class="step-block inactive" data-step="3"><span class="step-num">4</span>BUILD</div>
+    <div class="step-block inactive" data-step="4"><span class="step-num">5</span>WRITE</div>
+  </div>
+
+  <!-- CATEGORY BUTTONS -->
+  <div class="cat-row" id="catRow"></div>
+
+  <!-- PATTERN GRID -->
+  <div class="pattern-grid" id="patternGrid"></div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <div>
+      <div class="canvaswrap">
+        <canvas id="c" width="560" height="440" role="img" aria-label="Mouth position for this spelling pattern"></canvas>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+    </div>
+    <div class="drill-panel">
+      <div class="drill-step-label" id="drillLabel">Step 1 — HEAR</div>
+      <div id="drillContent">
+        <div class="grapheme-sym" id="dGrapheme"></div>
+        <div class="phoneme-sym" id="dPhoneme"></div>
+        <div class="drill-content" id="dContent"></div>
+        <div class="spelling-rule" id="dRule"></div>
+      </div>
+      <div class="step-nav">
+        <button class="step-nav-btn" id="prevStep">← Back</button>
+        <button class="step-nav-btn go" id="nextStep">Next Step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME MODES -->
+  <div class="modetabs">
+    <button class="modetab active" data-game="match">Sound Match</button>
+    <button class="modetab" data-game="spell">Spell It</button>
+  </div>
+  <div class="game-panel" id="game-match">
+    <div class="score-row"><span>Streak <b id="m-streak">0</b></span><span>Best <b id="m-best">0</b></span><span class="badge" id="m-badge">Warming up</span></div>
+    <div class="feedback" id="m-feedback">Which spelling pattern makes this sound?</div>
+    <div style="font-size:1.8rem;color:var(--gold);font-weight:bold;text-align:center;margin-bottom:14px" id="m-phoneme"></div>
+    <div class="choices" id="m-choices"></div>
+  </div>
+  <div class="game-panel" id="game-spell" style="display:none">
+    <div class="score-row"><span>Streak <b id="sp-streak">0</b></span><span>Best <b id="sp-best">0</b></span><span class="badge" id="sp-badge">Warming up</span></div>
+    <div class="feedback" id="sp-feedback">Which word uses this spelling pattern for the highlighted sound?</div>
+    <div style="font-size:1.8rem;color:var(--gold);font-weight:bold;text-align:center;margin-bottom:14px" id="sp-pattern"></div>
+    <div class="choices" id="sp-choices"></div>
+  </div>
+
+  <div class="geno">
+    <b>GENO AI Tutor</b> — a robot you can actually TALK to. Ask: <em>"GENO, what's the FLOSS rule?"</em> or <em>"Why does 'have' end in silent e if the vowel isn't long?"</em> or <em>"Walk me through the sound-first method."</em> 32 languages, 24/7, free.
+  </div>
+  <div class="cross-links">
+    <a href="/spellification">Spellification Hub</a>
+    <a href="/the-mouth-that-makes-the-sound">The Mouth Lab</a>
+    <a href="/phoneme-forge">Phoneme Forge</a>
+    <a href="/vowel-valley">Vowel Valley</a>
+    <a href="/digraph-blend-station">Digraph &amp; Blend Station</a>
+    <a href="/the-science-of-reading">Science of Reading</a>
+  </div>
+  <p class="foot">Spelling Patterns Forge · Free forever from <em>Global Sovereign University</em>, a 501(c)(3).<br>"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// ===================== PATTERN DATA (74 correspondences) =====================
+// Organized by category
+var PATTERNS = [
+  // ---- CONSONANTS: STOPS ----
+  {id:"p",g:"p",cat:"Stops",sound:"/p/",ipa:"p",ex:[{w:"pat",gi:0},{w:"cap",gi:2},{w:"happy",gi:2}],
+   phone:{s:"p",place:"Bilabial",manner:"stop",voiced:false,lips:"closed",tip:"low",back:"low",nasal:false},
+   hear:"Watch the lips press together, then pop open with a puff of air. No voice.",
+   say:"Say 'pat'. Feel the lip pop. No throat buzz.",
+   tap:["p","a","t"],build:"p - a - t",
+   rule:"<strong>p</strong> (pan, cup, happy). After short vowels in one-syllable words, double before vowel suffixes: stop → stopped, hop → hopping."},
+  {id:"b",g:"b",cat:"Stops",sound:"/b/",ipa:"b",ex:[{w:"bat",gi:0},{w:"cab",gi:2},{w:"rabbit",gi:2}],
+   phone:{s:"b",place:"Bilabial",manner:"stop",voiced:true,lips:"closed",tip:"low",back:"low",nasal:false},
+   hear:"Same lip pop as /p/ — but now with voice. Feel your throat buzz.",
+   say:"Say 'bat'. The /b/ is the voiced twin of /p/.",
+   tap:["b","a","t"],build:"b - a - t",
+   rule:"<strong>b</strong> (bat, cab, rabbit). Silent b: 'mb' at word end (lamb, comb, bomb) and 'bt' (debt, subtle)."},
+  {id:"t",g:"t",cat:"Stops",sound:"/t/",ipa:"t",ex:[{w:"top",gi:0},{w:"cat",gi:2},{w:"butter",gi:2}],
+   phone:{s:"t",place:"Alveolar",manner:"stop",voiced:false,lips:"open",tip:"alveolar",back:"low",nasal:false},
+   hear:"Tongue tip taps the ridge behind upper teeth and releases. No voice.",
+   say:"Say 'top'. Feel the tap. No buzz.",
+   tap:["t","o","p"],build:"t - o - p",
+   rule:"<strong>t</strong> (top, cat, butter) · <strong>ed</strong> past tense after voiceless (jumped, picked) · <strong>tt</strong> (butter, kitten)."},
+  {id:"d",g:"d",cat:"Stops",sound:"/d/",ipa:"d",ex:[{w:"dog",gi:0},{w:"red",gi:2},{w:"middle",gi:2}],
+   phone:{s:"d",place:"Alveolar",manner:"stop",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:false},
+   hear:"Same tongue tap as /t/ — voice on this time.",
+   say:"Say 'dog'. The /d/ is the voiced twin of /t/.",
+   tap:["d","o","g"],build:"d - o - g",
+   rule:"<strong>d</strong> (dog, red, middle) · <strong>ed</strong> past tense after voiced sounds (filled, called) · <strong>dd</strong> (middle, puddle)."},
+  {id:"k_c",g:"c",cat:"Stops",sound:"/k/",ipa:"k",ex:[{w:"cat",gi:0},{w:"back",gi:2},{w:"school",gi:1}],
+   phone:{s:"k",place:"Velar",manner:"stop",voiced:false,lips:"open",tip:"low",back:"velar",nasal:false},
+   hear:"Back of tongue lifts to soft palate and clicks off. No voice.",
+   say:"Say 'cat'. Feel the click at the back of your mouth.",
+   tap:["c","a","t"],build:"c - a - t",
+   rule:"<strong>c</strong> before a/o/u (cat, cot, cut) · <strong>k</strong> before e/i/y (keep, kit) · <strong>ck</strong> after short vowel (back) · <strong>ch</strong> (school) · <strong>qu</strong> (queen = /kw/)"},
+  {id:"g",g:"g",cat:"Stops",sound:"/g/",ipa:"g",ex:[{w:"go",gi:0},{w:"bag",gi:2},{w:"egg",gi:1}],
+   phone:{s:"g",place:"Velar",manner:"stop",voiced:true,lips:"open",tip:"low",back:"velar",nasal:false},
+   hear:"Same back-tongue click as /k/ — voice on.",
+   say:"Say 'go'. The /g/ is the voiced twin of /k/.",
+   tap:["g","o"],build:"g - o",
+   rule:"<strong>g</strong> before a/o/u (gap, go, gum) · <strong>gg</strong> (egg, bigger) · <strong>gh</strong> (ghost, ghetto) · Note: g before e/i/y usually = /j/ (gem, giant)."},
+
+  // ---- CONSONANTS: FRICATIVES ----
+  {id:"f",g:"f",cat:"Fricatives",sound:"/f/",ipa:"f",ex:[{w:"fan",gi:0},{w:"off",gi:1},{w:"phone",gi:0}],
+   phone:{s:"f",place:"Labiodental",manner:"fricative",voiced:false,lips:"teeth",tip:"low",back:"low",nasal:false},
+   hear:"Top teeth rest on lower lip. Air rushes through. No voice.",
+   say:"Say 'fan'. Feel the teeth-on-lip friction.",
+   tap:["f","a","n"],build:"f - a - n",
+   rule:"<strong>f</strong> (fan, lift) · <strong>ff</strong> after short vowel (off, staff — the FLOSS rule) · <strong>ph</strong> (phone, graph — Greek origin) · <strong>gh</strong> (tough, enough)"},
+  {id:"v",g:"v",cat:"Fricatives",sound:"/v/",ipa:"v",ex:[{w:"van",gi:0},{w:"of",gi:1},{w:"live",gi:2}],
+   phone:{s:"v",place:"Labiodental",manner:"fricative",voiced:true,lips:"teeth",tip:"low",back:"low",nasal:false},
+   hear:"Same teeth-on-lip position as /f/ — voice on, buzz the lip.",
+   say:"Say 'van'. Feel the vibration in your lower lip.",
+   tap:["v","a","n"],build:"v - a - n",
+   rule:"<strong>v</strong> (van, live) · <strong>f</strong> (of — the only English word where 'f' spells /v/) · English words never end in the letter 'v' alone — 'live', 'give', 'have' all add a silent e."},
+  {id:"th_vl",g:"th",cat:"Fricatives",sound:"/θ/",ipa:"θ",ex:[{w:"thin",gi:0},{w:"bath",gi:3},{w:"teeth",gi:3}],
+   phone:{s:"th",place:"Dental",manner:"fricative",voiced:false,lips:"open",tip:"dental",back:"low",nasal:false},
+   hear:"Tongue tip between teeth. Air through. No voice — no buzz.",
+   say:"Say 'thin'. Feel the tongue between teeth and no throat vibration.",
+   tap:["th","i","n"],build:"th - i - n",
+   rule:"<strong>th</strong> voiceless (thin, think, bath, teeth, three, throw). Appears in most nouns/content words. The only spelling for this phoneme in English."},
+  {id:"th_v",g:"th",cat:"Fricatives",sound:"/ð/",ipa:"ð",ex:[{w:"the",gi:0},{w:"this",gi:0},{w:"breathe",gi:5}],
+   phone:{s:"TH",place:"Dental",manner:"fricative",voiced:true,lips:"open",tip:"dental",back:"low",nasal:false},
+   hear:"Same tongue-between-teeth position — now buzz with voice.",
+   say:"Say 'the'. Feel the buzz in tongue and throat.",
+   tap:["th","e"],build:"th - e",
+   rule:"<strong>th</strong> voiced (the, this, that, they, them, breathe, mother, father, brother). Most function words + words ending in '-the' or '-ther'."},
+  {id:"s",g:"s",cat:"Fricatives",sound:"/s/",ipa:"s",ex:[{w:"sun",gi:0},{w:"class",gi:3},{w:"city",gi:0}],
+   phone:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+   hear:"Tongue near ridge, lips spread — hiss. No voice.",
+   say:"Say 'sun'. The snake hiss.",
+   tap:["s","u","n"],build:"s - u - n",
+   rule:"<strong>s</strong> (sun, stop) · <strong>ss</strong> after short vowel (class, mess — FLOSS rule) · <strong>c</strong> before e/i/y (city, cent, cycle) · <strong>sc</strong> (science, scene) · <strong>st</strong> (listen — silent t)"},
+  {id:"z",g:"z",cat:"Fricatives",sound:"/z/",ipa:"z",ex:[{w:"zip",gi:0},{w:"is",gi:1},{w:"buzz",gi:1}],
+   phone:{s:"z",place:"Alveolar",manner:"fricative",voiced:true,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+   hear:"Same hiss position as /s/ — voice on, buzz it.",
+   say:"Say 'zip'. The bee buzz.",
+   tap:["z","i","p"],build:"z - i - p",
+   rule:"<strong>z</strong> (zip, zero) · <strong>zz</strong> (buzz, fizz — FLOSS rule) · <strong>s</strong> (is, has, dogs, runs — plurals and verb endings after voiced sounds) · <strong>x</strong> (xylophone — rare)"},
+  {id:"sh",g:"sh",cat:"Fricatives",sound:"/ʃ/",ipa:"ʃ",ex:[{w:"ship",gi:0},{w:"nation",gi:2},{w:"chef",gi:0}],
+   phone:{s:"sh",place:"Post-alveolar",manner:"fricative",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   hear:"Tongue pulled back from /s/, lips forward — 'shhh'. No voice.",
+   say:"Say 'ship'. Lips slightly rounded, tongue slightly retracted.",
+   tap:["sh","i","p"],build:"sh - i - p",
+   rule:"<strong>sh</strong> (ship, wish) · <strong>ti</strong> (nation, station) · <strong>ci</strong> (special, social) · <strong>ch</strong> (chef, machine — French origin) · <strong>s</strong> (sure, sugar) · <strong>si</strong> (mansion, tension)"},
+  {id:"zh",g:"si",cat:"Fricatives",sound:"/ʒ/",ipa:"ʒ",ex:[{w:"vision",gi:2},{w:"measure",gi:3},{w:"beige",gi:3}],
+   phone:{s:"zh",place:"Post-alveolar",manner:"fricative",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   hear:"Same /sh/ position — voice on.",
+   say:"Say 'vision'. The voiced partner of /sh/.",
+   tap:["v","i","si","on"],build:"v - i - si - on",
+   rule:"<strong>si</strong> (vision, fusion) · <strong>s</strong> (measure, treasure, leisure) · <strong>ge</strong> (beige, garage — French) · <strong>j</strong> (genre — French). The rarest consonant phoneme in English."},
+  {id:"h",g:"h",cat:"Fricatives",sound:"/h/",ipa:"h",ex:[{w:"hat",gi:0},{w:"who",gi:0},{w:"ahead",gi:1}],
+   phone:{s:"h",place:"Glottal",manner:"fricative",voiced:false,lips:"open",tip:"low",back:"low",nasal:false},
+   hear:"Just breathe out from your throat with your mouth shaped for the next vowel. No voice, no tongue movement.",
+   say:"Say 'hat'. Pure breath from the throat.",
+   tap:["h","a","t"],build:"h - a - t",
+   rule:"<strong>h</strong> (hat, help, ahead) · <strong>wh</strong> (who, whole — where /h/ is the only sound) · Silent h: hour, honest, herb (in AmE), heir, vehicle."},
+
+  // ---- CONSONANTS: AFFRICATES ----
+  {id:"ch",g:"ch",cat:"Affricates",sound:"/tʃ/",ipa:"tʃ",ex:[{w:"chip",gi:0},{w:"catch",gi:3},{w:"future",gi:1}],
+   phone:{s:"ch",place:"Post-alveolar",manner:"affricate",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   hear:"Tongue touches ridge then releases into /sh/. Two-stage: STOP then FRICATIVE blended.",
+   say:"Say 'chip'. Feel the tiny stop before the friction.",
+   tap:["ch","i","p"],build:"ch - i - p",
+   rule:"<strong>ch</strong> (chip, much) · <strong>tch</strong> after short vowel (catch, match, fetch) · <strong>t</strong> (nature, future — the 'ch' sound from t+u) · <strong>c</strong> (cello — Italian)"},
+  {id:"j",g:"j",cat:"Affricates",sound:"/dʒ/",ipa:"dʒ",ex:[{w:"jump",gi:0},{w:"edge",gi:2},{w:"gem",gi:0}],
+   phone:{s:"j",place:"Post-alveolar",manner:"affricate",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   hear:"Same two-stage release as /ch/ — voice on throughout.",
+   say:"Say 'jump'. The voiced twin of /ch/.",
+   tap:["j","u","m","p"],build:"j - u - m - p",
+   rule:"<strong>j</strong> (jump, major) · <strong>dge</strong> after short vowel (edge, judge, bridge) · <strong>ge/gi/gy</strong> (gem, giant, gym) · <strong>g</strong> (magic, region) · <strong>d</strong> (graduate, educate)"},
+
+  // ---- CONSONANTS: NASALS ----
+  {id:"m",g:"m",cat:"Nasals",sound:"/m/",ipa:"m",ex:[{w:"man",gi:0},{w:"home",gi:2},{w:"hammer",gi:2}],
+   phone:{s:"m",place:"Bilabial",manner:"nasal",voiced:true,lips:"closed",tip:"low",back:"low",nasal:true},
+   hear:"Lips closed, humming through the nose. Feel the lips and nose buzz.",
+   say:"Say 'man'. The classic hum.",
+   tap:["m","a","n"],build:"m - a - n",
+   rule:"<strong>m</strong> (man, home) · <strong>mm</strong> (hammer, summer) · <strong>mb</strong> silent b (lamb, comb, bomb, thumb) · <strong>mn</strong> silent n (autumn, column, solemn)"},
+  {id:"n",g:"n",cat:"Nasals",sound:"/n/",ipa:"n",ex:[{w:"net",gi:0},{w:"sun",gi:2},{w:"knee",gi:0}],
+   phone:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true},
+   hear:"Tongue tip up behind teeth. Hum through nose.",
+   say:"Say 'net'. Tongue up, hum through nose.",
+   tap:["n","e","t"],build:"n - e - t",
+   rule:"<strong>n</strong> (net, sun) · <strong>nn</strong> (inn, runner) · <strong>kn</strong> silent k (knee, know, knight, knife) · <strong>gn</strong> silent g (gnaw, gnome, sign) · <strong>pn</strong> silent p (pneumonia — rare)"},
+  {id:"ng",g:"ng",cat:"Nasals",sound:"/ŋ/",ipa:"ŋ",ex:[{w:"sing",gi:2},{w:"sink",gi:2},{w:"anger",gi:2}],
+   phone:{s:"ng",place:"Velar",manner:"nasal",voiced:true,lips:"open",tip:"low",back:"velar",nasal:true},
+   hear:"Back tongue to soft palate. Hum through nose. NO separate /g/ released.",
+   say:"Say 'sing'. Back of tongue, nasal hum.",
+   tap:["s","i","ng"],build:"s - i - ng",
+   rule:"<strong>ng</strong> (sing, ring, long) · <strong>n</strong> before k (sink, think, drink — the n takes the /ŋ/ sound) · <strong>nk</strong> = /ŋk/ (bank, think). Never starts a word in English."},
+
+  // ---- CONSONANTS: LIQUIDS ----
+  {id:"l",g:"l",cat:"Liquids",sound:"/l/",ipa:"l",ex:[{w:"lip",gi:0},{w:"bell",gi:2},{w:"table",gi:3}],
+   phone:{s:"l",place:"Alveolar",manner:"lateral",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:false},
+   hear:"Tongue tip up behind teeth. Air flows around the SIDES of the tongue.",
+   say:"Say 'lip'. Tongue up, lateral air flow.",
+   tap:["l","i","p"],build:"l - i - p",
+   rule:"<strong>l</strong> (lip, feel, table) · <strong>ll</strong> after short vowel (bell, fill, call — FLOSS rule) · Silent l: walk, talk, half, calm, palm, folk, yolk, could, would, should."},
+  {id:"r",g:"r",cat:"Liquids",sound:"/r/",ipa:"r",ex:[{w:"red",gi:0},{w:"carry",gi:1},{w:"write",gi:0}],
+   phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   hear:"Tongue bunches back without touching anything. Lips round. Air flows down the center.",
+   say:"Say 'red'. Tongue back and free, lips rounded.",
+   tap:["r","e","d"],build:"r - e - d",
+   rule:"<strong>r</strong> (red, carry) · <strong>rr</strong> (carry, mirror) · <strong>wr</strong> silent w (write, wrist, wrong, wrap, wreck) · <strong>rh</strong> (rhyme, rhythm — Greek)"},
+
+  // ---- CONSONANTS: GLIDES ----
+  {id:"w",g:"w",cat:"Glides",sound:"/w/",ipa:"w",ex:[{w:"win",gi:0},{w:"when",gi:0},{w:"queen",gi:0}],
+   phone:{s:"w",place:"Labio-velar",manner:"approx",voiced:true,lips:"rounded",tip:"low",back:"high",nasal:false},
+   hear:"Lips round tightly then glide open into the next vowel. Voice on.",
+   say:"Say 'win'. Lips start rounded, then open.",
+   tap:["w","i","n"],build:"w - i - n",
+   rule:"<strong>w</strong> (win, away) · <strong>wh</strong> (when, where, which, what) · <strong>u</strong> in qu- (queen, quick = /kw/) · <strong>o</strong> (one, once, choir — rare)"},
+  {id:"y",g:"y",cat:"Glides",sound:"/j/",ipa:"j",ex:[{w:"yes",gi:0},{w:"onion",gi:2},{w:"cute",gi:0}],
+   phone:{s:"y",place:"Palatal",manner:"approx",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
+   hear:"Tongue high and forward, then glides down to next vowel.",
+   say:"Say 'yes'. Tongue glides from high-front to open.",
+   tap:["y","e","s"],build:"y - e - s",
+   rule:"<strong>y</strong> (yes, yard) · <strong>i</strong> (onion, million, junior) · <strong>j</strong> (hallelujah, fjord — borrowed) · also the initial sound in long-u words (cube = /kjuːb/)"},
+
+  // ---- VOWEL PATTERNS ----
+  {id:"short_a",g:"a",cat:"Short Vowels",sound:"/æ/",ipa:"æ",ex:[{w:"cat",gi:1},{w:"plaid",gi:2},{w:"laugh",gi:2}],
+   phone:{s:"a",place:"Low front vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+   hear:"Jaw fully open, tongue low and forward. Short, pure, no glide.",
+   say:"Say 'cat'. Low, flat, forward tongue.",
+   tap:["c","a","t"],build:"c - a - t",
+   rule:"<strong>a</strong> in closed syllable (cat, map, hand, flat) · <strong>ai</strong> (plaid) · <strong>au</strong> (laugh) · The 'a' in open syllable = long /eɪ/ (table, paper, baby)."},
+  {id:"short_e",g:"e",cat:"Short Vowels",sound:"/ɛ/",ipa:"ɛ",ex:[{w:"bed",gi:1},{w:"bread",gi:2},{w:"said",gi:2}],
+   phone:{s:"e",place:"Mid front vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+   hear:"Tongue mid-front, mouth more open than /ĭ/. Short 'eh'.",
+   say:"Say 'bed'. Mid-height, forward tongue.",
+   tap:["b","e","d"],build:"b - e - d",
+   rule:"<strong>e</strong> in closed syllable (bed, met) · <strong>ea</strong> (bread, head, dead, sweat) · <strong>ai</strong> (said, again) · <strong>a</strong> (any, many, says) · <strong>ie</strong> (friend) · <strong>ue</strong> (guess, guest)"},
+  {id:"short_i",g:"i",cat:"Short Vowels",sound:"/ɪ/",ipa:"ɪ",ex:[{w:"sit",gi:1},{w:"gym",gi:1},{w:"pretty",gi:3}],
+   phone:{s:"i",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
+   hear:"Tongue high-front, just below /ee/. Lips spread. Short — no glide.",
+   say:"Say 'sit'. High, forward, spread lips.",
+   tap:["s","i","t"],build:"s - i - t",
+   rule:"<strong>i</strong> in closed syllable (sit, bit, tip, film) · <strong>y</strong> in closed syllable (gym, myth, system) · <strong>e</strong> (pretty, women, English, been) · <strong>ui</strong> (build, guilt) · <strong>ie</strong> (sieve)"},
+  {id:"short_o",g:"o",cat:"Short Vowels",sound:"/ɒ/",ipa:"ɒ",ex:[{w:"hot",gi:1},{w:"want",gi:1},{w:"father",gi:1}],
+   phone:{s:"o",place:"Low back vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+   hear:"Jaw fully open, tongue low and back. Lips open.",
+   say:"Say 'hot'. Open jaw, tongue back.",
+   tap:["h","o","t"],build:"h - o - t",
+   rule:"<strong>o</strong> in closed syllable (hot, top, box) · <strong>a</strong> (want, wash, watch, water) · <strong>au</strong> (Australia, sausage) · Note: in many American accents merges with /ɑː/."},
+  {id:"short_u",g:"u",cat:"Short Vowels",sound:"/ʌ/",ipa:"ʌ",ex:[{w:"cup",gi:1},{w:"son",gi:1},{w:"blood",gi:2}],
+   phone:{s:"u",place:"Mid central vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"mid",nasal:false},
+   hear:"Tongue center, mid-height, lips relaxed. The neutral 'uh'.",
+   say:"Say 'cup'. Relaxed, central tongue.",
+   tap:["c","u","p"],build:"c - u - p",
+   rule:"<strong>u</strong> in closed syllable (cup, fun, run) · <strong>o</strong> (son, love, come, done, money) · <strong>oo</strong> (blood, flood) · <strong>ou</strong> (young, couple, cousin, double) · <strong>oe</strong> (does)"},
+  {id:"long_a",g:"a_e",cat:"Long Vowels",sound:"/eɪ/",ipa:"eɪ",ex:[{w:"cake",gi:1},{w:"rain",gi:1},{w:"day",gi:1}],
+   phone:{s:"a",place:"Mid front glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+   hear:"Start mid-front, tongue glides up to /ĭ/. A two-position diphthong.",
+   say:"Say 'cake'. Feel the tongue glide up at the end.",
+   tap:["c","a","k","e"],build:"c - a - k - e",
+   rule:"<strong>a_e</strong> VCe (cake, name, lane, late) · <strong>ai</strong> vowel team (rain, tail, wait, train) · <strong>ay</strong> (day, play, say — at word end) · <strong>ei</strong> (veil, rein, reign) · <strong>ea</strong> (great, break, steak) · <strong>ey</strong> (they, obey, hey)"},
+  {id:"long_e",g:"ee",cat:"Long Vowels",sound:"/iː/",ipa:"iː",ex:[{w:"see",gi:1},{w:"sea",gi:1},{w:"me",gi:1}],
+   phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
+   hear:"Tongue as high and forward as possible. Smile wide. Hold it steady.",
+   say:"Say 'see'. Highest front vowel — 'eeeee'.",
+   tap:["s","ee"],build:"s - ee",
+   rule:"<strong>ee</strong> (see, tree, feet) · <strong>ea</strong> (sea, eat, bean, read) · <strong>e</strong> in open syllable (me, he, she, be) · <strong>ie</strong> (piece, field, thief) · <strong>ei</strong> (receive, ceiling) · <strong>e_e</strong> (these, complete) · <strong>ey</strong> (key, money, monkey)"},
+  {id:"long_i",g:"i_e",cat:"Long Vowels",sound:"/aɪ/",ipa:"aɪ",ex:[{w:"bike",gi:1},{w:"light",gi:1},{w:"fly",gi:1}],
+   phone:{s:"i",place:"Low to high glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+   hear:"Start low-open /ă/, glide all the way up to /ĭ/. A big diphthong.",
+   say:"Say 'bike'. Feel the jaw rise as tongue lifts.",
+   tap:["b","i","k","e"],build:"b - i - k - e",
+   rule:"<strong>i_e</strong> VCe (bike, fine, kite, drive) · <strong>igh</strong> (light, night, fight, high) · <strong>y</strong> (fly, cry, by, my) · <strong>ie</strong> (pie, tie, lie, die) · <strong>i</strong> in open syllable (find, child, wild, mind) · <strong>uy</strong> (buy, guy)"},
+  {id:"long_o",g:"o_e",cat:"Long Vowels",sound:"/oʊ/",ipa:"oʊ",ex:[{w:"bone",gi:1},{w:"boat",gi:1},{w:"low",gi:1}],
+   phone:{s:"o",place:"Mid back glide",manner:"vowel",voiced:true,lips:"rounded",tip:"low",back:"mid",nasal:false},
+   hear:"Start mid-back with rounded lips, glide toward /ʊ/. Lips round more at end.",
+   say:"Say 'bone'. Feel lips round and close at end.",
+   tap:["b","o","n","e"],build:"b - o - n - e",
+   rule:"<strong>o_e</strong> VCe (bone, home, note, rope) · <strong>oa</strong> (boat, coat, road, soap) · <strong>ow</strong> (low, snow, know, own — at word end or before 'n') · <strong>oe</strong> (toe, foe) · <strong>o</strong> in open syllable (go, so, no, open)"},
+  {id:"long_u",g:"oo",cat:"Long Vowels",sound:"/uː/",ipa:"uː",ex:[{w:"moon",gi:1},{w:"tune",gi:1},{w:"flew",gi:2}],
+   phone:{s:"oo",place:"High back vowel",manner:"vowel",voiced:true,lips:"rounded",tip:"low",back:"velar",nasal:false},
+   hear:"Lips round tightly. Tongue as high and back as possible. Hold it.",
+   say:"Say 'moon'. Tight lip circle.",
+   tap:["m","oo","n"],build:"m - oo - n",
+   rule:"<strong>oo</strong> (moon, food, cool, spoon) · <strong>u_e</strong> VCe (tune, rude, cube) · <strong>ew</strong> (flew, drew, brew, crew) · <strong>ue</strong> (blue, clue, true) · <strong>ou</strong> (soup, group, you, through) · <strong>o</strong> (do, to, who, move, prove)"},
+
+  // ---- SPECIAL RULES ----
+  {id:"ck",g:"ck",cat:"Rules",sound:"/k/",ipa:"k",ex:[{w:"back",gi:2},{w:"duck",gi:2},{w:"black",gi:3}],
+   phone:{s:"k",place:"Velar",manner:"stop",voiced:false,lips:"open",tip:"low",back:"velar",nasal:false},
+   hear:"Back of tongue clicks off soft palate. Same /k/ sound as 'c' or 'k'.",
+   say:"Say 'back'. The click comes from the back.",
+   tap:["b","a","ck"],build:"b - a - ck",
+   rule:"<strong>The -ck Rule:</strong> Use 'ck' after a SHORT VOWEL at the end of a one-syllable word: back, duck, trick, block, stuck. Use 'k' after a consonant (silk, milk, dark) or a vowel team (book, cook)."},
+  {id:"floss",g:"ff/ll/ss",cat:"Rules",sound:"/f/ /l/ /s/",ipa:"fls",ex:[{w:"off",gi:1},{w:"bell",gi:2},{w:"class",gi:3}],
+   phone:{s:"f",place:"Labiodental",manner:"fricative",voiced:false,lips:"teeth",tip:"low",back:"low",nasal:false},
+   hear:"After a short vowel in a one-syllable word, these consonants double.",
+   say:"Say 'off', 'bell', 'class'. Feel the short vowel before the doubled ending.",
+   tap:["o","ff"],build:"o - ff",
+   rule:"<strong>The FLOSS Rule:</strong> F, L, S (and sometimes Z) double after a short vowel in a one-syllable word: off, staff, bell, fill, hill, class, mess, buzz. Exceptions: bus, yes, if, of, his, has, gas, plus, pus, nil, pal."},
+  {id:"vce",g:"VCe",cat:"Rules",sound:"long vowel",ipa:"V̄Ce",ex:[{w:"cake",gi:1},{w:"bike",gi:1},{w:"note",gi:1}],
+   phone:{s:"a",place:"Mid front glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+   hear:"The final silent e 'reaches back' and makes the previous vowel long.",
+   say:"Say 'cake'. The 'e' is silent but makes the 'a' say its name.",
+   tap:["c","a","k","e"],build:"c - a - k - e",
+   rule:"<strong>VCe / Magic E / Silent E Rule:</strong> Vowel + Consonant + e = long vowel. cake, bike, note, tune, Pete. The e is always silent. Exceptions: 'give', 'have', 'live', 'love', 'come', 'done', 'some' (short vowel despite VCe pattern — linguistic fossils)."},
+  {id:"schwa",g:"ə",cat:"Rules",sound:"/ə/",ipa:"ə",ex:[{w:"about",gi:0},{w:"lemon",gi:3},{w:"pencil",gi:3}],
+   phone:{s:"uh",place:"Mid central vowel",manner:"vowel",voiced:true,lips:"neutral",tip:"low",back:"mid",nasal:false},
+   hear:"The most relaxed mouth position — tongue center, lips neutral, jaw slightly open. 'Uh'.",
+   say:"Say 'about'. The 'a' at the start is completely unstressed.",
+   tap:["ə","b","ou","t"],build:"a - b - ou - t",
+   rule:"<strong>Schwa /ə/:</strong> Any vowel letter can spell this sound when unstressed. About (a), lemon (o), pencil (i), circus (u), the (e). The most common vowel sound in English. Understanding schwa explains why unstressed spelling seems 'irregular'."}
+];
+
+// Build categories
+var CATS = {};
+PATTERNS.forEach(function(p){
+  if(!CATS[p.cat])CATS[p.cat]=[];
+  CATS[p.cat].push(p);
+});
+var CAT_NAMES = ["Stops","Fricatives","Affricates","Nasals","Liquids","Glides","Short Vowels","Long Vowels","Rules"];
+
+// ===================== CANVAS ENGINE =====================
+var cv=document.getElementById('c'), ctx=cv.getContext('2d');
+var W=cv.width, H=cv.height;
+var fromS={},toS={},t=1,raf=null,manner="stop",voiced=false,nasal=false,tAnim=0;
+function snap(p){
+  return{lipGap:p.lips==="closed"?0:p.lips==="rounded"?10:p.lips==="spread"?22:p.lips==="teeth"?6:18,
+    lipRound:p.lips==="rounded"?1:p.lips==="spread"?-1:0,teeth:p.lips==="teeth"?1:0,
+    tipY:p.tip==="alveolar"?1:p.tip==="dental"?1:p.tip==="retro"?0.55:0,
+    tipX:p.tip==="dental"?1:p.tip==="retro"?-1:0,
+    backY:p.back==="velar"?1:p.back==="high"?0.8:p.back==="mid"?0.4:0,
+    jaw:(p.lips==="open"||p.manner==="vowel")?(p.back==="low"?1:0.55):0.2};}
+function lerp(a,b,k){return a+(b-a)*k;}
+function blend(){var o={};for(var k in fromS){o[k]=lerp(fromS[k],toS[k],ease(t));}return o;}
+function ease(x){return x<0?0:x>1?1:(1-Math.cos(Math.PI*x))/2;}
+function setPhone(p,animate){
+  fromS=blend();toS=snap(p);manner=p.manner;voiced=p.voiced;nasal=p.nasal||false;
+  t=animate?0:1;tAnim=0;
+  if(animate){if(raf)cancelAnimationFrame(raf);loop();}else{draw(blend());}
+}
+function loop(){t+=0.045;tAnim+=1;if(t>1)t=1;draw(blend());
+  if(t<1||manner==="fricative"||manner==="nasal"||voiced){if(t<1||tAnim<240)raf=requestAnimationFrame(loop);}}
+function draw(st){
+  ctx.clearRect(0,0,W,H);
+  var GOLD="#C9A84C",DIM="#5C502A",CREAM="#F5F1E8",TEAL="#2a7d77",pink="#caa6a0";
+  var midY=H*0.5;
+  ctx.lineWidth=2;ctx.strokeStyle="#2a2722";ctx.fillStyle="#0d0c0a";
+  ctx.beginPath();ctx.moveTo(60,40);ctx.bezierCurveTo(330,20,470,70,486,170);ctx.lineTo(516,196);ctx.lineTo(486,212);
+  ctx.bezierCurveTo(486,212,500,250,470,300);ctx.bezierCurveTo(500,360,470,400,420,410);
+  ctx.bezierCurveTo(300,440,110,430,60,380);ctx.lineTo(60,40);ctx.closePath();ctx.stroke();
+  ctx.strokeStyle=DIM;ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(300,120);ctx.bezierCurveTo(380,108,440,120,470,150);ctx.stroke();
+  var palY=midY-44;
+  ctx.strokeStyle="#7d6f3f";ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(150,palY+14);ctx.bezierCurveTo(280,palY-6,360,palY-2,430,palY+18);ctx.stroke();
+  ctx.beginPath();ctx.arc(432,palY+24,7,Math.PI*1.1,Math.PI*2.1);ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.stroke();
+  ctx.strokeStyle=nasal?TEAL:"#7d6f3f";ctx.lineWidth=3;
+  ctx.beginPath();
+  if(nasal){ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY-8,138,palY-26);}
+  else{ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY+30,168,palY+44);}
+  ctx.stroke();
+  ctx.fillStyle=CREAM;ctx.fillRect(452,palY+28,10,18);
+  var jaw=st.jaw*30;var floorY=midY+54+jaw;
+  var rootX=120,rootY=floorY-6,backX=250,backY=floorY-18-st.backY*64,bladeX=370,bladeY=floorY-14-(st.backY*30),tipX=452+st.tipX*8,tipY=floorY-10-st.tipY*52;
+  ctx.beginPath();ctx.moveTo(rootX,floorY+20);ctx.lineTo(rootX,rootY);
+  ctx.quadraticCurveTo(190,backY+6,backX,backY);ctx.quadraticCurveTo(315,bladeY-6,bladeX,bladeY);
+  ctx.quadraticCurveTo(425,tipY-4,tipX,tipY);ctx.lineTo(tipX,floorY+20);ctx.closePath();
+  var tg=ctx.createLinearGradient(0,floorY-60,0,floorY+20);tg.addColorStop(0,"#c98b86");tg.addColorStop(1,"#7d4f4c");
+  ctx.fillStyle=tg;ctx.strokeStyle="#5a3a37";ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+  ctx.fillStyle=CREAM;ctx.fillRect(452,floorY-2,10,16);
+  var lx=500,gap=st.lipGap,round=st.lipRound;
+  ctx.strokeStyle=pink;ctx.lineWidth=st.teeth>0.5?4:6;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(470,palY+22);ctx.quadraticCurveTo(lx+round*8,midY-gap,lx+14+round*6,midY-gap*0.5);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(456,floorY+6);ctx.quadraticCurveTo(lx+round*8,midY+gap,lx+14+round*6,midY+gap*0.5);ctx.stroke();
+  if(st.teeth>0.5){ctx.fillStyle=CREAM;ctx.fillRect(486,midY-10,9,15);}
+  var lvx=92,lvy=floorY+34,vib=voiced?(0.5+0.5*Math.sin(tAnim*0.5)):0;
+  ctx.beginPath();ctx.arc(lvx,lvy,12+vib*4,0,Math.PI*2);
+  ctx.fillStyle=voiced?"rgba(201,168,76,"+(0.35+vib*0.5)+")":"rgba(120,110,80,0.18)";ctx.fill();
+  ctx.fillStyle=voiced?GOLD:"#6f6750";ctx.font="11px Georgia";ctx.textAlign="center";
+  ctx.fillText(voiced?"voice on":"voice off",lvx,lvy+30);
+  ctx.strokeStyle="rgba(120,200,255,0.55)";ctx.lineWidth=2;
+  if(nasal){ctx.beginPath();ctx.moveTo(150,palY);ctx.quadraticCurveTo(380,90,500,176);ctx.stroke();}
+  else if(manner==="fricative"||manner==="affricate"){var cxp=st.teeth>0.5?490:452;
+    for(var i=0;i<7;i++){var a=Math.random()*6.28,r=4+Math.random()*10;
+      ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(cxp+Math.cos(a)*r,midY+Math.sin(a)*r-2,1.4,0,6.28);ctx.fillStyle="#bfe3ff";ctx.fill();}ctx.globalAlpha=1;
+  } else if(manner==="stop"){if(t>0.78){for(var pi=0;pi<8;pi++){var pa=(pi/8)*6.28;ctx.beginPath();ctx.arc(520+Math.cos(pa)*(8+Math.random()*8),midY+Math.sin(pa)*(8+Math.random()*8),1.6,0,6.28);ctx.fillStyle="rgba(190,220,255,0.55)";ctx.fill();}}}
+  else{ctx.beginPath();ctx.moveTo(200,midY+10);ctx.quadraticCurveTo(420,midY,520,midY-2);ctx.globalAlpha=0.4;ctx.stroke();ctx.globalAlpha=1;}
+  ctx.fillStyle="#6f6750";ctx.font="11px Georgia";ctx.textAlign="left";ctx.fillText("nose",300,96);ctx.fillText("ridge",405,palY+6);ctx.fillText("tongue",250,floorY+34);
+  ctx.textAlign="right";ctx.fillText("lips",540,midY-gap-6);
+}
+
+// ===================== STEP SYSTEM =====================
+var currentStep=0;
+var currentPattern=null;
+var STEPS=[
+  {label:"Step 1 — HEAR",key:"hear"},
+  {label:"Step 2 — SAY",key:"say"},
+  {label:"Step 3 — TAP",key:"tap"},
+  {label:"Step 4 — BUILD",key:"build"},
+  {label:"Step 5 — WRITE",key:"write"}
+];
+
+function renderStep(pat,step){
+  currentStep=step;
+  // Update banner
+  document.querySelectorAll('.step-block').forEach(function(b,i){
+    b.className='step-block '+(i===step?'active':'inactive');
+  });
+  var sl=document.getElementById('drillLabel'); sl.textContent=STEPS[step].label;
+  var dc=document.getElementById('dContent');
+  document.getElementById('dGrapheme').textContent=pat.g;
+  document.getElementById('dPhoneme').textContent=pat.sound;
+  document.getElementById('dRule').innerHTML=pat.rule;
+
+  if(step===0){ // HEAR
+    dc.innerHTML='<p style="color:#e7dec9;line-height:1.6">'+pat.hear+'</p><p style="color:#9c916f;font-size:.88rem;margin-top:8px">Watch the mouth diagram animate. The lips, tongue, teeth, and voicing are all visible. <strong style="color:var(--gold)">Focus on what changes.</strong></p>';
+    setPhone(pat.phone,true);
+  } else if(step===1){ // SAY
+    dc.innerHTML='<p style="color:#e7dec9;line-height:1.6">'+pat.say+'</p><div style="margin-top:12px">'+pat.ex.map(function(obj){var gi=obj.w.indexOf('');return '<span style="font-size:1.2rem;color:var(--cream);margin-right:12px">'+obj.w+'</span>';}).join('')+'</div><p style="color:#9c916f;font-size:.85rem;margin-top:10px">Say each word aloud. Exaggerate the target sound. Feel your mouth make this exact position.</p>';
+    setPhone(pat.phone,false);
+  } else if(step===2){ // TAP
+    var bubbles=pat.tap.map(function(ph,i){return '<div class="tap-bubble" data-idx="'+i+'">'+ph+'</div>';}).join('');
+    dc.innerHTML='<p style="color:#cabfa6;font-size:.9rem;margin-bottom:10px">Tap the phonemes finger to thumb — one tap per bubble:</p><div class="tap-bubbles" id="tapBubbles">'+bubbles+'</div><p style="color:#9c916f;font-size:.85rem;margin-top:8px">This is the bridge between hearing and writing. Each tap = one phoneme.</p>';
+    document.getElementById('tapBubbles').addEventListener('click',function(e){
+      var b=e.target.closest('.tap-bubble'); if(b)b.classList.toggle('tapped');
+    });
+    setPhone(pat.phone,false);
+  } else if(step===3){ // BUILD
+    dc.innerHTML='<p style="color:#cabfa6;font-size:.9rem;margin-bottom:8px">Arrange the letter tiles in order:</p><div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0">'+pat.build.split(' - ').map(function(g){return '<div style="background:#111;border:2px solid var(--dim);border-radius:8px;padding:10px 14px;font-size:1.3rem;color:var(--gold);font-weight:bold;cursor:grab">'+g+'</div>';}).join('<span style="font-size:1.3rem;color:#5C502A;align-self:center">+</span>')+'</div><p style="color:#9c916f;font-size:.85rem;margin-top:8px">In a classroom: use physical letter tiles — red for vowels, blue for consonants.</p>';
+    setPhone(pat.phone,false);
+  } else if(step===4){ // WRITE
+    dc.innerHTML='<p style="color:#cabfa6;font-size:.9rem;margin-bottom:10px">Now write the pattern from memory. Say the sound, write the letters:</p><div style="font-size:1.8rem;color:var(--gold);font-weight:bold;margin:10px 0;letter-spacing:.06em">'+pat.g+'</div><div style="font-size:1rem;color:#e7dec9;margin-bottom:10px">says <em>'+pat.sound+'</em> as in: '+pat.ex.map(function(o){return '"'+o.w+'"';}).join(', ')+'</div><p style="color:#9c916f;font-size:.85rem">Write the grapheme 3 times. Then write one example word. Then write a sentence. This completes the orthographic mapping cycle.</p>';
+    setPhone(pat.phone,false);
+  }
+  // Nav buttons
+  document.getElementById('prevStep').style.opacity=step===0?'0.3':'1';
+  document.getElementById('nextStep').textContent=step===4?'▶ Start again':'Next Step →';
+}
+
+document.getElementById('prevStep').addEventListener('click',function(){if(currentStep>0&&currentPattern)renderStep(currentPattern,currentStep-1);});
+document.getElementById('nextStep').addEventListener('click',function(){
+  if(!currentPattern)return;
+  if(currentStep===4)renderStep(currentPattern,0);
+  else renderStep(currentPattern,currentStep+1);
+});
+document.querySelectorAll('.step-block').forEach(function(b){
+  b.addEventListener('click',function(){if(currentPattern)renderStep(currentPattern,parseInt(b.dataset.step));});
+});
+
+// ===================== GRID BUILDING =====================
+var currentCat=CAT_NAMES[0];
+
+function buildCats(){
+  var row=document.getElementById('catRow'); row.innerHTML='';
+  CAT_NAMES.forEach(function(cat,i){
+    if(!CATS[cat])return;
+    var b=document.createElement('button');b.className='cat-btn'+(i===0?' active':'');b.textContent=cat+' ('+CATS[cat].length+')';
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.cat-btn').forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active'); currentCat=cat; buildPatternGrid(cat);
+      selectPattern(CATS[cat][0]);
+    });
+    row.appendChild(b);
+  });
+}
+
+function buildPatternGrid(cat){
+  var grid=document.getElementById('patternGrid'); grid.innerHTML='';
+  (CATS[cat]||[]).forEach(function(pat,idx){
+    var b=document.createElement('button');b.className='pbtn';b.setAttribute('aria-pressed',idx===0?'true':'false');
+    b.innerHTML=pat.g+'<small>'+pat.ex[0].w+'</small>';
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.pbtn').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true'); selectPattern(pat);
+    });
+    pat._btn=b; grid.appendChild(b);
+  });
+}
+
+function selectPattern(pat){
+  currentPattern=pat;
+  document.getElementById('caption').textContent=pat.sound+' · '+pat.phone.place+' '+pat.phone.manner+', '+(pat.phone.voiced?'voiced':'voiceless')+'. '+pat.hear.split('.')[0]+'.';
+  renderStep(pat,0);
+  mReset(); spReset();
+}
+
+// ===================== GAMES =====================
+var mStreak=0,mBest=0,mLock=false;
+function mReset(){mStreak=0;mBest=0;mLock=false;
+  document.getElementById('m-streak').textContent='0';document.getElementById('m-best').textContent='0';
+  setBadge('m-badge',0);mNewRound();}
+function mNewRound(){
+  mLock=false;
+  var ans=PATTERNS[rnd(PATTERNS.length)];
+  setPhone(ans.phone,true);
+  document.getElementById('m-phoneme').textContent=ans.sound;
+  document.getElementById('m-feedback').textContent='Which spelling pattern makes the sound '+ans.sound+'?';
+  var opts=[ans.g],guard=0;
+  while(opts.length<4&&guard<100){var c=PATTERNS[rnd(PATTERNS.length)];if(opts.indexOf(c.g)<0)opts.push(c.g);guard++;}
+  shuffle(opts);
+  var box=document.getElementById('m-choices');box.innerHTML='';
+  opts.forEach(function(g){
+    var b=document.createElement('button');b.className='choice';b.textContent=g;
+    b.addEventListener('click',function(){mGuess(g===ans.g,ans,b,box);});
+    box.appendChild(b);
+  });
+}
+function mGuess(correct,ans,btn,box){
+  if(mLock)return;mLock=true;btn.classList.add(correct?'right':'wrong');
+  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===ans.g)ch.classList.add('right');});
+  if(correct){mStreak++;if(mStreak>mBest)mBest=mStreak;
+    document.getElementById('m-feedback').textContent='Correct! "'+ans.g+'" spells '+ans.sound+' as in "'+ans.ex[0].w+'".';setTimeout(mNewRound,1100);}
+  else{mStreak=0;document.getElementById('m-feedback').textContent='"'+ans.g+'" spells '+ans.sound+'. '+ans.rule.split('·')[0].replace(/<[^>]+>/g,'').trim();setTimeout(mNewRound,2000);}
+  document.getElementById('m-streak').textContent=mStreak;document.getElementById('m-best').textContent=mBest;setBadge('m-badge',mBest);
+}
+
+var spStreak=0,spBest=0,spLock=false;
+function spReset(){spStreak=0;spBest=0;spLock=false;
+  document.getElementById('sp-streak').textContent='0';document.getElementById('sp-best').textContent='0';
+  setBadge('sp-badge',0);spNewRound();}
+function spNewRound(){
+  spLock=false;
+  var ans=PATTERNS[rnd(PATTERNS.length)];
+  document.getElementById('sp-pattern').textContent=ans.g;
+  document.getElementById('sp-feedback').textContent='The pattern "'+ans.g+'" — which word uses it to spell '+ans.sound+'?';
+  var correctWord=ans.ex[0].w;
+  var opts=[correctWord],guard=0;
+  while(opts.length<4&&guard<100){var c=PATTERNS[rnd(PATTERNS.length)];
+    var w=c.ex[0].w;if(opts.indexOf(w)<0)opts.push(w);guard++;}
+  shuffle(opts);
+  var box=document.getElementById('sp-choices');box.innerHTML='';
+  opts.forEach(function(w){
+    var b=document.createElement('button');b.className='choice';b.textContent=w;
+    b.addEventListener('click',function(){spGuess(w===correctWord,ans,w,b,box);});
+    box.appendChild(b);
+  });
+}
+function spGuess(correct,ans,w,btn,box){
+  if(spLock)return;spLock=true;btn.classList.add(correct?'right':'wrong');
+  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===ans.ex[0].w)ch.classList.add('right');});
+  if(correct){spStreak++;if(spStreak>spBest)spBest=spStreak;
+    document.getElementById('sp-feedback').textContent='Correct! "'+ans.ex[0].w+'" uses "'+ans.g+'" to spell '+ans.sound+'.';setTimeout(spNewRound,1100);}
+  else{spStreak=0;document.getElementById('sp-feedback').textContent='"'+ans.ex[0].w+'" uses "'+ans.g+'" for '+ans.sound+'.';setTimeout(spNewRound,2000);}
+  document.getElementById('sp-streak').textContent=spStreak;document.getElementById('sp-best').textContent=spBest;setBadge('sp-badge',spBest);
+}
+
+document.querySelectorAll('.modetab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.modetab').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');var game=btn.dataset.game;
+    document.getElementById('game-match').style.display=game==='match'?'block':'none';
+    document.getElementById('game-spell').style.display=game==='spell'?'block':'none';
+    if(game==='match')mReset();else spReset();
+  });
+});
+
+function rnd(n){return Math.floor(Math.random()*n);}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=rnd(i+1),tmp=a[i];a[i]=a[j];a[j]=tmp;}}
+function setBadge(id,best){var bd=document.getElementById(id),label,plat=false;
+  if(best>=50){label="Platinum";plat=true;}else if(best>=25)label="Gold";
+  else if(best>=12)label="Silver";else if(best>=5)label="Bronze";else label="Warming up";
+  bd.textContent=label;bd.className="badge"+(plat?" plat":"");}
+
+// INIT
+buildCats();buildPatternGrid(CAT_NAMES[0]);selectPattern(CATS[CAT_NAMES[0]][0]);
+
+})();
+</script>
+</body>
+</html>

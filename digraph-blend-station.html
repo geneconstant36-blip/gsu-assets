@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digraph & Blend Station — GSU Readification</title>
+<meta name="description" content="Free phonics tool from GSU. See how digraphs form one sound with two letters and how blends keep both sounds audible. Mouth diagrams, voiced vs. voiceless, two game modes. No login.">
+<style>
+:root{--gold:#C9A84C;--dim:#5C502A;--cream:#F5F1E8;--teal:#1A8B7F;--dblue:#285bac;--dred:#c0392b;--dgreen:#1a6b3a;--dpurp:#7d3f8c;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:22px 18px 48px}
+.kick{color:var(--gold);letter-spacing:.18em;font-size:.74rem;text-transform:uppercase;margin-bottom:6px}
+h1{font-size:1.85rem;line-height:1.15;margin:.2rem 0 .2rem;color:var(--cream)}
+.sub{color:#cabfa6;font-size:.97rem;margin:0 0 14px;max-width:64ch;line-height:1.55}
+.rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:12px 0 18px}
+
+/* TYPE TABS */
+.type-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.type-tab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 18px;border-radius:8px;font-family:Georgia,serif;font-size:.9rem;cursor:pointer;transition:all .15s}
+.type-tab:hover{border-color:var(--gold);color:var(--cream)}
+.type-tab.active{font-weight:bold}
+.type-tab[data-type="digraph"].active{background:#0d1b3a;color:#6d9eeb;border-color:#6d9eeb}
+.type-tab[data-type="blend"].active{background:#0d2a18;color:#43d692;border-color:#43d692}
+.type-tab[data-type="voiced"].active{background:#3a0d0d;color:var(--dred);border-color:var(--dred)}
+
+/* ITEM GRID */
+.item-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.ibtn{min-width:60px;background:#111;border:2px solid var(--dim);color:var(--cream);padding:10px 10px 8px;border-radius:10px;font-family:Georgia,serif;font-size:1.15rem;cursor:pointer;text-align:center;transition:all .15s}
+.ibtn small{display:block;font-size:.62rem;color:#8d835f;letter-spacing:.04em;margin-top:2px}
+.ibtn:hover{border-color:var(--gold)}
+.ibtn[aria-pressed="true"]{background:var(--gold);color:#000;border-color:var(--gold);font-weight:bold}
+.ibtn[aria-pressed="true"] small{color:#3a3208}
+
+/* STAGE - for blends we show TWO canvases */
+.stage-single{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-bottom:20px}
+.stage-double{display:grid;grid-template-columns:1fr 1fr .9fr;gap:14px;margin-bottom:20px}
+@media(max-width:720px){.stage-single,.stage-double{grid-template-columns:1fr}}
+.canvaswrap{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:10px}
+.canvaswrap.digraph{border-top:3px solid #6d9eeb}
+.canvaswrap.blend1{border-top:3px solid #43d692}
+.canvaswrap.blend2{border-top:3px solid var(--gold)}
+.canvas-label{font-size:.7rem;color:#9c916f;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+canvas{width:100%;height:auto;display:block;border-radius:8px;background:radial-gradient(120% 120% at 60% 40%,#11100c 0%,#050505 70%)}
+.caption{font-size:.82rem;color:#bdb293;margin-top:6px;min-height:2em;line-height:1.35}
+
+/* INFO PANEL */
+.info-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:18px}
+.item-sym{font-size:2.4rem;font-weight:bold;color:var(--gold);line-height:1;margin-bottom:4px}
+.item-name{font-size:1rem;color:#9c916f;margin-bottom:6px}
+.type-pill{display:inline-block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 12px;border-radius:999px;border:1px solid currentColor;margin-bottom:10px}
+.examples{margin-bottom:10px}
+.ex-word{font-size:1.1rem;color:var(--cream);margin:.2rem 0}
+.ex-word b{color:var(--gold);border-bottom:2px solid var(--gold)}
+.how-text{font-size:.9rem;color:#e7dec9;line-height:1.5;margin-bottom:10px}
+.key-fact{background:#0f0f0f;border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:8px;padding:10px 12px;font-size:.85rem;color:#cabfa6;line-height:1.45;margin-bottom:10px}
+.key-fact strong{color:var(--gold)}
+.replay-btn{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 14px;border-radius:8px;font-family:Georgia,serif;cursor:pointer;font-size:.85rem;width:100%;margin-top:4px}
+.replay-btn:hover{background:var(--gold);color:#000}
+
+/* VOICED/VOICELESS PAIR */
+.vv-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.vv-card{background:#0a0a0a;border:1px solid var(--dim);border-radius:12px;padding:14px;text-align:center}
+.vv-card.voiced-card{border-top:3px solid var(--gold)}
+.vv-card.voiceless-card{border-top:3px solid #9c916f}
+.vv-sym{font-size:1.8rem;font-weight:bold;margin-bottom:4px}
+.vv-card.voiced-card .vv-sym{color:var(--gold)}
+.vv-card.voiceless-card .vv-sym{color:#9c916f}
+.vv-ex{font-size:.9rem;color:#cabfa6}
+.vv-desc{font-size:.8rem;color:#7c7458;margin-top:4px;line-height:1.3}
+
+/* GAMES */
+.modetabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.modetab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;font-family:Georgia,serif;font-size:.88rem;cursor:pointer}
+.modetab.active{background:var(--gold);color:#000;font-weight:bold;border-color:var(--gold)}
+.game-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:20px;margin-bottom:22px}
+.score-row{display:flex;gap:16px;align-items:baseline;margin:0 0 10px;flex-wrap:wrap}
+.score-row b{color:var(--gold);font-size:1.2rem}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
+.badge.plat{background:var(--gold);color:#000}
+.feedback{font-size:.92rem;color:#e7dec9;min-height:2.2em;line-height:1.4;margin-bottom:10px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:14px 10px;border-radius:10px;font-family:Georgia,serif;font-size:1.1rem;cursor:pointer;text-align:center;transition:all .15s}
+.choice:hover{border-color:var(--gold)}
+.choice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
+.choice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
+
+/* GENO */
+.geno{margin-top:22px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:.93rem;color:#d9cfb4}
+.geno b{color:var(--gold)}
+.cross-links{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.cross-links a{display:inline-block;border:1px solid var(--dim);color:#9c916f;padding:7px 14px;border-radius:8px;text-decoration:none;font-size:.83rem}
+.cross-links a:hover{border-color:var(--gold);color:var(--gold)}
+.foot{margin-top:14px;color:#7c7458;font-size:.8rem;line-height:1.5}
+.foot em{color:#a99f7e}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">GSU · Readification · Digraph &amp; Blend Station</div>
+  <h1>Digraph &amp; Blend Station</h1>
+  <p class="sub">A digraph is two letters that make ONE sound — the /sh/ in ship, the /ch/ in chip. A blend is two letters that make TWO sounds heard together — the /st/ in stop. See the difference in the mouth. Then prove you know which is which.</p>
+  <div class="rule"></div>
+
+  <!-- TYPE TABS -->
+  <div class="type-tabs" role="tablist">
+    <button class="type-tab active" data-type="digraph">Digraphs</button>
+    <button class="type-tab" data-type="blend">Consonant Blends</button>
+    <button class="type-tab" data-type="voiced">Voiced vs. Voiceless th</button>
+  </div>
+
+  <!-- ITEM GRID -->
+  <div class="item-grid" id="itemGrid"></div>
+
+  <!-- STAGE (single canvas for digraphs, double for blends) -->
+  <div id="stageSingle" class="stage-single">
+    <div>
+      <div class="canvaswrap digraph">
+        <div class="canvas-label" id="labelA">Digraph Position</div>
+        <canvas id="cA" width="520" height="410" role="img" aria-label="Mouth forming this digraph"></canvas>
+      </div>
+      <div class="caption" id="capA" aria-live="polite"></div>
+    </div>
+    <div class="info-panel" id="infoPanel">
+      <div class="item-sym" id="iSym"></div>
+      <div class="item-name" id="iName"></div>
+      <span class="type-pill" id="iPill"></span>
+      <div class="examples" id="iExamples"></div>
+      <div class="how-text" id="iHow"></div>
+      <div class="key-fact" id="iKeyFact"></div>
+      <button class="replay-btn" id="replayA">▶ Replay</button>
+    </div>
+  </div>
+
+  <!-- STAGE DOUBLE (for blends) -->
+  <div id="stageDouble" class="stage-double" style="display:none">
+    <div>
+      <div class="canvaswrap blend1">
+        <div class="canvas-label" id="labelB1">First Sound</div>
+        <canvas id="cB1" width="420" height="330" role="img" aria-label="First sound in blend"></canvas>
+      </div>
+      <div class="caption" id="capB1" aria-live="polite"></div>
+    </div>
+    <div>
+      <div class="canvaswrap blend2">
+        <div class="canvas-label" id="labelB2">Second Sound</div>
+        <canvas id="cB2" width="420" height="330" role="img" aria-label="Second sound in blend"></canvas>
+      </div>
+      <div class="caption" id="capB2" aria-live="polite"></div>
+    </div>
+    <div class="info-panel">
+      <div class="item-sym" id="bSym"></div>
+      <div class="item-name" id="bName"></div>
+      <span class="type-pill" id="bPill" style="color:#43d692;border-color:#43d692">Blend</span>
+      <div class="examples" id="bExamples"></div>
+      <div class="how-text" id="bHow"></div>
+      <div class="key-fact" id="bKeyFact"></div>
+      <button class="replay-btn" id="replayBlend" style="margin-top:6px">▶ Replay both sounds</button>
+    </div>
+  </div>
+
+  <!-- VOICED / VOICELESS PAIR DISPLAY -->
+  <div id="stageVoiced" style="display:none">
+    <div class="vv-pair">
+      <div class="vv-card voiceless-card">
+        <div class="vv-sym">/θ/</div>
+        <div class="vv-ex"><b>th</b>in · <b>th</b>ink · ba<b>th</b> · tee<b>th</b></div>
+        <div class="vv-desc">Voiceless — push air through without buzzing. Feel no vibration in your throat.</div>
+      </div>
+      <div class="vv-card voiced-card">
+        <div class="vv-sym">/ð/</div>
+        <div class="vv-ex"><b>th</b>e · <b>th</b>is · brea<b>th</b>e · mo<b>th</b>er</div>
+        <div class="vv-desc">Voiced — same position, buzzing voice added. Feel the vibration in your throat and tongue.</div>
+      </div>
+    </div>
+    <div class="stage-single">
+      <div>
+        <div class="canvaswrap" style="border-top:3px solid #9c916f">
+          <div class="canvas-label">Both th sounds — same mouth position</div>
+          <canvas id="cTH" width="520" height="410" role="img" aria-label="Mouth position for th sounds"></canvas>
+        </div>
+        <div class="caption" id="capTH" aria-live="polite"></div>
+      </div>
+      <div class="info-panel">
+        <div style="font-size:1.4rem;font-weight:bold;color:var(--gold);margin-bottom:6px">th — the exception</div>
+        <div style="font-size:.85rem;color:#9c916f;margin-bottom:10px">The only English digraph with two distinct sounds</div>
+        <div style="font-size:.9rem;color:#e7dec9;line-height:1.55;margin-bottom:12px">Every other digraph (sh, ch, wh, ph, ck, ng) makes exactly one sound. The 'th' digraph is unique — it represents two completely different phonemes that are spelled identically. The only cue is the word itself.</div>
+        <div class="key-fact"><strong>Rule of thumb:</strong> Function words (the, this, that, those, them, they, though, there) almost always use voiced /ð/. Content words (thin, think, thread, three, bath, teeth, math) almost always use voiceless /θ/.</div>
+        <div class="key-fact"><strong>Diagnostic:</strong> Put your fingertips lightly on your throat. Say "the" — you feel vibration. Say "thin" — silence. Same mouth, different voice.</div>
+        <button class="replay-btn" id="replayTH">▶ Replay th position</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME MODES -->
+  <div class="modetabs">
+    <button class="modetab active" data-game="classify">Classify It</button>
+    <button class="modetab" data-game="sort">Word Sort</button>
+  </div>
+
+  <div class="game-panel" id="game-classify">
+    <div class="score-row">
+      <span>Streak <b id="cl-streak">0</b></span>
+      <span>Best <b id="cl-best">0</b></span>
+      <span class="badge" id="cl-badge">Warming up</span>
+    </div>
+    <div class="feedback" id="cl-feedback">Is this a digraph (one sound) or a blend (two sounds)?</div>
+    <div class="choices" id="cl-choices"></div>
+  </div>
+
+  <div class="game-panel" id="game-sort" style="display:none">
+    <div class="score-row">
+      <span>Streak <b id="so-streak">0</b></span>
+      <span>Best <b id="so-best">0</b></span>
+      <span class="badge" id="so-badge">Warming up</span>
+    </div>
+    <div class="feedback" id="so-feedback">Does the underlined letter combination form a digraph or a blend?</div>
+    <div style="font-size:2rem;color:var(--gold);font-weight:bold;text-align:center;margin-bottom:14px;min-height:2.4em" id="so-word"></div>
+    <div class="choices" id="so-choices"></div>
+  </div>
+
+  <div class="geno">
+    <b>GENO AI Tutor</b> — a robot you can actually TALK to. Ask: <em>"GENO, what's the difference between a digraph and a blend?"</em> or <em>"Why does 'ph' make an /f/ sound?"</em> 32 languages, 24/7, free.
+  </div>
+  <div class="cross-links">
+    <a href="/the-mouth-that-makes-the-sound">The Mouth Lab</a>
+    <a href="/phoneme-forge">Phoneme Forge</a>
+    <a href="/minimal-pairs-lab">Minimal Pairs Lab</a>
+    <a href="/vowel-valley">Vowel Valley</a>
+    <a href="/readification">Readification Hub</a>
+    <a href="/spellification">Spellification</a>
+  </div>
+  <p class="foot">Digraph &amp; Blend Station · Free forever from <em>Global Sovereign University</em>, a 501(c)(3).<br>"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// ===================== DATA =====================
+var DIGRAPHS = [
+  {id:"sh", sym:"sh", name:"sh digraph", type:"digraph",
+   sound:{s:"sh",place:"Post-alveolar",manner:"fricative",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   words:[{w:"ship",g:"sh"},{w:"wish",g:"sh"},{w:"nation",g:"ti"},{w:"chef",g:"ch"}],
+   how:"Tongue pulled back from /s/ position, lips rounded slightly forward. One continuous friction — no stop. The mouth looks like it's whispering 'shhh'.",
+   keyFact:"'sh' is spelled <strong>sh</strong> (ship), <strong>ti</strong> (nation), <strong>ci</strong> (special), <strong>ch</strong> (chef), <strong>s</strong> (sure). One sound, five spellings.",
+   pill:{text:"Digraph — 1 sound",color:"#6d9eeb"}},
+  {id:"ch", sym:"ch", name:"ch digraph", type:"digraph",
+   sound:{s:"ch",place:"Post-alveolar",manner:"affricate",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   words:[{w:"chip",g:"ch"},{w:"catch",g:"tch"},{w:"future",g:"t"}],
+   how:"Tongue touches the ridge (like /t/), then releases into /sh/ friction. It's a two-stage release: STOP then FRICATIVE — but so fast it's one phoneme. Feel the tiny pop before the hiss.",
+   keyFact:"<strong>ch</strong> (chip, much) · <strong>tch</strong> (catch, match — always after a short vowel) · <strong>t</strong> (nature, future). The -tch rule: short vowel + /ch/ = always 'tch'.",
+   pill:{text:"Digraph — 1 sound",color:"#6d9eeb"}},
+  {id:"th_v", sym:"th", name:"th (voiced)", type:"digraph",
+   sound:{s:"TH",place:"Dental",manner:"fricative",voiced:true,lips:"open",tip:"dental",back:"low",nasal:false},
+   words:[{w:"the",g:"th"},{w:"this",g:"th"},{w:"breathe",g:"th"},{w:"mother",g:"th"}],
+   how:"Tongue tip lightly between or behind the upper teeth. Push air through AND add voice — feel your throat and tongue buzz. The common, voiced th of everyday speech.",
+   keyFact:"<strong>Voiced /ð/:</strong> always spelled 'th'. Appears in: function words (the, this, that, they, them, there, though), and endings (-the, -ther, -the). Over 70% of 'th' words are voiced.",
+   pill:{text:"Digraph — voiced",color:"#C9A84C"}},
+  {id:"th_vl", sym:"θ", name:"th (voiceless)", type:"digraph",
+   sound:{s:"th",place:"Dental",manner:"fricative",voiced:false,lips:"open",tip:"dental",back:"low",nasal:false},
+   words:[{w:"thin",g:"th"},{w:"think",g:"th"},{w:"bath",g:"th"},{w:"teeth",g:"th"}],
+   how:"Tongue tip lightly between or behind the upper teeth. Push air through WITHOUT voice — feel no vibration. This is the rarer, voiceless th of content words.",
+   keyFact:"<strong>Voiceless /θ/:</strong> always spelled 'th'. Appears in: most nouns/verbs (thin, think, thread, bath, teeth, math, method). Put your hand on your throat — silence.",
+   pill:{text:"Digraph — voiceless",color:"#9c916f"}},
+  {id:"wh", sym:"wh", name:"wh digraph", type:"digraph",
+   sound:{s:"w",place:"Labio-velar",manner:"approx",voiced:true,lips:"rounded",tip:"low",back:"high",nasal:false},
+   words:[{w:"when",g:"wh"},{w:"where",g:"wh"},{w:"while",g:"wh"}],
+   how:"In most modern American English, 'wh' is pronounced exactly like /w/ — lips rounded, gliding open. In older or some regional dialects, 'wh' was a voiceless /hw/. The distinction has largely merged.",
+   keyFact:"<strong>wh</strong> (when, where, while, what, which, who) — note: 'who' is exceptional, pronounced /h/, not /w/. The 'wh' question words are the most common context.",
+   pill:{text:"Digraph — 1 sound",color:"#6d9eeb"}},
+  {id:"ph", sym:"ph", name:"ph digraph", type:"digraph",
+   sound:{s:"f",place:"Labiodental",manner:"fricative",voiced:false,lips:"teeth",tip:"low",back:"low",nasal:false},
+   words:[{w:"phone",g:"ph"},{w:"photo",g:"ph"},{w:"graph",g:"ph"},{w:"trophy",g:"ph"}],
+   how:"Upper teeth on lower lip — exactly the same position as /f/. 'ph' makes an /f/ sound always. It comes from Greek (phi = φ), which is why phone, photo, and philosophy all use 'ph'.",
+   keyFact:"<strong>ph = /f/:</strong> phone, photo, graph, trophy, elephant, alphabet, pharmacy. Almost all 'ph' words come from Greek roots. When you see 'ph', think Greek origin.",
+   pill:{text:"Digraph — Greek /f/",color:"#6d9eeb"}},
+  {id:"ck", sym:"ck", name:"ck digraph", type:"digraph",
+   sound:{s:"k",place:"Velar",manner:"stop",voiced:false,lips:"open",tip:"low",back:"velar",nasal:false},
+   words:[{w:"back",g:"ck"},{w:"duck",g:"ck"},{w:"black",g:"ck"},{w:"stick",g:"ck"}],
+   how:"Back of tongue to soft palate — exactly /k/. 'ck' always spells /k/ and follows the rule: a SHORT vowel + /k/ sound at the end of a one-syllable word = always 'ck'. Never 'k' in that position.",
+   keyFact:"<strong>The -ck rule:</strong> short vowel + /k/ at syllable end = 'ck' (back, duck, trick, block, stuck). Single 'k' after consonant (silk, milk) or long vowel (bike, duke = k_e pattern).",
+   pill:{text:"Digraph — /k/ rule",color:"#6d9eeb"}},
+  {id:"ng", sym:"ng", name:"ng digraph", type:"digraph",
+   sound:{s:"ng",place:"Velar",manner:"nasal",voiced:true,lips:"open",tip:"low",back:"velar",nasal:true},
+   words:[{w:"sing",g:"ng"},{w:"ring",g:"ng"},{w:"think",g:"n"},{w:"long",g:"ng"}],
+   how:"Back of tongue to soft palate (same place as /k/ and /g/), but release the air through the NOSE. Hum through the nose while the back tongue stays up. No separate /g/ sound is released in 'sing'.",
+   keyFact:"<strong>ng = /ŋ/:</strong> sing, ring, long, song, king. Note: 'n' before 'k' also = /ŋ/ (think, sink, drink). The /ŋ/ phoneme never starts a word in English — only appears medially or finally.",
+   pill:{text:"Digraph — nasal",color:"#6d9eeb"}}
+];
+
+var BLENDS = [
+  {id:"st", sym:"st", name:"st blend", type:"blend",
+   s1:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+   s2:{s:"t",place:"Alveolar",manner:"stop",voiced:false,lips:"open",tip:"alveolar",back:"low",nasal:false},
+   words:[{w:"stop",g:"st"},{w:"best",g:"st"},{w:"street",g:"str"}],
+   how:"HEAR BOTH SOUNDS: /s/ (tongue near ridge, hissing) then immediately /t/ (tongue taps ridge, releases). Same tongue position for both — just switch from friction to a stop tap. 'St' — the hiss slides into a click.",
+   keyFact:"<strong>st</strong> appears at both word beginnings (stop, star, stay) and ends (best, test, fast). The two sounds keep their individual identities — nothing merges.",
+   pill:{text:"Blend — 2 sounds",color:"#43d692"}},
+  {id:"br", sym:"br", name:"br blend", type:"blend",
+   s1:{s:"b",place:"Bilabial",manner:"stop",voiced:true,lips:"closed",tip:"low",back:"low",nasal:false},
+   s2:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   words:[{w:"bread",g:"br"},{w:"bring",g:"br"},{w:"brown",g:"br"}],
+   how:"HEAR BOTH SOUNDS: /b/ (lips pop open) then immediately /r/ (tongue bunches back, lips round). The lip-pop of /b/ flows straight into the rounding of /r/. 'Br' — pop into a growl.",
+   keyFact:"<strong>br</strong> blend: bread, bring, brown, break, bright, brief. The /b/ is fully audible before the /r/ begins — this is what distinguishes a blend from a digraph.",
+   pill:{text:"Blend — 2 sounds",color:"#43d692"}},
+  {id:"cl", sym:"cl", name:"cl blend", type:"blend",
+   s1:{s:"k",place:"Velar",manner:"stop",voiced:false,lips:"open",tip:"low",back:"velar",nasal:false},
+   s2:{s:"l",place:"Alveolar",manner:"lateral",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:false},
+   words:[{w:"class",g:"cl"},{w:"clean",g:"cl"},{w:"climb",g:"cl"}],
+   how:"HEAR BOTH SOUNDS: /k/ (back tongue clicks off soft palate) then immediately /l/ (tongue tip goes up to ridge, air flows around sides). Big movement from back to front of mouth.",
+   keyFact:"<strong>cl</strong> blend: class, clean, climb, close, cloud, clever. /k/ is velar (back tongue), /l/ is alveolar (front tongue) — the tongue travels the full length of the mouth.",
+   pill:{text:"Blend — 2 sounds",color:"#43d692"}},
+  {id:"tr", sym:"tr", name:"tr blend", type:"blend",
+   s1:{s:"t",place:"Alveolar",manner:"stop",voiced:false,lips:"open",tip:"alveolar",back:"low",nasal:false},
+   s2:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   words:[{w:"tree",g:"tr"},{w:"try",g:"tr"},{w:"true",g:"tr"}],
+   how:"HEAR BOTH SOUNDS: /t/ tap on the ridge, then immediately pull tongue back for /r/ and round the lips. In fast speech, 'tr' can sound like 'chr' — that's coarticulation, but both phonemes are present.",
+   keyFact:"<strong>tr</strong> blend: tree, try, true, trust, travel, train. In rapid speech this blend creates an affricate-like quality ('chree'), but it remains a blend — two distinct phonemes.",
+   pill:{text:"Blend — 2 sounds",color:"#43d692"}},
+  {id:"fl", sym:"fl", name:"fl blend", type:"blend",
+   s1:{s:"f",place:"Labiodental",manner:"fricative",voiced:false,lips:"teeth",tip:"low",back:"low",nasal:false},
+   s2:{s:"l",place:"Alveolar",manner:"lateral",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:false},
+   words:[{w:"fly",g:"fl"},{w:"flat",g:"fl"},{w:"floor",g:"fl"}],
+   how:"HEAR BOTH SOUNDS: /f/ (teeth on lip, air rush) then immediately /l/ (tongue tip up to ridge, air around sides). Teeth release from lip as tongue tip lifts. 'Fl' — friction into a lateral.",
+   keyFact:"<strong>fl</strong> blend: fly, flat, floor, flow, flag, flower. Both sounds fully audible. The teeth-on-lip position of /f/ must completely release before /l/ can form.",
+   pill:{text:"Blend — 2 sounds",color:"#43d692"}},
+  {id:"sn", sym:"sn", name:"sn blend", type:"blend",
+   s1:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+   s2:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true},
+   words:[{w:"snap",g:"sn"},{w:"snow",g:"sn"},{w:"snake",g:"sn"}],
+   how:"HEAR BOTH SOUNDS: /s/ (hiss near ridge) then immediately /n/ (tongue stays on ridge but voice comes on and air goes through nose). The tongue barely moves — just voice and nasal release change.",
+   keyFact:"<strong>sn</strong> blend: snap, snow, snake, sneak, sneeze, snore. Both /s/ and /n/ use the alveolar ridge — making this the smoothest blend transition, since the tongue barely moves.",
+   pill:{text:"Blend — 2 sounds",color:"#43d692"}},
+  {id:"str", sym:"str", name:"str triple blend", type:"blend",
+   s1:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+   s2:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   words:[{w:"street",g:"str"},{w:"strong",g:"str"},{w:"straight",g:"str"}],
+   how:"THREE SOUNDS in sequence: /s/ (hiss) → /t/ (tap) → /r/ (bunch back, round lips). In 'str', the /t/ is often reduced in rapid speech, but all three phonemes are present. Street = /s/ + /t/ + /r/ + eet.",
+   keyFact:"<strong>str</strong> triple blend: street, strong, straight, strange, stream, strike. Three separate phonemes, three separate mouth positions — none of them merge into a new single sound.",
+   pill:{text:"Triple Blend — 3 sounds",color:"#43d692"}}
+];
+
+var TH_SOUND = {s:"th",place:"Dental",manner:"fricative",voiced:false,lips:"open",tip:"dental",back:"low",nasal:false};
+
+// All items for games
+var ALL_ITEMS = [];
+DIGRAPHS.forEach(function(d){ALL_ITEMS.push({sym:d.sym,type:'digraph',label:d.words[0].w});});
+BLENDS.forEach(function(b){ALL_ITEMS.push({sym:b.sym,type:'blend',label:b.words[0].w});});
+
+// ===================== CANVAS ENGINE =====================
+function makeEngine(canvasId){
+  var cv=document.getElementById(canvasId), ctx=cv.getContext('2d');
+  var W=cv.width,H=cv.height;
+  var fromS={},toS={},t=1,raf=null,manner="stop",voiced=false,nasal=false,tAnim=0;
+  function snap(p){return{
+    lipGap:p.lips==="closed"?0:p.lips==="rounded"?10:p.lips==="spread"?22:p.lips==="teeth"?6:18,
+    lipRound:p.lips==="rounded"?1:p.lips==="spread"?-1:0,
+    teeth:p.lips==="teeth"?1:0,
+    tipY:p.tip==="alveolar"?1:p.tip==="dental"?1:p.tip==="retro"?0.55:0,
+    tipX:p.tip==="dental"?1:p.tip==="retro"?-1:0,
+    backY:p.back==="velar"?1:p.back==="high"?0.8:p.back==="mid"?0.4:0,
+    jaw:(p.lips==="open"||p.manner==="vowel")?(p.back==="low"?1:0.55):0.2
+  };}
+  function lerp(a,b,k){return a+(b-a)*k;}
+  function blend(){var o={};for(var k in fromS){o[k]=lerp(fromS[k],toS[k],ease(t));}return o;}
+  function ease(x){return x<0?0:x>1?1:(1-Math.cos(Math.PI*x))/2;}
+  function set(p,animate){
+    fromS=blend();toS=snap(p);manner=p.manner;voiced=p.voiced;nasal=p.nasal||false;
+    t=animate?0:1;tAnim=0;
+    if(animate){if(raf)cancelAnimationFrame(raf);loop();}else{draw(blend());}
+  }
+  function loop(){t+=0.045;tAnim+=1;if(t>1)t=1;draw(blend());
+    if(t<1||manner==="fricative"||manner==="nasal"||voiced){if(t<1||tAnim<240)raf=requestAnimationFrame(loop);}}
+  function draw(st){
+    ctx.clearRect(0,0,W,H);
+    var GOLD="#C9A84C",DIM="#5C502A",CREAM="#F5F1E8",TEAL="#2a7d77",pink="#caa6a0";
+    var midY=H*0.5,sc=W/560;
+    function s(x){return x*sc;} function sy(y){return y*(H/440);}
+    ctx.lineWidth=2;ctx.strokeStyle="#2a2722";ctx.fillStyle="#0d0c0a";
+    ctx.beginPath();
+    ctx.moveTo(s(60),sy(40));ctx.bezierCurveTo(s(330),sy(20),s(470),sy(70),s(486),sy(170));
+    ctx.lineTo(s(516),sy(196));ctx.lineTo(s(486),sy(212));
+    ctx.bezierCurveTo(s(486),sy(212),s(500),sy(250),s(470),sy(300));
+    ctx.bezierCurveTo(s(500),sy(360),s(470),sy(400),s(420),sy(410));
+    ctx.bezierCurveTo(s(300),sy(440),s(110),sy(430),s(60),sy(380));
+    ctx.lineTo(s(60),sy(40));ctx.closePath();ctx.stroke();
+    ctx.strokeStyle=DIM;ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(s(300),sy(120));ctx.bezierCurveTo(s(380),sy(108),s(440),sy(120),s(470),sy(150));ctx.stroke();
+    var palY=sy(H*0.5/440*440-44);
+    var midYd=H*0.5;palY=midYd-s(44);
+    ctx.strokeStyle="#7d6f3f";ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(s(150),palY+s(14));ctx.bezierCurveTo(s(280),palY-s(6),s(360),palY-s(2),s(430),palY+s(18));ctx.stroke();
+    ctx.beginPath();ctx.arc(s(432),palY+s(24),s(7),Math.PI*1.1,Math.PI*2.1);ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.stroke();
+    var velOpen=nasal?1:0;
+    ctx.strokeStyle=velOpen?TEAL:"#7d6f3f";ctx.lineWidth=3;
+    ctx.beginPath();
+    if(velOpen){ctx.moveTo(s(150),palY+s(14));ctx.quadraticCurveTo(s(150),palY-s(8),s(138),palY-s(26));}
+    else{ctx.moveTo(s(150),palY+s(14));ctx.quadraticCurveTo(s(150),palY+s(30),s(168),palY+s(44));}
+    ctx.stroke();
+    ctx.fillStyle=CREAM;ctx.fillRect(s(452),palY+s(28),s(10),s(18));
+    var jaw=st.jaw*s(30);var floorY=midYd+s(54)+jaw;
+    var rootX=s(120),rootY=floorY-s(6);
+    var backX=s(250),backY=floorY-s(18)-st.backY*s(64);
+    var bladeX=s(370),bladeY=floorY-s(14)-(st.backY*s(30));
+    var tipX=s(452)+st.tipX*s(8),tipY=floorY-s(10)-st.tipY*s(52);
+    ctx.beginPath();ctx.moveTo(rootX,floorY+s(20));ctx.lineTo(rootX,rootY);
+    ctx.quadraticCurveTo(s(190),backY+s(6),backX,backY);ctx.quadraticCurveTo(s(315),bladeY-s(6),bladeX,bladeY);
+    ctx.quadraticCurveTo(s(425),tipY-s(4),tipX,tipY);ctx.lineTo(tipX,floorY+s(20));ctx.closePath();
+    var tg=ctx.createLinearGradient(0,floorY-s(60),0,floorY+s(20));
+    tg.addColorStop(0,"#c98b86");tg.addColorStop(1,"#7d4f4c");
+    ctx.fillStyle=tg;ctx.strokeStyle="#5a3a37";ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+    ctx.fillStyle=CREAM;ctx.fillRect(s(452),floorY-s(2),s(10),s(16));
+    var lx=s(500),gap=st.lipGap,round=st.lipRound;
+    ctx.strokeStyle=pink;ctx.lineWidth=st.teeth>0.5?4:6;ctx.lineCap="round";
+    ctx.beginPath();ctx.moveTo(s(470),palY+s(22));ctx.quadraticCurveTo(lx+round*s(8),midYd-gap,lx+s(14)+round*s(6),midYd-gap*0.5);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(s(456),floorY+s(6));ctx.quadraticCurveTo(lx+round*s(8),midYd+gap,lx+s(14)+round*s(6),midYd+gap*0.5);ctx.stroke();
+    if(st.teeth>0.5){ctx.fillStyle=CREAM;ctx.fillRect(s(486),midYd-s(10),s(9),s(15));}
+    var lvx=s(92),lvy=floorY+s(34);
+    var vib=voiced?(0.5+0.5*Math.sin(tAnim*0.5)):0;
+    ctx.beginPath();ctx.arc(lvx,lvy,s(12)+vib*s(4),0,Math.PI*2);
+    ctx.fillStyle=voiced?"rgba(201,168,76,"+(0.35+vib*0.5)+")":"rgba(120,110,80,0.18)";ctx.fill();
+    ctx.fillStyle=voiced?GOLD:"#6f6750";ctx.font=s(11)+"px Georgia";ctx.textAlign="center";
+    ctx.fillText(voiced?"voice on":"voice off",lvx,lvy+s(30));
+    ctx.strokeStyle="rgba(120,200,255,0.55)";ctx.lineWidth=2;
+    if(nasal){ctx.beginPath();ctx.moveTo(s(150),palY);ctx.quadraticCurveTo(s(380),s(90),s(500),s(176));ctx.stroke();}
+    else if(manner==="fricative"||manner==="affricate"){
+      var cxp=st.teeth>0.5?s(490):(manner==="affricate"?s(452):s(452));
+      for(var i=0;i<7;i++){var a=Math.random()*6.28,r=s(4)+Math.random()*s(10);
+        ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(cxp+Math.cos(a)*r,midYd+Math.sin(a)*r-s(2),s(1.4),0,6.28);
+        ctx.fillStyle="#bfe3ff";ctx.fill();}ctx.globalAlpha=1;
+    } else if(manner==="stop"){
+      if(t>0.78){for(var pi=0;pi<8;pi++){var pa=(pi/8)*6.28;ctx.beginPath();ctx.arc(s(520)+Math.cos(pa)*(s(8)+Math.random()*s(8)),midYd+Math.sin(pa)*(s(8)+Math.random()*s(8)),s(1.6),0,6.28);ctx.fillStyle="rgba(190,220,255,0.55)";ctx.fill();}}
+    } else {ctx.beginPath();ctx.moveTo(s(200),midYd+s(10));ctx.quadraticCurveTo(s(420),midYd,s(520),midYd-s(2));ctx.globalAlpha=0.4;ctx.stroke();ctx.globalAlpha=1;}
+    ctx.fillStyle="#6f6750";ctx.font=s(11)+"px Georgia";ctx.textAlign="left";
+    ctx.fillText("nose",s(300),s(96));ctx.fillText("ridge",s(405),palY+s(6));ctx.fillText("tongue",s(250),floorY+s(34));
+    ctx.textAlign="right";ctx.fillText("lips",s(540),midYd-gap-s(6));
+  }
+  return {set:set,replay:function(){if(toS)set({manner:manner,voiced:voiced,nasal:nasal,lips:nasal?"open":"open",tip:"low",back:"low"},false);}}; 
+}
+
+var engA=makeEngine('cA');
+var engB1=makeEngine('cB1');
+var engB2=makeEngine('cB2');
+var engTH=makeEngine('cTH');
+
+// ===================== ITEM LOADING =====================
+var currentType='digraph';
+var currentItem=null;
+
+function buildGrid(type){
+  var grid=document.getElementById('itemGrid'); grid.innerHTML='';
+  var items=type==='digraph'?DIGRAPHS:(type==='blend'?BLENDS:[]);
+  if(type==='voiced'){
+    document.getElementById('stageSingle').style.display='none';
+    document.getElementById('stageDouble').style.display='none';
+    document.getElementById('stageVoiced').style.display='block';
+    grid.innerHTML='';
+    engTH.set(TH_SOUND,true);
+    document.getElementById('capTH').textContent='/θ/ and /ð/ — tongue tip between teeth, air pushed through. Voiceless: no buzz. Voiced: buzz added. Same mouth, different voice.';
+    return;
+  }
+  items.forEach(function(item,idx){
+    var b=document.createElement('button');b.className='ibtn';b.setAttribute('aria-pressed',idx===0?'true':'false');
+    b.innerHTML=item.sym+'<small>'+item.words[0].w+'</small>';
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.ibtn').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');
+      if(type==='digraph')loadDigraph(item);else loadBlend(item);
+    });
+    item._btn=b;grid.appendChild(b);
+  });
+}
+
+function loadDigraph(d){
+  currentItem=d;
+  document.getElementById('stageSingle').style.display='grid';
+  document.getElementById('stageDouble').style.display='none';
+  document.getElementById('stageVoiced').style.display='none';
+  engA.set(d.sound,true);
+  document.getElementById('labelA').textContent='"'+d.sym+'" — one mouth position, one sound';
+  document.getElementById('capA').textContent='/'+d.sound.s+'/ · '+d.sound.place+' '+d.sound.manner+', '+(d.sound.voiced?'voiced':'voiceless')+'. '+d.how.split('.')[0]+'.';
+  document.getElementById('iSym').textContent=d.sym;
+  document.getElementById('iName').textContent=d.name;
+  var pill=document.getElementById('iPill');pill.textContent=d.pill.text;pill.style.color=d.pill.color;pill.style.borderColor=d.pill.color;
+  var ex=document.getElementById('iExamples');ex.innerHTML='';
+  d.words.forEach(function(obj){var gi=obj.w.indexOf(obj.g);
+    var html=gi>=0?obj.w.slice(0,gi)+'<b>'+obj.w.slice(gi,gi+obj.g.length)+'</b>'+obj.w.slice(gi+obj.g.length):obj.w;
+    var div=document.createElement('div');div.className='ex-word';div.innerHTML=html;ex.appendChild(div);});
+  document.getElementById('iHow').textContent=d.how;
+  document.getElementById('iKeyFact').innerHTML=d.keyFact;
+  document.getElementById('replayA').onclick=function(){engA.set(d.sound,true);};
+}
+
+function loadBlend(b){
+  currentItem=b;
+  document.getElementById('stageSingle').style.display='none';
+  document.getElementById('stageDouble').style.display='grid';
+  document.getElementById('stageVoiced').style.display='none';
+  engB1.set(b.s1,true);
+  setTimeout(function(){engB2.set(b.s2,true);},600);
+  document.getElementById('labelB1').textContent='/'+b.s1.s+'/ — first sound';
+  document.getElementById('labelB2').textContent='/'+b.s2.s+'/ — second sound';
+  document.getElementById('capB1').textContent='/'+b.s1.s+'/ · '+b.s1.place+' '+b.s1.manner;
+  document.getElementById('capB2').textContent='/'+b.s2.s+'/ · '+b.s2.place+' '+b.s2.manner;
+  document.getElementById('bSym').textContent=b.sym;
+  document.getElementById('bName').textContent=b.name;
+  var ex=document.getElementById('bExamples');ex.innerHTML='';
+  b.words.forEach(function(obj){var gi=obj.w.indexOf(obj.g);
+    var html=gi>=0?obj.w.slice(0,gi)+'<b>'+obj.w.slice(gi,gi+obj.g.length)+'</b>'+obj.w.slice(gi+obj.g.length):obj.w;
+    var div=document.createElement('div');div.className='ex-word';div.innerHTML=html;ex.appendChild(div);});
+  document.getElementById('bHow').textContent=b.how;
+  document.getElementById('bKeyFact').innerHTML=b.keyFact;
+  document.getElementById('replayBlend').onclick=function(){engB1.set(b.s1,true);setTimeout(function(){engB2.set(b.s2,true);},600);};
+}
+
+// TYPE TAB SWITCHING
+document.querySelectorAll('.type-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.type-tab').forEach(function(t){t.classList.remove('active');});
+    tab.classList.add('active');
+    currentType=tab.dataset.type;
+    buildGrid(currentType);
+    if(currentType==='digraph')loadDigraph(DIGRAPHS[0]);
+    else if(currentType==='blend')loadBlend(BLENDS[0]);
+    clReset();soReset();
+  });
+});
+
+// ===================== CLASSIFY GAME =====================
+var clStreak=0,clBest=0,clLock=false;
+function clReset(){clStreak=0;clBest=0;clLock=false;
+  document.getElementById('cl-streak').textContent='0';document.getElementById('cl-best').textContent='0';
+  setBadge('cl-badge',0);clNewRound();}
+function clNewRound(){
+  clLock=false;
+  var item=ALL_ITEMS[rnd(ALL_ITEMS.length)];
+  document.getElementById('cl-feedback').textContent='"'+item.sym+'" in "'+item.label+'" — is this a digraph (one merged sound) or a blend (two audible sounds)?';
+  var box=document.getElementById('cl-choices');box.innerHTML='';
+  [{label:'Digraph\none sound',val:'digraph'},{label:'Blend\ntwo sounds',val:'blend'}].forEach(function(opt){
+    var b=document.createElement('button');b.className='choice';
+    b.innerHTML='<strong>'+opt.label.split('\n')[0]+'</strong><br><small style="font-size:.78rem;color:#8d835f">'+opt.label.split('\n')[1]+'</small>';
+    b.addEventListener('click',function(){clGuess(opt.val===item.type,item,b,box);});
+    box.appendChild(b);
+  });
+}
+function clGuess(correct,item,btn,box){
+  if(clLock)return;clLock=true;
+  btn.classList.add(correct?'right':'wrong');
+  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch!==btn)ch.classList.add('right');});
+  if(correct){clStreak++;if(clStreak>clBest)clBest=clStreak;
+    document.getElementById('cl-feedback').textContent='Correct! "'+item.sym+'" is a '+(item.type==='digraph'?'digraph — two letters, one merged sound':'blend — two letters, two audible sounds')+'.';
+    setTimeout(clNewRound,1100);}
+  else{clStreak=0;
+    document.getElementById('cl-feedback').textContent='"'+item.sym+'" is a '+(item.type==='digraph'?'DIGRAPH — the sounds merge into one':'BLEND — both sounds stay audible')+'.';
+    setTimeout(clNewRound,2000);}
+  document.getElementById('cl-streak').textContent=clStreak;document.getElementById('cl-best').textContent=clBest;setBadge('cl-badge',clBest);
+}
+
+// ===================== SORT GAME =====================
+var soStreak=0,soBest=0,soLock=false;
+var sortWords=[
+  {w:"ship",g:"sh",type:"digraph"},{w:"stop",g:"st",type:"blend"},{w:"chip",g:"ch",type:"digraph"},
+  {w:"bread",g:"br",type:"blend"},{w:"phone",g:"ph",type:"digraph"},{w:"class",g:"cl",type:"blend"},
+  {w:"ring",g:"ng",type:"digraph"},{w:"tree",g:"tr",type:"blend"},{w:"when",g:"wh",type:"digraph"},
+  {w:"fly",g:"fl",type:"blend"},{w:"back",g:"ck",type:"digraph"},{w:"snap",g:"sn",type:"blend"},
+  {w:"think",g:"th",type:"digraph"},{w:"street",g:"str",type:"blend"},{w:"graph",g:"ph",type:"digraph"},
+  {w:"clean",g:"cl",type:"blend"},{w:"sing",g:"ng",type:"digraph"},{w:"strong",g:"str",type:"blend"}
+];
+function soReset(){soStreak=0;soBest=0;soLock=false;
+  document.getElementById('so-streak').textContent='0';document.getElementById('so-best').textContent='0';
+  setBadge('so-badge',0);soNewRound();}
+function soNewRound(){
+  soLock=false;var sw=sortWords[rnd(sortWords.length)];
+  var gi=sw.w.indexOf(sw.g);
+  var html=gi>=0?sw.w.slice(0,gi)+'<u>'+sw.w.slice(gi,gi+sw.g.length)+'</u>'+sw.w.slice(gi+sw.g.length):sw.w;
+  document.getElementById('so-word').innerHTML=html;
+  document.getElementById('so-feedback').textContent='Does "'+sw.g+'" in "'+sw.w+'" make one merged sound or two audible sounds?';
+  var box=document.getElementById('so-choices');box.innerHTML='';
+  [{label:'Digraph — one sound',val:'digraph'},{label:'Blend — two sounds',val:'blend'}].forEach(function(opt){
+    var b=document.createElement('button');b.className='choice';b.textContent=opt.label;
+    b.addEventListener('click',function(){soGuess(opt.val===sw.type,sw,b,box);});
+    box.appendChild(b);
+  });
+}
+function soGuess(correct,sw,btn,box){
+  if(soLock)return;soLock=true;
+  btn.classList.add(correct?'right':'wrong');
+  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch!==btn)ch.classList.add('right');});
+  if(correct){soStreak++;if(soStreak>soBest)soBest=soStreak;
+    document.getElementById('so-feedback').textContent='"'+sw.g+'" is a '+(sw.type==='digraph'?'digraph — one merged sound':'blend — two audible sounds')+'. ✓';
+    setTimeout(soNewRound,1000);}
+  else{soStreak=0;
+    document.getElementById('so-feedback').textContent='"'+sw.g+'" is a '+(sw.type==='digraph'?'DIGRAPH — two letters, one sound':'BLEND — two letters, two sounds')+'.';
+    setTimeout(soNewRound,1800);}
+  document.getElementById('so-streak').textContent=soStreak;document.getElementById('so-best').textContent=soBest;setBadge('so-badge',soBest);
+}
+
+// GAME TABS
+document.querySelectorAll('.modetab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.modetab').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');var game=btn.dataset.game;
+    document.getElementById('game-classify').style.display=game==='classify'?'block':'none';
+    document.getElementById('game-sort').style.display=game==='sort'?'block':'none';
+    if(game==='classify')clReset();else soReset();
+  });
+});
+
+// UTILS
+function rnd(n){return Math.floor(Math.random()*n);}
+function setBadge(id,best){var bd=document.getElementById(id),label,plat=false;
+  if(best>=50){label="Platinum";plat=true;}else if(best>=25)label="Gold";
+  else if(best>=12)label="Silver";else if(best>=5)label="Bronze";else label="Warming up";
+  bd.textContent=label;bd.className="badge"+(plat?" plat":"");}
+
+// INIT
+buildGrid('digraph');
+loadDigraph(DIGRAPHS[0]);
+
+})();
+</script>
+</body>
+</html>
