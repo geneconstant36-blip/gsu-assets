@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minimal Pairs Lab — GSU Readification</title>
+<meta name="description" content="Free phonics tool from Global Sovereign University. Two sounds, one difference. Train your ear to hear voiced vs. voiceless and every confusable pair. No login.">
+<style>
+:root{--black:#000;--gold:#C9A84C;--dim:#5C502A;--cream:#F5F1E8;--teal:#1A8B7F;--red:#c0392b;--green:#1a6b3a;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:22px 18px 48px}
+.kick{color:var(--gold);letter-spacing:.18em;font-size:.74rem;text-transform:uppercase;margin-bottom:6px}
+h1{font-size:1.85rem;line-height:1.15;margin:.2rem 0 .2rem;color:var(--cream)}
+.sub{color:#cabfa6;font-size:.97rem;margin:0 0 14px;max-width:64ch;line-height:1.55}
+.rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:12px 0 18px}
+
+/* PAIR SELECTOR */
+.pair-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.pair-btn{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;font-family:Georgia,serif;font-size:.9rem;cursor:pointer;transition:all .15s;line-height:1.2;text-align:center}
+.pair-btn:hover{border-color:var(--gold);color:var(--cream)}
+.pair-btn.active{background:var(--gold);color:#000;font-weight:bold;border-color:var(--gold)}
+.pair-btn .pair-label{display:block;font-size:.65rem;letter-spacing:.07em;text-transform:uppercase;opacity:.7;margin-bottom:2px}
+
+/* DUAL STAGE */
+.dual-stage{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+@media(max-width:640px){.dual-stage{grid-template-columns:1fr}}
+.mouth-card{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:12px;position:relative}
+.mouth-card.left{border-top:3px solid var(--gold)}
+.mouth-card.right{border-top:3px solid var(--teal)}
+.mouth-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;font-weight:bold}
+.mouth-card.left .mouth-label{color:var(--gold)}
+.mouth-card.right .mouth-label{color:var(--teal)}
+canvas{width:100%;height:auto;display:block;border-radius:8px;background:radial-gradient(120% 120% at 60% 40%,#11100c 0%,#050505 70%)}
+.phoneme-badge{font-size:2rem;font-weight:bold;margin:8px 0 2px;line-height:1}
+.mouth-card.left .phoneme-badge{color:var(--gold)}
+.mouth-card.right .phoneme-badge{color:var(--teal)}
+.example-word{font-size:1.1rem;color:var(--cream);margin-bottom:4px}
+.example-word b{border-bottom:3px solid currentColor}
+.mouth-card.left .example-word b{color:var(--gold)}
+.mouth-card.right .example-word b{color:var(--teal)}
+.artic-tag{font-size:.72rem;color:#9c916f;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.how-text{font-size:.88rem;color:#d9cfb4;line-height:1.45;min-height:3.5em}
+.replay-btn{margin-top:8px;background:transparent;border:1px solid currentColor;padding:7px 14px;border-radius:7px;font-family:Georgia,serif;cursor:pointer;font-size:.82rem;width:100%}
+.mouth-card.left .replay-btn{color:var(--gold)}
+.mouth-card.right .replay-btn{color:var(--teal)}
+.replay-btn:hover{background:rgba(201,168,76,.12)}
+
+/* THE DIFFERENCE STRIP */
+.diff-strip{background:#0a0a0a;border:1px solid var(--dim);border-left:4px solid var(--gold);border-radius:12px;padding:16px 20px;margin-bottom:22px}
+.diff-title{color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.diff-body{font-size:.97rem;color:#e7dec9;line-height:1.55}
+.diff-tag{display:inline-block;background:rgba(201,168,76,.12);border:1px solid var(--dim);border-radius:6px;padding:2px 10px;font-size:.8rem;color:var(--gold);margin:4px 4px 0 0}
+
+/* PLAY MODE */
+.modetabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.modetab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;font-family:Georgia,serif;font-size:.88rem;cursor:pointer}
+.modetab.active{background:var(--gold);color:#000;font-weight:bold;border-color:var(--gold)}
+.game-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:20px}
+
+/* LISTEN game */
+.listen-prompt{font-size:1.05rem;color:#e7dec9;margin-bottom:14px;line-height:1.4;min-height:2.4em}
+.listen-choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lchoice{background:#111;border:2px solid var(--dim);color:var(--cream);padding:18px 12px;border-radius:12px;font-family:Georgia,serif;font-size:1.4rem;cursor:pointer;text-align:center;transition:border-color .15s}
+.lchoice:hover{border-color:var(--gold)}
+.lchoice small{display:block;font-size:.78rem;color:#8d835f;margin-top:4px}
+.lchoice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
+.lchoice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
+
+/* SORT game */
+.sort-prompt{font-size:1rem;color:#cabfa6;margin-bottom:14px}
+.sort-word{font-size:1.8rem;color:var(--gold);font-weight:bold;text-align:center;margin-bottom:16px;letter-spacing:.04em}
+.sort-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sort-col-btn{background:#111;border:2px solid var(--dim);color:var(--cream);padding:16px 12px;border-radius:12px;font-family:Georgia,serif;font-size:1.1rem;cursor:pointer;text-align:center;transition:all .15s}
+.sort-col-btn:hover{border-color:var(--gold)}
+.sort-col-btn small{display:block;font-size:.72rem;color:#8d835f;margin-top:4px}
+.sort-col-btn.left-col{border-top-color:var(--gold)}
+.sort-col-btn.right-col{border-top-color:var(--teal)}
+.sort-col-btn.right{background:#16351f;border-color:#43d692}
+.sort-col-btn.wrong{background:#3a1414;border-color:#e0584f}
+
+/* SCORE */
+.score-row{display:flex;gap:16px;align-items:baseline;margin:0 0 12px;flex-wrap:wrap}
+.score-row b{color:var(--gold);font-size:1.2rem}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
+.badge.plat{background:var(--gold);color:#000}
+.feedback{font-size:.92rem;color:#e7dec9;min-height:2em;line-height:1.4;margin-bottom:10px}
+
+/* ESL note */
+.esl-note{background:#070707;border:1px solid var(--dim);border-radius:12px;padding:16px 20px;margin-bottom:22px}
+.esl-note-title{color:var(--teal);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.esl-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:8px}
+.esl-table th{color:#9c916f;text-align:left;padding:4px 8px;border-bottom:1px solid var(--dim);font-weight:normal;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em}
+.esl-table td{padding:6px 8px;color:#d9cfb4;border-bottom:1px solid #1a1a1a}
+.esl-table td:first-child{color:var(--gold);font-weight:bold}
+
+/* GENO + LINKS */
+.geno{margin-top:22px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:.93rem;color:#d9cfb4}
+.geno b{color:var(--gold)}
+.cross-links{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cross-links a{display:inline-block;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:.84rem}
+.cross-links a:hover{border-color:var(--gold);color:var(--gold)}
+.foot{margin-top:16px;color:#7c7458;font-size:.8rem;line-height:1.5}
+.foot em{color:#a99f7e}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">GSU · Readification · Minimal Pairs Lab</div>
+  <h1>Minimal Pairs Lab</h1>
+  <p class="sub">Two sounds. One difference. The ability to hear and feel that difference is the foundation of phonemic awareness — and the key to reading, spelling, and accent accuracy. Compare side by side. Then prove you can hear it.</p>
+  <div class="rule"></div>
+
+  <!-- PAIR SELECTOR -->
+  <div class="pair-nav" id="pairNav" role="tablist" aria-label="Choose a minimal pair"></div>
+
+  <!-- DUAL MOUTH STAGE -->
+  <div class="dual-stage">
+    <div class="mouth-card left">
+      <div class="mouth-label" id="labelL">Sound A</div>
+      <canvas id="cL" width="480" height="380" role="img" aria-label="Left mouth diagram"></canvas>
+      <div class="phoneme-badge" id="symL">/p/</div>
+      <div class="example-word" id="wordL"></div>
+      <div class="artic-tag" id="metaL"></div>
+      <div class="how-text" id="howL"></div>
+      <button class="replay-btn" id="replayL">▶ Replay</button>
+    </div>
+    <div class="mouth-card right">
+      <div class="mouth-label" id="labelR">Sound B</div>
+      <canvas id="cR" width="480" height="380" role="img" aria-label="Right mouth diagram"></canvas>
+      <div class="phoneme-badge" id="symR">/b/</div>
+      <div class="example-word" id="wordR"></div>
+      <div class="artic-tag" id="metaR"></div>
+      <div class="how-text" id="howR"></div>
+      <button class="replay-btn" id="replayR">▶ Replay</button>
+    </div>
+  </div>
+
+  <!-- THE DIFFERENCE -->
+  <div class="diff-strip" id="diffStrip">
+    <div class="diff-title">The One Difference</div>
+    <div class="diff-body" id="diffBody"></div>
+    <div id="diffTags" style="margin-top:8px"></div>
+  </div>
+
+  <!-- ESL INTERFERENCE NOTE -->
+  <div class="esl-note" id="eslNote">
+    <div class="esl-note-title">Who Struggles With This Pair</div>
+    <div id="eslBody" style="font-size:.9rem;color:#cabfa6;line-height:1.5"></div>
+  </div>
+
+  <!-- GAME MODES -->
+  <div class="modetabs">
+    <button class="modetab active" data-game="listen">Listen &amp; Identify</button>
+    <button class="modetab" data-game="sort">Word Sort</button>
+  </div>
+
+  <!-- LISTEN GAME -->
+  <div class="game-panel" id="game-listen">
+    <div class="score-row">
+      <span>Streak <b id="ls-streak">0</b></span>
+      <span>Best <b id="ls-best">0</b></span>
+      <span class="badge" id="ls-badge">Warming up</span>
+    </div>
+    <div class="feedback" id="ls-feedback">The mouth is forming one of the two sounds. Which one?</div>
+    <div class="listen-choices" id="ls-choices"></div>
+  </div>
+
+  <!-- SORT GAME -->
+  <div class="game-panel" id="game-sort" style="display:none">
+    <div class="score-row">
+      <span>Streak <b id="st-streak">0</b></span>
+      <span>Best <b id="st-best">0</b></span>
+      <span class="badge" id="st-badge">Warming up</span>
+    </div>
+    <div class="sort-prompt" id="st-prompt">Which column does this word belong in?</div>
+    <div class="sort-word" id="st-word"></div>
+    <div class="sort-cols" id="st-cols"></div>
+    <div class="feedback" id="st-feedback"></div>
+  </div>
+
+  <!-- GENO -->
+  <div class="geno">
+    <b>GENO AI Tutor</b> — a robot you can actually TALK to. Ask: <em>"GENO, what's the difference between /p/ and /b/?"</em> or <em>"Why do Spanish speakers confuse /b/ and /v/?"</em> 32 languages, 24/7, free forever.
+  </div>
+
+  <div class="cross-links">
+    <a href="/the-mouth-that-makes-the-sound">The Mouth Lab</a>
+    <a href="/phoneme-forge">Phoneme Forge</a>
+    <a href="/readification">Readification Hub</a>
+    <a href="/spellification">Spellification</a>
+    <a href="/the-science-of-reading">The Science of Reading</a>
+  </div>
+
+  <p class="foot">
+    Minimal Pairs Lab · Free forever from <em>Global Sovereign University</em>, a 501(c)(3).<br>
+    "Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant
+  </p>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// ===================== MINIMAL PAIR DATA =====================
+var PAIRS = [
+  {
+    id:"pb", label:"p / b", category:"Voicing",
+    A:{s:"p", g:"p", w:"pat", gi:0, place:"Bilabial", manner:"stop", voiced:false, lips:"closed", tip:"low", back:"low", nasal:false,
+       how:"Lips together, build pressure, then pop them open with a puff of air. No voice — feel no buzz in your throat."},
+    B:{s:"b", g:"b", w:"bat", gi:0, place:"Bilabial", manner:"stop", voiced:true, lips:"closed", tip:"low", back:"low", nasal:false,
+       how:"Identical lip position to /p/ — but now turn your voice on. Feel your throat buzz."},
+    diff:"These two sounds are made in exactly the same place with exactly the same lip movement. The only difference is VOICING: /p/ is voiceless (no throat buzz), /b/ is voiced. Put your fingers on your throat — you feel silence for /p/, vibration for /b/.",
+    tags:["Voicing only","Same lips","Same place","Bilabial pair"],
+    esl:"Spanish speakers (no voicing distinction in some dialects), Arabic speakers, and many East Asian learners commonly merge these two sounds. Common error: 'bat' sounds like 'pat' or vice versa.",
+    sortWords:[["pat","pen","cap","cup","tap"],["bat","ben","cab","cub","tab"]]
+  },
+  {
+    id:"td", label:"t / d", category:"Voicing",
+    A:{s:"t", g:"t", w:"top", gi:0, place:"Alveolar", manner:"stop", voiced:false, lips:"open", tip:"alveolar", back:"low", nasal:false,
+       how:"Tongue tip taps the ridge behind your upper teeth, then releases with a click. No voice."},
+    B:{s:"d", g:"d", w:"dog", gi:0, place:"Alveolar", manner:"stop", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:false,
+       how:"Identical tongue tap to /t/ — but voice on. Feel the buzz as the tongue releases."},
+    diff:"Same tongue position, same tap on the alveolar ridge behind the upper teeth. The only difference is VOICING. /t/ = voiceless, /d/ = voiced. Touch your throat: silence on /t/, vibration on /d/.",
+    tags:["Voicing only","Same tongue position","Alveolar pair"],
+    esl:"One of the most common confusions for speakers of Arabic, Japanese, Korean, and many South Asian languages. Also affects readers who were taught to guess rather than decode — 'dot' vs 'tot' can look similar.",
+    sortWords:[["top","ten","cat","bit","time"],["dog","den","cad","bid","dime"]]
+  },
+  {
+    id:"kg", label:"k / g", category:"Voicing",
+    A:{s:"k", g:"c", w:"cat", gi:0, place:"Velar", manner:"stop", voiced:false, lips:"open", tip:"low", back:"velar", nasal:false,
+       how:"Back of your tongue lifts to the soft palate (velum) at the back of the roof of your mouth, then releases with a click. No voice."},
+    B:{s:"g", g:"g", w:"go", gi:0, place:"Velar", manner:"stop", voiced:true, lips:"open", tip:"low", back:"velar", nasal:false,
+       how:"Identical back-tongue position to /k/ — voice on. Feel the buzz deep in your throat as the back tongue drops."},
+    diff:"Both sounds use the back of the tongue against the soft palate — you cannot see this difference from the outside. The only cue is VOICING. /k/ = voiceless, /g/ = voiced. This is why 'cat' and 'gap' can confuse learners — the mouth looks nearly identical.",
+    tags:["Voicing only","Back tongue","Velar pair","Invisible from outside"],
+    esl:"Commonly confused by speakers of Arabic (where /g/ doesn't exist in some dialects), Japanese learners, and children with phonological disorders. The back-of-mouth position makes it hard to self-monitor.",
+    sortWords:[["cat","coat","back","class","pick"],["gap","goat","bag","glass","pig"]]
+  },
+  {
+    id:"fv", label:"f / v", category:"Voicing",
+    A:{s:"f", g:"f", w:"fan", gi:0, place:"Labiodental", manner:"fricative", voiced:false, lips:"teeth", tip:"low", back:"low", nasal:false,
+       how:"Rest your upper teeth gently on your lower lip and push air through. No voice — just a quiet rush of air."},
+    B:{s:"v", g:"v", w:"van", gi:0, place:"Labiodental", manner:"fricative", voiced:true, lips:"teeth", tip:"low", back:"low", nasal:false,
+       how:"Same teeth-on-lip position as /f/ — now buzz it. Feel the vibration in your lower lip and teeth."},
+    diff:"Upper teeth rest on the lower lip for both sounds. The fricative (air turbulence) happens at the same point. The only difference is VOICING: /f/ is voiceless, /v/ is voiced. This pair causes many spelling errors: 'of' is spelled with 'f' but pronounced /v/.",
+    tags:["Voicing only","Labiodental","Spelling trap: 'of'"],
+    esl:"Spanish has no /v/ phoneme (only /b/), making this pair very difficult for Spanish speakers. Arabic and many East Asian languages also lack /v/. Common error: 'very' sounds like 'ferry'.",
+    sortWords:[["fan","feel","leaf","safe","fine"],["van","veal","leave","save","vine"]]
+  },
+  {
+    id:"sz", label:"s / z", category:"Voicing",
+    A:{s:"s", g:"s", w:"sip", gi:0, place:"Alveolar", manner:"fricative", voiced:false, lips:"spread", tip:"alveolar", back:"low", nasal:false,
+       how:"Tongue close to the ridge behind the upper teeth, lips slightly spread — hiss like a snake. No voice."},
+    B:{s:"z", g:"z", w:"zip", gi:0, place:"Alveolar", manner:"fricative", voiced:true, lips:"spread", tip:"alveolar", back:"low", nasal:false,
+       how:"Same tongue position and lip spread as /s/ — turn your voice on. The hiss becomes a buzz."},
+    diff:"Identical tongue position and lip spread. The turbulent airflow happens at the same place (just behind the upper teeth). VOICING is the only difference. This pair also causes spelling confusion: the plural /s/ in 'cats' is voiceless, but in 'dogs' it's voiced /z/.",
+    tags:["Voicing only","Alveolar fricative","Plural spelling trap"],
+    esl:"The voiced /z/ is absent in many languages including Japanese, Korean, Arabic (in some positions), and several Slavic languages. Common error in spelling: writing 's' for /z/ sounds.",
+    sortWords:[["sip","seal","price","bus","race"],["zip","zeal","prize","buzz","raze"]]
+  },
+  {
+    id:"sh_zh", label:"sh / zh", category:"Voicing",
+    A:{s:"sh", g:"sh", w:"ship", gi:0, place:"Post-alveolar", manner:"fricative", voiced:false, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+       how:"Tongue pulled back behind the ridge, lips rounded slightly forward. Quiet 'shhh'. No voice."},
+    B:{s:"zh", g:"si", w:"vision", gi:2, place:"Post-alveolar", manner:"fricative", voiced:true, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+       how:"Exact same position as /sh/ — lips forward, tongue retracted — but voice on. The sound in 'measure', 'vision', 'beige'."},
+    diff:"Same post-alveolar position, same lip rounding and tongue retraction. VOICING is the only difference. /zh/ is rare as an initial sound in English but common medially (vision, measure, azure, beige). Many learners don't know it exists as a separate phoneme.",
+    tags:["Voicing only","Post-alveolar","Rare in English spelling"],
+    esl:"The voiced /zh/ is absent in most learners' native languages. Even native English speakers often can't name it. Key words: vision, measure, genre, beige, azure.",
+    sortWords:[["ship","sure","cash","nation","share"],["vision","measure","beige","genre","azure"]]
+  },
+  {
+    id:"th_TH", label:"th (thin) / th (the)", category:"Voicing",
+    A:{s:"θ", g:"th", w:"thin", gi:0, place:"Dental", manner:"fricative", voiced:false, lips:"open", tip:"dental", back:"low", nasal:false,
+       how:"Tongue tip lightly between your teeth (or just behind the upper edge), push air through. No voice — this is the th in 'thin', 'think', 'bath'."},
+    B:{s:"ð", g:"th", w:"the", gi:0, place:"Dental", manner:"fricative", voiced:true, lips:"open", tip:"dental", back:"low", nasal:false,
+       how:"Identical tongue-between-teeth position — now add voice. Feel the buzz. This is the th in 'the', 'this', 'breathe'."},
+    diff:"Both use the tongue tip at or between the teeth. Both use the same spelling 'th'. The only difference is VOICING. Voiceless /θ/: thin, think, bath, teeth, method. Voiced /ð/: the, this, that, breathe, mother, father, brother. English spells both identically — only context tells you which.",
+    tags:["Voicing only","Dental fricative","Same spelling 'th'","Most difficult pair for ESL"],
+    esl:"The /th/ sounds are absent in almost every other language on Earth, making this the hardest pair for ESL learners globally. French, Spanish, German, Arabic, Chinese, Japanese, Korean, Russian — all lack both phonemes. Common substitutions: /t/ or /d/ (most common), /s/ or /z/, /f/ or /v/.",
+    sortWords:[["thin","think","bath","teeth","three"],["the","this","breathe","father","mother"]]
+  },
+  {
+    id:"mn", label:"m / n", category:"Place",
+    A:{s:"m", g:"m", w:"man", gi:0, place:"Bilabial", manner:"nasal", voiced:true, lips:"closed", tip:"low", back:"low", nasal:true,
+       how:"Press both lips together and hum. The air comes out entirely through your nose. Feel your lips buzz."},
+    B:{s:"n", g:"n", w:"net", gi:0, place:"Alveolar", manner:"nasal", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:true,
+       how:"Tongue tip up behind the upper teeth, lips open, and hum through your nose. Feel your nose and tongue buzz."},
+    diff:"Both /m/ and /n/ are nasal sounds — air flows through the nose for both, and both are voiced. The difference is PLACE: /m/ is bilabial (lips close), /n/ is alveolar (tongue tip goes up). If you hold your nose and say them, both sound the same — proving the nasal resonance is the shared feature.",
+    tags:["Place only","Both nasal","Both voiced","Lips vs. tongue"],
+    esl:"Confusion between /m/ and /n/ is common for speakers of languages where the contrast doesn't exist in certain positions (e.g. final position in some Chinese dialects). Also common in children with phonological delays.",
+    sortWords:[["man","map","home","him","come"],["net","nap","bone","him","cone"]]
+  },
+  {
+    id:"lr", label:"l / r", category:"Place + Manner",
+    A:{s:"l", g:"l", w:"lip", gi:0, place:"Alveolar", manner:"lateral", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:false,
+       how:"Tongue tip touches the ridge behind the upper teeth. Air flows around the SIDES of the tongue. Voice on."},
+    B:{s:"r", g:"r", w:"rip", gi:0, place:"Alveolar", manner:"approx", voiced:true, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+       how:"Tongue bunches back without touching anything. Lips round slightly. Air flows down the CENTER. Voice on."},
+    diff:"/l/ is a LATERAL sound: tongue tip up, air exits around the sides. /r/ is an APPROXIMANT: tongue bunches back with no contact, air exits down the center, lips round. Both are voiced. The mouth diagrams look almost identical from outside — the key is tongue tip position (up and touching for /l/, back and free for /r/).",
+    tags:["Place + Manner","Both voiced","Lateral vs. approximant","Most common ESL confusion"],
+    esl:"The most globally common phoneme confusion in English. Japanese, Korean, Chinese, and many other Asian languages have one liquid phoneme that is neither /l/ nor /r/. Also difficult for speakers of Arabic, Greek, and some African languages. 'Correct' and 'collect', 'rice' and 'lice', 'right' and 'light'.",
+    sortWords:[["lip","lock","fly","full","play"],["rip","rock","fry","full","pray"]]
+  },
+  {
+    id:"wv", label:"w / v", category:"Place",
+    A:{s:"w", g:"w", w:"wet", gi:0, place:"Labio-velar", manner:"approx", voiced:true, lips:"rounded", tip:"low", back:"high", nasal:false,
+       how:"Round your lips tightly as if about to say 'oo', then glide them open. Voice on. No teeth involved."},
+    B:{s:"v", g:"v", w:"vet", gi:0, place:"Labiodental", manner:"fricative", voiced:true, lips:"teeth", tip:"low", back:"low", nasal:false,
+       how:"Upper teeth rest on the lower lip. Push air through creating turbulence. Voice on. No lip rounding."},
+    diff:"/w/ rounds the lips with NO tooth contact — it's a glide from rounded lips into the next vowel. /v/ requires the upper TEETH on the lower lip — it creates friction (it's a fricative). Both are voiced. The diagnostic test: if you feel teeth on lip, it's /v/. If lips are just rounded with no tooth contact, it's /w/.",
+    tags:["Place difference","Both voiced","Glide vs. fricative","Teeth contact = /v/"],
+    esl:"German speakers famously substitute /v/ for /w/ ('vine' for 'wine'). South Asian languages (Hindi, Urdu) often have an intermediate sound between /w/ and /v/. Spanish speakers may confuse both with /b/.",
+    sortWords:[["wet","wine","away","we","wear"],["vet","vine","avail","vee","veer"]]
+  },
+  {
+    id:"ch_sh", label:"ch / sh", category:"Manner",
+    A:{s:"ch", g:"ch", w:"chip", gi:0, place:"Post-alveolar", manner:"affricate", voiced:false, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+       how:"Tongue touches the ridge, then releases into /sh/. It starts with a STOP then releases into friction. /t/ + /sh/ blended into one sound."},
+    B:{s:"sh", g:"sh", w:"ship", gi:0, place:"Post-alveolar", manner:"fricative", voiced:false, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+       how:"Tongue pulled back, lips forward. Continuous 'shhh' — no stop before it. Pure friction from start to finish."},
+    diff:"Same place (post-alveolar), same voicing (voiceless), same lip rounding. The difference is MANNER: /ch/ is an AFFRICATE (stop + fricative: /t/ + /sh/), /sh/ is a pure FRICATIVE (no stop). Feel the difference: 'chip' starts with a tiny pop before the friction; 'ship' is smooth friction from the start.",
+    tags:["Manner only","Same place","Same voicing","Affricate vs. fricative"],
+    esl:"Portuguese speakers often substitute /sh/ for /ch/ (saying 'ship' for 'chip'). Japanese speakers may have difficulty with the affricate quality. Also confused by children with articulation delays.",
+    sortWords:[["chip","chain","catch","church","beach"],["ship","Shane","cash","sure","beash"]]
+  },
+  {
+    id:"ng_n", label:"ng / n", category:"Place",
+    A:{s:"ŋ", g:"ng", w:"sing", gi:2, place:"Velar", manner:"nasal", voiced:true, lips:"open", tip:"low", back:"velar", nasal:true,
+       how:"Back of the tongue lifts to the soft palate (where /k/ and /g/ are made) and hums. Air comes out the nose. Tongue tip stays LOW."},
+    B:{s:"n", g:"n", w:"sin", gi:2, place:"Alveolar", manner:"nasal", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:true,
+       how:"Tongue TIP up behind the upper teeth. Hum through the nose. Back of tongue stays LOW."},
+    diff:"Both are nasal sounds (air through the nose), both voiced. The difference is PLACE: /ng/ uses the BACK of the tongue against the soft palate (velar — like /k/ and /g/); /n/ uses the TIP of the tongue on the alveolar ridge. 'Sing' vs 'sin', 'ring' vs 'rin', 'bang' vs 'ban'.",
+    tags:["Place only","Both nasal","Both voiced","Back tongue vs. tip"],
+    esl:"Final /ng/ is very difficult for learners who add a /g/ sound ('sing-guh') or replace it with /n/ ('sin'). Common in speakers of Spanish, French, and many Asian languages. The /ng/ spelling with no pronounced /g/ confuses many learners.",
+    sortWords:[["sing","ring","bang","long","wrong"],["sin","rin","ban","lon","ron"]]
+  }
+];
+
+// ===================== CANVAS ENGINE =====================
+function makeEngine(canvasId){
+  var cv=document.getElementById(canvasId), ctx=cv.getContext('2d');
+  var W=cv.width, H=cv.height;
+  var cur=null, fromS={}, toS={}, t=1, raf=null, manner="stop", voiced=false, nasal=false, tAnim=0;
+
+  function snap(p){
+    return {
+      lipGap:p.lips==="closed"?0:p.lips==="rounded"?10:p.lips==="spread"?22:p.lips==="teeth"?6:18,
+      lipRound:p.lips==="rounded"?1:p.lips==="spread"?-1:0,
+      teeth:p.lips==="teeth"?1:0,
+      tipY:p.tip==="alveolar"?1:p.tip==="dental"?1:p.tip==="retro"?0.55:0,
+      tipX:p.tip==="dental"?1:p.tip==="retro"?-1:0,
+      backY:p.back==="velar"?1:p.back==="high"?0.8:p.back==="mid"?0.4:0,
+      jaw:(p.lips==="open"||p.manner==="vowel")?(p.back==="low"?1:0.55):0.2
+    };
+  }
+  function lerp(a,b,k){return a+(b-a)*k;}
+  function blend(){var o={};for(var k in fromS){o[k]=lerp(fromS[k],toS[k],ease(t));}return o;}
+  function ease(x){return x<0?0:x>1?1:(1-Math.cos(Math.PI*x))/2;}
+
+  function set(p, animate){
+    cur=p;fromS=blend();toS=snap(p);manner=p.manner;voiced=p.voiced;nasal=p.nasal||false;
+    t=animate?0:1;tAnim=0;
+    if(animate){if(raf)cancelAnimationFrame(raf);loop();}else{draw(blend());}
+  }
+  function loop(){
+    t+=0.045;tAnim+=1;if(t>1)t=1;draw(blend());
+    if(t<1||manner==="fricative"||manner==="nasal"||(voiced)){
+      if(t<1||tAnim<240){raf=requestAnimationFrame(loop);}
+    }
+  }
+  function draw(st){
+    ctx.clearRect(0,0,W,H);
+    var GOLD="#C9A84C",DIM="#5C502A",CREAM="#F5F1E8",TEAL="#2a7d77",pink="#caa6a0";
+    var midY=H*0.5;
+    ctx.lineWidth=2;ctx.strokeStyle="#2a2722";ctx.fillStyle="#0d0c0a";
+    ctx.beginPath();
+    ctx.moveTo(50,34);ctx.bezierCurveTo(280,16,400,60,414,146);ctx.lineTo(440,168);ctx.lineTo(414,182);
+    ctx.bezierCurveTo(414,182,426,214,400,256);ctx.bezierCurveTo(426,306,400,340,356,348);
+    ctx.bezierCurveTo(254,374,92,366,50,322);ctx.lineTo(50,34);ctx.closePath();ctx.stroke();
+    ctx.strokeStyle=DIM;ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(252,102);ctx.bezierCurveTo(320,92,374,102,400,128);ctx.stroke();
+    var palY=midY-38;
+    ctx.strokeStyle="#7d6f3f";ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(126,palY+12);ctx.bezierCurveTo(238,palY-5,306,palY-2,366,palY+15);ctx.stroke();
+    ctx.beginPath();ctx.arc(368,palY+20,6,Math.PI*1.1,Math.PI*2.1);ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.stroke();
+    var velOpen=nasal?1:0;
+    ctx.strokeStyle=velOpen?TEAL:"#7d6f3f";ctx.lineWidth=3;
+    ctx.beginPath();
+    if(velOpen){ctx.moveTo(126,palY+12);ctx.quadraticCurveTo(126,palY-6,116,palY-22);}
+    else{ctx.moveTo(126,palY+12);ctx.quadraticCurveTo(126,palY+26,142,palY+38);}
+    ctx.stroke();
+    ctx.fillStyle=CREAM;ctx.fillRect(386,palY+24,8,15);
+    var jaw=st.jaw*26;var floorY=midY+46+jaw;
+    var rootX=100,rootY=floorY-5;
+    var backX=212,backY=floorY-15-st.backY*54;
+    var bladeX=314,bladeY=floorY-12-(st.backY*25);
+    var tipX=384+st.tipX*7,tipY=floorY-9-st.tipY*44;
+    ctx.beginPath();ctx.moveTo(rootX,floorY+17);ctx.lineTo(rootX,rootY);
+    ctx.quadraticCurveTo(160,backY+5,backX,backY);ctx.quadraticCurveTo(268,bladeY-5,bladeX,bladeY);
+    ctx.quadraticCurveTo(362,tipY-3,tipX,tipY);ctx.lineTo(tipX,floorY+17);ctx.closePath();
+    var tg=ctx.createLinearGradient(0,floorY-52,0,floorY+17);
+    tg.addColorStop(0,"#c98b86");tg.addColorStop(1,"#7d4f4c");
+    ctx.fillStyle=tg;ctx.strokeStyle="#5a3a37";ctx.lineWidth=1.4;ctx.fill();ctx.stroke();
+    ctx.fillStyle=CREAM;ctx.fillRect(384,floorY-2,8,14);
+    var lx=424,gap=st.lipGap,round=st.lipRound;
+    ctx.strokeStyle=pink;ctx.lineWidth=st.teeth>0.5?3:5;ctx.lineCap="round";
+    ctx.beginPath();ctx.moveTo(398,palY+18);ctx.quadraticCurveTo(lx+round*7,midY-gap,lx+12+round*5,midY-gap*0.5);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(388,floorY+5);ctx.quadraticCurveTo(lx+round*7,midY+gap,lx+12+round*5,midY+gap*0.5);ctx.stroke();
+    if(st.teeth>0.5){ctx.fillStyle=CREAM;ctx.fillRect(412,midY-9,8,13);}
+    var lvx=76,lvy=floorY+28;
+    var vib=voiced?(0.5+0.5*Math.sin(tAnim*0.5)):0;
+    ctx.beginPath();ctx.arc(lvx,lvy,10+vib*3,0,Math.PI*2);
+    ctx.fillStyle=voiced?"rgba(201,168,76,"+(0.35+vib*0.5)+")":"rgba(120,110,80,0.18)";ctx.fill();
+    ctx.fillStyle=voiced?GOLD:"#6f6750";ctx.font="10px Georgia";ctx.textAlign="center";
+    ctx.fillText(voiced?"voice on":"voice off",lvx,lvy+25);
+    ctx.strokeStyle="rgba(120,200,255,0.55)";ctx.lineWidth=2;
+    if(nasal){
+      ctx.beginPath();ctx.moveTo(126,palY);ctx.quadraticCurveTo(320,76,424,150);ctx.stroke();
+    } else if(manner==="fricative"||manner==="affricate"){
+      var cxp=st.teeth>0.5?416:(cur&&cur.tip==="alveolar"?384:424);
+      for(var i=0;i<7;i++){var a=Math.random()*6.28,r=3+Math.random()*8;
+        ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(cxp+Math.cos(a)*r,midY+Math.sin(a)*r-2,1.2,0,6.28);
+        ctx.fillStyle="#bfe3ff";ctx.fill();}ctx.globalAlpha=1;
+    } else if(manner==="stop"){
+      if(t>0.78){puff(ctx,440,midY,"rgba(190,220,255,0.55)");}
+    } else {
+      ctx.beginPath();ctx.moveTo(168,midY+9);ctx.quadraticCurveTo(354,midY,440,midY-2);ctx.globalAlpha=0.38;ctx.stroke();ctx.globalAlpha=1;
+    }
+    ctx.fillStyle="#6f6750";ctx.font="10px Georgia";ctx.textAlign="left";
+    ctx.fillText("nose",252,84);ctx.fillText("ridge",340,palY+5);ctx.fillText("tongue",210,floorY+28);
+    ctx.textAlign="right";ctx.fillText("lips",452,midY-gap-5);
+  }
+  function puff(ctx,x,y,col){for(var i=0;i<7;i++){var a=(i/7)*6.28;ctx.beginPath();
+    ctx.arc(x+Math.cos(a)*(6+Math.random()*7),y+Math.sin(a)*(6+Math.random()*7),1.4,0,6.28);
+    ctx.fillStyle=col;ctx.fill();}}
+
+  return {set:set, replay:function(){if(cur)set(cur,true);}};
+}
+
+var engL = makeEngine('cL');
+var engR = makeEngine('cR');
+
+// ===================== PAIR LOADING =====================
+var currentPair = PAIRS[0];
+
+// Build nav
+var pairNav = document.getElementById('pairNav');
+PAIRS.forEach(function(pair, idx){
+  var btn = document.createElement('button');
+  btn.className = 'pair-btn' + (idx===0?' active':'');
+  btn.setAttribute('role','tab');
+  btn.innerHTML = '<span class="pair-label">'+pair.category+'</span>'+pair.label;
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.pair-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    loadPair(pair);
+  });
+  pairNav.appendChild(btn);
+});
+
+function loadPair(pair){
+  currentPair = pair;
+
+  // Left mouth (A)
+  engL.set(pair.A, true);
+  document.getElementById('labelL').textContent = 'Sound A  /'+pair.A.s+'/';
+  document.getElementById('symL').textContent = '/'+pair.A.s+'/';
+  var wA=pair.A.w, giA=wA.indexOf(pair.A.g);
+  document.getElementById('wordL').innerHTML = giA>=0 ? wA.slice(0,giA)+'<b>'+wA.slice(giA,giA+pair.A.g.length)+'</b>'+wA.slice(giA+pair.A.g.length) : wA;
+  document.getElementById('metaL').textContent = pair.A.place+' · '+pair.A.manner+' · '+(pair.A.voiced?'voiced':'voiceless');
+  document.getElementById('howL').textContent = pair.A.how;
+
+  // Right mouth (B)
+  setTimeout(function(){ engR.set(pair.B, true); }, 400);
+  document.getElementById('labelR').textContent = 'Sound B  /'+pair.B.s+'/';
+  document.getElementById('symR').textContent = '/'+pair.B.s+'/';
+  var wB=pair.B.w, giB=wB.indexOf(pair.B.g);
+  document.getElementById('wordR').innerHTML = giB>=0 ? wB.slice(0,giB)+'<b>'+wB.slice(giB,giB+pair.B.g.length)+'</b>'+wB.slice(giB+pair.B.g.length) : wB;
+  document.getElementById('metaR').textContent = pair.B.place+' · '+pair.B.manner+' · '+(pair.B.voiced?'voiced':'voiceless');
+  document.getElementById('howR').textContent = pair.B.how;
+
+  // Difference strip
+  document.getElementById('diffBody').textContent = pair.diff;
+  var tagsEl = document.getElementById('diffTags'); tagsEl.innerHTML='';
+  pair.tags.forEach(function(tag){
+    var span=document.createElement('span'); span.className='diff-tag'; span.textContent=tag; tagsEl.appendChild(span);
+  });
+
+  // ESL note
+  document.getElementById('eslBody').textContent = pair.esl;
+
+  // Reset games
+  lsReset(); stReset();
+}
+
+// Replay buttons
+document.getElementById('replayL').addEventListener('click', function(){ engL.replay(); });
+document.getElementById('replayR').addEventListener('click', function(){ engR.replay(); });
+
+// ===================== LISTEN & IDENTIFY GAME =====================
+var lsStreak=0, lsBest=0, lsAnswer=null, lsLock=false;
+function lsReset(){ lsStreak=0; lsBest=0; lsAnswer=null; lsLock=false;
+  document.getElementById('ls-streak').textContent='0'; document.getElementById('ls-best').textContent='0';
+  setBadge('ls-badge',0); document.getElementById('ls-feedback').textContent='The mouth is forming one of the two sounds. Which one?';
+  lsNewRound(); }
+function lsNewRound(){
+  lsLock=false;
+  lsAnswer = rnd(2)===0 ? 'A' : 'B';
+  var p = lsAnswer==='A' ? currentPair.A : currentPair.B;
+  if(lsAnswer==='A'){engL.set(p,true); engR.set(currentPair.B,false);}
+  else{engL.set(currentPair.A,false); engR.set(p,true);}
+  // Show only the chosen one animating — actually just animate both and ask which
+  engL.set(currentPair.A, lsAnswer==='A');
+  setTimeout(function(){ engR.set(currentPair.B, lsAnswer==='B'); }, 300);
+  // Build choices
+  var box=document.getElementById('ls-choices'); box.innerHTML='';
+  [{label:'/'+currentPair.A.s+'/ as in "'+currentPair.A.w+'"', val:'A'},
+   {label:'/'+currentPair.B.s+'/ as in "'+currentPair.B.w+'"', val:'B'}].forEach(function(opt){
+    var b=document.createElement('button'); b.className='lchoice';
+    b.innerHTML=opt.label.split(' as ')[0]+'<small>as '+opt.label.split(' as ')[1]+'</small>';
+    b.addEventListener('click',function(){lsGuess(opt.val,b);});
+    box.appendChild(b);
+  });
+  document.getElementById('ls-feedback').textContent='The highlighted mouth is forming one of these sounds. Which one?';
+}
+function lsGuess(val,btn){
+  if(lsLock)return; lsLock=true;
+  var correct = val===lsAnswer;
+  var correctP = lsAnswer==='A'?currentPair.A:currentPair.B;
+  btn.classList.add(correct?'right':'wrong');
+  if(!correct){
+    var box=document.getElementById('ls-choices');
+    Array.prototype.forEach.call(box.children,function(ch){ if(ch!==btn) ch.classList.add('right'); });
+  }
+  if(correct){ lsStreak++; if(lsStreak>lsBest)lsBest=lsStreak;
+    document.getElementById('ls-feedback').textContent='Correct! That was /'+correctP.s+'/ — '+correctP.how;
+    setTimeout(lsNewRound,1100);
+  } else { lsStreak=0;
+    document.getElementById('ls-feedback').textContent='That was /'+correctP.s+'/ — '+correctP.how;
+    setTimeout(lsNewRound,2000);
+  }
+  document.getElementById('ls-streak').textContent=lsStreak;
+  document.getElementById('ls-best').textContent=lsBest;
+  setBadge('ls-badge',lsBest);
+}
+
+// ===================== WORD SORT GAME =====================
+var stStreak=0, stBest=0, stLock=false, stAnswer=null, stWord=null;
+function stReset(){ stStreak=0; stBest=0; stLock=false;
+  document.getElementById('st-streak').textContent='0'; document.getElementById('st-best').textContent='0';
+  setBadge('st-badge',0); stNewRound(); }
+function stNewRound(){
+  stLock=false;
+  var allWords=[];
+  currentPair.sortWords[0].forEach(function(w){allWords.push({w:w,side:'A'});});
+  currentPair.sortWords[1].forEach(function(w){allWords.push({w:w,side:'B'});});
+  var item=allWords[rnd(allWords.length)];
+  stWord=item.w; stAnswer=item.side;
+  document.getElementById('st-word').textContent=stWord;
+  document.getElementById('st-prompt').textContent='Which column does "'+stWord+'" belong in?';
+  document.getElementById('st-feedback').textContent='';
+  var cols=document.getElementById('st-cols'); cols.innerHTML='';
+  [{label:'/'+currentPair.A.s+'/ column', ex:'"'+currentPair.A.w+'"', val:'A', cls:'left-col'},
+   {label:'/'+currentPair.B.s+'/ column', ex:'"'+currentPair.B.w+'"', val:'B', cls:'right-col'}].forEach(function(col){
+    var b=document.createElement('button');
+    b.className='sort-col-btn '+col.cls;
+    b.innerHTML=col.label+'<small>like '+col.ex+'</small>';
+    b.addEventListener('click',function(){stGuess(col.val,b,cols);});
+    cols.appendChild(b);
+  });
+}
+function stGuess(val,btn,cols){
+  if(stLock)return; stLock=true;
+  var correct=val===stAnswer;
+  var correctP=stAnswer==='A'?currentPair.A:currentPair.B;
+  btn.classList.add(correct?'right':'wrong');
+  if(!correct){ Array.prototype.forEach.call(cols.children,function(ch){if(ch!==btn)ch.classList.add('right');}); }
+  if(correct){ stStreak++; if(stStreak>stBest)stBest=stStreak;
+    document.getElementById('st-feedback').textContent='"'+stWord+'" has the /'+correctP.s+'/ sound. ✓';
+    setTimeout(stNewRound,1000);
+  } else { stStreak=0;
+    document.getElementById('st-feedback').textContent='"'+stWord+'" belongs in the /'+correctP.s+'/ column — like "'+correctP.w+'".';
+    setTimeout(stNewRound,1800);
+  }
+  document.getElementById('st-streak').textContent=stStreak;
+  document.getElementById('st-best').textContent=stBest;
+  setBadge('st-badge',stBest);
+}
+
+// ===================== GAME MODE TABS =====================
+document.querySelectorAll('.modetab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.modetab').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    var game=btn.dataset.game;
+    document.getElementById('game-listen').style.display=game==='listen'?'block':'none';
+    document.getElementById('game-sort').style.display=game==='sort'?'block':'none';
+    if(game==='listen')lsReset();
+    if(game==='sort')stReset();
+  });
+});
+
+// ===================== UTILS =====================
+function rnd(n){return Math.floor(Math.random()*n);}
+function setBadge(id,best){
+  var bd=document.getElementById(id),label,plat=false;
+  if(best>=50){label="Platinum";plat=true;}else if(best>=25)label="Gold";
+  else if(best>=12)label="Silver";else if(best>=5)label="Bronze";else label="Warming up";
+  bd.textContent=label;bd.className="badge"+(plat?" plat":"");
+}
+
+// ===================== INIT =====================
+loadPair(PAIRS[0]);
+
+})();
+</script>
+</body>
+</html>
