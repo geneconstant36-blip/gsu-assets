@@ -47,7 +47,7 @@ if [ ! -f "$WEBROOT/index.html" ]; then
 <title>GSU Free Library</title>
 <style>body{background:#000;color:#F5F1E8;font-family:Georgia,serif;text-align:center;padding:18vh 24px}
 h1{color:#C9A84C;font-size:2rem}p{color:#9CA3AF;max-width:480px;margin:16px auto;line-height:1.6}</style></head>
-<body><h1>GSU Free Library</h1><p>The box is broadcasting, but the library hasn't been loaded yet.
+<body><script src="/return-bar.js"></script><h1>GSU Free Library</h1><p>The box is broadcasting, but the library hasn't been loaded yet.
 Copy the University on a Stick bundle into /var/www/gsu on this device, then refresh.</p>
 <p>globalsovereignuniversity.org · Free education for all</p></body></html>
 PLACEHOLDER

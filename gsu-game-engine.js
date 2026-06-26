@@ -404,7 +404,7 @@ ${CERT_CSS}
         body{margin:0;background:#0A0907;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
         ${CERT_CSS}
         @media print{body{background:#fff;padding:0}.cert-inner{box-shadow:none}}
-      </style></head><body>${html}</body></html>`);
+      </style></head><body><script src="/return-bar.js"></script>${html}</body></html>`);
       w.document.close(); w.focus(); setTimeout(()=>{ try{w.print();}catch(e){} },400);
     },
 
