@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adult Literacy Lab — GSU Second Chance</title>
+<meta name="description" content="Free adult reading tool from GSU. You weren't bad at reading — you were taught wrong. The phonics code you were never given, rebuilt for adult dignity. No judgment, no login.">
+<style>
+:root{--gold:#C9A84C;--dim:#5C502A;--cream:#F5F1E8;--teal:#1A8B7F;--red:#c0392b;--green:#1a6b3a;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:22px 18px 48px}
+.kick{color:var(--gold);letter-spacing:.18em;font-size:.74rem;text-transform:uppercase;margin-bottom:6px}
+h1{font-size:1.85rem;line-height:1.15;margin:.2rem 0 .2rem;color:var(--cream)}
+.sub{color:#cabfa6;font-size:.97rem;margin:0 0 14px;max-width:64ch;line-height:1.55}
+.rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:12px 0 18px}
+
+/* OPENING STATEMENT */
+.opening{background:linear-gradient(135deg,#0d0d0d,#070707);border:1px solid var(--dim);border-left:4px solid var(--gold);border-radius:14px;padding:24px 26px;margin-bottom:28px}
+.opening-headline{font-size:1.5rem;color:var(--cream);line-height:1.3;margin-bottom:12px}
+.opening-headline strong{color:var(--gold)}
+.opening-body{font-size:.97rem;color:#cabfa6;line-height:1.7;margin:0}
+
+/* PATH SELECTOR */
+.path-label{color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px}
+.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+@media(max-width:560px){.path-grid{grid-template-columns:1fr}}
+.path-card{background:#0a0a0a;border:2px solid var(--dim);border-radius:12px;padding:18px;cursor:pointer;transition:all .18s}
+.path-card:hover{border-color:var(--gold)}
+.path-card.active{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.path-num{font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.path-title{font-size:1rem;font-weight:bold;color:var(--cream);margin-bottom:4px}
+.path-desc{font-size:.82rem;color:#7c7458;line-height:1.35}
+
+/* STAGE */
+.stage{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-bottom:22px}
+@media(max-width:680px){.stage{grid-template-columns:1fr}}
+.canvaswrap{background:#0a0a0a;border:1px solid var(--dim);border-top:3px solid var(--gold);border-radius:14px;padding:10px}
+canvas{width:100%;height:auto;display:block;border-radius:8px;background:radial-gradient(120% 120% at 60% 40%,#11100c 0%,#050505 70%)}
+.caption{font-size:.82rem;color:#bdb293;margin-top:7px;min-height:2.4em;line-height:1.35}
+
+/* LESSON PANEL */
+.lesson-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:18px}
+.lesson-step{font-size:.7rem;color:var(--teal);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+.lesson-title{font-size:1.3rem;color:var(--cream);font-weight:bold;margin-bottom:8px;line-height:1.2}
+.lesson-body{font-size:.93rem;color:#e7dec9;line-height:1.6;margin-bottom:12px}
+.lesson-body strong{color:var(--gold)}
+.lesson-example{background:#0f0f0f;border:1px solid var(--dim);border-radius:8px;padding:12px 14px;margin-bottom:12px}
+.lesson-example .word{font-size:1.5rem;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:.06em}
+.lesson-example .breakdown{font-size:.85rem;color:#cabfa6;line-height:1.4}
+.lesson-example .breakdown b{color:var(--cream)}
+.truth-box{background:#0f0f0f;border:1px solid var(--dim);border-left:3px solid var(--teal);border-radius:8px;padding:11px 14px;font-size:.87rem;color:#cabfa6;line-height:1.5;margin-bottom:12px}
+.truth-box strong{color:var(--teal)}
+.lesson-nav{display:flex;gap:8px;margin-top:10px}
+.lesson-btn{flex:1;background:transparent;border:1px solid var(--dim);color:#9c916f;padding:9px;border-radius:8px;font-family:Georgia,serif;cursor:pointer;font-size:.85rem}
+.lesson-btn:hover{border-color:var(--gold);color:var(--gold)}
+.lesson-btn.go{background:var(--gold);color:#000;border-color:var(--gold);font-weight:bold}
+
+/* COMMON GAPS SECTION */
+.gaps-title{color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:12px}
+.gap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-bottom:22px}
+.gap-btn{background:#111;border:2px solid var(--dim);color:var(--cream);padding:10px 8px;border-radius:10px;font-family:Georgia,serif;font-size:1rem;cursor:pointer;text-align:center;transition:all .15s}
+.gap-btn small{display:block;font-size:.6rem;color:#7a6a40;margin-top:2px;letter-spacing:.04em}
+.gap-btn:hover{border-color:var(--gold)}
+.gap-btn[aria-pressed="true"]{background:var(--gold);color:#000;border-color:var(--gold);font-weight:bold}
+.gap-btn[aria-pressed="true"] small{color:#3a3208}
+
+/* GAMES */
+.modetabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.modetab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;font-family:Georgia,serif;font-size:.88rem;cursor:pointer}
+.modetab.active{background:var(--gold);color:#000;font-weight:bold;border-color:var(--gold)}
+.game-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:20px;margin-bottom:22px}
+.score-row{display:flex;gap:16px;align-items:baseline;margin:0 0 10px;flex-wrap:wrap}
+.score-row b{color:var(--gold);font-size:1.2rem}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
+.badge.plat{background:var(--gold);color:#000}
+.feedback{font-size:.92rem;color:#e7dec9;min-height:2.2em;line-height:1.4;margin-bottom:10px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:14px 10px;border-radius:10px;font-family:Georgia,serif;font-size:1rem;cursor:pointer;text-align:center;transition:all .15s}
+.choice:hover{border-color:var(--gold)}
+.choice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
+.choice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
+.decode-word{font-size:2rem;color:var(--gold);font-weight:bold;text-align:center;margin-bottom:14px;letter-spacing:.08em}
+
+/* GENO + LINKS */
+.geno{margin-top:22px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:.93rem;color:#d9cfb4}
+.geno b{color:var(--gold)}
+.cross-links{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.cross-links a{display:inline-block;border:1px solid var(--dim);color:#9c916f;padding:7px 14px;border-radius:8px;text-decoration:none;font-size:.83rem}
+.cross-links a:hover{border-color:var(--gold);color:var(--gold)}
+.foot{margin-top:14px;color:#7c7458;font-size:.8rem;line-height:1.5}
+.foot em{color:#a99f7e}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">GSU · Second Chance · Adult Literacy Lab</div>
+  <h1>Adult Literacy Lab</h1>
+  <p class="sub">This lab is not for children. It is for every adult who finished school without the reading skills they were promised — and who is ready to learn the code they were never taught.</p>
+  <div class="rule"></div>
+
+  <!-- OPENING STATEMENT -->
+  <div class="opening">
+    <div class="opening-headline">You weren't bad at reading.<br><strong>You were taught wrong.</strong></div>
+    <div class="opening-body">For decades, American schools taught reading by asking children to guess words from pictures and context — a method called whole language. The science of reading shows this approach fails the majority of learners, particularly those who needed systematic phonics. If you struggled in school, the failure was not yours. It was the method's. This lab gives you the code you were never given — the same code the research says every reader needs — delivered with the dignity you deserve as an adult.</div>
+  </div>
+
+  <!-- PATH SELECTOR -->
+  <div class="path-label">Choose your starting point</div>
+  <div class="path-grid" id="pathGrid">
+    <div class="path-card active" data-path="code">
+      <div class="path-num">Path A</div>
+      <div class="path-title">The Alphabetic Code</div>
+      <div class="path-desc">Start here. Every letter represents a sound. Every sound has a letter. Learn the system from the ground up — fast, clear, no condescension.</div>
+    </div>
+    <div class="path-card" data-path="gaps">
+      <div class="path-num">Path B</div>
+      <div class="path-title">Fix the Gaps</div>
+      <div class="path-desc">Already read but hit a wall on certain sounds? Target the specific phonics patterns that whole-language instruction leaves out.</div>
+    </div>
+    <div class="path-card" data-path="spelling">
+      <div class="path-num">Path C</div>
+      <div class="path-title">Spelling Confidence</div>
+      <div class="path-desc">The same code that unlocks reading also unlocks spelling. Work through the patterns that make English spelling make sense.</div>
+    </div>
+    <div class="path-card" data-path="fluency">
+      <div class="path-num">Path D</div>
+      <div class="path-title">Long Words</div>
+      <div class="path-desc">Can read short words but multi-syllable words stop you cold? The six syllable types give you an algorithm for any word you encounter.</div>
+    </div>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <div>
+      <div class="canvaswrap">
+        <canvas id="c" width="560" height="440" role="img" aria-label="Mouth forming the current sound"></canvas>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+    </div>
+    <div class="lesson-panel">
+      <div class="lesson-step" id="lessonStep">Path A · Lesson 1 of 8</div>
+      <div class="lesson-title" id="lessonTitle"></div>
+      <div class="lesson-body" id="lessonBody"></div>
+      <div class="lesson-example" id="lessonExample" style="display:none">
+        <div class="word" id="exWord"></div>
+        <div class="breakdown" id="exBreakdown"></div>
+      </div>
+      <div class="truth-box" id="truthBox" style="display:none"></div>
+      <div class="lesson-nav">
+        <button class="lesson-btn" id="prevLesson">← Back</button>
+        <button class="lesson-btn go" id="nextLesson">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAP FIXER (shown on Path B) -->
+  <div id="gapSection" style="display:none">
+    <div class="gaps-title">The 10 most common phonics gaps left by whole-language instruction — tap one to work on it</div>
+    <div class="gap-grid" id="gapGrid"></div>
+  </div>
+
+  <!-- GAMES -->
+  <div class="modetabs">
+    <button class="modetab active" data-game="decode">Decode It</button>
+    <button class="modetab" data-game="pattern">Pattern Match</button>
+  </div>
+
+  <div class="game-panel" id="game-decode">
+    <div class="score-row"><span>Streak <b id="dc-streak">0</b></span><span>Best <b id="dc-best">0</b></span><span class="badge" id="dc-badge">Warming up</span></div>
+    <div class="feedback" id="dc-feedback">Read the mouth position — which word does it spell?</div>
+    <div class="decode-word" id="dc-word"></div>
+    <div class="choices" id="dc-choices"></div>
+  </div>
+
+  <div class="game-panel" id="game-pattern" style="display:none">
+    <div class="score-row"><span>Streak <b id="pt-streak">0</b></span><span>Best <b id="pt-best">0</b></span><span class="badge" id="pt-badge">Warming up</span></div>
+    <div class="feedback" id="pt-feedback">Which pattern explains why this word is spelled this way?</div>
+    <div class="decode-word" id="pt-word"></div>
+    <div class="choices" id="pt-choices"></div>
+  </div>
+
+  <div class="geno">
+    <b>GENO AI Tutor</b> — a robot you can actually TALK to, in private, with no judgment. Ask anything: <em>"GENO, why can't I remember how to spell 'because'?"</em> or <em>"Can you explain what a short vowel is?"</em> or <em>"I want to practice reading slowly with you."</em> 32 languages, 24/7, free forever. No one is watching.
+  </div>
+  <div class="cross-links">
+    <a href="/second-chance">Second Chance Hub</a>
+    <a href="/the-mouth-that-makes-the-sound">The Mouth Lab</a>
+    <a href="/phoneme-forge">Phoneme Forge</a>
+    <a href="/vowel-valley">Vowel Valley</a>
+    <a href="/syllable-types">Syllable Types</a>
+    <a href="/free-tutor">Free Tutor</a>
+  </div>
+  <p class="foot">Adult Literacy Lab · Free forever from <em>Global Sovereign University</em>, a 501(c)(3) nonprofit.<br>"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// ===================== LESSON DATA =====================
+var PATHS = {
+  code: [
+    {title:"English is a code — and codes can be learned",
+     body:"Reading is not a talent. It is not something some people have and others don't. Reading is a manufactured technology — like riding a bicycle or driving a car. It requires instruction. The English writing system is a code: letters represent sounds, sounds combine into words. Once you know the code, every word becomes decodable. You are not starting from zero. You already know every sound in English — you use them every time you speak.",
+     truth:"<strong>The truth the schools didn't tell you:</strong> 80–85% of English words follow predictable phonics patterns. The code is real, it is consistent, and it can be taught in weeks — not years.",
+     phone:{s:"m",place:"Bilabial",manner:"nasal",voiced:true,lips:"closed",tip:"low",back:"low",nasal:true},
+     cap:"Every letter represents a sound your mouth already knows how to make. /m/ — lips close, voice hums through the nose."},
+    {title:"The mouth comes first — always",
+     body:"Before a letter means anything, there is a sound. Your mouth already makes every sound in English — you've been doing it your whole life. The letters are just pictures of those sounds. When you see the letter 'b', your brain should immediately trigger the sound your lips make when they pop open with voice. That connection — letter to sound — is called a grapheme-phoneme correspondence. It is the only thing you need to learn.",
+     truth:"<strong>What whole language got wrong:</strong> It asked you to look at a picture of a dog and guess the word 'dog'. That works for 500 common words. It fails completely at word 501. The code works for every word — including words you've never seen.",
+     phone:{s:"b",place:"Bilabial",manner:"stop",voiced:true,lips:"closed",tip:"low",back:"low",nasal:false},
+     cap:"/b/ — lips press together (same as /p/), then pop open with voice on. The mouth IS the code.",
+     example:{word:"bad",breakdown:"<b>b</b> = lip pop with voice · <b>a</b> = jaw drops, tongue low-forward · <b>d</b> = tongue taps ridge with voice"}},
+    {title:"Short vowels — the five sounds that unlock most words",
+     body:"Every syllable has one vowel. That vowel makes either a short sound or a long sound — and knowing which depends on the syllable type. The most common is the short vowel: the vowel is 'closed off' by a consonant after it, which shortens the sound. Five short vowels, five sounds, and they appear in the majority of single-syllable English words.",
+     truth:"<strong>The five short vowels:</strong> ă (cat) · ĕ (bed) · ĭ (sit) · ŏ (hot) · ŭ (cup). Every one of them is a sound your mouth already makes. What you may not know is that 'o' in 'son' and 'love' and 'come' makes the same short u sound — ŭ. That's not irregular. That's the code.",
+     phone:{s:"a",place:"Low front vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+     cap:"Short a /æ/ — jaw fully open, tongue low and forward. The vowel in 'cat', 'map', 'hand'.",
+     example:{word:"cat",breakdown:"<b>c</b> = back tongue clicks · <b>a</b> = short a, jaw open · <b>t</b> = tongue taps ridge, no voice"}},
+    {title:"Long vowels — when the vowel says its own name",
+     body:"A long vowel is simply a vowel that says its own name: long a = /eɪ/ (the letter 'A'). Long e = /iː/ (the letter 'E'). Long i = /aɪ/ (the letter 'I'). Long o = /oʊ/ (the letter 'O'). Long u = /uː/ or /juː/ (the letter 'U'). Three things make a vowel go long: an open syllable (nothing after it), a silent e after a consonant, or a vowel team. Once you know these three patterns, you can always tell whether a vowel is long or short.",
+     truth:"<strong>The silent e rule:</strong> cake, bike, note, tune — the e is always silent but reaches back to make the first vowel long. Remove the e: cak, bik, not, tun — the vowel goes short immediately. The e is doing a job. It is not random.",
+     phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
+     cap:"Long e /iː/ — tongue as high and forward as possible, lips spread wide. The vowel says its own name.",
+     example:{word:"cake",breakdown:"<b>c</b> = /k/ click · <b>a</b> = long a (the silent e reaches back) · <b>k</b> = /k/ · <b>e</b> = silent, makes a long"}},
+    {title:"Digraphs — two letters, one sound",
+     body:"Some letter combinations are called digraphs: two letters that merge completely into one new sound. 'sh' is not /s/ + /h/ — it is a completely different sound made by pulling the tongue back and rounding the lips slightly. 'ch' is not /c/ + /h/ — it is a quick stop then release. 'th' appears in two forms: voiceless (thin, think) and voiced (the, this). 'ph' always makes /f/ — it comes from Greek. 'ck' always makes /k/ and only appears after a short vowel.",
+     truth:"<strong>Why 'ph' makes /f/:</strong> Because words like 'phone', 'photo', 'graph', and 'pharmacy' come from ancient Greek, where phi (φ) was the letter for /f/. When Latin scribes borrowed these words, they spelled phi as 'ph'. The code has history — and the history explains the 'exceptions'.",
+     phone:{s:"sh",place:"Post-alveolar",manner:"fricative",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+     cap:"/ʃ/ — the sh digraph. Tongue back, lips slightly rounded forward. Two letters, one sound, one mouth position.",
+     example:{word:"phone",breakdown:"<b>ph</b> = /f/ (Greek origin) · <b>o</b> = long o (open syllable) · <b>ne</b> = VCe makes the o long"}},
+    {title:"The r-controlled vowel — why 'er', 'ir', and 'ur' all sound the same",
+     body:"When a vowel is followed by the letter r, the r takes over and changes the vowel sound completely. This is called an r-controlled vowel — or 'bossy r'. The vowel no longer makes its short or long sound. Instead it makes a new sound dominated by the r. 'ar' = /ɑːr/ (car, star). 'or' = /ɔːr/ (for, born). 'er', 'ir', and 'ur' all make the SAME sound: /ɜːr/ — as in her, bird, and burn.",
+     truth:"<strong>The er/ir/ur merger:</strong> 'her', 'bird', and 'burn' are spelled differently but sound identical in the stressed syllable. This is why 'girl' is not spelled 'gerl' or 'gurl' — they'd all work phonetically. When in doubt on these three, you have to know the word. But knowing the merger means you can always READ any of them correctly.",
+     phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+     cap:"R-controlled vowel — tongue bunches back without touching anything, lips round. The r dominates the vowel entirely.",
+     example:{word:"her",breakdown:"<b>h</b> = breath from throat · <b>er</b> = r-controlled vowel, same sound as 'ir' in 'bird' and 'ur' in 'burn'"}},
+    {title:"Syllable division — the algorithm for long words",
+     body:"Long words stop adult readers cold — but they don't have to. Every long word is just a sequence of short syllables. And every syllable follows one of six types you already understand. The trick is knowing where to divide. Two key rules: (1) When two consonants appear between vowels (VC·CV), divide between them: rab·bit, nap·kin. (2) When one consonant appears between vowels (V·CV), usually divide before it and the first syllable is open with a long vowel: ti·ger, ba·by.",
+     truth:"<strong>Practice word: 'fantastic'</strong> — fan (closed, short a) · tas (closed, short a) · tic (closed, short i). Three closed syllables, three short vowels, completely predictable. The code works even when the word feels intimidating.",
+     phone:{s:"a",place:"Low front vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+     cap:"Every syllable has one vowel sound. Break the word into syllables — identify the type of each one — and the vowel sound follows automatically.",
+     example:{word:"fantastic",breakdown:"<b>fan</b> = closed (short a) · <b>tas</b> = closed (short a) · <b>tic</b> = closed (short i)"}},
+    {title:"You have everything you need",
+     body:"You now have the framework: the alphabetic code, short and long vowels, digraphs, r-controlled vowels, and syllable division. These are not elementary school concepts — they are the scientific foundation of reading instruction. The most expensive reading programs in America teach exactly this sequence. You just received it free. The next step is practice: use every tool in this Arsenal, ask GENO anything, and read every day.",
+     truth:"<strong>What the research proves:</strong> Adults who receive systematic phonics instruction — even after decades of struggle — make dramatic gains in as little as 8–12 weeks of consistent practice. The brain retains plasticity for literacy acquisition throughout life. It is never too late.",
+     phone:{s:"m",place:"Bilabial",manner:"nasal",voiced:true,lips:"closed",tip:"low",back:"low",nasal:true},
+     cap:"Every word, every page, every book — the code is the same. You know the code now. Use it.",
+     example:{word:"reading",breakdown:"<b>read</b> = vowel team (ea = long e) · <b>ing</b> = closed syllable (short i)"}}
+  ],
+  gaps: [
+    {title:"The top phonics gaps left by whole language",
+     body:"Whole-language instruction left most adult readers with specific, predictable gaps. These are the patterns the method never taught directly because it relied on guessing instead of decoding. Use the gap selector below to target the exact pattern that trips you up. Each one can be closed in a single focused session.",
+     truth:"<strong>The most common gaps:</strong> vowel teams (ea, oa, ie), r-controlled vowels (er/ir/ur), silent letters (kn, wr, mb), the -ck/-tch rules, and long vowel patterns (VCe). These are not random — they are the exact patterns that guessing from context cannot teach.",
+     phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
+     cap:"Select a gap below to focus on that specific pattern."}
+  ],
+  spelling: [
+    {title:"Spelling is reading in reverse — the same code, the other direction",
+     body:"Reading is decoding: you see letters and convert them to sounds. Spelling is encoding: you hear sounds and convert them to letters. The code is identical — you just work it backwards. The key insight is that English spelling is not about memorizing words. It is about knowing the phoneme-grapheme correspondences so well that you can write any sound you hear. That is orthographic mapping — the goal of all spelling instruction.",
+     truth:"<strong>The FLOSS rule:</strong> F, L, S (and Z) double after a short vowel at the end of a one-syllable word: off, bell, class, buzz. The rule name spells itself. Once you know it, you will never again wonder whether 'off' has one f or two.",
+     phone:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+     cap:"/s/ — the hiss. This sound can be spelled 's', 'ss', 'c' (before e/i/y), 'sc', or 'st' (listen). Knowing all the spellings is the spelling code.",
+     example:{word:"class",breakdown:"<b>cl</b> = blend (two sounds) · <b>a</b> = short a (closed syllable) · <b>ss</b> = FLOSS rule (short vowel + double s)"}}
+  ],
+  fluency: [
+    {title:"Long words are just short syllables in a row",
+     body:"The six syllable types are your algorithm for every long word you encounter. Closed syllable = short vowel. Open syllable = long vowel. VCe = long vowel. Vowel team = team's sound. R-controlled = r-colored vowel. Consonant-le = unstressed /əl/. Every syllable in every English word is one of these six types. Identify the type, know the vowel, read the word.",
+     truth:"<strong>Test word: 'understanding'</strong> — un (closed) · der (r-controlled) · stand (closed) · ing (closed). Four syllables, four types, completely predictable. The word that felt impossible becomes obvious.",
+     phone:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true},
+     cap:"Long words yield to the six-type algorithm. Every syllable has one vowel sound — identify the type and the vowel follows.",
+     example:{word:"understanding",breakdown:"<b>un</b> = closed (short u) · <b>der</b> = r-controlled · <b>stand</b> = closed (short a) · <b>ing</b> = closed (short i)"}}
+  ]
+};
+
+var GAPS = [
+  {id:"ea",sym:"ea",label:"ea team",phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
+   note:"'ea' usually = long e (sea, eat, bean) but sometimes = short e (bread, head, dead). Context tells you which."},
+  {id:"oa",sym:"oa",label:"oa team",phone:{s:"oh",place:"Mid back glide",manner:"vowel",voiced:true,lips:"rounded",tip:"low",back:"mid",nasal:false},
+   note:"'oa' always = long o (boat, coat, road, soap). No exceptions. One of the most reliable vowel teams."},
+  {id:"kn",sym:"kn",label:"silent kn",phone:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true},
+   note:"'kn' = /n/ only. The k is always silent: knee, know, knight, knife, knot, knuckle. Old English origin — the k was once pronounced."},
+  {id:"wr",sym:"wr",label:"silent wr",phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   note:"'wr' = /r/ only. The w is always silent: write, wrist, wrong, wrap, wreck, wrestle. Old English — the w was once sounded."},
+  {id:"mb",sym:"mb",label:"silent mb",phone:{s:"m",place:"Bilabial",manner:"nasal",voiced:true,lips:"closed",tip:"low",back:"low",nasal:true},
+   note:"'mb' at word end = /m/ only. The b is silent: lamb, comb, bomb, thumb, climb, crumb, plumb."},
+  {id:"igh",sym:"igh",label:"igh pattern",phone:{s:"i",place:"Low to high glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+   note:"'igh' = long i /aɪ/. Always. light, night, fight, high, sigh, thigh. The 'gh' is always silent in this pattern."},
+  {id:"tch",sym:"tch",label:"-tch rule",phone:{s:"ch",place:"Post-alveolar",manner:"affricate",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+   note:"Short vowel + /ch/ sound at end of a syllable = always 'tch': catch, match, fetch, witch, notch, hutch. After a consonant or long vowel = 'ch': much, reach, teach."},
+  {id:"ck",sym:"ck",label:"-ck rule",phone:{s:"k",place:"Velar",manner:"stop",voiced:false,lips:"open",tip:"low",back:"velar",nasal:false},
+   note:"Short vowel + /k/ sound at end = always 'ck': back, duck, trick, block, stuck. After a consonant or long vowel = 'k': milk, desk, book, bike."},
+  {id:"schwa",sym:"ə",label:"schwa",phone:{s:"uh",place:"Mid central vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"mid",nasal:false},
+   note:"The schwa /ə/ is the most common vowel in English. It's the unstressed 'uh': about, lemon, pencil, circus, doctor. Any vowel letter can spell it when unstressed."},
+  {id:"ou",sym:"ou/ow",label:"ou/ow",phone:{s:"ou",place:"Low to high back glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+   note:"'ou' and 'ow' spell /aʊ/ (out, now) OR 'ow' spells /oʊ/ (low, snow). Context: 'ow' at word end or before 'n' usually = long o; elsewhere usually = /aʊ/."}
+];
+
+// Decode game words
+var DECODE_WORDS = [
+  {w:"ship",opts:["ship","chip","shop","whip"],phone:{s:"sh",place:"Post-alveolar",manner:"fricative",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false}},
+  {w:"cake",opts:["cake","lake","cane","came"],phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false}},
+  {w:"bird",opts:["bird","burn","bard","bid"],phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false}},
+  {w:"phone",opts:["phone","bone","tone","cone"],phone:{s:"f",place:"Labiodental",manner:"fricative",voiced:false,lips:"teeth",tip:"low",back:"low",nasal:false}},
+  {w:"table",opts:["table","fable","cable","sable"],phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false}},
+  {w:"know",opts:["know","now","no","new"],phone:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true}},
+  {w:"rain",opts:["rain","rein","ran","reign"],phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false}},
+  {w:"light",opts:["light","might","lite","liked"],phone:{s:"i",place:"Low to high glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false}},
+  {w:"nurse",opts:["nurse","purse","worse","curse"],phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false}},
+  {w:"catch",opts:["catch","latch","cash","cats"],phone:{s:"ch",place:"Post-alveolar",manner:"affricate",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false}}
+];
+
+var PATTERN_WORDS = [
+  {w:"back",ans:"The -ck rule: short vowel + /k/ at syllable end = always 'ck'",opts:["The -ck rule","The -tch rule","Silent e rule","Open syllable"]},
+  {w:"cake",ans:"VCe (silent e): vowel + consonant + silent e = long vowel",opts:["VCe (silent e)","Vowel team","Open syllable","R-controlled"]},
+  {w:"rain",ans:"Vowel team: 'ai' always makes long a",opts:["Vowel team","VCe (silent e)","Open syllable","-ck rule"]},
+  {w:"me",ans:"Open syllable: vowel at end = long vowel says its name",opts:["Open syllable","Closed syllable","Vowel team","VCe (silent e)"]},
+  {w:"bird",ans:"R-controlled: vowel + r — the r takes over the vowel sound",opts:["R-controlled","Closed syllable","Vowel team","Open syllable"]},
+  {w:"off",ans:"FLOSS rule: short vowel + f at end of one-syllable word = 'ff'",opts:["FLOSS rule","R-controlled","VCe (silent e)","Vowel team"]},
+  {w:"table",ans:"Consonant-le: the 'ble' ending = unstressed /əl/ syllable",opts:["Consonant-le","Open syllable","Vowel team","Closed syllable"]},
+  {w:"knife",ans:"Silent kn: 'kn' always = /n/ — the k is silent",opts:["Silent kn","VCe (silent e)","Open syllable","FLOSS rule"]}
+];
+
+// ===================== CANVAS ENGINE =====================
+var cv=document.getElementById('c'),ctx=cv.getContext('2d');
+var W=cv.width,H=cv.height;
+var fromS={},toS={},t=1,raf=null,manner="nasal",voiced=true,nasal=true,tAnim=0;
+function snap(p){return{lipGap:p.lips==="closed"?0:p.lips==="rounded"?10:p.lips==="spread"?22:p.lips==="teeth"?6:18,
+  lipRound:p.lips==="rounded"?1:p.lips==="spread"?-1:0,teeth:p.lips==="teeth"?1:0,
+  tipY:p.tip==="alveolar"?1:p.tip==="dental"?1:p.tip==="retro"?0.55:0,
+  tipX:p.tip==="dental"?1:p.tip==="retro"?-1:0,
+  backY:p.back==="velar"?1:p.back==="high"?0.85:p.back==="mid"?0.42:0,
+  jaw:(p.lips==="open"||p.manner==="vowel")?(p.back==="low"?1:0.55):0.2};}
+function lerp(a,b,k){return a+(b-a)*k;}
+function blend(){var o={};for(var k in fromS){o[k]=lerp(fromS[k],toS[k],ease(t));}return o;}
+function ease(x){return x<0?0:x>1?1:(1-Math.cos(Math.PI*x))/2;}
+function setPhone(p,animate){
+  fromS=blend();toS=snap(p);manner=p.manner;voiced=p.voiced;nasal=p.nasal||false;
+  t=animate?0:1;tAnim=0;
+  if(animate){if(raf)cancelAnimationFrame(raf);loop();}else{draw(blend());}
+}
+function loop(){t+=0.04;tAnim+=1;if(t>1)t=1;draw(blend());
+  if(t<1||manner==="fricative"||manner==="nasal"||voiced){if(t<1||tAnim<220)raf=requestAnimationFrame(loop);}}
+function draw(st){
+  ctx.clearRect(0,0,W,H);
+  var GOLD="#C9A84C",DIM="#5C502A",CREAM="#F5F1E8",TEAL="#2a7d77",pink="#caa6a0";
+  var midY=H*0.5;
+  ctx.lineWidth=2;ctx.strokeStyle="#2a2722";ctx.fillStyle="#0d0c0a";
+  ctx.beginPath();ctx.moveTo(60,40);ctx.bezierCurveTo(330,20,470,70,486,170);ctx.lineTo(516,196);ctx.lineTo(486,212);
+  ctx.bezierCurveTo(486,212,500,250,470,300);ctx.bezierCurveTo(500,360,470,400,420,410);
+  ctx.bezierCurveTo(300,440,110,430,60,380);ctx.lineTo(60,40);ctx.closePath();ctx.stroke();
+  ctx.strokeStyle=DIM;ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(300,120);ctx.bezierCurveTo(380,108,440,120,470,150);ctx.stroke();
+  var palY=midY-44;
+  ctx.strokeStyle="#7d6f3f";ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(150,palY+14);ctx.bezierCurveTo(280,palY-6,360,palY-2,430,palY+18);ctx.stroke();
+  ctx.beginPath();ctx.arc(432,palY+24,7,Math.PI*1.1,Math.PI*2.1);ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.stroke();
+  ctx.strokeStyle=nasal?TEAL:"#7d6f3f";ctx.lineWidth=3;
+  ctx.beginPath();
+  if(nasal){ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY-8,138,palY-26);}
+  else{ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY+30,168,palY+44);}
+  ctx.stroke();
+  ctx.fillStyle=CREAM;ctx.fillRect(452,palY+28,10,18);
+  var jaw=st.jaw*30,floorY=midY+54+jaw;
+  var rootX=120,rootY=floorY-6,backX=250,backY=floorY-18-st.backY*64,bladeX=370,bladeY=floorY-14-(st.backY*30);
+  var tipX=452+st.tipX*8,tipY=floorY-10-st.tipY*52;
+  ctx.beginPath();ctx.moveTo(rootX,floorY+20);ctx.lineTo(rootX,rootY);
+  ctx.quadraticCurveTo(190,backY+6,backX,backY);ctx.quadraticCurveTo(315,bladeY-6,bladeX,bladeY);
+  ctx.quadraticCurveTo(425,tipY-4,tipX,tipY);ctx.lineTo(tipX,floorY+20);ctx.closePath();
+  var tg=ctx.createLinearGradient(0,floorY-60,0,floorY+20);tg.addColorStop(0,"#c98b86");tg.addColorStop(1,"#7d4f4c");
+  ctx.fillStyle=tg;ctx.strokeStyle="#5a3a37";ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+  ctx.fillStyle=CREAM;ctx.fillRect(452,floorY-2,10,16);
+  var lx=500,gap=st.lipGap,round=st.lipRound;
+  ctx.strokeStyle=pink;ctx.lineWidth=st.teeth>0.5?4:6;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(470,palY+22);ctx.quadraticCurveTo(lx+round*8,midY-gap,lx+14+round*6,midY-gap*0.5);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(456,floorY+6);ctx.quadraticCurveTo(lx+round*8,midY+gap,lx+14+round*6,midY+gap*0.5);ctx.stroke();
+  if(st.teeth>0.5){ctx.fillStyle=CREAM;ctx.fillRect(486,midY-10,9,15);}
+  var lvx=92,lvy=floorY+34,vib=voiced?(0.5+0.5*Math.sin(tAnim*0.45)):0;
+  ctx.beginPath();ctx.arc(lvx,lvy,12+vib*4,0,Math.PI*2);
+  ctx.fillStyle=voiced?"rgba(201,168,76,"+(0.38+vib*0.45)+")":"rgba(120,110,80,0.18)";ctx.fill();
+  ctx.fillStyle=voiced?GOLD:"#6f6750";ctx.font="11px Georgia";ctx.textAlign="center";ctx.fillText(voiced?"voice on":"voice off",lvx,lvy+30);
+  ctx.strokeStyle="rgba(120,200,255,0.55)";ctx.lineWidth=2;
+  if(nasal){ctx.beginPath();ctx.moveTo(150,palY);ctx.quadraticCurveTo(380,90,500,176);ctx.stroke();}
+  else if(manner==="fricative"||manner==="affricate"){var cxp=st.teeth>0.5?490:452;
+    for(var i=0;i<7;i++){var a=Math.random()*6.28,r=4+Math.random()*10;
+      ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(cxp+Math.cos(a)*r,midY+Math.sin(a)*r-2,1.4,0,6.28);ctx.fillStyle="#bfe3ff";ctx.fill();}ctx.globalAlpha=1;
+  } else if(manner==="stop"){if(t>0.78){for(var pi=0;pi<8;pi++){var pa=(pi/8)*6.28;ctx.beginPath();ctx.arc(520+Math.cos(pa)*(8+Math.random()*8),midY+Math.sin(pa)*(8+Math.random()*8),1.6,0,6.28);ctx.fillStyle="rgba(190,220,255,0.55)";ctx.fill();}}}
+  else{ctx.beginPath();ctx.moveTo(200,midY+10);ctx.quadraticCurveTo(420,midY,520,midY-2);ctx.globalAlpha=0.4;ctx.stroke();ctx.globalAlpha=1;}
+  ctx.fillStyle="#6f6750";ctx.font="11px Georgia";ctx.textAlign="left";ctx.fillText("nose",300,96);ctx.fillText("ridge",405,palY+6);ctx.fillText("tongue",250,floorY+34);
+  ctx.textAlign="right";ctx.fillText("lips",540,midY-gap-6);
+}
+
+// ===================== LESSON SYSTEM =====================
+var currentPath="code";
+var currentLessonIdx=0;
+
+function loadLesson(path,idx){
+  currentPath=path;
+  var lessons=PATHS[path];
+  if(!lessons||!lessons.length)return;
+  currentLessonIdx=Math.max(0,Math.min(idx,lessons.length-1));
+  var lesson=lessons[currentLessonIdx];
+  document.getElementById('lessonStep').textContent=
+    'Path '+{code:'A',gaps:'B',spelling:'C',fluency:'D'}[path]+
+    ' · Lesson '+(currentLessonIdx+1)+' of '+lessons.length;
+  document.getElementById('lessonTitle').textContent=lesson.title;
+  document.getElementById('lessonBody').innerHTML=lesson.body;
+  var tb=document.getElementById('truthBox');
+  if(lesson.truth){tb.style.display='block';tb.innerHTML=lesson.truth;}else{tb.style.display='none';}
+  var ex=document.getElementById('lessonExample');
+  if(lesson.example){
+    ex.style.display='block';
+    document.getElementById('exWord').textContent=lesson.example.word;
+    document.getElementById('exBreakdown').innerHTML=lesson.example.breakdown;
+  } else {ex.style.display='none';}
+  if(lesson.phone)setPhone(lesson.phone,true);
+  if(lesson.cap)document.getElementById('caption').textContent=lesson.cap;
+  document.getElementById('prevLesson').style.opacity=currentLessonIdx===0?'0.3':'1';
+  document.getElementById('nextLesson').textContent=currentLessonIdx===lessons.length-1?'▶ Start again':'Next →';
+  document.getElementById('gapSection').style.display=path==='gaps'?'block':'none';
+}
+
+document.getElementById('prevLesson').addEventListener('click',function(){if(currentLessonIdx>0)loadLesson(currentPath,currentLessonIdx-1);});
+document.getElementById('nextLesson').addEventListener('click',function(){
+  var lessons=PATHS[currentPath];
+  if(currentLessonIdx>=lessons.length-1)loadLesson(currentPath,0);
+  else loadLesson(currentPath,currentLessonIdx+1);
+});
+
+// Path cards
+document.querySelectorAll('.path-card').forEach(function(card){
+  card.addEventListener('click',function(){
+    document.querySelectorAll('.path-card').forEach(function(c){c.classList.remove('active');});
+    card.classList.add('active');currentPath=card.dataset.path;loadLesson(card.dataset.path,0);
+    dcReset();ptReset();
+  });
+});
+
+// Gap grid
+var gapGrid=document.getElementById('gapGrid');
+GAPS.forEach(function(gap,idx){
+  var b=document.createElement('button');b.className='gap-btn';b.setAttribute('aria-pressed','false');
+  b.innerHTML=gap.sym+'<small>'+gap.label+'</small>';
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.gap-btn').forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');
+    setPhone(gap.phone,true);
+    document.getElementById('caption').textContent=gap.note;
+    document.getElementById('lessonTitle').textContent=gap.label+' — the pattern explained';
+    document.getElementById('lessonBody').textContent=gap.note;
+    document.getElementById('truthBox').style.display='none';
+    document.getElementById('lessonExample').style.display='none';
+  });
+  gapGrid.appendChild(b);
+});
+
+// ===================== DECODE GAME =====================
+var dcStreak=0,dcBest=0,dcLock=false;
+function dcReset(){dcStreak=0;dcBest=0;dcLock=false;
+  document.getElementById('dc-streak').textContent='0';document.getElementById('dc-best').textContent='0';
+  setBadge('dc-badge',0);dcNewRound();}
+function dcNewRound(){
+  dcLock=false;
+  var item=DECODE_WORDS[rnd(DECODE_WORDS.length)];
+  setPhone(item.phone,true);
+  document.getElementById('dc-word').textContent=item.w;
+  document.getElementById('dc-feedback').textContent='The mouth is showing you the key sound in "'+item.w+'". Which word matches this pattern?';
+  var opts=item.opts.slice();shuffle(opts);
+  var box=document.getElementById('dc-choices');box.innerHTML='';
+  opts.forEach(function(w){
+    var b=document.createElement('button');b.className='choice';b.textContent=w;
+    b.addEventListener('click',function(){dcGuess(w===item.w,item.w,b,box);});
+    box.appendChild(b);
+  });
+}
+function dcGuess(correct,ans,btn,box){
+  if(dcLock)return;dcLock=true;btn.classList.add(correct?'right':'wrong');
+  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===ans)ch.classList.add('right');});
+  if(correct){dcStreak++;if(dcStreak>dcBest)dcBest=dcStreak;
+    document.getElementById('dc-feedback').textContent='Correct! You decoded it. ✓';setTimeout(dcNewRound,1100);}
+  else{dcStreak=0;document.getElementById('dc-feedback').textContent='The answer was "'+ans+'". Look at the mouth position again.';setTimeout(dcNewRound,2000);}
+  document.getElementById('dc-streak').textContent=dcStreak;document.getElementById('dc-best').textContent=dcBest;setBadge('dc-badge',dcBest);
+}
+
+// ===================== PATTERN GAME =====================
+var ptStreak=0,ptBest=0,ptLock=false;
+function ptReset(){ptStreak=0;ptBest=0;ptLock=false;
+  document.getElementById('pt-streak').textContent='0';document.getElementById('pt-best').textContent='0';
+  setBadge('pt-badge',0);ptNewRound();}
+function ptNewRound(){
+  ptLock=false;
+  var item=PATTERN_WORDS[rnd(PATTERN_WORDS.length)];
+  document.getElementById('pt-word').textContent=item.w;
+  document.getElementById('pt-feedback').textContent='Which spelling rule or pattern explains why "'+item.w+'" is spelled this way?';
+  var opts=item.opts.slice();shuffle(opts);
+  var box=document.getElementById('pt-choices');box.innerHTML='';
+  opts.forEach(function(o){
+    var b=document.createElement('button');b.className='choice';b.textContent=o;
+    b.addEventListener('click',function(){ptGuess(o===item.ans,item,o,b,box);});
+    box.appendChild(b);
+  });
+}
+function ptGuess(correct,item,chosen,btn,box){
+  if(ptLock)return;ptLock=true;btn.classList.add(correct?'right':'wrong');
+  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===item.ans)ch.classList.add('right');});
+  if(correct){ptStreak++;if(ptStreak>ptBest)ptBest=ptStreak;
+    document.getElementById('pt-feedback').textContent='Correct! '+item.ans+'.';setTimeout(ptNewRound,1200);}
+  else{ptStreak=0;document.getElementById('pt-feedback').textContent=item.ans+'.';setTimeout(ptNewRound,2200);}
+  document.getElementById('pt-streak').textContent=ptStreak;document.getElementById('pt-best').textContent=ptBest;setBadge('pt-badge',ptBest);
+}
+
+// GAME TABS
+document.querySelectorAll('.modetab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.modetab').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');var game=btn.dataset.game;
+    document.getElementById('game-decode').style.display=game==='decode'?'block':'none';
+    document.getElementById('game-pattern').style.display=game==='pattern'?'block':'none';
+    if(game==='decode')dcReset();else ptReset();
+  });
+});
+
+function rnd(n){return Math.floor(Math.random()*n);}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=rnd(i+1),tmp=a[i];a[i]=a[j];a[j]=tmp;}}
+function setBadge(id,best){var bd=document.getElementById(id),label,plat=false;
+  if(best>=50){label="Platinum";plat=true;}else if(best>=25)label="Gold";
+  else if(best>=12)label="Silver";else if(best>=5)label="Bronze";else label="Warming up";
+  bd.textContent=label;bd.className="badge"+(plat?" plat":"");}
+
+// INIT
+loadLesson("code",0);
+dcReset();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morphology Mouth — GSU Spellification + Readification</title>
+<meta name="description" content="Free vocabulary and phonics tool from GSU. See how prefixes, suffixes, and Latin roots change pronunciation — and unlock thousands of words at once. Mouth diagrams, stress shifts, morpheme builder. No login.">
+<style>
+:root{--gold:#C9A84C;--dim:#5C502A;--cream:#F5F1E8;--teal:#1A8B7F;
+  --prefix:#285bac;--root:#1a6b3a;--suffix:#7d3f8c;--stress:#c0392b;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:22px 18px 48px}
+.kick{color:var(--gold);letter-spacing:.18em;font-size:.74rem;text-transform:uppercase;margin-bottom:6px}
+h1{font-size:1.85rem;line-height:1.15;margin:.2rem 0 .2rem;color:var(--cream)}
+.sub{color:#cabfa6;font-size:.97rem;margin:0 0 14px;max-width:64ch;line-height:1.55}
+.rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:12px 0 18px}
+
+/* SECTION TABS */
+.sec-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.sec-tab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 18px;border-radius:8px;font-family:Georgia,serif;font-size:.9rem;cursor:pointer;transition:all .15s}
+.sec-tab:hover{border-color:var(--gold);color:var(--cream)}
+.sec-tab.active{font-weight:bold;border-color:var(--gold);background:#111;color:var(--gold)}
+
+/* MORPHEME SELECTOR */
+.morpheme-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.mbtn{background:#111;border:2px solid var(--dim);color:var(--cream);padding:9px 12px;border-radius:10px;font-family:Georgia,serif;font-size:.95rem;cursor:pointer;text-align:center;transition:all .15s;min-width:60px}
+.mbtn small{display:block;font-size:.58rem;color:#7a6a40;margin-top:2px}
+.mbtn:hover{border-color:var(--gold)}
+.mbtn[aria-pressed="true"]{font-weight:bold}
+.mbtn.prefix-btn[aria-pressed="true"]{background:var(--prefix);border-color:var(--prefix);color:#fff}
+.mbtn.root-btn[aria-pressed="true"]{background:var(--root);border-color:var(--root);color:#fff}
+.mbtn.suffix-btn[aria-pressed="true"]{background:var(--suffix);border-color:var(--suffix);color:#fff}
+
+/* STAGE */
+.stage{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-bottom:22px}
+@media(max-width:680px){.stage{grid-template-columns:1fr}}
+.canvaswrap{background:#0a0a0a;border:1px solid var(--dim);border-top:3px solid var(--gold);border-radius:14px;padding:10px}
+canvas{width:100%;height:auto;display:block;border-radius:8px;background:radial-gradient(120% 120% at 60% 40%,#11100c 0%,#050505 70%)}
+.caption{font-size:.82rem;color:#bdb293;margin-top:7px;min-height:2.4em;line-height:1.35}
+
+/* INFO PANEL */
+.info-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:18px}
+.morph-sym{font-size:2.2rem;font-weight:bold;color:var(--gold);line-height:1;margin-bottom:3px}
+.morph-meaning{font-size:.88rem;color:var(--teal);margin-bottom:6px;font-style:italic}
+.morph-type-pill{display:inline-block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 12px;border-radius:999px;border:1px solid currentColor;margin-bottom:10px}
+.morph-words{margin-bottom:10px}
+.morph-word{font-size:1rem;color:var(--cream);margin:.25rem 0;cursor:pointer;padding:4px 8px;border-radius:6px;transition:background .15s}
+.morph-word:hover{background:rgba(201,168,76,.1)}
+.morph-word .prefix{color:var(--prefix);font-weight:bold}
+.morph-word .root{color:var(--root);font-weight:bold}
+.morph-word .suffix{color:var(--suffix);font-weight:bold}
+.morph-word .meaning{font-size:.78rem;color:#7c7458;margin-left:6px}
+.sound-note{background:#0f0f0f;border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:8px;padding:10px 12px;font-size:.85rem;color:#cabfa6;line-height:1.45;margin-bottom:10px}
+.sound-note strong{color:var(--gold)}
+.replay-btn{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 14px;border-radius:8px;font-family:Georgia,serif;cursor:pointer;font-size:.85rem;width:100%}
+.replay-btn:hover{background:var(--gold);color:#000}
+
+/* WORD BUILDER */
+.builder-section{margin-bottom:22px}
+.builder-title{color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.builder-wrap{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:20px}
+.builder-slots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.slot{min-width:80px;padding:12px 10px;border-radius:10px;text-align:center;border:2px dashed var(--dim);font-size:1rem;color:#5C502A;transition:all .2s}
+.slot.prefix-slot{border-color:var(--prefix);color:var(--prefix)}
+.slot.root-slot{border-color:var(--root);color:var(--root);font-weight:bold;font-size:1.1rem}
+.slot.suffix-slot{border-color:var(--suffix);color:var(--suffix)}
+.slot.filled{color:#fff}
+.slot.prefix-slot.filled{background:var(--prefix)}
+.slot.root-slot.filled{background:var(--root)}
+.slot.suffix-slot.filled{background:var(--suffix)}
+.builder-result{font-size:1.6rem;font-weight:bold;color:var(--gold);text-align:center;margin-bottom:8px;min-height:2em;letter-spacing:.04em}
+.builder-def{font-size:.88rem;color:#cabfa6;text-align:center;min-height:2.4em;line-height:1.45}
+.builder-controls{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.build-btn{background:transparent;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;font-family:Georgia,serif;cursor:pointer;font-size:.85rem}
+.build-btn:hover{border-color:var(--gold);color:var(--gold)}
+.build-btn.go{background:var(--gold);color:#000;border-color:var(--gold);font-weight:bold}
+
+/* STRESS SHIFT SECTION */
+.stress-section{margin-bottom:22px}
+.stress-title{color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.stress-pairs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stress-card{background:#0a0a0a;border:1px solid var(--dim);border-radius:12px;padding:16px;cursor:pointer;transition:border-color .15s}
+.stress-card:hover{border-color:var(--gold)}
+.stress-card.active{border-color:var(--gold);background:rgba(201,168,76,.05)}
+.stress-word{font-size:1.3rem;color:var(--cream);font-weight:bold;margin-bottom:4px}
+.stress-word .stressed{color:var(--gold);text-decoration:underline;text-decoration-style:dotted}
+.stress-pos{font-size:.72rem;color:var(--stress);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.stress-note{font-size:.8rem;color:#7c7458;line-height:1.35}
+
+/* GAMES */
+.modetabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.modetab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;font-family:Georgia,serif;font-size:.88rem;cursor:pointer}
+.modetab.active{background:var(--gold);color:#000;font-weight:bold;border-color:var(--gold)}
+.game-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:20px;margin-bottom:22px}
+.score-row{display:flex;gap:16px;align-items:baseline;margin:0 0 10px;flex-wrap:wrap}
+.score-row b{color:var(--gold);font-size:1.2rem}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
+.badge.plat{background:var(--gold);color:#000}
+.feedback{font-size:.92rem;color:#e7dec9;min-height:2.2em;line-height:1.4;margin-bottom:10px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:13px 10px;border-radius:10px;font-family:Georgia,serif;font-size:.95rem;cursor:pointer;text-align:center;transition:all .15s}
+.choice:hover{border-color:var(--gold)}
+.choice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
+.choice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
+.geno{margin-top:22px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:.93rem;color:#d9cfb4}
+.geno b{color:var(--gold)}
+.cross-links{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.cross-links a{display:inline-block;border:1px solid var(--dim);color:#9c916f;padding:7px 14px;border-radius:8px;text-decoration:none;font-size:.83rem}
+.cross-links a:hover{border-color:var(--gold);color:var(--gold)}
+.foot{margin-top:14px;color:#7c7458;font-size:.8rem;line-height:1.5}
+.foot em{color:#a99f7e}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">GSU · Spellification + Readification · Morphology Mouth</div>
+  <h1>Morphology Mouth</h1>
+  <p class="sub">A morpheme is the smallest unit of meaning. When you add a prefix or suffix to a root, the sounds can change — vowels shift, stress moves, consonants soften. Learn one root and you unlock a dozen words at once. Learn the sound changes and nothing surprises you.</p>
+  <div class="rule"></div>
+
+  <!-- SECTION TABS -->
+  <div class="sec-tabs" role="tablist">
+    <button class="sec-tab active" data-sec="prefixes">Prefixes</button>
+    <button class="sec-tab" data-sec="roots">Latin & Greek Roots</button>
+    <button class="sec-tab" data-sec="suffixes">Suffixes & Sound Changes</button>
+    <button class="sec-tab" data-sec="stress">Stress Shifts</button>
+  </div>
+
+  <!-- MORPHEME GRID -->
+  <div class="morpheme-grid" id="morphGrid"></div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <div>
+      <div class="canvaswrap">
+        <canvas id="c" width="560" height="440" role="img" aria-label="Mouth forming a sound changed by morphology"></canvas>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+    </div>
+    <div class="info-panel">
+      <div class="morph-sym" id="morphSym"></div>
+      <div class="morph-meaning" id="morphMeaning"></div>
+      <span class="morph-type-pill" id="morphPill"></span>
+      <div class="morph-words" id="morphWords"></div>
+      <div class="sound-note" id="morphNote"></div>
+      <button class="replay-btn" id="replayBtn">▶ Replay sound</button>
+    </div>
+  </div>
+
+  <!-- WORD BUILDER -->
+  <div class="builder-section" id="builderSection">
+    <div class="builder-title">Morpheme Word Builder — combine parts to build real words</div>
+    <div class="builder-wrap">
+      <div class="builder-slots">
+        <div class="slot prefix-slot" id="slotPrefix">PREFIX<br><small>optional</small></div>
+        <div class="slot root-slot" id="slotRoot">ROOT<br><small>required</small></div>
+        <div class="slot suffix-slot" id="slotSuffix">SUFFIX<br><small>optional</small></div>
+      </div>
+      <div class="builder-result" id="builderResult">—</div>
+      <div class="builder-def" id="builderDef">Select a root, then add a prefix or suffix to build a word.</div>
+      <div class="builder-controls">
+        <button class="build-btn" id="clearPrefix">Clear prefix</button>
+        <button class="build-btn" id="clearSuffix">Clear suffix</button>
+        <button class="build-btn go" id="buildBtn">Build →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRESS SHIFT SECTION -->
+  <div class="stress-section" id="stressSection" style="display:none">
+    <div class="stress-title">Stress Shifts — when adding a suffix moves the accent</div>
+    <div class="stress-pairs" id="stressPairs"></div>
+  </div>
+
+  <!-- GAMES -->
+  <div class="modetabs">
+    <button class="modetab active" data-game="meaning">Morpheme Meaning</button>
+    <button class="modetab" data-game="build">Word Family</button>
+  </div>
+  <div class="game-panel" id="game-meaning">
+    <div class="score-row"><span>Streak <b id="mn-streak">0</b></span><span>Best <b id="mn-best">0</b></span><span class="badge" id="mn-badge">Warming up</span></div>
+    <div class="feedback" id="mn-feedback">What does this morpheme mean?</div>
+    <div style="font-size:2rem;color:var(--gold);font-weight:bold;text-align:center;margin-bottom:14px" id="mn-morph"></div>
+    <div class="choices" id="mn-choices"></div>
+  </div>
+  <div class="game-panel" id="game-build" style="display:none">
+    <div class="score-row"><span>Streak <b id="wf-streak">0</b></span><span>Best <b id="wf-best">0</b></span><span class="badge" id="wf-badge">Warming up</span></div>
+    <div class="feedback" id="wf-feedback">Which word contains the given root or morpheme?</div>
+    <div style="font-size:1.4rem;color:var(--gold);font-weight:bold;text-align:center;margin-bottom:14px" id="wf-root"></div>
+    <div class="choices" id="wf-choices"></div>
+  </div>
+
+  <div class="geno">
+    <b>GENO AI Tutor</b> — a robot you can actually TALK to. Ask: <em>"GENO, what does the prefix 're-' mean?"</em> or <em>"How many words contain the root 'port'?"</em> or <em>"Why does 'sign' have a silent g?"</em> 32 languages, 24/7, free.
+  </div>
+  <div class="cross-links">
+    <a href="/spellification">Spellification Hub</a>
+    <a href="/phoneme-forge">Phoneme Forge</a>
+    <a href="/vowel-valley">Vowel Valley</a>
+    <a href="/syllable-types">Syllable Types</a>
+    <a href="/spelling-patterns">Spelling Patterns Forge</a>
+    <a href="/readification">Readification Hub</a>
+  </div>
+  <p class="foot">Morphology Mouth · Free forever from <em>Global Sovereign University</em>, a 501(c)(3).<br>"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant</p>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// ===================== DATA =====================
+var SECTIONS = {
+  prefixes: [
+    {m:"re-",type:"prefix",meaning:"again / back",color:"#285bac",
+     phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+     cap:"re- = 'again' or 'back'. The /r/ begins every re- word. re·turn, re·build, re·write, re·play.",
+     words:[{w:"re·turn",morph:"<span class='prefix'>re</span>·turn",m:"back again"},{w:"re·build",morph:"<span class='prefix'>re</span>·build",m:"build again"},{w:"re·write",morph:"<span class='prefix'>re</span>·write",m:"write again"},{w:"re·call",morph:"<span class='prefix'>re</span>·call",m:"call back"}],
+     note:"<strong>re-</strong> always = 'again' or 'back'. Pronunciation: usually /riː/ before a vowel (re·open), /rɪ/ before a consonant (re·turn). The vowel reduces slightly but the meaning is constant."},
+    {m:"un-",type:"prefix",meaning:"not / reverse",color:"#285bac",
+     phone:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true},
+     cap:"un- = 'not' or 'reverse action'. un·happy, un·lock, un·do, un·known.",
+     words:[{w:"un·happy",morph:"<span class='prefix'>un</span>·happy",m:"not happy"},{w:"un·lock",morph:"<span class='prefix'>un</span>·lock",m:"reverse locking"},{w:"un·known",morph:"<span class='prefix'>un</span>·known",m:"not known"},{w:"un·fold",morph:"<span class='prefix'>un</span>·fold",m:"reverse folding"}],
+     note:"<strong>un-</strong> = 'not' (adjectives: unhappy, unkind) or 'reverse action' (verbs: unlock, undo, unfold). Always pronounced /ʌn/. No spelling change to the base word."},
+    {m:"pre-",type:"prefix",meaning:"before",color:"#285bac",
+     phone:{s:"p",place:"Bilabial",manner:"stop",voiced:false,lips:"closed",tip:"low",back:"low",nasal:false},
+     cap:"pre- = 'before'. pre·view, pre·fix, pre·school, pre·pare.",
+     words:[{w:"pre·view",morph:"<span class='prefix'>pre</span>·view",m:"view before"},{w:"pre·school",morph:"<span class='prefix'>pre</span>·school",m:"before school"},{w:"pre·pare",morph:"<span class='prefix'>pre</span>·pare",m:"make ready before"},{w:"pre·fix",morph:"<span class='prefix'>pre</span>·fix",m:"fixed before the root"}],
+     note:"<strong>pre-</strong> = 'before'. From Latin prae. The word 'prefix' itself contains pre- meaning 'fixed before'. Pronounced /priː/ (stressed) or /prɪ/ (unstressed)."},
+    {m:"dis-",type:"prefix",meaning:"not / opposite / apart",color:"#285bac",
+     phone:{s:"d",place:"Alveolar",manner:"stop",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:false},
+     cap:"dis- = 'not', 'opposite', or 'apart'. dis·agree, dis·appear, dis·cover, dis·connect.",
+     words:[{w:"dis·agree",morph:"<span class='prefix'>dis</span>·agree",m:"not agree"},{w:"dis·appear",morph:"<span class='prefix'>dis</span>·appear",m:"cease to appear"},{w:"dis·cover",morph:"<span class='prefix'>dis</span>·cover",m:"uncover / find"},{w:"dis·connect",morph:"<span class='prefix'>dis</span>·connect",m:"take apart connection"}],
+     note:"<strong>dis-</strong> from Latin dis- meaning 'apart'. Note: 'discover' seems paradoxical (dis = not, cover = cover → 'uncover'), which is how we get 'find'. The prefix changes the word's semantic direction."},
+    {m:"sub-",type:"prefix",meaning:"under / below",color:"#285bac",
+     phone:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+     cap:"sub- = 'under' or 'below'. sub·way, sub·marine, sub·title, sub·tract.",
+     words:[{w:"sub·way",morph:"<span class='prefix'>sub</span>·way",m:"way under ground"},{w:"sub·marine",morph:"<span class='prefix'>sub</span>·marine",m:"under the sea"},{w:"sub·tract",morph:"<span class='prefix'>sub</span>·tract",m:"pull from under"},{w:"sub·title",morph:"<span class='prefix'>sub</span>·title",m:"title below the main"}],
+     note:"<strong>sub-</strong> from Latin sub 'under'. Note the assimilation: sub- becomes suf- (suffer), sug- (suggest), sup- (support), sus- (suspect) before certain consonants — the prefix adapts its final consonant to match the root's first consonant."},
+    {m:"trans-",type:"prefix",meaning:"across / beyond / through",color:"#285bac",
+     phone:{s:"t",place:"Alveolar",manner:"stop",voiced:false,lips:"open",tip:"alveolar",back:"low",nasal:false},
+     cap:"trans- = 'across', 'beyond', 'through'. trans·port, trans·late, trans·form, trans·plant.",
+     words:[{w:"trans·port",morph:"<span class='prefix'>trans</span>·port",m:"carry across"},{w:"trans·late",morph:"<span class='prefix'>trans</span>·late",m:"carry across languages"},{w:"trans·form",morph:"<span class='prefix'>trans</span>·form",m:"change across forms"},{w:"trans·plant",morph:"<span class='prefix'>trans</span>·plant",m:"plant across (move)"}],
+     note:"<strong>trans-</strong> from Latin trans 'across'. Notice that 'translate' = 'carry across (languages)' and 'transport' = 'carry across (space)' — both use the root 'lat/port' meaning 'carry'."}
+  ],
+  roots: [
+    {m:"port",type:"root",meaning:"carry",color:"#1a6b3a",
+     phone:{s:"p",place:"Bilabial",manner:"stop",voiced:false,lips:"closed",tip:"low",back:"low",nasal:false},
+     cap:"port = 'carry' (Latin portare). Every word with this root involves carrying or moving something.",
+     words:[{w:"trans·port",morph:"trans·<span class='root'>port</span>",m:"carry across"},{w:"im·port",morph:"im·<span class='root'>port</span>",m:"carry in"},{w:"ex·port",morph:"ex·<span class='root'>port</span>",m:"carry out"},{w:"port·able",morph:"<span class='root'>port</span>·able",m:"able to be carried"}],
+     note:"<strong>port</strong> (Latin: portare, to carry). transport, import, export, portable, porter, portfolio, report, deport, support — one root, a dozen words. The final /t/ in 'port' is always clearly audible."},
+    {m:"scrib/script",type:"root",meaning:"write",color:"#1a6b3a",
+     phone:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+     cap:"scrib/script = 'write' (Latin scribere). When it comes before a vowel suffix, 'scrib' is used; before a consonant, 'script'.",
+     words:[{w:"de·scribe",morph:"de·<span class='root'>scribe</span>",m:"write down about"},{w:"pre·scription",morph:"pre·<span class='root'>script</span>·ion",m:"written before (doctor's note)"},{w:"manu·script",morph:"manu·<span class='root'>script</span>",m:"written by hand"},{w:"sub·scribe",morph:"sub·<span class='root'>scribe</span>",m:"write under (sign below)"}],
+     note:"<strong>scrib/script</strong> (Latin: scribere, to write). Sound change: 'scrib' before vowels (describe, inscribe), 'script' before consonants (prescription, transcript). This allomorphic variation — same root, two forms — is a key morphology concept."},
+    {m:"aud",type:"root",meaning:"hear",color:"#1a6b3a",
+     phone:{s:"ah",place:"Low back vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
+     cap:"aud = 'hear' (Latin audire). The /ɔː/ vowel in 'aud' is always clearly audible — fitting for a root about hearing.",
+     words:[{w:"aud·io",morph:"<span class='root'>aud</span>·io",m:"related to sound/hearing"},{w:"aud·ience",morph:"<span class='root'>aud</span>·ience",m:"those who hear"},{w:"aud·itorium",morph:"<span class='root'>aud</span>·itorium",m:"place for hearing"},{w:"in·aud·ible",morph:"in·<span class='root'>aud</span>·ible",m:"not able to be heard"}],
+     note:"<strong>aud</strong> (Latin: audire, to hear). audio, audience, auditorium, inaudible, audition (literally 'a hearing'), audit (originally 'a hearing of accounts'). The root makes the meaning visible in every word."},
+    {m:"vid/vis",type:"root",meaning:"see",color:"#1a6b3a",
+     phone:{s:"v",place:"Labiodental",manner:"fricative",voiced:true,lips:"teeth",tip:"low",back:"low",nasal:false},
+     cap:"vid/vis = 'see' (Latin videre). 'vid' before vowel suffixes; 'vis' before consonant suffixes.",
+     words:[{w:"vis·ion",morph:"<span class='root'>vis</span>·ion",m:"the act of seeing"},{w:"vis·ible",morph:"<span class='root'>vis</span>·ible",m:"able to be seen"},{w:"pro·vide",morph:"pro·<span class='root'>vide</span>",m:"see ahead / foresee"},{w:"tele·vision",morph:"tele·<span class='root'>vis</span>·ion",m:"seeing from afar"}],
+     note:"<strong>vid/vis</strong> (Latin: videre, to see). vision, visible, visit (to go to see), video (I see), evidence (seen clearly), supervise (to see over). The allomorphs vid/vis are the same root in different grammatical environments."},
+    {m:"dict",type:"root",meaning:"say / speak",color:"#1a6b3a",
+     phone:{s:"d",place:"Alveolar",manner:"stop",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:false},
+     cap:"dict = 'say' or 'speak' (Latin dicere). Every word with this root involves speaking, saying, or declaring.",
+     words:[{w:"dict·ate",morph:"<span class='root'>dict</span>·ate",m:"speak (so another writes)"},{w:"pre·dict",morph:"pre·<span class='root'>dict</span>",m:"say before (foretell)"},{w:"contra·dict",morph:"contra·<span class='root'>dict</span>",m:"say against"},{w:"dict·ionary",morph:"<span class='root'>dict</span>·ionary",m:"book of words said/defined"}],
+     note:"<strong>dict</strong> (Latin: dicere, to say). dictate, predict, contradict, dictionary, verdict (true saying), edict (a saying out), dedicate (say forth). The /k/ in dict is always clearly pronounced."},
+    {m:"sign",type:"root",meaning:"mark / sign",color:"#1a6b3a",
+     phone:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
+     cap:"sign = 'mark' (Latin signum). Morphology explains the silent g: 'signal' sounds the g, proving it belongs.",
+     words:[{w:"sign",morph:"<span class='root'>sign</span>",m:"a mark (silent g)"},{w:"sig·nal",morph:"<span class='root'>sig</span>·nal",m:"a mark (g sounds here!)"},{w:"de·sign",morph:"de·<span class='root'>sign</span>",m:"mark out / plan"},{w:"sig·na·ture",morph:"<span class='root'>sig</span>·na·ture",m:"personal mark"}],
+     note:"<strong>sign</strong> (Latin: signum, mark). The silent g in 'sign' is explained by 'signal' — the g surfaces when a vowel follows it. Morphology is the key to silent letters: 'sign' keeps the g because 'signal' needs it. Same with 'bomb'→'bombard', 'damn'→'damnation'."}
+  ],
+  suffixes: [
+    {m:"-tion/-sion",type:"suffix",meaning:"act of / state of / result of",color:"#7d3f8c",
+     phone:{s:"sh",place:"Post-alveolar",manner:"fricative",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
+     cap:"-tion/-sion always sounds like /ʃən/ — the 't' or 's' + i + on produces the /sh/ sound through yod-coalescence.",
+     words:[{w:"na·tion",morph:"na·<span class='suffix'>tion</span>",m:"state of being born (natus)"},{w:"vi·sion",morph:"vi·<span class='suffix'>sion</span>",m:"act of seeing"},{w:"ac·tion",morph:"ac·<span class='suffix'>tion</span>",m:"act of acting"},{w:"ten·sion",morph:"ten·<span class='suffix'>sion</span>",m:"state of stretching"}],
+     note:"<strong>-tion/-sion = /ʃən/</strong>. The letters 't' + 'i' before a vowel → /ʃ/ through a process called yod-coalescence. This is why 'nation' is NOT pronounced /næt.i.ɒn/ — the 'ti' merges into /ʃ/. Also why -tion adds a syllable: ac·tion = 2 syllables."},
+    {m:"-ous",type:"suffix",meaning:"having the quality of / full of",color:"#7d3f8c",
+     phone:{s:"uh",place:"Mid central vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"mid",nasal:false},
+     cap:"-ous = /əs/ — the 'ou' reduces to a schwa. famous = /feɪ.məs/, not /feɪ.mʌs/.",
+     words:[{w:"fa·mous",morph:"fa·<span class='suffix'>mous</span>",m:"having fame"},{w:"dan·ger·ous",morph:"dan·ger·<span class='suffix'>ous</span>",m:"full of danger"},{w:"glo·ri·ous",morph:"glo·ri·<span class='suffix'>ous</span>",m:"full of glory"},{w:"har·mo·ni·ous",morph:"har·mo·ni·<span class='suffix'>ous</span>",m:"having harmony"}],
+     note:"<strong>-ous = /əs/</strong> (schwa + s). The 'ou' reduces to schwa in this suffix: famous /feɪ.məs/, dangerous /deɪn.dʒər.əs/. Adding -ous to a noun makes an adjective. Sometimes spelling changes: glory → glori·ous; fury → furi·ous (y → i before -ous)."},
+    {m:"-ity",type:"suffix",meaning:"state of being / quality of",color:"#7d3f8c",
+     phone:{s:"ĭ",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
+     cap:"-ity shifts stress to the syllable BEFORE it and often changes the vowel sound of the base word.",
+     words:[{w:"hu·man·i·ty",morph:"hu·man·<span class='suffix'>ity</span>",m:"state of being human"},{w:"e·lec·tri·ci·ty",morph:"e·lec·tric·<span class='suffix'>ity</span>",m:"state of being electric"},{w:"ac·tiv·i·ty",morph:"ac·tiv·<span class='suffix'>ity</span>",m:"state of being active"},{w:"cre·a·tiv·i·ty",morph:"cre·a·tiv·<span class='suffix'>ity</span>",m:"quality of being creative"}],
+     note:"<strong>-ity</strong> triggers a STRESS SHIFT to the syllable before it: 'active' → 'acTIVity'; 'electric' → 'elecTRICity'. Also triggers vowel changes: 'divine' /dɪˈvaɪn/ → 'divinity' /dɪˈvɪnɪti/ (the long i becomes short i). This is one of the most important suffixes for vocabulary acquisition."},
+    {m:"-fy/-ify",type:"suffix",meaning:"make / cause to be",color:"#7d3f8c",
+     phone:{s:"f",place:"Labiodental",manner:"fricative",voiced:false,lips:"teeth",tip:"low",back:"low",nasal:false},
+     cap:"-fy/-ify = 'make' or 'cause to become'. The /f/ begins every word ending in -fy.",
+     words:[{w:"sim·pli·fy",morph:"sim·pli·<span class='suffix'>fy</span>",m:"make simple"},{w:"clar·i·fy",morph:"clar·i·<span class='suffix'>fy</span>",m:"make clear"},{w:"mag·ni·fy",morph:"mag·ni·<span class='suffix'>fy</span>",m:"make large"},{w:"i·den·ti·fy",morph:"i·den·ti·<span class='suffix'>fy</span>",m:"make known / name"}],
+     note:"<strong>-fy/-ify</strong> (Latin: facere, to make). simplify, clarify, magnify, identify, justify, verify, modify. The -fy suffix converts a root into a verb meaning 'to make [adjective]'. Not to be confused with -ify which is the same morpheme with a linking vowel."}
+  ],
+  stress: []
+};
+
+var STRESS_PAIRS = [
+  {root:"permit",noun:{w:"PER·mit",stress:"PER",pos:"noun",note:"'A PERmit' — stress on first syllable"},verb:{w:"per·MIT",stress:"MIT",pos:"verb",note:"'to perMIT' — stress shifts to second syllable"}},
+  {root:"present",noun:{w:"PRE·sent",stress:"PRE",pos:"noun",note:"'A PRESent' (gift) — first syllable"},verb:{w:"pre·SENT",stress:"SENT",pos:"verb",note:"'to preSENT' — stress shifts to second syllable"}},
+  {root:"electric",derived:{w:"e·LEC·tric",stress:"LEC",pos:"adjective",note:"eLECtric — stress on second syllable"},ity:{w:"e·lec·TRI·ci·ty",stress:"TRI",pos:"noun -ity",note:"-ity shifts stress to TRI"}},
+  {root:"photograph",base:{w:"PHO·to·graph",stress:"PHO",pos:"noun",note:"PHOtograph — first syllable"},er:{w:"pho·TOG·ra·pher",stress:"TOG",pos:"noun -er",note:"-er shifts stress to TOG"}}
+];
+
+// Game data
+var GAME_MORPHEMES = [
+  {m:"re-",meaning:"again / back",distractors:["before","under","not","with"]},
+  {m:"un-",meaning:"not / opposite",distractors:["again","before","across","out"]},
+  {m:"pre-",meaning:"before",distractors:["again","not","under","after"]},
+  {m:"trans-",meaning:"across / through",distractors:["before","not","under","against"]},
+  {m:"port",meaning:"carry",distractors:["write","see","hear","say"]},
+  {m:"aud",meaning:"hear",distractors:["see","carry","say","write"]},
+  {m:"dict",meaning:"say / speak",distractors:["hear","see","carry","write"]},
+  {m:"vis",meaning:"see",distractors:["hear","carry","say","write"]},
+  {m:"sign",meaning:"mark / sign",distractors:["carry","hear","say","see"]},
+  {m:"-tion",meaning:"act of / state of",distractors:["full of","make","one who","able to"]},
+  {m:"-ous",meaning:"full of / having quality of",distractors:["act of","make","one who","state of being"]},
+  {m:"-ify",meaning:"make / cause to be",distractors:["full of","act of","state of","one who"]}
+];
+
+var WORD_FAMILY_GAME = [
+  {root:"port (carry)",words:["transport","import","portable","portrait"],wrong:["predict","visible","audio","signal"]},
+  {root:"aud (hear)",words:["audience","auditorium","audition","audio"],wrong:["transport","vision","describe","signal"]},
+  {root:"vis/vid (see)",words:["vision","visible","video","evidence"],wrong:["transport","audience","signal","describe"]},
+  {root:"dict (say)",words:["dictate","predict","dictionary","verdict"],wrong:["transport","vision","audience","signal"]},
+  {root:"sign (mark)",words:["signal","signature","design","insignia"],wrong:["transport","vision","audience","dictate"]},
+  {root:"scrib (write)",words:["describe","prescribe","subscribe","manuscript"],wrong:["transport","vision","dictate","signal"]}
+];
+
+// ===================== CANVAS ENGINE =====================
+var cv=document.getElementById('c'),ctx=cv.getContext('2d');
+var W=cv.width,H=cv.height;
+var fromS={},toS={},t=1,raf=null,manner="stop",voiced=false,nasal=false,tAnim=0;
+function snap(p){return{lipGap:p.lips==="closed"?0:p.lips==="rounded"?10:p.lips==="spread"?22:p.lips==="teeth"?6:18,
+  lipRound:p.lips==="rounded"?1:p.lips==="spread"?-1:0,teeth:p.lips==="teeth"?1:0,
+  tipY:p.tip==="alveolar"?1:p.tip==="dental"?1:p.tip==="retro"?0.55:0,
+  tipX:p.tip==="dental"?1:p.tip==="retro"?-1:0,
+  backY:p.back==="velar"?1:p.back==="high"?0.85:p.back==="mid"?0.42:0,
+  jaw:(p.lips==="open"||p.manner==="vowel")?(p.back==="low"?1:0.55):0.2};}
+function lerp(a,b,k){return a+(b-a)*k;}
+function blend(){var o={};for(var k in fromS){o[k]=lerp(fromS[k],toS[k],ease(t));}return o;}
+function ease(x){return x<0?0:x>1?1:(1-Math.cos(Math.PI*x))/2;}
+function setPhone(p,animate){
+  fromS=blend();toS=snap(p);manner=p.manner;voiced=p.voiced;nasal=p.nasal||false;
+  t=animate?0:1;tAnim=0;
+  if(animate){if(raf)cancelAnimationFrame(raf);loop();}else{draw(blend());}
+}
+function loop(){t+=0.04;tAnim+=1;if(t>1)t=1;draw(blend());
+  if(t<1||manner==="fricative"||manner==="nasal"||voiced){if(t<1||tAnim<220)raf=requestAnimationFrame(loop);}}
+function draw(st){
+  ctx.clearRect(0,0,W,H);
+  var GOLD="#C9A84C",DIM="#5C502A",CREAM="#F5F1E8",TEAL="#2a7d77",pink="#caa6a0";
+  var midY=H*0.5;
+  ctx.lineWidth=2;ctx.strokeStyle="#2a2722";ctx.fillStyle="#0d0c0a";
+  ctx.beginPath();ctx.moveTo(60,40);ctx.bezierCurveTo(330,20,470,70,486,170);ctx.lineTo(516,196);ctx.lineTo(486,212);
+  ctx.bezierCurveTo(486,212,500,250,470,300);ctx.bezierCurveTo(500,360,470,400,420,410);
+  ctx.bezierCurveTo(300,440,110,430,60,380);ctx.lineTo(60,40);ctx.closePath();ctx.stroke();
+  ctx.strokeStyle=DIM;ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(300,120);ctx.bezierCurveTo(380,108,440,120,470,150);ctx.stroke();
+  var palY=midY-44;
+  ctx.strokeStyle="#7d6f3f";ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(150,palY+14);ctx.bezierCurveTo(280,palY-6,360,palY-2,430,palY+18);ctx.stroke();
+  ctx.beginPath();ctx.arc(432,palY+24,7,Math.PI*1.1,Math.PI*2.1);ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.stroke();
+  ctx.strokeStyle=nasal?TEAL:"#7d6f3f";ctx.lineWidth=3;
+  ctx.beginPath();
+  if(nasal){ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY-8,138,palY-26);}
+  else{ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY+30,168,palY+44);}
+  ctx.stroke();
+  ctx.fillStyle=CREAM;ctx.fillRect(452,palY+28,10,18);
+  var jaw=st.jaw*30,floorY=midY+54+jaw;
+  var rootX=120,rootY=floorY-6,backX=250,backY=floorY-18-st.backY*64,bladeX=370,bladeY=floorY-14-(st.backY*30);
+  var tipX=452+st.tipX*8,tipY=floorY-10-st.tipY*52;
+  ctx.beginPath();ctx.moveTo(rootX,floorY+20);ctx.lineTo(rootX,rootY);
+  ctx.quadraticCurveTo(190,backY+6,backX,backY);ctx.quadraticCurveTo(315,bladeY-6,bladeX,bladeY);
+  ctx.quadraticCurveTo(425,tipY-4,tipX,tipY);ctx.lineTo(tipX,floorY+20);ctx.closePath();
+  var tg=ctx.createLinearGradient(0,floorY-60,0,floorY+20);tg.addColorStop(0,"#c98b86");tg.addColorStop(1,"#7d4f4c");
+  ctx.fillStyle=tg;ctx.strokeStyle="#5a3a37";ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+  ctx.fillStyle=CREAM;ctx.fillRect(452,floorY-2,10,16);
+  var lx=500,gap=st.lipGap,round=st.lipRound;
+  ctx.strokeStyle=pink;ctx.lineWidth=st.teeth>0.5?4:6;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(470,palY+22);ctx.quadraticCurveTo(lx+round*8,midY-gap,lx+14+round*6,midY-gap*0.5);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(456,floorY+6);ctx.quadraticCurveTo(lx+round*8,midY+gap,lx+14+round*6,midY+gap*0.5);ctx.stroke();
+  if(st.teeth>0.5){ctx.fillStyle=CREAM;ctx.fillRect(486,midY-10,9,15);}
+  var lvx=92,lvy=floorY+34,vib=voiced?(0.5+0.5*Math.sin(tAnim*0.45)):0;
+  ctx.beginPath();ctx.arc(lvx,lvy,12+vib*4,0,Math.PI*2);
+  ctx.fillStyle=voiced?"rgba(201,168,76,"+(0.38+vib*0.45)+")":"rgba(120,110,80,0.18)";ctx.fill();
+  ctx.fillStyle=voiced?GOLD:"#6f6750";ctx.font="11px Georgia";ctx.textAlign="center";ctx.fillText(voiced?"voice on":"voice off",lvx,lvy+30);
+  ctx.strokeStyle="rgba(120,200,255,0.55)";ctx.lineWidth=2;
+  if(nasal){ctx.beginPath();ctx.moveTo(150,palY);ctx.quadraticCurveTo(380,90,500,176);ctx.stroke();}
+  else if(manner==="fricative"||manner==="affricate"){var cxp=st.teeth>0.5?490:452;
+    for(var i=0;i<7;i++){var a=Math.random()*6.28,r=4+Math.random()*10;
+      ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(cxp+Math.cos(a)*r,midY+Math.sin(a)*r-2,1.4,0,6.28);ctx.fillStyle="#bfe3ff";ctx.fill();}ctx.globalAlpha=1;
+  } else if(manner==="stop"){if(t>0.78){for(var pi=0;pi<8;pi++){var pa=(pi/8)*6.28;ctx.beginPath();ctx.arc(520+Math.cos(pa)*(8+Math.random()*8),midY+Math.sin(pa)*(8+Math.random()*8),1.6,0,6.28);ctx.fillStyle="rgba(190,220,255,0.55)";ctx.fill();}}}
+  else{ctx.beginPath();ctx.moveTo(200,midY+10);ctx.quadraticCurveTo(420,midY,520,midY-2);ctx.globalAlpha=0.4;ctx.stroke();ctx.globalAlpha=1;}
+  ctx.fillStyle="#6f6750";ctx.font="11px Georgia";ctx.textAlign="left";ctx.fillText("nose",300,96);ctx.fillText("ridge",405,palY+6);ctx.fillText("tongue",250,floorY+34);
+  ctx.textAlign="right";ctx.fillText("lips",540,midY-gap-6);
+}
+
+// ===================== UI =====================
+var currentSec="prefixes";
+var selectedPrefix=null,selectedRoot=null,selectedSuffix=null;
+
+// Builder combinations
+var COMBOS = {
+  "re-+port":   {word:"report",def:"carry back — bring news"},
+  "re-+scrib":  {word:"rewrite/re-describe",def:"write again"},
+  "trans-+port":{word:"transport",def:"carry across"},
+  "im-+port":   {word:"(imagine) import",def:"carry in"},
+  "ex-+port":   {word:"(imagine) export",def:"carry out"},
+  "pre-+dict":  {word:"predict",def:"say before — foretell"},
+  "contra-+dict":{word:"contradict",def:"say against"},
+  "dis-+sign":  {word:"design",def:"mark apart — plan out"},
+  "port+-able": {word:"portable",def:"able to be carried"},
+  "port+-ation":{word:"transportation",def:"act of carrying across"},
+  "sign+-al":   {word:"signal",def:"a mark — and the g is now heard!"},
+  "sign+-ature":{word:"signature",def:"personal mark"},
+  "aud+-ition": {word:"audition",def:"a hearing"},
+  "vis+-ion":   {word:"vision",def:"act of seeing"},
+  "dict+-ate":  {word:"dictate",def:"speak so another writes"},
+  "dict+-ion":  {word:"diction",def:"manner of speaking"},
+  "scrib/script+-tion":{word:"prescription",def:"written before (by doctor)"}
+};
+
+function buildGrid(sec){
+  var items=SECTIONS[sec]||[];
+  var grid=document.getElementById('morphGrid');grid.innerHTML='';
+  var typeClass={prefix:"prefix-btn",root:"root-btn",suffix:"suffix-btn"}[items[0]&&items[0].type]||"prefix-btn";
+  items.forEach(function(item,idx){
+    var b=document.createElement('button');
+    b.className='mbtn '+typeClass;b.setAttribute('aria-pressed',idx===0?'true':'false');
+    b.innerHTML=item.m+'<small>'+item.meaning+'</small>';
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.mbtn').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');loadMorph(item);
+    });
+    item._btn=b;grid.appendChild(b);
+  });
+  if(items.length>0)loadMorph(items[0]);
+}
+
+function loadMorph(item){
+  setPhone(item.phone,true);
+  document.getElementById('caption').textContent=item.cap;
+  document.getElementById('morphSym').textContent=item.m;
+  document.getElementById('morphMeaning').textContent='"'+item.meaning+'"';
+  var pill=document.getElementById('morphPill');
+  pill.textContent={prefix:"Prefix",root:"Latin/Greek Root",suffix:"Suffix"}[item.type]||item.type;
+  var cols={prefix:"#285bac",root:"#1a6b3a",suffix:"#7d3f8c"};
+  pill.style.color=cols[item.type]||'#C9A84C';pill.style.borderColor=cols[item.type]||'#C9A84C';
+  var wordsEl=document.getElementById('morphWords');wordsEl.innerHTML='';
+  item.words.forEach(function(w){
+    var div=document.createElement('div');div.className='morph-word';
+    div.innerHTML=w.morph+'<span class="meaning">=&nbsp;'+w.m+'</span>';
+    div.addEventListener('click',function(){setPhone(item.phone,true);});
+    wordsEl.appendChild(div);
+  });
+  document.getElementById('morphNote').innerHTML=item.note;
+  // Update builder slot
+  if(item.type==='prefix'){selectedPrefix=item.m;document.getElementById('slotPrefix').textContent=item.m;document.getElementById('slotPrefix').className='slot prefix-slot filled';}
+  else if(item.type==='root'){selectedRoot=item.m;document.getElementById('slotRoot').textContent=item.m;document.getElementById('slotRoot').className='slot root-slot filled';}
+  else if(item.type==='suffix'){selectedSuffix=item.m;document.getElementById('slotSuffix').textContent=item.m;document.getElementById('slotSuffix').className='slot suffix-slot filled';}
+  updateBuilder();
+}
+
+function updateBuilder(){
+  var parts=[];
+  if(selectedPrefix)parts.push(selectedPrefix);
+  if(selectedRoot)parts.push(selectedRoot);
+  if(selectedSuffix)parts.push(selectedSuffix);
+  var key=(selectedPrefix||'')+'+'+(selectedRoot||'')+(selectedSuffix?'+'+selectedSuffix:'');
+  var combo=COMBOS[key]||COMBOS[(selectedPrefix||'')+'+'+(selectedRoot||'')]||COMBOS[(selectedRoot||'')+'+'+(selectedSuffix||'')];
+  if(combo){
+    document.getElementById('builderResult').textContent=combo.word;
+    document.getElementById('builderDef').textContent=combo.def;
+  } else if(parts.length>=2){
+    document.getElementById('builderResult').textContent=parts.join('');
+    document.getElementById('builderDef').textContent='A real or constructed word — check the morpheme meanings: '+parts.map(function(p){var found=null;Object.values(SECTIONS).forEach(function(s){s.forEach(function(i){if(i.m===p)found=i.meaning;});});return p+' ('+( found||'?')+')';}).join(' + ');
+  } else {
+    document.getElementById('builderResult').textContent=parts.join('')||'—';
+    document.getElementById('builderDef').textContent=parts.length===0?'Select a root, then add a prefix or suffix.':'Select at least one more morpheme.';
+  }
+}
+
+document.getElementById('clearPrefix').addEventListener('click',function(){selectedPrefix=null;document.getElementById('slotPrefix').textContent='PREFIX\noptional';document.getElementById('slotPrefix').className='slot prefix-slot';updateBuilder();});
+document.getElementById('clearSuffix').addEventListener('click',function(){selectedSuffix=null;document.getElementById('slotSuffix').textContent='SUFFIX\noptional';document.getElementById('slotSuffix').className='slot suffix-slot';updateBuilder();});
+document.getElementById('buildBtn').addEventListener('click',updateBuilder);
+document.getElementById('replayBtn').addEventListener('click',function(){var items=SECTIONS[currentSec];if(items&&items[0])setPhone(items[0].phone,true);});
+
+// Stress pairs
+function buildStressPairs(){
+  var container=document.getElementById('stressPairs');container.innerHTML='';
+  STRESS_PAIRS.forEach(function(pair){
+    var forms=pair.noun?[pair.noun,pair.verb]:pair.base?[pair.base,pair.er]:[pair.derived,pair.ity];
+    forms.forEach(function(form){
+      if(!form)return;
+      var card=document.createElement('div');card.className='stress-card';
+      card.innerHTML='<div class="stress-word">'+form.w.replace(form.stress,'<span class="stressed">'+form.stress+'</span>')+'</div>'+
+        '<div class="stress-pos">'+form.pos+'</div><div class="stress-note">'+form.note+'</div>';
+      container.appendChild(card);
+    });
+  });
+}
+
+// Section tabs
+document.querySelectorAll('.sec-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.sec-tab').forEach(function(t){t.classList.remove('active');});
+    tab.classList.add('active');currentSec=tab.dataset.sec;
+    document.getElementById('builderSection').style.display=currentSec==='stress'?'none':'block';
+    document.getElementById('stressSection').style.display=currentSec==='stress'?'block':'none';
+    if(currentSec==='stress'){buildStressPairs();}
+    else{buildGrid(currentSec);}
+    mnReset();wfReset();
+  });
+});
+
+// ===================== GAMES =====================
+var mnStreak=0,mnBest=0,mnLock=false;
+function mnReset(){mnStreak=0;mnBest=0;mnLock=false;
+  document.getElementById('mn-streak').textContent='0';document.getElementById('mn-best').textContent='0';
+  setBadge('mn-badge',0);mnNewRound();}
+function mnNewRound(){
+  mnLock=false;
+  var item=GAME_MORPHEMES[rnd(GAME_MORPHEMES.length)];
+  document.getElementById('mn-morph').textContent=item.m;
+  document.getElementById('mn-feedback').textContent='What does "'+item.m+'" mean?';
+  var opts=[item.meaning].concat(item.distractors.slice(0,3));shuffle(opts);
+  var box=document.getElementById('mn-choices');box.innerHTML='';
+  opts.forEach(function(o){
+    var b=document.createElement('button');b.className='choice';b.textContent=o;
+    b.addEventListener('click',function(){mnGuess(o===item.meaning,item.meaning,b,box);});
+    box.appendChild(b);
+  });
+}
+function mnGuess(correct,ans,btn,box){
+  if(mnLock)return;mnLock=true;btn.classList.add(correct?'right':'wrong');
+  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===ans)ch.classList.add('right');});
+  if(correct){mnStreak++;if(mnStreak>mnBest)mnBest=mnStreak;
+    document.getElementById('mn-feedback').textContent='Correct! "'+document.getElementById('mn-morph').textContent+'" = '+ans+'.';setTimeout(mnNewRound,1100);}
+  else{mnStreak=0;document.getElementById('mn-feedback').textContent='"'+document.getElementById('mn-morph').textContent+'" = '+ans+'.';setTimeout(mnNewRound,2000);}
+  document.getElementById('mn-streak').textContent=mnStreak;document.getElementById('mn-best').textContent=mnBest;setBadge('mn-badge',mnBest);
+}
+
+var wfStreak=0,wfBest=0,wfLock=false;
+function wfReset(){wfStreak=0;wfBest=0;wfLock=false;
+  document.getElementById('wf-streak').textContent='0';document.getElementById('wf-best').textContent='0';
+  setBadge('wf-badge',0);wfNewRound();}
+function wfNewRound(){
+  wfLock=false;
+  var family=WORD_FAMILY_GAME[rnd(WORD_FAMILY_GAME.length)];
+  var ans=family.words[rnd(family.words.length)];
+  document.getElementById('wf-root').textContent='Root: '+family.root;
+  document.getElementById('wf-feedback').textContent='Which word contains the root "'+family.root.split(' ')[0]+'"?';
+  var opts=[ans].concat(family.wrong.slice(0,3));shuffle(opts);
+  var box=document.getElementById('wf-choices');box.innerHTML='';
+  opts.forEach(function(w){
+    var b=document.createElement('button');b.className='choice';b.textContent=w;
+    b.addEventListener('click',function(){wfGuess(w===ans,ans,b,box);});
+    box.appendChild(b);
+  });
+}
+function wfGuess(correct,ans,btn,box){
+  if(wfLock)return;wfLock=true;btn.classList.add(correct?'right':'wrong');
+  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===ans)ch.classList.add('right');});
+  if(correct){wfStreak++;if(wfStreak>wfBest)wfBest=wfStreak;
+    document.getElementById('wf-feedback').textContent='Correct! "'+ans+'" contains the root.';setTimeout(wfNewRound,1100);}
+  else{wfStreak=0;document.getElementById('wf-feedback').textContent='"'+ans+'" contains the root. Look for the shared letters.';setTimeout(wfNewRound,2000);}
+  document.getElementById('wf-streak').textContent=wfStreak;document.getElementById('wf-best').textContent=wfBest;setBadge('wf-badge',wfBest);
+}
+
+document.querySelectorAll('.modetab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.modetab').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');var game=btn.dataset.game;
+    document.getElementById('game-meaning').style.display=game==='meaning'?'block':'none';
+    document.getElementById('game-build').style.display=game==='build'?'block':'none';
+    if(game==='meaning')mnReset();else wfReset();
+  });
+});
+
+function rnd(n){return Math.floor(Math.random()*n);}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=rnd(i+1),tmp=a[i];a[i]=a[j];a[j]=tmp;}}
+function setBadge(id,best){var bd=document.getElementById(id),label,plat=false;
+  if(best>=50){label="Platinum";plat=true;}else if(best>=25)label="Gold";
+  else if(best>=12)label="Silver";else if(best>=5)label="Bronze";else label="Warming up";
+  bd.textContent=label;bd.className="badge"+(plat?" plat":"");}
+
+// INIT
+buildGrid("prefixes");
+mnReset();
+
+})();
+</script>
+</body>
+</html>
