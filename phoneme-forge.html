@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Phoneme Forge — GSU Spellification + Readification</title>
+<meta name="description" content="Free interactive phonics tool from Global Sovereign University. Forge the link between sound and spelling — both directions. See the mouth, name the letters. See the letters, watch the mouth. Free, no login, any device.">
+<style>
+:root{--black:#000;--gold:#C9A84C;--dim:#5C502A;--cream:#F5F1E8;--teal:#1A8B7F;--navy:#1B2A4A;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:22px 18px 40px}
+.kick{color:var(--gold);letter-spacing:.18em;font-size:.74rem;text-transform:uppercase;margin-bottom:6px}
+h1{font-size:1.85rem;line-height:1.15;margin:.2rem 0 .2rem;color:var(--cream)}
+.sub{color:#cabfa6;font-size:.97rem;margin:0 0 14px;max-width:64ch;line-height:1.55}
+.rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:12px 0 16px}
+
+/* MODE TABS */
+.modetabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.modetab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:9px 18px;border-radius:8px;font-family:Georgia,serif;font-size:.9rem;cursor:pointer;transition:all .15s}
+.modetab:hover{border-color:var(--gold);color:var(--cream)}
+.modetab.active{background:var(--gold);color:#000;font-weight:bold;border-color:var(--gold)}
+.mode-label{font-size:.7rem;display:block;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px;opacity:.7}
+
+/* STAGE */
+.stage{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start}
+@media(max-width:720px){.stage{grid-template-columns:1fr}}
+.canvaswrap{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:10px;position:relative}
+canvas{width:100%;height:auto;display:block;border-radius:8px;background:radial-gradient(120% 120% at 60% 40%,#11100c 0%,#050505 70%)}
+.caption{font-size:.84rem;color:#bdb293;margin-top:8px;min-height:2.4em;line-height:1.35}
+
+/* PANEL shared */
+.panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:18px;min-height:300px}
+
+/* DECODE panel */
+.phoneme-display{font-size:2.8rem;color:var(--gold);font-weight:bold;line-height:1;margin-bottom:4px}
+.word-display{font-size:1.5rem;color:var(--cream);margin:.25rem 0 .15rem;letter-spacing:.02em}
+.word-display b{color:var(--gold);border-bottom:3px solid var(--gold)}
+.articulatory{font-size:.8rem;color:#9c916f;text-transform:uppercase;letter-spacing:.08em;margin:.15rem 0 .7rem}
+.how-text{font-size:.95rem;color:#e7dec9;line-height:1.5}
+.replay-btn{margin-top:12px;background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 16px;border-radius:8px;font-family:Georgia,serif;cursor:pointer;font-size:.88rem}
+.replay-btn:hover{background:var(--gold);color:#000}
+
+/* ENCODE panel */
+.encode-question{font-size:1rem;color:#cabfa6;margin-bottom:12px;line-height:1.4}
+.encode-question .ipa{font-size:2rem;color:var(--gold);font-weight:bold;display:block;margin:6px 0}
+.grapheme-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.gchoice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:14px 10px;border-radius:10px;font-family:Georgia,serif;font-size:1.3rem;cursor:pointer;text-align:center;transition:border-color .15s}
+.gchoice:hover{border-color:var(--gold)}
+.gchoice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
+.gchoice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
+.gchoice small{display:block;font-size:.7rem;color:#8d835f;margin-top:3px}
+
+/* SPEED panel */
+.speed-question{font-size:1.1rem;color:#e7dec9;margin-bottom:10px;min-height:2.4em}
+.speed-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.schoice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:16px 10px;border-radius:10px;font-family:Georgia,serif;font-size:1.15rem;cursor:pointer;text-align:center;transition:border-color .15s}
+.schoice:hover{border-color:var(--gold)}
+.schoice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
+.schoice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
+.timer-bar-wrap{background:#1a1a1a;border-radius:999px;height:6px;margin-bottom:12px;overflow:hidden}
+.timer-bar{height:6px;border-radius:999px;background:var(--gold);transition:width .1s linear}
+
+/* ERROR HUNT panel */
+.error-word{font-size:2rem;color:var(--cream);text-align:center;margin:12px 0 6px;letter-spacing:.08em}
+.error-word .wrong-letter{color:#e0584f;text-decoration:underline;text-decoration-color:#e0584f}
+.error-question{font-size:.95rem;color:#cabfa6;text-align:center;margin-bottom:12px}
+.error-choices{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:480px){.error-choices{grid-template-columns:1fr 1fr}}
+.echoice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:12px 6px;border-radius:10px;font-family:Georgia,serif;font-size:1.1rem;cursor:pointer;text-align:center}
+.echoice:hover{border-color:var(--gold)}
+.echoice.right{background:#16351f;border-color:#43d692}
+.echoice.wrong{background:#3a1414;border-color:#e0584f}
+
+/* SCORE + BADGES */
+.score-row{display:flex;gap:16px;align-items:baseline;margin:0 0 10px;flex-wrap:wrap}
+.score-row b{color:var(--gold);font-size:1.2rem}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase}
+.badge.plat{background:var(--gold);color:#000}
+.feedback{font-size:.92rem;color:#e7dec9;min-height:2.2em;margin-bottom:10px;line-height:1.4}
+
+/* PHONEME GRID */
+.grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.pbtn{min-width:50px;background:#111;border:1px solid var(--dim);color:var(--cream);padding:9px 7px;border-radius:9px;font-family:Georgia,serif;font-size:1rem;cursor:pointer;text-align:center}
+.pbtn small{display:block;font-size:.6rem;color:#8d835f;letter-spacing:.04em;margin-top:2px}
+.pbtn:hover{border-color:var(--gold)}
+.pbtn[aria-pressed="true"]{background:var(--gold);color:#000;border-color:var(--gold)}
+.pbtn[aria-pressed="true"] small{color:#3a3208}
+
+/* GENO + FOOT */
+.geno{margin-top:22px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:.93rem;color:#d9cfb4}
+.geno b{color:var(--gold)}
+.geno-inner{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.geno-inner img{width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);flex-shrink:0}
+.cross-links{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.cross-links a{display:inline-block;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:.84rem}
+.cross-links a:hover{border-color:var(--gold);color:var(--gold)}
+.foot{margin-top:16px;color:#7c7458;font-size:.8rem;line-height:1.5}
+.foot em{color:#a99f7e}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">GSU · Spellification + Readification · Phoneme Forge</div>
+  <h1>The Phoneme Forge</h1>
+  <p class="sub">Sound becomes spelling. Spelling becomes sound. Forge the link both ways — and the reading code unlocks forever. Four modes, 40 phonemes, free, no login.</p>
+  <div class="rule"></div>
+
+  <!-- MODE TABS -->
+  <div class="modetabs" role="tablist" aria-label="Forge Mode">
+    <button class="modetab active" data-mode="decode" role="tab">
+      <span class="mode-label">Mode 1</span>Decode
+    </button>
+    <button class="modetab" data-mode="encode" role="tab">
+      <span class="mode-label">Mode 2</span>Encode
+    </button>
+    <button class="modetab" data-mode="speed" role="tab">
+      <span class="mode-label">Mode 3</span>Speed Drill
+    </button>
+    <button class="modetab" data-mode="error" role="tab">
+      <span class="mode-label">Mode 4</span>Error Hunt
+    </button>
+  </div>
+
+  <!-- STAGE -->
+  <div class="stage">
+    <!-- LEFT: canvas always visible -->
+    <div>
+      <div class="canvaswrap">
+        <canvas id="c" width="560" height="440" role="img" aria-label="Side view of a mouth forming a speech sound"></canvas>
+      </div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+    </div>
+
+    <!-- RIGHT: panels swap by mode -->
+
+    <!-- DECODE: See mouth → name the grapheme(s) -->
+    <div class="panel" id="panel-decode">
+      <div style="font-size:.72rem;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Mouth → Letters</div>
+      <div class="phoneme-display" id="d-sym">/m/</div>
+      <div class="word-display" id="d-word"></div>
+      <div class="articulatory" id="d-meta"></div>
+      <div class="how-text" id="d-how"></div>
+      <div style="margin-top:14px;font-size:.88rem;color:#9c916f">Grapheme(s) that spell this sound:</div>
+      <div style="font-size:1.6rem;color:var(--gold);font-weight:bold;margin:4px 0 10px" id="d-graphemes"></div>
+      <button class="replay-btn" id="replayBtn">▶ Show the motion again</button>
+    </div>
+
+    <!-- ENCODE: See IPA / phoneme → pick the correct grapheme -->
+    <div class="panel" id="panel-encode" style="display:none">
+      <div style="font-size:.72rem;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Sound → Letters</div>
+      <div class="score-row">
+        <span>Streak <b id="enc-streak">0</b></span>
+        <span>Best <b id="enc-best">0</b></span>
+        <span class="badge" id="enc-badge">Warming up</span>
+      </div>
+      <div class="feedback" id="enc-feedback">Watch the mouth — which letters spell that sound?</div>
+      <div class="grapheme-choices" id="enc-choices"></div>
+    </div>
+
+    <!-- SPEED: timed both-direction drill -->
+    <div class="panel" id="panel-speed" style="display:none">
+      <div style="font-size:.72rem;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Speed Drill</div>
+      <div class="score-row">
+        <span>Score <b id="sp-score">0</b></span>
+        <span>Best <b id="sp-best">0</b></span>
+        <span class="badge" id="sp-badge">Warming up</span>
+      </div>
+      <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar" style="width:100%"></div></div>
+      <div class="speed-question" id="sp-question">Get ready…</div>
+      <div class="speed-choices" id="sp-choices"></div>
+      <div class="feedback" id="sp-feedback"></div>
+    </div>
+
+    <!-- ERROR HUNT: word with wrong grapheme → find the correct one -->
+    <div class="panel" id="panel-error" style="display:none">
+      <div style="font-size:.72rem;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Error Hunt</div>
+      <div class="score-row">
+        <span>Streak <b id="eh-streak">0</b></span>
+        <span>Best <b id="eh-best">0</b></span>
+        <span class="badge" id="eh-badge">Warming up</span>
+      </div>
+      <div class="error-word" id="eh-word"></div>
+      <div class="error-question" id="eh-question">One grapheme is wrong. Which letter(s) should replace it?</div>
+      <div class="error-choices" id="eh-choices"></div>
+      <div class="feedback" id="eh-feedback"></div>
+    </div>
+  </div>
+
+  <!-- Phoneme selector grid (only in Decode mode) -->
+  <div class="grid" id="grid" aria-label="Choose a sound"></div>
+
+  <!-- GENO -->
+  <div class="geno">
+    <div class="geno-inner">
+      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor">
+      <div><b>GENO AI Tutor</b> — a robot you can actually TALK to. Ask GENO: <em>"What are all the ways to spell the /k/ sound?"</em> or <em>"Why does 'phone' use 'ph' instead of 'f'?"</em> — 32 languages, 24/7, free forever.</div>
+    </div>
+  </div>
+
+  <div class="cross-links">
+    <a href="/the-mouth-that-makes-the-sound">← The Mouth Lab</a>
+    <a href="/spellification">Spellification Hub</a>
+    <a href="/readification">Readification Hub</a>
+    <a href="/the-science-of-reading">The Science of Reading</a>
+    <a href="/minimal-pairs-lab">Minimal Pairs Lab →</a>
+  </div>
+
+  <p class="foot">
+    Forge Mode · Free forever from <em>Global Sovereign University</em>, a 501(c)(3) nonprofit.<br>
+    "Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant
+  </p>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// ===================== PHONEME DATA =====================
+// Each phoneme: sound symbol, primary grapheme, alternate graphemes, example word,
+// grapheme index in word, articulatory data, how-to description, error-hunt data
+var P = [
+  // CONSONANTS — STOPS
+  {s:"p", g:"p", alts:["p","pp"], altWords:["pan","happy"], w:"pat", gi:0, place:"Bilabial", manner:"stop", voiced:false, lips:"closed", tip:"low", back:"low", nasal:false,
+   how:"Lips together, build a little air, then pop them open with a puff. No voice.", errorSwap:"b", errorHint:"p and b use the same lip position — only voicing differs"},
+  {s:"b", g:"b", alts:["b","bb"], altWords:["bat","rabbit"], w:"bat", gi:0, place:"Bilabial", manner:"stop", voiced:true, lips:"closed", tip:"low", back:"low", nasal:false,
+   how:"Lips together, then pop them open — with your voice switched on.", errorSwap:"p", errorHint:"b is the voiced twin of p — same lips, voice on"},
+  {s:"t", g:"t", alts:["t","tt","ed"], altWords:["top","butter","jumped"], w:"top", gi:0, place:"Alveolar", manner:"stop", voiced:false, lips:"open", tip:"alveolar", back:"low", nasal:false,
+   how:"Tap your tongue tip behind your top teeth, then release. No voice.", errorSwap:"d", errorHint:"t and d use the same tongue position — only voicing differs"},
+  {s:"d", g:"d", alts:["d","dd","ed"], altWords:["dog","add","filled"], w:"dog", gi:0, place:"Alveolar", manner:"stop", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:false,
+   how:"Same tap behind the teeth as /t/ — but voice on.", errorSwap:"t", errorHint:"d is the voiced twin of t"},
+  {s:"k", g:"c", alts:["c","k","ck","ch","qu"], altWords:["cat","kit","back","school","queen"], w:"cat", gi:0, place:"Velar", manner:"stop", voiced:false, lips:"open", tip:"low", back:"velar", nasal:false,
+   how:"The back of your tongue lifts to the soft palate, then releases with a click. No voice.", errorSwap:"g", errorHint:"k and g use the same back-tongue position — only voicing differs"},
+  {s:"g", g:"g", alts:["g","gg","gh","gu"], altWords:["go","egg","ghost","guide"], w:"go", gi:0, place:"Velar", manner:"stop", voiced:true, lips:"open", tip:"low", back:"velar", nasal:false,
+   how:"Back of the tongue to the soft palate — voice on.", errorSwap:"k", errorHint:"g is the voiced twin of k"},
+
+  // CONSONANTS — FRICATIVES
+  {s:"f", g:"f", alts:["f","ff","ph","gh"], altWords:["fan","off","phone","tough"], w:"fan", gi:0, place:"Labiodental", manner:"fricative", voiced:false, lips:"teeth", tip:"low", back:"low", nasal:false,
+   how:"Rest your top teeth on your bottom lip and push air through. No voice.", errorSwap:"v", errorHint:"f and v use the same lip-teeth position — only voicing differs"},
+  {s:"v", g:"v", alts:["v","f"], altWords:["van","of"], w:"van", gi:0, place:"Labiodental", manner:"fricative", voiced:true, lips:"teeth", tip:"low", back:"low", nasal:false,
+   how:"Top teeth on bottom lip — now buzz it with your voice.", errorSwap:"f", errorHint:"v is the voiced twin of f"},
+  {s:"th", g:"th", alts:["th"], altWords:["thin","the"], w:"thin", gi:0, place:"Dental", manner:"fricative", voiced:false, lips:"open", tip:"dental", back:"low", nasal:false,
+   how:"Put your tongue tip lightly between your teeth and push air through. No voice — this is the voiceless th.", errorSwap:"s", errorHint:"th needs the tongue between the teeth — s does not"},
+  {s:"TH", g:"th", alts:["th"], altWords:["the","this","then"], w:"the", gi:0, place:"Dental", manner:"fricative", voiced:true, lips:"open", tip:"dental", back:"low", nasal:false,
+   how:"Same tongue-between-teeth position as voiceless th — now add voice and feel the buzz.", errorSwap:"d", errorHint:"voiced th needs tongue between the teeth — d does not"},
+  {s:"s", g:"s", alts:["s","ss","c","sc","st"], altWords:["sun","class","city","science","listen"], w:"sun", gi:0, place:"Alveolar", manner:"fricative", voiced:false, lips:"spread", tip:"alveolar", back:"low", nasal:false,
+   how:"Tongue close behind your top teeth — hiss like a snake. No voice.", errorSwap:"z", errorHint:"s and z use the same tongue position — only voicing differs"},
+  {s:"z", g:"z", alts:["z","zz","s","x"], altWords:["zip","buzz","is","xylophone"], w:"zip", gi:0, place:"Alveolar", manner:"fricative", voiced:true, lips:"spread", tip:"alveolar", back:"low", nasal:false,
+   how:"Same hiss position as /s/ — turn your voice on so it buzzes.", errorSwap:"s", errorHint:"z is the voiced twin of s"},
+  {s:"sh", g:"sh", alts:["sh","ti","ci","ch","s"], altWords:["ship","nation","special","chef","sure"], w:"ship", gi:0, place:"Post-alveolar", manner:"fricative", voiced:false, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+   how:"Pull the tongue back a little from /s/ position, push your lips slightly forward, and make a quiet 'shhh'.", errorSwap:"s", errorHint:"sh is further back than s — lips also round forward"},
+  {s:"zh", g:"si", alts:["si","s","ge"], altWords:["vision","measure","beige"], w:"vision", gi:2, place:"Post-alveolar", manner:"fricative", voiced:true, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+   how:"Same as /sh/ but add voice — the 'zh' in 'measure' or 'vision'.", errorSwap:"sh", errorHint:"zh is the voiced twin of sh"},
+  {s:"h", g:"h", alts:["h","wh"], altWords:["hat","who"], w:"hat", gi:0, place:"Glottal", manner:"fricative", voiced:false, lips:"open", tip:"low", back:"low", nasal:false,
+   how:"Just breathe out from your throat with your mouth shaped for the next vowel.", errorSwap:"w", errorHint:"h is glottal — air from the throat; w is lip-rounded"},
+
+  // AFFRICATES
+  {s:"ch", g:"ch", alts:["ch","tch","t","tu"], altWords:["chip","watch","nature","future"], w:"chip", gi:0, place:"Post-alveolar", manner:"affricate", voiced:false, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+   how:"Touch the tongue to the ridge, then release into /sh/. It's /t/ + /sh/ blended.", errorSwap:"sh", errorHint:"ch starts with a tongue-stop before the /sh/ release"},
+  {s:"j", g:"j", alts:["j","g","dge","d"], altWords:["jump","gem","edge","graduate"], w:"jump", gi:0, place:"Post-alveolar", manner:"affricate", voiced:true, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+   how:"Same as /ch/ but voice on — /d/ + /zh/ blended.", errorSwap:"ch", errorHint:"j is the voiced twin of ch"},
+
+  // NASALS
+  {s:"m", g:"m", alts:["m","mm","mb","mn"], altWords:["man","hammer","lamb","autumn"], w:"man", gi:0, place:"Bilabial", manner:"nasal", voiced:true, lips:"closed", tip:"low", back:"low", nasal:true,
+   how:"Press your lips together and hum — the air comes out your nose.", errorSwap:"n", errorHint:"m closes both lips; n puts the tongue up behind the teeth"},
+  {s:"n", g:"n", alts:["n","nn","kn","gn","pn"], altWords:["net","inn","knee","gnaw","pneumonia"], w:"net", gi:0, place:"Alveolar", manner:"nasal", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:true,
+   how:"Tongue tip up behind your top teeth, and hum through your nose.", errorSwap:"m", errorHint:"n uses the tongue behind the teeth, not closed lips"},
+  {s:"ng", g:"ng", alts:["ng","n","nk"], altWords:["sing","think","sink"], w:"sing", gi:2, place:"Velar", manner:"nasal", voiced:true, lips:"open", tip:"low", back:"velar", nasal:true,
+   how:"Back of the tongue to the soft palate — hum through your nose. No separate /g/ is released.", errorSwap:"n", errorHint:"ng uses the back of the tongue, not the tip"},
+
+  // LIQUIDS
+  {s:"l", g:"l", alts:["l","ll","le"], altWords:["lip","bell","bottle"], w:"lip", gi:0, place:"Alveolar", manner:"lateral", voiced:true, lips:"open", tip:"alveolar", back:"low", nasal:false,
+   how:"Tongue tip up behind your teeth; let the air slide around the sides of your tongue.", errorSwap:"r", errorHint:"l puts the tongue tip up; r bunches the tongue back without touching"},
+  {s:"r", g:"r", alts:["r","rr","wr","rh"], altWords:["red","carry","write","rhyme"], w:"red", gi:0, place:"Alveolar", manner:"approx", voiced:true, lips:"rounded", tip:"retro", back:"mid", nasal:false,
+   how:"Bunch your tongue back without touching anything, round your lips slightly. Voice on.", errorSwap:"l", errorHint:"r bunches the tongue back; l puts the tongue tip up"},
+
+  // GLIDES
+  {s:"w", g:"w", alts:["w","wh","u"], altWords:["win","when","queen"], w:"win", gi:0, place:"Labio-velar", manner:"approx", voiced:true, lips:"rounded", tip:"low", back:"high", nasal:false,
+   how:"Round your lips tight, then glide them open as you voice the following vowel.", errorSwap:"v", errorHint:"w rounds the lips; v puts the top teeth on the bottom lip"},
+  {s:"y", g:"y", alts:["y","i","j"], altWords:["yes","onion","hallelujah"], w:"yes", gi:0, place:"Palatal", manner:"approx", voiced:true, lips:"spread", tip:"low", back:"high", nasal:false,
+   how:"Tongue high and forward like /ee/, then glide down to the next vowel.", errorSwap:"j", errorHint:"y is a glide — tongue moves from high-front position; j has a stop release"},
+
+  // VOWELS — SHORT
+  {s:"ĭ", g:"i", alts:["i","y","e","ui"], altWords:["sit","gym","pretty","build"], w:"sit", gi:1, place:"High front vowel", manner:"vowel", voiced:true, lips:"spread", tip:"low", back:"high", nasal:false,
+   how:"Tongue high and forward, lips slightly spread. Short — don't let it glide.", errorSwap:"ee", errorHint:"short i is lower and shorter than long ee"},
+  {s:"ĕ", g:"e", alts:["e","ea","ai","a"], altWords:["bed","bread","said","any"], w:"bed", gi:1, place:"Mid front vowel", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"low", nasal:false,
+   how:"Tongue in the middle, mouth open more than for /ĭ/. Short 'eh'.", errorSwap:"ĭ", errorHint:"short e is lower in the mouth than short i"},
+  {s:"ă", g:"a", alts:["a","ai"], altWords:["cat","plaid"], w:"cat", gi:1, place:"Low front vowel", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"low", nasal:false,
+   how:"Open your mouth, tongue low and forward. The classic short 'a'.", errorSwap:"ĕ", errorHint:"short a drops the jaw lower than short e"},
+  {s:"ŏ", g:"o", alts:["o","a","au","aw"], altWords:["hot","father","caught","law"], w:"hot", gi:1, place:"Low back vowel", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"low", nasal:false,
+   how:"Jaw drops, tongue low and back, lips relaxed and open.", errorSwap:"ă", errorHint:"short o is in the back of the mouth; short a is in the front"},
+  {s:"ŭ", g:"u", alts:["u","o","ou","oo"], altWords:["cup","son","young","blood"], w:"cup", gi:1, place:"Mid central vowel", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"mid", nasal:false,
+   how:"Tongue in the center, lips relaxed — the unstressed 'uh'.", errorSwap:"ŏ", errorHint:"short u is more central; short o is lower and further back"},
+
+  // VOWELS — LONG / DIPHTHONGS
+  {s:"ee", g:"ee", alts:["ee","ea","e","ie","ey","ei"], altWords:["see","sea","me","piece","key","receive"], w:"see", gi:1, place:"High front vowel", manner:"vowel", voiced:true, lips:"spread", tip:"low", back:"high", nasal:false,
+   how:"Smile wide, tongue high and forward. Hold it — this is a long vowel.", errorSwap:"ĭ", errorHint:"long ee holds the tongue higher and longer than short i"},
+  {s:"ā", g:"a_e", alts:["a_e","ai","ay","ei","ea"], altWords:["cake","rain","day","veil","great"], w:"cake", gi:1, place:"Mid front glide", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"low", nasal:false,
+   how:"Start with /ĕ/ and glide your tongue up to /ĭ/ position.", errorSwap:"ă", errorHint:"long a is a glide — it moves up; short a stays low"},
+  {s:"ī", g:"i_e", alts:["i_e","igh","y","ie","i"], altWords:["bike","light","fly","pie","find"], w:"bike", gi:1, place:"Low→high glide", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"low", nasal:false,
+   how:"Start with /ah/ open jaw, then glide your tongue high and forward.", errorSwap:"ĭ", errorHint:"long i is a diphthong — it glides up; short i stays still"},
+  {s:"ō", g:"o_e", alts:["o_e","oa","ow","oe","o"], altWords:["bone","boat","low","toe","go"], w:"bone", gi:1, place:"Mid back glide", manner:"vowel", voiced:true, lips:"rounded", tip:"low", back:"mid", nasal:false,
+   how:"Start mid-back, then glide your tongue up and your lips round further.", errorSwap:"ŏ", errorHint:"long o glides and rounds the lips; short o stays open"},
+  {s:"oo", g:"oo", alts:["oo","u_e","ue","ew","ou","o"], altWords:["moon","tune","blue","flew","soup","do"], w:"moon", gi:1, place:"High back vowel", manner:"vowel", voiced:true, lips:"rounded", tip:"low", back:"velar", nasal:false,
+   how:"Round your lips tightly, tongue high and back. The long 'oo'.", errorSwap:"ŭ", errorHint:"long oo rounds the lips tightly; short u has relaxed lips"},
+  {s:"oi", g:"oi", alts:["oi","oy"], altWords:["coin","boy"], w:"coin", gi:1, place:"Back→front glide", manner:"vowel", voiced:true, lips:"rounded", tip:"low", back:"mid", nasal:false,
+   how:"Start rounded like /ō/, then glide to /ĭ/ position.", errorSwap:"oo", errorHint:"oi is a diphthong — it glides; oo is pure and held"},
+  {s:"ou", g:"ou", alts:["ou","ow"], altWords:["out","now"], w:"out", gi:0, place:"Low→high back glide", manner:"vowel", voiced:true, lips:"open", tip:"low", back:"low", nasal:false,
+   how:"Start with an open /ă/ jaw, then quickly round and raise your lips to /oo/.", errorSwap:"oo", errorHint:"ou/ow is a glide from open to rounded; oo stays rounded throughout"}
+];
+
+// ===================== CANVAS ENGINE (from The Mouth That Makes the Sound) =====================
+var cv=document.getElementById('c'), ctx=cv.getContext('2d');
+var W=cv.width, H=cv.height;
+var cur=P[0], fromS=snap(P[0]), toS=snap(P[0]), t=1, raf=null, manner=P[0].manner, voiced=P[0].voiced, nasal=P[0].nasal, tAnim=0;
+
+function snap(p){
+  return {
+    lipGap: p.lips==="closed"?0 : p.lips==="rounded"?10 : p.lips==="spread"?22 : p.lips==="teeth"?6 : 18,
+    lipRound: p.lips==="rounded"?1 : p.lips==="spread"?-1 : 0,
+    teeth: p.lips==="teeth"?1:0,
+    tipY: p.tip==="alveolar"?1 : p.tip==="dental"?1 : p.tip==="retro"?0.55 : 0,
+    tipX: p.tip==="dental"?1 : p.tip==="retro"?-1 : 0,
+    backY: p.back==="velar"?1 : p.back==="high"?0.8 : p.back==="mid"?0.4 : 0,
+    jaw: (p.lips==="open"||p.manner==="vowel")?(p.back==="low"?1:0.55):0.2
+  };
+}
+function lerp(a,b,k){return a+(b-a)*k;}
+function blend(){var o={};for(var k in fromS){o[k]=lerp(fromS[k],toS[k],ease(t));}return o;}
+function ease(x){return x<0?0:x>1?1:(1-Math.cos(Math.PI*x))/2;}
+
+function setPhoneme(p,animate){
+  cur=p; fromS=blend(); toS=snap(p); manner=p.manner; voiced=p.voiced; nasal=p.nasal;
+  t=animate?0:1; tAnim=0;
+  var cap="/"+p.s+"/ as in ""+p.w+"". "+p.place+" "+p.manner+", "+(p.voiced?"voiced":"voiceless")+(p.nasal?", air through the nose":"")+". "+p.how;
+  document.getElementById('caption').textContent=cap;
+  if(animate){if(raf)cancelAnimationFrame(raf);loop();}else{draw(blend());}
+}
+function loop(){
+  t+=0.045; tAnim+=1;
+  if(t>1)t=1;
+  draw(blend());
+  if(t<1||manner==="fricative"||manner==="nasal"||(voiced)){
+    if(t<1||tAnim<240){raf=requestAnimationFrame(loop);}
+  }
+}
+function draw(st){
+  ctx.clearRect(0,0,W,H);
+  var GOLD="#C9A84C",DIM="#5C502A",CREAM="#F5F1E8",TEAL="#2a7d77",pink="#caa6a0";
+  var midY=H*0.5;
+  ctx.lineWidth=2;ctx.strokeStyle="#2a2722";ctx.fillStyle="#0d0c0a";
+  ctx.beginPath();
+  ctx.moveTo(60,40);ctx.bezierCurveTo(330,20,470,70,486,170);ctx.lineTo(516,196);ctx.lineTo(486,212);
+  ctx.bezierCurveTo(486,212,500,250,470,300);ctx.bezierCurveTo(500,360,470,400,420,410);
+  ctx.bezierCurveTo(300,440,110,430,60,380);ctx.lineTo(60,40);ctx.closePath();ctx.stroke();
+  ctx.strokeStyle=DIM;ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(300,120);ctx.bezierCurveTo(380,108,440,120,470,150);ctx.stroke();
+  var palY=midY-44;
+  ctx.strokeStyle="#7d6f3f";ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(150,palY+14);ctx.bezierCurveTo(280,palY-6,360,palY-2,430,palY+18);ctx.stroke();
+  ctx.beginPath();ctx.arc(432,palY+24,7,Math.PI*1.1,Math.PI*2.1);ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.stroke();
+  var velOpen=nasal?1:0;
+  ctx.strokeStyle=velOpen?TEAL:"#7d6f3f";ctx.lineWidth=3;
+  ctx.beginPath();
+  if(velOpen){ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY-8,138,palY-26);}
+  else{ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY+30,168,palY+44);}
+  ctx.stroke();
+  ctx.fillStyle=CREAM;ctx.fillRect(452,palY+28,10,18);
+  var jaw=st.jaw*30;var floorY=midY+54+jaw;
+  var rootX=120,rootY=floorY-6;
+  var backX=250,backY=floorY-18-st.backY*64;
+  var bladeX=370,bladeY=floorY-14-(st.backY*30);
+  var tipX=452+st.tipX*8,tipY=floorY-10-st.tipY*52;
+  ctx.beginPath();ctx.moveTo(rootX,floorY+20);ctx.lineTo(rootX,rootY);
+  ctx.quadraticCurveTo(190,backY+6,backX,backY);ctx.quadraticCurveTo(315,bladeY-6,bladeX,bladeY);
+  ctx.quadraticCurveTo(425,tipY-4,tipX,tipY);ctx.lineTo(tipX,floorY+20);ctx.closePath();
+  var tg=ctx.createLinearGradient(0,floorY-60,0,floorY+20);
+  tg.addColorStop(0,"#c98b86");tg.addColorStop(1,"#7d4f4c");
+  ctx.fillStyle=tg;ctx.strokeStyle="#5a3a37";ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
+  ctx.fillStyle=CREAM;ctx.fillRect(452,floorY-2,10,16);
+  var lx=500,gap=st.lipGap,round=st.lipRound;
+  ctx.strokeStyle=pink;ctx.lineWidth=st.teeth>0.5?4:6;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(470,palY+22);ctx.quadraticCurveTo(lx+round*8,midY-gap,lx+14+round*6,midY-gap*0.5);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(456,floorY+6);ctx.quadraticCurveTo(lx+round*8,midY+gap,lx+14+round*6,midY+gap*0.5);ctx.stroke();
+  if(st.teeth>0.5){ctx.fillStyle=CREAM;ctx.fillRect(486,midY-10,9,15);}
+  var lvx=92,lvy=floorY+34;
+  var vib=voiced?(0.5+0.5*Math.sin(tAnim*0.5)):0;
+  ctx.beginPath();ctx.arc(lvx,lvy,12+vib*4,0,Math.PI*2);
+  ctx.fillStyle=voiced?"rgba(201,168,76,"+(0.35+vib*0.5)+")" :"rgba(120,110,80,0.18)";ctx.fill();
+  ctx.fillStyle=voiced?GOLD:"#6f6750";ctx.font="11px Georgia";ctx.textAlign="center";
+  ctx.fillText(voiced?"voice on":"voice off",lvx,lvy+30);
+  ctx.strokeStyle="rgba(120,200,255,0.55)";ctx.lineWidth=2;
+  if(nasal){
+    ctx.beginPath();ctx.moveTo(150,palY);ctx.quadraticCurveTo(380,90,500,176);ctx.stroke();
+    puff(ctx,500,176,"rgba(150,210,255,0.5)");
+  } else if(manner==="fricative"||manner==="affricate"){
+    var cxp=st.teeth>0.5?490:(cur.tip==="alveolar"?452:cur.place==="Glottal"?120:500);
+    for(var i=0;i<7;i++){var a=Math.random()*6.28,r=4+Math.random()*10;
+      ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(cxp+Math.cos(a)*r,midY+Math.sin(a)*r-2,1.4,0,6.28);
+      ctx.fillStyle="#bfe3ff";ctx.fill();}ctx.globalAlpha=1;
+  } else if(manner==="stop"){
+    if(t>0.78){puff(ctx,520,midY,"rgba(190,220,255,0.55)");}
+  } else {
+    ctx.beginPath();ctx.moveTo(200,midY+10);ctx.quadraticCurveTo(420,midY,520,midY-2);ctx.globalAlpha=0.4;ctx.stroke();ctx.globalAlpha=1;
+  }
+  ctx.fillStyle="#6f6750";ctx.font="11px Georgia";ctx.textAlign="left";
+  ctx.fillText("nose",300,96);ctx.fillText("ridge",405,palY+6);ctx.fillText("tongue",250,floorY+34);
+  ctx.textAlign="right";ctx.fillText("lips",540,midY-gap-6);
+}
+function puff(ctx,x,y,col){for(var i=0;i<8;i++){var a=(i/8)*6.28;ctx.beginPath();
+  ctx.arc(x+Math.cos(a)*(8+Math.random()*8),y+Math.sin(a)*(8+Math.random()*8),1.6,0,6.28);
+  ctx.fillStyle=col;ctx.fill();}}
+
+// ===================== PHONEME GRID (Decode mode) =====================
+var grid=document.getElementById('grid');
+P.forEach(function(p,idx){
+  var b=document.createElement('button');b.className='pbtn';b.setAttribute('aria-pressed',idx===0?'true':'false');
+  b.innerHTML=p.g+"<small>"+p.w+"</small>";
+  b.addEventListener('click',function(){decodeSelect(idx,b);});
+  p._btn=b;grid.appendChild(b);
+});
+
+function decodeSelect(idx,btn){
+  P.forEach(function(p){p._btn.setAttribute('aria-pressed','false');});
+  btn.setAttribute('aria-pressed','true');
+  var p=P[idx];
+  document.getElementById('d-sym').textContent="/"+p.s+"/";
+  var w=p.w,gi=w.toLowerCase().indexOf(p.g.toLowerCase()),parts;
+  if(gi>=0){parts=w.slice(0,gi)+"<b>"+w.slice(gi,gi+p.g.length)+"</b>"+w.slice(gi+p.g.length);}else parts=w;
+  document.getElementById('d-word').innerHTML=parts;
+  document.getElementById('d-meta').textContent=p.place+" · "+p.manner+" · "+(p.voiced?"voiced":"voiceless");
+  document.getElementById('d-how').textContent=p.how;
+  // show all graphemes that can spell this sound
+  var gList=p.alts.map(function(a,i){return '"'+a+'" ('+p.altWords[i]+')'}).join(' · ');
+  document.getElementById('d-graphemes').textContent=gList;
+  setPhoneme(p,true);
+}
+document.getElementById('replayBtn').addEventListener('click',function(){setPhoneme(cur,true);});
+
+// ===================== ENCODE MODE (Sound → Letters) =====================
+var encStreak=0,encBest=0,encAnswer=null,encLock=false;
+function encNewRound(){
+  encLock=false;
+  encAnswer=P[rnd(P.length)];
+  setPhoneme(encAnswer,true);
+  document.getElementById('enc-feedback').textContent="Watch the mouth — which letters spell that sound?";
+  // 4 grapheme options from different phonemes
+  var opts=[encAnswer.g],guard=0;
+  while(opts.length<4&&guard<100){var c=P[rnd(P.length)];if(opts.indexOf(c.g)<0)opts.push(c.g);guard++;}
+  shuffle(opts);
+  var box=document.getElementById('enc-choices');box.innerHTML="";
+  opts.forEach(function(g){
+    var ph=P.find(function(p){return p.g===g;})||encAnswer;
+    var b=document.createElement('button');b.className='gchoice';
+    b.innerHTML=g+'<small>as in "'+ph.w+'"</small>';
+    b.addEventListener('click',function(){encGuess(g,b);});
+    box.appendChild(b);
+  });
+}
+function encGuess(g,btn){
+  if(encLock)return;encLock=true;
+  if(g===encAnswer.g){
+    btn.classList.add('right');encStreak++;if(encStreak>encBest)encBest=encStreak;
+    document.getElementById('enc-feedback').textContent='Correct! "'+encAnswer.g+'" spells /'+encAnswer.s+'/ as in "'+encAnswer.w+'". '+encAnswer.how;
+    setTimeout(encNewRound,1200);
+  } else {
+    btn.classList.add('wrong');
+    var box=document.getElementById('enc-choices');
+    Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent.trim().indexOf(encAnswer.g)===0)ch.classList.add('right');});
+    document.getElementById('enc-feedback').textContent='Not quite — "'+encAnswer.g+'" is how you spell /'+encAnswer.s+'/. Remember: '+encAnswer.how;
+    encStreak=0;setTimeout(encNewRound,2000);
+  }
+  updateEncScore();
+}
+function updateEncScore(){
+  document.getElementById('enc-streak').textContent=encStreak;
+  document.getElementById('enc-best').textContent=encBest;
+  setBadge('enc-badge',encBest);
+}
+
+// ===================== SPEED DRILL =====================
+var spScore=0,spBest=0,spLock=false,spTimer=null,spTimeLeft=5,spRoundType=0;
+function spNewRound(){
+  spLock=false;clearInterval(spTimer);spTimeLeft=5;
+  document.getElementById('timer-bar').style.width='100%';
+  // alternate direction: even = mouth→grapheme, odd = grapheme→mouth
+  spRoundType=rnd(2);
+  var answer=P[rnd(P.length)];
+  setPhoneme(answer,true);
+  var box=document.getElementById('sp-choices');box.innerHTML="";
+  var feedback=document.getElementById('sp-feedback');feedback.textContent='';
+  if(spRoundType===0){
+    // Mouth → grapheme
+    document.getElementById('sp-question').textContent='What letters spell this sound?';
+    var opts=[answer.g],guard=0;
+    while(opts.length<4&&guard<100){var c=P[rnd(P.length)];if(opts.indexOf(c.g)<0)opts.push(c.g);guard++;}
+    shuffle(opts);
+    opts.forEach(function(g){
+      var b=document.createElement('button');b.className='schoice';b.textContent=g;
+      b.addEventListener('click',function(){spGuess(g===answer.g,answer,b,box);});
+      box.appendChild(b);
+    });
+  } else {
+    // Grapheme → phoneme
+    document.getElementById('sp-question').textContent='"'+answer.g+'" — which sound does it make?';
+    var opts2=[answer],guard2=0;
+    while(opts2.length<4&&guard2<100){var c2=P[rnd(P.length)];
+      var dup=false;opts2.forEach(function(o){if(o.s===c2.s)dup=true;});
+      if(!dup)opts2.push(c2);guard2++;}
+    shuffle(opts2);
+    opts2.forEach(function(ph){
+      var b=document.createElement('button');b.className='schoice';b.textContent='/'+ph.s+'/';
+      b.addEventListener('click',function(){spGuess(ph.s===answer.s,answer,b,box);});
+      box.appendChild(b);
+    });
+  }
+  // countdown
+  spTimer=setInterval(function(){
+    spTimeLeft-=0.1;
+    var pct=Math.max(0,(spTimeLeft/5)*100);
+    document.getElementById('timer-bar').style.width=pct+'%';
+    if(spTimeLeft<=0){clearInterval(spTimer);spTimeOut(answer);}
+  },100);
+}
+function spGuess(correct,answer,btn,box){
+  if(spLock)return;spLock=true;clearInterval(spTimer);
+  if(correct){
+    btn.classList.add('right');spScore++;if(spScore>spBest)spBest=spScore;
+    document.getElementById('sp-feedback').textContent='✓ '+answer.how;
+    setTimeout(spNewRound,900);
+  } else {
+    btn.classList.add('wrong');
+    Array.prototype.forEach.call(box.children,function(ch){
+      if(spRoundType===0&&ch.textContent.trim()===answer.g)ch.classList.add('right');
+      if(spRoundType===1&&ch.textContent.trim()==='/'+answer.s+'/')ch.classList.add('right');
+    });
+    document.getElementById('sp-feedback').textContent='The correct answer: '+
+      (spRoundType===0?'"'+answer.g+'" spells /'+answer.s+'/':'/'+answer.s+'/ as in "'+answer.w+'"');
+    spScore=0;setTimeout(spNewRound,1800);
+  }
+  document.getElementById('sp-score').textContent=spScore;
+  document.getElementById('sp-best').textContent=spBest;
+  setBadge('sp-badge',spBest);
+}
+function spTimeOut(answer){
+  spLock=true;spScore=0;
+  document.getElementById('sp-score').textContent=spScore;
+  document.getElementById('sp-feedback').textContent='Time! The answer was: '+
+    (spRoundType===0?'"'+answer.g+'" for /'+answer.s+'/':'/'+answer.s+'/ as in "'+answer.w+'"');
+  setTimeout(spNewRound,1800);
+}
+
+// ===================== ERROR HUNT =====================
+// Presents a word with one grapheme replaced by a phonetically similar wrong one
+// Student must pick the correct replacement
+var ehStreak=0,ehBest=0,ehLock=false;
+var errorItems=P.filter(function(p){return p.errorSwap;});
+
+function ehNewRound(){
+  ehLock=false;
+  var p=errorItems[rnd(errorItems.length)];
+  setPhoneme(p,true);
+  // Show the word with the wrong grapheme highlighted
+  var wrong=p.errorSwap;
+  var w=p.w;
+  var gi=w.toLowerCase().indexOf(p.g.toLowerCase());
+  // Replace the correct grapheme with the wrong one for display
+  var displayWord;
+  if(gi>=0){
+    displayWord=w.slice(0,gi)+'<span class="wrong-letter">'+wrong+'</span>'+w.slice(gi+p.g.length);
+  } else {
+    displayWord='<span class="wrong-letter">'+wrong+'</span>'+w.slice(1);
+  }
+  document.getElementById('eh-word').innerHTML=displayWord;
+  document.getElementById('eh-question').textContent='The highlighted letter(s) are wrong. What should replace them to spell /'+p.s+'/ as in "'+p.w+'"?';
+  document.getElementById('eh-feedback').textContent='';
+  // 4 choices: the correct grapheme + 3 distractors
+  var opts=[p.g],guard=0;
+  while(opts.length<4&&guard<100){var c=P[rnd(P.length)];if(opts.indexOf(c.g)<0)opts.push(c.g);guard++;}
+  shuffle(opts);
+  var box=document.getElementById('eh-choices');box.innerHTML='';
+  opts.forEach(function(g){
+    var b=document.createElement('button');b.className='echoice';b.textContent=g;
+    b.addEventListener('click',function(){ehGuess(g===p.g,p,b,box);});
+    box.appendChild(b);
+  });
+}
+function ehGuess(correct,p,btn,box){
+  if(ehLock)return;ehLock=true;
+  if(correct){
+    btn.classList.add('right');ehStreak++;if(ehStreak>ehBest)ehBest=ehStreak;
+    document.getElementById('eh-feedback').textContent='Correct! "'+p.g+'" spells /'+p.s+'/ in "'+p.w+'". '+p.errorHint;
+    setTimeout(ehNewRound,1400);
+  } else {
+    btn.classList.add('wrong');
+    Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===p.g)ch.classList.add('right');});
+    document.getElementById('eh-feedback').textContent='The correct spelling is "'+p.g+'". '+p.errorHint;
+    ehStreak=0;setTimeout(ehNewRound,2000);
+  }
+  document.getElementById('eh-streak').textContent=ehStreak;
+  document.getElementById('eh-best').textContent=ehBest;
+  setBadge('eh-badge',ehBest);
+}
+
+// ===================== MODE SWITCHING =====================
+var currentMode='decode';
+var panels={decode:'panel-decode',encode:'panel-encode',speed:'panel-speed',error:'panel-error'};
+var gridEl=document.getElementById('grid');
+
+document.querySelectorAll('.modetab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var mode=btn.dataset.mode;
+    if(mode===currentMode)return;
+    // hide all panels
+    Object.values(panels).forEach(function(id){document.getElementById(id).style.display='none';});
+    document.querySelectorAll('.modetab').forEach(function(b){b.classList.remove('active');});
+    // show selected
+    document.getElementById(panels[mode]).style.display='block';
+    btn.classList.add('active');
+    currentMode=mode;
+    gridEl.style.display=mode==='decode'?'flex':'none';
+    // init modes
+    if(mode==='decode'){decodeSelect(0,P[0]._btn);}
+    if(mode==='encode'){encStreak=0;encBest=0;encNewRound();}
+    if(mode==='speed'){spScore=0;spBest=0;spNewRound();}
+    if(mode==='error'){ehStreak=0;ehBest=0;ehNewRound();}
+  });
+});
+
+// ===================== UTILS =====================
+function rnd(n){return Math.floor(Math.random()*n);}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=rnd(i+1),tmp=a[i];a[i]=a[j];a[j]=tmp;}}
+function setBadge(id,best){
+  var bd=document.getElementById(id),label,plat=false;
+  if(best>=50){label="Platinum";plat=true;}else if(best>=25)label="Gold";
+  else if(best>=12)label="Silver";else if(best>=5)label="Bronze";else label="Warming up";
+  bd.textContent=label;bd.className="badge"+(plat?" plat":"");
+}
+
+// ===================== INIT =====================
+decodeSelect(0,P[0]._btn);
+
+// Add Object.values polyfill if needed
+if(!Object.values){Object.values=function(o){return Object.keys(o).map(function(k){return o[k];});};}
+if(!Array.prototype.find){Array.prototype.find=function(fn){for(var i=0;i<this.length;i++){if(fn(this[i],i,this))return this[i];}return undefined;};}
+
+})();
+</script>
+</body>
+</html>
