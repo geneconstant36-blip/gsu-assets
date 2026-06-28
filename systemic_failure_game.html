@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systemic Failure | The Lost & The Forgotten | GSU</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0f0a0a; color: #f5f1e8; font-family: Georgia, serif; min-height: 100vh; }
+header { background: #000; border-bottom: 2px solid #8B0000; padding: 14px 24px; display: flex; align-items: center; gap: 16px; }
+.logo { color: #c0392b; font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; }
+.title-bar { color: #f5f1e8; font-size: 0.9rem; opacity: 0.7; }
+#game-wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px; }
+.intro-card { background: #111; border: 1px solid #8B000040; border-radius: 10px; padding: 32px; text-align: center; }
+.intro-card h1 { color: #c0392b; font-size: 1.8rem; margin-bottom: 10px; }
+.intro-card .sub { color: #aaa; font-size: 1rem; margin-bottom: 24px; line-height: 1.6; }
+.concept-box { background: #1a0d0d; border: 1px solid #8B000060; border-radius: 8px; padding: 18px; margin: 20px 0; text-align: left; }
+.concept-box h3 { color: #c0392b; margin-bottom: 8px; font-size: 0.95rem; letter-spacing: 1px; text-transform: uppercase; }
+.concept-box p { font-size: 0.92rem; line-height: 1.6; color: #ccc; }
+.two-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+.group-box { background: #1a0d0d; border: 1px solid #8B000060; border-radius: 8px; padding: 14px; text-align: left; }
+.group-box h4 { color: #c0392b; margin-bottom: 6px; font-size: 0.9rem; }
+.group-box p { font-size: 0.85rem; color: #bbb; line-height: 1.4; }
+.btn-start { background: #8B0000; color: #fff; border: none; padding: 14px 40px; font-size: 1.1rem; font-weight: bold; border-radius: 6px; cursor: pointer; font-family: Georgia; }
+.btn-start:hover { background: #a00; }
+#quiz-screen { display: none; }
+.progress-bar { background: #222; border-radius: 4px; height: 6px; margin-bottom: 24px; }
+.progress-fill { background: #8B0000; height: 6px; border-radius: 4px; transition: width 0.4s; }
+.q-counter { color: #c0392b; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 6px; }
+.score-live { color: #aaa; font-size: 0.85rem; float: right; }
+.scenario-card { background: #111; border: 1px solid #333; border-radius: 10px; padding: 28px; margin-bottom: 20px; }
+.scenario-label { color: #c0392b; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.scenario-text { font-size: 1.05rem; line-height: 1.7; color: #f0ece3; }
+.data-box { background: #1a0d0d; border: 1px solid #8B000040; border-radius: 6px; padding: 12px; margin-top: 14px; }
+.data-box .label { color: #c0392b; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 6px; }
+.data-box .value { font-size: 0.9rem; color: #ccc; line-height: 1.4; }
+.question-text { font-size: 1rem; color: #ddd; margin-bottom: 16px; line-height: 1.5; }
+.options { display: flex; flex-direction: column; gap: 10px; }
+.opt-btn { background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 14px 18px; text-align: left; cursor: pointer; font-family: Georgia; font-size: 0.95rem; color: #eee; transition: all 0.2s; }
+.opt-btn:hover:not(:disabled) { border-color: #c0392b; background: #1f1010; }
+.opt-btn.correct { border-color: #4CAF50; background: #0d1f0d; color: #7fd47f; }
+.opt-btn.wrong { border-color: #e53935; background: #1f0d0d; color: #e07070; }
+.opt-btn.reveal { border-color: #4CAF50; background: #0d1f0d; color: #7fd47f; }
+.feedback { background: #111; border-left: 3px solid #8B0000; padding: 16px; border-radius: 0 6px 6px 0; margin-top: 12px; display: none; }
+.feedback.show { display: block; }
+.feedback .verdict { font-weight: bold; color: #c0392b; margin-bottom: 6px; font-size: 0.9rem; }
+.feedback .explain { font-size: 0.9rem; color: #ccc; line-height: 1.5; }
+.concept-tag { display: inline-block; background: #1f1010; border: 1px solid #8B000060; color: #c0392b; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; margin-right: 6px; margin-bottom: 6px; }
+.next-btn { background: #8B0000; color: #fff; border: none; padding: 12px 32px; font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 16px; display: none; font-family: Georgia; }
+.next-btn:hover { background: #a00; }
+#result-screen { display: none; background: #111; border-radius: 10px; padding: 36px; text-align: center; }
+.result-icon { font-size: 4rem; margin-bottom: 12px; }
+.result-score { font-size: 2.5rem; color: #c0392b; font-weight: bold; }
+.result-label { color: #aaa; margin-bottom: 20px; }
+.result-msg { font-size: 1rem; line-height: 1.6; color: #ddd; margin-bottom: 24px; }
+.badge-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.badge { background: #1a0d0d; border: 1px solid #8B0000; border-radius: 8px; padding: 10px 18px; font-size: 0.85rem; color: #c0392b; }
+.btn-replay { background: transparent; border: 1px solid #8B0000; color: #c0392b; padding: 10px 28px; border-radius: 6px; cursor: pointer; font-family: Georgia; font-size: 0.95rem; }
+.btn-replay:hover { background: #8B000020; }
+.learn-more { background: #1a0d0d; border: 1px solid #8B000040; border-radius: 8px; padding: 18px; margin-top: 20px; text-align: left; }
+.learn-more h4 { color: #c0392b; margin-bottom: 10px; }
+.learn-more p { font-size: 0.88rem; color: #bbb; line-height: 1.5; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">GSU</div>
+  <div class="title-bar">Global Sovereign University · Deep Research Series · Systemic Failure</div>
+</header>
+
+<div id="game-wrap">
+
+  <div class="intro-card" id="intro-screen">
+    <h1>The Lost &amp; The Forgotten</h1>
+    <p class="sub">A game based on <em>Systemic Failure and Institutional Corruption</em> by Dr. Gene A. Constant<br>Can you see through the system's narrative to what it actually produces?</p>
+    <div class="two-groups">
+      <div class="group-box">
+        <h4>The Lost</h4>
+        <p>Young people processed through twelve years of schooling, certified as ready, and released into a world that demands far more than they were taught to handle.</p>
+      </div>
+      <div class="group-box">
+        <h4>The Forgotten</h4>
+        <p>Older adults erased from cultural dignity and warehoused in systems that suppress autonomy under the banner of safety and efficiency.</p>
+      </div>
+    </div>
+    <div class="concept-box">
+      <h3>Core Argument</h3>
+      <p>These are not separate tragedies. They are the bookends of a single valuation error: a hyper-utilitarian society that overinvests in appearances of efficiency and underinvests in the slow, expensive work of developing and honoring human beings. The system is not failing. It is doing exactly what its incentive structure demands.</p>
+    </div>
+    <button class="btn-start" onclick="startGame()">Begin Game →</button>
+  </div>
+
+  <div id="quiz-screen">
+    <div style="overflow:hidden">
+      <span class="q-counter" id="q-counter">Question 1 of 10</span>
+      <span class="score-live" id="score-live">Score: 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:10%"></div></div>
+    <div class="scenario-card" id="scenario-card"></div>
+    <div class="question-text" id="q-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback">
+      <div class="verdict" id="feedback-verdict"></div>
+      <div class="explain" id="feedback-explain"></div>
+      <div id="concept-tags" style="margin-top:10px;"></div>
+    </div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next →</button>
+  </div>
+
+  <div id="result-screen">
+    <div class="result-icon" id="r-icon">📋</div>
+    <div class="result-score" id="r-score"></div>
+    <div class="result-label" id="r-label"></div>
+    <div class="result-msg" id="r-msg"></div>
+    <div class="badge-row" id="r-badges"></div>
+    <button class="btn-replay" onclick="restartGame()">Play Again</button>
+    <div class="learn-more">
+      <h4>Go Deeper</h4>
+      <p>This game is based on <em>Systemic Failure and Institutional Corruption</em> by Dr. Gene A. Constant — available on Amazon Kindle. Global Sovereign University was built as the direct counter-paradigm to every system this book describes. Free tutor. No factory model. No proxy for mastery. Ask GENO at globalsovereignuniversity.org.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    scenario: "A national education ministry releases its annual report: graduation rates are up 4 points, enrollment is at an all-time high, and international completion comparisons look favorable. Politicians declare the education system is working. Teachers in classrooms describe a different reality.",
+    data: "Completion rate: +4%. Functional literacy (PIAAC): stagnant. NAEP 8th grade math proficiency: 28%.",
+    question: "What is the book's term for rising graduation rates that mask declining competency?",
+    options: [
+      "The Attainment Paradox — when more schooling produces less learning",
+      "The Illusion of Attainment — when completion statistics substitute for evidence of actual capability",
+      "Metric Inflation — a temporary statistical artifact from post-pandemic recovery",
+      "The Efficiency Trap — what happens when schools become too good at throughput"
+    ],
+    correct: 1,
+    verdict: "Correct — The Illusion of Attainment",
+    explain: "The illusion of attainment is what happens when enrollment, completion, and graduation become the proof-of-life signals that substitute for actual learning. The institution delivers a proxy that looks close enough to satisfy overseers. A child can be enrolled for twelve years and still emerge unable to comprehend a job application. Rising completion rates can function like a moral anesthetic — dulling the urgency that a genuine learning crisis should provoke.",
+    concepts: ["Illusion of Attainment", "Proxy Metrics", "Factory Model"]
+  },
+  {
+    scenario: "A fifth-grade teacher wants to retain a student who cannot read at second-grade level. The principal calls a meeting and explains: 'Our district doesn't do that anymore. It stigmatizes children. We focus on the whole child and keep them with their peers.' The student advances to sixth grade.",
+    data: "Research shows: without intensive intervention, a student who cannot read fluently by 3rd grade faces compounding academic difficulty in every subsequent year.",
+    question: "According to the book, what has the district chosen when it prioritizes cohort progression over honest assessment?",
+    options: [
+      "Equity — protecting the child from stigma is a legitimate educational value",
+      "Social Promotion — advancing students regardless of mastery to protect institutional metrics and avoid administrative disruption",
+      "Differentiated Instruction — recognizing that literacy develops at different rates",
+      "Trauma-Informed Practice — acknowledging that retention causes emotional harm"
+    ],
+    correct: 1,
+    verdict: "Correct — Social Promotion",
+    explain: "Social promotion is the administrative machinery that manufactures 'The Lost.' It is not primarily a compassionate choice — it is an institutional adaptation. Districts are judged by graduation rates, cohort completion, and promotion statistics. Retention disrupts those numbers. The factory model is built to move bodies through a pipeline, not to ensure mastery at each stage. The student being advanced without competence is the predictable casualty of an institution protecting its dashboards.",
+    concepts: ["Social Promotion", "Factory Model", "Institutional Pathology"]
+  },
+  {
+    scenario: "A school district announces it spent $47 million on educational technology last year. Test scores remained flat. The superintendent explains: 'We're building infrastructure for the future. These investments take time to show results.'",
+    data: "Administrative budget grew 22% while classroom staffing fell 8% over the same period.",
+    question: "What does this pattern illustrate about how money flows in institutionally pathological systems?",
+    options: [
+      "Technology investment has a delayed ROI — the scores will improve next year",
+      "The underfunding problem — $47 million is not enough for a district this size",
+      "Institutional survival logic — resources flow toward what protects institutional legitimacy, not toward what produces student capability",
+      "Innovation lag — teachers need more training before technology investments pay off"
+    ],
+    correct: 2,
+    verdict: "Correct — Resources Follow Survival Logic, Not Mission",
+    explain: "The book argues that the underfunding narrative is the most effective shield institutional pathology can deploy. It converts a question of purpose into a question of sympathy. Money can be both present and absent: present in the budget totals, absent in the classroom. Under hyper-utilitarianism, resources flow toward what is countable, reportable, and defensive — compliance layers, dashboards, communications, technology that photographs well — rather than toward the slow, expensive work of building functional competency.",
+    concepts: ["Underfunding Myth", "Institutional Pathology", "Resource Allocation"]
+  },
+  {
+    scenario: "A community college reports that 1 in 3 incoming freshmen — many with high school diplomas and GPAs above 3.0 — require developmental (remedial) coursework in math, reading, or writing before they can access college-level classes. The courses cost tuition but do not count toward a degree.",
+    data: "Annual national cost of remedial higher education: approximately $1 billion. The students paying this cost already paid for K-12 education through taxes.",
+    question: "The book describes this as a 'two-stage fraud.' What does that mean?",
+    options: [
+      "The high school fraudulently inflated grades; the college fraudulently charges for courses that should be free",
+      "Stage 1: certify readiness early to protect K-12 metrics. Stage 2: charge the student again for the competency the credential falsely claimed they already had",
+      "The fraud is in the data: FAFSA requirements create incentives for colleges to overdiagnose remedial need",
+      "Both high schools and colleges are complicit in inflating the value of credentials they sell"
+    ],
+    correct: 1,
+    verdict: "Correct — Certify Early, Bill Again Later",
+    explain: "The remediation economy is not evidence that the system is correcting itself. It is evidence that the system normalized cost-shifting. The K-12 institution advances students to protect graduation rates and avoid the internal reckoning that honest assessment would trigger. The receiving institution inherits the deficit and charges for it — often from the least-resourced students, who took out loans expecting to progress toward a degree and instead pay tuition to access material the high school diploma promised they already knew.",
+    concepts: ["Remediation Economy", "Cost-Shifting", "Two-Stage Fraud"]
+  },
+  {
+    scenario: "The New Orleans school system, prior to Hurricane Katrina, had such pervasive corruption — kickbacks, payroll fraud, ghost employees, bid-rigging — that federal investigators maintained a nearly permanent presence. Audits were conducted. Reports were filed. New officials were appointed. The corruption persisted across administrations.",
+    data: "Roslyn School District, New York (an affluent suburb): $11 million diverted through luxury spending despite 'strong oversight'.",
+    question: "What does the persistence of corruption across leadership changes suggest about the nature of institutional corruption?",
+    options: [
+      "Criminal personalities self-select into education leadership and need better screening",
+      "Oversight was too weak — stronger auditing would have stopped it",
+      "Corruption is systemic, not episodic — the incentive structure recruits and rewards the same behaviors regardless of who holds the position",
+      "Both cases were outliers; corruption at this scale is rare in education systems"
+    ],
+    correct: 2,
+    verdict: "Correct — Incentives Persist When Personnel Change",
+    explain: "If corruption were primarily a function of bad people, replacing the bad people would fix it. But corruption that persists across administrations, regions, and funding levels is structural. The incentive structure recruits the behavior. A procurement system that makes kickbacks easy and quiet will process kickbacks regardless of who runs it. The book's central argument: removing individual wrongdoers without confronting the system's incentive architecture will create vacancies, not change.",
+    concepts: ["Structural Corruption", "IIEP Typology", "Incentive Architecture"]
+  },
+  {
+    scenario: "A television advertising executive explains their demographic targeting strategy: 'The 18-49 age group is our primary audience because they are most receptive to brand formation and have high consumption elasticity. Viewers 55 and older are less malleable and represent lower lifetime value to advertisers.'",
+    data: "Older adults control more than 70% of consumer spending in the US. They are represented in less than 15% of advertising imagery.",
+    question: "According to the book's framework, what is this an example of?",
+    options: [
+      "Market segmentation — a neutral, data-driven advertising strategy",
+      "Ageism as a business model — the media ecosystem systematically erasing older adults because their humanity is less profitable to depict",
+      "Demographic targeting — which is legal and standard practice in all advertising",
+      "Supply and demand — older viewers prefer content that networks aren't producing"
+    ],
+    correct: 1,
+    verdict: "Correct — The Cultural Architecture of 'The Forgotten'",
+    explain: "The book argues that ageism in media is not random bias or simple taste. It is structural selection: whose humanity is profitable to depict, and whose humanity is profitable to hide. The system does not need to hate older adults to erase them. It only needs to treat their attention as less monetizable. Cultural representation follows profitability like a shadow. When this pattern is consistent, cross-industry, and economically incentivized, it is not discrimination by accident — it is discrimination by design.",
+    concepts: ["Media Ageism", "The Forgotten", "Hyper-Utilitarianism"]
+  },
+  {
+    scenario: "A student is socially promoted year after year. When they fail a college placement test, they say: 'This isn't fair. I graduated. I did what I was supposed to do.' Their advisor explains that the placement test is just a formality and recommends remedial courses. The student drops out after one semester.",
+    data: "Research finding: remedial students who must take non-credit courses are significantly more likely to drop out before completing a degree than students who test into college-level work.",
+    question: "The student's belief that graduation means readiness is an example of which psychological outcome the book describes?",
+    options: [
+      "Entitlement — the student's generation was raised to expect rewards without effort",
+      "Credential Inflation — the student overestimated what their diploma was worth",
+      "Social Promotion-Induced Academic Entitlement — a learned expectation that advancement is attached to time served, not mastery demonstrated",
+      "Institutional Betrayal — the student correctly perceives they were failed by the system"
+    ],
+    correct: 2,
+    verdict: "Correct — The System Taught This Expectation",
+    explain: "Academic entitlement is not a generational character flaw. It is a learned expectation produced by consistent reinforcement. If you want to know what an institution teaches, look at what it reliably rewards. A system that advances students regardless of mastery teaches that advancement is a time-based entitlement. The student did not invent the rule — they absorbed it from twelve years of experience. The system then abandons them when the external world refuses to follow the same rule.",
+    concepts: ["Academic Entitlement", "Social Promotion", "Structural Outcome"]
+  },
+  {
+    scenario: "A long-term care facility announces a new policy: residents must request permission 48 hours in advance to leave the facility, cannot receive guests after 8pm, and must use facility-approved meal delivery services. The administrator states: 'All policies are in place to protect resident safety and minimize liability.'",
+    data: "Studies show isolation and loss of autonomy in long-term care settings correlate with accelerated cognitive decline and reduced life expectancy.",
+    question: "This pattern of policy-making exemplifies which aspect of institutional pathology the book describes?",
+    options: [
+      "Reasonable risk management — facilities have a legal duty of care that justifies restrictions",
+      "Structural autonomy suppression — when institutions treat the reduction of human variability as a cost-savings and liability strategy, rationalized as safety",
+      "Regulatory overreach — excessive government requirements force facilities into restrictive policies",
+      "Staffing shortages — understaffed facilities cannot safely accommodate unrestricted resident movement"
+    ],
+    correct: 1,
+    verdict: "Correct — Safety as the Language of Control",
+    explain: "The book argues that 'The Forgotten' are manufactured not only by media erasure but by institutional systems that treat elders as liabilities to be managed rather than persons to be served. The hyper-utilitarian logic is explicit: human variability is expensive. Expanding an elder's choices requires time, individualized attention, and complex judgment. Restricting their choices is administratively simpler and legally defensible. The institution does not need to intend cruelty. It only needs to treat controlled human behavior as efficient behavior.",
+    concepts: ["The Forgotten", "Autonomy Suppression", "Warehouse Model"]
+  },
+  {
+    scenario: "A district auditor notices that the dropout rate in a large urban system has declined significantly over three years. Upon investigation, she discovers that many students who stopped attending were reclassified as 'transfers,' 'moved to home schooling,' or placed in administrative categories that do not trigger dropout reporting. No students were formally dropped.",
+    data: "A student who stops attending school without transferring to another program is, by most definitions, a dropout. Administrative reclassification does not change what happened to the student.",
+    question: "This practice represents which type of corruption in the IIEP framework?",
+    options: [
+      "Finance Corruption — the district is misusing funds by paying for students who aren't attending",
+      "Staffing Corruption — teachers are falsifying attendance records",
+      "Data Manipulation — information is being distorted to protect institutional narrative and prevent accountability",
+      "Policy Failure — the reporting rules are too complex and create unintended loopholes"
+    ],
+    correct: 2,
+    verdict: "Correct — Data Manipulation Steals Reality",
+    explain: "If finance corruption steals money and staffing corruption steals competence, data manipulation steals reality. In a metric-driven institution, data is currency. It secures funding, prevents sanctions, preserves leadership careers, and maintains public confidence. Once data becomes currency, there is constant pressure to mint it. The institution does not need to say 'falsify the numbers' — it only needs to signal that bad numbers will be punished and good numbers will be rewarded. Data distortion is a time-delayed weapon: it steals the public's ability to respond while response would still be effective.",
+    concepts: ["Data Manipulation", "IIEP Typology", "Metric Currency"]
+  },
+  {
+    scenario: "Global Sovereign University offers free instruction, AI-tutored practice, gamified certification, and mentor matching with retired professionals — with no tuition, no social promotion, and no proxy credentials. Every certificate reflects demonstrated mastery verified through a sequence that cannot be faked without actually doing the work.",
+    data: "GSU is a 501(c)(3) nonprofit. Revenue comes entirely from book sales. Every educational resource is free. The model is designed to be the institutional counter-paradigm described in Chapter 6.",
+    question: "Which design feature most directly inverts the factory model's core failure?",
+    options: [
+      "The use of AI — which is more efficient than human teachers",
+      "The free access model — which removes financial barriers",
+      "The competency-based certification — which ties advancement to demonstrated mastery rather than time served, making the credential a genuine signal rather than a proxy",
+      "The podcast and book catalog — which provide more content than traditional schools"
+    ],
+    correct: 2,
+    verdict: "Correct — The Honest Transcript Is the Counter-Paradigm",
+    explain: "Every problem this book describes traces back to a single substitution: the institution delivering a proxy for its purpose rather than the purpose itself. Graduation for competency. Compliance for learning. Credential for capability. The GSU model inverts this by making the certification cross-validate itself: a learner who claims mastery must demonstrate it across a sequence that internal consistency alone cannot fake. 'Teach Me, Don't Cheat Me' — the credential reflects what was actually built, not what was processed.",
+    concepts: ["GSU Counter-Paradigm", "Competency-Based Education", "Honest Transcript"]
+  }
+];
+
+let current = 0, score = 0, answered = false;
+
+function startGame() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const q = questions[current];
+  answered = false;
+  document.getElementById('q-counter').textContent = `Question ${current+1} of ${questions.length}`;
+  document.getElementById('score-live').textContent = `Score: ${score}`;
+  document.getElementById('prog').style.width = `${((current)/questions.length)*100+10}%`;
+  document.getElementById('feedback').classList.remove('show');
+  document.getElementById('next-btn').style.display = 'none';
+
+  let scenarioHTML = `<div class="scenario-label">Scenario ${current+1}</div>
+    <div class="scenario-text">${q.scenario}</div>`;
+  if (q.data) {
+    scenarioHTML += `<div class="data-box"><div class="label">The Data</div><div class="value">${q.data}</div></div>`;
+  }
+  document.getElementById('scenario-card').innerHTML = scenarioHTML;
+  document.getElementById('q-text').textContent = q.question;
+
+  const optDiv = document.getElementById('options');
+  optDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    optDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.correct) b.classList.add('reveal');
+    if (i === idx && idx !== q.correct) b.classList.add('wrong');
+    if (i === idx && idx === q.correct) { b.classList.add('correct'); score++; }
+  });
+  document.getElementById('feedback-verdict').textContent = (idx === q.correct ? '✓ ' : '✗ ') + q.verdict;
+  document.getElementById('feedback-explain').textContent = q.explain;
+  const tags = document.getElementById('concept-tags');
+  tags.innerHTML = q.concepts.map(c => `<span class="concept-tag">${c}</span>`).join('');
+  document.getElementById('feedback').classList.add('show');
+  document.getElementById('score-live').textContent = `Score: ${score}`;
+  document.getElementById('next-btn').style.display = 'inline-block';
+  document.getElementById('next-btn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results →';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) { showResult(); return; }
+  loadQuestion();
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.style.display = 'block';
+  const icons = ['📋','🔍','📊','⚖️','🔥'];
+  const labels = ['Beginning to See','Pattern Detector','Systems Thinker','Institutional Analyst','Sovereignty Builder'];
+  const msgs = [
+    'The system is designed to be invisible. Keep reading — every question you missed is a layer of the machine you have not yet seen.',
+    'You are starting to see through the narrative. The difference between "the system is failing" and "the system is succeeding at the wrong goal" is the most important insight in this book.',
+    'You understand the mechanisms. Social promotion, data manipulation, the remediation economy — these are not accidents. They are adaptations. Now the question is: what replaces them?',
+    'You see the whole architecture: hyper-utilitarianism connecting The Lost and The Forgotten through a single valuation error. This is rare thinking. Share it.',
+    'You are a Sovereignty Builder. You do not just see the machine — you know what to build instead. GSU was built for you, and for everyone you can reach.'
+  ];
+  const tier = score < 4 ? 0 : score < 6 ? 1 : score < 8 ? 2 : score < 10 ? 3 : 4;
+  document.getElementById('r-icon').textContent = icons[tier];
+  document.getElementById('r-score').textContent = `${score} / ${questions.length}`;
+  document.getElementById('r-label').textContent = labels[tier];
+  document.getElementById('r-msg').textContent = msgs[tier];
+  const badges = [];
+  if (score >= 6) badges.push('Factory Model Analyst');
+  if (score >= 7) badges.push('Proxy Detector');
+  if (score >= 8) badges.push('Systems Reader');
+  if (score >= 9) badges.push('Sovereignty Builder');
+  if (score === 10) badges.push('The Paradigm Breaker 🏆');
+  document.getElementById('r-badges').innerHTML = badges.map(b => `<div class="badge">${b}</div>`).join('');
+}
+
+function restartGame() {
+  current = 0; score = 0; answered = false;
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  loadQuestion();
+}
+</script>
+</body>
+</html>

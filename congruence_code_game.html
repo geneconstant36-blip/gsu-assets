@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Congruence Code | Signal or Noise? | GSU</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a0f; color: #f5f1e8; font-family: Georgia, serif; min-height: 100vh; }
+header { background: #000; border-bottom: 2px solid #C9A84C; padding: 14px 24px; display: flex; align-items: center; gap: 16px; }
+.logo { color: #C9A84C; font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; }
+.title-bar { color: #f5f1e8; font-size: 0.9rem; opacity: 0.7; }
+#game-wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px; }
+.intro-card { background: #111; border: 1px solid #C9A84C40; border-radius: 10px; padding: 32px; text-align: center; }
+.intro-card h1 { color: #C9A84C; font-size: 1.8rem; margin-bottom: 10px; }
+.intro-card .sub { color: #aaa; font-size: 1rem; margin-bottom: 24px; line-height: 1.6; }
+.concept-box { background: #0d1a0d; border: 1px solid #C9A84C60; border-radius: 8px; padding: 18px; margin: 20px 0; text-align: left; }
+.concept-box h3 { color: #C9A84C; margin-bottom: 8px; font-size: 0.95rem; letter-spacing: 1px; text-transform: uppercase; }
+.concept-box p { font-size: 0.92rem; line-height: 1.6; color: #ccc; }
+.btn-start { background: #C9A84C; color: #000; border: none; padding: 14px 40px; font-size: 1.1rem; font-weight: bold; border-radius: 6px; cursor: pointer; font-family: Georgia; }
+.btn-start:hover { background: #e8c55a; }
+#quiz-screen { display: none; }
+.progress-bar { background: #222; border-radius: 4px; height: 6px; margin-bottom: 24px; }
+.progress-fill { background: #C9A84C; height: 6px; border-radius: 4px; transition: width 0.4s; }
+.q-counter { color: #C9A84C; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 6px; }
+.score-live { color: #aaa; font-size: 0.85rem; float: right; }
+.scenario-card { background: #111; border: 1px solid #333; border-radius: 10px; padding: 28px; margin-bottom: 20px; }
+.scenario-label { color: #C9A84C; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.scenario-text { font-size: 1.05rem; line-height: 1.7; color: #f0ece3; }
+.channel-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.channel-box { background: #0d1a0d; border: 1px solid #C9A84C40; border-radius: 6px; padding: 12px; }
+.channel-box .label { color: #C9A84C; font-size: 0.75rem; letter-spacing: 1px; margin-bottom: 6px; }
+.channel-box .value { font-size: 0.9rem; color: #ccc; line-height: 1.4; }
+.question-text { font-size: 1rem; color: #ddd; margin-bottom: 16px; line-height: 1.5; }
+.options { display: flex; flex-direction: column; gap: 10px; }
+.opt-btn { background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 14px 18px; text-align: left; cursor: pointer; font-family: Georgia; font-size: 0.95rem; color: #eee; transition: all 0.2s; }
+.opt-btn:hover:not(:disabled) { border-color: #C9A84C; background: #1d1a0f; }
+.opt-btn.correct { border-color: #4CAF50; background: #0d1f0d; color: #7fd47f; }
+.opt-btn.wrong { border-color: #e53935; background: #1f0d0d; color: #e07070; }
+.opt-btn.reveal { border-color: #4CAF50; background: #0d1f0d; color: #7fd47f; }
+.feedback { background: #111; border-left: 3px solid #C9A84C; padding: 16px; border-radius: 0 6px 6px 0; margin-top: 12px; display: none; }
+.feedback.show { display: block; }
+.feedback .verdict { font-weight: bold; color: #C9A84C; margin-bottom: 6px; font-size: 0.9rem; }
+.feedback .explain { font-size: 0.9rem; color: #ccc; line-height: 1.5; }
+.concept-tag { display: inline-block; background: #1d1a0f; border: 1px solid #C9A84C60; color: #C9A84C; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; margin-right: 6px; margin-bottom: 6px; }
+.next-btn { background: #C9A84C; color: #000; border: none; padding: 12px 32px; font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 16px; display: none; font-family: Georgia; }
+.next-btn:hover { background: #e8c55a; }
+#result-screen { display: none; background: #111; border-radius: 10px; padding: 36px; text-align: center; }
+.result-icon { font-size: 4rem; margin-bottom: 12px; }
+.result-score { font-size: 2.5rem; color: #C9A84C; font-weight: bold; }
+.result-label { color: #aaa; margin-bottom: 20px; }
+.result-msg { font-size: 1rem; line-height: 1.6; color: #ddd; margin-bottom: 24px; }
+.badge-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.badge { background: #0d1a0d; border: 1px solid #C9A84C; border-radius: 8px; padding: 10px 18px; font-size: 0.85rem; color: #C9A84C; }
+.btn-replay { background: transparent; border: 1px solid #C9A84C; color: #C9A84C; padding: 10px 28px; border-radius: 6px; cursor: pointer; font-family: Georgia; font-size: 0.95rem; }
+.btn-replay:hover { background: #C9A84C20; }
+.learn-more { background: #0d1a0d; border: 1px solid #C9A84C40; border-radius: 8px; padding: 18px; margin-top: 20px; text-align: left; }
+.learn-more h4 { color: #C9A84C; margin-bottom: 10px; }
+.learn-more p { font-size: 0.88rem; color: #bbb; line-height: 1.5; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">GSU</div>
+  <div class="title-bar">Global Sovereign University · Free Tutor · Deep Research Series</div>
+</header>
+
+<div id="game-wrap">
+
+  <!-- INTRO -->
+  <div class="intro-card" id="intro-screen">
+    <h1>Signal or Noise?</h1>
+    <p class="sub">A game based on <em>The Congruence Code</em> by Dr. Gene A. Constant<br>Can you read what the body is really saying?</p>
+    <div class="concept-box">
+      <h3>The Core Idea</h3>
+      <p>Every human interaction runs on two channels at once. The <strong>explicit channel</strong> carries words. The <strong>implicit channel</strong> carries tone, posture, timing, and micro-expression. When they align — <em>congruence</em>. When they conflict — the brain flags it as a threat. Your nervous system detects this in milliseconds, before you know what you noticed.</p>
+    </div>
+    <div class="concept-box">
+      <h3>How to Play</h3>
+      <p>You will read 10 real-world communication scenarios. For each one, identify what is actually happening neurologically, psychologically, or practically. The N400, the Othello Error, Bateson's Double Bind, Rogers' Congruence, Mehrabian's Myth, and more — all in action.</p>
+    </div>
+    <button class="btn-start" onclick="startGame()">Begin Game →</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz-screen">
+    <div style="overflow:hidden">
+      <span class="q-counter" id="q-counter">Question 1 of 10</span>
+      <span class="score-live" id="score-live">Score: 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:10%"></div></div>
+    <div class="scenario-card" id="scenario-card"></div>
+    <div class="question-text" id="q-text"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback">
+      <div class="verdict" id="feedback-verdict"></div>
+      <div class="explain" id="feedback-explain"></div>
+      <div id="concept-tags" style="margin-top:10px;"></div>
+    </div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result-screen">
+    <div class="result-icon" id="r-icon">🧠</div>
+    <div class="result-score" id="r-score"></div>
+    <div class="result-label" id="r-label"></div>
+    <div class="result-msg" id="r-msg"></div>
+    <div class="badge-row" id="r-badges"></div>
+    <button class="btn-replay" onclick="restartGame()">Play Again</button>
+    <div class="learn-more">
+      <h4>Dig Deeper</h4>
+      <p>This game is based on <em>The Congruence Code: How the Brain and Body Process Authentic Interaction</em> by Dr. Gene A. Constant — available on Amazon Kindle for $3.99. Global Sovereign University offers free tutor sessions on every topic covered here. Ask GENO.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    scenario: "A manager holds a company-wide meeting after layoffs. She says with a bright smile and upbeat tone: \"We're actually in a really exciting position right now! This is a great opportunity for everyone who remains.\"",
+    explicit: "\"Exciting opportunity\" — optimism, forward momentum",
+    implicit: "Bright smile, high energy — disconnected from the gravity of layoffs",
+    question: "What neurological event is occurring in the listeners?",
+    options: [
+      "The listeners are reassured and their cortisol drops",
+      "The brain flags integration failure — tone and reality don't match, triggering N400-like prediction error",
+      "The listeners accept the reframe and update their model to see the layoffs as positive",
+      "The implicit channel is ignored because words carry 93% of meaning"
+    ],
+    correct: 1,
+    verdict: "Correct — The Brain Flags the Mismatch",
+    explain: "The N400 is a neural marker of integration difficulty. When emotional tone contradicts the reality of the situation — cheerfulness over something genuinely serious — the brain registers the mismatch as prediction error. Listeners become guarded, not reassured. Congruence would require the manager's tone to match the weight of the moment.",
+    concepts: ["N400", "Congruence Failure", "Autonomic Response"]
+  },
+  {
+    scenario: "A father says to his child: \"Come here, give me a hug — I love you.\" As the child approaches, the father stiffens, looks away, and tightens his jaw. When the child hesitates, the father says, \"What's wrong with you? Don't you love me?\"",
+    explicit: "Verbal invitation to closeness, then accusation of coldness",
+    implicit: "Stiffening, averted gaze, jaw tension — signals rejection",
+    question: "This scenario is a clinical example of which psychological structure?",
+    options: [
+      "Cognitive Dissonance — the father is unaware of his own contradictions",
+      "Expectancy Violation — the child's hug violated the father's expectation",
+      "Bateson's Double Bind — two contradictory injunctions with no escape and no permission to name the contradiction",
+      "Nonverbal Leakage — the father is lying about his feelings"
+    ],
+    correct: 2,
+    verdict: "Correct — Bateson's Double Bind",
+    explain: "A double bind requires: (1) a primary verbal injunction, (2) a conflicting nonverbal injunction, and (3) a tertiary prohibition on naming the contradiction. All three are present. The child cannot comply with both. If they hug, they're rejected. If they don't, they're accused. This structure, when chronic, can fracture a child's ability to decode social reality.",
+    concepts: ["Double Bind", "Bateson", "Systemic Incongruence"]
+  },
+  {
+    scenario: "A corporate trainer opens his session by announcing: \"Remember, only 7 percent of communication is the words you say. The rest is body language and tone.\" The audience nods.",
+    explicit: "The trainer claims words are 7% of communication",
+    implicit: "Audience accepts the statistic as scientific fact",
+    question: "What is scientifically wrong with the 7-38-55 rule as typically taught?",
+    options: [
+      "Nothing — Mehrabian's research proved it applies to all human communication",
+      "The numbers were derived from a narrow study of emotional attitude judgment, not general communication, and cannot be generalized",
+      "The real split is 20-40-40, according to later research",
+      "Nonverbal cues only matter in face-to-face settings, not digital communication"
+    ],
+    correct: 1,
+    verdict: "Correct — The Mehrabian Myth Exposed",
+    explain: "Mehrabian's 1967 study examined how people infer emotional attitude from single spoken words with contradictory tones — a narrow, artificial scenario. He never intended the numbers to apply to all communication. Using the 7-38-55 rule to dismiss the content of speeches, lessons, or instructions is scientific malpractice. Words carry meaning. The N400 spike happens *because* the brain cares about words.",
+    concepts: ["Mehrabian Myth", "Dual-Channel Model", "Scientific Literacy"]
+  },
+  {
+    scenario: "During a police interrogation, an innocent suspect sweats, avoids eye contact, stumbles over words, and can't recall precise details about where they were the night in question. The detective concludes: \"Their body language is clearly deceptive.\"",
+    explicit: "Suspect says they are innocent and provides a timeline",
+    implicit: "High physiological arousal, gaze aversion, speech disruptions",
+    question: "The detective's conclusion is an example of which well-documented error?",
+    options: [
+      "Nonverbal Leakage Detection — a valid investigative method",
+      "The Othello Error — misreading fear of being disbelieved as proof of guilt",
+      "The Halo Effect — assuming one bad trait means all traits are bad",
+      "Confirmation Bias — the detective had already made up their mind"
+    ],
+    correct: 1,
+    verdict: "Correct — The Othello Error",
+    explain: "The Othello Error names the mistake of treating an innocent person's stress response as evidence of deception. Both the guilty and the innocent show arousal under interrogation — the nervous system flags 'I am in danger,' not 'I am guilty.' Meta-analyses show humans detect deception at approximately 54% accuracy — barely better than chance. Fear is not a confession.",
+    concepts: ["Othello Error", "Deception Detection", "Arousal vs. Guilt"]
+  },
+  {
+    scenario: "A therapist sits across from a client who says 'It wasn't a big deal' while their jaw tightens, their shoulders rise, and their voice loses resonance. The therapist responds: 'Well, if you feel it wasn't a big deal, we can move on.'",
+    explicit: "Client minimizes the event verbally; therapist accepts the minimization",
+    implicit: "Client's body contradicts the words — signals suppressed distress",
+    question: "According to Carl Rogers, what has this therapist failed to provide?",
+    options: [
+      "Unconditional Positive Regard — they should have praised the client's resilience",
+      "Congruence — a congruent therapist would have named what the body was communicating, not deferred to the words",
+      "Accurate Empathic Understanding — they needed more training in active listening",
+      "Psychological Distance — good therapy requires professional neutrality"
+    ],
+    correct: 1,
+    verdict: "Correct — Congruence Is the Hinge",
+    explain: "Rogers held that congruence — the therapist being genuinely present and not hiding behind a professional mask — is what makes empathy and unconditional positive regard credible. When the therapist defers to the explicit channel while the implicit channel screams distress, they teach the client the old lesson: certain truths cannot live here. A congruent therapist would say, gently, 'I notice your shoulders came up as you said that.'",
+    concepts: ["Carl Rogers", "Congruence", "Implicit Channel"]
+  },
+  {
+    scenario: "A respected CEO walks into a board meeting after a bad earnings quarter. Instead of explaining what happened, he opens with: 'I want to acknowledge that I'm frustrated with our results, and I'm committed to being honest with you about where we failed. I'm going to slow down and walk through this clearly.'",
+    explicit: "Acknowledges frustration, commits to honesty, signals patience",
+    implicit: "Matches word with regulated tone — not performing calm, but demonstrating it",
+    question: "Why does this approach build trust rather than undermine authority?",
+    options: [
+      "Because displaying emotion signals vulnerability, which triggers sympathy",
+      "Because making the internal state legible closes the gap between channels — the board's nervous systems don't have to decode a hidden message",
+      "Because the CEO is using a rehearsed technique from an executive presence course",
+      "Because honesty is always rewarded in corporate settings"
+    ],
+    correct: 1,
+    verdict: "Correct — Legible State = Reduced Prediction Error",
+    explain: "When a leader's internal state is made legible — not dumped, but named — the team no longer has to run a background threat-detection process. They can listen. A congruent leader does not demand trust; they make trust a reasonable prediction. The CEO's statement reduces the integration cost for every person in the room.",
+    concepts: ["Executive Presence", "Congruence", "Prediction Error"]
+  },
+  {
+    scenario: "A researcher measures brain activity while participants listen to the same sentence — 'I'm so happy for you' — spoken first with genuine warmth, then with a flat, irritated tone. The second version produces a measurable spike in a specific ERP component.",
+    explicit: "Words are identical in both conditions",
+    implicit: "Prosody (tone) changes from warm to flat/irritated",
+    question: "Which ERP component spikes, and what does the spike mean?",
+    options: [
+      "The P300, indicating the participant is surprised by the tone change",
+      "The N400, indicating the brain detected integration difficulty — meaning became harder to compute when tone contradicted semantics",
+      "The P1, indicating early visual processing was disrupted",
+      "The MMN (Mismatch Negativity), indicating the brain detected an auditory anomaly"
+    ],
+    correct: 1,
+    verdict: "Correct — The N400 Is the Integration Alarm",
+    explain: "The N400 is a negative-going potential peaking around 400ms post-stimulus. Originally discovered in response to semantic anomalies ('I take my coffee with cream and dog'), it also fires when emotional prosody contradicts semantic meaning. This shows that affective incongruence is not a slow social judgment — it is folded into comprehension itself. Prosody is part of what the sentence means.",
+    concepts: ["N400", "ERP", "Affective Incongruence", "Prosody"]
+  },
+  {
+    scenario: "An employee is consistently nervous before one-on-ones with their manager. The manager notices and thinks: 'They're hiding something.' The manager becomes more evaluative. The employee becomes more nervous. The manager becomes more suspicious.",
+    explicit: "Employee is nervous; manager interprets this as deception",
+    implicit: "The manager's own increased evaluation is raising the employee's threat response",
+    question: "What self-reinforcing loop is this, and who is producing it?",
+    options: [
+      "A cognitive distortion loop — the employee is catastrophizing",
+      "An expectancy violation cascade — both parties are violating each other's norms",
+      "The Othello Error generating a self-fulfilling prophecy — the manager's suspicion creates the physiology it then treats as evidence",
+      "A double bind in which the employee is trapped regardless of what they do"
+    ],
+    correct: 2,
+    verdict: "Correct — The Suspicion Manufactures the Evidence",
+    explain: "This is the Othello Error in organizational form. When an observer suspects deception, their own nonverbal signals shift: harder face, clipped timing, evaluative posture. The target detects the threat and becomes more aroused. The observer interprets the arousal as proof. The loop tightens. The observer created the physiology they then used as evidence. De-escalation requires the manager to lower threat first, then gather data.",
+    concepts: ["Othello Error", "Self-Fulfilling Prophecy", "Threat Physiology"]
+  },
+  {
+    scenario: "During a heated argument, one partner's voice gets sharp, their breathing shortens, and they start interrupting. The other partner decides this is the moment to explain, in detail, why the first partner is logically wrong about three different issues.",
+    explicit: "Partner 2 provides a logical, detailed counterargument",
+    implicit: "Partner 1 is in physiological flooding — unable to process complex language",
+    question: "Why will Partner 2's logical explanation almost certainly fail?",
+    options: [
+      "Because emotions always override logic in relationships",
+      "Because Partner 1 hasn't had time to rehearse a response",
+      "Because physiological flooding shrinks the brain's bandwidth for semantic processing — the nervous system is asking 'Am I safe?' not 'Is this argument valid?'",
+      "Because Partner 2 hasn't established credibility first"
+    ],
+    correct: 2,
+    verdict: "Correct — You Cannot Logic Someone Out of Flooding",
+    explain: "Physiological flooding is when the autonomic nervous system ramps high enough to squeeze the prefrontal cortex's capacity for abstract processing. The flooded partner can hear sounds but cannot process nuance, multi-step reasoning, or hypotheticals. What the brain needs at this point is regulation first, content second. The Three C's apply: Context (why are they flooded?), Clusters (what is the full signal?), Congruence (is your delivery matching your intent to de-escalate?).",
+    concepts: ["Physiological Flooding", "Autonomic Nervous System", "Three C's"]
+  },
+  {
+    scenario: "A young person who grew up in a household where one parent routinely denied that they were angry — even while shouting, throwing objects, or leaving the room — now as an adult struggles to trust their own perception of others' emotions. They often dismiss their gut feelings about situations. Their therapist notes this is a consistent pattern.",
+    explicit: "Adult dismisses their own emotional perception as unreliable",
+    implicit: "Pattern traces directly to childhood experience with denied reality",
+    question: "Which framework best explains this adult's learned response?",
+    options: [
+      "Cognitive Dissonance — they were raised with contradictory beliefs about emotion",
+      "Bateson's Double Bind — chronic exposure to denied incongruence trained the nervous system to suppress its own signal-reading capacity as a survival strategy",
+      "Alexithymia — they have a genetic trait that prevents emotion recognition",
+      "EVT (Expectancy Violations Theory) — their expectations for emotional communication were set too high"
+    ],
+    correct: 1,
+    verdict: "Correct — The Double Bind Trains Self-Doubt",
+    explain: "When a child's perception of incongruence is consistently denied ('I'm not angry'), they face an unsolvable dilemma: trust the body's signal or trust the authority. Over time, some nervous systems learn to suppress the signal as the safer move — because perceiving the truth accurately only led to punishment or destabilization. Therapy often involves rebuilding trust in one's own implicit channel: learning that what you sensed was real, and that congruent relationships feel different — not because they're perfect, but because they allow repair.",
+    concepts: ["Double Bind", "Bateson", "Interoception", "Implicit Channel"]
+  }
+];
+
+let current = 0, score = 0, answered = false;
+
+function startGame() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const q = questions[current];
+  answered = false;
+  document.getElementById('q-counter').textContent = `Question ${current+1} of ${questions.length}`;
+  document.getElementById('score-live').textContent = `Score: ${score}`;
+  document.getElementById('prog').style.width = `${((current)/questions.length)*100+10}%`;
+  document.getElementById('feedback').classList.remove('show');
+  document.getElementById('next-btn').style.display = 'none';
+
+  let scenarioHTML = `<div class="scenario-label">Scenario ${current+1}</div>
+    <div class="scenario-text">${q.scenario}</div>`;
+  if (q.explicit && q.implicit) {
+    scenarioHTML += `<div class="channel-row">
+      <div class="channel-box"><div class="label">Explicit Channel</div><div class="value">${q.explicit}</div></div>
+      <div class="channel-box"><div class="label">Implicit Channel</div><div class="value">${q.implicit}</div></div>
+    </div>`;
+  }
+  document.getElementById('scenario-card').innerHTML = scenarioHTML;
+  document.getElementById('q-text').textContent = q.question;
+
+  const optDiv = document.getElementById('options');
+  optDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    optDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.correct) b.classList.add('reveal');
+    if (i === idx && idx !== q.correct) b.classList.add('wrong');
+    if (i === idx && idx === q.correct) { b.classList.add('correct'); score++; }
+  });
+  document.getElementById('feedback-verdict').textContent = (idx === q.correct ? '✓ ' : '✗ ') + q.verdict;
+  document.getElementById('feedback-explain').textContent = q.explain;
+  const tags = document.getElementById('concept-tags');
+  tags.innerHTML = q.concepts.map(c => `<span class="concept-tag">${c}</span>`).join('');
+  document.getElementById('feedback').classList.add('show');
+  document.getElementById('score-live').textContent = `Score: ${score}`;
+  document.getElementById('next-btn').style.display = 'inline-block';
+  document.getElementById('next-btn').textContent = current < questions.length - 1 ? 'Next →' : 'See Results →';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) { showResult(); return; }
+  loadQuestion();
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.style.display = 'block';
+  const pct = Math.round((score/questions.length)*100);
+  const icons = ['🤔','🧩','👁️','🧠','🧠'];
+  const labels = ['Keep Learning','Signal Detected','Good Instincts','Sharp Reader','Congruence Master'];
+  const msgs = [
+    'The brain is fast and so are the patterns. Go back and read the feedback — every explanation is a doorway into the deeper neuroscience.',
+    'You are picking up signals. The concepts are clicking in. Try again and see where your instincts sharpen.',
+    'You have good instincts. The nuances between the Othello Error, Double Bind, and N400 are subtle — and you are getting there.',
+    'Sharp work. You understand both the neuroscience and the relational mechanics. The Congruence Code is worth reading cover to cover.',
+    'You read the room at the neural level. You understand that congruence is not a virtue — it is a biological event. Lead, teach, and mentor accordingly.'
+  ];
+  const tier = score < 4 ? 0 : score < 6 ? 1 : score < 8 ? 2 : score < 10 ? 3 : 4;
+  document.getElementById('r-icon').textContent = icons[tier];
+  document.getElementById('r-score').textContent = `${score} / ${questions.length}`;
+  document.getElementById('r-label').textContent = labels[tier];
+  document.getElementById('r-msg').textContent = msgs[tier];
+  const badges = [];
+  if (score >= 7) badges.push('N400 Navigator');
+  if (score >= 8) badges.push('Othello Aware');
+  if (score >= 9) badges.push('Double Bind Detector');
+  if (score === 10) badges.push('Congruence Master 🏆');
+  document.getElementById('r-badges').innerHTML = badges.map(b => `<div class="badge">${b}</div>`).join('');
+}
+
+function restartGame() {
+  current = 0; score = 0; answered = false;
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  loadQuestion();
+}
+</script>
+</body>
+</html>
