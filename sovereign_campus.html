@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Sovereign Campus | Global Sovereign University</title>
+<meta name="description" content="Walk our virtual campus — every book speaks. GSU's 3D library powered by A-Frame WebXR.">
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+<style>
+body { margin: 0; background: #000; font-family: Georgia, serif; }
+#ui-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 20px; background: rgba(0,0,0,0.85);
+  border-bottom: 1px solid #C9A84C40;
+  pointer-events: none;
+}
+#ui-overlay .logo { color: #C9A84C; font-size: 1rem; font-weight: bold; letter-spacing: 2px; }
+#ui-overlay .hint { color: #aaa; font-size: 0.8rem; }
+#info-panel {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.92); border: 1px solid #C9A84C60;
+  border-radius: 10px; padding: 16px 24px; z-index: 999;
+  text-align: center; min-width: 300px; max-width: 500px;
+  transition: opacity 0.4s;
+}
+#info-panel h3 { color: #C9A84C; margin-bottom: 6px; font-size: 1rem; }
+#info-panel p { color: #ccc; font-size: 0.85rem; line-height: 1.4; }
+#info-panel .series { color: #888; font-size: 0.75rem; margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+#info-panel .geno-line { color: #C9A84C; font-size: 0.8rem; margin-top: 8px; font-style: italic; }
+#enter-btn {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  background: #C9A84C; color: #000; border: none;
+  padding: 18px 48px; font-size: 1.2rem; font-weight: bold;
+  font-family: Georgia; border-radius: 8px; cursor: pointer; z-index: 1000;
+}
+#enter-btn:hover { background: #e8c55a; }
+</style>
+</head>
+<body>
+
+<div id="ui-overlay">
+  <div class="logo">GSU · SOVEREIGN CAMPUS</div>
+  <div class="hint">WASD / Arrow Keys to move · Click a book to hear GENO</div>
+</div>
+
+<button id="enter-btn" onclick="enterCampus()">Enter the Campus</button>
+
+<div id="info-panel">
+  <h3 id="panel-title">Welcome to the Sovereign Campus</h3>
+  <p id="panel-desc">Walk our virtual library. Every book speaks. Approach a shelf to hear GENO introduce the title. Your learning journey begins here.</p>
+  <div class="series" id="panel-series">Global Sovereign University · Free Campus</div>
+  <div class="geno-line" id="panel-geno">Ask GENO anything — type or speak.</div>
+</div>
+
+<a-scene id="scene" vr-mode-ui="enabled: true" background="color: #08080f" style="display:none;">
+
+  <!-- Camera with WASD controls -->
+  <a-entity id="rig" position="0 0 8">
+    <a-camera look-controls wasd-controls="acceleration: 30" position="0 1.6 0">
+      <a-cursor color="#C9A84C" fuse="false" raycaster="objects: .book-spine"></a-cursor>
+    </a-camera>
+  </a-entity>
+
+  <!-- Ambient + directional lighting -->
+  <a-light type="ambient" color="#1a1a2e" intensity="0.6"></a-light>
+  <a-light type="directional" color="#C9A84C" intensity="0.4" position="-2 4 2"></a-light>
+  <a-light type="point" color="#C9A84C" intensity="0.8" position="0 3 0" distance="20"></a-light>
+  <a-light type="point" color="#ffffff" intensity="0.3" position="0 3 -8" distance="15"></a-light>
+
+  <!-- Floor -->
+  <a-plane rotation="-90 0 0" width="30" height="40" position="0 0 0"
+    material="color: #0a0806; roughness: 0.9; metalness: 0.1"></a-plane>
+
+  <!-- Ceiling -->
+  <a-plane rotation="90 0 0" width="30" height="40" position="0 6 0"
+    material="color: #050508"></a-plane>
+
+  <!-- Back wall -->
+  <a-plane width="30" height="7" position="0 3.5 -15"
+    material="color: #0d0a06"></a-plane>
+
+  <!-- Side walls -->
+  <a-plane width="40" height="7" rotation="0 90 0" position="-12 3.5 -5"
+    material="color: #0d0a06"></a-plane>
+  <a-plane width="40" height="7" rotation="0 -90 0" position="12 3.5 -5"
+    material="color: #0d0a06"></a-plane>
+
+  <!-- GSU HEADER TEXT on back wall -->
+  <a-text value="GLOBAL SOVEREIGN UNIVERSITY" position="0 5.8 -14.8"
+    color="#C9A84C" width="20" align="center" font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt"></a-text>
+  <a-text value="The Sovereign Campus · Every Book Speaks" position="0 5.2 -14.8"
+    color="#888" width="14" align="center"></a-text>
+
+  <!-- GOLD TRIM lines -->
+  <a-box position="0 0.02 0" width="30" height="0.04" depth="40"
+    color="#C9A84C" opacity="0.15"></a-box>
+
+  <!-- ============================================
+       BOOKSHELVES — Left Wall (series A-E)
+       ============================================ -->
+
+  <!-- LEFT SHELF UNIT 1 -->
+  <a-box position="-9.5 2 -4" width="0.3" height="4" depth="8" color="#1a0f05" roughness="0.9"></a-box>
+  <!-- shelf boards -->
+  <a-box position="-9.2 0.8 -4" width="0.2" height="0.06" depth="8" color="#2a1a08"></a-box>
+  <a-box position="-9.2 1.8 -4" width="0.2" height="0.06" depth="8" color="#2a1a08"></a-box>
+  <a-box position="-9.2 2.8 -4" width="0.2" height="0.06" depth="8" color="#2a1a08"></a-box>
+  <a-box position="-9.2 3.8 -4" width="0.2" height="0.06" depth="8" color="#2a1a08"></a-box>
+
+  <!-- LEFT SHELF UNIT 2 -->
+  <a-box position="-9.5 2 -12" width="0.3" height="4" depth="6" color="#1a0f05" roughness="0.9"></a-box>
+  <a-box position="-9.2 0.8 -12" width="0.2" height="0.06" depth="6" color="#2a1a08"></a-box>
+  <a-box position="-9.2 1.8 -12" width="0.2" height="0.06" depth="6" color="#2a1a08"></a-box>
+  <a-box position="-9.2 2.8 -12" width="0.2" height="0.06" depth="6" color="#2a1a08"></a-box>
+
+  <!-- RIGHT SHELF UNIT 1 -->
+  <a-box position="9.5 2 -4" width="0.3" height="4" depth="8" color="#1a0f05" roughness="0.9"></a-box>
+  <a-box position="9.2 0.8 -4" width="0.2" height="0.06" depth="8" color="#2a1a08"></a-box>
+  <a-box position="9.2 1.8 -4" width="0.2" height="0.06" depth="8" color="#2a1a08"></a-box>
+  <a-box position="9.2 2.8 -4" width="0.2" height="0.06" depth="8" color="#2a1a08"></a-box>
+  <a-box position="9.2 3.8 -4" width="0.2" height="0.06" depth="8" color="#2a1a08"></a-box>
+
+  <!-- RIGHT SHELF UNIT 2 -->
+  <a-box position="9.5 2 -12" width="0.3" height="4" depth="6" color="#1a0f05" roughness="0.9"></a-box>
+  <a-box position="9.2 0.8 -12" width="0.2" height="0.06" depth="6" color="#2a1a08"></a-box>
+  <a-box position="9.2 1.8 -12" width="0.2" height="0.06" depth="6" color="#2a1a08"></a-box>
+  <a-box position="9.2 2.8 -12" width="0.2" height="0.06" depth="6" color="#2a1a08"></a-box>
+
+  <!-- BACK SHELF CENTER -->
+  <a-box position="0 2 -14.5" width="18" height="4" depth="0.3" color="#1a0f05" roughness="0.9"></a-box>
+  <a-box position="0 0.8 -14.3" width="18" height="0.06" depth="0.2" color="#2a1a08"></a-box>
+  <a-box position="0 1.8 -14.3" width="18" height="0.06" depth="0.2" color="#2a1a08"></a-box>
+  <a-box position="0 2.8 -14.3" width="18" height="0.06" depth="0.2" color="#2a1a08"></a-box>
+  <a-box position="0 3.8 -14.3" width="18" height="0.06" depth="0.2" color="#2a1a08"></a-box>
+
+  <!-- ============================================
+       BOOK SPINES — Left shelf, bottom row
+       ============================================ -->
+  <!-- Reading Helix series — deep red spines -->
+  <a-box class="book-spine" position="-8.9 1.2 -1.5" width="0.18" height="0.7" depth="0.8"
+    color="#8B0000" roughness="0.5"
+    data-title="The Sovereign Reader Vol. 1" data-series="Reading Helix"
+    data-desc="Where reading begins — not as a school subject, but as a survival skill. GENO guides you from decoding to comprehension."
+    data-geno="This is where The Lost find their way back. Every page you master is a door the system tried to close."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Sovereign Reader" position="-8.82 1.2 -1.5" rotation="0 -90 0" color="#f5f1e8" width="1.2" align="center"></a-text>
+
+  <a-box class="book-spine" position="-8.9 1.2 -2.5" width="0.18" height="0.7" depth="0.8"
+    color="#6B0000" roughness="0.5"
+    data-title="The Sovereign Reader Vol. 2" data-series="Reading Helix"
+    data-desc="Moving from reading words to reading the world. Comprehension, inference, and the analytical literacy the factory model never taught."
+    data-geno="If you can read this shelf, you have already beaten the system at its own game."
+    onclick="selectBook(this)"></a-box>
+
+  <!-- Mathification series — navy spines -->
+  <a-box class="book-spine" position="-8.9 1.2 -4.0" width="0.18" height="0.7" depth="0.8"
+    color="#1B2A4A" roughness="0.5"
+    data-title="The Little Economist's Handbook" data-series="Mathification"
+    data-desc="Numbers are not the enemy. Supply, demand, scarcity, value — explained for any learner, any age."
+    data-geno="Math is the language of consequences. Learn it and you stop being easy to deceive."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Little Economist" position="-8.82 1.2 -4.0" rotation="0 -90 0" color="#C9A84C" width="1.2" align="center"></a-text>
+
+  <!-- Financial Literacy series — green spines -->
+  <a-box class="book-spine" position="-8.9 1.2 -5.5" width="0.18" height="0.7" depth="0.8"
+    color="#0d3d0d" roughness="0.5"
+    data-title="Financial Literacy Without Apology" data-series="Financial Literacy"
+    data-desc="The money system was never designed to explain itself to you. This book does what the system refused to."
+    data-geno="They kept this book out of your school on purpose. Read it anyway."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Financial Literacy" position="-8.82 1.2 -5.5" rotation="0 -90 0" color="#4CAF50" width="1.2" align="center"></a-text>
+
+  <!-- Sovereign Trades — brown spines -->
+  <a-box class="book-spine" position="-8.9 1.2 -7.0" width="0.18" height="0.7" depth="0.8"
+    color="#3d1a00" roughness="0.5"
+    data-title="The Sovereign Electrician" data-series="Sovereign Trades"
+    data-desc="The trades built this civilization. This book helps you build yours. From fundamentals to business ownership."
+    data-geno="A sovereign person knows how to make things work. Starting with the lights."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Sovereign Electrician" position="-8.82 1.2 -7.0" rotation="0 -90 0" color="#e8c55a" width="1.0" align="center"></a-text>
+
+  <!-- Right shelf books -->
+  <!-- Civics — dark blue -->
+  <a-box class="book-spine" position="8.9 1.2 -1.5" width="0.18" height="0.7" depth="0.8"
+    color="#0a1f3d" roughness="0.5"
+    data-title="Civics Without Apology" data-series="Civics Without Apology"
+    data-desc="The rights you were never taught, the duties they hoped you would forget. Civics as it was meant to be taught."
+    data-geno="You cannot defend what you do not understand. Start here."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Civics Without Apology" position="8.82 1.2 -1.5" rotation="0 90 0" color="#C9A84C" width="1.0" align="center"></a-text>
+
+  <!-- Behavior Series — purple -->
+  <a-box class="book-spine" position="8.9 1.2 -3.0" width="0.18" height="0.7" depth="0.8"
+    color="#2d0d3d" roughness="0.5"
+    data-title="The Congruence Code" data-series="Behavior Series"
+    data-desc="How the brain and body process authentic interaction. The neuroscience of trust, deception, and the N400."
+    data-geno="When your words and your body say the same thing, people feel it before they can explain why."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Congruence Code" position="8.82 1.2 -3.0" rotation="0 90 0" color="#a78bc0" width="1.2" align="center"></a-text>
+
+  <!-- Deep Research — teal -->
+  <a-box class="book-spine" position="8.9 1.2 -5.0" width="0.18" height="0.7" depth="0.8"
+    color="#0a3d3d" roughness="0.5"
+    data-title="Systemic Failure & Institutional Corruption" data-series="Deep Research"
+    data-desc="The dual marginalization paradigm — how The Lost and The Forgotten are manufactured by design, not by accident."
+    data-geno="The system is not broken. It is doing exactly what its incentives demand. Now you know."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Systemic Failure" position="8.82 1.2 -5.0" rotation="0 90 0" color="#1A8B7F" width="1.2" align="center"></a-text>
+
+  <!-- Sovereign Mind Junior — gold -->
+  <a-box class="book-spine" position="8.9 1.2 -7.0" width="0.18" height="0.7" depth="0.8"
+    color="#3d3000" roughness="0.5"
+    data-title="The Sovereign Mind Junior" data-series="Sovereign Mind"
+    data-desc="Critical thinking for young people who deserve better than a factory education. For kids who ask why."
+    data-geno="A child who knows how to think cannot be easily controlled. That is the point."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Sovereign Mind Jr" position="8.82 1.2 -7.0" rotation="0 90 0" color="#C9A84C" width="1.2" align="center"></a-text>
+
+  <!-- Back wall books -->
+  <!-- Linguification -->
+  <a-box class="book-spine" position="-6 1.2 -14.0" width="0.8" height="0.7" depth="0.18"
+    color="#004d40" roughness="0.5"
+    data-title="The Sounds You've Never Made" data-series="Linguification"
+    data-desc="Language learning for people who think they are too old, too busy, or too far gone. Free PDF. No excuse."
+    data-geno="Every language you speak is another mind you can reach."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Sounds You've Never Made" position="-6 1.2 -13.85" color="#4CAF50" width="2" align="center"></a-text>
+
+  <a-box class="book-spine" position="-3 1.2 -14.0" width="0.8" height="0.7" depth="0.18"
+    color="#006B5E" roughness="0.5"
+    data-title="Living in Two Languages" data-series="Linguification"
+    data-desc="Bilingualism is not a luxury. It is a cognitive advantage that the system never told you was yours to claim."
+    data-geno="Two languages. Two ways of seeing. One sovereign mind."
+    onclick="selectBook(this)"></a-box>
+
+  <!-- Homeschool -->
+  <a-box class="book-spine" position="0 1.2 -14.0" width="0.8" height="0.7" depth="0.18"
+    color="#4a1a00" roughness="0.5"
+    data-title="Morals, Character, Values" data-series="Homeschool"
+    data-desc="The essential homeschool guide for the middle years. What schools stopped teaching and why you cannot afford to let it go."
+    data-geno="Character is not taught in a compliance checklist. It is built in the conversation between a parent and a child."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Morals Character Values" position="0 1.2 -13.85" color="#e8c55a" width="2" align="center"></a-text>
+
+  <!-- Epic Heart of America -->
+  <a-box class="book-spine" position="3 1.2 -14.0" width="0.8" height="0.7" depth="0.18"
+    color="#8B0000" roughness="0.5"
+    data-title="The Epic Heart of America" data-series="American History"
+    data-desc="ASIN B0H6MRYNP1 · American history as it was lived — not sanitized, not simplified, not forgotten."
+    data-geno="You cannot love what you do not know. This is what you were not taught."
+    onclick="selectBook(this)"></a-box>
+  <a-text value="Epic Heart of America" position="3 1.2 -13.85" color="#c0392b" width="2" align="center"></a-text>
+
+  <!-- Polyglot's Method -->
+  <a-box class="book-spine" position="6 1.2 -14.0" width="0.8" height="0.7" depth="0.18"
+    color="#003d4a" roughness="0.5"
+    data-title="The Polyglot's Method" data-series="Linguification"
+    data-desc="How to learn multiple languages simultaneously without losing your mind. The GSU approach to linguistic sovereignty."
+    data-geno="The factory model taught you one language and called you educated. You were built for more."
+    onclick="selectBook(this)"></a-box>
+
+  <!-- GENO AVATAR — center of the room -->
+  <a-entity position="0 0 -5" id="geno-entity">
+    <!-- Body -->
+    <a-sphere position="0 1.5 0" radius="0.35" color="#C9A84C" roughness="0.3" metalness="0.2"></a-sphere>
+    <!-- Head -->
+    <a-sphere position="0 2.1 0" radius="0.28" color="#e8c55a" roughness="0.3"></a-sphere>
+    <!-- Eyes -->
+    <a-sphere position="-0.1 2.15 0.24" radius="0.05" color="#000"></a-sphere>
+    <a-sphere position="0.1 2.15 0.24" radius="0.05" color="#000"></a-sphere>
+    <!-- Eye shine -->
+    <a-sphere position="-0.08 2.17 0.27" radius="0.015" color="#fff"></a-sphere>
+    <a-sphere position="0.12 2.17 0.27" radius="0.015" color="#fff"></a-sphere>
+    <!-- Arms -->
+    <a-box position="-0.5 1.5 0" width="0.1" height="0.6" depth="0.1" color="#C9A84C" rotation="0 0 20"></a-box>
+    <a-box position="0.5 1.5 0" width="0.1" height="0.6" depth="0.1" color="#C9A84C" rotation="0 0 -20"></a-box>
+    <!-- Legs -->
+    <a-box position="-0.12 0.7 0" width="0.1" height="0.7" depth="0.1" color="#C9A84C"></a-box>
+    <a-box position="0.12 0.7 0" width="0.1" height="0.7" depth="0.1" color="#C9A84C"></a-box>
+    <!-- GENO label -->
+    <a-text value="GENO" position="0 2.6 0" color="#C9A84C" width="3" align="center"></a-text>
+    <!-- Glow ring at feet -->
+    <a-torus position="0 0.05 0" radius="0.5" radius-tubular="0.02" color="#C9A84C" opacity="0.4"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 6000; easing: linear"></a-torus>
+    <!-- Idle bob animation -->
+    <a-animation attribute="position" to="0 0.2 -5" from="0 0 -5" direction="alternate" dur="2000" repeat="indefinite" easing="easeInOutSine"></a-animation>
+  </a-entity>
+
+  <!-- WISDOM BRIDGE portal -->
+  <a-entity position="0 0 -13" id="wisdom-bridge">
+    <a-torus position="0 2 0" radius="1.2" radius-tubular="0.06" color="#C9A84C" opacity="0.7"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear"></a-torus>
+    <a-text value="WISDOM BRIDGE" position="0 3.5 0" color="#C9A84C" width="5" align="center"></a-text>
+    <a-text value="Complete a book · Earn your checkpoint" position="0 3.0 0" color="#888" width="5" align="center"></a-text>
+    <a-sphere position="0 2 0" radius="0.9" color="#0a0820" opacity="0.8"
+      animation="property: material.opacity; from: 0.6; to: 0.9; direction: alternate; dur: 3000; repeat: indefinite"></a-sphere>
+  </a-entity>
+
+  <!-- Floor path lights -->
+  <a-sphere position="-3 0.1 2" radius="0.08" color="#C9A84C" opacity="0.6"></a-sphere>
+  <a-sphere position="0 0.1 2" radius="0.08" color="#C9A84C" opacity="0.6"></a-sphere>
+  <a-sphere position="3 0.1 2" radius="0.08" color="#C9A84C" opacity="0.6"></a-sphere>
+  <a-sphere position="-3 0.1 -3" radius="0.08" color="#C9A84C" opacity="0.6"></a-sphere>
+  <a-sphere position="0 0.1 -3" radius="0.08" color="#C9A84C" opacity="0.6"></a-sphere>
+  <a-sphere position="3 0.1 -3" radius="0.08" color="#C9A84C" opacity="0.6"></a-sphere>
+
+  <!-- Sky / environment -->
+  <a-sky color="#08080f"></a-sky>
+
+</a-scene>
+
+<script>
+const ELEVENLABS_AGENT = 'agent_8401kgp60tkbf9q82n9cxaa31c5g';
+let genoActive = false;
+let lastBook = null;
+
+function enterCampus() {
+  document.getElementById('enter-btn').style.display = 'none';
+  document.getElementById('scene').style.display = 'block';
+  updatePanel(
+    'You are in the Library',
+    'Walk toward the shelves. Click any book to hear GENO introduce it. The Wisdom Bridge ahead glows when you complete a checkpoint.',
+    'Free Campus · 198+ Titles',
+    'Ask GENO: "Which book should I start with?"'
+  );
+}
+
+function selectBook(el) {
+  const title = el.getAttribute('data-title');
+  const series = el.getAttribute('data-series');
+  const desc = el.getAttribute('data-desc');
+  const geno = el.getAttribute('data-geno');
+  if (lastBook) lastBook.setAttribute('scale', '1 1 1');
+  el.setAttribute('scale', '1.15 1.15 1.15');
+  lastBook = el;
+  updatePanel(title, desc, series, '"' + geno + '"');
+  speakGENO(geno + ' ' + desc);
+}
+
+function updatePanel(title, desc, series, geno) {
+  document.getElementById('panel-title').textContent = title;
+  document.getElementById('panel-desc').textContent = desc;
+  document.getElementById('panel-series').textContent = series;
+  document.getElementById('panel-geno').textContent = geno;
+}
+
+function speakGENO(text) {
+  // Trigger ElevenLabs convai widget if available
+  try {
+    const widget = document.querySelector('elevenlabs-convai');
+    if (widget) { widget.startConversation && widget.startConversation(text); }
+  } catch(e) {}
+  // Log for Firebase checkpoint integration (Phase 2)
+  console.log('GENO speaks:', text);
+}
+
+// Proximity detection — check distance from books every second
+setInterval(() => {
+  const scene = document.getElementById('scene');
+  if (!scene || scene.style.display === 'none') return;
+  const rig = document.getElementById('rig');
+  if (!rig) return;
+  const pos = rig.getAttribute('position');
+  if (!pos) return;
+  // Check proximity to GENO
+  const dx = pos.x, dz = pos.z + 5;
+  const dist = Math.sqrt(dx*dx + dz*dz);
+  if (dist < 2 && !genoActive) {
+    genoActive = true;
+    updatePanel(
+      'GENO is with you',
+      'You have reached the center of the campus. GENO is here to guide your learning journey.',
+      'Global Education Navigation Operator',
+      '"Walk the shelves. Every book here was written for someone the system forgot about."'
+    );
+  } else if (dist >= 2) {
+    genoActive = false;
+  }
+}, 1000);
+</script>
+
+<!-- ElevenLabs GENO widget -->
+<script src="https://elevenlabs.io/convai-widget/index.js" async></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+</body>
+</html>

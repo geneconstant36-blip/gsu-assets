@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wall of Gratitude | Global Sovereign University</title>
+<meta name="description" content="The people who believe in free education for everyone. Ranked by impact. Honored by name.">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #050505; color: #f5f1e8; font-family: Georgia, serif; min-height: 100vh; }
+header { background: #000; border-bottom: 2px solid #C9A84C; padding: 16px 24px; text-align: center; }
+header h1 { color: #C9A84C; font-size: 1.6rem; letter-spacing: 2px; }
+header p { color: #888; font-size: 0.85rem; margin-top: 4px; }
+.hero { background: linear-gradient(180deg, #0a0805 0%, #050505 100%); padding: 40px 20px; text-align: center; border-bottom: 1px solid #C9A84C20; }
+.hero h2 { color: #f5f1e8; font-size: 1.4rem; margin-bottom: 12px; }
+.hero p { color: #aaa; max-width: 600px; margin: 0 auto 20px; line-height: 1.6; font-size: 0.95rem; }
+.mission-bar { background: #C9A84C10; border: 1px solid #C9A84C40; border-radius: 8px; padding: 14px 24px; max-width: 620px; margin: 0 auto; font-size: 0.9rem; color: #C9A84C; font-style: italic; }
+.wall-wrap { max-width: 900px; margin: 0 auto; padding: 32px 16px; }
+.section-title { color: #C9A84C; font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; border-bottom: 1px solid #C9A84C30; padding-bottom: 8px; }
+/* TOP 3 PODIUM */
+.podium { display: flex; justify-content: center; align-items: flex-end; gap: 12px; margin-bottom: 36px; }
+.podium-slot { text-align: center; }
+.podium-slot .rank-num { font-size: 1.4rem; font-weight: bold; }
+.podium-slot .crown { font-size: 1.8rem; }
+.podium-slot .name { font-size: 1rem; color: #f5f1e8; margin: 6px 0 4px; font-weight: bold; }
+.podium-slot .impact { font-size: 0.8rem; color: #aaa; }
+.podium-slot .card { border-radius: 10px 10px 0 0; padding: 20px 24px 0; min-width: 160px; }
+.p1 .card { background: linear-gradient(180deg, #2d2400 0%, #1a1500 100%); border: 1px solid #C9A84C; height: 140px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 16px; }
+.p2 .card { background: linear-gradient(180deg, #1a1a1a 0%, #111 100%); border: 1px solid #888; height: 110px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 12px; }
+.p3 .card { background: linear-gradient(180deg, #1a0f00 0%, #110a00 100%); border: 1px solid #8B4513; height: 90px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 10px; }
+.p1 .rank-num { color: #C9A84C; }
+.p2 .rank-num { color: #aaa; }
+.p3 .rank-num { color: #CD7F32; }
+/* LEADERBOARD TABLE */
+.board { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; overflow: hidden; }
+.board-row { display: grid; grid-template-columns: 48px 1fr 120px 80px; align-items: center; padding: 14px 18px; border-bottom: 1px solid #1a1a1a; transition: background 0.2s; }
+.board-row:hover { background: #111; }
+.board-row.header { background: #111; color: #888; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; padding: 10px 18px; }
+.board-row .rank { color: #555; font-size: 1rem; font-weight: bold; }
+.board-row .rank.gold { color: #C9A84C; }
+.board-row .name-col .handle { color: #f5f1e8; font-size: 0.95rem; }
+.board-row .name-col .location { color: #555; font-size: 0.75rem; margin-top: 2px; }
+.board-row .books { color: #C9A84C; font-size: 0.95rem; text-align: right; }
+.board-row .badge-col { text-align: right; }
+.badge { display: inline-block; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; }
+.b-gold { background: #C9A84C20; border: 1px solid #C9A84C60; color: #C9A84C; }
+.b-silver { background: #88888820; border: 1px solid #88888860; color: #aaa; }
+.b-bronze { background: #CD7F3220; border: 1px solid #CD7F3260; color: #CD7F32; }
+.b-friend { background: #1A8B7F20; border: 1px solid #1A8B7F60; color: #1A8B7F; }
+/* JOIN SECTION */
+.join-section { background: #0d0d0d; border: 1px solid #C9A84C30; border-radius: 10px; padding: 28px; margin-top: 32px; text-align: center; }
+.join-section h3 { color: #C9A84C; font-size: 1.1rem; margin-bottom: 10px; }
+.join-section p { color: #aaa; font-size: 0.9rem; line-height: 1.6; max-width: 520px; margin: 0 auto 20px; }
+.join-section .how-it-works { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+.step { background: #111; border: 1px solid #C9A84C20; border-radius: 8px; padding: 16px; }
+.step .num { color: #C9A84C; font-size: 1.4rem; font-weight: bold; margin-bottom: 6px; }
+.step p { font-size: 0.82rem; color: #bbb; line-height: 1.4; }
+.join-btn { display: inline-block; background: #C9A84C; color: #000; padding: 12px 32px; border-radius: 6px; font-weight: bold; font-size: 0.95rem; text-decoration: none; font-family: Georgia; }
+.join-btn:hover { background: #e8c55a; }
+.how-credited { background: #0a0f0a; border: 1px solid #1A8B7F30; border-radius: 8px; padding: 14px 20px; margin-top: 18px; font-size: 0.82rem; color: #888; line-height: 1.5; }
+.how-credited strong { color: #1A8B7F; }
+/* Loading state */
+.loading { text-align: center; padding: 40px; color: #555; }
+@media (max-width: 600px) {
+  .podium { flex-direction: column; align-items: center; }
+  .join-section .how-it-works { grid-template-columns: 1fr; }
+  .board-row { grid-template-columns: 40px 1fr 80px; }
+  .board-row .badge-col { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Wall of Gratitude</h1>
+  <p>Global Sovereign University · Foundation for Global Instruction · 501(c)(3)</p>
+</header>
+
+<div class="hero">
+  <h2>These people believe free education should exist.</h2>
+  <p>Every time someone buys a GSU book through our store, a portion of that sale is tracked as their contribution to this mission. No accounting staff. No commissions to chase. Just a public record of who showed up.</p>
+  <div class="mission-bar">"Building a Bridge to Freedom Through Education — Not Handouts." — Dr. Gene A. Constant</div>
+</div>
+
+<div class="wall-wrap">
+
+  <div class="section-title">Top Contributors · All Time</div>
+
+  <!-- PODIUM TOP 3 -->
+  <div class="podium" id="podium">
+    <div class="podium-slot p2" id="p2-slot">
+      <div class="card">
+        <div class="crown">🥈</div>
+        <div class="rank-num">#2</div>
+        <div class="name" id="p2-name">—</div>
+        <div class="impact" id="p2-books">— books</div>
+      </div>
+    </div>
+    <div class="podium-slot p1" id="p1-slot">
+      <div class="card">
+        <div class="crown">👑</div>
+        <div class="rank-num">#1</div>
+        <div class="name" id="p1-name">—</div>
+        <div class="impact" id="p1-books">— books</div>
+      </div>
+    </div>
+    <div class="podium-slot p3" id="p3-slot">
+      <div class="card">
+        <div class="crown">🥉</div>
+        <div class="rank-num">#3</div>
+        <div class="name" id="p3-name">—</div>
+        <div class="impact" id="p3-books">— books</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="board" id="board">
+    <div class="board-row header">
+      <div>Rank</div>
+      <div>Contributor</div>
+      <div style="text-align:right">Books Gifted</div>
+      <div style="text-align:right">Level</div>
+    </div>
+    <div class="loading" id="board-loading">Loading contributors...</div>
+  </div>
+
+  <!-- HOW TO JOIN -->
+  <div class="join-section">
+    <h3>Your Name Could Be Here</h3>
+    <p>There are no phone calls to make, no commission checks to wait for, and no accounting department to deal with. Share your link. When someone buys — we see it. Your name rises on this wall.</p>
+    <div class="how-it-works">
+      <div class="step">
+        <div class="num">1</div>
+        <p>Sign up below and receive your unique GSU Amazon affiliate share link.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <p>Share it anywhere — email, social media, text, podcast, back of a book.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <p>Every purchase through your link earns the Foundation a referral and moves your name up this wall.</p>
+      </div>
+    </div>
+    <a href="/quid-pro-quo" class="join-btn">Join the Wall of Gratitude →</a>
+    <div class="how-credited">
+      <strong>How impact is tracked:</strong> GSU uses Amazon's affiliate system (tag: gsu2026-20). When a purchase is made through your shared link, Amazon reports it. Your total is updated monthly. No personal financial data is collected or displayed. Your ranking reflects books-moved-into-hands, not dollars. <strong>The goal is never money. The goal is reach.</strong>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Firebase config — replace with GSU production config
+const firebaseConfig = {
+  apiKey: "AIzaSyPlaceholderGSUConfig",
+  authDomain: "gsu-platform.firebaseapp.com",
+  projectId: "gsu-platform",
+};
+
+// SEED DATA — shown while Firebase loads or if unavailable
+const seedData = [
+  { name: "The Founding Chancellor", location: "Eugene, OR", books: 198, badge: "gold" },
+  { name: "A Sovereign Educator", location: "United States", books: 47, badge: "gold" },
+  { name: "Voice of the People", location: "Anonymous", books: 31, badge: "silver" },
+  { name: "A Civilization Builder", location: "Oregon", books: 18, badge: "silver" },
+  { name: "The Quiet Reader", location: "Anonymous", books: 12, badge: "bronze" },
+  { name: "A Friend of Freedom", location: "United States", books: 9, badge: "friend" },
+  { name: "Dr. Hope", location: "Anonymous", books: 7, badge: "friend" },
+  { name: "Your Name Here", location: "Anywhere", books: 0, badge: "friend" },
+];
+
+const BADGE_LABELS = { gold: "Sovereign", silver: "Builder", bronze: "Ally", friend: "Friend" };
+const BADGE_CLASS = { gold: "b-gold", silver: "b-silver", bronze: "b-bronze", friend: "b-friend" };
+
+function renderBoard(data) {
+  // Podium
+  if (data[0]) { document.getElementById('p1-name').textContent = data[0].name; document.getElementById('p1-books').textContent = data[0].books + ' books'; }
+  if (data[1]) { document.getElementById('p2-name').textContent = data[1].name; document.getElementById('p2-books').textContent = data[1].books + ' books'; }
+  if (data[2]) { document.getElementById('p3-name').textContent = data[2].name; document.getElementById('p3-books').textContent = data[2].books + ' books'; }
+
+  // Table
+  const board = document.getElementById('board');
+  const header = board.querySelector('.board-row.header');
+  board.innerHTML = '';
+  board.appendChild(header);
+
+  data.forEach((person, i) => {
+    const row = document.createElement('div');
+    row.className = 'board-row';
+    const rankClass = i < 3 ? 'rank gold' : 'rank';
+    const rankEmoji = i === 0 ? '👑' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i+1}`;
+    row.innerHTML = `
+      <div class="${rankClass}">${rankEmoji}</div>
+      <div class="name-col">
+        <div class="handle">${person.name}</div>
+        <div class="location">${person.location}</div>
+      </div>
+      <div class="books">${person.books > 0 ? person.books : '—'}</div>
+      <div class="badge-col"><span class="badge ${BADGE_CLASS[person.badge] || 'b-friend'}">${BADGE_LABELS[person.badge] || 'Friend'}</span></div>
+    `;
+    board.appendChild(row);
+  });
+
+  document.getElementById('board-loading') && document.getElementById('board-loading').remove();
+}
+
+// Try Firebase, fallback to seed
+try {
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  db.collection('wall_of_gratitude').orderBy('books', 'desc').limit(20).get()
+    .then(snap => {
+      if (snap.empty) { renderBoard(seedData); return; }
+      const live = snap.docs.map(d => d.data());
+      renderBoard(live);
+    })
+    .catch(() => renderBoard(seedData));
+} catch(e) {
+  renderBoard(seedData);
+}
+</script>
+
+</body>
+</html>

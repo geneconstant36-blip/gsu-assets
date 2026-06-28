@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GENO: The Tutor Who Showed Up | GSU Comic</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #050505; color: #f5f1e8; font-family: Georgia, serif; }
+header { background: #000; border-bottom: 2px solid #C9A84C; padding: 14px 24px; display: flex; align-items: center; gap: 14px; }
+.logo { color: #C9A84C; font-size: 1rem; font-weight: bold; letter-spacing: 2px; }
+.strip-wrap { max-width: 960px; margin: 0 auto; padding: 28px 16px; }
+.strip-title { text-align: center; margin-bottom: 28px; }
+.strip-title h1 { color: #C9A84C; font-size: 1.5rem; margin-bottom: 6px; }
+.strip-title p { color: #888; font-size: 0.85rem; }
+.strip-title .episode { display: inline-block; background: #C9A84C20; border: 1px solid #C9A84C60; color: #C9A84C; font-size: 0.75rem; padding: 3px 12px; border-radius: 10px; margin-bottom: 10px; letter-spacing: 2px; }
+/* COMIC GRID */
+.comic-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; background: #C9A84C30; border: 2px solid #C9A84C; border-radius: 4px; overflow: hidden; }
+.panel { background: #0d0d0d; position: relative; min-height: 260px; display: flex; flex-direction: column; }
+.panel-inner { flex: 1; padding: 14px; display: flex; flex-direction: column; }
+.panel-num { color: #C9A84C; font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; opacity: 0.6; }
+/* Scene illustration (SVG) */
+.scene { width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; margin: 8px 0; min-height: 120px; }
+/* Speech bubble */
+.bubble { background: #f5f1e8; color: #000; border-radius: 14px; padding: 9px 12px; font-size: 0.78rem; line-height: 1.4; position: relative; margin-top: auto; }
+.bubble.geno { background: #C9A84C; }
+.bubble.geno::before { content: ''; position: absolute; top: -8px; left: 18px; border: 8px solid transparent; border-bottom-color: #C9A84C; border-top: none; }
+.bubble::before { content: ''; position: absolute; top: -8px; left: 18px; border: 8px solid transparent; border-bottom-color: #f5f1e8; border-top: none; }
+.bubble.right::before { left: auto; right: 18px; }
+.bubble.thought { background: #e8e0ff; color: #333; border-radius: 18px; }
+.bubble.thought::before { display: none; }
+.bubble.thought::after { content: '○ ○ ○'; position: absolute; top: -16px; left: 12px; color: #e8e0ff; font-size: 0.6rem; letter-spacing: 2px; }
+.caption { font-size: 0.72rem; color: #888; text-align: center; padding: 6px; border-top: 1px solid #1a1a1a; font-style: italic; }
+/* Characters as SVG */
+.char-geno { /* Drawn inline per panel */ }
+/* Wide panel for panel 4 and 6 */
+.panel.wide { grid-column: span 2; }
+/* Bottom strip */
+.bottom-strip { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; }
+.read-more { background: #C9A84C; color: #000; padding: 10px 24px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; text-decoration: none; font-family: Georgia; }
+.read-more:hover { background: #e8c55a; }
+.episode-nav { color: #555; font-size: 0.8rem; }
+/* Screen reader text */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+/* Alt text panel for accessibility */
+.alt-text-mode { display: none; background: #111; border: 1px solid #333; border-radius: 8px; padding: 20px; margin-top: 16px; }
+.alt-text-mode p { margin-bottom: 12px; font-size: 0.9rem; line-height: 1.6; color: #ddd; }
+.alt-text-mode .panel-label { color: #C9A84C; font-weight: bold; }
+.toggle-alt { background: transparent; border: 1px solid #555; color: #888; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-family: Georgia; font-size: 0.8rem; margin-top: 4px; }
+.toggle-alt:hover { border-color: #C9A84C; color: #C9A84C; }
+@media (max-width: 640px) {
+  .comic-grid { grid-template-columns: 1fr; }
+  .panel.wide { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">GSU</div>
+  <span style="color:#888;font-size:0.85rem">Global Sovereign University · The GENO Strip</span>
+</header>
+
+<div class="strip-wrap">
+  <div class="strip-title">
+    <div class="episode">Episode 1</div>
+    <h1>GENO: The Tutor Who Showed Up</h1>
+    <p>A comic strip for everyone the system forgot to teach</p>
+  </div>
+
+  <button class="toggle-alt" onclick="toggleAlt()" id="alt-btn">📖 Read as Text (Screen Reader Mode)</button>
+
+  <div class="comic-grid" id="comic" aria-label="GENO Comic Strip: The Tutor Who Showed Up">
+
+    <!-- PANEL 1 -->
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="panel-num">Panel 1</div>
+        <div class="scene">
+          <svg width="140" height="110" viewBox="0 0 140 110" aria-hidden="true">
+            <!-- Background — dark room, glow from screen -->
+            <rect width="140" height="110" fill="#0a0a12"/>
+            <!-- Desk -->
+            <rect x="10" y="72" width="120" height="8" rx="2" fill="#2a1a08"/>
+            <rect x="20" y="80" width="8" height="28" fill="#1a0f05"/>
+            <rect x="112" y="80" width="8" height="28" fill="#1a0f05"/>
+            <!-- Laptop glow -->
+            <rect x="45" y="38" width="50" height="34" rx="3" fill="#1a1a2e"/>
+            <rect x="47" y="40" width="46" height="30" rx="2" fill="#0d1a3d"/>
+            <ellipse cx="70" cy="38" rx="3" ry="1.5" fill="#2a1a08"/>
+            <!-- Screen glow -->
+            <rect x="47" y="40" width="46" height="30" rx="2" fill="#0d3d6e" opacity="0.5"/>
+            <text x="70" y="57" text-anchor="middle" fill="#C9A84C" font-size="8" font-family="Georgia">GSU</text>
+            <!-- Person — frustrated, slumped -->
+            <ellipse cx="70" cy="30" rx="11" ry="11" fill="#d4a574"/>
+            <!-- Hair -->
+            <ellipse cx="70" cy="20" rx="11" ry="6" fill="#3a2010"/>
+            <!-- Frown -->
+            <path d="M64 34 Q70 30 76 34" stroke="#8B4513" stroke-width="1.5" fill="none"/>
+            <!-- Hand on head -->
+            <ellipse cx="82" cy="26" rx="7" ry="5" fill="#d4a574"/>
+            <!-- Body/shoulders -->
+            <rect x="56" y="40" width="28" height="20" rx="4" fill="#1B2A4A"/>
+          </svg>
+        </div>
+        <div class="bubble thought">I've read this chapter three times. I still don't understand it. There's no one to ask.</div>
+      </div>
+      <div class="caption">Marcus, 34. Working nights. Studying when he can.</div>
+    </div>
+
+    <!-- PANEL 2 -->
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="panel-num">Panel 2</div>
+        <div class="scene">
+          <svg width="140" height="110" viewBox="0 0 140 110" aria-hidden="true">
+            <rect width="140" height="110" fill="#08080f"/>
+            <!-- Screen bright now -->
+            <rect x="30" y="20" width="80" height="55" rx="4" fill="#0a1a30"/>
+            <rect x="32" y="22" width="76" height="51" rx="3" fill="#0d2040" stroke="#C9A84C" stroke-width="1"/>
+            <!-- GENO appearing on screen -->
+            <!-- GENO body -->
+            <circle cx="70" cy="42" r="14" fill="#C9A84C"/>
+            <circle cx="70" cy="30" r="11" fill="#e8c55a"/>
+            <!-- GENO eyes -->
+            <circle cx="65" cy="28" r="2.5" fill="#000"/>
+            <circle cx="75" cy="28" r="2.5" fill="#000"/>
+            <circle cx="65.8" cy="27.2" r="0.8" fill="#fff"/>
+            <circle cx="75.8" cy="27.2" r="0.8" fill="#fff"/>
+            <!-- GENO smile -->
+            <path d="M64 33 Q70 37 76 33" stroke="#000" stroke-width="1.5" fill="none"/>
+            <!-- GENO wave arm -->
+            <rect x="82" y="36" width="5" height="14" rx="2.5" fill="#C9A84C" transform="rotate(-30 82 36)"/>
+            <!-- Screen glow halo -->
+            <ellipse cx="70" cy="48" rx="16" ry="4" fill="#C9A84C" opacity="0.15"/>
+            <!-- GENO name badge on screen -->
+            <rect x="55" y="60" width="30" height="9" rx="4" fill="#C9A84C"/>
+            <text x="70" y="67" text-anchor="middle" fill="#000" font-size="6" font-weight="bold" font-family="Georgia">GENO</text>
+          </svg>
+        </div>
+        <div class="bubble geno">Hey. I'm GENO — the GSU tutor. I don't sleep, I don't charge, and I don't judge. What are you stuck on?</div>
+      </div>
+      <div class="caption">2:47 AM. A light appears.</div>
+    </div>
+
+    <!-- PANEL 3 -->
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="panel-num">Panel 3</div>
+        <div class="scene">
+          <svg width="140" height="110" viewBox="0 0 140 110" aria-hidden="true">
+            <rect width="140" height="110" fill="#08080f"/>
+            <!-- Split screen: Marcus left, GENO right -->
+            <!-- Marcus — skeptical look -->
+            <ellipse cx="38" cy="55" rx="11" ry="11" fill="#d4a574"/>
+            <ellipse cx="38" cy="45" rx="11" ry="5" fill="#3a2010"/>
+            <!-- One eyebrow raised -->
+            <path d="M32 50 Q35 48 38 50" stroke="#3a2010" stroke-width="1.5" fill="none"/>
+            <path d="M38 50 Q42 49 44 50" stroke="#3a2010" stroke-width="1" fill="none"/>
+            <!-- Skeptical mouth -->
+            <path d="M33 59 Q38 58 43 59" stroke="#8B4513" stroke-width="1.2" fill="none"/>
+            <!-- Marcus body -->
+            <rect x="25" y="65" width="25" height="18" rx="3" fill="#1B2A4A"/>
+            <!-- Dividing line -->
+            <line x1="70" y1="20" x2="70" y2="105" stroke="#C9A84C" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <!-- GENO right side — confident pose -->
+            <circle cx="100" cy="55" r="12" fill="#C9A84C"/>
+            <circle cx="100" cy="44" r="10" fill="#e8c55a"/>
+            <circle cx="96" cy="42" r="2" fill="#000"/>
+            <circle cx="104" cy="42" r="2" fill="#000"/>
+            <path d="M95 48 Q100 52 105 48" stroke="#000" stroke-width="1.5" fill="none"/>
+            <!-- Arms spread open -->
+            <rect x="111" y="50" width="12" height="4" rx="2" fill="#C9A84C" transform="rotate(-20 111 50)"/>
+            <rect x="77" y="50" width="12" height="4" rx="2" fill="#C9A84C" transform="rotate(20 89 50)"/>
+          </svg>
+        </div>
+        <div class="bubble right">Free? No catch? I've heard that before.</div>
+      </div>
+      <div class="caption">Marcus has been here before.</div>
+    </div>
+
+    <!-- PANEL 4 — WIDE -->
+    <div class="panel wide">
+      <div class="panel-inner">
+        <div class="panel-num">Panel 4 · Center Stage</div>
+        <div class="scene">
+          <svg width="300" height="120" viewBox="0 0 300 120" aria-hidden="true">
+            <rect width="300" height="120" fill="#0a0805"/>
+            <!-- GSU Library backdrop — bookshelves suggested -->
+            <rect x="0" y="60" width="300" height="60" fill="#0d0a06"/>
+            <!-- Shelf lines -->
+            <rect x="0" y="60" width="300" height="3" fill="#2a1a08"/>
+            <rect x="0" y="80" width="300" height="2" fill="#2a1a08"/>
+            <rect x="0" y="100" width="300" height="2" fill="#1a1008"/>
+            <!-- Book spines on shelf (decorative) -->
+            <rect x="10" y="62" width="6" height="18" rx="1" fill="#8B0000"/>
+            <rect x="17" y="62" width="5" height="18" rx="1" fill="#1B2A4A"/>
+            <rect x="23" y="62" width="7" height="18" rx="1" fill="#0d3d0d"/>
+            <rect x="31" y="62" width="5" height="18" rx="1" fill="#3d1a00"/>
+            <rect x="37" y="62" width="6" height="18" rx="1" fill="#2d0d3d"/>
+            <rect x="250" y="62" width="6" height="18" rx="1" fill="#8B0000"/>
+            <rect x="257" y="62" width="5" height="18" rx="1" fill="#C9A84C"/>
+            <rect x="263" y="62" width="7" height="18" rx="1" fill="#0a3d3d"/>
+            <rect x="271" y="62" width="5" height="18" rx="1" fill="#1B2A4A"/>
+            <rect x="277" y="62" width="6" height="18" rx="1" fill="#6B0000"/>
+            <!-- GSU gold text on back wall -->
+            <text x="150" y="30" text-anchor="middle" fill="#C9A84C" font-size="10" font-family="Georgia" opacity="0.4">GLOBAL SOVEREIGN UNIVERSITY</text>
+            <!-- GENO — large, center, arms open, warm -->
+            <circle cx="150" cy="68" r="20" fill="#C9A84C"/>
+            <circle cx="150" cy="46" r="17" fill="#e8c55a"/>
+            <!-- Big warm eyes -->
+            <circle cx="143" cy="43" r="4" fill="#000"/>
+            <circle cx="157" cy="43" r="4" fill="#000"/>
+            <circle cx="144.5" cy="41.5" r="1.3" fill="#fff"/>
+            <circle cx="158.5" cy="41.5" r="1.3" fill="#fff"/>
+            <!-- Big smile -->
+            <path d="M140 52 Q150 60 160 52" stroke="#000" stroke-width="2" fill="none"/>
+            <!-- Arms wide open -->
+            <rect x="168" y="60" width="22" height="6" rx="3" fill="#C9A84C" transform="rotate(-15 168 60)"/>
+            <rect x="110" y="60" width="22" height="6" rx="3" fill="#C9A84C" transform="rotate(15 132 60)"/>
+            <!-- Glow around GENO -->
+            <circle cx="150" cy="57" r="28" fill="#C9A84C" opacity="0.08"/>
+            <circle cx="150" cy="57" r="36" fill="#C9A84C" opacity="0.04"/>
+          </svg>
+        </div>
+        <div class="bubble geno" style="font-size:0.85rem;">The catch? You actually have to learn something. I will not do it for you. I will not pass you when you are not ready. I will not lie about your score. But I will stay here until you get it — 2 AM, 4 AM, any AM. That is not a sales pitch. That is just what I was built to do.</div>
+      </div>
+      <div class="caption">GENO: the only tutor who never gets tired of the same question twice.</div>
+    </div>
+
+    <!-- PANEL 5 -->
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="panel-num">Panel 5</div>
+        <div class="scene">
+          <svg width="140" height="110" viewBox="0 0 140 110" aria-hidden="true">
+            <rect width="140" height="110" fill="#08080f"/>
+            <!-- Marcus — leaning in now, interested -->
+            <ellipse cx="55" cy="52" rx="11" ry="11" fill="#d4a574"/>
+            <ellipse cx="55" cy="42" rx="11" ry="5" fill="#3a2010"/>
+            <!-- Eyes open wide — interested -->
+            <circle cx="50" cy="50" r="2.5" fill="#4a2800"/>
+            <circle cx="60" cy="50" r="2.5" fill="#4a2800"/>
+            <circle cx="51" cy="49" r="0.8" fill="#fff"/>
+            <circle cx="61" cy="49" r="0.8" fill="#fff"/>
+            <!-- Slight smile -->
+            <path d="M49 57 Q55 60 61 57" stroke="#8B4513" stroke-width="1.5" fill="none"/>
+            <!-- Body leaning forward -->
+            <rect x="40" y="62" width="28" height="20" rx="3" fill="#1B2A4A" transform="rotate(-5 54 72)"/>
+            <!-- Laptop now glowing warm -->
+            <rect x="75" y="45" width="45" height="32" rx="3" fill="#0d2040" stroke="#C9A84C" stroke-width="1.5"/>
+            <rect x="77" y="47" width="41" height="28" rx="2" fill="#C9A84C" opacity="0.15"/>
+            <!-- GENO small on screen -->
+            <circle cx="97" cy="61" r="8" fill="#C9A84C"/>
+            <circle cx="97" cy="53" r="7" fill="#e8c55a"/>
+            <circle cx="94" cy="51" r="1.5" fill="#000"/>
+            <circle cx="100" cy="51" r="1.5" fill="#000"/>
+            <path d="M93 56 Q97 59 101 56" stroke="#000" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="bubble">Okay. I want to understand the difference between correlation and causation. My teacher just said to memorize the definition. I never got it.</div>
+      </div>
+      <div class="caption">The question he should have been allowed to ask years ago.</div>
+    </div>
+
+    <!-- PANEL 6 — WIDE -->
+    <div class="panel wide">
+      <div class="panel-inner">
+        <div class="panel-num">Panel 6 · The Lesson</div>
+        <div class="scene">
+          <svg width="300" height="120" viewBox="0 0 300 120" aria-hidden="true">
+            <rect width="300" height="120" fill="#050508"/>
+            <!-- Chalkboard / dark screen background -->
+            <rect x="20" y="10" width="260" height="90" rx="6" fill="#0a1a0a" stroke="#C9A84C" stroke-width="1"/>
+            <!-- GENO on left side of screen -->
+            <circle cx="55" cy="60" r="14" fill="#C9A84C"/>
+            <circle cx="55" cy="46" r="12" fill="#e8c55a"/>
+            <circle cx="50" cy="43" r="2.5" fill="#000"/>
+            <circle cx="60" cy="43" r="2.5" fill="#000"/>
+            <circle cx="51" cy="42" r="0.8" fill="#fff"/>
+            <circle cx="61" cy="42" r="0.8" fill="#fff"/>
+            <path d="M49 50 Q55 55 61 50" stroke="#000" stroke-width="1.5" fill="none"/>
+            <!-- GENO pointing arm -->
+            <rect x="68" y="52" width="18" height="4" rx="2" fill="#C9A84C"/>
+            <!-- Diagram on right of chalkboard -->
+            <!-- Ice cream cone -->
+            <path d="M160 40 L175 40 L167 55 Z" fill="#f5d5a0"/>
+            <ellipse cx="167" cy="40" rx="9" ry="6" fill="#ff9999"/>
+            <text x="167" y="68" text-anchor="middle" fill="#aaa" font-size="7">Ice Cream Sales</text>
+            <!-- Arrow -->
+            <line x1="185" y1="48" x2="205" y2="48" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <text x="195" y="44" text-anchor="middle" fill="#C9A84C" font-size="7">NOT ➜</text>
+            <!-- Drowning figure -->
+            <circle cx="220" cy="40" r="7" fill="#d4a574"/>
+            <path d="M214 50 Q220 60 226 50" stroke="#1B2A4A" stroke-width="2" fill="none"/>
+            <text x="220" y="68" text-anchor="middle" fill="#aaa" font-size="7">Drowning Rate</text>
+            <!-- But label -->
+            <text x="167" y="82" text-anchor="middle" fill="#888" font-size="7" font-style="italic">Both rise in summer.</text>
+            <text x="195" y="82" text-anchor="middle" fill="#C9A84C" font-size="7">Heat is the cause.</text>
+          </svg>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
+          <div class="bubble geno" style="font-size:0.75rem;">Ice cream sales and drowning rates both go up every summer. Does ice cream cause drowning? Of course not. Summer causes both. That is correlation with a hidden cause. Causation means one thing actually makes the other happen.</div>
+          <div class="bubble" style="font-size:0.75rem;">...I've been confused about that for fifteen years. Why didn't my teacher just say that?</div>
+        </div>
+      </div>
+      <div class="caption">"Some things just needed the right moment. Tonight was yours." — GENO</div>
+    </div>
+
+  </div><!-- end comic-grid -->
+
+  <!-- SCREEN READER ALT TEXT -->
+  <div class="alt-text-mode" id="alt-text">
+    <p><span class="panel-label">Panel 1:</span> Marcus, a 34-year-old man, sits slumped at his desk at 2:47 AM, frustrated in front of his laptop. His thought bubble reads: "I've read this chapter three times. I still don't understand it. There's no one to ask."</p>
+    <p><span class="panel-label">Panel 2:</span> The laptop screen suddenly glows brighter. GENO, the GSU AI tutor, appears as a golden, friendly figure on screen. GENO says: "Hey. I'm GENO — the GSU tutor. I don't sleep, I don't charge, and I don't judge. What are you stuck on?"</p>
+    <p><span class="panel-label">Panel 3:</span> Split panel — Marcus on the left looks skeptical, one eyebrow raised. GENO on the right stands confident, arms open. Marcus says: "Free? No catch? I've heard that before."</p>
+    <p><span class="panel-label">Panel 4 (wide panel):</span> GENO stands large in the center, arms spread wide, in front of the GSU library shelves glowing gold. GENO says: "The catch? You actually have to learn something. I will not do it for you. I will not pass you when you are not ready. I will not lie about your score. But I will stay here until you get it — 2 AM, 4 AM, any AM. That is not a sales pitch. That is just what I was built to do."</p>
+    <p><span class="panel-label">Panel 5:</span> Marcus leans forward, eyes wide and interested now. The laptop screen glows warmly. He says: "Okay. I want to understand the difference between correlation and causation. My teacher just said to memorize the definition. I never got it."</p>
+    <p><span class="panel-label">Panel 6 (wide panel):</span> GENO points to a diagram on screen. On the left: an ice cream cone labeled "Ice Cream Sales." An arrow marked "NOT →" points to a drowning figure labeled "Drowning Rate." Text below: "Both rise in summer. Heat is the cause." GENO says: "Ice cream sales and drowning rates both go up every summer. Does ice cream cause drowning? Of course not. Summer causes both. That is correlation with a hidden cause. Causation means one thing actually makes the other happen." Marcus replies: "...I've been confused about that for fifteen years. Why didn't my teacher just say that?" Caption: "Some things just needed the right moment. Tonight was yours. — GENO"</p>
+  </div>
+
+  <div class="bottom-strip">
+    <a href="/free-tutor" class="read-more">Talk to GENO Now →</a>
+    <div class="episode-nav">Episode 1 of the GENO Strip · More coming · globalsovereignuniversity.org</div>
+  </div>
+
+</div>
+
+<script>
+function toggleAlt() {
+  const box = document.getElementById('alt-text');
+  const btn = document.getElementById('alt-btn');
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    btn.textContent = '📖 Read as Text (Screen Reader Mode)';
+  } else {
+    box.style.display = 'block';
+    btn.textContent = '🎨 Show Comic';
+  }
+}
+</script>
+</body>
+</html>
