@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sovereign Campus | Walk Our Virtual University | GSU</title>
+<meta name="description" content="Walk the Global Sovereign University virtual campus. A 3D library where every book speaks. Powered by WebXR, GENO AI tutor, and 198 free titles.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #050508; color: #f5f1e8; font-family: Georgia, serif; }
+.gsu-nav { background: #000; border-bottom: 2px solid #C9A84C; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { color: #C9A84C; font-size: 1rem; font-weight: bold; letter-spacing: 2px; text-decoration: none; }
+/* HERO */
+.campus-hero { text-align: center; padding: 80px 24px 60px; background: radial-gradient(ellipse at center top, #0d0820 0%, #050508 60%); }
+.campus-hero .eyebrow { color: #C9A84C; font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px; }
+.campus-hero h1 { font-size: 2.8rem; line-height: 1.2; margin-bottom: 18px; }
+.campus-hero h1 span { color: #C9A84C; }
+.campus-hero p { color: #aaa; font-size: 1.05rem; max-width: 560px; margin: 0 auto 32px; line-height: 1.7; }
+.enter-btn { display: inline-block; background: #C9A84C; color: #000; padding: 16px 44px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; text-decoration: none; font-family: Georgia; margin-bottom: 12px; }
+.enter-btn:hover { background: #e8c55a; }
+.device-note { color: #444; font-size: 0.78rem; margin-top: 8px; }
+/* PREVIEW */
+.campus-preview { max-width: 900px; margin: 40px auto; padding: 0 24px; }
+.preview-frame { background: #08080f; border: 1px solid #C9A84C30; border-radius: 12px; aspect-ratio: 16/9; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.preview-frame::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #0d0820 0%, #080810 100%); }
+.preview-label { position: relative; z-index: 1; text-align: center; }
+.preview-label .play-icon { font-size: 3rem; color: #C9A84C; display: block; margin-bottom: 10px; }
+.preview-label p { color: #888; font-size: 0.85rem; }
+/* FEATURES */
+.features { max-width: 900px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.feature { background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 10px; padding: 22px; }
+.feature .fi { font-size: 1.8rem; margin-bottom: 12px; }
+.feature h3 { color: #C9A84C; font-size: 0.9rem; margin-bottom: 8px; }
+.feature p { color: #888; font-size: 0.82rem; line-height: 1.5; }
+/* SERIES ON SHELVES */
+.shelves-section { max-width: 900px; margin: 0 auto; padding: 0 24px 40px; }
+.shelves-section h2 { color: #C9A84C; font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; border-bottom: 1px solid #C9A84C20; padding-bottom: 8px; }
+.shelf-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+.shelf-item { background: #0d0d0d; border-left: 3px solid #C9A84C; padding: 10px 12px; border-radius: 0 6px 6px 0; }
+.shelf-item .si-series { color: #C9A84C; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.shelf-item .si-count { color: #555; font-size: 0.7rem; }
+/* PHASES */
+.phases { max-width: 900px; margin: 0 auto; padding: 0 24px 60px; }
+.phases h2 { color: #C9A84C; font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; border-bottom: 1px solid #C9A84C20; padding-bottom: 8px; }
+.phase-list { display: flex; flex-direction: column; gap: 12px; }
+.phase { display: grid; grid-template-columns: 120px 1fr; gap: 16px; background: #0d0d0d; border-radius: 8px; padding: 18px; align-items: start; }
+.phase-tag { font-size: 0.7rem; padding: 4px 10px; border-radius: 10px; text-align: center; font-weight: bold; letter-spacing: 1px; }
+.ph-live { background: #1a3a1a; border: 1px solid #4CAF50; color: #4CAF50; }
+.ph-soon { background: #3a2a0a; border: 1px solid #C9A84C; color: #C9A84C; }
+.ph-later { background: #1a1a3a; border: 1px solid #4488cc; color: #4488cc; }
+.phase h3 { color: #ddd; font-size: 0.88rem; margin-bottom: 4px; }
+.phase p { color: #666; font-size: 0.78rem; line-height: 1.5; }
+@media (max-width: 640px) {
+  .features { grid-template-columns: 1fr; }
+  .campus-hero h1 { font-size: 1.8rem; }
+  .phase { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="gsu-nav">
+  <a href="/" class="nav-logo">GSU</a>
+  <a href="/library" style="color:#555;font-size:0.82rem;text-decoration:none">← Library</a>
+</nav>
+
+<div class="campus-hero">
+  <div class="eyebrow">Phase 1 · Now Live</div>
+  <h1>The Sovereign Campus<br><span>Every Book Speaks.</span></h1>
+  <p>Walk a 3D virtual library built on 198 real GSU titles. Approach any book and GENO reads it to you. No headset required — runs in your browser.</p>
+  <a href="/sovereign-campus-3d" class="enter-btn">Enter the Campus →</a>
+  <div class="device-note">Works on any device · Chrome recommended · VR headset optional</div>
+</div>
+
+<!-- PREVIEW FRAME -->
+<div class="campus-preview">
+  <div class="preview-frame" onclick="window.location='/sovereign-campus-3d'">
+    <div class="preview-label">
+      <span class="play-icon">🏛️</span>
+      <p>Click to enter the 3D campus · GENO greets you at the door</p>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feature">
+    <div class="fi">📚</div>
+    <h3>198 Real Titles on Real Shelves</h3>
+    <p>Every book in the GSU catalog has a spine in the 3D library, organized by the same 41 series as the Webflow CMS.</p>
+  </div>
+  <div class="feature">
+    <div class="fi">🤖</div>
+    <h3>GENO Reads Every Book Aloud</h3>
+    <p>Walk within 1.5 meters of any book and GENO begins reading its introduction. Ask questions at any time. He answers in 32 languages.</p>
+  </div>
+  <div class="feature">
+    <div class="fi">🏅</div>
+    <h3>Wisdom Bridge Checkpoints</h3>
+    <p>Complete a book checkpoint and your book spine glows gold in the campus. Your progress is recorded on your Honest Transcript.</p>
+  </div>
+  <div class="feature">
+    <div class="fi">📱</div>
+    <h3>QR Code Per Book</h3>
+    <p>Each book spine generates a QR code linking directly to its Webflow detail page — with the Kindle buy link and free PDF download.</p>
+  </div>
+  <div class="feature">
+    <div class="fi">🥽</div>
+    <h3>WebXR — Optional Headset</h3>
+    <p>The campus runs in any browser. Connect a compatible VR headset for full immersive mode. No download required either way.</p>
+  </div>
+  <div class="feature">
+    <div class="fi">🔥</div>
+    <h3>Firebase Checkpoint Memory</h3>
+    <p>Your checkpoint completions persist across sessions. Log in anonymously — no account required. Your progress belongs to you.</p>
+  </div>
+</div>
+
+<!-- SERIES ON SHELVES -->
+<div class="shelves-section">
+  <h2>41 Series · Organized as Shelves</h2>
+  <div class="shelf-list">
+    <div class="shelf-item"><div class="si-series">Reading Helix</div><div class="si-count">Left Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">Sovereign Trades</div><div class="si-count">Right Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">Financial Literacy</div><div class="si-count">Right Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">Behavior Series</div><div class="si-count">Back Wall</div></div>
+    <div class="shelf-item"><div class="si-series">Deep Research</div><div class="si-count">Back Wall</div></div>
+    <div class="shelf-item"><div class="si-series">American History</div><div class="si-count">Back Wall</div></div>
+    <div class="shelf-item"><div class="si-series">Linguification</div><div class="si-count">Left Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">Civics Without Apology</div><div class="si-count">Right Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">Mathification</div><div class="si-count">Left Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">Homeschool</div><div class="si-count">Left Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">Sovereign Mind</div><div class="si-count">Center</div></div>
+    <div class="shelf-item"><div class="si-series">VOLTAGE / Electrician</div><div class="si-count">Right Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">Emotional Intelligence</div><div class="si-count">Back Wall</div></div>
+    <div class="shelf-item"><div class="si-series">Critical Thinking for Kids</div><div class="si-count">Left Shelf</div></div>
+    <div class="shelf-item"><div class="si-series">+ 27 more series</div><div class="si-count">Full catalog</div></div>
+  </div>
+</div>
+
+<!-- PHASES -->
+<div class="phases">
+  <h2>Build Phases</h2>
+  <div class="phase-list">
+    <div class="phase">
+      <div class="phase-tag ph-live">LIVE NOW</div>
+      <div>
+        <h3>Phase 1 — The Library</h3>
+        <p>3D library room with all 41 series on shelves. GENO avatar at center. Proximity-triggered voice introduction per book. Firebase checkpoint read. GitHub Pages deployment.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-tag ph-soon">THIS QUARTER</div>
+      <div>
+        <h3>Phase 2 — Hall of the Forgotten + Game Arena</h3>
+        <p>The Amnesty Protocol corridor honoring "The Lost" and "The Forgotten." Game Arena with 5 anchor titles from the 24-game library. Infographic stat walls as 3D panels.</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-tag ph-later">THIS YEAR</div>
+      <div>
+        <h3>Phase 3 — Civilization Builders Commons</h3>
+        <p>Google Meet integration for mentor sessions. Firebase mentor-matching UI. Avatar presence via WebXR avatar spec. The Sovereign Handshake intake wired to the 3D space.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

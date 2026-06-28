@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behavior, Communication & Emotional Intelligence | Humanics | GSU</title>
+<meta name="description" content="The neuroscience of authentic communication. Congruence, double binds, body language, deception myths, and EQ — free from GSU. The Behavior Series and Humanics hub.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #050505; color: #f5f1e8; font-family: Georgia, serif; }
+.gsu-nav { background: #000; border-bottom: 2px solid #C9A84C; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { color: #C9A84C; font-size: 1rem; font-weight: bold; letter-spacing: 2px; text-decoration: none; }
+/* HERO */
+.hub-hero { padding: 60px 24px 48px; background: radial-gradient(ellipse at top left, #1a0d2e 0%, #050505 60%); border-bottom: 1px solid #C9A84C20; }
+.hub-hero-inner { max-width: 900px; margin: 0 auto; }
+.hub-hero .eyebrow { color: #C9A84C; font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; }
+.hub-hero h1 { font-size: 2.4rem; line-height: 1.2; margin-bottom: 14px; }
+.hub-hero p { color: #aaa; font-size: 1rem; max-width: 580px; line-height: 1.7; margin-bottom: 24px; }
+.hero-stats { display: flex; gap: 24px; flex-wrap: wrap; }
+.hstat { }
+.hstat .sn { font-size: 1.4rem; color: #C9A84C; font-weight: bold; }
+.hstat .sl { font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+/* FEATURED BOOK */
+.featured { max-width: 900px; margin: 40px auto; padding: 0 24px; }
+.featured-card { background: #0d0d0d; border: 1px solid #C9A84C40; border-radius: 12px; display: grid; grid-template-columns: 180px 1fr; gap: 28px; padding: 28px; }
+.fc-cover { background: linear-gradient(135deg, #2d0d3d, #1a0820); border-radius: 6px; aspect-ratio: 6/9; display: flex; align-items: center; justify-content: center; }
+.fc-cover img { width: 100%; border-radius: 6px; }
+.fc-badge { color: #C9A84C; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.fc-title { font-size: 1.5rem; margin-bottom: 8px; }
+.fc-desc { color: #aaa; font-size: 0.88rem; line-height: 1.6; margin-bottom: 18px; }
+.fc-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-k { display: inline-block; background: #C9A84C; color: #000; padding: 10px 22px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; text-decoration: none; }
+.btn-k:hover { background: #e8c55a; }
+.btn-g { display: inline-block; border: 1px solid #555; color: #888; padding: 10px 22px; border-radius: 6px; font-size: 0.85rem; text-decoration: none; }
+/* GAMES SECTION */
+.games-section { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+.section-label { color: #C9A84C; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; border-bottom: 1px solid #C9A84C20; padding-bottom: 8px; }
+.games-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 36px; }
+.game-card { background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 10px; padding: 18px; text-decoration: none; transition: border-color 0.2s; }
+.game-card:hover { border-color: #C9A84C40; }
+.gc-icon { font-size: 1.6rem; margin-bottom: 8px; }
+.gc-title { color: #ddd; font-size: 0.88rem; font-weight: bold; margin-bottom: 4px; }
+.gc-desc { color: #555; font-size: 0.75rem; line-height: 1.4; }
+.gc-tag { display: inline-block; margin-top: 8px; font-size: 0.65rem; color: #C9A84C; border: 1px solid #C9A84C40; padding: 2px 8px; border-radius: 8px; }
+/* KEY CONCEPTS */
+.concepts { max-width: 900px; margin: 0 auto; padding: 0 24px 40px; }
+.concept-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cc { background: #0d0d0d; border-left: 3px solid #C9A84C; padding: 14px; border-radius: 0 6px 6px 0; }
+.cc h4 { color: #C9A84C; font-size: 0.78rem; margin-bottom: 6px; }
+.cc p { color: #666; font-size: 0.72rem; line-height: 1.4; }
+/* BOOKS IN SERIES */
+.books-section { max-width: 900px; margin: 0 auto; padding: 0 24px 60px; }
+.book-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+.br-card { text-decoration: none; }
+.br-cover { aspect-ratio: 6/9; background: linear-gradient(135deg, #2d0d3d, #1a0820); border-radius: 5px; border: 1px solid #222; margin-bottom: 7px; }
+.br-title { font-size: 0.74rem; color: #ccc; line-height: 1.3; }
+.br-price { font-size: 0.68rem; color: #C9A84C; margin-top: 3px; }
+@media (max-width: 600px) {
+  .featured-card { grid-template-columns: 1fr; }
+  .games-grid { grid-template-columns: 1fr; }
+  .concept-cards { grid-template-columns: 1fr; }
+  .hub-hero h1 { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="gsu-nav">
+  <a href="/" class="nav-logo">GSU</a>
+  <a href="/humanics" style="color:#555;font-size:0.82rem;text-decoration:none">← Humanics Hub</a>
+</nav>
+
+<!-- HERO -->
+<div class="hub-hero">
+  <div class="hub-hero-inner">
+    <div class="eyebrow">Behavior · Communication · Emotional Intelligence</div>
+    <h1>The Neuroscience of<br>Authentic Interaction</h1>
+    <p>Every human interaction runs on two channels. The words you say. The body that says them. When they align — trust. When they don't — your nervous system knows before your mind does. This is the science. And it is free.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="sn">3</div><div class="sl">Series</div></div>
+      <div class="hstat"><div class="sn">6+</div><div class="sl">Games</div></div>
+      <div class="hstat"><div class="sn">Free</div><div class="sl">GENO Tutor</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURED: CONGRUENCE CODE -->
+<div class="featured" style="margin-top:40px;">
+  <div class="section-label" style="border:none;padding:0;margin-bottom:16px">Featured Book — New Release</div>
+  <div class="featured-card">
+    <div class="fc-cover">
+      <div style="color:#C9A84C50;font-size:0.7rem;text-align:center;padding:12px">THE CONGRUENCE CODE</div>
+    </div>
+    <div>
+      <div class="fc-badge">Behavior Series</div>
+      <h2 class="fc-title">The Congruence Code</h2>
+      <p style="font-size:0.78rem;color:#888;margin-bottom:8px">How the Brain and Body Process Authentic Interaction</p>
+      <p class="fc-desc">The N400, Bateson's Double Bind, the Mehrabian Myth, the Othello Error, physiological flooding, and the Three C's. The neuroscience of trust — explained for leaders, educators, parents, and anyone who has ever felt that something was off in a conversation but couldn't name it.</p>
+      <div class="fc-cta">
+        <a href="https://www.amazon.com/dp/B0GX3B1DQW?tag=gsu2026-20" class="btn-k" target="_blank">📖 Kindle — $3.99</a>
+        <a href="/bookgames" class="btn-g">Play the Game →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAMES -->
+<div class="games-section" style="margin-top:36px">
+  <div class="section-label">Interactive Games</div>
+  <div class="games-grid">
+    <a href="/congruence-code-game" class="game-card">
+      <div class="gc-icon">🧠</div>
+      <div class="gc-title">Signal or Noise?</div>
+      <div class="gc-desc">10 scenarios testing your understanding of the N400, Double Bind, Mehrabian Myth, Othello Error, and Rogers' Congruence.</div>
+      <div class="gc-tag">Behavior Series Game</div>
+    </a>
+    <a href="/systemic-failure-game" class="game-card">
+      <div class="gc-icon">⚙️</div>
+      <div class="gc-title">The Lost & The Forgotten</div>
+      <div class="gc-desc">10 scenarios on institutional corruption, social promotion, the remediation economy, and the GSU counter-paradigm.</div>
+      <div class="gc-tag">Deep Research Game</div>
+    </a>
+    <a href="/face-reader" class="game-card">
+      <div class="gc-icon">👁️</div>
+      <div class="gc-title">Face Reader</div>
+      <div class="gc-desc">Spot microexpressions and hidden emotions — the 7 universal emotions in milliseconds.</div>
+      <div class="gc-tag">Humanics Game</div>
+    </a>
+    <a href="/body-language-decoder" class="game-card">
+      <div class="gc-icon">🕺</div>
+      <div class="gc-title">Body Language Decoder</div>
+      <div class="gc-desc">Interpret posture, gestures, and nonverbal signals. What do people really mean beyond their words?</div>
+      <div class="gc-tag">Humanics Game</div>
+    </a>
+    <a href="/active-listener" class="game-card">
+      <div class="gc-icon">👂</div>
+      <div class="gc-title">Active Listener</div>
+      <div class="gc-desc">Reflective listening, open-ended questions, and empathic responses that build trust.</div>
+      <div class="gc-tag">Humanics Game</div>
+    </a>
+    <a href="/difficult-conversations" class="game-card">
+      <div class="gc-icon">💬</div>
+      <div class="gc-title">Difficult Conversations</div>
+      <div class="gc-desc">Giving feedback. Setting boundaries. Resolving conflict. Practice the conversations most people avoid.</div>
+      <div class="gc-tag">Humanics Game</div>
+    </a>
+  </div>
+</div>
+
+<!-- KEY CONCEPTS -->
+<div class="concepts">
+  <div class="section-label">Key Concepts — Behavior Series</div>
+  <div class="concept-cards">
+    <div class="cc"><h4>The N400</h4><p>A neural spike 400ms after incongruent speech — the brain's integration alarm. Affective incongruence is measurable electricity.</p></div>
+    <div class="cc"><h4>Bateson's Double Bind</h4><p>Two contradictory messages with no escape and no permission to name the contradiction. Not just confusing — reality-fracturing.</p></div>
+    <div class="cc"><h4>The Mehrabian Myth</h4><p>Words are not 7% of communication. That number was derived from a narrow 1967 study about emotional attitude — not general conversation.</p></div>
+    <div class="cc"><h4>The Othello Error</h4><p>Interpreting an innocent person's fear as proof of guilt. The observer's own suspicion creates the arousal they then treat as evidence.</p></div>
+    <div class="cc"><h4>Physiological Flooding</h4><p>When the autonomic nervous system ramps high enough that semantic processing gets squeezed. You cannot argue someone out of flooding.</p></div>
+    <div class="cc"><h4>The Three C's</h4><p>Context · Clusters · Congruence. How to read nonverbal behavior without folklore, without courtrooms, and without the Othello Error.</p></div>
+  </div>
+</div>
+
+<!-- BOOKS IN SERIES -->
+<div class="books-section">
+  <div class="section-label">Books in the Behavior Series</div>
+  <!-- CMS Collection List in Webflow, filtered by series = "Behavior Series" + "Emotional Intelligence" + "Conflict Resolution" -->
+  <div class="book-row">
+    <a href="/books/the-congruence-code" class="br-card">
+      <div class="br-cover"></div>
+      <div class="br-title">The Congruence Code</div>
+      <div class="br-price">$3.99 Kindle</div>
+    </a>
+    <!-- x remaining books via CMS -->
+  </div>
+</div>
+
+<script src="https://elevenlabs.io/convai-widget/index.js" async></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+</body>
+</html>

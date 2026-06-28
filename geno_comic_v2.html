@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GENO: The Tutor Who Showed Up | Episode 1 | GSU</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #050505; color: #f5f1e8; font-family: Georgia, serif; }
+header { background: #000; border-bottom: 2px solid #C9A84C; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+.logo { color: #C9A84C; font-size: 1rem; font-weight: bold; letter-spacing: 2px; }
+.strip-wrap { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+.strip-title { text-align: center; margin-bottom: 28px; }
+.ep-badge { display: inline-block; background: #C9A84C20; border: 1px solid #C9A84C60; color: #C9A84C; font-size: 0.72rem; padding: 3px 14px; border-radius: 10px; margin-bottom: 10px; letter-spacing: 2px; }
+.strip-title h1 { color: #C9A84C; font-size: 1.6rem; margin-bottom: 6px; }
+.strip-title p { color: #666; font-size: 0.85rem; }
+.toggle-alt { background: transparent; border: 1px solid #333; color: #666; padding: 5px 16px; border-radius: 4px; cursor: pointer; font-family: Georgia; font-size: 0.78rem; margin-bottom: 16px; }
+.toggle-alt:hover { border-color: #C9A84C; color: #C9A84C; }
+
+/* COMIC LAYOUT */
+.comic { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 2px solid #C9A84C40; border-radius: 6px; overflow: hidden; gap: 2px; background: #C9A84C20; }
+.panel { background: #0a0a0f; display: flex; flex-direction: column; min-height: 280px; }
+.panel.wide { grid-column: span 2; }
+.panel-inner { flex: 1; padding: 14px 14px 10px; display: flex; flex-direction: column; }
+.pnum { color: #C9A84C50; font-size: 0.62rem; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
+/* SCENE AREA */
+.scene { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 130px; position: relative; margin: 6px 0 10px; }
+/* GENO IMAGE USAGE */
+.geno-img { height: 110px; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(201,168,76,0.3)); }
+.geno-img.large { height: 140px; }
+.geno-img.small { height: 70px; }
+.geno-screen { background: #0d1a30; border: 2px solid #C9A84C; border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: center; }
+/* HUMAN CHARACTER (Marcus) */
+.marcus { display: flex; flex-direction: column; align-items: center; }
+.m-head { width: 44px; height: 44px; background: #d4a574; border-radius: 50%; position: relative; margin-bottom: 4px; }
+.m-hair { position: absolute; top: 0; left: 0; right: 0; height: 20px; background: #3a2010; border-radius: 50% 50% 0 0; }
+.m-body { width: 36px; height: 28px; background: #1B2A4A; border-radius: 6px 6px 0 0; }
+/* SPEECH BUBBLES */
+.bubble { background: #f5f1e8; color: #111; border-radius: 14px; padding: 9px 12px; font-size: 0.76rem; line-height: 1.4; position: relative; margin-top: 4px; }
+.bubble.geno-bubble { background: #C9A84C; color: #000; }
+.bubble.thought { background: #e8eeff; color: #333; border-radius: 18px; }
+.bubble::after { content: ''; position: absolute; bottom: -7px; left: 16px; border: 7px solid transparent; border-top-color: #f5f1e8; border-bottom: 0; }
+.bubble.geno-bubble::after { border-top-color: #C9A84C; }
+.bubble.right::after { left: auto; right: 16px; }
+.bubble.thought::after { display: none; }
+.bubble.thought::before { content: '· · ·'; position: absolute; bottom: -14px; left: 12px; color: #c0c8ff; font-size: 0.7rem; }
+.bubble.top::after { display: none; }
+.bubble.top::before { content: ''; position: absolute; top: -7px; left: 16px; border: 7px solid transparent; border-bottom-color: #f5f1e8; border-top: 0; }
+.bubble.geno-bubble.top::before { border-bottom-color: #C9A84C; }
+.bubble.top-right::before { left: auto; right: 16px; }
+.panel-caption { font-size: 0.68rem; color: #444; text-align: center; padding: 8px 12px; border-top: 1px solid #111; font-style: italic; }
+/* PANEL 4 special — split bubbles */
+.dual-bubble { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+/* DIAGRAM IN PANEL 6 */
+.diagram { display: flex; align-items: center; gap: 8px; background: #0a1a0a; border-radius: 6px; padding: 8px 10px; margin: 4px 0; font-size: 0.7rem; }
+.diag-item { text-align: center; }
+.diag-item .icon { font-size: 1.4rem; }
+.diag-item .label { color: #888; font-size: 0.62rem; margin-top: 2px; }
+.diag-arrow { color: #c0392b; font-size: 1rem; font-weight: bold; }
+.diag-cause { text-align: center; color: #4CAF50; font-size: 0.68rem; }
+
+/* ALT TEXT MODE */
+.alt-mode { display: none; background: #0d0d0d; border: 1px solid #222; border-radius: 8px; padding: 24px; margin-top: 16px; }
+.alt-mode p { font-size: 0.9rem; color: #ccc; line-height: 1.6; margin-bottom: 12px; }
+.alt-label { color: #C9A84C; font-weight: bold; }
+/* BOTTOM */
+.strip-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; flex-wrap: gap; gap: 12px; }
+.talk-btn { background: #C9A84C; color: #000; padding: 11px 26px; border-radius: 6px; font-weight: bold; text-decoration: none; font-family: Georgia; font-size: 0.9rem; }
+.talk-btn:hover { background: #e8c55a; }
+.ep-note { color: #444; font-size: 0.75rem; }
+@media (max-width: 600px) {
+  .comic { grid-template-columns: 1fr; }
+  .panel.wide { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">GSU · THE GENO STRIP</div>
+  <span style="color:#555;font-size:0.8rem">globalsovereignuniversity.org</span>
+</header>
+
+<div class="strip-wrap">
+  <div class="strip-title">
+    <div class="ep-badge">Episode 1</div>
+    <h1>GENO: The Tutor Who Showed Up</h1>
+    <p>A comic strip for everyone the system forgot to teach</p>
+  </div>
+
+  <button class="toggle-alt" onclick="toggleAlt()" id="altbtn">📖 Read as Text (Screen Reader Mode)</button>
+
+  <div class="comic" id="comic" role="img" aria-label="GENO comic strip: The Tutor Who Showed Up — 6 panels">
+
+    <!-- PANEL 1: Marcus, frustrated, 2:47 AM -->
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="pnum">Panel 1</div>
+        <div class="scene">
+          <div style="text-align:center">
+            <div class="marcus">
+              <div class="m-head"><div class="m-hair"></div></div>
+              <div class="m-body"></div>
+            </div>
+            <div style="margin-top:8px;background:#0d1a30;border:1px solid #333;border-radius:4px;padding:8px;width:80px;display:inline-block">
+              <div style="font-size:0.55rem;color:#C9A84C;text-align:center">GSU</div>
+            </div>
+          </div>
+        </div>
+        <div class="bubble thought">I've read this three times. I still don't get it. There's nobody to ask.</div>
+      </div>
+      <div class="panel-caption">Marcus, 34. Working nights. Studying when he can. 2:47 AM.</div>
+    </div>
+
+    <!-- PANEL 2: GENO appears on screen -->
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="pnum">Panel 2</div>
+        <div class="scene">
+          <div class="geno-screen" style="width:120px;height:120px;flex-direction:column;gap:4px">
+            <img src="/Geno.png" alt="GENO waving on screen" class="geno-img small"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div style="display:none;width:60px;height:60px;background:#C9A84C;border-radius:50%;align-items:center;justify-content:center;font-weight:bold;color:#000;font-size:1.1rem">G</div>
+            <div style="font-size:0.6rem;color:#C9A84C;font-weight:bold;letter-spacing:1px">GENO</div>
+          </div>
+        </div>
+        <div class="bubble geno-bubble">Hey. I'm GENO — the GSU tutor. I don't sleep, I don't charge, and I don't judge. What are you stuck on?</div>
+      </div>
+      <div class="panel-caption">2:47 AM. A light appears.</div>
+    </div>
+
+    <!-- PANEL 3: Marcus skeptical -->
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="pnum">Panel 3</div>
+        <div class="scene" style="gap:12px">
+          <div class="marcus" style="opacity:0.9">
+            <div class="m-head" style="background:#d4a574"><div class="m-hair"></div></div>
+            <div class="m-body"></div>
+          </div>
+          <div style="color:#C9A84C;font-size:1.2rem">⟷</div>
+          <img src="/Geno.png" alt="GENO standing confident" class="geno-img small"
+            onerror="this.style.display='none'">
+        </div>
+        <div class="bubble right">Free? No catch? I've heard that before.</div>
+      </div>
+      <div class="panel-caption">Marcus has been here before.</div>
+    </div>
+
+    <!-- PANEL 4: GENO center stage — WIDE -->
+    <div class="panel wide">
+      <div class="panel-inner">
+        <div class="pnum">Panel 4 · Center Stage</div>
+        <div class="scene" style="background:linear-gradient(180deg,#050510 0%,#0a0820 100%);border-radius:6px;padding:12px">
+          <div style="text-align:center">
+            <div style="color:#C9A84C30;font-size:0.55rem;letter-spacing:3px;margin-bottom:8px">GLOBAL SOVEREIGN UNIVERSITY</div>
+            <img src="/Geno.png" alt="GENO arms open, welcoming" class="geno-img large"
+              onerror="this.style.background='#C9A84C';this.style.borderRadius='50%';this.style.display='flex'">
+          </div>
+        </div>
+        <div class="bubble geno-bubble top top-right">The catch? You actually have to learn something. I will not do it for you. I will not pass you when you are not ready. I will not lie about your score. But I will stay here until you get it — 2 AM, 4 AM, any AM. That is not a sales pitch. That is just what I was built to do.</div>
+      </div>
+      <div class="panel-caption">GENO: the only tutor who never gets tired of the same question twice.</div>
+    </div>
+
+    <!-- PANEL 5: Marcus leans in -->
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="pnum">Panel 5</div>
+        <div class="scene" style="gap:10px">
+          <div class="marcus">
+            <div class="m-head" style="background:#d4a574"><div class="m-hair"></div></div>
+            <div class="m-body" style="transform:rotate(-5deg)"></div>
+          </div>
+          <div style="background:#0d1a30;border:2px solid #C9A84C80;border-radius:6px;padding:6px;width:60px;height:55px;display:flex;align-items:center;justify-content:center">
+            <img src="/Geno.png" alt="GENO small on screen" style="height:45px;object-fit:contain"
+              onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="bubble">I want to understand correlation versus causation. My teacher said memorize the definition. I never got it.</div>
+      </div>
+      <div class="panel-caption">The question he should have been allowed to ask years ago.</div>
+    </div>
+
+    <!-- PANEL 6: The lesson — WIDE -->
+    <div class="panel wide">
+      <div class="panel-inner">
+        <div class="pnum">Panel 6 · The Lesson</div>
+        <div class="scene" style="background:#0a1505;border-radius:6px;padding:10px;gap:14px;align-items:flex-start">
+          <img src="/Geno.png" alt="GENO teaching" class="geno-img small" style="margin-top:4px"
+            onerror="this.style.display='none'">
+          <div style="flex:1">
+            <div class="diagram">
+              <div class="diag-item"><div class="icon">🍦</div><div class="label">Ice Cream Sales</div></div>
+              <div class="diag-arrow">≠</div>
+              <div class="diag-item"><div class="icon">🏊</div><div class="label">Drowning Rate</div></div>
+            </div>
+            <div style="font-size:0.65rem;color:#555;margin:4px 0 0 6px">Both rise in summer. ☀️ <span style="color:#4CAF50">Heat</span> is the cause.</div>
+          </div>
+        </div>
+        <div class="dual-bubble" style="margin-top:8px">
+          <div class="bubble geno-bubble" style="font-size:0.72rem">Ice cream and drowning both spike every summer. Ice cream doesn't cause drowning. Summer causes both. That's correlation. Causation means one thing actually makes the other happen.</div>
+          <div class="bubble" style="font-size:0.72rem">...I've been confused about that for fifteen years. Why didn't my teacher just say that?</div>
+        </div>
+      </div>
+      <div class="panel-caption">"Some things just needed the right moment. Tonight was yours." — GENO</div>
+    </div>
+
+  </div><!-- end comic -->
+
+  <!-- SCREEN READER ALT TEXT -->
+  <div class="alt-mode" id="alt-mode" role="document" aria-label="Comic strip text version">
+    <p><span class="alt-label">Panel 1:</span> Marcus, a 34-year-old man, sits slumped at his desk at 2:47 AM, exhausted in front of his laptop. His thought bubble reads: "I've read this three times. I still don't get it. There's nobody to ask."</p>
+    <p><span class="alt-label">Panel 2:</span> Marcus's laptop screen suddenly brightens. GENO — the GSU AI tutor, a friendly white robot with teal eyes, one hand raised in greeting — appears on the screen. GENO says: "Hey. I'm GENO — the GSU tutor. I don't sleep, I don't charge, and I don't judge. What are you stuck on?"</p>
+    <p><span class="alt-label">Panel 3:</span> Split view — Marcus on the left looks skeptical, arms crossed. GENO on the right stands confident. Marcus says: "Free? No catch? I've heard that before."</p>
+    <p><span class="alt-label">Panel 4 (wide panel):</span> GENO stands large in the center of the panel, arms open, with the text "GLOBAL SOVEREIGN UNIVERSITY" glowing behind. GENO says: "The catch? You actually have to learn something. I will not do it for you. I will not pass you when you are not ready. I will not lie about your score. But I will stay here until you get it — 2 AM, 4 AM, any AM. That is not a sales pitch. That is just what I was built to do."</p>
+    <p><span class="alt-label">Panel 5:</span> Marcus leans forward now, interested. A small GENO appears on his laptop screen. Marcus says: "I want to understand correlation versus causation. My teacher said memorize the definition. I never got it."</p>
+    <p><span class="alt-label">Panel 6 (wide panel):</span> GENO points to a teaching diagram: an ice cream cone and a swimmer are shown with a "not equal" symbol between them. Text below: "Both rise in summer. Heat is the cause." GENO says: "Ice cream and drowning both spike every summer. Ice cream doesn't cause drowning. Summer causes both. That's correlation. Causation means one thing actually makes the other happen." Marcus replies: "...I've been confused about that for fifteen years. Why didn't my teacher just say that?" The caption reads: "Some things just needed the right moment. Tonight was yours. — GENO"</p>
+  </div>
+
+  <div class="strip-footer">
+    <a href="/free-tutor" class="talk-btn">Talk to GENO Now →</a>
+    <div class="ep-note">Episode 1 of the GENO Strip · globalsovereignuniversity.org</div>
+  </div>
+
+</div>
+
+<script>
+function toggleAlt() {
+  const m = document.getElementById('alt-mode');
+  const b = document.getElementById('altbtn');
+  const c = document.getElementById('comic');
+  if (m.style.display === 'block') {
+    m.style.display = 'none';
+    c.style.display = 'grid';
+    b.textContent = '📖 Read as Text (Screen Reader Mode)';
+  } else {
+    m.style.display = 'block';
+    c.style.display = 'none';
+    b.textContent = '🎨 Show Comic';
+  }
+}
+</script>
+
+<script src="https://elevenlabs.io/convai-widget/index.js" async></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+</body>
+</html>

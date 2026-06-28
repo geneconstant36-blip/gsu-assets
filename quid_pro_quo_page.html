@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wall of Gratitude & Quid Pro Quo | Global Sovereign University</title>
+<meta name="description" content="Honor those who move free education into the world. Donate and receive books from GSU's 198-title library. Tax-deductible 501(c)(3).">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #050505; color: #f5f1e8; font-family: Georgia, serif; }
+/* NAV */
+.gsu-nav { background: #000; border-bottom: 2px solid #C9A84C; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { color: #C9A84C; font-size: 1rem; font-weight: bold; letter-spacing: 2px; text-decoration: none; }
+/* ===== WALL OF GRATITUDE HEAD ===== */
+.wall-section { background: linear-gradient(180deg, #0a0a0f 0%, #050505 100%); padding: 0 0 60px; border-bottom: 1px solid #C9A84C20; }
+.wall-hero { text-align: center; padding: 56px 24px 40px; }
+.wall-hero .eyebrow { color: #C9A84C; font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; }
+.wall-hero h1 { font-size: 2.2rem; color: #f5f1e8; margin-bottom: 12px; }
+.wall-hero p { color: #888; font-size: 0.95rem; max-width: 560px; margin: 0 auto 10px; line-height: 1.7; }
+.mission-quote { background: #0a0a0f; border-left: 3px solid #C9A84C; padding: 14px 20px; max-width: 560px; margin: 20px auto 0; text-align: left; color: #C9A84C; font-size: 0.88rem; font-style: italic; }
+/* PODIUM */
+.podium-wrap { max-width: 700px; margin: 40px auto 0; padding: 0 16px; }
+.podium { display: flex; justify-content: center; align-items: flex-end; gap: 10px; }
+.pod { text-align: center; }
+.pod .card { border-radius: 10px 10px 0 0; padding: 14px 18px; min-width: 140px; display: flex; flex-direction: column; justify-content: flex-end; }
+.pod-1 .card { background: linear-gradient(180deg, #2a2000 0%, #1a1500 100%); border: 1px solid #C9A84C; height: 130px; }
+.pod-2 .card { background: linear-gradient(180deg, #1a1a1a 0%, #111 100%); border: 1px solid #666; height: 100px; }
+.pod-3 .card { background: linear-gradient(180deg, #1a0f00 0%, #110a00 100%); border: 1px solid #7B5E37; height: 82px; }
+.pod .crown { font-size: 1.5rem; margin-bottom: 4px; }
+.pod .pname { font-size: 0.88rem; font-weight: bold; color: #f5f1e8; }
+.pod-1 .pname { color: #C9A84C; }
+.pod .pbooks { font-size: 0.72rem; color: #666; margin-top: 2px; }
+/* LEADERBOARD */
+.board-wrap { max-width: 700px; margin: 30px auto 0; padding: 0 16px; }
+.board { background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 10px; overflow: hidden; }
+.brow { display: grid; grid-template-columns: 44px 1fr 100px 80px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #111; }
+.brow.head { background: #111; color: #444; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; }
+.brow:hover { background: #111; }
+.brow .rank { font-weight: bold; color: #444; }
+.brow .rank.gold { color: #C9A84C; }
+.brow .pname { color: #ddd; font-size: 0.88rem; }
+.brow .ploc { color: #444; font-size: 0.72rem; margin-top: 2px; }
+.brow .books { color: #C9A84C; text-align: right; font-size: 0.9rem; }
+.brow .blevel { text-align: right; }
+.badge { font-size: 0.68rem; padding: 2px 8px; border-radius: 8px; display: inline-block; }
+.bg { background: #C9A84C20; border: 1px solid #C9A84C50; color: #C9A84C; }
+.bs { background: #88888820; border: 1px solid #88888850; color: #aaa; }
+.bb { background: #CD7F3220; border: 1px solid #CD7F3250; color: #CD7F32; }
+.bf { background: #1A8B7F20; border: 1px solid #1A8B7F50; color: #1A8B7F; }
+/* HOW IT WORKS */
+.how-wrap { max-width: 700px; margin: 30px auto 0; padding: 0 16px; }
+.how-box { background: #0d0d0d; border: 1px solid #C9A84C20; border-radius: 10px; padding: 24px; }
+.how-box h3 { color: #C9A84C; margin-bottom: 14px; font-size: 0.95rem; }
+.how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+.hstep { background: #111; border-radius: 6px; padding: 14px; }
+.hstep .snum { color: #C9A84C; font-size: 1.3rem; font-weight: bold; margin-bottom: 4px; }
+.hstep p { font-size: 0.78rem; color: #aaa; line-height: 1.4; }
+.join-btn { display: inline-block; background: #C9A84C; color: #000; padding: 10px 28px; border-radius: 6px; font-weight: bold; font-size: 0.88rem; text-decoration: none; font-family: Georgia; }
+.join-btn:hover { background: #e8c55a; }
+.credit-note { font-size: 0.75rem; color: #444; line-height: 1.5; margin-top: 14px; }
+/* ===== QUID PRO QUO SECTION ===== */
+.qpq-section { padding: 60px 24px; }
+.qpq-inner { max-width: 800px; margin: 0 auto; }
+.qpq-inner .eyebrow { color: #C9A84C; font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; }
+.qpq-inner h2 { font-size: 1.8rem; margin-bottom: 16px; }
+.qpq-inner .lead { font-size: 1rem; color: #aaa; line-height: 1.7; max-width: 620px; margin-bottom: 32px; }
+/* DONATION TIERS */
+.tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+.tier { background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 10px; padding: 20px; text-align: center; transition: border-color 0.2s; }
+.tier:hover { border-color: #C9A84C40; }
+.tier.featured { border-color: #C9A84C60; background: #0d0d0d; }
+.tier .t-amount { font-size: 2rem; font-weight: bold; color: #C9A84C; margin-bottom: 4px; }
+.tier .t-label { font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.tier .t-books { font-size: 0.88rem; color: #ccc; margin-bottom: 14px; line-height: 1.4; }
+.tier .t-btn { display: block; background: #C9A84C; color: #000; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; text-decoration: none; font-family: Georgia; }
+.tier .t-btn:hover { background: #e8c55a; }
+.tier.featured .t-btn { background: #C9A84C; }
+/* PAYPAL FORM */
+.donate-form { background: #0d0d0d; border: 1px solid #C9A84C20; border-radius: 10px; padding: 28px; margin-bottom: 24px; }
+.donate-form h3 { color: #C9A84C; margin-bottom: 6px; }
+.donate-form p { color: #888; font-size: 0.85rem; margin-bottom: 16px; }
+.ein-line { font-size: 0.8rem; color: #444; margin-top: 12px; }
+/* BOOK SELECTION */
+.book-selection { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 24px; margin-bottom: 24px; }
+.book-selection h3 { color: #C9A84C; margin-bottom: 8px; font-size: 0.95rem; }
+.book-selection p { color: #888; font-size: 0.85rem; margin-bottom: 16px; line-height: 1.5; }
+.cat-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.cat-pill { background: #111; border: 1px solid #222; color: #888; padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; cursor: pointer; }
+.cat-pill.active, .cat-pill:hover { border-color: #C9A84C; color: #C9A84C; background: #C9A84C10; }
+/* FAQ */
+.faq-section { margin-top: 40px; }
+.faq-section h3 { color: #C9A84C; font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 16px; }
+.faq-item { border-bottom: 1px solid #111; padding: 14px 0; }
+.faq-q { color: #ddd; font-size: 0.9rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.faq-q::after { content: '+'; color: #C9A84C; font-size: 1.2rem; }
+.faq-a { color: #888; font-size: 0.85rem; line-height: 1.6; margin-top: 10px; display: none; }
+.faq-item.open .faq-q::after { content: '−'; }
+.faq-item.open .faq-a { display: block; }
+@media (max-width: 600px) {
+  .tiers { grid-template-columns: 1fr; }
+  .how-steps { grid-template-columns: 1fr; }
+  .podium { gap: 6px; }
+  .pod .card { min-width: 100px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="gsu-nav">
+  <a href="/" class="nav-logo">GSU · GLOBAL SOVEREIGN UNIVERSITY</a>
+</nav>
+
+<!-- ===== WALL OF GRATITUDE ===== -->
+<div class="wall-section">
+  <div class="wall-hero">
+    <div class="eyebrow">Wall of Gratitude</div>
+    <h1>These People Believe Education Should Be Free</h1>
+    <p>No accounting department. No commission checks to chase. When someone buys a GSU book through a shared link, Amazon reports it — and their name rises on this wall. The ranking unit is books moved into hands, not dollars.</p>
+    <div class="mission-quote">"Building a Bridge to Freedom Through Education — Not Handouts." — Dr. Gene A. Constant, DBA, Founding Chancellor</div>
+  </div>
+
+  <!-- PODIUM -->
+  <div class="podium-wrap">
+    <div class="podium">
+      <div class="pod pod-2">
+        <div class="card">
+          <div class="crown">🥈</div>
+          <div class="pname" id="p2n">—</div>
+          <div class="pbooks" id="p2b">—</div>
+        </div>
+      </div>
+      <div class="pod pod-1">
+        <div class="card">
+          <div class="crown">👑</div>
+          <div class="pname" id="p1n">The Founding Chancellor</div>
+          <div class="pbooks" id="p1b">198 books</div>
+        </div>
+      </div>
+      <div class="pod pod-3">
+        <div class="card">
+          <div class="crown">🥉</div>
+          <div class="pname" id="p3n">—</div>
+          <div class="pbooks" id="p3b">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="board-wrap">
+    <div class="board" id="board">
+      <div class="brow head">
+        <div>Rank</div><div>Contributor</div><div style="text-align:right">Books</div><div style="text-align:right">Level</div>
+      </div>
+      <div id="board-rows"></div>
+    </div>
+  </div>
+
+  <!-- HOW TO JOIN -->
+  <div class="how-wrap">
+    <div class="how-box">
+      <h3>Your Name Could Be Here</h3>
+      <div class="how-steps">
+        <div class="hstep"><div class="snum">1</div><p>Share your Amazon affiliate link anywhere — social, email, back of a book, podcast.</p></div>
+        <div class="hstep"><div class="snum">2</div><p>When someone buys a GSU book through your link, Amazon reports the sale to the Foundation.</p></div>
+        <div class="hstep"><div class="snum">3</div><p>Your count updates monthly. Your name rises. No tracking software, no phone calls, no commissions.</p></div>
+      </div>
+      <a href="mailto:chancellor@globalsovereignuniversity.org?subject=Wall of Gratitude — I want my link" class="join-btn">Request Your Affiliate Link →</a>
+      <div class="credit-note">How it works: GSU uses Amazon's affiliate system (tag: gsu2026-20). Impact is tracked as books-moved-into-hands, not dollars. No personal financial data is collected or displayed. <strong>The goal is never money. The goal is reach.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== QUID PRO QUO ===== -->
+<div class="qpq-section">
+  <div class="qpq-inner">
+    <div class="eyebrow">Quid Pro Quo</div>
+    <h2>Give Something. Receive Something. Both Matter.</h2>
+    <p class="lead">Your donation funds the Foundation for Global Instruction, a 501(c)(3) nonprofit building free education for everyone. In return, you receive printed books from our 198-title library — to keep, share with a learner, or donate to a library, shelter, or school. Tax-deductible. Tangible. Real.</p>
+
+    <!-- DONATION TIERS -->
+    <div class="tiers">
+      <div class="tier">
+        <div class="t-amount">$25</div>
+        <div class="t-label">Friend of Freedom</div>
+        <div class="t-books">Receive 2 titles of your choice from the GSU catalog. Good for a learner who needs a specific subject.</div>
+        <a href="https://www.paypal.com/donate/?hosted_button_id=3LS8MGA6B53K8" class="t-btn" target="_blank">Donate $25 →</a>
+      </div>
+      <div class="tier featured">
+        <div class="t-amount">$50</div>
+        <div class="t-label">Civilization Builder</div>
+        <div class="t-books">Receive 5 titles — one complete series starter pack. Popular choice for homeschool families and mentors.</div>
+        <a href="https://www.paypal.com/donate/?hosted_button_id=3LS8MGA6B53K8" class="t-btn" target="_blank">Donate $50 →</a>
+      </div>
+      <div class="tier">
+        <div class="t-amount">$100</div>
+        <div class="t-label">Sovereignty Builder</div>
+        <div class="t-books">Receive 12 titles — enough to stock a home library, a shelter shelf, or a prison reading program.</div>
+        <a href="https://www.paypal.com/donate/?hosted_button_id=3LS8MGA6B53K8" class="t-btn" target="_blank">Donate $100 →</a>
+      </div>
+    </div>
+
+    <!-- CUSTOM AMOUNT -->
+    <div class="donate-form">
+      <h3>Custom Amount</h3>
+      <p>Every donation goes directly to the Foundation for Global Instruction. Name your amount, then email us your book selections.</p>
+      <a href="https://www.paypal.com/donate/?hosted_button_id=3LS8MGA6B53K8" class="join-btn" target="_blank" style="display:inline-block">Donate via PayPal →</a>
+      <div class="ein-line">Foundation for Global Instruction · EIN 39-2716552 · Oregon Registry #242538999 · 501(c)(3) All donations are tax-deductible to the extent allowed by law.</div>
+    </div>
+
+    <!-- BOOK SELECTION -->
+    <div class="book-selection">
+      <h3>Choose Your Books</h3>
+      <p>After donating, email your selections to <strong style="color:#C9A84C">chancellor@globalsovereignuniversity.org</strong> with your donation receipt. We will ship your books within 7 business days. Browse by subject to choose:</p>
+      <div class="cat-pills">
+        <div class="cat-pill active">All Subjects</div>
+        <div class="cat-pill">Reading</div>
+        <div class="cat-pill">Math</div>
+        <div class="cat-pill">Trades</div>
+        <div class="cat-pill">Finance</div>
+        <div class="cat-pill">History</div>
+        <div class="cat-pill">Civics</div>
+        <div class="cat-pill">Science</div>
+        <div class="cat-pill">Mindset</div>
+        <div class="cat-pill">Language</div>
+        <div class="cat-pill">Law</div>
+      </div>
+      <p style="font-size:0.82rem;color:#555">Full catalog with all 198 titles available at <a href="/library" style="color:#C9A84C">/library</a> and on <a href="https://www.amazon.com/s?k=Gene+A+Constant&tag=gsu2026-20" style="color:#C9A84C" target="_blank">Amazon</a>. PDFs are always free at globalsovereignuniversity.org.</p>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <h3>Frequently Asked Questions</h3>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Are donations tax-deductible?</div>
+        <div class="faq-a">Yes. The Foundation for Global Instruction is a 501(c)(3) nonprofit (EIN 39-2716552). Your donation is tax-deductible to the extent allowed by law. You will receive a PayPal receipt you can use for your records.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What is the difference between donating and buying books on Amazon?</div>
+        <div class="faq-a">When you donate, your money goes directly to the Foundation and you receive books at no additional cost. When you buy on Amazon, KDP pays royalties to the Foundation as the author account holder. Both support the mission. The donation path gives you more titles per dollar and a tax deduction. The Amazon path supports the platform infrastructure that makes free PDFs possible.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Can I donate books to a school, library, or shelter instead of keeping them?</div>
+        <div class="faq-a">Yes — and we encourage it. Several donors have used the $100 tier to stock a shelter reading shelf or a prison library. If you are donating to an institution, let us know and we can include a letter from the Foundation on official letterhead.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What is the Wall of Gratitude and how do I get on it?</div>
+        <div class="faq-a">The Wall of Gratitude honors people who move GSU books into the hands of learners through the Amazon affiliate program. There is no accounting department and no commissions — when someone buys through your shared link, Amazon reports it and your count rises. Email the Foundation to receive your affiliate link. It costs nothing.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Why "Quid Pro Quo"?</div>
+        <div class="faq-a">Because charity that creates dependency dishonors both the giver and the receiver. Quid pro quo — something for something — respects everyone in the transaction. You give something real. You receive something real. The Foundation advances its mission. Nobody owes anyone anything after the exchange. That is sovereignty.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const seed = [
+  { name: "The Founding Chancellor", loc: "Eugene, OR", books: 198, level: "gold" },
+  { name: "A Sovereign Educator", loc: "United States", books: 47, level: "gold" },
+  { name: "Voice of the People", loc: "Anonymous", books: 31, level: "silver" },
+  { name: "A Civilization Builder", loc: "Oregon", books: 18, level: "silver" },
+  { name: "The Quiet Reader", loc: "Anonymous", books: 12, level: "bronze" },
+  { name: "A Friend of Freedom", loc: "United States", books: 9, level: "friend" },
+  { name: "Your Name Here", loc: "Anywhere", books: 0, level: "friend" }
+];
+const BADGES = { gold: ["bg","Sovereign"], silver: ["bs","Builder"], bronze: ["bb","Ally"], friend: ["bf","Friend"] };
+const RANK_E = ["👑","🥈","🥉"];
+
+function renderBoard(data) {
+  if (data[1]) { document.getElementById('p2n').textContent = data[1].name; document.getElementById('p2b').textContent = data[1].books + ' books'; }
+  if (data[2]) { document.getElementById('p3n').textContent = data[2].name; document.getElementById('p3b').textContent = data[2].books + ' books'; }
+  const rows = document.getElementById('board-rows');
+  rows.innerHTML = '';
+  data.forEach((p, i) => {
+    const [bc, bl] = BADGES[p.level] || ["bf","Friend"];
+    const r = document.createElement('div');
+    r.className = 'brow';
+    r.innerHTML = `<div class="rank${i<3?' gold':''}">${RANK_E[i]||'#'+(i+1)}</div>
+      <div><div class="pname">${p.name}</div><div class="ploc">${p.loc}</div></div>
+      <div class="books">${p.books||'—'}</div>
+      <div class="blevel"><span class="badge ${bc}">${bl}</span></div>`;
+    rows.appendChild(r);
+  });
+}
+try {
+  firebase.initializeApp({ apiKey:"placeholder", authDomain:"gsu-platform.firebaseapp.com", projectId:"gsu-platform" });
+  firebase.firestore().collection('wall_of_gratitude').orderBy('books','desc').limit(20).get()
+    .then(s => renderBoard(s.empty ? seed : s.docs.map(d => d.data())))
+    .catch(() => renderBoard(seed));
+} catch(e) { renderBoard(seed); }
+
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>

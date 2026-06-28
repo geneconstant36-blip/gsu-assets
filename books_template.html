@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{Book Title}} | Global Sovereign University</title>
+<meta name="description" content="{{short-description}}">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #050505; color: #f5f1e8; font-family: Georgia, serif; }
+/* NAV */
+.gsu-nav { background: #000; border-bottom: 2px solid #C9A84C; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { color: #C9A84C; font-size: 1rem; font-weight: bold; letter-spacing: 2px; text-decoration: none; }
+.nav-back { color: #888; font-size: 0.82rem; text-decoration: none; }
+.nav-back:hover { color: #C9A84C; }
+/* HERO */
+.book-hero { display: grid; grid-template-columns: 280px 1fr; gap: 40px; max-width: 1000px; margin: 0 auto; padding: 48px 24px 32px; align-items: start; }
+.book-cover-wrap { position: relative; }
+.book-cover { width: 100%; border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px #C9A84C30; display: block; }
+.cover-placeholder { width: 100%; aspect-ratio: 6/9; background: linear-gradient(135deg, #1B2A4A 0%, #0d1a30 100%); border-radius: 6px; border: 1px solid #C9A84C40; display: flex; align-items: center; justify-content: center; }
+.cover-placeholder .cp-text { color: #C9A84C; font-size: 0.8rem; letter-spacing: 2px; text-align: center; opacity: 0.6; }
+.series-badge { display: inline-block; background: #C9A84C20; border: 1px solid #C9A84C60; color: #C9A84C; font-size: 0.72rem; padding: 4px 12px; border-radius: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.book-title { font-size: 2rem; line-height: 1.25; color: #f5f1e8; margin-bottom: 8px; }
+.book-author { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+.book-excerpt { font-size: 1rem; line-height: 1.7; color: #ccc; margin-bottom: 28px; max-width: 560px; }
+/* CTA ROW */
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.btn-kindle { background: #C9A84C; color: #000; padding: 13px 28px; border-radius: 6px; font-weight: bold; font-size: 0.95rem; text-decoration: none; font-family: Georgia; display: inline-flex; align-items: center; gap: 8px; }
+.btn-kindle:hover { background: #e8c55a; }
+.btn-pdf { background: transparent; border: 1px solid #C9A84C; color: #C9A84C; padding: 13px 28px; border-radius: 6px; font-size: 0.95rem; text-decoration: none; font-family: Georgia; display: inline-flex; align-items: center; gap: 8px; }
+.btn-pdf:hover { background: #C9A84C20; }
+.price-note { font-size: 0.78rem; color: #555; margin-top: 6px; }
+/* META ROW */
+.meta-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
+.meta-item { font-size: 0.78rem; color: #555; }
+.meta-item span { color: #888; }
+/* BODY SECTION */
+.book-body { max-width: 1000px; margin: 0 auto; padding: 0 24px 60px; }
+.section-divider { border: none; border-top: 1px solid #1a1a1a; margin: 32px 0; }
+/* GENO SECTION */
+.geno-section { background: #0d0d0d; border: 1px solid #C9A84C30; border-radius: 10px; padding: 24px; margin-bottom: 32px; display: flex; gap: 20px; align-items: flex-start; }
+.geno-avatar-wrap { flex-shrink: 0; }
+.geno-avatar-wrap img { width: 70px; border-radius: 50%; }
+.geno-avatar-placeholder { width: 70px; height: 70px; background: #C9A84C; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; font-size: 1.2rem; }
+.geno-speak { flex: 1; }
+.geno-speak h4 { color: #C9A84C; font-size: 0.85rem; margin-bottom: 8px; letter-spacing: 1px; }
+.geno-speak p { font-size: 0.92rem; color: #ccc; line-height: 1.6; }
+.geno-speak .ask-btn { display: inline-block; margin-top: 12px; background: #C9A84C20; border: 1px solid #C9A84C60; color: #C9A84C; padding: 6px 16px; border-radius: 4px; font-size: 0.82rem; cursor: pointer; }
+/* RELATED BOOKS */
+.related-section h3 { color: #C9A84C; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px; border-bottom: 1px solid #C9A84C20; padding-bottom: 8px; }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+.related-card { text-decoration: none; }
+.related-card .rc-cover { width: 100%; aspect-ratio: 6/9; background: #111; border-radius: 4px; border: 1px solid #222; margin-bottom: 8px; overflow: hidden; }
+.related-card .rc-cover img { width: 100%; height: 100%; object-fit: cover; }
+.related-card .rc-title { font-size: 0.78rem; color: #ccc; line-height: 1.3; }
+.related-card:hover .rc-title { color: #C9A84C; }
+/* WISDOM BRIDGE SECTION */
+.wisdom-bridge { background: linear-gradient(135deg, #0a0820 0%, #080810 100%); border: 1px solid #C9A84C40; border-radius: 10px; padding: 24px; margin-bottom: 32px; }
+.wisdom-bridge h3 { color: #C9A84C; margin-bottom: 8px; font-size: 1rem; }
+.wisdom-bridge p { color: #aaa; font-size: 0.88rem; line-height: 1.5; margin-bottom: 14px; }
+.wb-btn { display: inline-block; background: transparent; border: 1px solid #C9A84C; color: #C9A84C; padding: 8px 20px; border-radius: 4px; font-size: 0.85rem; text-decoration: none; }
+.wb-btn:hover { background: #C9A84C20; }
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .book-hero { grid-template-columns: 1fr; }
+  .book-cover-wrap { max-width: 200px; }
+  .book-title { font-size: 1.4rem; }
+  .cta-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<nav class="gsu-nav">
+  <a href="/" class="nav-logo">GSU</a>
+  <a href="/library" class="nav-back">← Back to Library</a>
+</nav>
+
+<div class="book-hero">
+  <!-- COVER — bind: cover-image field -->
+  <div class="book-cover-wrap">
+    <div class="cover-placeholder">
+      <!-- In Webflow Designer: bind to cover-image CMS field -->
+      <!-- <img src="{{cover-image}}" alt="{{name}} cover" class="book-cover"> -->
+      <div class="cp-text">COVER<br>IMAGE</div>
+    </div>
+  </div>
+
+  <div class="book-info">
+    <!-- SERIES BADGE — bind: series field -->
+    <div class="series-badge">Reading Helix</div>
+    <!-- In Webflow: bind text to series field (56907cb0f12cd010f213bc533e6182a4) -->
+
+    <!-- TITLE — bind: name field -->
+    <h1 class="book-title">The Sovereign Reader, Volume 1</h1>
+    <div class="book-author">Dr. Gene A. Constant · Global Sovereign University</div>
+
+    <!-- EXCERPT — bind: short-description field (86b4d274347df2c85616487facfd87be) -->
+    <p class="book-excerpt">Where reading begins — not as a school subject, but as a survival skill. This volume builds the phonemic awareness and decoding fluency that the factory model never secured. No judgment. No grade. Just the skill you were owed.</p>
+
+    <!-- CTA ROW — bind: asin field for Kindle link, free-pdf-url for PDF -->
+    <div class="cta-row">
+      <a href="https://www.amazon.com/dp/{{asin}}?tag=gsu2026-20" class="btn-kindle" target="_blank">
+        📖 Kindle — $3.99
+      </a>
+      <!-- Show PDF button only if free-pdf-url exists -->
+      <a href="{{free-pdf-url}}" class="btn-pdf" target="_blank">
+        ⬇ Free PDF
+      </a>
+    </div>
+    <div class="price-note">Kindle purchase supports the Foundation for Global Instruction 501(c)(3). PDF is always free.</div>
+
+    <div class="meta-row">
+      <div class="meta-item">Series: <span>Reading Helix</span></div>
+      <div class="meta-item">Subject: <span>Readification</span></div>
+      <div class="meta-item">Price: <span>$3.99 Kindle</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="book-body">
+  <hr class="section-divider">
+
+  <!-- GENO INTRODUCTION -->
+  <div class="geno-section">
+    <div class="geno-avatar-wrap">
+      <div class="geno-avatar-placeholder">G</div>
+      <!-- In production: <img src="/geno-avatar.png" alt="GENO"> -->
+    </div>
+    <div class="geno-speak">
+      <h4>GENO says about this book</h4>
+      <p>This is a book for people the system failed. Not because you weren't capable — because the system was never designed to teach you this. Open it anywhere. Ask me anything on any page. I am here 24 hours a day and I do not get tired of the same question twice.</p>
+      <span class="ask-btn" onclick="document.querySelector('elevenlabs-convai').click()">Ask GENO about this book →</span>
+    </div>
+  </div>
+
+  <!-- WISDOM BRIDGE -->
+  <div class="wisdom-bridge">
+    <h3>🌉 Wisdom Bridge Checkpoint</h3>
+    <p>Read the book. Then take the checkpoint to verify your mastery — and earn a notation on your Honest Transcript. Free. No login. Your result is yours.</p>
+    <a href="/wisdom-bridge" class="wb-btn">Take the Checkpoint →</a>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- RELATED BOOKS IN SAME SERIES -->
+  <div class="related-section">
+    <h3>More from the Reading Helix Series</h3>
+    <div class="related-grid" id="related-grid">
+      <!-- CMS Collection List filtered by same series goes here in Webflow -->
+      <a href="/books/sovereign-reader-2" class="related-card">
+        <div class="rc-cover"><img src="" alt=""></div>
+        <div class="rc-title">The Sovereign Reader Vol. 2</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ElevenLabs GENO widget -->
+<script src="https://elevenlabs.io/convai-widget/index.js" async></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+</body>
+</html>
