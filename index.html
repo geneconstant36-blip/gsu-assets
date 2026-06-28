@@ -1,51 +1,392 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>GSU Biology — Free Homeschool Biology Curriculum | Global Sovereign University</title>
-<meta name="description" content="A complete, free, gamified high school biology curriculum for homeschool families: ten units, full lessons, the Bio Lab Climb game, and GENO tutoring in 32 languages.">
-<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;line-height:1.7}
-a{color:#C9A84C}.wrap{max-width:1100px;margin:0 auto;padding:0 22px}
-header.top{border-bottom:1px solid #8A6D2F;padding:18px 0}header.top .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.crumb{font-size:.95rem;letter-spacing:.12em;color:#C9A84C;text-decoration:none}.crumb b{color:#F5F1E8}
-.hero{padding:64px 0 44px;text-align:center;background:#000}
-.hero h1{font-size:clamp(2rem,5vw,3.2rem);color:#C9A84C;letter-spacing:.04em;margin-bottom:14px}
-.hero p.tag{font-size:1.15rem;color:#F5F1E8;max-width:760px;margin:0 auto;font-style:italic}
-.band{padding:48px 0;border-top:1px solid #1a1a1a}
-h2.sec{color:#C9A84C;font-size:1.6rem;margin-bottom:18px;letter-spacing:.03em}
-.parent{border:1px solid #C9A84C;padding:26px;margin:0 0 8px}
-.parent h3{color:#C9A84C;letter-spacing:.1em;font-size:1rem;margin-bottom:12px}
-.parent li{margin:0 0 8px 20px}
-.parent .wk{color:#C9A84C;font-weight:bold}
-.lesson h3{color:#C9A84C;font-size:1.25rem;margin:26px 0 10px}
-.lesson p{margin-bottom:14px;font-size:1.06rem}
-.game{background:#0d0d0d;border:1px solid #8A6D2F;padding:30px;margin-top:6px}
-.game h2{color:#C9A84C;text-align:center;margin-bottom:6px}
-.game .sub{text-align:center;color:#F5F1E8;opacity:.85;margin-bottom:18px;font-style:italic}
-.hud{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-bottom:18px;font-size:1.02rem}
-.hud span b{color:#C9A84C}
-.badges{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-.bdg{border:1px solid #444;color:#666;padding:6px 14px;font-size:.85rem;letter-spacing:.08em}
-.bdg.on{border-color:#C9A84C;color:#C9A84C}
-#q{font-size:1.2rem;text-align:center;margin:8px 0 20px;min-height:56px}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:760px;margin:0 auto}
-@media(max-width:640px){.opts{grid-template-columns:1fr}}
-.opt{background:#000;border:1px solid #8A6D2F;color:#F5F1E8;font-family:Georgia,serif;font-size:1.02rem;padding:14px;cursor:pointer;text-align:left;transition:.15s}
-.opt:hover{border-color:#C9A84C;color:#C9A84C}
-.opt.right{background:#C9A84C;color:#000;border-color:#C9A84C}
-.opt.wrong{border-color:#7a2e2e;color:#caa}
-#fb{text-align:center;margin-top:16px;min-height:44px;font-style:italic;color:#C9A84C}
-#next{display:none;margin:14px auto 0;background:#C9A84C;color:#000;border:0;padding:12px 34px;font-family:Georgia,serif;font-size:1rem;letter-spacing:.08em;cursor:pointer}
-.geno{border:1px solid #C9A84C;padding:30px;text-align:center;margin-top:6px}
-.geno h2{color:#C9A84C;margin-bottom:10px}
-.geno p{max-width:740px;margin:0 auto 8px}
-footer{border-top:1px solid #8A6D2F;padding:34px 0;text-align:center;font-size:.95rem}
-footer a{margin:0 12px;text-decoration:none}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Sovereign Campus — Global Sovereign University</title>
+  <meta name="description" content="Walk the Sovereign Campus. No headset required. Browser-native WebXR.">
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; background: #000; overflow: hidden; }
+    #loading-screen {
+      position: fixed; inset: 0; background: #000;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 999; color: #C9A84C;
+    }
+    #loading-screen h1 { font-size: 28px; letter-spacing: .04em; margin-bottom: 8px; }
+    #loading-screen p { font-size: 14px; color: rgba(201,168,76,.6); margin-bottom: 32px; }
+    .loading-bar { width: 240px; height: 2px; background: rgba(201,168,76,.2); border-radius: 1px; }
+    .loading-fill { height: 100%; background: #C9A84C; border-radius: 1px; animation: fill 2s ease forwards; }
+    @keyframes fill { from { width: 0 } to { width: 100% } }
+    #hud {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,.75); border: 0.5px solid rgba(201,168,76,.3);
+      border-radius: 8px; padding: 8px 16px;
+      display: flex; align-items: center; gap: 16px;
+      z-index: 100; font-family: Georgia, serif;
+    }
+    #hud .room-label { font-size: 13px; color: #C9A84C; }
+    #hud .sep { color: rgba(201,168,76,.3); }
+    #hud .hint { font-size: 11px; color: rgba(255,255,255,.4); }
+    #geno-panel {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,.85); border: 0.5px solid rgba(201,168,76,.4);
+      border-radius: 12px; padding: 12px 20px; max-width: 480px; width: 90%;
+      z-index: 100; display: none;
+    }
+    #geno-panel .geno-label { font-size: 10px; color: #C9A84C; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+    #geno-panel .geno-text { font-size: 14px; color: rgba(255,255,255,.85); line-height: 1.6; }
+    #geno-panel .geno-close { position: absolute; top: 8px; right: 12px; color: rgba(201,168,76,.5); cursor: pointer; font-size: 16px; background: none; border: none; }
+    #enter-btn {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #C9A84C; color: #000; border: none;
+      border-radius: 8px; padding: 10px 20px; font-size: 13px;
+      font-family: Georgia, serif; cursor: pointer; z-index: 100;
+    }
+  </style>
+</head>
+<body>
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
-.card{display:block;border:1px solid #8A6D2F;padding:24px;text-decoration:none;color:#F5F1E8;transition:.15s}
-.card:hover{border-color:#C9A84C}.card .n{color:#C9A84C;font-size:.85rem;letter-spacing:.15em}
-.card h3{color:#C9A84C;margin:8px 0 8px;font-size:1.2rem}.card p{font-size:.98rem;margin-bottom:10px}
-.card .wk{color:#8A6D2F;font-size:.85rem;letter-spacing:.05em}</style></head><body><script src="/return-bar.js"></script>
-<header class="top"><div class="wrap"><a class="crumb" href="https://globalsovereignuniversity.org/biology">&#8592; BIOLOGY HUB</a><span class="crumb"><b>GLOBAL SOVEREIGN UNIVERSITY</b> &middot; FREE FOREVER</span></div></header>
-<section class="hero"><div class="wrap"><h1>BIOLOGY &mdash; THE SCIENCE OF LIFE</h1>
-<p class="tag">A complete, free high school biology year for homeschool families: ten units, the full canon parents expect, every unit gamified, and GENO on call in 32 languages.</p></div></section>
-<section class="band"><div class="wrap"><div class="grid"><a class="card" href="lab-skills.html"><span class="n">UNIT 01</span><h3>The Scientific Method &amp; the Home Laboratory</h3><p>How real science is done — and how to do it at your kitchen table.</p><span class="wk">2 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="chemistry-of-life.html"><span class="n">UNIT 02</span><h3>The Chemistry of Life</h3><p>Water, carbon, and the four molecules every living thing is built from.</p><span class="wk">4 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="cell-biology.html"><span class="n">UNIT 03</span><h3>Cell Structure &amp; Function</h3><p>The smallest unit of life — and the busiest factory your student will ever tour.</p><span class="wk">4 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="cellular-energy.html"><span class="n">UNIT 04</span><h3>Cellular Energy: Photosynthesis &amp; Respiration</h3><p>How sunlight becomes sugar, and sugar becomes the power for everything alive.</p><span class="wk">4 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="genetics.html"><span class="n">UNIT 05</span><h3>Genetics &amp; Heredity</h3><p>DNA, Punnett squares, and how the instructions of life are written, copied, and passed on.</p><span class="wk">5 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="classification.html"><span class="n">UNIT 06</span><h3>Classification &amp; the Diversity of Life</h3><p>Kingdoms, scientific names, and the keys biologists use to put two million species in order.</p><span class="wk">3 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="ecology.html"><span class="n">UNIT 07</span><h3>Ecology: How Life Fits Together</h3><p>Food webs, biomes, and the 10% rule — the systems view of the living planet.</p><span class="wk">4 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="botany.html"><span class="n">UNIT 08</span><h3>Plant Biology</h3><p>Roots, shoots, flowers, and seeds — the green engineering that feeds the world.</p><span class="wk">3 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="zoology.html"><span class="n">UNIT 09</span><h3>Animal Biology</h3><p>From jellyfish to mammals — the great survey of the animal kingdom.</p><span class="wk">4 weeks &middot; lesson + Bio Lab Climb</span></a><a class="card" href="human-body.html"><span class="n">UNIT 10</span><h3>The Human Body: Anatomy &amp; Physiology</h3><p>Eleven systems, one student — the survey of the body they live in.</p><span class="wk">3 weeks &middot; lesson + Bio Lab Climb</span></a></div></div></section>
-<footer><div class="wrap"><p>&copy; Global Sovereign University &middot; <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a></p></div></footer></body></html>
+<div id="loading-screen">
+  <h1>Global Sovereign University</h1>
+  <p>The Sovereign Campus · WebXR · No headset required</p>
+  <div class="loading-bar"><div class="loading-fill"></div></div>
+</div>
+
+<div id="hud" style="display:none">
+  <span class="room-label" id="room-label">The Quad</span>
+  <span class="sep">·</span>
+  <span class="hint" id="device-hint">WASD to move · Mouse to look</span>
+</div>
+
+<div id="geno-panel">
+  <button class="geno-close" onclick="closeGeno()">✕</button>
+  <div class="geno-label">GENO — Your Guide</div>
+  <div class="geno-text" id="geno-text"></div>
+</div>
+
+<button id="enter-btn" onclick="enterVR()">Enter VR</button>
+
+<a-scene
+  id="campus-scene"
+  loading-screen="enabled: false"
+  fog="type: linear; color: #0a0a0a; near: 20; far: 80"
+  renderer="antialias: true; colorManagement: true"
+  vr-mode-ui="enabled: true">
+
+  <!-- Assets -->
+  <a-assets>
+    <a-mixin id="gold-text"
+      text="color: #C9A84C; font: kelsonsans; align: center; width: 4"
+      geometry="primitive: plane; width: 4.5; height: .8"
+      material="color: #000; opacity: 0.7; side: double">
+    </a-mixin>
+  </a-assets>
+
+  <!-- Sky -->
+  <a-sky color="#0a0608"></a-sky>
+
+  <!-- Ground — black marble -->
+  <a-plane
+    position="0 0 0" rotation="-90 0 0"
+    width="120" height="120"
+    material="color: #050505; roughness: 0.1; metalness: 0.4"
+    shadow="receive: true">
+  </a-plane>
+
+  <!-- Gold grid lines on ground -->
+  <a-entity id="grid-lines"></a-entity>
+
+  <!-- ═══════════════════════════════════════════
+       THE QUAD — Entry Plaza
+  ═══════════════════════════════════════════ -->
+  <a-entity id="quad" position="0 0 0">
+
+    <!-- GSU Crest pedestal -->
+    <a-cylinder position="0 0.5 -8" radius="2" height="1"
+      material="color: #111; roughness: 0.3; metalness: 0.6" shadow="cast: true">
+    </a-cylinder>
+    <a-cylinder position="0 1.2 -8" radius="1.6" height="0.4"
+      material="color: #C9A84C; roughness: 0.2; metalness: 0.8" shadow="cast: true">
+    </a-cylinder>
+    <a-text value="GSU" position="0 2.2 -8" color="#C9A84C"
+      font="kelsonsans" align="center" width="6" side="double">
+    </a-text>
+    <a-text value="Global Sovereign University" position="0 1.8 -7.9"
+      color="rgba(201,168,76,0.6)" align="center" width="5" side="double">
+    </a-text>
+
+    <!-- Five archway doors around the plaza -->
+
+    <!-- Door 1: Library (North) -->
+    <a-entity id="door-library" position="0 0 -20"
+      class="room-door" data-room="library"
+      data-geno="Welcome to The Library. Every book Gene has written lives on these shelves. Walk toward any spine. I will introduce it to you.">
+      <a-box position="0 3 0" width="5" height="6" depth="0.3"
+        material="color: #0a0a0a; roughness: 0.5" shadow="cast: true">
+      </a-box>
+      <a-box position="-2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="0 6.3 0" width="5.8" height="0.4" depth="0.4"
+        material="color: #C9A84C; roughness: 0.2; metalness: 0.8" shadow="cast: true">
+      </a-box>
+      <a-text value="THE LIBRARY" position="0 5.5 0.2"
+        color="#C9A84C" align="center" width="4" side="double">
+      </a-text>
+      <a-text value="177 Books · GENO Guides" position="0 4.9 0.2"
+        color="rgba(201,168,76,0.5)" align="center" width="3.5" side="double">
+      </a-text>
+      <!-- Gold glow plane inside arch -->
+      <a-plane position="0 3 0.1" width="4.6" height="5.8"
+        material="color: #C9A84C; opacity: 0.04; side: double">
+      </a-plane>
+      <!-- Proximity trigger zone -->
+      <a-box position="0 1 2" width="5" height="3" depth="4"
+        material="opacity: 0; transparent: true"
+        class="proximity-trigger" data-room="library">
+      </a-box>
+    </a-entity>
+
+    <!-- Door 2: Wisdom Bridge (NE) -->
+    <a-entity id="door-bridge" position="16 0 -14"
+      rotation="0 -40 0"
+      class="room-door" data-room="bridge"
+      data-geno="The Wisdom Bridge. Every chapter you complete adds a plank. Turn around and look — the bridge behind you is the distance you have already traveled.">
+      <a-box position="0 3 0" width="5" height="6" depth="0.3"
+        material="color: #0a0a0a; roughness: 0.5" shadow="cast: true">
+      </a-box>
+      <a-box position="-2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="0 6.3 0" width="5.8" height="0.4" depth="0.4"
+        material="color: #C9A84C; roughness: 0.2; metalness: 0.8" shadow="cast: true">
+      </a-box>
+      <a-text value="WISDOM BRIDGE" position="0 5.5 0.2"
+        color="#C9A84C" align="center" width="4" side="double">
+      </a-text>
+      <a-text value="Your progress · Visualized" position="0 4.9 0.2"
+        color="rgba(201,168,76,0.5)" align="center" width="3.5" side="double">
+      </a-text>
+      <a-plane position="0 3 0.1" width="4.6" height="5.8"
+        material="color: #C9A84C; opacity: 0.04; side: double">
+      </a-plane>
+    </a-entity>
+
+    <!-- Door 3: Hall of Forgotten (NW) -->
+    <a-entity id="door-hall" position="-16 0 -14"
+      rotation="0 40 0"
+      class="room-door" data-room="hall"
+      data-geno="The Hall of the Forgotten. This room contains the statistics the system would prefer you never see. Walk through them. Let the numbers become real.">
+      <a-box position="0 3 0" width="5" height="6" depth="0.3"
+        material="color: #0a0a0a; roughness: 0.5" shadow="cast: true">
+      </a-box>
+      <a-box position="-2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="0 6.3 0" width="5.8" height="0.4" depth="0.4"
+        material="color: #C9A84C; roughness: 0.2; metalness: 0.8" shadow="cast: true">
+      </a-box>
+      <a-text value="HALL OF THE FORGOTTEN" position="0 5.5 0.2"
+        color="#C9A84C" align="center" width="5" side="double">
+      </a-text>
+      <a-text value="The statistics the system hides" position="0 4.9 0.2"
+        color="rgba(201,168,76,0.5)" align="center" width="3.5" side="double">
+      </a-text>
+      <a-plane position="0 3 0.1" width="4.6" height="5.8"
+        material="color: #500; opacity: 0.05; side: double">
+      </a-plane>
+    </a-entity>
+
+    <!-- Door 4: Game Arena (East) -->
+    <a-entity id="door-arena" position="20 0 0"
+      rotation="0 -90 0"
+      class="room-door" data-room="arena"
+      data-geno="The Game Arena. Every BookGame lives behind these doors. Your progress glows gold on the door you have already entered. New doors remain white.">
+      <a-box position="0 3 0" width="5" height="6" depth="0.3"
+        material="color: #0a0a0a; roughness: 0.5" shadow="cast: true">
+      </a-box>
+      <a-box position="-2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="0 6.3 0" width="5.8" height="0.4" depth="0.4"
+        material="color: #C9A84C; roughness: 0.2; metalness: 0.8" shadow="cast: true">
+      </a-box>
+      <a-text value="THE GAME ARENA" position="0 5.5 0.2"
+        color="#C9A84C" align="center" width="4" side="double">
+      </a-text>
+      <a-text value="All BookGames · All subjects" position="0 4.9 0.2"
+        color="rgba(201,168,76,0.5)" align="center" width="3.5" side="double">
+      </a-text>
+      <a-plane position="0 3 0.1" width="4.6" height="5.8"
+        material="color: #C9A84C; opacity: 0.04; side: double">
+      </a-plane>
+    </a-entity>
+
+    <!-- Door 5: Civilization Commons (West) -->
+    <a-entity id="door-commons" position="-20 0 0"
+      rotation="0 90 0"
+      class="room-door" data-room="commons"
+      data-geno="The Civilization Builders Commons. Mentors and learners meet here. A Eugene veteran across a table from a Lagos entrepreneur. The exchange the system never built.">
+      <a-box position="0 3 0" width="5" height="6" depth="0.3"
+        material="color: #0a0a0a; roughness: 0.5" shadow="cast: true">
+      </a-box>
+      <a-box position="-2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="2.5 3 0" width="0.4" height="6.5" depth="0.4"
+        material="color: #1a1208; roughness: 0.4" shadow="cast: true">
+      </a-box>
+      <a-box position="0 6.3 0" width="5.8" height="0.4" depth="0.4"
+        material="color: #C9A84C; roughness: 0.2; metalness: 0.8" shadow="cast: true">
+      </a-box>
+      <a-text value="CIVILIZATION BUILDERS" position="0 5.5 0.2"
+        color="#C9A84C" align="center" width="4" side="double">
+      </a-text>
+      <a-text value="Commons · Mentor network" position="0 4.9 0.2"
+        color="rgba(201,168,76,0.5)" align="center" width="3.5" side="double">
+      </a-text>
+      <a-plane position="0 3 0.1" width="4.6" height="5.8"
+        material="color: #C9A84C; opacity: 0.04; side: double">
+      </a-plane>
+    </a-entity>
+
+    <!-- Ambient torches / light pillars -->
+    <a-cylinder position="8 2 -8" radius="0.15" height="4"
+      material="color: #1a1208; roughness: 0.5" shadow="cast: true">
+    </a-cylinder>
+    <a-sphere position="8 4.2 -8" radius="0.3"
+      material="color: #C9A84C; emissive: #C9A84C; emissiveIntensity: 0.8">
+    </a-sphere>
+    <a-light type="point" position="8 4.5 -8" color="#C9A84C" intensity="0.4" distance="12"></a-light>
+
+    <a-cylinder position="-8 2 -8" radius="0.15" height="4"
+      material="color: #1a1208; roughness: 0.5" shadow="cast: true">
+    </a-cylinder>
+    <a-sphere position="-8 4.2 -8" radius="0.3"
+      material="color: #C9A84C; emissive: #C9A84C; emissiveIntensity: 0.8">
+    </a-sphere>
+    <a-light type="point" position="-8 4.5 -8" color="#C9A84C" intensity="0.4" distance="12"></a-light>
+
+  </a-entity>
+
+  <!-- ═══════════════════════════════════════════
+       LIGHTING
+  ═══════════════════════════════════════════ -->
+  <a-light type="ambient" color="#0a0608" intensity="0.5"></a-light>
+  <a-light type="directional" position="10 20 5" color="#C9A84C" intensity="0.2" castShadow="true"></a-light>
+  <a-light type="point" position="0 8 -8" color="#C9A84C" intensity="0.6" distance="30"></a-light>
+
+  <!-- ═══════════════════════════════════════════
+       PLAYER
+  ═══════════════════════════════════════════ -->
+  <a-entity id="player"
+    position="0 1.6 8"
+    movement-controls="fly: false; speed: 0.15; constrainToNavMesh: false"
+    look-controls="pointerLockEnabled: true">
+    <a-camera
+      id="camera"
+      look-controls="pointerLockEnabled: true"
+      wasd-controls="acceleration: 25"
+      near="0.1" far="100">
+      <!-- Crosshair -->
+      <a-cursor
+        color="#C9A84C"
+        opacity="0.6"
+        raycaster="objects: .room-door, .proximity-trigger; far: 8">
+      </a-cursor>
+    </a-camera>
+  </a-entity>
+
+</a-scene>
+
+<script>
+/* ── Loading screen ── */
+setTimeout(()=>{
+  document.getElementById('loading-screen').style.display='none';
+  document.getElementById('hud').style.display='flex';
+  showGeno("Welcome to the Sovereign Campus. This is a free university. Walk toward any door. I will guide you. Use WASD to move and your mouse to look around.");
+  detectDevice();
+},2500);
+
+function detectDevice(){
+  const hint=document.getElementById('device-hint');
+  if(/Mobi|Android|iPhone/i.test(navigator.userAgent)){
+    hint.textContent='Move your phone to look around · Tap to interact';
+  } else {
+    hint.textContent='WASD to move · Mouse to look · Click to lock cursor';
+  }
+}
+
+/* ── GENO panel ── */
+function showGeno(text){
+  const panel=document.getElementById('geno-panel');
+  document.getElementById('geno-text').textContent=text;
+  panel.style.display='block';
+}
+function closeGeno(){
+  document.getElementById('geno-panel').style.display='none';
+}
+
+/* ── Room door proximity ── */
+const ROOM_LABELS={
+  library:'The Library',
+  bridge:'Wisdom Bridge',
+  hall:'Hall of the Forgotten',
+  arena:'The Game Arena',
+  commons:'Civilization Builders Commons'
+};
+const ROOM_URLS={
+  library:'https://globalsovereignuniversity.org/campus/library',
+  bridge:'https://globalsovereignuniversity.org/campus/bridge',
+  hall:'https://globalsovereignuniversity.org/campus/hall',
+  arena:'https://globalsovereignuniversity.org/campus/arena',
+  commons:'https://globalsovereignuniversity.org/campus/commons'
+};
+
+let lastRoom=null;
+document.querySelectorAll('.room-door').forEach(door=>{
+  door.addEventListener('mouseenter',()=>{
+    const room=door.getAttribute('data-room');
+    if(room===lastRoom) return;
+    lastRoom=room;
+    document.getElementById('room-label').textContent=ROOM_LABELS[room]||'The Quad';
+    const geno=door.getAttribute('data-geno');
+    if(geno) showGeno(geno);
+  });
+  door.addEventListener('click',()=>{
+    const room=door.getAttribute('data-room');
+    if(ROOM_URLS[room]){
+      window.location.href=ROOM_URLS[room];
+    }
+  });
+});
+
+/* ── VR mode ── */
+function enterVR(){
+  document.getElementById('campus-scene').enterVR();
+}
+
+/* ── Reset room label when looking away ── */
+setInterval(()=>{
+  // Could add raycast-based room detection here
+},2000);
+</script>
+
+</body>
+</html>
