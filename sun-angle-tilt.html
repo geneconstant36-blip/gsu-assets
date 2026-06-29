@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sun-Angle & Panel Tilt — GSU Solar PV</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+canvas{display:block;width:100%;background:#020a14;border:1px solid rgba(201,168,76,.2);border-radius:12px;margin-bottom:14px;cursor:ew-resize;touch-action:pan-y}
+.sliders{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.slider-card{background:#0d0d0d;border:1px solid rgba(201,168,76,.18);border-radius:10px;padding:14px 18px}
+.slider-card label{font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:10px}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;outline:none;background:rgba(201,168,76,.25)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:#C9A84C;border-radius:50%;cursor:pointer}
+.slider-val{font-family:Georgia,serif;font-size:1.4rem;font-weight:700;color:#C9A84C;margin-top:8px}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.r-cell{background:#0d0d0d;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:10px 14px;text-align:center}
+.r-val{font-family:Georgia,serif;font-size:1.3rem;font-weight:700;color:#C9A84C}
+.r-label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.4);margin-top:3px}
+.output-bar-wrap{background:#0d0d0d;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:14px 18px;margin-bottom:16px}
+.output-bar-label{font-size:.78rem;color:rgba(245,241,232,.6);margin-bottom:8px;font-weight:700}
+.output-bar-track{background:#111;border-radius:4px;height:24px;overflow:hidden;position:relative}
+.output-bar-fill{height:100%;border-radius:4px;transition:width .3s,background .3s;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:.75rem;font-weight:800;color:#000}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32}
+#b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C}
+#b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:16px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Solar PV Installers · Pattern B · Living Diagram</div>
+  <h1>Sun Angle vs. <em>Panel Tilt</em></h1>
+  <p class="sub">Drag the sun across the sky and rotate the panel with the tilt slider. Watch the angle of incidence change and see live how much of the sun's energy actually reaches the cells. Find peak output — then see what a 10° error costs you in kilowatt-hours.</p>
+
+  <div class="teach">
+    <div class="teach-title">Why angle matters more than most installers realize</div>
+    <p><strong style="color:#F5F1E8">The cosine law of solar irradiance.</strong> A panel receives maximum energy when sunlight hits perpendicular (90°). At any other angle, output = cos(angle of incidence). At 30° off-axis you lose 13%. At 60° off-axis you lose 50%. The math is relentless.</p>
+    <p><strong style="color:#F5F1E8">Optimal tilt ≈ your latitude.</strong> In Eugene, OR (44°N), a fixed panel at 44° tilt faces the sun most squarely averaged across the year. In Phoenix (33°N), 33°. The rule is simple; the math behind it is the same cosine law.</p>
+  </div>
+
+  <canvas id="solarCanvas" height="340"></canvas>
+
+  <div class="sliders">
+    <div class="slider-card">
+      <label>Sun Elevation Angle: <span id="sunLabel">45°</span></label>
+      <input type="range" id="sunSlider" min="5" max="85" value="45" oninput="update()"/>
+      <div class="slider-val" id="sunValBig">45°</div>
+    </div>
+    <div class="slider-card">
+      <label>Panel Tilt from Horizontal: <span id="tiltLabel">30°</span></label>
+      <input type="range" id="tiltSlider" min="0" max="90" value="30" oninput="update()"/>
+      <div class="slider-val" id="tiltValBig">30°</div>
+    </div>
+  </div>
+
+  <div class="output-bar-wrap">
+    <div class="output-bar-label">Panel Output vs. Theoretical Maximum</div>
+    <div class="output-bar-track">
+      <div class="output-bar-fill" id="outputBar" style="width:70%;background:#C9A84C">70%</div>
+    </div>
+  </div>
+
+  <div class="readout">
+    <div class="r-cell"><div class="r-val" id="rv-inc">—</div><div class="r-label">Angle of Incidence</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-out">—</div><div class="r-label">Output %</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-kwh">—</div><div class="r-label">kWh/day (400W panel)</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-loss">—</div><div class="r-label">Annual Loss vs. Optimal</div></div>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — 80% output achieved</div>
+    <div class="badge" id="b-silver">🥈 Silver — 95% output achieved</div>
+    <div class="badge" id="b-gold">🥇 Gold — Perfect alignment (99%+)</div>
+    <div class="badge" id="b-platinum">✦ Platinum — Low sun survived</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"What is the optimal tilt angle for solar panels in my state?"</em> or <em>"How much does shading one cell affect the whole panel?"</em> — GENO AI Tutor, 32 languages, 24/7.</p>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('solarCanvas');
+const ctx = canvas.getContext('2d');
+const GOLD='#C9A84C', SKY1='#020a14', SKY2='#0a1628', SUN='#FFD700', PANEL='#2a5f8f';
+
+let W, H;
+function resize(){
+  W=canvas.parentElement.getBoundingClientRect().width;
+  H=Math.round(W*0.36);
+  canvas.width=W*(window.devicePixelRatio||1);
+  canvas.height=H*(window.devicePixelRatio||1);
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+  draw();
+}
+
+let bronzeEarned=false,silverEarned=false,goldEarned=false,platinumEarned=false;
+
+function update(){
+  const sun=+document.getElementById('sunSlider').value;
+  const tilt=+document.getElementById('tiltSlider').value;
+  document.getElementById('sunLabel').textContent=sun+'°';
+  document.getElementById('sunValBig').textContent=sun+'°';
+  document.getElementById('tiltLabel').textContent=tilt+'°';
+  document.getElementById('tiltValBig').textContent=tilt+'°';
+
+  // Angle of incidence: angle between sun ray and panel normal
+  // Panel normal = tilt+90 from horizontal toward sky
+  // Sun direction from horizontal = sun elevation
+  const panelNormalAngle = 90 - tilt; // from horizontal
+  const incidenceRad = Math.abs(panelNormalAngle - sun) * Math.PI/180;
+  const incidence = Math.abs(panelNormalAngle - sun);
+  const outputFrac = Math.max(0, Math.cos(incidenceRad));
+  const outputPct = Math.round(outputFrac*100);
+  const kwhDay = (0.4 * outputFrac * 5).toFixed(2); // 400W panel, 5 peak hours
+  const optimalFrac = Math.cos(0);
+  const annualLoss = Math.round((optimalFrac-outputFrac)*0.4*5*365*100)/100; // kWh
+  const annualLossKwh = (annualLoss).toFixed(0);
+
+  document.getElementById('rv-inc').textContent=incidence.toFixed(1)+'°';
+  document.getElementById('rv-out').textContent=outputPct+'%';
+  document.getElementById('rv-kwh').textContent=kwhDay;
+  document.getElementById('rv-loss').textContent=annualLossKwh+' kWh/yr';
+
+  const bar=document.getElementById('outputBar');
+  bar.style.width=outputPct+'%';
+  bar.textContent=outputPct+'%';
+  const col=outputPct>=95?'#4caf7d':outputPct>=80?'#C9A84C':'#e05c5c';
+  bar.style.background=col;
+  bar.style.color=outputPct>20?'#000':'#fff';
+
+  // Badges
+  if(outputPct>=80&&!bronzeEarned){bronzeEarned=true;document.getElementById('b-bronze').classList.add('earned');}
+  if(outputPct>=95&&!silverEarned){silverEarned=true;document.getElementById('b-silver').classList.add('earned');}
+  if(outputPct>=99&&!goldEarned){goldEarned=true;document.getElementById('b-gold').classList.add('earned');}
+  if(sun<=15&&!platinumEarned){platinumEarned=true;document.getElementById('b-platinum').classList.add('earned');}
+
+  draw(sun,tilt,outputFrac,incidence);
+}
+
+function draw(sun=45,tilt=30,outputFrac=0.7,incidence=15){
+  ctx.clearRect(0,0,W,H);
+  const grd=ctx.createLinearGradient(0,0,0,H);
+  const sunPct=sun/90;
+  grd.addColorStop(0,`hsl(${200+sunPct*20},${60+sunPct*20}%,${5+sunPct*15}%)`);
+  grd.addColorStop(1,'#050a0f');
+  ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+
+  // Ground
+  ctx.fillStyle='#0f1a0a';
+  ctx.fillRect(0,H*0.78,W,H*0.22);
+  ctx.fillStyle='#1a2e10';
+  ctx.fillRect(0,H*0.78,W,4);
+
+  // Horizon grid
+  ctx.strokeStyle='rgba(201,168,76,.08)';ctx.lineWidth=1;
+  for(let i=1;i<4;i++){
+    ctx.beginPath();ctx.moveTo(0,H*0.78-i*H*0.18);ctx.lineTo(W,H*0.78-i*H*0.18);ctx.stroke();
+  }
+
+  // Sun position
+  const sunRad=(90-sun)*Math.PI/180;
+  const sunR=Math.min(W,H)*0.42;
+  const sx=W*0.2+Math.cos(sunRad)*sunR*0.6;
+  const sy=H*0.78-Math.sin(sunRad)*sunR*0.85;
+  const sunSize=Math.min(W,H)*0.055;
+
+  // Sun glow
+  const glow=ctx.createRadialGradient(sx,sy,0,sx,sy,sunSize*3);
+  glow.addColorStop(0,`rgba(255,220,50,${0.2+sunPct*0.2})`);
+  glow.addColorStop(1,'transparent');
+  ctx.fillStyle=glow;ctx.beginPath();ctx.arc(sx,sy,sunSize*3,0,Math.PI*2);ctx.fill();
+  // Sun disc
+  ctx.fillStyle=SUN;ctx.beginPath();ctx.arc(sx,sy,sunSize,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='rgba(255,240,100,.4)';ctx.beginPath();ctx.arc(sx,sy,sunSize*1.3,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='bold 10px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(sun+'°',sx,sy);
+
+  // Sun ray to panel
+  const px=W*0.62, py=H*0.72;
+  ctx.strokeStyle=`rgba(255,220,50,${0.3+outputFrac*0.5})`;
+  ctx.lineWidth=2;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(px,py);ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Panel
+  const panelLen=W*0.2;
+  const tiltRad=(90-tilt)*Math.PI/180; // 0 tilt = horizontal
+  const ang=-tilt*Math.PI/180;
+  const p1x=px-Math.cos(ang)*panelLen/2, p1y=py-Math.sin(ang)*panelLen/2;
+  const p2x=px+Math.cos(ang)*panelLen/2, p2y=py+Math.sin(ang)*panelLen/2;
+
+  // Panel shadow
+  ctx.strokeStyle='rgba(0,0,0,.4)';ctx.lineWidth=8;
+  ctx.beginPath();ctx.moveTo(p1x+3,p1y+4);ctx.lineTo(p2x+3,p2y+4);ctx.stroke();
+
+  // Panel body
+  const panelColor=`rgb(${Math.round(42+outputFrac*80)},${Math.round(95+outputFrac*130)},${Math.round(143+outputFrac*80)})`;
+  ctx.strokeStyle=panelColor;ctx.lineWidth=6;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(p1x,p1y);ctx.lineTo(p2x,p2y);ctx.stroke();
+  ctx.strokeStyle='rgba(201,168,76,.6)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(p1x,p1y);ctx.lineTo(p2x,p2y);ctx.stroke();
+
+  // Panel normal arrow
+  const normAngle=ang-Math.PI/2;
+  const normLen=H*0.18;
+  const nx=px+Math.cos(normAngle)*normLen, ny=py+Math.sin(normAngle)*normLen;
+  ctx.strokeStyle='rgba(76,175,125,.7)';ctx.lineWidth=1.5;ctx.setLineDash([3,3]);
+  ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(nx,ny);ctx.stroke();ctx.setLineDash([]);
+  // Arrow head
+  ctx.fillStyle='rgba(76,175,125,.7)';
+  const ahead=normAngle;
+  ctx.beginPath();
+  ctx.moveTo(nx+Math.cos(ahead)*8,ny+Math.sin(ahead)*8);
+  ctx.lineTo(nx+Math.cos(ahead+2.4)*5,ny+Math.sin(ahead+2.4)*5);
+  ctx.lineTo(nx+Math.cos(ahead-2.4)*5,ny+Math.sin(ahead-2.4)*5);
+  ctx.fill();
+
+  // Incidence angle arc
+  ctx.strokeStyle='rgba(224,92,92,.7)';ctx.lineWidth=1.5;
+  const arcR=30;
+  const rayAngle=Math.atan2(py-sy,px-sx);
+  ctx.beginPath();ctx.arc(px,py,arcR,rayAngle,normAngle+Math.PI,true);ctx.stroke();
+  ctx.fillStyle='rgba(224,92,92,.8)';ctx.font='bold 11px Arial';ctx.textAlign='center';
+  const midAng=(rayAngle+normAngle+Math.PI)/2;
+  ctx.fillText(incidence.toFixed(0)+'°',px+Math.cos(midAng-Math.PI/2)*44,py+Math.sin(midAng-Math.PI/2)*44);
+
+  // Output flash on panel
+  if(outputFrac>0.95){
+    ctx.fillStyle=`rgba(255,220,50,${(outputFrac-0.95)*10})`;
+    ctx.font='bold 13px Arial';ctx.textAlign='center';
+    ctx.fillText('⚡ PEAK OUTPUT', px, py-H*0.22);
+  }
+
+  // Labels
+  ctx.fillStyle='rgba(245,241,232,.5)';ctx.font='11px Arial';ctx.textAlign='left';
+  ctx.fillText('Panel normal →',nx+6,ny);
+  ctx.fillStyle='rgba(255,220,50,.6)';ctx.fillText('← Sun ray',sx+sunSize+6,sy);
+
+  // Output meter in corner
+  const mw=W*0.18, mh=10, mx=W-mw-14, my=14;
+  ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(mx-2,my-2,mw+4,mh+4);
+  ctx.fillStyle='#111';ctx.fillRect(mx,my,mw,mh);
+  const outCol=outputFrac>=0.95?'#4caf7d':outputFrac>=0.8?GOLD:'#e05c5c';
+  ctx.fillStyle=outCol;ctx.fillRect(mx,my,mw*outputFrac,mh);
+  ctx.fillStyle='rgba(245,241,232,.7)';ctx.font='bold 10px Arial';ctx.textAlign='right';
+  ctx.fillText(Math.round(outputFrac*100)+'% output',mx-4,my+mh);
+}
+
+window.addEventListener('load',()=>{resize();update();});
+window.addEventListener('resize',resize);
+</script>
+</body>
+</html>

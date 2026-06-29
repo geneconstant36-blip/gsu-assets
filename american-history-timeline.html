@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>American History Timeline — GSU History & Geography</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+.era-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.era-tab{background:#111;border:1px solid rgba(201,168,76,.3);color:#C9A84C;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:8px 12px;border-radius:6px;cursor:pointer;transition:.15s}
+.era-tab.active{background:#C9A84C;color:#000}
+canvas{display:block;width:100%;background:#050508;border:1px solid rgba(201,168,76,.2);border-radius:12px;margin-bottom:14px;cursor:pointer}
+.event-card{background:#0d0d0d;border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:18px 20px;margin-bottom:14px;display:none}
+.event-card.visible{display:block}
+.event-year{font-family:Georgia,serif;font-size:1.8rem;font-weight:700;color:#C9A84C;margin-bottom:4px}
+.event-title{font-family:Georgia,serif;font-size:1.1rem;color:#F5F1E8;margin-bottom:8px}
+.event-body{font-size:.88rem;color:rgba(245,241,232,.8);line-height:1.75}
+.event-why{font-size:.85rem;color:rgba(201,168,76,.8);margin-top:10px;font-style:italic;border-top:1px solid rgba(201,168,76,.15);padding-top:10px}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:14px}
+.r-cell{background:#0d0d0d;border:1px solid rgba(201,168,76,.15);border-radius:7px;padding:9px 12px;text-align:center}
+.r-val{font-family:Georgia,serif;font-size:1.1rem;font-weight:700;color:#C9A84C}
+.r-label{font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.35);margin-top:2px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32} #b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C} #b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:16px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU American History & Geography · Pattern D · Animated Timeline</div>
+  <h1>American History <em>in Motion</em></h1>
+  <p class="sub">Click any event on the timeline to open it. Watch how each era flows into the next — cause and effect made visible. Navigate by era or scroll the full sweep from 1607 to the present.</p>
+
+  <div class="teach">
+    <div class="teach-title">History is a chain, not a list of dates</div>
+    <p><strong style="color:#F5F1E8">Every event was caused — and caused something else.</strong> The Stamp Act didn't come from nowhere — it came from war debt. The Revolution didn't end with Yorktown — it produced the Constitution. Understanding causation is the difference between memorizing history and thinking historically.</p>
+    <p><strong style="color:#F5F1E8">Migration is the hidden story.</strong> The Great Migration. Westward expansion. Immigration waves. The people moved before the ideas did. Geography and demography explain more political history than most textbooks admit.</p>
+  </div>
+
+  <div class="era-tabs">
+    <button class="era-tab active" onclick="setEra('all',this)">All Eras</button>
+    <button class="era-tab" onclick="setEra('colonial',this)">Colonial</button>
+    <button class="era-tab" onclick="setEra('founding',this)">Founding</button>
+    <button class="era-tab" onclick="setEra('expansion',this)">Expansion</button>
+    <button class="era-tab" onclick="setEra('civil',this)">Civil War Era</button>
+    <button class="era-tab" onclick="setEra('modern',this)">Modern</button>
+  </div>
+
+  <canvas id="tlCanvas" height="220"></canvas>
+
+  <div class="readout">
+    <div class="r-cell"><div class="r-val" id="rv-era">—</div><div class="r-label">Era</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-year">—</div><div class="r-label">Year</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-seen">0</div><div class="r-label">Events Opened</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-span">—</div><div class="r-label">Years Spanned</div></div>
+  </div>
+
+  <div class="event-card" id="eventCard">
+    <div class="event-year" id="eYear">—</div>
+    <div class="event-title" id="eTitle">—</div>
+    <div class="event-body" id="eBody">—</div>
+    <div class="event-why" id="eWhy">—</div>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — 3 events opened</div>
+    <div class="badge" id="b-silver">🥈 Silver — 3 eras visited</div>
+    <div class="badge" id="b-gold">🥇 Gold — 10 events opened</div>
+    <div class="badge" id="b-platinum">✦ Platinum — All eras visited</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"What caused the Civil War, beyond slavery?"</em> or <em>"Why did the Great Migration happen when it did?"</em> — GENO AI Tutor, 32 languages, 24/7.</p>
+  </div>
+</div>
+
+<script>
+const EVENTS=[
+  {year:1607,era:'colonial',label:'Jamestown',title:'First Permanent English Settlement',
+   body:'Virginia Company settlers land at Jamestown. 60% die in the first year from starvation and disease. Tobacco, discovered by John Rolfe, saves the colony economically — and plants the seed of plantation agriculture and slavery.',
+   why:'Jamestown proves English colonization is viable but costly. The tobacco economy creates demand for cheap labor that eventually becomes the transatlantic slave trade.'},
+  {year:1619,era:'colonial',label:'1619',title:'First Enslaved Africans Arrive',
+   body:'A Portuguese slave ship sells "20 and odd" Africans to Virginia colonists. They arrive as indentured servants — but within decades, Virginia law will codify hereditary, race-based slavery.',
+   why:'This single event sets the course of American labor, economics, culture, and eventually war for four centuries.'},
+  {year:1692,era:'colonial',label:'Salem',title:'Salem Witch Trials',
+   body:'200 accused, 19 executed in Salem, Massachusetts. The hysteria collapses when accusers name respected citizens. The aftermath produces early precedents about evidence, due process, and the danger of mass panic.',
+   why:'Salem enters American consciousness as a warning about moral panic — referenced in every era from McCarthyism to modern media frenzies.'},
+  {year:1765,era:'founding',label:'Stamp Act',title:'Taxation Without Representation',
+   body:'Britain imposes the Stamp Act to pay off £130 million in war debt from the French & Indian War. Colonists erupt: "No taxation without representation." Boycotts cripple British merchants. The Act is repealed — but Parliament asserts it can still tax colonies.',
+   why:'The Stamp Act unites thirteen squabbling colonies for the first time. It creates the shared grievance that becomes Revolution.'},
+  {year:1776,era:'founding',label:'Independence',title:'Declaration of Independence',
+   body:'Jefferson drafts, Congress edits, 56 men sign. "We hold these truths to be self-evident, that all men are created equal." The document is a legal argument, a philosophical statement, and a declaration of war against the most powerful empire on Earth.',
+   why:'The Declaration sets an aspirational standard Americans have argued about ever since — who counts as "all men."'},
+  {year:1787,era:'founding',label:'Constitution',title:'The Great Compromise',
+   body:'The Constitutional Convention nearly collapses over representation. The Great Compromise gives small states equal Senate seats, large states proportional House seats, and enslaved people count as 3/5 of a person for taxation and representation.',
+   why:'The 3/5 Compromise gives the South outsized political power for 70 years — directly contributing to every policy conflict leading to the Civil War.'},
+  {year:1803,era:'expansion',label:'Louisiana',title:'Louisiana Purchase',
+   body:'Napoleon sells 828,000 square miles to Jefferson for $15 million — less than 3 cents per acre. The U.S. doubles in size overnight. Jefferson, a strict constitutionalist, has no clear authority to do this — but does it anyway.',
+   why:'The Purchase opens the West and immediately raises the question: will new territories be slave or free? That question drives every major conflict for the next 60 years.'},
+  {year:1830,era:'expansion',label:'Trail of Tears',title:'Indian Removal Act',
+   body:'President Jackson signs the Indian Removal Act. The Five Civilized Tribes — Cherokee, Chickasaw, Choctaw, Creek, Seminole — are forced from their ancestral lands. 16,000 Cherokee march west; 4,000 die en route.',
+   why:'The Trail of Tears establishes a federal precedent that treaty rights can be ignored when land is wanted. Its legal and moral legacy shapes Native American sovereignty debates today.'},
+  {year:1848,era:'expansion',label:'Gold Rush',title:'California Gold Rush',
+   body:'Gold discovered at Sutter\'s Mill. 300,000 migrants flood California in two years — from Europe, China, Latin America, and eastern states. California jumps from 14,000 to 380,000 people in three years.',
+   why:'The Gold Rush makes California instant population and accelerates the slavery question: would California be free or slave? Its admission as a free state in 1850 shifts the balance — and pushes the South toward secession.'},
+  {year:1861,era:'civil',label:'Fort Sumter',title:'Civil War Begins',
+   body:'Confederate forces fire on Fort Sumter, South Carolina, April 12, 1861. The bloodiest conflict in American history begins. 620,000 soldiers die — more than all other American wars combined until Vietnam.',
+   why:'Fort Sumter ends the era of political compromise. The question of slavery — and of whether states can leave the Union — will now be settled by force.'},
+  {year:1863,era:'civil',label:'Emancipation',title:'Emancipation Proclamation',
+   body:'Lincoln issues the Emancipation Proclamation on January 1, 1863 — declaring enslaved people in Confederate states free. It is a war measure, not a moral gesture: it destabilizes the Confederate economy and allows 180,000 Black men to fight for the Union.',
+   why:'The Proclamation changes the war\'s meaning. It becomes, unmistakably, a war about slavery. European nations considering recognizing the Confederacy back off.'},
+  {year:1865,era:'civil',label:'End of War',title:'Reconstruction Begins',
+   body:'Lee surrenders at Appomattox. Lincoln is assassinated days later. Andrew Johnson succeeds and immediately undercuts Reconstruction, allowing Southern states to pass Black Codes replicating slavery in all but name.',
+   why:'The failure of Reconstruction — not slavery itself — determines the next century of American racial politics. Jim Crow, the Great Migration, and the Civil Rights Movement are all direct descendants.'},
+  {year:1917,era:'modern',label:'WWI',title:'America Enters the Great War',
+   body:'After three years of neutrality, the Zimmermann Telegram and German submarine warfare push Congress to declare war. 4 million Americans mobilize. 116,000 die. The U.S. emerges as the decisive power in Europe.',
+   why:'WWI ends European dominance of world affairs and begins American dominance. It also triggers the Great Migration — labor shortages in northern factories pull 1.6 million Black Americans north in a decade.'},
+  {year:1929,era:'modern',label:'Depression',title:'The Great Depression',
+   body:'Stock market crash in October 1929 triggers the worst economic collapse in American history. By 1933: 25% unemployment, 9,000 banks fail, GDP falls 30%, farm prices collapse. The Dust Bowl forces 3.5 million off their land.',
+   why:'The Depression permanently changes the relationship between citizens and government. FDR\'s New Deal creates Social Security, the FDIC, SEC, and dozens of programs that still exist. Americans come to expect government to act in economic crises.'},
+  {year:1964,era:'modern',label:'Civil Rights',title:'Civil Rights Act',
+   body:'After years of marches, sit-ins, Freedom Rides, and the Birmingham bombing, LBJ signs the Civil Rights Act of 1964, outlawing discrimination based on race, color, religion, sex, or national origin. The Voting Rights Act follows in 1965.',
+   why:'The Civil Rights Act fulfills what the 14th Amendment promised in 1868 — a century later. It also realigns the two parties: Democrats lose the South for a generation.'},
+];
+
+const ERA_COLORS={
+  colonial:'#8B6914', founding:'#2a6b9b', expansion:'#2a7a3b',
+  civil:'#8b2a2a', modern:'#4a2a8b'
+};
+const ERA_YEARS={colonial:[1600,1760],founding:[1760,1800],expansion:[1800,1860],civil:[1860,1870],modern:[1870,2000]};
+
+let canvas=document.getElementById('tlCanvas');
+let ctx=canvas.getContext('2d');
+let W,H, currentEra='all', selectedIdx=-1, eventsOpened=new Set(), erasVisited=new Set(['all']);
+let animProg=0, animTarget=1;
+
+function resize(){
+  W=canvas.parentElement.getBoundingClientRect().width;
+  H=parseInt(canvas.getAttribute('height'));
+  canvas.width=W*(window.devicePixelRatio||1);
+  canvas.height=H*(window.devicePixelRatio||1);
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+  draw();
+}
+
+function filterEvents(){
+  if(currentEra==='all') return EVENTS;
+  return EVENTS.filter(e=>e.era===currentEra);
+}
+
+const MIN_YEAR=1600, MAX_YEAR=2000;
+function yearToX(y,pl,cw){return pl+cw*(y-MIN_YEAR)/(MAX_YEAR-MIN_YEAR);}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const pl=40,pr=20,pt=30,pb=50;
+  const cw=W-pl-pr, ch=H-pt-pb;
+  const evts=filterEvents();
+
+  // Background era bands
+  Object.entries(ERA_YEARS).forEach(([era,[y1,y2]])=>{
+    const x1=yearToX(y1,pl,cw), x2=yearToX(y2,pl,cw);
+    ctx.fillStyle=ERA_COLORS[era]+'22';
+    ctx.fillRect(x1,pt,x2-x1,ch);
+    ctx.fillStyle=ERA_COLORS[era]+'66';
+    ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.textBaseline='top';
+    const label={colonial:'Colonial',founding:'Founding',expansion:'Expansion',civil:'Civil War',modern:'Modern'}[era];
+    ctx.fillText(label,(x1+x2)/2,pt+3);
+  });
+
+  // Main timeline bar
+  const ty=pt+ch*0.45;
+  ctx.strokeStyle='rgba(201,168,76,.4)';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(pl,ty);ctx.lineTo(pl+cw*animProg,ty);ctx.stroke();
+
+  // Year labels
+  ctx.fillStyle='rgba(245,241,232,.35)';ctx.font='10px Arial';ctx.textAlign='center';ctx.textBaseline='top';
+  [1620,1700,1776,1800,1850,1865,1900,1945,2000].forEach(y=>{
+    const x=yearToX(y,pl,cw);
+    ctx.fillText(y,x,H-pb+8);
+    ctx.strokeStyle='rgba(245,241,232,.1)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x,pt+4);ctx.lineTo(x,ty+6);ctx.stroke();
+  });
+
+  // Events
+  evts.forEach((ev,i)=>{
+    const x=yearToX(ev.year,pl,cw);
+    const isSelected=ev===EVENTS[selectedIdx];
+    const above=i%2===0;
+    const dotY=ty;
+    const lineLen=above?-(ch*0.28+i%3*8):(ch*0.2+i%3*8);
+    const textY=dotY+lineLen+(above?-14:14);
+
+    // Connector
+    ctx.strokeStyle=ERA_COLORS[ev.era]+(isSelected?'ff':'88');
+    ctx.lineWidth=isSelected?2:1;ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(x,dotY);ctx.lineTo(x,textY+(above?12:-12));ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Dot
+    ctx.fillStyle=ERA_COLORS[ev.era];
+    ctx.strokeStyle=isSelected?'#C9A84C':'rgba(201,168,76,.4)';
+    ctx.lineWidth=isSelected?2.5:1;
+    ctx.beginPath();ctx.arc(x,dotY,isSelected?8:5,0,Math.PI*2);ctx.fill();ctx.stroke();
+
+    // Label
+    ctx.fillStyle=isSelected?'#C9A84C':'rgba(245,241,232,.65)';
+    ctx.font=`${isSelected?'bold ':''}10px Arial`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(ev.label,x,textY);
+    if(eventsOpened.has(i)){
+      ctx.fillStyle='rgba(201,168,76,.6)';ctx.beginPath();ctx.arc(x+5,textY-7,3,0,Math.PI*2);ctx.fill();
+    }
+  });
+
+  animProg=Math.min(1,animProg+0.008);
+}
+
+function getClickedEvent(e){
+  const pl=40,pr=20,pt=30,pb=50;
+  const cw=W-pl-pr, ch=H-pt-pb;
+  const rect=canvas.getBoundingClientRect();
+  const cx=(e.clientX-rect.left)*W/rect.width;
+  const cy=(e.clientY-rect.top)*H/rect.height;
+  const evts=filterEvents();
+  let best=-1, bestDist=30;
+  evts.forEach((ev,i)=>{
+    const x=yearToX(ev.year,pl,cw);
+    const d=Math.hypot(x-cx, (pt+ch*0.45)-cy);
+    if(d<bestDist){bestDist=d;best=EVENTS.indexOf(ev);}
+  });
+  return best;
+}
+
+canvas.addEventListener('click',e=>{
+  const idx=getClickedEvent(e);
+  if(idx<0) return;
+  selectedIdx=idx;
+  openEvent(idx);
+});
+
+function openEvent(idx){
+  const ev=EVENTS[idx];
+  eventsOpened.add(idx);
+  document.getElementById('eYear').textContent=ev.year;
+  document.getElementById('eTitle').textContent=ev.title;
+  document.getElementById('eBody').textContent=ev.body;
+  document.getElementById('eWhy').textContent='Why it matters today: '+ev.why;
+  document.getElementById('eventCard').className='event-card visible';
+  document.getElementById('rv-era').textContent=ev.era.charAt(0).toUpperCase()+ev.era.slice(1);
+  document.getElementById('rv-year').textContent=ev.year;
+  document.getElementById('rv-seen').textContent=eventsOpened.size;
+  document.getElementById('rv-span').textContent=(ev.year-1607)+' yrs';
+  if(eventsOpened.size>=3) document.getElementById('b-bronze').classList.add('earned');
+  if(eventsOpened.size>=10) document.getElementById('b-gold').classList.add('earned');
+  draw();
+}
+
+function setEra(era,btn){
+  currentEra=era;
+  erasVisited.add(era);
+  animProg=0;
+  document.querySelectorAll('.era-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('eventCard').className='event-card';
+  selectedIdx=-1;
+  if(erasVisited.size>=3) document.getElementById('b-silver').classList.add('earned');
+  if(erasVisited.size>=6) document.getElementById('b-platinum').classList.add('earned');
+  draw();
+}
+
+function loop(){draw();requestAnimationFrame(loop);}
+window.addEventListener('load',()=>{resize();loop();});
+window.addEventListener('resize',resize);
+</script>
+</body>
+</html>

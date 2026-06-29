@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Load-Path Sandbox — GSU Tradification</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+/* TEACH PANEL */
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+/* CONTROLS */
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
+.ctrl-btn{background:#111;border:1px solid rgba(201,168,76,.35);color:#C9A84C;font-size:.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:9px 16px;border-radius:7px;cursor:pointer;transition:.15s}
+.ctrl-btn:hover,.ctrl-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.ctrl-btn.danger{border-color:rgba(224,92,92,.4);color:#e05c5c}
+.ctrl-btn.danger:hover{background:#e05c5c;color:#000;border-color:#e05c5c}
+.slider-wrap{display:flex;align-items:center;gap:10px;background:#111;border:1px solid rgba(201,168,76,.2);border-radius:7px;padding:8px 14px}
+.slider-wrap label{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#C9A84C;white-space:nowrap}
+input[type=range]{-webkit-appearance:none;width:100px;height:3px;background:rgba(201,168,76,.3);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:#C9A84C;border-radius:50%;cursor:pointer}
+/* CANVAS */
+.canvas-wrap{position:relative;background:#050505;border:1px solid rgba(201,168,76,.2);border-radius:12px;overflow:hidden;margin-bottom:16px}
+canvas{display:block;width:100%!important;height:auto!important}
+.canvas-hint{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:.72rem;color:rgba(201,168,76,.6);font-weight:700;letter-spacing:1px;text-transform:uppercase;pointer-events:none}
+/* STATUS */
+.status-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.stat{background:#0d0d0d;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:10px 16px;flex:1;min-width:120px;text-align:center}
+.stat-val{font-family:Georgia,serif;font-size:1.3rem;font-weight:700;color:#C9A84C}
+.stat-label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.45);margin-top:2px}
+/* BADGES */
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 16px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32}
+#b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C}
+#b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+/* GENO */
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:18px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+/* LOAD LABEL */
+.load-info{font-size:.82rem;color:rgba(201,168,76,.8);text-align:center;margin-bottom:8px;min-height:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Tradification · Pattern A · Physics Sandbox</div>
+  <h1>The Load-Path <em>Sandbox</em></h1>
+  <p class="sub">Drag a load onto the frame and watch the force travel through every member to the ground. Toggle diagonal bracing and push a wind load — then feel the difference between a frame that stands and one that doesn't.</p>
+
+  <div class="teach">
+    <div class="teach-title">Before you play — the three truths of structural framing</div>
+    <p><strong style="color:#F5F1E8">1. Every load needs a path to the ground.</strong> A roof load doesn't "sit" on a joist — it travels: roof deck → rafter → top plate → stud → bottom plate → foundation. Break any link and the load finds its own path, often through failure.</p>
+    <p><strong style="color:#F5F1E8">2. Bracing resists racking.</strong> A rectangle of studs is a parallelogram waiting to happen. One diagonal changes that — it creates a triangle, the only shape that can't deform without breaking a member.</p>
+    <p><strong style="color:#F5F1E8">3. Wind is a lateral load.</strong> Gravity pushes down. Wind pushes sideways. A frame that handles gravity perfectly can still rack under wind if it has no lateral resistance.</p>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="btnBrace" onclick="toggleBrace()">Add Diagonal Brace</button>
+    <button class="ctrl-btn" id="btnLoad" onclick="dropLoad()">Drop Roof Load</button>
+    <div class="slider-wrap">
+      <label>Wind →</label>
+      <input type="range" id="windSlider" min="0" max="8" value="0" step="0.5" oninput="setWind(this.value)"/>
+      <span id="windVal" style="font-size:.78rem;color:#C9A84C;min-width:28px">0</span>
+    </div>
+    <button class="ctrl-btn danger" onclick="resetSim()">Reset</button>
+  </div>
+
+  <div class="load-info" id="loadInfo">← Add a load or toggle bracing to begin</div>
+
+  <div class="canvas-wrap">
+    <canvas id="simCanvas"></canvas>
+    <div class="canvas-hint" id="canvasHint">Click "Drop Roof Load" to start</div>
+  </div>
+
+  <div class="status-bar">
+    <div class="stat"><div class="stat-val" id="sv-load">0 lbs</div><div class="stat-label">Roof Load</div></div>
+    <div class="stat"><div class="stat-val" id="sv-wind">0 mph</div><div class="stat-label">Wind Force</div></div>
+    <div class="stat"><div class="stat-val" id="sv-brace">None</div><div class="stat-label">Bracing</div></div>
+    <div class="stat"><div class="stat-val" id="sv-status">Stable</div><div class="stat-label">Frame Status</div></div>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — First load dropped</div>
+    <div class="badge" id="b-silver">🥈 Silver — Brace tested</div>
+    <div class="badge" id="b-gold">🥇 Gold — Wind load survived</div>
+    <div class="badge" id="b-platinum">✦ Platinum — All scenarios</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"Why does a diagonal brace prevent racking?"</em> or <em>"What is dead load vs. live load?"</em> — GENO AI Tutor available 24/7, answers in 32 languages. A robot you can actually TALK to.</p>
+  </div>
+</div>
+
+<script>
+const { Engine, Render, Runner, Bodies, Body, Composite, Constraint, Events, Mouse, MouseConstraint, Vector } = Matter;
+
+const GOLD = '#C9A84C', CREAM = '#F5F1E8', DIM = 'rgba(245,241,232,.4)';
+const CW = Math.min(960, window.innerWidth - 36);
+const CH = Math.round(CW * 0.52);
+
+let engine, render, runner, mc;
+let studs = [], plates = [], brace = null, load = null, hasBrace = false;
+let loadDropped = false, braceToggled = false, windSurvived = false, allDone = false;
+let windForce = 0, loadCount = 0;
+let scenarios = new Set();
+
+const canvas = document.getElementById('simCanvas');
+canvas.width = CW; canvas.height = CH;
+
+function initSim() {
+  if (engine) { Runner.stop(runner); Render.stop(render); Engine.clear(engine); }
+
+  engine = Engine.create({ gravity: { y: 1.2 } });
+  render = Render.create({
+    canvas,
+    engine,
+    options: {
+      width: CW, height: CH,
+      background: '#050505',
+      wireframes: false,
+      pixelRatio: Math.min(window.devicePixelRatio || 1, 2)
+    }
+  });
+
+  buildFrame();
+  addMouseControl();
+  addEventListeners();
+  Runner.run(runner = Runner.create(), engine);
+  Render.run(render);
+  drawLoop();
+}
+
+const FW = CW * 0.55, FH = CH * 0.65;
+const FX = CW * 0.28, FY = CH * 0.18;
+const THICK = 10, GROUND_Y = CH - 20;
+
+function buildFrame() {
+  const opts = (color) => ({
+    isStatic: true,
+    render: { fillStyle: color },
+    friction: 0.8, frictionStatic: 0.8
+  });
+
+  // Ground
+  const ground = Bodies.rectangle(CW / 2, GROUND_Y + 10, CW * 2, 24, opts('#1a1a1a'));
+  ground.render.fillStyle = '#1a1a1a';
+
+  // Studs (vertical) — left and right
+  const lStud = Bodies.rectangle(FX, FY + FH / 2, THICK, FH, opts('#8B6914'));
+  const rStud = Bodies.rectangle(FX + FW, FY + FH / 2, THICK, FH, opts('#8B6914'));
+
+  // Top plate
+  const topPlate = Bodies.rectangle(FX + FW / 2, FY, FW + THICK, THICK, opts(GOLD));
+
+  // Bottom plate
+  const botPlate = Bodies.rectangle(FX + FW / 2, FY + FH, FW + THICK, THICK, opts('#5a4a1a'));
+
+  // Mid studs
+  const midStuds = [];
+  for (let i = 1; i <= 3; i++) {
+    const x = FX + (FW / 4) * i;
+    midStuds.push(Bodies.rectangle(x, FY + FH / 2, THICK - 2, FH, opts('#6b5010')));
+  }
+
+  // Roof ridge
+  const ridge = Bodies.rectangle(FX + FW / 2, FY - 30, FW * 0.1, 8, opts(GOLD));
+  // Roof rafters
+  const lRafter = Bodies.rectangle(FX + FW * 0.28, FY - 16, FW * 0.55, 7, {
+    isStatic: true, angle: -0.28,
+    render: { fillStyle: GOLD }
+  });
+  const rRafter = Bodies.rectangle(FX + FW * 0.72, FY - 16, FW * 0.55, 7, {
+    isStatic: true, angle: 0.28,
+    render: { fillStyle: GOLD }
+  });
+
+  studs = [lStud, rStud, ...midStuds];
+  plates = [topPlate, botPlate, ground, ridge, lRafter, rRafter];
+
+  Composite.add(engine.world, [...studs, ...plates]);
+  document.getElementById('sv-brace').textContent = 'None';
+}
+
+function addBrace() {
+  if (brace) Composite.remove(engine.world, brace);
+  brace = Bodies.rectangle(
+    FX + FW / 2, FY + FH / 2,
+    Math.sqrt(FW * FW + FH * FH) * 0.52, 7,
+    {
+      isStatic: true,
+      angle: Math.atan2(FH, FW),
+      render: { fillStyle: '#4caf7d', opacity: 0.85 }
+    }
+  );
+  Composite.add(engine.world, brace);
+  document.getElementById('sv-brace').textContent = 'Diagonal ✓';
+  document.getElementById('loadInfo').textContent = 'Diagonal brace locks the rectangle into triangles — racking is now resisted.';
+}
+
+function removeBrace() {
+  if (brace) { Composite.remove(engine.world, brace); brace = null; }
+  document.getElementById('sv-brace').textContent = 'None';
+  document.getElementById('loadInfo').textContent = 'No bracing — the frame can rack under lateral load.';
+}
+
+function toggleBrace() {
+  hasBrace = !hasBrace;
+  const btn = document.getElementById('btnBrace');
+  if (hasBrace) { addBrace(); btn.classList.add('active'); btn.textContent = 'Remove Brace'; }
+  else { removeBrace(); btn.classList.remove('active'); btn.textContent = 'Add Diagonal Brace'; }
+  braceToggled = true;
+  document.getElementById('b-silver').classList.add('earned');
+  scenarios.add('brace');
+  checkPlatinum();
+}
+
+function dropLoad() {
+  loadCount++;
+  const lx = FX + FW * 0.2 + Math.random() * FW * 0.6;
+  const newLoad = Bodies.rectangle(lx, FY - 80, 44, 22, {
+    density: 0.004,
+    restitution: 0.1, friction: 0.6,
+    render: { fillStyle: '#e05c5c', strokeStyle: '#ff6b6b', lineWidth: 2 },
+    label: 'load'
+  });
+  Composite.add(engine.world, newLoad);
+  if (!load) load = newLoad;
+  loadDropped = true;
+  document.getElementById('b-bronze').classList.add('earned');
+  document.getElementById('sv-load').textContent = (loadCount * 240) + ' lbs';
+  document.getElementById('loadInfo').textContent = `Load ${loadCount} dropped — watch the force travel to the top plate and down the studs.`;
+  document.getElementById('canvasHint').style.display = 'none';
+  document.getElementById('sv-status').textContent = 'Loaded';
+  scenarios.add('load');
+  checkPlatinum();
+}
+
+function setWind(v) {
+  windForce = parseFloat(v);
+  document.getElementById('windVal').textContent = v;
+  document.getElementById('sv-wind').textContent = Math.round(v * 8) + ' mph';
+  if (v > 0) document.getElementById('loadInfo').textContent =
+    `Wind force ${Math.round(v*8)} mph applied laterally. ${hasBrace ? 'Brace is resisting racking.' : 'No bracing — frame may rack!'}`;
+}
+
+function resetSim() {
+  hasBrace = false; windForce = 0; load = null; loadCount = 0;
+  document.getElementById('windSlider').value = 0;
+  document.getElementById('windVal').textContent = '0';
+  document.getElementById('btnBrace').classList.remove('active');
+  document.getElementById('btnBrace').textContent = 'Add Diagonal Brace';
+  document.getElementById('sv-load').textContent = '0 lbs';
+  document.getElementById('sv-wind').textContent = '0 mph';
+  document.getElementById('sv-brace').textContent = 'None';
+  document.getElementById('sv-status').textContent = 'Stable';
+  document.getElementById('loadInfo').textContent = '← Add a load or toggle bracing to begin';
+  document.getElementById('canvasHint').style.display = 'block';
+  initSim();
+}
+
+function addMouseControl() {
+  const mouse = Mouse.create(render.canvas);
+  mc = MouseConstraint.create(engine, {
+    mouse,
+    constraint: { stiffness: 0.2, render: { visible: false } }
+  });
+  Composite.add(engine.world, mc);
+  render.mouse = mouse;
+}
+
+function addEventListeners() {
+  Events.on(engine, 'beforeUpdate', () => {
+    if (windForce === 0) return;
+    Composite.allBodies(engine.world).forEach(b => {
+      if (!b.isStatic && b.label === 'load') {
+        Body.applyForce(b, b.position, { x: windForce * 0.00004, y: 0 });
+      }
+    });
+  });
+
+  Events.on(engine, 'afterUpdate', () => {
+    const loads = Composite.allBodies(engine.world).filter(b => b.label === 'load');
+    const fallen = loads.filter(b => b.position.y > GROUND_Y - 10);
+    if (fallen.length > 0) {
+      document.getElementById('sv-status').textContent = '⚠ Racking!';
+    } else if (loads.length > 0) {
+      document.getElementById('sv-status').textContent = 'Loaded';
+    }
+    // Wind badge
+    if (windForce >= 5 && loads.length > 0 && hasBrace) {
+      document.getElementById('b-gold').classList.add('earned');
+      windSurvived = true; scenarios.add('wind'); checkPlatinum();
+    }
+  });
+}
+
+function checkPlatinum() {
+  if (scenarios.size >= 3) {
+    document.getElementById('b-platinum').classList.add('earned');
+  }
+}
+
+function drawLoop() {
+  // Draw load path overlay on canvas via afterRender
+  Events.on(render, 'afterRender', () => {
+    const ctx = render.context;
+    if (!loadDropped) return;
+    // Arrow from top plate down left stud
+    ctx.strokeStyle = 'rgba(201,168,76,0.4)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 4]);
+    ctx.beginPath();
+    ctx.moveTo(FX + FW / 2, FY + 8);
+    ctx.lineTo(FX, FY + FH);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(FX + FW / 2, FY + 8);
+    ctx.lineTo(FX + FW, FY + FH);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // Labels
+    ctx.fillStyle = 'rgba(201,168,76,0.6)';
+    ctx.font = 'bold 10px Arial';
+    ctx.fillText('load path', FX - 68, FY + FH / 2);
+    ctx.fillText('load path', FX + FW + 8, FY + FH / 2);
+  });
+}
+
+window.addEventListener('load', initSim);
+window.addEventListener('resize', () => {
+  // Re-init on resize for mobile
+  const newW = Math.min(960, window.innerWidth - 36);
+  if (Math.abs(newW - CW) > 40) location.reload();
+});
+</script>
+</body>
+</html>

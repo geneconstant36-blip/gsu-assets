@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Simple Machines Lab — GSU Science</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+.machine-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.m-tab{background:#111;border:1px solid rgba(201,168,76,.3);color:#C9A84C;font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:9px 14px;border-radius:7px;cursor:pointer;transition:.15s}
+.m-tab.active{background:#C9A84C;color:#000}
+canvas{display:block;width:100%;background:#050a0f;border:1px solid rgba(201,168,76,.2);border-radius:12px;margin-bottom:14px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center}
+.slider-card{background:#0d0d0d;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:10px 16px;flex:1;min-width:180px}
+.slider-card label{font-size:.7rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:8px}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;border-radius:2px;background:rgba(201,168,76,.25);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:#C9A84C;border-radius:50%;cursor:pointer}
+.slider-val{font-family:Georgia,serif;font-size:1.1rem;font-weight:700;color:#C9A84C;margin-top:6px}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.r-cell{background:#0d0d0d;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:10px 14px;text-align:center}
+.r-val{font-family:Georgia,serif;font-size:1.3rem;font-weight:700;color:#C9A84C}
+.r-label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.4);margin-top:3px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32} #b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C} #b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:16px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Science · Pattern D · Animated Scene</div>
+  <h1>Simple Machines <em>Lab</em></h1>
+  <p class="sub">Drag the slider to apply force and watch the machine move. See the trade-off: every simple machine trades force for distance — but work stays constant. Change the mechanical advantage and feel why levers moved the ancient world.</p>
+
+  <div class="teach">
+    <div class="teach-title">The one law all six simple machines obey</div>
+    <p><strong style="color:#F5F1E8">Work = Force × Distance.</strong> You cannot get more work out than you put in — but you can get more force by trading distance, or more speed by trading force. A lever that lifts 500 lbs with 50 lbs of effort moves the load half as far as you move the effort end. The math always balances.</p>
+    <p><strong style="color:#F5F1E8">Mechanical Advantage = Load Force ÷ Effort Force</strong> — or equivalently, Effort Distance ÷ Load Distance. An MA of 5 means you push with one-fifth the force over five times the distance. The machine multiplies force; it never multiplies work.</p>
+  </div>
+
+  <div class="machine-tabs">
+    <button class="m-tab active" onclick="setMachine('lever',this)">Lever</button>
+    <button class="m-tab" onclick="setMachine('pulley',this)">Pulley</button>
+    <button class="m-tab" onclick="setMachine('incline',this)">Inclined Plane</button>
+    <button class="m-tab" onclick="setMachine('wheel',this)">Wheel & Axle</button>
+  </div>
+
+  <canvas id="machineCanvas" height="300"></canvas>
+
+  <div class="controls" id="controls"></div>
+
+  <div class="readout">
+    <div class="r-cell"><div class="r-val" id="rv-ma">—</div><div class="r-label">Mech. Advantage</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-effort">—</div><div class="r-label">Effort Force (N)</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-load">—</div><div class="r-label">Load Force (N)</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-work">—</div><div class="r-label">Work (J) — constant</div></div>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — 3 machines explored</div>
+    <div class="badge" id="b-silver">🥈 Silver — MA of 5 achieved</div>
+    <div class="badge" id="b-gold">🥇 Gold — All 4 machines</div>
+    <div class="badge" id="b-platinum">✦ Platinum — Work constant observed</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"How did Archimedes use a lever to move a ship?"</em> or <em>"What is the difference between a first, second, and third class lever?"</em> — GENO AI Tutor, 32 languages, 24/7.</p>
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById('machineCanvas');
+const ctx=canvas.getContext('2d');
+const GOLD='#C9A84C', CREAM='#F5F1E8', GREEN='#4caf7d', RED='#e05c5c';
+let W,H, animId, currentMachine='lever', t=0;
+let machinesVisited=new Set(['lever']), maAchieved=false, workObserved=false;
+let effortVal=100, pivotRatio=0.33;
+
+function resize(){
+  W=canvas.parentElement.getBoundingClientRect().width;
+  H=parseInt(canvas.getAttribute('height'));
+  canvas.width=W*(window.devicePixelRatio||1);
+  canvas.height=H*(window.devicePixelRatio||1);
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+}
+
+function label(x,y,txt,col,align){
+  ctx.fillStyle=col||'rgba(245,241,232,.7)';ctx.font='11px Arial';
+  ctx.textAlign=align||'center';ctx.textBaseline='middle';ctx.fillText(txt,x,y);
+}
+function arrow(x1,y1,x2,y2,col,lw){
+  ctx.strokeStyle=col||GOLD;ctx.lineWidth=lw||2;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+  const a=Math.atan2(y2-y1,x2-x1);
+  ctx.fillStyle=col||GOLD;ctx.beginPath();
+  ctx.moveTo(x2,y2);ctx.lineTo(x2-10*Math.cos(a-0.4),y2-10*Math.sin(a-0.4));
+  ctx.lineTo(x2-10*Math.cos(a+0.4),y2-10*Math.sin(a+0.4));ctx.fill();
+}
+
+// ── LEVER ────────────────────────────────────────────────
+function drawLever(pivot){
+  ctx.clearRect(0,0,W,H);
+  const py=H*0.58, bx=W*0.12, ex=W*0.88, lx=bx+(ex-bx)*pivot;
+  const loadF=100, effortF=loadF*pivot/(1-pivot);
+  const disp=(t%180)/180; // 0..1 animate
+  const tilt=Math.sin(disp*Math.PI*2)*0.06*(pivot-0.5)*-1;
+  const liftY=py+Math.sin(tilt)*lx;
+  const effortY=py-Math.sin(tilt)*(ex-lx);
+
+  // Ground
+  ctx.fillStyle='#0f1a0a';ctx.fillRect(0,H*0.72,W,H*0.28);
+
+  // Fulcrum triangle
+  ctx.fillStyle='#5a4a1a';
+  ctx.beginPath();ctx.moveTo(lx,py);ctx.lineTo(lx-22,H*0.72);ctx.lineTo(lx+22,H*0.72);ctx.fill();
+
+  // Lever bar
+  ctx.save();ctx.translate(lx,py);ctx.rotate(tilt);
+  ctx.strokeStyle=GOLD;ctx.lineWidth=8;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(bx-lx,0);ctx.lineTo(ex-lx,0);ctx.stroke();
+  ctx.restore();
+
+  // Load block (left)
+  const loadX=bx, blockY=py+Math.sin(tilt)*(bx-lx)-22;
+  ctx.fillStyle='#e05c5c';ctx.fillRect(loadX-20,blockY-22,40,22);
+  ctx.fillStyle=CREAM;ctx.font='bold 10px Arial';ctx.textAlign='center';
+  ctx.fillText('100N',loadX,blockY-10);
+  arrow(loadX,blockY+2,loadX,blockY+28,'rgba(224,92,92,.8)');
+
+  // Effort arrow (right)
+  const effX=ex, effY=py-Math.sin(tilt)*(ex-lx);
+  arrow(effX,effY-30,effX,effY,'rgba(76,175,125,.9)',2.5);
+  ctx.fillStyle='rgba(76,175,125,.9)';ctx.font='bold 10px Arial';ctx.textAlign='center';
+  ctx.fillText(effortF.toFixed(0)+'N effort',effX,effY-40);
+
+  // Labels
+  const effortDist=(ex-lx).toFixed(0), loadDist=(lx-bx).toFixed(0);
+  label(lx,H*0.68,`MA = ${(pivot/(1-pivot+0.001)).toFixed(2)} · Load dist: ${loadDist}px · Effort dist: ${effortDist}px`,GOLD);
+  label(lx,py-18,'FULCRUM','rgba(201,168,76,.5)');
+
+  document.getElementById('rv-ma').textContent=(pivot/(1-pivot+0.001)).toFixed(2)+'×';
+  document.getElementById('rv-effort').textContent=effortF.toFixed(1);
+  document.getElementById('rv-load').textContent='100';
+  document.getElementById('rv-work').textContent=(100*30).toFixed(0)+' J';
+  if(parseFloat(document.getElementById('rv-ma').textContent)>=5) badgeMA();
+}
+
+// ── PULLEY ──────────────────────────────────────────────
+function drawPulley(pulleys){
+  ctx.clearRect(0,0,W,H);
+  const n=Math.round(pulleys)||2; // number of rope segments
+  const MA=n; // simplified block-and-tackle
+  const effortF=100/MA;
+  const cx=W/2, topY=H*0.08;
+  const ph=32;
+
+  // Ceiling
+  ctx.fillStyle='#1a1a1a';ctx.fillRect(W*0.3,0,W*0.4,ph*0.4);
+
+  // Draw pulleys
+  for(let i=0;i<Math.min(n,4);i++){
+    const py=topY+i*(H*0.14);
+    const isFixed=i===0;
+    ctx.strokeStyle=isFixed?GOLD:'rgba(201,168,76,.7)';ctx.lineWidth=3;
+    ctx.beginPath();ctx.arc(cx,py,ph,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='rgba(201,168,76,.12)';ctx.fill();
+    ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(cx,py,5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=isFixed?'rgba(245,241,232,.6)':'rgba(201,168,76,.5)';
+    ctx.font='9px Arial';ctx.textAlign='center';
+    ctx.fillText(isFixed?'Fixed':'Movable',cx+42,py);
+  }
+
+  // Ropes
+  const loadY=topY+H*0.42+(Math.sin(t*0.04)*8);
+  ctx.strokeStyle='rgba(245,241,232,.6)';ctx.lineWidth=2;
+  for(let i=0;i<n;i++){
+    const rx=cx+(-n/2+i+0.5)*14;
+    ctx.beginPath();ctx.moveTo(rx,topY);ctx.lineTo(rx,loadY);ctx.stroke();
+  }
+
+  // Load
+  ctx.fillStyle='#3a5a8a';ctx.fillRect(cx-28,loadY,56,32);
+  ctx.fillStyle=CREAM;ctx.font='bold 11px Arial';ctx.textAlign='center';
+  ctx.fillText('100N',cx,loadY+20);
+  arrow(cx,loadY-4,cx,loadY-28,'rgba(224,92,92,.8)');
+
+  // Effort rope
+  const effX=cx+n*8;
+  ctx.strokeStyle='rgba(76,175,125,.6)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(effX,loadY-18);ctx.lineTo(effX,loadY-60);ctx.stroke();
+  arrow(effX,loadY-60,effX,loadY-86,'rgba(76,175,125,.9)',2);
+  ctx.fillStyle='rgba(76,175,125,.9)';ctx.font='bold 10px Arial';
+  ctx.fillText(effortF.toFixed(1)+'N',effX+36,loadY-70);
+
+  label(cx,H-22,`Block & tackle: ${n} rope segments = MA of ${n} = lift 100N with only ${effortF.toFixed(1)}N`,GOLD);
+  document.getElementById('rv-ma').textContent=n+'×';
+  document.getElementById('rv-effort').textContent=effortF.toFixed(1);
+  document.getElementById('rv-load').textContent='100';
+  document.getElementById('rv-work').textContent='3000 J';
+  if(n>=5) badgeMA();
+}
+
+// ── INCLINED PLANE ──────────────────────────────────────
+function drawIncline(angleD){
+  ctx.clearRect(0,0,W,H);
+  const ang=angleD*Math.PI/180;
+  const L=W*0.65, bx=W*0.1, by=H*0.8;
+  const topX=bx+L*Math.cos(ang), topY=by-L*Math.sin(ang);
+  const MA=1/Math.sin(ang);
+  const effortF=100*Math.sin(ang);
+
+  // Ground
+  ctx.fillStyle='#0f1a0a';ctx.fillRect(0,by,W,H-by);
+  // Ramp
+  ctx.fillStyle='#3a2a08';
+  ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(topX,topY);ctx.lineTo(topX,by);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(topX,topY);ctx.stroke();
+
+  // Block sliding up
+  const prog=(t%240)/240;
+  const bpx=bx+L*Math.cos(ang)*prog, bpy=by-L*Math.sin(ang)*prog;
+  ctx.save();ctx.translate(bpx,bpy);ctx.rotate(-ang);
+  ctx.fillStyle='#e05c5c';ctx.fillRect(-16,-12,32,22);
+  ctx.fillStyle=CREAM;ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.fillText('100N',0,5);
+  ctx.restore();
+
+  // Force arrows
+  arrow(bpx-28*Math.cos(ang),bpy+28*Math.sin(ang),bpx+28*Math.cos(ang),bpy-28*Math.sin(ang),'rgba(76,175,125,.8)',2.5);
+  // Gravity down
+  arrow(bpx,bpy,bpx,bpy+35,'rgba(224,92,92,.7)',2);
+
+  // Angle label
+  ctx.strokeStyle='rgba(201,168,76,.5)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.arc(bx,by,40,(-ang),0);ctx.stroke();
+  label(bx+50,by-18,angleD+'°',GOLD);
+  label(W/2,H-22,`MA = 1/sin(${angleD}°) = ${MA.toFixed(2)}× · Effort = ${effortF.toFixed(1)}N instead of 100N`,GOLD);
+
+  document.getElementById('rv-ma').textContent=MA.toFixed(2)+'×';
+  document.getElementById('rv-effort').textContent=effortF.toFixed(1);
+  document.getElementById('rv-load').textContent='100';
+  document.getElementById('rv-work').textContent='3000 J';
+  if(MA>=5) badgeMA();
+}
+
+// ── WHEEL & AXLE ─────────────────────────────────────────
+function drawWheel(ratio){
+  ctx.clearRect(0,0,W,H);
+  const cx=W/2, cy=H*0.45;
+  const R=H*0.3, r=R*ratio;
+  const MA=R/r;
+  const effortF=100*r/R;
+  const rot=(t*0.015)%(Math.PI*2);
+
+  // Spokes
+  ctx.strokeStyle='rgba(201,168,76,.25)';ctx.lineWidth=2;
+  for(let i=0;i<8;i++){
+    const a=rot+i*Math.PI/4;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);ctx.stroke();
+  }
+  // Wheel rim
+  ctx.strokeStyle=GOLD;ctx.lineWidth=6;
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
+  // Axle
+  ctx.fillStyle='#3a6a9a';ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=3;ctx.stroke();
+  ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.fill();
+
+  // Load rope on axle
+  const ropeAng=rot;
+  const rx=cx+Math.cos(ropeAng)*r, ry=cy+Math.sin(ropeAng)*r;
+  ctx.strokeStyle='rgba(245,241,232,.5)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(rx,ry);ctx.lineTo(cx+r,cy+H*0.22+8);ctx.stroke();
+  ctx.fillStyle='#e05c5c';ctx.fillRect(cx+r-16,cy+H*0.22+8,32,22);
+  ctx.fillStyle=CREAM;ctx.font='bold 9px Arial';ctx.textAlign='center';
+  ctx.fillText('100N',cx+r,cy+H*0.22+22);
+
+  // Effort rope on wheel rim
+  const effAng=rot+Math.PI;
+  const ex=cx+Math.cos(effAng)*R, ey=cy+Math.sin(effAng)*R;
+  arrow(ex,ey+30,ex,ey,'rgba(76,175,125,.9)',2.5);
+  ctx.fillStyle='rgba(76,175,125,.9)';ctx.font='bold 10px Arial';ctx.textAlign='center';
+  ctx.fillText(effortF.toFixed(1)+'N',ex,ey+44);
+
+  // Labels
+  label(cx-R-10,cy,'R = Wheel',GOLD,'right');
+  label(cx+r+6,cy-r-6,'r = Axle','rgba(201,168,76,.6)','left');
+  label(cx,H-22,`MA = R÷r = ${R.toFixed(0)}÷${r.toFixed(0)} = ${MA.toFixed(2)}× · Effort = ${effortF.toFixed(1)}N`,GOLD);
+
+  document.getElementById('rv-ma').textContent=MA.toFixed(2)+'×';
+  document.getElementById('rv-effort').textContent=effortF.toFixed(1);
+  document.getElementById('rv-load').textContent='100';
+  document.getElementById('rv-work').textContent='3000 J';
+  if(MA>=5) badgeMA();
+}
+
+// ── CONTROL PANELS ──────────────────────────────────────
+const controlDefs={
+  lever:`<div class="slider-card"><label>Pivot Position: <span id="sLeverLabel">33%</span> from load end</label>
+    <input type="range" id="sLever" min="10" max="90" value="33" step="1" oninput="document.getElementById('sLeverLabel').textContent=this.value+'%';pivotRatio=this.value/100"/>
+    <div class="slider-val" id="sLeverBig">1:2 advantage</div></div>`,
+  pulley:`<div class="slider-card"><label>Number of Rope Segments: <span id="sPulleyLabel">2</span></label>
+    <input type="range" id="sPulley" min="1" max="6" value="2" step="1" oninput="document.getElementById('sPulleyLabel').textContent=this.value"/>
+    <div class="slider-val">More ropes = more MA</div></div>`,
+  incline:`<div class="slider-card"><label>Ramp Angle: <span id="sInclineLabel">20°</span></label>
+    <input type="range" id="sIncline" min="5" max="60" value="20" step="1" oninput="document.getElementById('sInclineLabel').textContent=this.value+'°'"/>
+    <div class="slider-val">Lower angle = more MA</div></div>`,
+  wheel:`<div class="slider-card"><label>Axle/Wheel Radius Ratio: <span id="sWheelLabel">25%</span></label>
+    <input type="range" id="sWheel" min="10" max="70" value="25" step="1" oninput="document.getElementById('sWheelLabel').textContent=this.value+'%'"/>
+    <div class="slider-val">Smaller axle = more MA</div></div>`,
+};
+
+function setMachine(m, btn){
+  currentMachine=m;
+  document.querySelectorAll('.m-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('controls').innerHTML=controlDefs[m];
+  machinesVisited.add(m);
+  if(machinesVisited.size>=3) document.getElementById('b-bronze').classList.add('earned');
+  if(machinesVisited.size>=4) document.getElementById('b-gold').classList.add('earned');
+  workObserved=true;
+  if(workObserved) document.getElementById('b-platinum').classList.add('earned');
+}
+
+function badgeMA(){
+  if(!maAchieved){maAchieved=true;document.getElementById('b-silver').classList.add('earned');}
+}
+
+function getSliderVal(){
+  if(currentMachine==='lever'){const s=document.getElementById('sLever');return s?s.value/100:0.33;}
+  if(currentMachine==='pulley'){const s=document.getElementById('sPulley');return s?parseFloat(s.value):2;}
+  if(currentMachine==='incline'){const s=document.getElementById('sIncline');return s?parseFloat(s.value):20;}
+  if(currentMachine==='wheel'){const s=document.getElementById('sWheel');return s?parseFloat(s.value)/100:0.25;}
+  return 0.5;
+}
+
+function loop(){
+  t++;
+  const v=getSliderVal();
+  if(currentMachine==='lever') drawLever(v);
+  else if(currentMachine==='pulley') drawPulley(v);
+  else if(currentMachine==='incline') drawIncline(v);
+  else if(currentMachine==='wheel') drawWheel(v);
+  animId=requestAnimationFrame(loop);
+}
+
+window.addEventListener('load',()=>{
+  resize();
+  document.getElementById('controls').innerHTML=controlDefs['lever'];
+  loop();
+});
+window.addEventListener('resize',resize);
+</script>
+</body>
+</html>

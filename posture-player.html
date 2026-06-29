@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Posture Player — GSU Leadership & Influence</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+.stage{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:16px}
+.figure-wrap{background:#050505;border:1px solid rgba(201,168,76,.2);border-radius:12px;overflow:hidden;position:relative}
+.figure-label{position:absolute;top:10px;left:0;right:0;text-align:center;font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,.7)}
+canvas{display:block;width:100%}
+.posture-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.pos-btn{background:#111;border:1px solid rgba(201,168,76,.3);color:#F5F1E8;font-size:.8rem;font-weight:700;padding:12px 8px;border-radius:8px;cursor:pointer;transition:.15s;text-align:center}
+.pos-btn:hover,.pos-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.pos-btn .pos-icon{font-size:1.3rem;display:block;margin-bottom:4px}
+.pos-btn .pos-name{font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.analysis{background:#0d0d0d;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;margin-bottom:16px}
+.analysis-title{font-size:.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;margin-bottom:10px}
+.analysis p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7}
+.mode-tabs{display:flex;gap:8px;margin-bottom:14px}
+.m-tab{background:#111;border:1px solid rgba(201,168,76,.3);color:#C9A84C;font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:7px;cursor:pointer;transition:.15s}
+.m-tab.active{background:#C9A84C;color:#000}
+.play-area{background:#050505;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:18px;margin-bottom:14px}
+.play-q{font-family:Georgia,serif;font-size:1rem;color:#F5F1E8;margin-bottom:14px;line-height:1.5}
+.play-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.play-opt{background:#111;border:1px solid rgba(201,168,76,.2);color:#F5F1E8;font-size:.85rem;padding:12px 14px;border-radius:8px;cursor:pointer;transition:.15s;text-align:left}
+.play-opt:hover{border-color:#C9A84C;color:#C9A84C}
+.play-opt.right{border-color:#4caf7d;color:#4caf7d;background:rgba(76,175,125,.08)}
+.play-opt.wrong{border-color:#e05c5c;color:#e05c5c;background:rgba(224,92,92,.08)}
+.score-row{display:flex;align-items:center;gap:14px;margin-top:12px}
+.score-badge{font-family:Georgia,serif;font-size:1.1rem;font-weight:700;color:#C9A84C}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32} #b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C} #b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:16px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+@media(max-width:600px){.stage{grid-template-columns:1fr}.posture-grid{grid-template-columns:repeat(3,1fr)}.play-opts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Leadership & Influence · Pattern C · Articulated Figure</div>
+  <h1>The Posture <em>Player</em></h1>
+  <p class="sub">See what your body says before you speak. Choose a posture — confident, defensive, open, closed, dominant, submissive — and the figure shows you what a room reads before a word leaves your mouth. Then play the read-the-room challenge.</p>
+
+  <div class="teach">
+    <div class="teach-title">55% of your message never touches your words</div>
+    <p><strong style="color:#F5F1E8">Mehrabian's rule in the room:</strong> when message and delivery conflict, listeners trust body language over words. A confident idea delivered in a collapsed posture arrives as a weak idea. The posture you walk in with sets the frame before you open your mouth.</p>
+    <p><strong style="color:#F5F1E8">High power vs. low power cues:</strong> Space taken (arms out, legs apart, chest up) reads as authority. Space surrendered (arms in, shoulders rolled, gaze down) reads as submission. Neither is "correct" — but knowing which you're doing lets you choose.</p>
+  </div>
+
+  <div class="mode-tabs">
+    <button class="m-tab active" onclick="setMode('explore',this)">Explore Postures</button>
+    <button class="m-tab" onclick="setMode('play',this)">Play — Read the Room</button>
+  </div>
+
+  <!-- EXPLORE MODE -->
+  <div id="exploreMode">
+    <div class="posture-grid">
+      <button class="pos-btn active" onclick="setPosture('power',this)"><span class="pos-icon">💪</span><span class="pos-name">Power Stance</span></button>
+      <button class="pos-btn" onclick="setPosture('open',this)"><span class="pos-icon">🤝</span><span class="pos-name">Open / Welcoming</span></button>
+      <button class="pos-btn" onclick="setPosture('cross',this)"><span class="pos-icon">🛡</span><span class="pos-name">Defensive / Closed</span></button>
+      <button class="pos-btn" onclick="setPosture('lean',this)"><span class="pos-icon">💡</span><span class="pos-name">Engaged / Leaning</span></button>
+      <button class="pos-btn" onclick="setPosture('shrink',this)"><span class="pos-icon">😰</span><span class="pos-name">Submissive / Small</span></button>
+      <button class="pos-btn" onclick="setPosture('point',this)"><span class="pos-icon">☝️</span><span class="pos-name">Assertive / Point</span></button>
+    </div>
+
+    <div class="stage">
+      <div class="figure-wrap">
+        <div class="figure-label">What the room sees</div>
+        <canvas id="figCanvas1" height="280"></canvas>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="analysis">
+          <div class="analysis-title">Body reads as</div>
+          <p id="analysisText">Power stance: feet wider than shoulders, chest up, hands visible. The body occupies maximum space — a primal signal of security and authority. Used well, it communicates "I belong here." Used poorly, it reads as aggression.</p>
+        </div>
+        <div class="analysis" style="border-color:rgba(224,92,92,.25)">
+          <div class="analysis-title" style="color:#e05c5c">Watch for</div>
+          <p id="watchText">Holding this posture while being challenged can read as dismissive. Combine with direct eye contact and a neutral face — not a stare-down.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAY MODE -->
+  <div id="playMode" style="display:none">
+    <div class="play-area">
+      <div class="play-q" id="playQ">What posture is this figure projecting?</div>
+      <canvas id="playCanvas" height="220" style="background:#050505;border-radius:8px;margin-bottom:14px;display:block;width:100%"></canvas>
+      <div class="play-opts" id="playOpts"></div>
+      <div class="score-row">
+        <span class="score-badge" id="scoreLabel">0 correct</span>
+        <div style="flex:1;height:3px;background:#111;border-radius:2px"><div id="scoreBar" style="height:3px;background:#C9A84C;border-radius:2px;transition:width .3s;width:0%"></div></div>
+        <button onclick="nextQ()" style="background:#111;border:1px solid rgba(201,168,76,.3);color:#C9A84C;font-size:.75rem;font-weight:800;padding:7px 14px;border-radius:6px;cursor:pointer">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — 3 postures explored</div>
+    <div class="badge" id="b-silver">🥈 Silver — All 6 explored</div>
+    <div class="badge" id="b-gold">🥇 Gold — 5 play questions correct</div>
+    <div class="badge" id="b-platinum">✦ Platinum — 10 correct</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"How do I project confidence without aggression in a negotiation?"</em> or <em>"What does open body language look like in different cultures?"</em> — GENO AI Tutor, 32 languages, 24/7.</p>
+  </div>
+</div>
+
+<script>
+const GOLD='#C9A84C', CREAM='#F5F1E8', INK='#050505';
+let exploredPostures=new Set(['power']), playScore=0, playLocked=false, qCount=0;
+
+const POSTURES = {
+  power:  { label:'Power Stance', reads:'Authority · dominates space · high confidence signal', watch:'Can read as aggressive if paired with hostile expression. Best used when entering a room, not when listening.',
+    pose:{sh:0,rUp:-52,rFore:-44,lUp:52,lFore:44,rH:'open',lH:'open',head:0,dip:-3,legA:22} },
+  open:   { label:'Open / Welcoming', reads:'Trust · approachability · invitation to engage', watch:'Avoid if you feel defensive — an open posture you don\'t mean reads as false. Build to it.',
+    pose:{sh:0,rUp:-38,rFore:-32,lUp:38,lFore:32,rH:'open',lH:'open',head:-4,dip:0,legA:8} },
+  cross:  { label:'Defensive / Closed', reads:'Self-protection · skepticism · low comfort. The room reads "I\'m not buying it."', watch:'You may be cold, not defensive — but the room won\'t know that. Uncross during disagreement.',
+    pose:{sh:0,rUp:24,rFore:90,lUp:-24,lFore:-90,rH:'open',lH:'open',head:4,dip:4,legA:6} },
+  lean:   { label:'Engaged / Leaning In', reads:'Interest · alignment · "I\'m with you." The most powerful signal to the person speaking.', watch:'Leaning toward someone you\'re opposing reads as confrontational. Know your context.',
+    pose:{sh:-6,rUp:8,rFore:-160,lUp:-8,lFore:160,rH:'open',lH:'open',head:-8,dip:-8,legA:0} },
+  shrink: { label:'Submissive / Small', reads:'Low status · uncertainty · deference. The body is taking up minimum space.', watch:'Even one small adjustment — chin up, shoulders back — shifts the entire read dramatically.',
+    pose:{sh:18,rUp:14,rFore:10,lUp:-14,lFore:-10,rH:'fist',lH:'fist',head:10,dip:10,legA:2} },
+  point:  { label:'Assertive / Pointing', reads:'Conviction · emphasis · "this is non-negotiable." Focuses the room\'s attention.', watch:'Pointing at a person (vs. an idea) reads as accusatory across most cultures. Point to the air.',
+    pose:{sh:0,rUp:-90,rFore:-90,lUp:10,lFore:6,rH:'point',lH:'open',head:-2,dip:0,legA:10} },
+};
+
+function P(d){return d*Math.PI/180}
+function endOf(x,y,L,aDeg){const a=P(aDeg);return[x+L*Math.sin(a),y+L*Math.cos(a)]}
+
+function drawFigure(canvas, posKey, label){
+  const d=window.devicePixelRatio||1;
+  const w=canvas.parentElement?canvas.parentElement.getBoundingClientRect().width:300;
+  const h=parseInt(canvas.getAttribute('height'));
+  canvas.width=w*d; canvas.height=h*d;
+  canvas.style.width=w+'px'; canvas.style.height=h+'px';
+  const ctx=canvas.getContext('2d');
+  ctx.scale(d,d);
+  ctx.clearRect(0,0,w,h);
+
+  const pose=POSTURES[posKey].pose;
+  const HIPX=w/2, HIPY=h-28;
+  const SPINE=h*0.32, HEADR=h*0.09, SHW=w*0.22, UP=h*0.18, FO=h*0.16, LEG=h*0.34, NECKL=h*0.04;
+  const sh=pose.sh||0;
+
+  // Ground
+  ctx.strokeStyle='rgba(201,168,76,.2)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(w*0.1,HIPY+4);ctx.lineTo(w*0.9,HIPY+4);ctx.stroke();
+
+  // Legs
+  const la=pose.legA||10;
+  const ll=endOf(HIPX-4,HIPY,LEG,-la), rl=endOf(HIPX+4,HIPY,LEG,la);
+  ctx.strokeStyle=GOLD;ctx.lineWidth=10;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(HIPX-4,HIPY);ctx.lineTo(ll[0],ll[1]);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(HIPX+4,HIPY);ctx.lineTo(rl[0],rl[1]);ctx.stroke();
+
+  const scx=HIPX, scy=HIPY-SPINE-sh;
+  // Spine
+  ctx.strokeStyle=GOLD;ctx.lineWidth=12;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(HIPX,HIPY);ctx.lineTo(scx,scy);ctx.stroke();
+  ctx.fillStyle='rgba(201,168,76,.3)';ctx.beginPath();ctx.arc(HIPX,HIPY,7,0,7);ctx.fill();
+
+  // Shoulders
+  const rSh=[scx-SHW/2,scy], lSh=[scx+SHW/2,scy];
+  ctx.strokeStyle=GOLD;ctx.lineWidth=10;
+  ctx.beginPath();ctx.moveTo(rSh[0],rSh[1]);ctx.lineTo(lSh[0],lSh[1]);ctx.stroke();
+
+  // Arms
+  function arm(sh2,up,fo,hnd){
+    const el=endOf(sh2[0],sh2[1],UP,up), wr=endOf(el[0],el[1],FO,fo);
+    ctx.strokeStyle=GOLD;ctx.lineWidth=9;ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(sh2[0],sh2[1]);ctx.lineTo(el[0],el[1]);ctx.stroke();
+    ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(el[0],el[1]);ctx.lineTo(wr[0],wr[1]);ctx.stroke();
+    ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(el[0],el[1],5,0,7);ctx.fill();
+    // Hand
+    if(hnd==='open'){
+      ctx.lineWidth=4;
+      for(let f=-2;f<=2;f++){const fp=endOf(wr[0],wr[1],12,fo+f*14);ctx.beginPath();ctx.moveTo(wr[0],wr[1]);ctx.lineTo(fp[0],fp[1]);ctx.stroke();}
+    } else if(hnd==='fist'){
+      ctx.beginPath();ctx.arc(wr[0],wr[1],7,0,7);ctx.fill();
+    } else if(hnd==='point'){
+      const fp=endOf(wr[0],wr[1],18,fo);
+      ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(wr[0],wr[1]);ctx.lineTo(fp[0],fp[1]);ctx.stroke();
+      ctx.beginPath();ctx.arc(fp[0],fp[1],4,0,7);ctx.fill();
+    }
+  }
+  arm(rSh,pose.rUp,pose.rFore,pose.rH);
+  arm(lSh,pose.lUp,pose.lFore,pose.lH);
+
+  // Head
+  const hx=scx, hy=scy-NECKL-HEADR+pose.dip;
+  ctx.strokeStyle=GOLD;ctx.lineWidth=6;
+  ctx.beginPath();ctx.moveTo(scx,scy);ctx.lineTo(hx,hy+HEADR);ctx.stroke();
+  ctx.fillStyle=INK;ctx.strokeStyle=GOLD;ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(hx,hy,HEADR,0,7);ctx.fill();ctx.stroke();
+  // Face
+  const tt=P(pose.head||0);
+  function fp(dx,dy){return[hx+dx*Math.cos(tt)-dy*Math.sin(tt),hy+dx*Math.sin(tt)+dy*Math.cos(tt)]}
+  ctx.fillStyle=CREAM;
+  const e1=fp(-HEADR*.35,-HEADR*.2),e2=fp(HEADR*.35,-HEADR*.2);
+  ctx.beginPath();ctx.arc(e1[0],e1[1],2.5,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(e2[0],e2[1],2.5,0,7);ctx.fill();
+  // Mouth — changes with posture
+  const m1=fp(-HEADR*.28,HEADR*.3),m2=fp(HEADR*.28,HEADR*.3);
+  ctx.strokeStyle=CREAM;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(m1[0],m1[1]);ctx.lineTo(m2[0],m2[1]);ctx.stroke();
+
+  if(label){
+    ctx.fillStyle='rgba(201,168,76,.6)';ctx.font='bold 10px Arial';ctx.textAlign='center';
+    ctx.fillText(label,w/2,h-6);
+  }
+}
+
+let currentPosture='power';
+function setPosture(key, btn){
+  currentPosture=key;
+  document.querySelectorAll('.pos-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  exploredPostures.add(key);
+  const p=POSTURES[key];
+  document.getElementById('analysisText').textContent=p.reads;
+  document.getElementById('watchText').textContent=p.watch;
+  drawFigure(document.getElementById('figCanvas1'), key, p.label);
+  if(exploredPostures.size>=3) document.getElementById('b-bronze').classList.add('earned');
+  if(exploredPostures.size>=6) document.getElementById('b-silver').classList.add('earned');
+}
+
+function setMode(mode, btn){
+  document.querySelectorAll('.m-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('exploreMode').style.display=mode==='explore'?'block':'none';
+  document.getElementById('playMode').style.display=mode==='play'?'block':'none';
+  if(mode==='play') nextQ();
+}
+
+const QUESTIONS=[
+  {key:'power',q:'This person has just entered a boardroom. What is their posture projecting?',opts:['Power & Authority','Submission','Defensiveness','Disengagement']},
+  {key:'cross',q:'During a sales presentation, a client shifts to this position. What is the room reading?',opts:['Enthusiasm','Defensiveness & Doubt','Agreement','Boredom only']},
+  {key:'lean',q:'Your team lead moves into this position while you\'re speaking. What does it signal?',opts:['They\'re challenging you','They\'re disinterested','They\'re engaged and aligned','They want to leave']},
+  {key:'open',q:'A negotiator opens with this stance. What frame are they setting?',opts:['Aggression','Openness & Trust','Dominance','Uncertainty']},
+  {key:'shrink',q:'A new hire enters the room like this. What does the team perceive?',opts:['Calm confidence','Low status / uncertainty','Cultural greeting','Anger']},
+  {key:'point',q:'A speaker shifts to this gesture to drive home a key point. What is the body saying?',opts:['Submission','Greeting','Conviction & Emphasis','Exhaustion']},
+];
+let qOrder=[], qIdx=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+
+function nextQ(){
+  if(!qOrder.length||(qIdx>=qOrder.length)){qOrder=shuffle([...Array(QUESTIONS.length).keys()]);qIdx=0;}
+  const q=QUESTIONS[qOrder[qIdx++]];
+  playLocked=false;
+  document.getElementById('playQ').textContent=q.q;
+  const pc=document.getElementById('playCanvas');
+  drawFigure(pc,q.key,'');
+  const opts=document.getElementById('playOpts');
+  opts.innerHTML='';
+  const shuffledOpts=shuffle([...q.opts.map((o,i)=>({text:o,correct:i===0}))]);
+  shuffledOpts.forEach(opt=>{
+    const b=document.createElement('button');
+    b.className='play-opt';b.textContent=opt.text;
+    b.onclick=()=>pick(b,opt.correct,q.key);
+    opts.appendChild(b);
+  });
+  qCount++;
+}
+
+function pick(btn, correct, key){
+  if(playLocked) return;
+  playLocked=true;
+  if(correct){
+    btn.classList.add('right');
+    playScore++;
+    document.getElementById('scoreLabel').textContent=playScore+' correct';
+    document.getElementById('scoreBar').style.width=Math.min(100,playScore*10)+'%';
+    if(playScore>=5) document.getElementById('b-gold').classList.add('earned');
+    if(playScore>=10) document.getElementById('b-platinum').classList.add('earned');
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.play-opt').forEach(b=>{if(b.textContent===QUESTIONS.find(q=>q.key===key)?.opts[0])b.classList.add('right');});
+  }
+}
+
+window.addEventListener('load',()=>{
+  drawFigure(document.getElementById('figCanvas1'),'power','Power Stance');
+  drawFigure(document.getElementById('playCanvas'),'open','');
+});
+window.addEventListener('resize',()=>{
+  setPosture(currentPosture,null);
+});
+</script>
+</body>
+</html>

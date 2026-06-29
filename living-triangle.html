@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Living Triangle — GSU Trades Geometry</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+.canvas-outer{position:relative;margin-bottom:16px}
+canvas{display:block;width:100%;background:#050505;border:1px solid rgba(201,168,76,.2);border-radius:12px;cursor:grab;touch-action:none}
+canvas:active{cursor:grabbing}
+.mode-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.mode-btn{background:#111;border:1px solid rgba(201,168,76,.3);color:#C9A84C;font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:7px;cursor:pointer;transition:.15s}
+.mode-btn.active{background:#C9A84C;color:#000}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.r-cell{background:#0d0d0d;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:10px 14px;text-align:center}
+.r-val{font-family:Georgia,serif;font-size:1.3rem;font-weight:700;color:#C9A84C}
+.r-label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.4);margin-top:3px}
+.formula-box{background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-family:Georgia,serif;font-size:1rem;color:#F5F1E8;text-align:center}
+.formula-box .hi{color:#C9A84C;font-weight:700}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32}
+#b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C}
+#b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:16px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Trades Geometry · Pattern B · Living Diagram</div>
+  <h1>The Living <em>Triangle</em></h1>
+  <p class="sub">Drag any vertex. Every angle, length, rise, and run updates live. Switch between roof pitch, stair layout, and the 3-4-5 right triangle that every tradesperson carries in their head.</p>
+
+  <div class="teach">
+    <div class="teach-title">The trade secret hiding inside every right triangle</div>
+    <p><strong style="color:#F5F1E8">The Pythagorean theorem is a daily tool.</strong> a² + b² = c² — that's every rafter, every stair stringer, every diagonal brace. If you know any two sides, you know the third. If your triangle satisfies 3-4-5 (or 6-8-10, or 9-12-15), your corner is square.</p>
+    <p><strong style="color:#F5F1E8">Roof pitch is rise over run.</strong> A "6 in 12" pitch means: for every 12 inches of horizontal run, the roof rises 6 inches. That ratio determines rafter length, cut angles, and how snow loads.</p>
+  </div>
+
+  <div class="mode-row">
+    <button class="mode-btn active" onclick="setMode('free',this)">Free Triangle</button>
+    <button class="mode-btn" onclick="setMode('pitch',this)">Roof Pitch</button>
+    <button class="mode-btn" onclick="setMode('stair',this)">Stair Layout</button>
+    <button class="mode-btn" onclick="setMode('345',this)">3-4-5 Check</button>
+  </div>
+
+  <canvas id="triCanvas" height="400"></canvas>
+
+  <div class="readout">
+    <div class="r-cell"><div class="r-val" id="rv-a">—</div><div class="r-label">Side A (Rise)</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-b">—</div><div class="r-label">Side B (Run)</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-c">—</div><div class="r-label">Side C (Hyp)</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-ang">—</div><div class="r-label">Angle θ</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-pitch">—</div><div class="r-label">Pitch</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-345">—</div><div class="r-label">3-4-5 Valid?</div></div>
+  </div>
+
+  <div class="formula-box" id="formulaBox">
+    a² + b² = c² &nbsp;·&nbsp; <span class="hi" id="fVal">drag a vertex to calculate</span>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — Triangle dragged</div>
+    <div class="badge" id="b-silver">🥈 Silver — All 4 modes tried</div>
+    <div class="badge" id="b-gold">🥇 Gold — 3-4-5 achieved</div>
+    <div class="badge" id="b-platinum">✦ Platinum — 45° right angle hit</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"How do I use the 3-4-5 rule to square a corner on a job site?"</em> or <em>"What is the rafter length for a 6-in-12 pitch on a 24-foot span?"</em> — GENO AI Tutor, 32 languages, 24/7.</p>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('triCanvas');
+const ctx = canvas.getContext('2d');
+const GOLD = '#C9A84C', CREAM = '#F5F1E8', DIM = 'rgba(245,241,232,.35)';
+const TEAL = '#1A8B7F', GREEN = '#4caf7d';
+
+let W, H;
+function resize() {
+  W = canvas.parentElement.getBoundingClientRect().width;
+  H = Math.round(W * 0.42);
+  canvas.width = W * (window.devicePixelRatio||1);
+  canvas.height = H * (window.devicePixelRatio||1);
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(window.devicePixelRatio||1, window.devicePixelRatio||1);
+  setModePositions(currentMode);
+  draw();
+}
+
+let currentMode = 'free';
+let pts = [];
+let dragging = -1;
+let modesVisited = new Set(['free']);
+let dragged = false, got345 = false, got45 = false;
+
+function defaultPts() {
+  return [
+    { x: W*0.18, y: H*0.78 },  // A bottom-left
+    { x: W*0.18, y: H*0.22 },  // B top
+    { x: W*0.75, y: H*0.78 },  // C bottom-right
+  ];
+}
+
+function setModePositions(mode) {
+  if (mode==='free') { pts = defaultPts(); }
+  else if (mode==='pitch') {
+    // 6-in-12 pitch: rise=H*0.45, run=H*0.9
+    const ox=W*0.15, oy=H*0.82;
+    pts = [{x:ox,y:oy},{x:ox,y:oy-H*0.44},{x:ox+H*0.88,y:oy}];
+  }
+  else if (mode==='stair') {
+    // Typical stair: 7" rise, 11" run per step
+    const ox=W*0.12, oy=H*0.82;
+    pts = [{x:ox,y:oy},{x:ox,y:oy-H*0.5},{x:ox+H*0.78,y:oy}];
+  }
+  else if (mode==='345') {
+    const unit=Math.min(W,H)*0.14;
+    const ox=W*0.2, oy=H*0.82;
+    pts = [{x:ox,y:oy},{x:ox,y:oy-unit*3},{x:ox+unit*4,y:oy}];
+  }
+}
+
+function setMode(mode, btn) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  modesVisited.add(mode);
+  setModePositions(mode);
+  if (modesVisited.size >= 4) document.getElementById('b-silver').classList.add('earned');
+  draw(); updateReadout();
+}
+
+function draw() {
+  ctx.clearRect(0,0,W,H);
+  const [A,B,C] = pts;
+
+  // Grid
+  ctx.strokeStyle='rgba(201,168,76,.06)';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=W/12){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=H/8){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+  // Right angle box at A
+  const sz=14;
+  ctx.strokeStyle='rgba(201,168,76,.5)';ctx.lineWidth=1.5;
+  ctx.beginPath();
+  ctx.moveTo(A.x+sz,A.y);ctx.lineTo(A.x+sz,A.y-sz);ctx.lineTo(A.x,A.y-sz);
+  ctx.stroke();
+
+  // Fill triangle
+  ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.lineTo(C.x,C.y);ctx.closePath();
+  ctx.fillStyle='rgba(201,168,76,.07)';ctx.fill();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=2.5;ctx.stroke();
+
+  // Side labels
+  const a=dist(B,C), b=dist(A,C), c=dist(A,B);
+  const scale=100/Math.max(a,b,c,1);
+
+  // Dashed dimension lines
+  function midLabel(p1,p2,lbl,color) {
+    const mx=(p1.x+p2.x)/2, my=(p1.y+p2.y)/2;
+    const dx=p2.x-p1.x, dy=p2.y-p1.y;
+    const len=Math.sqrt(dx*dx+dy*dy)||1;
+    const nx=-dy/len*16, ny=dx/len*16;
+    ctx.fillStyle=color||GOLD;
+    ctx.font='bold 12px Arial';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(lbl, mx+nx, my+ny);
+  }
+  midLabel(B,C, 'a (Hyp)','rgba(245,241,232,.7)');
+  midLabel(A,B, 'b (Rise)',TEAL);
+  midLabel(A,C, 'c (Run)','rgba(76,175,125,.9)');
+
+  // Angle arc at B-A-C
+  const angleBAC = angleDeg(B,A,C);
+  ctx.strokeStyle='rgba(201,168,76,.7)';ctx.lineWidth=1.5;
+  ctx.beginPath();
+  const r=28;
+  const a1=Math.atan2(B.y-A.y,B.x-A.x), a2=Math.atan2(C.y-A.y,C.x-A.x);
+  ctx.arc(A.x,A.y,r,a1,a2);ctx.stroke();
+  ctx.fillStyle='rgba(201,168,76,.8)';ctx.font='bold 11px Arial';ctx.textAlign='center';
+  const am=(a1+a2)/2;
+  ctx.fillText(angleBAC.toFixed(1)+'°', A.x+Math.cos(am)*42, A.y+Math.sin(am)*42);
+
+  // Vertices
+  [A,B,C].forEach((p,i)=>{
+    ctx.beginPath();ctx.arc(p.x,p.y,8,0,Math.PI*2);
+    ctx.fillStyle=GOLD;ctx.fill();
+    ctx.fillStyle='#000';ctx.font='bold 10px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(['A','B','C'][i],p.x,p.y);
+  });
+
+  // Mode annotations
+  if(currentMode==='pitch') {
+    ctx.fillStyle='rgba(201,168,76,.6)';ctx.font='11px Arial';ctx.textAlign='left';
+    ctx.fillText('← run (12 units) →', A.x+10, A.y+20);
+    ctx.fillStyle=TEAL;ctx.fillText('↑ rise', A.x-38, (A.y+B.y)/2);
+  }
+  if(currentMode==='345') {
+    const is345 = check345();
+    ctx.fillStyle=is345?GREEN:'rgba(224,92,92,.8)';
+    ctx.font='bold 13px Georgia';ctx.textAlign='center';
+    ctx.fillText(is345?'✓ Valid 3-4-5 right triangle':'Drag vertices toward 3-4-5 ratio', W/2, 24);
+  }
+}
+
+function dist(a,b){return Math.sqrt((b.x-a.x)**2+(b.y-a.y)**2)}
+function angleDeg(p1,vertex,p2){
+  const v1={x:p1.x-vertex.x,y:p1.y-vertex.y};
+  const v2={x:p2.x-vertex.x,y:p2.y-vertex.y};
+  const dot=v1.x*v2.x+v1.y*v2.y;
+  const m=Math.sqrt((v1.x**2+v1.y**2)*(v2.x**2+v2.y**2))||1;
+  return Math.acos(Math.max(-1,Math.min(1,dot/m)))*180/Math.PI;
+}
+
+function check345(){
+  const [A,B,C]=pts;
+  const rise=Math.abs(B.y-A.y), run=Math.abs(C.x-A.x), hyp=dist(B,C);
+  const r1=rise/run, r2=3/4;
+  return Math.abs(r1-r2)<0.12;
+}
+
+function updateReadout(){
+  const [A,B,C]=pts;
+  const rise=Math.abs(B.y-A.y), run=Math.abs(C.x-A.x), hyp=dist(B,C);
+  const scale=60/Math.max(rise,run,hyp,1);
+  const sa=(rise*scale).toFixed(1), sb=(run*scale).toFixed(1), sc=(hyp*scale).toFixed(1);
+  document.getElementById('rv-a').textContent=sa+'"';
+  document.getElementById('rv-b').textContent=sb+'"';
+  document.getElementById('rv-c').textContent=sc+'"';
+  const ang=angleDeg(B,A,C);
+  document.getElementById('rv-ang').textContent=ang.toFixed(1)+'°';
+  const pitch=run>2?Math.round(rise/run*12):0;
+  document.getElementById('rv-pitch').textContent=pitch+' in 12';
+  const v=check345();
+  document.getElementById('rv-345').textContent=v?'✓ Yes':'✗ No';
+  document.getElementById('fVal').textContent=
+    `${sa}² + ${sb}² = ${(rise**2*scale**2+run**2*scale**2).toFixed(1)} ≈ ${sc}² = ${(hyp**2*scale**2).toFixed(1)}`;
+  if(v){document.getElementById('b-gold').classList.add('earned');got345=true;}
+  if(Math.abs(ang-45)<2.5){document.getElementById('b-platinum').classList.add('earned');got45=true;}
+}
+
+// Interaction
+function getPos(e){
+  const rect=canvas.getBoundingClientRect();
+  const t=e.touches?e.touches[0]:e;
+  return{x:(t.clientX-rect.left)*W/rect.width,y:(t.clientY-rect.top)*H/rect.height};
+}
+function hitTest(pos){
+  return pts.findIndex(p=>Math.hypot(p.x-pos.x,p.y-pos.y)<18);
+}
+canvas.addEventListener('mousedown',e=>{const p=getPos(e);const i=hitTest(p);if(i>=0)dragging=i;});
+canvas.addEventListener('touchstart',e=>{e.preventDefault();const p=getPos(e);const i=hitTest(p);if(i>=0)dragging=i;},{passive:false});
+window.addEventListener('mousemove',e=>{if(dragging<0)return;const p=getPos(e);
+  if(dragging===0){pts[0].x=p.x;pts[1].x=pts[0].x;pts[0].y=p.y;} // A moves bottom
+  else{pts[dragging].x=p.x;pts[dragging].y=p.y;}
+  // Keep A at same X as B (right angle)
+  if(currentMode!=='free') pts[1].x=pts[0].x;
+  dragged=true;document.getElementById('b-bronze').classList.add('earned');
+  draw();updateReadout();
+});
+window.addEventListener('touchmove',e=>{e.preventDefault();if(dragging<0)return;
+  const p=getPos(e);
+  if(dragging===0){pts[0].y=p.y;}
+  else{pts[dragging].x=p.x;pts[dragging].y=p.y;}
+  if(currentMode!=='free')pts[1].x=pts[0].x;
+  draw();updateReadout();
+},{passive:false});
+window.addEventListener('mouseup',()=>dragging=-1);
+window.addEventListener('touchend',()=>dragging=-1);
+
+window.addEventListener('load',()=>{resize();setModePositions('free');draw();updateReadout();});
+window.addEventListener('resize',resize);
+</script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Information Farm — GSU Digital Farm</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+.scene-wrap{position:relative;margin-bottom:14px}
+canvas{display:block;width:100%;background:#020510;border:1px solid rgba(201,168,76,.2);border-radius:12px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.ctrl-btn{background:#111;border:1px solid rgba(201,168,76,.3);color:#F5F1E8;font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:9px 14px;border-radius:7px;cursor:pointer;transition:.15s}
+.ctrl-btn:hover{border-color:#C9A84C;color:#C9A84C}
+.ctrl-btn.on{background:rgba(224,92,92,.15);border-color:#e05c5c;color:#e05c5c}
+.narrative{background:#0d0d0d;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;margin-bottom:14px}
+.narrative-title{font-size:.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+.narrative-text{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:14px}
+.stat-cell{background:#0d0d0d;border:1px solid rgba(201,168,76,.15);border-radius:7px;padding:9px 12px;text-align:center}
+.stat-val{font-family:Georgia,serif;font-size:1.2rem;font-weight:700;color:#C9A84C}
+.stat-label{font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.35);margin-top:2px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32} #b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C} #b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:16px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Digital Farm · Pattern D · Animated Allegory</div>
+  <h1>The Information <em>Farm</em></h1>
+  <p class="sub">Watch information flow from source to screen — then turn on the filters, the algorithm, and the wall, and see what reaches the reader. This is how your bubble forms: not with violence, but with convenience.</p>
+
+  <div class="teach">
+    <div class="teach-title">The farm doesn't need guards — it has algorithms</div>
+    <p><strong style="color:#F5F1E8">Every piece of content travels through filters you didn't choose.</strong> Platform algorithms, government censors, corporate sponsors, and your own click history all shape what you see. The dangerous part: filtered information feels complete. You don't see what's missing.</p>
+    <p><strong style="color:#F5F1E8">The filter bubble is self-reinforcing.</strong> You click what matches your views → the algorithm shows you more of the same → your views harden → you click more of the same. This loop requires no conspiracy — just optimization for engagement.</p>
+  </div>
+
+  <canvas id="farmCanvas" height="360"></canvas>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="btnAlgo" onclick="toggleFilter('algo',this)">Algorithm Filter: OFF</button>
+    <button class="ctrl-btn" id="btnCorp" onclick="toggleFilter('corp',this)">Sponsor Filter: OFF</button>
+    <button class="ctrl-btn" id="btnGov" onclick="toggleFilter('gov',this)">State Filter: OFF</button>
+    <button class="ctrl-btn" id="btnBubble" onclick="toggleFilter('bubble',this)">Echo Chamber: OFF</button>
+    <button class="ctrl-btn" style="border-color:rgba(76,175,125,.4);color:#4caf7d" onclick="resetFilters()">Open System ✓</button>
+  </div>
+
+  <div class="narrative">
+    <div class="narrative-title" id="narrTitle">Free flow of information</div>
+    <div class="narrative-text" id="narrText">All information types flow from source to reader. Diverse, contradictory, uncomfortable. This is what an open information ecosystem looks like — and why it feels chaotic. The noise is the feature, not the bug.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-cell"><div class="stat-val" id="sv-flow">100%</div><div class="stat-label">Info Reaching Reader</div></div>
+    <div class="stat-cell"><div class="stat-val" id="sv-diversity">High</div><div class="stat-label">Viewpoint Diversity</div></div>
+    <div class="stat-cell"><div class="stat-val" id="sv-blocked">0</div><div class="stat-label">Streams Blocked</div></div>
+    <div class="stat-cell"><div class="stat-val" id="sv-bubble">0%</div><div class="stat-label">Echo Chamber Level</div></div>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — First filter activated</div>
+    <div class="badge" id="b-silver">🥈 Silver — 3 filters active</div>
+    <div class="badge" id="b-gold">🥇 Gold — Full bubble formed</div>
+    <div class="badge" id="b-platinum">✦ Platinum — Reset to open system</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"What is a filter bubble and how do I escape mine?"</em> or <em>"How do algorithmic feeds change political polarization?"</em> — GENO AI Tutor, 32 languages, 24/7.</p>
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById('farmCanvas');
+const ctx=canvas.getContext('2d');
+const GOLD='#C9A84C',GREEN='#4caf7d',RED='#e05c5c',BLUE='#4a8fd4',PURPLE='#9b7fd4',TEAL='#1A8B7F';
+
+let W,H,t=0;
+const filters={algo:false,corp:false,gov:false,bubble:false};
+let filtersEverOn=new Set();
+let platinumEarned=false;
+
+// Info streams: different types of content
+const STREAMS=[
+  {name:'Independent News',color:GREEN,angle:-0.35,active:true,blocked:['gov']},
+  {name:'Corporate Media',color:BLUE,angle:-0.15,active:true,blocked:['corp']},
+  {name:'Gov. Statement',color:'#aaa',angle:0,active:true,blocked:[]},
+  {name:'Opposing Views',color:PURPLE,angle:0.15,active:true,blocked:['algo','bubble']},
+  {name:'Foreign Press',color:TEAL,angle:0.32,active:true,blocked:['gov']},
+  {name:'Grassroots',color:'#e8a04a',angle:-0.25,active:true,blocked:['algo','corp']},
+  {name:'Satire / Opinion',color:'#d47f9b',angle:0.22,active:true,blocked:['corp']},
+];
+
+// Particles
+let particles=[];
+function spawnParticle(){
+  const active=STREAMS.filter(s=>{
+    return !s.blocked.some(f=>filters[f]);
+  });
+  if(!active.length) return;
+  const s=active[Math.floor(Math.random()*active.length)];
+  particles.push({
+    stream:s, x:W*0.05, y:H*0.5,
+    vx:2.2+Math.random()*0.8, vy:s.angle*1.2+Math.random()*0.2-0.1,
+    life:1, age:0, size:5+Math.random()*4,
+    color:s.color
+  });
+}
+
+function resize(){
+  W=canvas.parentElement.getBoundingClientRect().width;
+  H=parseInt(canvas.getAttribute('height'));
+  canvas.width=W*(window.devicePixelRatio||1);
+  canvas.height=H*(window.devicePixelRatio||1);
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+}
+
+function drawFilter(x,y,h,label,active,color){
+  if(!active) return;
+  ctx.fillStyle=color+'44';
+  ctx.fillRect(x-8,y-h/2,16,h);
+  ctx.strokeStyle=color;ctx.lineWidth=2;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(x,y-h/2);ctx.lineTo(x,y+h/2);ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle=color;ctx.font='bold 10px Arial';ctx.textAlign='center';
+  ctx.fillText(label,x,y-h/2-6);
+  // Grill bars
+  for(let i=0;i<5;i++){
+    const fy=y-h/2+h/6+i*h/6;
+    ctx.strokeStyle=color+'88';ctx.lineWidth=1.5;ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(x-8,fy);ctx.lineTo(x+8,fy);ctx.stroke();
+  }
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+
+  // Background
+  const bg=ctx.createLinearGradient(0,0,W,0);
+  bg.addColorStop(0,'#020510');bg.addColorStop(0.5,'#050a14');bg.addColorStop(1,'#020510');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  // Source (left)
+  const sx=W*0.06, sy=H*0.5;
+  ctx.fillStyle='rgba(201,168,76,.15)';ctx.strokeStyle=GOLD;ctx.lineWidth=2;
+  ctx.beginPath();ctx.roundRect(sx-28,sy-50,56,100,8);ctx.fill();ctx.stroke();
+  ctx.fillStyle=GOLD;ctx.font='bold 10px Arial';ctx.textAlign='center';
+  ctx.fillText('SOURCE',sx,sy-60);
+  // Stream labels
+  STREAMS.forEach((s,i)=>{
+    const blocked=s.blocked.some(f=>filters[f]);
+    ctx.fillStyle=blocked?'rgba(224,92,92,.4)':s.color+'88';
+    ctx.font='9px Arial';ctx.textAlign='left';
+    ctx.fillText(blocked?'✗ '+s.name:'✓ '+s.name,sx+32,sy-48+i*16);
+  });
+
+  // Filter walls
+  const fh=H*0.65;
+  const filterPositions=[
+    {key:'gov',x:W*0.28,label:'State Filter',color:RED},
+    {key:'corp',x:W*0.44,label:'Sponsor Filter',color:BLUE},
+    {key:'algo',x:W*0.60,label:'Algorithm',color:PURPLE},
+    {key:'bubble',x:W*0.75,label:'Echo Chamber',color:'#ff8c42'},
+  ];
+  filterPositions.forEach(fp=>drawFilter(fp.x,H*0.5,fh,fp.label,filters[fp.key],fp.color));
+
+  // Reader (right)
+  const rx=W*0.92, ry=H*0.5;
+  const activeCount=STREAMS.filter(s=>!s.blocked.some(f=>filters[f])).length;
+  const readerColor=activeCount>5?GREEN:activeCount>2?GOLD:RED;
+  ctx.fillStyle='rgba(201,168,76,.12)';ctx.strokeStyle=readerColor;ctx.lineWidth=2;
+  ctx.beginPath();ctx.roundRect(rx-24,ry-40,48,80,8);ctx.fill();ctx.stroke();
+  // Simple reader face
+  ctx.fillStyle='rgba(245,241,232,.15)';ctx.beginPath();ctx.arc(rx,ry-16,16,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='rgba(245,241,232,.6)';ctx.beginPath();ctx.arc(rx-5,ry-20,2,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(rx+5,ry-20,2,0,Math.PI*2);ctx.fill();
+  // Expression
+  if(activeCount>4){ctx.strokeStyle='rgba(76,175,125,.8)';ctx.beginPath();ctx.arc(rx,ry-8,6,0.2,Math.PI-0.2);ctx.stroke();}
+  else if(activeCount<=1){ctx.strokeStyle='rgba(224,92,92,.8)';ctx.beginPath();ctx.arc(rx,ry-4,6,Math.PI+0.2,2*Math.PI-0.2);ctx.stroke();}
+  else{ctx.strokeStyle='rgba(201,168,76,.5)';ctx.beginPath();ctx.moveTo(rx-5,ry-9);ctx.lineTo(rx+5,ry-9);ctx.stroke();}
+  ctx.fillStyle=readerColor;ctx.font='bold 9px Arial';ctx.textAlign='center';
+  ctx.fillText('READER',rx,ry+54);
+  ctx.fillText(activeCount+'/'+STREAMS.length+' streams',rx,ry+66);
+
+  // Bubble visualization
+  if(filters.bubble){
+    const bProg=0.5+0.5*Math.sin(t*0.03);
+    const br=Math.min(W*0.15,H*0.3)*bProg;
+    ctx.strokeStyle='rgba(255,140,66,.3)';ctx.lineWidth=2;ctx.setLineDash([5,5]);
+    ctx.beginPath();ctx.arc(rx,ry,br,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(255,140,66,.05)';ctx.beginPath();ctx.arc(rx,ry,br,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(255,140,66,.5)';ctx.font='9px Arial';ctx.textAlign='center';
+    ctx.fillText('Echo Chamber',rx,ry-br-8);
+  }
+
+  // Particles
+  if(t%4===0) spawnParticle();
+  particles=particles.filter(p=>{
+    p.x+=p.vx; p.y+=p.vy; p.age++;
+    const maxAge=W*0.6;
+    p.life=Math.max(0,1-p.age/maxAge);
+    // Check if hits a blocked filter wall
+    for(const fp of filterPositions){
+      if(p.stream.blocked.includes(fp.key)&&filters[fp.key]&&Math.abs(p.x-fp.x)<12){
+        p.vx=0;p.vy=0;p.life-=0.05;
+        p.color=RED;
+      }
+    }
+    if(p.life<=0||p.x>W+10) return false;
+    ctx.globalAlpha=p.life;
+    ctx.fillStyle=p.color;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);ctx.fill();
+    // Trail
+    ctx.fillStyle=p.color+'44';ctx.beginPath();ctx.arc(p.x-8,p.y,p.size*0.5*p.life,0,Math.PI*2);ctx.fill();
+    ctx.globalAlpha=1;
+    return true;
+  });
+
+  t++;
+}
+
+function loop(){draw();requestAnimationFrame(loop);}
+
+function toggleFilter(key,btn){
+  filters[key]=!filters[key];
+  btn.textContent=btn.textContent.replace(/ON|OFF/,filters[key]?'ON':'OFF');
+  btn.classList.toggle('on',filters[key]);
+  filtersEverOn.add(key);
+  updateNarrative();
+  updateStats();
+  // Badges
+  if(filtersEverOn.size>=1) document.getElementById('b-bronze').classList.add('earned');
+  if(Object.values(filters).filter(Boolean).length>=3) document.getElementById('b-silver').classList.add('earned');
+  if(Object.values(filters).every(Boolean)) document.getElementById('b-gold').classList.add('earned');
+}
+
+function resetFilters(){
+  Object.keys(filters).forEach(k=>{
+    filters[k]=false;
+    const btn=document.getElementById('btn'+k.charAt(0).toUpperCase()+k.slice(1));
+    if(btn){btn.textContent=btn.textContent.replace('ON','OFF');btn.classList.remove('on');}
+  });
+  if(!platinumEarned&&filtersEverOn.size>0){platinumEarned=true;document.getElementById('b-platinum').classList.add('earned');}
+  updateNarrative();updateStats();
+}
+
+function updateStats(){
+  const blocked=Object.values(filters).filter(Boolean).length;
+  const activeCount=STREAMS.filter(s=>!s.blocked.some(f=>filters[f])).length;
+  const flowPct=Math.round(activeCount/STREAMS.length*100);
+  const diversity=flowPct>85?'High':flowPct>60?'Medium':flowPct>30?'Low':'Minimal';
+  const bubble=Math.round((1-activeCount/STREAMS.length)*100);
+  document.getElementById('sv-flow').textContent=flowPct+'%';
+  document.getElementById('sv-diversity').textContent=diversity;
+  document.getElementById('sv-blocked').textContent=blocked+' filters';
+  document.getElementById('sv-bubble').textContent=bubble+'%';
+}
+
+const NARRATIVES=[
+  {cond:()=>Object.values(filters).every(Boolean), title:'Total Filter Bubble',
+   text:'Every filter is active. The reader sees only approved, profit-aligned, algorithmically-curated content that already matches their beliefs. This isn\'t censorship by force — it\'s censorship by optimization. The reader doesn\'t feel censored. That\'s the most effective kind.'},
+  {cond:()=>filters.bubble&&filters.algo, title:'Algorithmic Echo Chamber',
+   text:'The algorithm feeds the bubble. Every click trains the model. Every "like" narrows the feed. Opposing views are deprioritized — not blocked — but they effectively disappear. The reader believes they\'ve "done their research."'},
+  {cond:()=>filters.gov&&filters.corp, title:'Institutional Capture',
+   text:'Both state and corporate filters are active. What passes through is what the most powerful institutions agree you should see. Historically this appears in authoritarian states, but corporate consolidation of media creates similar effects in democracies.'},
+  {cond:()=>Object.values(filters).every(v=>!v), title:'Free Flow of Information',
+   text:'All information types flow from source to reader. Diverse, contradictory, uncomfortable. This is what an open information ecosystem looks like — and why it feels chaotic. The noise is the feature, not the bug. Critical thinking is the only filter you control.'},
+  {cond:()=>true, title:'Partial Filtering Active',
+   text:'Some streams are blocked. The reader doesn\'t know which voices are missing — absence is invisible. This is the normal state for most people in most media environments. The question isn\'t "is there filtering?" but "which filters am I not seeing?"'},
+];
+
+function updateNarrative(){
+  const match=NARRATIVES.find(n=>n.cond());
+  document.getElementById('narrTitle').textContent=match.title;
+  document.getElementById('narrText').textContent=match.text;
+}
+
+window.addEventListener('load',()=>{resize();loop();updateStats();});
+window.addEventListener('resize',resize);
+</script>
+</body>
+</html>

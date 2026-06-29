@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Arch That Stands — GSU Stonemasons</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.ctrl-btn{background:#111;border:1px solid rgba(201,168,76,.35);color:#C9A84C;font-size:.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:9px 16px;border-radius:7px;cursor:pointer;transition:.15s}
+.ctrl-btn:hover,.ctrl-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.ctrl-btn.danger{border-color:rgba(224,92,92,.4);color:#e05c5c}
+.ctrl-btn.danger:hover{background:#e05c5c;color:#000}
+.canvas-wrap{position:relative;background:#050505;border:1px solid rgba(201,168,76,.2);border-radius:12px;overflow:hidden;margin-bottom:14px}
+canvas{display:block;width:100%!important;height:auto!important}
+.load-info{font-size:.82rem;color:rgba(201,168,76,.8);text-align:center;margin-bottom:10px;min-height:20px}
+.status-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.stat{background:#0d0d0d;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:10px 16px;flex:1;min-width:100px;text-align:center}
+.stat-val{font-family:Georgia,serif;font-size:1.2rem;font-weight:700;color:#C9A84C}
+.stat-label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.45);margin-top:2px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32}
+#b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C}
+#b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:18px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Stonemasons · Pattern A · Physics Sandbox</div>
+  <h1>The Arch <em>That Stands</em></h1>
+  <p class="sub">Build a Roman arch stone by stone. Place the keystone last — and feel the moment compression takes over and the structure becomes self-supporting. Then load it and see what happens to a pile vs. an arch.</p>
+
+  <div class="teach">
+    <div class="teach-title">The secret the Romans discovered: compression, not adhesion</div>
+    <p><strong style="color:#F5F1E8">A pile of stones falls.</strong> An arch stands — and the heavier you load it, the tighter the joints squeeze together. The arch converts every downward load into outward thrust, which the abutments absorb. No mortar required for the Romans' biggest arches — gravity itself was the adhesive.</p>
+    <p><strong style="color:#F5F1E8">The keystone is last, not first.</strong> All voussoir stones lean on each other through a wooden centering frame. The keystone drops into the crown, the centering is removed, and the arch becomes a self-supporting compression ring.</p>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="btnArch" onclick="buildArch()">Build Arch (11 stones)</button>
+    <button class="ctrl-btn" id="btnPile" onclick="buildPile()">Build Pile (same stones)</button>
+    <button class="ctrl-btn" id="btnLoad" onclick="dropStoneLoad()">Drop Heavy Load</button>
+    <button class="ctrl-btn danger" onclick="resetAll()">Reset</button>
+  </div>
+
+  <div class="load-info" id="loadInfo">Choose: build an arch or a pile — then drop a load and compare</div>
+
+  <div class="canvas-wrap">
+    <canvas id="archCanvas"></canvas>
+  </div>
+
+  <div class="status-bar">
+    <div class="stat"><div class="stat-val" id="sv-type">—</div><div class="stat-label">Structure</div></div>
+    <div class="stat"><div class="stat-val" id="sv-stones">0</div><div class="stat-label">Stones Placed</div></div>
+    <div class="stat"><div class="stat-val" id="sv-status">Waiting</div><div class="stat-label">Status</div></div>
+    <div class="stat"><div class="stat-val" id="sv-keystone">No</div><div class="stat-label">Keystone Set</div></div>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — Arch built</div>
+    <div class="badge" id="b-silver">🥈 Silver — Pile collapsed</div>
+    <div class="badge" id="b-gold">🥇 Gold — Arch survived load</div>
+    <div class="badge" id="b-platinum">✦ Platinum — Both tested</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"What is a voussoir and why is it wedge-shaped?"</em> or <em>"How did Romans build arches without modern tools?"</em> — GENO AI Tutor available 24/7, answers in 32 languages.</p>
+  </div>
+</div>
+
+<script>
+const { Engine, Render, Runner, Bodies, Body, Composite, Events, Mouse, MouseConstraint } = Matter;
+
+const CW = Math.min(960, window.innerWidth - 36);
+const CH = Math.round(CW * 0.48);
+const canvas = document.getElementById('archCanvas');
+canvas.width = CW; canvas.height = CH;
+
+let engine, render, runner, mc;
+let archBuilt = false, pileBuilt = false, loadDropped = false;
+let archSurvived = false, pileCollapsed = false;
+
+function initEngine() {
+  if (engine) { Runner.stop(runner); Render.stop(render); Engine.clear(engine); }
+  engine = Engine.create({ gravity: { y: 2 } });
+  render = Render.create({
+    canvas, engine,
+    options: { width: CW, height: CH, background: '#050505', wireframes: false,
+               pixelRatio: Math.min(window.devicePixelRatio||1,2) }
+  });
+  // Ground + abutments
+  const ground = Bodies.rectangle(CW/2, CH-10, CW*2, 24, {isStatic:true, render:{fillStyle:'#1a1a1a'}});
+  const leftAb = Bodies.rectangle(CW*0.22, CH-60, 60, 90, {isStatic:true, render:{fillStyle:'#3a2a08'}});
+  const rightAb = Bodies.rectangle(CW*0.78, CH-60, 60, 90, {isStatic:true, render:{fillStyle:'#3a2a08'}});
+  Composite.add(engine.world, [ground, leftAb, rightAb]);
+  addMouse();
+  Runner.run(runner = Runner.create(), engine);
+  Render.run(render);
+}
+
+function addMouse() {
+  const mouse = Mouse.create(render.canvas);
+  mc = MouseConstraint.create(engine, { mouse, constraint:{stiffness:.2,render:{visible:false}} });
+  Composite.add(engine.world, mc);
+  render.mouse = mouse;
+}
+
+function buildArch() {
+  initEngine();
+  archBuilt = true; pileBuilt = false;
+  const cx = CW/2, cy = CH - 100, r = CW * 0.22, n = 11;
+  const stoneW = 2 * Math.PI * r / n * 0.85;
+  const stoneH = stoneW * 0.55;
+  let placed = 0;
+  const colors = ['#8B6914','#9b7a1a','#7a5c10','#a08020','#6b4f0e'];
+
+  for (let i = 0; i < n; i++) {
+    const angle = Math.PI + (Math.PI / (n-1)) * i; // 180° to 360°
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    const isKeystone = (i === Math.floor(n/2));
+    const stone = Bodies.rectangle(x, y, stoneW, stoneH, {
+      isStatic: true,
+      angle: angle + Math.PI/2,
+      render: {
+        fillStyle: isKeystone ? '#C9A84C' : colors[i%colors.length],
+        strokeStyle: isKeystone ? '#FFD700' : 'rgba(201,168,76,.3)',
+        lineWidth: isKeystone ? 2 : 1
+      },
+      friction: 0.95, frictionStatic: 1.0,
+      label: isKeystone ? 'keystone' : 'voussoir'
+    });
+    setTimeout(() => {
+      Composite.add(engine.world, stone);
+      placed++;
+      document.getElementById('sv-stones').textContent = placed;
+      if (isKeystone) {
+        document.getElementById('sv-keystone').textContent = '✓ Yes';
+        document.getElementById('loadInfo').textContent = 'Keystone set (gold) — compression ring is complete. Now drop a load!';
+      }
+      if (placed === n) {
+        document.getElementById('sv-type').textContent = 'Roman Arch';
+        document.getElementById('sv-status').textContent = 'Standing';
+        document.getElementById('b-bronze').classList.add('earned');
+      }
+    }, i * 120);
+  }
+}
+
+function buildPile() {
+  initEngine();
+  pileBuilt = true; archBuilt = false;
+  const cx = CW/2, baseY = CH - 50;
+  const stoneW = CW * 0.08, stoneH = stoneW * 0.55;
+  let placed = 0;
+  const colors = ['#8B6914','#9b7a1a','#7a5c10','#a08020','#6b4f0e'];
+
+  for (let row = 0; row < 4; row++) {
+    const cols = 4 - row;
+    for (let col = 0; col < cols; col++) {
+      const x = cx + (col - cols/2 + 0.5) * (stoneW + 4) + (Math.random()-0.5)*4;
+      const y = baseY - row * (stoneH + 3);
+      const stone = Bodies.rectangle(x, y, stoneW, stoneH, {
+        restitution: 0.1, friction: 0.4,
+        render: { fillStyle: colors[(row+col)%colors.length] },
+        label: 'pile-stone'
+      });
+      Composite.add(engine.world, stone);
+      placed++;
+    }
+  }
+  document.getElementById('sv-type').textContent = 'Stone Pile';
+  document.getElementById('sv-stones').textContent = placed;
+  document.getElementById('sv-status').textContent = 'Unstable';
+  document.getElementById('sv-keystone').textContent = 'N/A';
+  document.getElementById('loadInfo').textContent = 'Pile built. Drop a load and watch gravity do its work.';
+}
+
+function dropStoneLoad() {
+  const cx = CW/2, loadW = CW*0.14, loadH = loadW*0.5;
+  const heavy = Bodies.rectangle(cx, 30, loadW, loadH, {
+    density: 0.12,
+    restitution: 0.05, friction: 0.5,
+    render: { fillStyle: '#e05c5c', strokeStyle:'#ff6b6b', lineWidth:2 },
+    label: 'heavy-load'
+  });
+  Composite.add(engine.world, heavy);
+  loadDropped = true;
+  document.getElementById('loadInfo').textContent = 'Heavy load released — ' + (archBuilt?'compression transfers to abutments':'stones scatter freely');
+  // Check after delay
+  setTimeout(() => {
+    const bodies = Composite.allBodies(engine.world);
+    const fallen = bodies.filter(b=>b.label==='voussoir'&&b.position.y > CH-30);
+    const pileScatter = bodies.filter(b=>b.label==='pile-stone'&&b.position.y > CH-40);
+    if (archBuilt && fallen.length === 0) {
+      document.getElementById('sv-status').textContent = '✓ Survived';
+      archSurvived = true;
+      document.getElementById('b-gold').classList.add('earned');
+      document.getElementById('loadInfo').textContent = 'Arch absorbed the load through compression — still standing!';
+    }
+    if (pileBuilt && pileScatter.length >= 2) {
+      document.getElementById('sv-status').textContent = '⚠ Collapsed';
+      pileCollapsed = true;
+      document.getElementById('b-silver').classList.add('earned');
+      document.getElementById('loadInfo').textContent = 'Pile scattered — no compression path, every stone fights alone.';
+    }
+    if (archSurvived && pileCollapsed) document.getElementById('b-platinum').classList.add('earned');
+  }, 3000);
+}
+
+function resetAll() {
+  archBuilt=false; pileBuilt=false; loadDropped=false; archSurvived=false; pileCollapsed=false;
+  document.getElementById('sv-type').textContent='—';
+  document.getElementById('sv-stones').textContent='0';
+  document.getElementById('sv-status').textContent='Waiting';
+  document.getElementById('sv-keystone').textContent='No';
+  document.getElementById('loadInfo').textContent='Choose: build an arch or a pile — then drop a load and compare';
+  initEngine();
+}
+
+window.addEventListener('load', initEngine);
+</script>
+</body>
+</html>

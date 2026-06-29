@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Supply & Demand — GSU Economics</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 18px 48px}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);color:#F5F1E8;line-height:1.15;margin-bottom:6px}
+h1 em{color:#C9A84C;font-style:normal}
+.sub{font-size:.95rem;color:rgba(245,241,232,.7);max-width:680px;margin-bottom:20px;line-height:1.65}
+.teach{background:#0d0d0d;border-left:3px solid #C9A84C;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:22px}
+.teach-title{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px;font-weight:700}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.82);line-height:1.7;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+canvas{display:block;width:100%;background:#050505;border:1px solid rgba(201,168,76,.2);border-radius:12px;margin-bottom:14px;cursor:ns-resize;touch-action:pan-x}
+.shift-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.shift-btn{background:#111;border:1px solid rgba(201,168,76,.3);color:#F5F1E8;font-size:.75rem;font-weight:700;padding:9px 14px;border-radius:7px;cursor:pointer;transition:.15s}
+.shift-btn:hover{border-color:#C9A84C;color:#C9A84C}
+.shift-btn.s-active{background:rgba(76,175,125,.15);border-color:#4caf7d;color:#4caf7d}
+.shift-btn.d-active{background:rgba(224,92,92,.15);border-color:#e05c5c;color:#e05c5c}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
+.r-cell{background:#0d0d0d;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:10px 14px;text-align:center}
+.r-val{font-family:Georgia,serif;font-size:1.3rem;font-weight:700;color:#C9A84C}
+.r-label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.4);margin-top:3px}
+.scenario-box{background:#0d0d0d;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:14px 18px;margin-bottom:14px}
+.scenario-title{font-size:.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#C9A84C;margin-bottom:8px}
+.scenario-text{font-size:.88rem;color:rgba(245,241,232,.8);line-height:1.7}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.badge{padding:8px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3;transition:.3s}
+.badge.earned{opacity:1}
+#b-bronze{color:#cd7f32;border-color:#cd7f32} #b-silver{color:#aaa;border-color:#aaa}
+#b-gold{color:#C9A84C;border-color:#C9A84C} #b-platinum{color:#e5e4e2;border-color:#e5e4e2}
+.geno-bar{display:flex;align-items:center;gap:14px;background:#0d0d0d;border:1px solid rgba(201,168,76,.25);border-radius:10px;padding:14px 18px;margin-top:16px;cursor:pointer}
+.geno-bar img{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-bar p{font-size:.85rem;color:rgba(245,241,232,.8);line-height:1.55}
+.geno-bar p em{color:#C9A84C;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Economics · Pattern D · Animated Scene</div>
+  <h1>Supply & Demand <em>in Motion</em></h1>
+  <p class="sub">Drag the price line up and down. Watch surplus and shortage appear and disappear. Shift the supply or demand curve and see the equilibrium move. This is the whole engine of a market economy — visible, touchable, real.</p>
+
+  <div class="teach">
+    <div class="teach-title">The two laws every economic decision rests on</div>
+    <p><strong style="color:#F5F1E8">Law of Demand:</strong> As price rises, quantity demanded falls. As price falls, quantity demanded rises. Consumers respond to cost. The demand curve slopes down — always.</p>
+    <p><strong style="color:#F5F1E8">Law of Supply:</strong> As price rises, producers supply more. As price falls, they supply less. Profit drives production. The supply curve slopes up — always. Where the two curves cross is the market equilibrium — the price where quantity supplied exactly equals quantity demanded. Move either curve and the equilibrium moves with it.</p>
+  </div>
+
+  <canvas id="sdCanvas" height="360"></canvas>
+
+  <div class="shift-row">
+    <div style="font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(245,241,232,.4);align-self:center">Shift:</div>
+    <button class="shift-btn" onclick="shiftCurve('supply','in')">↑ Supply Increase</button>
+    <button class="shift-btn" onclick="shiftCurve('supply','out')">↓ Supply Decrease</button>
+    <button class="shift-btn" onclick="shiftCurve('demand','in')">→ Demand Increase</button>
+    <button class="shift-btn" onclick="shiftCurve('demand','out')">← Demand Decrease</button>
+    <button class="shift-btn" onclick="resetCurves()" style="border-color:rgba(224,92,92,.3);color:#e05c5c">Reset</button>
+  </div>
+
+  <div class="readout">
+    <div class="r-cell"><div class="r-val" id="rv-price">$—</div><div class="r-label">Current Price</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-eq">$—</div><div class="r-label">Equilibrium Price</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-qd">—</div><div class="r-label">Qty Demanded</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-qs">—</div><div class="r-label">Qty Supplied</div></div>
+    <div class="r-cell"><div class="r-val" id="rv-market">—</div><div class="r-label">Market State</div></div>
+  </div>
+
+  <div class="scenario-box">
+    <div class="scenario-title" id="scenTitle">Market at equilibrium</div>
+    <div class="scenario-text" id="scenText">At equilibrium, every seller finds a buyer and every buyer finds a seller. The market clears. Drag the price line to see what happens when price is set above or below equilibrium.</div>
+  </div>
+
+  <div class="badges">
+    <div class="badge" id="b-bronze">🥉 Bronze — Price dragged</div>
+    <div class="badge" id="b-silver">🥈 Silver — Surplus & shortage seen</div>
+    <div class="badge" id="b-gold">🥇 Gold — Curve shifted</div>
+    <div class="badge" id="b-platinum">✦ Platinum — New equilibrium found</div>
+  </div>
+
+  <div class="geno-bar" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <p>Ask GENO: <em>"What causes inflation — is it supply or demand?"</em> or <em>"How does a minimum wage create a surplus of workers?"</em> — GENO AI Tutor, 32 languages, 24/7.</p>
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById('sdCanvas');
+const ctx=canvas.getContext('2d');
+const GOLD='#C9A84C', GREEN='#4caf7d', RED='#e05c5c', CREAM='#F5F1E8', BLUE='#5b8dd9';
+let W,H,pl=60,pr=20,pt=20,pb=40;
+let cw,ch;
+
+// State
+let priceLevel=0.5; // 0=min, 1=max — as fraction of price axis
+let supplyShift=0; // -0.2 to +0.2
+let demandShift=0;
+let dragging=false;
+let bronzeEarned=false, silverEarned=false, goldEarned=false, platinumEarned=false;
+let sawSurplus=false, sawShortage=false;
+
+function resize(){
+  W=canvas.parentElement.getBoundingClientRect().width;
+  H=parseInt(canvas.getAttribute('height'));
+  canvas.width=W*(window.devicePixelRatio||1);
+  canvas.height=H*(window.devicePixelRatio||1);
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+  cw=W-pl-pr; ch=H-pt-pb;
+  draw();
+}
+
+// Supply: Qs = slope*(price - intercept) + shift → passes through midpoint
+// Demand: Qd = -slope*(price) + intercept + shift
+// Price range: 0..100, Qty range: 0..100
+// Supply: Qs = price (just a 45° line shifted by supplyShift*100)
+// Demand: Qd = 100 - price (negative slope shifted by demandShift*100)
+// Equilibrium: price + supplyShift*100 = 100 - price + demandShift*100
+// => 2*price = 100 + (demandShift - supplyShift)*100
+// => eq_price = 50 + (demandShift - supplyShift)*50
+
+function getSupplyQ(price){return Math.max(0,Math.min(100,price+(supplyShift*100)));}
+function getDemandQ(price){return Math.max(0,Math.min(100,100-price+(demandShift*100)));}
+function getEqPrice(){return Math.max(5,Math.min(95,50+(demandShift-supplyShift)*50));}
+
+function priceToY(p){return pt+ch*(1-p/100);}
+function yToPrice(y){return 100*(1-(y-pt)/ch);}
+function qToX(q){return pl+cw*(q/100);}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // Grid
+  ctx.strokeStyle='rgba(245,241,232,.05)';ctx.lineWidth=1;
+  for(let i=0;i<=10;i++){
+    const x=pl+cw*i/10;ctx.beginPath();ctx.moveTo(x,pt);ctx.lineTo(x,pt+ch);ctx.stroke();
+    const y=pt+ch*i/10;ctx.beginPath();ctx.moveTo(pl,y);ctx.lineTo(pl+cw,y);ctx.stroke();
+  }
+  // Axes
+  ctx.strokeStyle='rgba(245,241,232,.3)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(pl,pt);ctx.lineTo(pl,pt+ch+8);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(pl-8,pt+ch);ctx.lineTo(pl+cw,pt+ch);ctx.stroke();
+  // Axis labels
+  ctx.fillStyle='rgba(245,241,232,.5)';ctx.font='bold 11px Arial';ctx.textAlign='center';
+  ctx.fillText('Quantity',pl+cw/2,H-4);
+  ctx.save();ctx.translate(14,pt+ch/2);ctx.rotate(-Math.PI/2);ctx.fillText('Price ($)',0,0);ctx.restore();
+  // Tick labels
+  ctx.font='10px Arial';ctx.fillStyle='rgba(245,241,232,.35)';
+  ['0','25','50','75','100'].forEach((v,i)=>{
+    ctx.textAlign='right';ctx.fillText('$'+v,pl-6,priceToY(parseInt(v))+3);
+    ctx.textAlign='center';ctx.fillText(v,qToX(parseInt(v)),pt+ch+14);
+  });
+
+  // Supply curve
+  ctx.strokeStyle=GREEN;ctx.lineWidth=2.5;ctx.lineCap='round';
+  ctx.beginPath();
+  for(let p=0;p<=100;p+=2){ctx.lineTo(qToX(getSupplyQ(p)),priceToY(p));}
+  ctx.stroke();
+  // Supply label
+  ctx.fillStyle=GREEN;ctx.font='bold 11px Arial';ctx.textAlign='left';
+  ctx.fillText('Supply →',qToX(getSupplyQ(98))+6,priceToY(98));
+
+  // Demand curve
+  ctx.strokeStyle=RED;ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(let p=0;p<=100;p+=2){ctx.lineTo(qToX(getDemandQ(p)),priceToY(p));}
+  ctx.stroke();
+  // Demand label
+  ctx.fillStyle=RED;ctx.font='bold 11px Arial';ctx.textAlign='left';
+  ctx.fillText('Demand',qToX(getDemandQ(98))+6,priceToY(98));
+
+  // Current price line
+  const price=priceLevel*100;
+  const py=priceToY(price);
+  const qs=getSupplyQ(price), qd=getDemandQ(price);
+  const eqP=getEqPrice();
+
+  ctx.strokeStyle='rgba(201,168,76,.8)';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);
+  ctx.beginPath();ctx.moveTo(pl,py);ctx.lineTo(pl+cw,py);ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Price label
+  ctx.fillStyle=GOLD;ctx.font='bold 12px Arial';ctx.textAlign='right';
+  ctx.fillText('$'+price.toFixed(0),pl-4,py);
+
+  // Surplus / shortage shading
+  if(Math.abs(price-eqP)>3){
+    const x1=Math.min(qToX(qs),qToX(qd)), x2=Math.max(qToX(qs),qToX(qd));
+    ctx.fillStyle=price>eqP?'rgba(76,175,125,.12)':'rgba(224,92,92,.12)';
+    ctx.fillRect(x1,py-2,x2-x1,4);
+    const mid=(x1+x2)/2;
+    ctx.fillStyle=price>eqP?GREEN:RED;
+    ctx.font='bold 10px Arial';ctx.textAlign='center';
+    ctx.fillText(price>eqP?'SURPLUS':'SHORTAGE',mid,py-(price>eqP?12:-14));
+  }
+
+  // Equilibrium point
+  const eqY=priceToY(eqP), eqX=qToX(getSupplyQ(eqP));
+  ctx.fillStyle=GOLD;ctx.beginPath();ctx.arc(eqX,eqY,7,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#000';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle=GOLD;ctx.font='bold 10px Arial';ctx.textAlign='center';
+  ctx.fillText('E* = $'+eqP.toFixed(0),eqX,eqY-14);
+
+  // Dashed drop lines to axes
+  ctx.strokeStyle='rgba(201,168,76,.3)';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(eqX,eqY);ctx.lineTo(eqX,pt+ch);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(eqX,eqY);ctx.lineTo(pl,eqY);ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Point dots on curves at price
+  ctx.fillStyle=GREEN;ctx.beginPath();ctx.arc(qToX(qs),py,5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=RED;ctx.beginPath();ctx.arc(qToX(qd),py,5,0,Math.PI*2);ctx.fill();
+
+  // Animate arrows when not at equilibrium
+  if(Math.abs(price-eqP)>5){
+    const dir=price>eqP?-1:1;
+    const aLen=20*(t%30<15?t%15/15:1-t%15/15);
+    ctx.strokeStyle='rgba(201,168,76,.5)';ctx.lineWidth=2;
+    const mid=(pl+pl+cw)/2;
+    ctx.beginPath();ctx.moveTo(mid,py);ctx.lineTo(mid,py+dir*aLen);ctx.stroke();
+    ctx.fillStyle='rgba(201,168,76,.5)';
+    const ay=py+dir*aLen;
+    ctx.beginPath();ctx.moveTo(mid,ay);ctx.lineTo(mid-8,ay-dir*8);ctx.lineTo(mid+8,ay-dir*8);ctx.fill();
+    ctx.fillStyle='rgba(201,168,76,.5)';ctx.font='9px Arial';ctx.textAlign='center';
+    ctx.fillText(dir>0?'Price will rise':'Price will fall',mid,ay+dir*16);
+  }
+
+  // Update readouts
+  const state=price>eqP+3?'Surplus':price<eqP-3?'Shortage':'Equilibrium ✓';
+  document.getElementById('rv-price').textContent='$'+price.toFixed(0);
+  document.getElementById('rv-eq').textContent='$'+eqP.toFixed(0);
+  document.getElementById('rv-qd').textContent=qd.toFixed(0)+' units';
+  document.getElementById('rv-qs').textContent=qs.toFixed(0)+' units';
+  document.getElementById('rv-market').textContent=state;
+
+  // Scenario text
+  if(price>eqP+3){
+    document.getElementById('scenTitle').textContent='Price Floor / Surplus';
+    document.getElementById('scenText').textContent=`At $${price.toFixed(0)}, producers want to sell ${qs.toFixed(0)} units but consumers only want ${qd.toFixed(0)}. The unsold ${(qs-qd).toFixed(0)} units pile up as surplus. Think: minimum wage above equilibrium creates surplus labor (unemployment).`;
+    sawSurplus=true;
+  } else if(price<eqP-3){
+    document.getElementById('scenTitle').textContent='Price Ceiling / Shortage';
+    document.getElementById('scenText').textContent=`At $${price.toFixed(0)}, consumers want ${qd.toFixed(0)} units but producers only offer ${qs.toFixed(0)}. The gap of ${(qd-qs).toFixed(0)} units is a shortage. Lines form. Black markets emerge. Think: rent control causing housing shortages.`;
+    sawShortage=true;
+  } else {
+    document.getElementById('scenTitle').textContent='Market Equilibrium';
+    document.getElementById('scenText').textContent=`At $${eqP.toFixed(0)}, quantity supplied = quantity demanded = ${getSupplyQ(eqP).toFixed(0)} units. The market clears. This is where the price naturally settles without intervention.`;
+  }
+  if(sawSurplus&&sawShortage) document.getElementById('b-silver').classList.add('earned');
+}
+
+let t=0;
+function loop(){t++;draw();requestAnimationFrame(loop);}
+
+function getPos(e){
+  const rect=canvas.getBoundingClientRect();
+  const te=e.touches?e.touches[0]:e;
+  return{x:(te.clientX-rect.left)*W/rect.width,y:(te.clientY-rect.top)*H/rect.height};
+}
+canvas.addEventListener('mousedown',e=>{dragging=true;const p=getPos(e);priceLevel=Math.max(0.05,Math.min(0.95,1-(p.y-pt)/ch));draw();});
+canvas.addEventListener('touchstart',e=>{e.preventDefault();dragging=true;const p=getPos(e);priceLevel=Math.max(0.05,Math.min(0.95,1-(p.y-pt)/ch));draw();},{passive:false});
+window.addEventListener('mousemove',e=>{if(!dragging)return;const p=getPos(e);priceLevel=Math.max(0.05,Math.min(0.95,1-(p.y-pt)/ch));
+  if(!bronzeEarned){bronzeEarned=true;document.getElementById('b-bronze').classList.add('earned');}draw();});
+window.addEventListener('touchmove',e=>{if(!dragging)return;e.preventDefault();const p=getPos(e);priceLevel=Math.max(0.05,Math.min(0.95,1-(p.y-pt)/ch));draw();},{passive:false});
+window.addEventListener('mouseup',()=>dragging=false);
+window.addEventListener('touchend',()=>dragging=false);
+
+function shiftCurve(which,dir){
+  const delta=dir==='in'?0.15:-0.15;
+  if(which==='supply') supplyShift=Math.max(-0.3,Math.min(0.3,supplyShift+delta));
+  else demandShift=Math.max(-0.3,Math.min(0.3,demandShift+delta));
+  if(!goldEarned){goldEarned=true;document.getElementById('b-gold').classList.add('earned');}
+  const newEq=getEqPrice();
+  if(!platinumEarned&&(Math.abs(newEq-50)>10)){platinumEarned=true;document.getElementById('b-platinum').classList.add('earned');}
+  draw();
+}
+function resetCurves(){supplyShift=0;demandShift=0;priceLevel=0.5;draw();}
+
+window.addEventListener('load',()=>{resize();loop();});
+window.addEventListener('resize',resize);
+</script>
+</body>
+</html>
