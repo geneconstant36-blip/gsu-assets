@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GSU Live Dashboard v2 — Engagement Analytics</title>
+<style>
+:root {
+  --black: #000000;
+  --gold: #C9A84C;
+  --gold-dim: rgba(201,168,76,.18);
+  --gold-line: rgba(201,168,76,.35);
+  --cream: #F5F1E8;
+  --cream-dim: rgba(245,241,232,.6);
+  --cream-muted: rgba(245,241,232,.35);
+  --panel: #0d0d0d;
+  --panel2: #111111;
+  --border: rgba(201,168,76,.2);
+  --green: #4caf7d;
+  --red: #e05c5c;
+  --teal: #1A8B7F;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  background: #050505;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.top-bar-left { display: flex; align-items: center; gap: 14px; }
+.logo-mark {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: .5px;
+}
+.logo-sub {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  font-weight: 700;
+}
+.top-bar-right { display: flex; align-items: center; gap: 10px; }
+
+.mode-btn {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all .18s;
+}
+.mode-btn.demo {
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+}
+.mode-btn.live {
+  background: var(--gold);
+  color: #000;
+}
+.mode-btn.live:hover { background: #e0ba52; }
+
+.live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse 2s infinite;
+  display: inline-block;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--cream-muted);
+}
+
+/* ── DEMO BANNER ── */
+.demo-banner {
+  background: rgba(201,168,76,.08);
+  border-bottom: 1px solid var(--gold-line);
+  padding: 9px 20px;
+  font-size: 12px;
+  color: var(--cream-dim);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.demo-banner span { color: var(--gold); font-weight: 700; }
+
+/* ── LAYOUT ── */
+.dash { padding: 18px 20px 40px; }
+
+/* ── KPI ROW ── */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.kpi {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.kpi-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.kpi-delta {
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.kpi-delta.up { color: var(--green); }
+.kpi-delta.down { color: var(--red); }
+.kpi-sub { font-size: 11px; color: var(--cream-muted); margin-top: 2px; }
+
+/* ── TIME SPAN TABS ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--gold);
+  font-weight: 700;
+}
+.timespan-tabs {
+  display: flex;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+.tab {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--cream-muted);
+  transition: all .15s;
+}
+.tab.active {
+  background: var(--gold);
+  color: #000;
+}
+.tab:hover:not(.active) {
+  color: var(--gold);
+}
+
+/* ── CHARTS ── */
+.chart-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.chart-panel canvas {
+  width: 100%;
+  display: block;
+}
+
+/* ── GRID ROW ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+
+/* ── GAUGE ── */
+.gauge-wrap { text-align: center; padding: 10px 0; }
+.gauge-canvas { display: block; margin: 0 auto; }
+.gauge-label {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-top: 4px;
+}
+.gauge-sub { font-size: 11px; color: var(--cream-muted); margin-top: 2px; }
+
+/* ── TRAFFIC SOURCES ── */
+.source-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(201,168,76,.1);
+}
+.source-row:last-child { border-bottom: none; }
+.source-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.source-name { font-size: 13px; color: var(--cream); font-weight: 600; }
+.source-sub { font-size: 11px; color: var(--cream-muted); }
+.source-bar-wrap { flex: 1; margin: 0 14px; height: 4px; background: var(--panel2); border-radius: 2px; }
+.source-bar { height: 4px; border-radius: 2px; background: var(--gold); }
+.source-count { font-family: var(--font-serif); font-size: 16px; font-weight: 700; color: var(--gold); min-width: 44px; text-align: right; }
+.source-pct { font-size: 11px; color: var(--cream-muted); text-align: right; }
+
+/* ── TOP PAGES ── */
+.page-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(201,168,76,.08);
+}
+.page-row:last-child { border-bottom: none; }
+.page-rank {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold-line);
+  min-width: 24px;
+}
+.page-name { font-size: 13px; color: var(--cream); font-weight: 600; flex: 1; }
+.page-slug { font-size: 10px; color: var(--cream-muted); }
+.page-users {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cream);
+  min-width: 36px;
+  text-align: right;
+}
+.page-bar-wrap { width: 80px; height: 3px; background: var(--panel2); border-radius: 2px; }
+.page-bar { height: 3px; border-radius: 2px; background: var(--gold); }
+
+/* ── EVENT FEED ── */
+.event-feed { max-height: 280px; overflow-y: auto; }
+.event-feed::-webkit-scrollbar { width: 3px; }
+.event-feed::-webkit-scrollbar-track { background: transparent; }
+.event-feed::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(201,168,76,.07);
+  animation: fadeIn .4s ease;
+}
+@keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:none} }
+.event-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.event-dot.gold { background: var(--gold); }
+.event-dot.green { background: var(--green); }
+.event-dot.teal { background: var(--teal); }
+.event-text { font-size: 12px; color: var(--cream-dim); flex: 1; line-height: 1.5; }
+.event-text strong { color: var(--cream); }
+.event-time { font-size: 10px; color: var(--cream-muted); min-width: 50px; text-align: right; }
+
+/* ── STICKINESS STATS ── */
+.sticky-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+.sticky-stat { text-align: center; }
+.sticky-stat-val {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+}
+.sticky-stat-label { font-size: 10px; color: var(--cream-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 16px;
+}
+.section-divider-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.section-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-line), transparent);
+}
+
+/* ── GA4 CONNECT ── */
+.ga4-panel {
+  background: rgba(26,139,127,.08);
+  border: 1px solid rgba(26,139,127,.3);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.ga4-icon { font-size: 22px; }
+.ga4-text { flex: 1; }
+.ga4-text b { color: var(--cream); font-size: 13px; }
+.ga4-text p { font-size: 11px; color: var(--cream-muted); margin-top: 3px; }
+.ga4-input {
+  background: var(--panel2);
+  border: 1px solid var(--gold-line);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--cream);
+  font-size: 12px;
+  width: 260px;
+  outline: none;
+}
+.ga4-input::placeholder { color: var(--cream-muted); }
+.ga4-input:focus { border-color: var(--gold); }
+.ga4-connect-btn {
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .15s;
+}
+.ga4-connect-btn:hover { background: #1ea899; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .kpi-row { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 760px) {
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .sticky-stats { grid-template-columns: 1fr 1fr; }
+  .ga4-panel { flex-direction: column; align-items: flex-start; }
+  .ga4-input { width: 100%; }
+}
+
+/* ── TOOLTIP ── */
+.tooltip {
+  position: absolute;
+  background: #1a1a1a;
+  border: 1px solid var(--gold-line);
+  border-radius: 6px;
+  padding: 8px 12px;
+  pointer-events: none;
+  z-index: 200;
+  font-size: 12px;
+  color: var(--cream);
+  display: none;
+  min-width: 120px;
+}
+.tooltip b { color: var(--gold); display: block; margin-bottom: 2px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div>
+      <div class="logo-mark">GSU</div>
+      <div class="logo-sub">Live Dashboard · v2</div>
+    </div>
+    <div class="status-pill">
+      <span class="live-dot" id="liveDot"></span>
+      <span id="modeLabel">DEMO MODE</span>
+    </div>
+  </div>
+  <div class="top-bar-right">
+    <button class="mode-btn demo" id="demoBtn" onclick="setMode('demo')">Demo</button>
+    <button class="mode-btn live" id="liveBtn" onclick="setMode('live')">Live GA4</button>
+  </div>
+</div>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner" id="demoBanner">
+  <span>Demo Mode:</span> Showing simulated data with realistic patterns for globalsovereignuniversity.org.
+  Click <span>Live GA4</span> above and enter your GA4 API key to connect real analytics.
+</div>
+
+<!-- GA4 CONNECT (hidden until live mode) -->
+<div id="ga4Panel" class="dash" style="padding-bottom:0;display:none;">
+  <div class="ga4-panel">
+    <div class="ga4-icon">🔗</div>
+    <div class="ga4-text">
+      <b>Connect GA4 Property 525158895</b>
+      <p>Enter your GA4 Measurement Protocol API secret to pull live session, user, and event data.</p>
+    </div>
+    <input class="ga4-input" id="ga4Key" type="password" placeholder="GA4 API Secret key…"/>
+    <button class="ga4-connect-btn" onclick="connectGA4()">Connect</button>
+  </div>
+</div>
+
+<!-- DASHBOARD BODY -->
+<div class="dash">
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Active Right Now</div>
+      <div class="kpi-value" id="kpi-active">—</div>
+      <div class="kpi-delta" id="kpi-active-delta"></div>
+      <div class="kpi-sub">Visitors on site</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Avg Session Duration</div>
+      <div class="kpi-value" id="kpi-dur">—</div>
+      <div class="kpi-delta" id="kpi-dur-delta"></div>
+      <div class="kpi-sub">Minutes per visit</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Sessions Today</div>
+      <div class="kpi-value" id="kpi-sessions">—</div>
+      <div class="kpi-delta" id="kpi-sessions-delta"></div>
+      <div class="kpi-sub">Total visits so far</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Pages / Session</div>
+      <div class="kpi-value" id="kpi-depth">—</div>
+      <div class="kpi-delta up">▲ Strong depth</div>
+      <div class="kpi-sub">Engagement signal</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Bounce Rate</div>
+      <div class="kpi-value" id="kpi-bounce">—</div>
+      <div class="kpi-delta up" id="kpi-bounce-delta"></div>
+      <div class="kpi-sub">Left without engaging</div>
+    </div>
+  </div>
+
+  <!-- TIME SPAN SELECTOR + MAIN CHART -->
+  <div class="section-header">
+    <div class="section-title">Sessions Over Time</div>
+    <div class="timespan-tabs">
+      <button class="tab active" onclick="setSpan('24h',this)">24 Hours</button>
+      <button class="tab" onclick="setSpan('7d',this)">7 Days</button>
+      <button class="tab" onclick="setSpan('30d',this)">30 Days</button>
+      <button class="tab" onclick="setSpan('12w',this)">12 Weeks</button>
+      <button class="tab" onclick="setSpan('12m',this)">12 Months</button>
+    </div>
+  </div>
+  <div class="chart-panel" style="padding-bottom:10px;">
+    <canvas id="mainChart" height="200"></canvas>
+  </div>
+
+  <!-- SECOND ROW: SESSION DURATION + PAGEVIEWS -->
+  <div class="grid-2">
+    <div class="chart-panel">
+      <div class="section-header" style="margin-bottom:10px;">
+        <div class="section-title">Avg Session Duration</div>
+        <div class="timespan-tabs">
+          <button class="tab active" onclick="setDurSpan('24h',this)">24h</button>
+          <button class="tab" onclick="setDurSpan('7d',this)">7d</button>
+          <button class="tab" onclick="setDurSpan('30d',this)">30d</button>
+        </div>
+      </div>
+      <canvas id="durChart" height="130"></canvas>
+    </div>
+    <div class="chart-panel">
+      <div class="section-header" style="margin-bottom:10px;">
+        <div class="section-title">Pageviews</div>
+        <div class="timespan-tabs">
+          <button class="tab active" onclick="setPvSpan('24h',this)">24h</button>
+          <button class="tab" onclick="setPvSpan('7d',this)">7d</button>
+          <button class="tab" onclick="setPvSpan('30d',this)">30d</button>
+        </div>
+      </div>
+      <canvas id="pvChart" height="130"></canvas>
+    </div>
+  </div>
+
+  <!-- THIRD ROW: STICKINESS + TRAFFIC SOURCES + EVENT FEED -->
+  <div class="grid-3">
+    <!-- Stickiness Gauge -->
+    <div class="chart-panel">
+      <div class="section-header" style="margin-bottom:6px;">
+        <div class="section-title">Stickiness Score</div>
+        <div style="font-size:10px;color:var(--cream-muted);text-align:right;">Composite engagement<br>score / 100</div>
+      </div>
+      <div class="gauge-wrap">
+        <canvas id="gaugeCanvas" width="220" height="120" class="gauge-canvas"></canvas>
+        <div class="gauge-label" id="gaugeVal">—</div>
+        <div class="gauge-sub">stickiness score / 100</div>
+      </div>
+      <div class="sticky-stats">
+        <div class="sticky-stat"><div class="sticky-stat-val" id="s-dur">—</div><div class="sticky-stat-label">Avg Dur.</div></div>
+        <div class="sticky-stat"><div class="sticky-stat-val" id="s-depth">—</div><div class="sticky-stat-label">Pg Depth</div></div>
+        <div class="sticky-stat"><div class="sticky-stat-val" id="s-return">—</div><div class="sticky-stat-label">Return %</div></div>
+      </div>
+    </div>
+
+    <!-- Traffic Sources -->
+    <div class="chart-panel">
+      <div class="section-header" style="margin-bottom:10px;">
+        <div class="section-title">Traffic Sources</div>
+        <div style="font-size:10px;color:var(--cream-muted);">Where visitors come from</div>
+      </div>
+      <div id="sourcesPanel"></div>
+    </div>
+
+    <!-- Live Event Feed -->
+    <div class="chart-panel">
+      <div class="section-header" style="margin-bottom:10px;">
+        <div class="section-title">Live Event Feed</div>
+        <div style="font-size:10px;color:var(--cream-muted);">Key interactions as they happen</div>
+      </div>
+      <div class="event-feed" id="eventFeed"></div>
+    </div>
+  </div>
+
+  <!-- SECTION DIVIDER -->
+  <div class="section-divider">
+    <div class="section-divider-label">Historical Performance</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <!-- BOTTOM ROW: TOP PAGES + RETURNING USERS -->
+  <div class="grid-2">
+    <div class="chart-panel">
+      <div class="section-header" style="margin-bottom:10px;">
+        <div class="section-title">Top Pages Right Now</div>
+        <div style="font-size:10px;color:var(--cream-muted);">Active users per page</div>
+      </div>
+      <div id="topPagesPanel"></div>
+    </div>
+    <div class="chart-panel">
+      <div class="section-header" style="margin-bottom:10px;">
+        <div class="section-title">New vs. Returning</div>
+        <div class="timespan-tabs">
+          <button class="tab active" onclick="setNvRSpan('24h',this)">24h</button>
+          <button class="tab" onclick="setNvRSpan('7d',this)">7d</button>
+          <button class="tab" onclick="setNvRSpan('30d',this)">30d</button>
+        </div>
+      </div>
+      <canvas id="nvrChart" height="160"></canvas>
+    </div>
+  </div>
+
+  <!-- MONTHLY SUMMARY -->
+  <div class="chart-panel">
+    <div class="section-header" style="margin-bottom:10px;">
+      <div class="section-title">Monthly Summary — Last 12 Months</div>
+      <div style="font-size:10px;color:var(--cream-muted);">Sessions · Users · Pageviews</div>
+    </div>
+    <canvas id="monthlyChart" height="160"></canvas>
+  </div>
+
+</div>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip"><b id="ttLabel"></b><span id="ttValue"></span></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   GSU LIVE DASHBOARD v2
+   Pure black #000000 · Gold #C9A84C · Cream #F5F1E8
+   ═══════════════════════════════════════════════════ */
+
+const GOLD = '#C9A84C', GOLD_DIM = 'rgba(201,168,76,.25)', CREAM = '#F5F1E8',
+      CREAM_DIM = 'rgba(245,241,232,.55)', GREEN = '#4caf7d', TEAL = '#1A8B7F',
+      RED = '#e05c5c';
+
+let currentSpan = '24h', currentDurSpan = '24h', currentPvSpan = '24h',
+    currentNvRSpan = '24h', isLive = false;
+
+/* ── SIMULATED DATA ENGINE ── */
+function seed(n) {
+  // deterministic pseudo-random for reproducibility
+  let x = Math.sin(n + 42.7) * 10000;
+  return x - Math.floor(x);
+}
+
+function gaussian(mean, std, i) {
+  return mean + (seed(i) * 2 - 1) * std;
+}
+
+// Hourly pattern: low at night, peak 9am–9pm
+function hourWeight(h) {
+  if (h < 6) return 0.15;
+  if (h < 9) return 0.4 + (h-6)*0.12;
+  if (h < 14) return 0.85 + (h-9)*0.03;
+  if (h < 18) return 0.95;
+  if (h < 21) return 0.80;
+  return 0.5 - (h-21)*0.1;
+}
+
+function makeHourlyData(baseSession=38, baseDur=6.5, basePv=3.6) {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const labels = [], sessions = [], durations = [], pageviews = [];
+  for (let h = 0; h < 24; h++) {
+    const t = new Date(now); t.setHours(h,0,0,0);
+    const label = t.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    const w = hourWeight(h);
+    const s = h > currentHour ? null : Math.round(gaussian(baseSession * w, 4, h*7));
+    const d = h > currentHour ? null : Math.max(1.5, gaussian(baseDur * (0.8 + w*0.3), 0.8, h*11));
+    const pv = h > currentHour ? null : Math.max(1.2, gaussian(basePv * (0.9 + w*0.2), 0.4, h*13));
+    labels.push(label);
+    sessions.push(s === null ? null : Math.max(2, s));
+    durations.push(d === null ? null : +d.toFixed(2));
+    pageviews.push(pv === null ? null : +pv.toFixed(1));
+  }
+  return { labels, sessions, durations, pageviews };
+}
+
+function makeDailyData(days=7) {
+  const labels = [], sessions = [], durations = [], pageviews = [];
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  for (let i = days-1; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    labels.push(days<=7 ? dayNames[d.getDay()] : `${d.getMonth()+1}/${d.getDate()}`);
+    const wd = d.getDay(); // weekends lower
+    const wt = (wd===0||wd===6) ? 0.65 : 1.0;
+    sessions.push(Math.max(80, Math.round(gaussian(780*wt, 60, i*3))));
+    durations.push(Math.max(2.5, +gaussian(6.3, 0.7, i*7).toFixed(2)));
+    pageviews.push(Math.max(1.8, +gaussian(3.5, 0.3, i*11).toFixed(1)));
+  }
+  return { labels, sessions, durations, pageviews };
+}
+
+function makeWeeklyData(weeks=12) {
+  const labels = [], sessions = [], durations = [], pageviews = [];
+  for (let i = weeks-1; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate()-i*7);
+    labels.push(`W${weeks-i}`);
+    // Gradual growth trend
+    const trend = 1 + (weeks-i)*0.018;
+    sessions.push(Math.max(400, Math.round(gaussian(3800*trend, 220, i*5))));
+    durations.push(Math.max(3, +gaussian(6.1+i*0.04, 0.5, i*9).toFixed(2)));
+    pageviews.push(Math.max(2, +gaussian(3.4+i*0.02, 0.25, i*13).toFixed(1)));
+  }
+  return { labels, sessions, durations, pageviews };
+}
+
+function makeMonthlyData(months=12) {
+  const labels = [], sessions = [], users = [], pageviews = [];
+  const mNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const now = new Date();
+  for (let i = months-1; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    labels.push(mNames[d.getMonth()]);
+    const trend = 1 + (months-1-i)*0.055;
+    sessions.push(Math.max(2000, Math.round(gaussian(14200*trend, 800, i*7))));
+    users.push(Math.max(1200, Math.round(gaussian(9100*trend, 500, i*11))));
+    pageviews.push(Math.max(5000, Math.round(gaussian(39000*trend, 2000, i*13))));
+  }
+  return { labels, sessions, users, pageviews };
+}
+
+function getSpanData(span) {
+  if (span==='24h') return makeHourlyData();
+  if (span==='7d') return makeDailyData(7);
+  if (span==='30d') return makeDailyData(30);
+  if (span==='12w') return makeWeeklyData(12);
+  if (span==='12m') return makeMonthlyData(12);
+  return makeHourlyData();
+}
+
+/* ── CANVAS UTILS ── */
+function dpr() { return window.devicePixelRatio || 1; }
+
+function setupCanvas(canvas) {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const w = rect.width - 36, h = parseInt(canvas.getAttribute('height'));
+  canvas.width = w * dpr();
+  canvas.height = h * dpr();
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr(), dpr());
+  return { ctx, w, h };
+}
+
+/* ── BAR CHART ── */
+function drawBarChart(canvas, data, opts={}) {
+  const { ctx, w, h } = setupCanvas(canvas);
+  ctx.clearRect(0,0,w,h);
+
+  const values = data.values.filter(v=>v!==null);
+  const max = Math.max(...values) * 1.15 || 1;
+  const pl=48, pr=12, pt=16, pb=36;
+  const cw = w-pl-pr, ch = h-pt-pb;
+  const n = data.values.length;
+  const barW = Math.max(3, Math.floor(cw/n*0.6));
+  const gap = (cw - barW*n) / (n+1);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(201,168,76,.1)';
+  ctx.lineWidth = 1;
+  [0.25,0.5,0.75,1].forEach(f => {
+    const y = pt + ch*(1-f);
+    ctx.beginPath(); ctx.moveTo(pl,y); ctx.lineTo(w-pr,y); ctx.stroke();
+    ctx.fillStyle = 'rgba(245,241,232,.3)';
+    ctx.font = '10px Arial';
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(max*f).toString(), pl-4, y+3);
+  });
+
+  // Bars
+  data.values.forEach((v,i) => {
+    if (v===null) return;
+    const x = pl + gap + i*(barW+gap);
+    const bh = (v/max)*ch;
+    const y = pt + ch - bh;
+    // Gradient fill
+    const grad = ctx.createLinearGradient(0,y,0,y+bh);
+    grad.addColorStop(0, opts.color || GOLD);
+    grad.addColorStop(1, opts.colorEnd || 'rgba(201,168,76,.3)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.roundRect(x, y, barW, bh, [3,3,0,0]);
+    ctx.fill();
+  });
+
+  // X labels — show every N
+  const step = n<=24 ? Math.ceil(n/8) : Math.ceil(n/10);
+  ctx.fillStyle = CREAM_DIM;
+  ctx.font = '10px Arial';
+  ctx.textAlign = 'center';
+  data.labels.forEach((label,i) => {
+    if (i%step!==0) return;
+    const x = pl + gap + i*(barW+gap) + barW/2;
+    ctx.fillText(label, x, h-pb+16);
+  });
+
+  // Current hour marker for 24h
+  if (opts.currentHour !== undefined && n===24) {
+    const i = opts.currentHour;
+    const x = pl + gap + i*(barW+gap) + barW/2;
+    ctx.strokeStyle = 'rgba(201,168,76,.5)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.moveTo(x,pt); ctx.lineTo(x,pt+ch); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(201,168,76,.7)';
+    ctx.font = '9px Arial';
+    ctx.fillText('NOW', x, pt-3);
+  }
+}
+
+/* ── LINE CHART ── */
+function drawLineChart(canvas, datasets, labels, opts={}) {
+  const { ctx, w, h } = setupCanvas(canvas);
+  ctx.clearRect(0,0,w,h);
+
+  const pl=48, pr=12, pt=16, pb=36;
+  const cw = w-pl-pr, ch = h-pt-pb;
+
+  const allVals = datasets.flatMap(d=>d.values.filter(v=>v!==null));
+  const max = Math.max(...allVals)*1.15 || 1;
+  const min = opts.zeroBase ? 0 : Math.max(0, Math.min(...allVals)*0.85);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(201,168,76,.1)';
+  ctx.lineWidth = 1;
+  [0,0.25,0.5,0.75,1].forEach(f => {
+    const y = pt + ch*(1-f);
+    ctx.beginPath(); ctx.moveTo(pl,y); ctx.lineTo(w-pr,y); ctx.stroke();
+    const val = min + (max-min)*f;
+    ctx.fillStyle = 'rgba(245,241,232,.3)';
+    ctx.font = '10px Arial'; ctx.textAlign='right';
+    ctx.fillText(opts.formatY ? opts.formatY(val) : Math.round(val), pl-4, y+3);
+  });
+
+  // X labels
+  const n = labels.length;
+  const step = n<=12 ? 1 : Math.ceil(n/10);
+  ctx.fillStyle = CREAM_DIM;
+  ctx.font = '10px Arial'; ctx.textAlign='center';
+  labels.forEach((l,i) => {
+    if (i%step!==0) return;
+    const x = pl + (i/(n-1))*cw;
+    ctx.fillText(l, x, h-pb+16);
+  });
+
+  // Lines + fill
+  datasets.forEach(ds => {
+    const pts = ds.values.map((v,i) => ({
+      x: pl + (i/(n-1))*cw,
+      y: pt + ch*(1-(v-min)/(max-min)),
+      v, null: v===null
+    }));
+
+    // Fill
+    ctx.beginPath();
+    let started=false;
+    pts.forEach(p => {
+      if(p.null) return;
+      if(!started){ctx.moveTo(p.x,p.y);started=true;}
+      else ctx.lineTo(p.x,p.y);
+    });
+    const lastP = pts.filter(p=>!p.null).slice(-1)[0];
+    if(lastP){
+      ctx.lineTo(lastP.x, pt+ch);
+      ctx.lineTo(pl, pt+ch);
+    }
+    ctx.closePath();
+    const grad = ctx.createLinearGradient(0,pt,0,pt+ch);
+    grad.addColorStop(0, (ds.color||GOLD).replace(')',', .35)').replace('rgb','rgba'));
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = typeof ds.color==='string' && ds.color.startsWith('#')
+      ? hexToFill(ds.color, .25) : grad;
+    ctx.fill();
+
+    // Line
+    ctx.beginPath(); started=false;
+    pts.forEach(p => {
+      if(p.null) return;
+      if(!started){ctx.moveTo(p.x,p.y);started=true;}
+      else ctx.lineTo(p.x,p.y);
+    });
+    ctx.strokeStyle = ds.color||GOLD;
+    ctx.lineWidth = ds.width||2;
+    ctx.lineJoin='round'; ctx.lineCap='round';
+    ctx.stroke();
+
+    // Dots for small datasets
+    if(n<=12){
+      pts.forEach(p=>{
+        if(p.null) return;
+        ctx.beginPath(); ctx.arc(p.x,p.y,3,0,Math.PI*2);
+        ctx.fillStyle = ds.color||GOLD; ctx.fill();
+      });
+    }
+  });
+}
+
+function hexToFill(hex, a) {
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+/* ── GROUPED BAR (monthly) ── */
+function drawGroupedBar(canvas, data) {
+  const { ctx, w, h } = setupCanvas(canvas);
+  ctx.clearRect(0,0,w,h);
+
+  const pl=56, pr=12, pt=16, pb=36;
+  const cw=w-pl-pr, ch=h-pt-pb;
+  const n=data.labels.length;
+  const groupW=cw/n, barW=Math.max(4,groupW*0.22);
+  const colors=[GOLD, GREEN, TEAL];
+  const seriesKeys=['sessions','users','pageviews'];
+  const max=Math.max(...seriesKeys.flatMap(k=>data[k]))*1.15||1;
+
+  // Grid
+  ctx.strokeStyle='rgba(201,168,76,.1)'; ctx.lineWidth=1;
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const y=pt+ch*(1-f);
+    ctx.beginPath(); ctx.moveTo(pl,y); ctx.lineTo(w-pr,y); ctx.stroke();
+    ctx.fillStyle='rgba(245,241,232,.3)'; ctx.font='10px Arial'; ctx.textAlign='right';
+    const v=max*f; ctx.fillText(v>=1000?(v/1000).toFixed(1)+'k':Math.round(v),pl-4,y+3);
+  });
+
+  data.labels.forEach((label,i)=>{
+    const gx=pl+i*groupW+groupW/2;
+    [-1,0,1].forEach((offset,j)=>{
+      const x=gx+(offset-(j===2?0:0))*barW*1.3 - barW/2;
+      const v=data[seriesKeys[j]][i];
+      const bh=(v/max)*ch, y=pt+ch-bh;
+      const grad=ctx.createLinearGradient(0,y,0,y+bh);
+      grad.addColorStop(0,colors[j]); grad.addColorStop(1,hexToFill(colors[j],.25));
+      ctx.fillStyle=grad;
+      ctx.beginPath(); ctx.roundRect(x,y,barW,bh,[2,2,0,0]); ctx.fill();
+    });
+    ctx.fillStyle=CREAM_DIM; ctx.font='10px Arial'; ctx.textAlign='center';
+    ctx.fillText(label,gx,h-pb+16);
+  });
+
+  // Legend
+  const legends=[{c:GOLD,l:'Sessions'},{c:GREEN,l:'Users'},{c:TEAL,l:'Pageviews'}];
+  let lx=pl;
+  legends.forEach(leg=>{
+    ctx.fillStyle=leg.c; ctx.fillRect(lx,3,10,8);
+    ctx.fillStyle='rgba(245,241,232,.7)'; ctx.font='10px Arial'; ctx.textAlign='left';
+    ctx.fillText(leg.l,lx+13,11); lx+=ctx.measureText(leg.l).width+28;
+  });
+}
+
+/* ── GAUGE ── */
+function drawGauge(score) {
+  const canvas=document.getElementById('gaugeCanvas');
+  const d=dpr(), w=220, h=120;
+  canvas.width=w*d; canvas.height=h*d;
+  canvas.style.width=w+'px'; canvas.style.height=h+'px';
+  const ctx=canvas.getContext('2d');
+  ctx.scale(d,d);
+
+  const cx=w/2, cy=h-10, r=80, sw=18;
+  const startA=Math.PI, endA=2*Math.PI;
+
+  // Background arc
+  ctx.beginPath(); ctx.arc(cx,cy,r,startA,endA);
+  ctx.strokeStyle='rgba(201,168,76,.15)'; ctx.lineWidth=sw; ctx.lineCap='round';
+  ctx.stroke();
+
+  // Color zones
+  const zones=[
+    {from:0,to:0.4,color:RED},
+    {from:0.4,to:0.65,color:'#d4a017'},
+    {from:0.65,to:1,color:GREEN}
+  ];
+  zones.forEach(z=>{
+    ctx.beginPath();
+    ctx.arc(cx,cy,r,startA+z.from*Math.PI,startA+z.to*Math.PI);
+    ctx.strokeStyle=z.color; ctx.lineWidth=sw-4; ctx.lineCap='butt';
+    ctx.stroke();
+  });
+
+  // Score arc
+  const pct=Math.min(1,Math.max(0,score/100));
+  ctx.beginPath(); ctx.arc(cx,cy,r,startA,startA+pct*Math.PI);
+  ctx.strokeStyle=GOLD; ctx.lineWidth=sw; ctx.lineCap='round';
+  ctx.stroke();
+
+  // Needle
+  const needleA=startA+pct*Math.PI;
+  const nx=cx+Math.cos(needleA)*r, ny=cy+Math.sin(needleA)*r;
+  ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(nx,ny);
+  ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,6,0,Math.PI*2);
+  ctx.fillStyle=GOLD; ctx.fill();
+
+  // Labels
+  ctx.fillStyle=CREAM_DIM; ctx.font='10px Arial'; ctx.textAlign='center';
+  ctx.fillText('Low',cx-r+4,cy+16);
+  ctx.fillText('High',cx+r-4,cy+16);
+}
+
+/* ── STACKED AREA (new vs returning) ── */
+function drawStackedArea(canvas, newData, retData, labels) {
+  const { ctx, w, h } = setupCanvas(canvas);
+  ctx.clearRect(0,0,w,h);
+
+  const pl=40, pr=12, pt=16, pb=36;
+  const cw=w-pl-pr, ch=h-pt-pb;
+  const n=labels.length;
+  const max=Math.max(...newData.map((v,i)=>v+(retData[i]||0)))*1.15||1;
+
+  // Grid
+  ctx.strokeStyle='rgba(201,168,76,.1)'; ctx.lineWidth=1;
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const y=pt+ch*(1-f);
+    ctx.beginPath(); ctx.moveTo(pl,y); ctx.lineTo(w-pr,y); ctx.stroke();
+  });
+
+  // Stacked areas
+  const stackedPts=newData.map((v,i)=>{
+    const total=v+(retData[i]||0);
+    return {
+      x:pl+(i/(n-1))*cw,
+      yBot:pt+ch*(1-total/max),
+      yMid:pt+ch*(1-(retData[i]||0)/max),
+      yTop:pt+ch
+    };
+  });
+
+  // Returning (bottom)
+  ctx.beginPath();
+  stackedPts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.yMid):ctx.lineTo(p.x,p.yMid));
+  stackedPts.slice().reverse().forEach(p=>ctx.lineTo(p.x,p.yTop));
+  ctx.closePath();
+  ctx.fillStyle=hexToFill(TEAL,.45); ctx.fill();
+  ctx.strokeStyle=TEAL; ctx.lineWidth=1.5;
+  ctx.beginPath();
+  stackedPts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.yMid):ctx.lineTo(p.x,p.yMid));
+  ctx.stroke();
+
+  // New (top)
+  ctx.beginPath();
+  stackedPts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.yBot):ctx.lineTo(p.x,p.yBot));
+  stackedPts.slice().reverse().forEach(p=>ctx.lineTo(p.x,p.yMid));
+  ctx.closePath();
+  ctx.fillStyle=hexToFill(GOLD,.35); ctx.fill();
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1.5;
+  ctx.beginPath();
+  stackedPts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.yBot):ctx.lineTo(p.x,p.yBot));
+  ctx.stroke();
+
+  // X labels
+  const step=n<=12?1:Math.ceil(n/8);
+  ctx.fillStyle=CREAM_DIM; ctx.font='10px Arial'; ctx.textAlign='center';
+  labels.forEach((l,i)=>{if(i%step!==0)return; ctx.fillText(l,pl+(i/(n-1))*cw,h-pb+16);});
+
+  // Legend
+  ctx.fillStyle=hexToFill(GOLD,.7); ctx.fillRect(pl,3,10,8);
+  ctx.fillStyle=CREAM_DIM; ctx.font='10px Arial'; ctx.textAlign='left'; ctx.fillText('New',pl+13,11);
+  ctx.fillStyle=hexToFill(TEAL,.7); ctx.fillRect(pl+55,3,10,8);
+  ctx.fillText('Returning',pl+68,11);
+}
+
+/* ── RENDER FUNCTIONS ── */
+function renderMainChart(span) {
+  const data=getSpanData(span);
+  const canvas=document.getElementById('mainChart');
+  drawBarChart(canvas,{labels:data.labels,values:data.sessions},{
+    currentHour: span==='24h'?new Date().getHours():undefined
+  });
+}
+
+function renderDurChart(span) {
+  const data=getSpanData(span);
+  const canvas=document.getElementById('durChart');
+  const vals=data.durations;
+  drawLineChart(canvas,[{values:vals,color:TEAL,width:2}],data.labels,{
+    formatY:v=>`${v.toFixed(1)}m`
+  });
+}
+
+function renderPvChart(span) {
+  const data=getSpanData(span);
+  const canvas=document.getElementById('pvChart');
+  drawLineChart(canvas,[{values:data.pageviews,color:'#9b7fd4',width:2}],data.labels,{
+    formatY:v=>v.toFixed(1)
+  });
+}
+
+function renderNvRChart(span) {
+  const data=getSpanData(span);
+  const canvas=document.getElementById('nvrChart');
+  const newD=data.sessions.map((v,i)=>v?Math.round(v*gaussian(.68,.06,i+99)):null);
+  const retD=data.sessions.map((v,i)=>v?v-(newD[i]||0):null);
+  drawStackedArea(canvas,newD.filter(v=>v!==null),retD.filter(v=>v!==null),
+    data.labels.filter((_,i)=>data.sessions[i]!==null));
+}
+
+function renderMonthly() {
+  const data=makeMonthlyData(12);
+  drawGroupedBar(document.getElementById('monthlyChart'),data);
+}
+
+function renderKPIs() {
+  const h=makeHourlyData();
+  const nowH=new Date().getHours();
+  const active=Math.max(5,Math.round(gaussian(23,8,nowH*3)));
+  document.getElementById('kpi-active').textContent=active;
+  setDelta('kpi-active-delta',active,26,'vs 5 min ago');
+  document.getElementById('kpi-dur').textContent='6:'+String(Math.round(gaussian(28,8,1))).padStart(2,'0');
+  document.getElementById('kpi-dur-delta').className='kpi-delta up';
+  document.getElementById('kpi-dur-delta').textContent='▲ Above 5-min target';
+  const todaySess=h.sessions.reduce((a,v)=>a+(v||0),0);
+  document.getElementById('kpi-sessions').textContent=todaySess.toLocaleString();
+  setDelta('kpi-sessions-delta',todaySess,890,'vs yesterday');
+  const depth=+gaussian(3.6,.4,5).toFixed(1);
+  document.getElementById('kpi-depth').textContent=depth.toFixed(1);
+  const bounce=Math.round(gaussian(36,4,9));
+  document.getElementById('kpi-bounce').textContent=bounce+'%';
+  document.getElementById('kpi-bounce-delta').textContent='▲ Better than avg';
+  document.getElementById('kpi-bounce-delta').className='kpi-delta up';
+}
+
+function setDelta(id,val,baseline,suffix) {
+  const el=document.getElementById(id);
+  const diff=val-baseline;
+  el.className='kpi-delta '+(diff>=0?'up':'down');
+  el.textContent=(diff>=0?'▲ +':'▼ ')+Math.abs(diff)+' '+suffix;
+}
+
+function renderStickiness() {
+  const score=61;
+  drawGauge(score);
+  document.getElementById('gaugeVal').textContent=score;
+  document.getElementById('s-dur').textContent='6:32';
+  document.getElementById('s-depth').textContent='3.6';
+  document.getElementById('s-return').textContent='28%';
+}
+
+function renderSources() {
+  const sources=[
+    {icon:'🔍',name:'Organic Search',sub:'Google, Bing',n:441,pct:48},
+    {icon:'🔗',name:'Direct',sub:'Typed URL / bookmarks',n:202,pct:22},
+    {icon:'📱',name:'Social',sub:'Facebook, YouTube',n:129,pct:14},
+    {icon:'📧',name:'Email',sub:'Newsletter campaigns',n:82,pct:9},
+    {icon:'🎯',name:'Paid Search',sub:'Google Ads',n:64,pct:7},
+  ];
+  const maxPct=48;
+  document.getElementById('sourcesPanel').innerHTML=sources.map(s=>`
+    <div class="source-row">
+      <div class="source-icon">${s.icon}</div>
+      <div style="flex:1">
+        <div class="source-name">${s.name}</div>
+        <div class="source-sub">${s.sub}</div>
+      </div>
+      <div class="source-bar-wrap"><div class="source-bar" style="width:${(s.pct/maxPct)*100}%"></div></div>
+      <div>
+        <div class="source-count">${s.n}</div>
+        <div class="source-pct">${s.pct}%</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderTopPages() {
+  const pages=[
+    {rank:1,name:'Homepage',slug:'/',users:4,share:100},
+    {rank:2,name:'Readification Hub',slug:'/readification',users:4,share:92},
+    {rank:3,name:'Certifications',slug:'/certification',users:4,share:88},
+    {rank:4,name:'GENO Free Tutor',slug:'/free-tutor',users:3,share:70},
+    {rank:5,name:'Leadership Hub',slug:'/leadership-influence',users:3,share:65},
+    {rank:6,name:'Tradification',slug:'/tradification',users:2,share:48},
+    {rank:7,name:'Mathification',slug:'/mathification',users:2,share:44},
+    {rank:8,name:'Deep Research',slug:'/deep-research',users:2,share:40},
+  ];
+  document.getElementById('topPagesPanel').innerHTML=pages.map(p=>`
+    <div class="page-row">
+      <div class="page-rank">${p.rank}</div>
+      <div style="flex:1">
+        <div class="page-name">${p.name}</div>
+        <div class="page-slug">${p.slug}</div>
+      </div>
+      <div class="page-bar-wrap"><div class="page-bar" style="width:${p.share}%"></div></div>
+      <div class="page-users">${p.users}</div>
+    </div>`).join('');
+}
+
+/* ── LIVE EVENT FEED ── */
+const events=[
+  {city:'Austin TX',action:'completed Today\'s Summit',dot:'gold'},
+  {city:'Eugene OR',action:'opened GENO AI Tutor',dot:'green'},
+  {city:'Sydney, AU',action:'clicked Read on Kindle',dot:'teal'},
+  {city:'Austin TX',action:'played a Helix Climb game',dot:'gold'},
+  {city:'Portland OR',action:'clicked Read on Kindle',dot:'teal'},
+  {city:'Chicago IL',action:'earned a Bronze badge',dot:'gold'},
+  {city:'Miami FL',action:'downloaded free PDF',dot:'green'},
+  {city:'London, UK',action:'started Certification',dot:'gold'},
+  {city:'Phoenix AZ',action:'asked GENO a question',dot:'green'},
+  {city:'Dallas TX',action:'shared a cert link',dot:'teal'},
+  {city:'Seattle WA',action:'completed Iron Mind game',dot:'gold'},
+  {city:'Boston MA',action:'visited Leadership Hub',dot:'teal'},
+  {city:'Denver CO',action:'clicked Kindle Buy',dot:'gold'},
+  {city:'Toronto, CA',action:'started Readification',dot:'green'},
+  {city:'Atlanta GA',action:'earned Silver badge',dot:'gold'},
+];
+let eventIdx=0;
+
+function addEvent() {
+  const feed=document.getElementById('eventFeed');
+  const e=events[eventIdx%events.length];
+  const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const div=document.createElement('div');
+  div.className='event-item';
+  div.innerHTML=`<div class="event-dot ${e.dot}"></div>
+    <div class="event-text"><strong>${e.city}</strong> ${e.action}</div>
+    <div class="event-time">${t}</div>`;
+  feed.insertBefore(div,feed.firstChild);
+  if(feed.children.length>20) feed.removeChild(feed.lastChild);
+  eventIdx++;
+}
+
+/* ── ACTIVE COUNTER ── */
+function tickActive() {
+  const now=new Date().getHours();
+  const base=Math.max(5,Math.round(23*hourWeight(now)));
+  const v=base+Math.round((Math.random()-.5)*4);
+  document.getElementById('kpi-active').textContent=Math.max(3,v);
+}
+
+/* ── MODE CONTROL ── */
+function setMode(mode) {
+  isLive=mode==='live';
+  document.getElementById('demoBanner').style.display=isLive?'none':'flex';
+  document.getElementById('ga4Panel').style.display=isLive?'block':'none';
+  document.getElementById('modeLabel').textContent=isLive?'LIVE GA4':'DEMO MODE';
+  document.getElementById('liveDot').style.background=isLive?GREEN:GOLD;
+}
+
+function connectGA4() {
+  const key=document.getElementById('ga4Key').value.trim();
+  if(!key){alert('Please enter your GA4 API secret key.');return;}
+  alert('GA4 connection initiated. In production, this would authenticate with property 525158895 and stream real session, user, and event data. Simulated data will continue until the connection is verified.');
+}
+
+/* ── SPAN SETTERS ── */
+function setSpan(span,btn) {
+  currentSpan=span;
+  btn.closest('.timespan-tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderMainChart(span);
+}
+function setDurSpan(span,btn) {
+  currentDurSpan=span;
+  btn.closest('.timespan-tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderDurChart(span);
+}
+function setPvSpan(span,btn) {
+  currentPvSpan=span;
+  btn.closest('.timespan-tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderPvChart(span);
+}
+function setNvRSpan(span,btn) {
+  currentNvRSpan=span;
+  btn.closest('.timespan-tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderNvRChart(span);
+}
+
+/* ── INIT ── */
+function init() {
+  renderKPIs();
+  renderMainChart('24h');
+  renderDurChart('24h');
+  renderPvChart('24h');
+  renderNvRChart('24h');
+  renderMonthly();
+  renderStickiness();
+  renderSources();
+  renderTopPages();
+  // Seed initial events
+  for(let i=0;i<8;i++) addEvent();
+  // Live ticks
+  setInterval(addEvent, 4500);
+  setInterval(tickActive, 7000);
+}
+
+// Wait for layout to settle
+window.addEventListener('load', ()=>setTimeout(init,80));
+window.addEventListener('resize', ()=>{
+  renderMainChart(currentSpan);
+  renderDurChart(currentDurSpan);
+  renderPvChart(currentPvSpan);
+  renderNvRChart(currentNvRSpan);
+  renderMonthly();
+  renderStickiness();
+});
+</script>
+</body>
+</html>
