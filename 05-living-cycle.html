@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Living Cycle — GSU Science Interactive</title>
+<meta name="description" content="Watch the water cycle and photosynthesis come alive. Animated, interactive, and free from Global Sovereign University."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#1A8B7F;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#C9A84C;margin-bottom:6px}
+.subtitle{font-size:.95rem;color:rgba(245,241,232,.65);margin-bottom:20px;line-height:1.6}
+.cycle-tabs{display:flex;gap:10px;margin-bottom:16px}
+.c-tab{font-size:.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.5);cursor:pointer}
+.c-tab.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.canvas-wrap{background:#0a1020;border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative}
+canvas{display:block;width:100%}
+.step-overlay{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:8px 18px;font-size:.82rem;color:#F5F1E8;text-align:center;pointer-events:none;min-width:280px}
+.step-overlay strong{color:#C9A84C}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.ctrl-btn{font-size:.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.6);cursor:pointer}
+.ctrl-btn.gold{background:#C9A84C;color:#000;border-color:#C9A84C}
+.speed-row{display:flex;align-items:center;gap:8px;font-size:.75rem;color:rgba(245,241,232,.4)}
+input[type=range]{accent-color:#C9A84C;width:100px;cursor:pointer}
+.teach{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.teach h2{font-family:Georgia,serif;font-size:1rem;color:#C9A84C;margin-bottom:8px}
+.teach p{font-size:.86rem;color:rgba(245,241,232,.75);line-height:1.65;margin-bottom:5px}
+.teach p:last-child{margin-bottom:0}
+.teach strong{color:#F5F1E8}
+.mode-row{display:flex;gap:10px;margin-bottom:14px}
+.mode-btn{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.5);cursor:pointer}
+.mode-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.quiz-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:20px;margin-bottom:16px;display:none}
+.quiz-q{font-family:Georgia,serif;font-size:.95rem;color:#F5F1E8;margin-bottom:12px;line-height:1.5}
+.qopt{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:9px 14px;font-size:.84rem;color:rgba(245,241,232,.7);cursor:pointer;text-align:left;display:block;width:100%;margin-bottom:7px}
+.qopt.correct{border-color:#1A8B7F;background:rgba(26,139,127,.1);color:#F5F1E8}
+.qopt.wrong{border-color:#e53935;background:rgba(229,57,53,.08)}
+.qfb{font-size:.84rem;line-height:1.6;padding:10px 14px;border-radius:6px;margin-bottom:10px;display:none}
+.qfb.pass{background:rgba(26,139,127,.1);border:1px solid rgba(26,139,127,.3)}
+.qfb.fail{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.2)}
+.next-btn{background:#C9A84C;color:#000;font-weight:800;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border:none;border-radius:5px;cursor:pointer;display:none}
+.score-ln{font-size:.75rem;color:rgba(245,241,232,.35);margin-top:8px}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.badge{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3}
+.badge.earned{opacity:1}
+.badge.bronze{color:#CD7F32;border-color:#CD7F32;background:rgba(205,127,50,.1)}
+.badge.silver{color:#C0C0C0;border-color:#C0C0C0;background:rgba(192,192,192,.1)}
+.badge.gold{color:#C9A84C;border-color:#C9A84C;background:rgba(201,168,76,.1)}
+.badge.platinum{color:#E5E4E2;border-color:#E5E4E2;background:rgba(229,228,226,.08)}
+.geno-invite{background:#000;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.geno-invite img{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-invite p{font-size:.82rem;color:rgba(245,241,232,.7);line-height:1.55}
+.geno-invite strong{color:#C9A84C}
+.geno-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1A8B7F;cursor:pointer;background:none;border:none;padding:0}
+@media(max-width:600px){h1{font-size:1.5rem}.cycle-tabs{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Science & Biology · Living Cycles</div>
+  <h1>The Living Cycle</h1>
+  <p class="subtitle">Two of Earth's most important processes, animated live. Watch water journey from ocean to sky to rain to root. Watch a leaf capture sunlight and breathe out the oxygen you're breathing right now.</p>
+
+  <div class="mode-row">
+    <button class="mode-btn active" id="btn-ex" onclick="setMode('explore')">Watch & Learn</button>
+    <button class="mode-btn" id="btn-qz" onclick="setMode('quiz')">Quiz Me</button>
+  </div>
+
+  <div class="cycle-tabs">
+    <button class="c-tab active" onclick="selectCycle('water')">💧 Water Cycle</button>
+    <button class="c-tab" onclick="selectCycle('photo')">🌿 Photosynthesis</button>
+  </div>
+
+  <div class="canvas-wrap">
+    <canvas id="cyc" width="920" height="460"></canvas>
+    <div class="step-overlay" id="step-label">Click Play to begin the cycle</div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn gold" id="play-btn" onclick="togglePlay()">▶ Play</button>
+    <button class="ctrl-btn" onclick="stepBack()">◀ Step</button>
+    <button class="ctrl-btn" onclick="stepFwd()">Step ▶</button>
+    <button class="ctrl-btn" onclick="resetCycle()">↺ Reset</button>
+    <div class="speed-row">Speed: <input type="range" min="0.3" max="3" step="0.1" value="1" oninput="speed=+this.value"/></div>
+  </div>
+
+  <div class="teach" id="teach-panel">
+    <h2 id="teach-title">The Water Cycle</h2>
+    <p id="teach-body">Water never disappears — it transforms and moves. The same water molecule that fell as rain on the Amazon might have once been drunk by a dinosaur. Click Play and watch each step of this endless cycle.</p>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-wrap" id="quiz-wrap">
+    <div class="quiz-q" id="quiz-q"></div>
+    <div id="quiz-opts"></div>
+    <div class="qfb" id="qfb"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQ()">Next Question →</button>
+    <div class="score-ln" id="score-ln"></div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge bronze" id="b-bronze">🥉 Bronze</span>
+    <span class="badge silver" id="b-silver">🥈 Silver</span>
+    <span class="badge gold" id="b-gold">🥇 Gold</span>
+    <span class="badge platinum" id="b-platinum">💎 Platinum</span>
+  </div>
+
+  <div class="geno-invite">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <div>
+      <p><strong>GENO has memorized the full GSU Science and Biology curriculum</strong> — water cycle, carbon cycle, photosynthesis, cellular respiration, and more. Ask him what happens to water underground, or why leaves are green.</p>
+      <button class="geno-btn" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">💬 Ask GENO about cycles →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('cyc');
+const ctx = canvas.getContext('2d');
+const CW=920, CH=460;
+canvas.width=CW; canvas.height=CH;
+
+let cycle='water', playing=false, t=0, speed=1;
+let animId=null;
+
+// ── WATER CYCLE PARTICLES ──
+let drops=[], clouds=[], evapParticles=[], rainActive=false;
+
+function initWater(){
+  drops=[]; clouds=[]; evapParticles=[];
+  for(let i=0;i<30;i++) drops.push({x:Math.random()*CW,y:CH-20-Math.random()*40,vy:0,phase:'ocean'});
+  for(let i=0;i<3;i++) clouds.push({x:100+i*280,y:80+Math.random()*40,w:120+Math.random()*60,evap:0});
+  rainActive=false;
+}
+
+function drawWater(){
+  ctx.clearRect(0,0,CW,CH);
+
+  // Sky gradient
+  const sky=ctx.createLinearGradient(0,0,0,CH);
+  sky.addColorStop(0,'#020818');
+  sky.addColorStop(0.6,'#04122A');
+  sky.addColorStop(1,'#0a1a04');
+  ctx.fillStyle=sky; ctx.fillRect(0,0,CW,CH);
+
+  // Mountains
+  ctx.fillStyle='#1a2010';
+  ctx.beginPath(); ctx.moveTo(0,CH); ctx.lineTo(180,180); ctx.lineTo(320,CH); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='#0f1808';
+  ctx.beginPath(); ctx.moveTo(100,CH); ctx.lineTo(260,220); ctx.lineTo(420,CH); ctx.closePath(); ctx.fill();
+  // Snow cap
+  ctx.fillStyle='rgba(245,241,232,.6)';
+  ctx.beginPath(); ctx.moveTo(180,180); ctx.lineTo(155,220); ctx.lineTo(205,220); ctx.closePath(); ctx.fill();
+
+  // Ground
+  ctx.fillStyle='#0d1a08'; ctx.fillRect(0,CH-55,CW,55);
+  // Ocean
+  const oceGrad=ctx.createLinearGradient(0,CH-55,0,CH);
+  oceGrad.addColorStop(0,'#04183a'); oceGrad.addColorStop(1,'#020c1e');
+  ctx.fillStyle=oceGrad; ctx.fillRect(420,CH-55,CW-420,55);
+  ctx.fillStyle='rgba(74,134,232,.3)'; ctx.fillRect(420,CH-60,CW-420,8);
+
+  // Labels
+  const lbl=(txt,x,y,col='rgba(245,241,232,.4)',sz=11)=>{
+    ctx.fillStyle=col; ctx.font=`bold ${sz}px Arial`; ctx.textAlign='center'; ctx.fillText(txt,x,y);
+  };
+  lbl('OCEAN',CW-100,CH-30,'rgba(74,134,232,.6)',12);
+  lbl('MOUNTAINS',220,170,'rgba(245,241,232,.25)',10);
+
+  // Clouds
+  clouds.forEach(c=>{
+    const alpha=0.4+Math.min(1,c.evap/30)*0.5;
+    ctx.fillStyle=`rgba(180,200,220,${alpha})`;
+    ctx.beginPath(); ctx.arc(c.x,c.y,c.w*0.4,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(c.x-c.w*0.28,c.y+8,c.w*0.3,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(c.x+c.w*0.28,c.y+8,c.w*0.3,0,Math.PI*2); ctx.fill();
+    if(c.evap>15) lbl('Cloud',c.x,c.y-c.w*0.45,'rgba(180,200,220,.6)',10);
+  });
+
+  // Evaporation arrows
+  if(t>1){
+    const numArrows=Math.min(8,Math.floor((t-1)*3));
+    for(let i=0;i<numArrows;i++){
+      const ax=480+i*50, baseY=CH-58;
+      const progress=((t*60+i*20)%80)/80;
+      const ay=baseY-progress*200;
+      if(ay>80){
+        ctx.strokeStyle=`rgba(74,134,232,${0.4*(1-progress)})`;
+        ctx.lineWidth=1.5; ctx.setLineDash([3,4]);
+        ctx.beginPath(); ctx.moveTo(ax,baseY); ctx.lineTo(ax,ay); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle=`rgba(74,134,232,${0.6*(1-progress*0.5)})`;
+        ctx.beginPath(); ctx.arc(ax,ay,3,0,Math.PI*2); ctx.fill();
+      }
+    }
+    if(numArrows>2) lbl('Evaporation',650,CH-80,'rgba(74,134,232,.5)',11);
+  }
+
+  // Rain
+  if(t>2.5 && rainActive){
+    const numDrops=Math.floor(Math.min(20,(t-2.5)*15));
+    for(let i=0;i<numDrops;i++){
+      const rx=120+i*28, rt=((t*80+i*15)%120)/120;
+      const ry=100+rt*300;
+      if(ry<CH-60){
+        ctx.strokeStyle=`rgba(100,160,255,${0.7*(1-rt*0.5)})`;
+        ctx.lineWidth=1.5;
+        ctx.beginPath(); ctx.moveTo(rx,ry); ctx.lineTo(rx-2,ry+10); ctx.stroke();
+      }
+    }
+    lbl('Precipitation (Rain/Snow)',230,CH-80,'rgba(100,160,255,.6)',11);
+  }
+
+  // Runoff
+  if(t>3.5){
+    const runProgress=Math.min(1,(t-3.5)/1.5);
+    ctx.strokeStyle='rgba(74,134,232,.5)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(240,CH-60); ctx.quadraticCurveTo(330,CH-50,420+runProgress*(CW-440),CH-58); ctx.stroke();
+    if(runProgress>0.3) lbl('Runoff',330,CH-70,'rgba(74,134,232,.5)',10);
+  }
+
+  // Groundwater
+  if(t>4.5){
+    ctx.fillStyle='rgba(74,134,232,.15)';
+    const gw=Math.min(1,(t-4.5)/1);
+    ctx.fillRect(220,CH-30,gw*500,15);
+    lbl('Groundwater',480,CH-18,'rgba(74,134,232,.4)',10);
+  }
+
+  // Step label
+  const steps=['','Evaporation: heat turns liquid water to vapor','Water vapor rises and cools, forming clouds','Precipitation: water falls as rain or snow','Runoff: water flows downhill to oceans and rivers','Groundwater: water soaks into soil and rock'];
+  const si=Math.min(5,Math.floor(t));
+  const label=steps[si]||steps[5];
+  document.getElementById('step-label').innerHTML=`<strong>Step ${si}:</strong> ${label||'Cycle complete — water is back in the ocean'}`;
+}
+
+// ── PHOTOSYNTHESIS ANIMATION ──
+let photoT=0;
+function initPhoto(){ photoT=0; }
+
+function drawPhoto(){
+  ctx.clearRect(0,0,CW,CH);
+  // Background
+  const bg=ctx.createLinearGradient(0,0,0,CH);
+  bg.addColorStop(0,'#080010'); bg.addColorStop(0.5,'#001808'); bg.addColorStop(1,'#020a01');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,CW,CH);
+
+  // Sun
+  const sunR=t>0.5?60:60*(t*2);
+  ctx.beginPath(); ctx.arc(CW-100,80,sunR,0,Math.PI*2);
+  const sunG=ctx.createRadialGradient(CW-100,80,0,CW-100,80,sunR);
+  sunG.addColorStop(0,'rgba(255,220,100,0.95)'); sunG.addColorStop(1,'rgba(255,180,50,0)');
+  ctx.fillStyle=sunG; ctx.fill();
+
+  // Sun rays
+  if(t>0.5){
+    ctx.strokeStyle='rgba(255,200,80,0.3)'; ctx.lineWidth=1.5;
+    for(let i=0;i<8;i++){
+      const ang=i*Math.PI/4;
+      ctx.beginPath(); ctx.moveTo(CW-100+Math.cos(ang)*65,80+Math.sin(ang)*65);
+      ctx.lineTo(CW-100+Math.cos(ang)*90,80+Math.sin(ang)*90); ctx.stroke();
+    }
+  }
+
+  // Light rays hitting leaf
+  if(t>0.8){
+    const numRays=Math.floor(Math.min(6,(t-0.8)*8));
+    ctx.strokeStyle='rgba(255,200,80,0.35)'; ctx.lineWidth=1.5; ctx.setLineDash([5,5]);
+    for(let i=0;i<numRays;i++){
+      ctx.beginPath(); ctx.moveTo(CW-130,60+i*12); ctx.lineTo(480+i*8,CH/2+i*10); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  // Leaf (center)
+  const leafX=CW/2-40, leafY=CH/2-40;
+  ctx.fillStyle='#1a4010';
+  ctx.beginPath(); ctx.ellipse(leafX+80,leafY+80,100,60,Math.PI/6,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='rgba(26,139,127,.5)'; ctx.lineWidth=1.5; ctx.stroke();
+  // Leaf veins
+  ctx.strokeStyle='rgba(26,100,40,.8)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(leafX+20,leafY+95); ctx.lineTo(leafX+140,leafY+75); ctx.stroke();
+  for(let i=0;i<4;i++){
+    const vx=leafX+40+i*25, vy=leafY+88-i*3;
+    ctx.beginPath(); ctx.moveTo(vx,vy); ctx.lineTo(vx+15,vy-20); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(vx,vy); ctx.lineTo(vx+15,vy+14); ctx.stroke();
+  }
+  ctx.fillStyle='#2a6020'; ctx.beginPath(); ctx.ellipse(leafX+80,leafY+80,96,57,Math.PI/6,0,Math.PI*2); ctx.fill();
+
+  // CO2 arrows (input)
+  if(t>1.2){
+    const n=Math.min(4,Math.floor((t-1.2)*4));
+    ctx.fillStyle='rgba(229,57,53,.6)'; ctx.strokeStyle='rgba(229,57,53,.6)'; ctx.lineWidth=1.5;
+    for(let i=0;i<n;i++){
+      const prog=((t*50+i*30)%80)/80;
+      const sx=50+i*30, sy=CH/2+20-prog*80;
+      if(sy>leafY+50){
+        ctx.beginPath(); ctx.arc(sx,sy,4,0,Math.PI*2); ctx.fill();
+        ctx.font='9px Arial'; ctx.textAlign='center'; ctx.fillText('CO₂',sx,sy-8);
+      }
+    }
+    ctx.fillStyle='rgba(229,57,53,.5)'; ctx.font='bold 11px Arial'; ctx.fillText('CO₂ in',80,CH/2+60);
+  }
+
+  // H2O arrows (input)
+  if(t>1.5){
+    ctx.fillStyle='rgba(74,134,232,.6)'; ctx.strokeStyle='rgba(74,134,232,.6)'; ctx.lineWidth=1.5;
+    const wp=Math.min(1,(t-1.5)/1);
+    ctx.beginPath(); ctx.moveTo(leafX+80,CH-20); ctx.lineTo(leafX+80,leafY+140); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(leafX+80,leafY+140); ctx.lineTo(leafX+70,leafY+155); ctx.lineTo(leafX+90,leafY+155); ctx.closePath(); ctx.fill();
+    ctx.fillStyle='rgba(74,134,232,.5)'; ctx.font='bold 11px Arial'; ctx.textAlign='center'; ctx.fillText('H₂O (water) from roots',leafX+80,CH-8);
+  }
+
+  // Chlorophyll glow
+  if(t>2){
+    const glow=ctx.createRadialGradient(leafX+80,leafY+80,0,leafX+80,leafY+80,80);
+    const glowA=Math.min(0.35,((t-2)/1)*0.35);
+    glow.addColorStop(0,`rgba(50,200,80,${glowA})`); glow.addColorStop(1,'transparent');
+    ctx.fillStyle=glow; ctx.beginPath(); ctx.ellipse(leafX+80,leafY+80,100,60,Math.PI/6,0,Math.PI*2); ctx.fill();
+    if(t>2.3){
+      ctx.fillStyle='rgba(100,255,100,.5)'; ctx.font='bold 10px Arial'; ctx.textAlign='center';
+      ctx.fillText('Chlorophyll captures light',leafX+80,leafY+40);
+    }
+  }
+
+  // Glucose output
+  if(t>2.8){
+    const gp=Math.min(1,(t-2.8)/1);
+    ctx.fillStyle='rgba(201,168,76,.6)'; ctx.font='bold 11px Arial'; ctx.textAlign='center';
+    const gx=leafX+80+gp*140, gy=leafY+80;
+    ctx.beginPath(); ctx.arc(gx,gy,8,0,Math.PI*2); ctx.fill();
+    ctx.fillText('Glucose (C₆H₁₂O₆)',gx+30,gy-12);
+    if(gp>0.5){ ctx.fillStyle='rgba(201,168,76,.4)'; ctx.fillText('→ Energy for the plant',gx+40,gy+5); }
+  }
+
+  // O2 output (bubbles up)
+  if(t>3.2){
+    ctx.fillStyle='rgba(180,240,180,.6)';
+    for(let i=0;i<5;i++){
+      const prog=((t*40+i*25)%80)/80;
+      const ox=leafX+90+i*12, oy=leafY+60-prog*160;
+      if(oy>-10){
+        ctx.beginPath(); ctx.arc(ox,oy,5+i*1.5,0,Math.PI*2); ctx.fill();
+        if(i===2) { ctx.fillStyle='rgba(180,240,180,.5)'; ctx.font='10px Arial'; ctx.textAlign='left'; ctx.fillText('O₂',ox+8,oy); ctx.fillStyle='rgba(180,240,180,.6)'; }
+      }
+    }
+    if(t>3.5){
+      ctx.fillStyle='rgba(180,240,180,.4)'; ctx.font='bold 11px Arial'; ctx.textAlign='center';
+      ctx.fillText('Oxygen released — the air you breathe',leafX+80,50);
+    }
+  }
+
+  // Equation
+  if(t>2){
+    ctx.fillStyle='rgba(201,168,76,.7)'; ctx.font='bold 12px Arial'; ctx.textAlign='center';
+    ctx.fillText('6CO₂ + 6H₂O + Light Energy → C₆H₁₂O₆ + 6O₂',CW/2,CH-20);
+  }
+
+  // Step label
+  const ps=['','Sunlight provides energy for photosynthesis','Carbon dioxide enters through tiny leaf pores (stomata)','Water is drawn up from roots through the stem','Chlorophyll in the leaf captures light energy','Glucose is produced — the plant\'s food and fuel','Oxygen is released — the byproduct we breathe'];
+  const si=Math.min(6,Math.floor(t));
+  document.getElementById('step-label').innerHTML=`<strong>Step ${si}:</strong> ${ps[si]||ps[6]}`;
+}
+
+// ── ANIMATION LOOP ──
+let lastTime=0;
+function loop(ts){
+  const dt=(ts-lastTime)/1000;
+  lastTime=ts;
+  t+=dt*speed*0.4;
+  if(t>6) t=0; // loop
+  if(cycle==='water') drawWater();
+  else drawPhoto();
+  if(playing) animId=requestAnimationFrame(loop);
+}
+
+function togglePlay(){
+  playing=!playing;
+  document.getElementById('play-btn').textContent=playing?'⏸ Pause':'▶ Play';
+  if(playing){ lastTime=performance.now(); animId=requestAnimationFrame(loop); }
+  else if(animId){ cancelAnimationFrame(animId); }
+}
+
+function stepFwd(){ t=Math.min(6,t+0.5); if(cycle==='water') drawWater(); else drawPhoto(); }
+function stepBack(){ t=Math.max(0,t-0.5); if(cycle==='water') drawWater(); else drawPhoto(); }
+function resetCycle(){ t=0; if(cycle==='water'){drawWater();}else{drawPhoto();} }
+
+function selectCycle(c){
+  cycle=c;
+  document.querySelectorAll('.c-tab').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  t=0;
+  const titles={water:'The Water Cycle',photo:'Photosynthesis'};
+  const bodies={water:'Water never disappears — it transforms and moves. The same water molecule that fell as rain on the Amazon might have once been drunk by a dinosaur. Press Play and watch each step of this endless cycle.',
+    photo:'Every breath of oxygen you take was made by this process. Inside every green leaf, sunlight + water + CO₂ is transformed into sugar and oxygen. Press Play to watch it happen, step by step.'};
+  document.getElementById('teach-title').textContent=titles[c];
+  document.getElementById('teach-body').textContent=bodies[c];
+  if(c==='water') drawWater(); else drawPhoto();
+}
+
+// ── QUIZ ──
+const QS=[
+  {q:"What process turns liquid water into water vapor in the water cycle?",opts:["Evaporation","Condensation","Precipitation","Transpiration"],ans:0,exp:"Evaporation is when heat energy (primarily from the sun) causes water molecules to escape from liquid water surfaces and become water vapor in the atmosphere."},
+  {q:"What is the raw material water uses to become water vapor?",opts:["Heat energy from the sun","Wind","Cold air","Gravity"],ans:0,exp:"The sun's heat energy breaks the bonds holding water molecules together in liquid form, allowing them to escape as water vapor. No sun = no water cycle."},
+  {q:"What is the equation for photosynthesis?",opts:["6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂","O₂ + glucose → CO₂ + H₂O","H₂O → H₂ + O₂","CO₂ + O₂ → C + H₂O"],ans:0,exp:"Photosynthesis converts 6 molecules of CO₂ + 6 of water + light energy into one glucose molecule and 6 oxygen molecules. This equation is the foundation of almost all life on Earth."},
+  {q:"Where does the oxygen produced in photosynthesis come from?",opts:["Water molecules (H₂O)","Carbon dioxide (CO₂)","The air","Soil minerals"],ans:0,exp:"When water molecules are split by light energy, the oxygen atoms are released as O₂. This is why plants release oxygen — and why aquatic plants also release it underwater."},
+  {q:"What pigment in leaves captures light energy for photosynthesis?",opts:["Chlorophyll","Melanin","Carotene","Hemoglobin"],ans:0,exp:"Chlorophyll is the green pigment in plant cells (specifically in chloroplasts) that absorbs red and blue light while reflecting green — which is why leaves appear green to us."},
+  {q:"In the water cycle, what is 'condensation'?",opts:["Water vapor cooling into liquid droplets forming clouds","Water falling as rain","Water soaking into soil","Water flowing in rivers"],ans:0,exp:"Condensation is the reverse of evaporation — water vapor cools as it rises into the atmosphere and converts back to tiny liquid droplets that form clouds. Clouds are condensed water vapor."},
+  {q:"What do plants do with the glucose produced in photosynthesis?",opts:["Use it as energy and building material for growth","Release it as oxygen","Store it as water","Convert it back to CO₂"],ans:0,exp:"Glucose (C₆H₁₂O₆) is the plant's food. It is used in cellular respiration to produce energy (ATP), and as a building block for cellulose (cell walls), starch, and other molecules the plant needs."},
+  {q:"What is transpiration in the water cycle?",opts:["Water evaporating from plant leaves","Rain falling on plants","Water absorbed by roots","Clouds forming"],ans:0,exp:"Transpiration is evaporation from plant leaves through tiny pores called stomata. Forests transpire enormous amounts of water — the Amazon rainforest creates its own rainfall cycle through transpiration."},
+];
+
+let qIdx=0,answered=false,qScore=0,qTotal=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let qOrder=shuffle([...Array(QS.length).keys()]);
+
+function setMode(m){
+  document.getElementById('btn-ex').className='mode-btn'+(m==='explore'?' active':'');
+  document.getElementById('btn-qz').className='mode-btn'+(m==='quiz'?' active':'');
+  document.getElementById('quiz-wrap').style.display=m==='quiz'?'block':'none';
+  if(m==='quiz'){qScore=0;qTotal=0;qIdx=0;qOrder=shuffle([...Array(QS.length).keys()]);showQ();}
+}
+
+function showQ(){
+  answered=false;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-opts').innerHTML=q.opts.map((o,i)=>`<button class="qopt" onclick="ansQ(${i})">${o}</button>`).join('');
+  document.getElementById('qfb').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  document.getElementById('score-ln').textContent=`Q${qTotal+1} · Score: ${qScore}/${qTotal}`;
+}
+function ansQ(i){
+  if(answered)return; answered=true;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.querySelectorAll('.qopt').forEach((o,idx)=>{
+    if(idx===q.ans)o.classList.add('correct'); else if(idx===i)o.classList.add('wrong'); o.disabled=true;
+  });
+  const ok=i===q.ans; if(ok)qScore++; qTotal++;
+  const fb=document.getElementById('qfb');
+  fb.className='qfb '+(ok?'pass':'fail');
+  fb.innerHTML=(ok?'✅ Correct! ':'❌ Not quite. ')+q.exp;
+  fb.style.display='block';
+  document.getElementById('next-btn').style.display='inline-flex';
+  document.getElementById('score-ln').textContent=`Score: ${qScore}/${qTotal}`;
+  const th={bronze:3,silver:6,gold:10,platinum:15};
+  for(const[n,v]of Object.entries(th)) if(qScore>=v) document.getElementById('b-'+n).classList.add('earned');
+}
+function nextQ(){qIdx++;showQ();}
+
+// Init
+drawWater();
+</script>
+</body>
+</html>

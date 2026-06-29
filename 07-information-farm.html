@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Information Farm — GSU Digital Farm Interactive</title>
+<meta name="description" content="See how information is controlled, filtered, and shaped before it reaches you. An animated allegory from Global Sovereign University."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#1A8B7F;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#C9A84C;margin-bottom:6px}
+.subtitle{font-size:.95rem;color:rgba(245,241,232,.65);margin-bottom:20px;line-height:1.6}
+.teach{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:20px 22px;margin-bottom:20px}
+.teach h2{font-family:Georgia,serif;font-size:1.1rem;color:#C9A84C;margin-bottom:10px}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.75);line-height:1.65;margin-bottom:6px}
+.teach strong{color:#F5F1E8}
+.canvas-wrap{background:#060a04;border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative}
+canvas{display:block;width:100%}
+.info-bar{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);border:1px solid rgba(201,168,76,.25);border-radius:8px;padding:7px 18px;font-size:.8rem;color:#F5F1E8;text-align:center;pointer-events:none;min-width:320px}
+.info-bar strong{color:#C9A84C}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.ctrl-btn{font-size:.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.6);cursor:pointer}
+.ctrl-btn.gold{background:#C9A84C;color:#000;border-color:#C9A84C}
+.slider-row{display:flex;align-items:center;gap:8px;font-size:.75rem;color:rgba(245,241,232,.4)}
+input[type=range]{accent-color:#C9A84C;width:100px;cursor:pointer}
+.mode-row{display:flex;gap:10px;margin-bottom:16px}
+.mode-btn{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.5);cursor:pointer}
+.mode-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.quiz-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:20px;margin-bottom:16px;display:none}
+.quiz-q{font-family:Georgia,serif;font-size:.95rem;color:#F5F1E8;margin-bottom:12px;line-height:1.5}
+.qopt{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:9px 14px;font-size:.84rem;color:rgba(245,241,232,.7);cursor:pointer;text-align:left;display:block;width:100%;margin-bottom:7px}
+.qopt.correct{border-color:#1A8B7F;background:rgba(26,139,127,.1);color:#F5F1E8}
+.qopt.wrong{border-color:#e53935;background:rgba(229,57,53,.08)}
+.qfb{font-size:.84rem;line-height:1.6;padding:10px 14px;border-radius:6px;margin-bottom:10px;display:none}
+.qfb.pass{background:rgba(26,139,127,.1);border:1px solid rgba(26,139,127,.3)}
+.qfb.fail{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.2)}
+.next-btn{background:#C9A84C;color:#000;font-weight:800;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border:none;border-radius:5px;cursor:pointer;display:none}
+.score-ln{font-size:.75rem;color:rgba(245,241,232,.35);margin-top:8px}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.badge{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3}
+.badge.earned{opacity:1}
+.badge.bronze{color:#CD7F32;border-color:#CD7F32;background:rgba(205,127,50,.1)}
+.badge.silver{color:#C0C0C0;border-color:#C0C0C0;background:rgba(192,192,192,.1)}
+.badge.gold{color:#C9A84C;border-color:#C9A84C;background:rgba(201,168,76,.1)}
+.badge.platinum{color:#E5E4E2;border-color:#E5E4E2;background:rgba(229,228,226,.08)}
+.geno-invite{background:#000;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.geno-invite img{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-invite p{font-size:.82rem;color:rgba(245,241,232,.7);line-height:1.55}
+.geno-invite strong{color:#C9A84C}
+.geno-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1A8B7F;cursor:pointer;background:none;border:none;padding:0}
+@media(max-width:600px){h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Digital Farm · Information Flow Allegory</div>
+  <h1>The Information Farm</h1>
+  <p class="subtitle">Every piece of information you receive has passed through a filter before it reached you. Some filters are obvious. Most are invisible. This animation shows the journey of a "truth particle" from source to your screen — and what happens to it along the way.</p>
+
+  <div class="teach">
+    <h2>How the Farm Works</h2>
+    <p>In George Orwell's Animal Farm, the pigs controlled what the other animals believed by controlling what they heard. The Digital Farm is the modern version: <strong>algorithms, platform rules, advertiser pressure, engagement optimization, and echo chambers</strong> all act as filters between raw reality and your perception of it.</p>
+    <p>A sovereign thinker understands these filters. They don't just consume information — they <strong>trace it back to the source</strong>, ask who benefits from them believing it, and seek out the view they weren't supposed to see.</p>
+  </div>
+
+  <div class="mode-row">
+    <button class="mode-btn active" id="btn-ex" onclick="setMode('explore')">Watch the Flow</button>
+    <button class="mode-btn" id="btn-qz" onclick="setMode('quiz')">Quiz Me</button>
+  </div>
+
+  <div class="canvas-wrap">
+    <canvas id="farm" width="920" height="480"></canvas>
+    <div class="info-bar" id="info-bar">Click <strong>Play</strong> to watch a truth particle travel from source to screen</div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn gold" id="play-btn" onclick="togglePlay()">▶ Play</button>
+    <button class="ctrl-btn" onclick="resetAnim()">↺ Reset</button>
+    <div class="slider-row">Filter Strength: <input type="range" min="0" max="100" value="60" id="filter-slider" oninput="filterStrength=+this.value"/></div>
+    <div class="slider-row" style="color:rgba(201,168,76,.5)">← less filtered · more filtered →</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-wrap" id="quiz-wrap">
+    <div class="quiz-q" id="quiz-q"></div>
+    <div id="quiz-opts"></div>
+    <div class="qfb" id="qfb"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQ()">Next Question →</button>
+    <div class="score-ln" id="score-ln"></div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge bronze" id="b-bronze">🥉 Bronze</span>
+    <span class="badge silver" id="b-silver">🥈 Silver</span>
+    <span class="badge gold" id="b-gold">🥇 Gold</span>
+    <span class="badge platinum" id="b-platinum">💎 Platinum</span>
+  </div>
+
+  <div class="geno-invite">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <div>
+      <p><strong>GENO has memorized the Digital Farm curriculum</strong> — algorithmic manipulation, filter bubbles, media literacy, and critical thinking tools. Ask him how to identify a bot, or how echo chambers form.</p>
+      <button class="geno-btn" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">💬 Ask GENO about media literacy →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById('farm');
+const ctx=canvas.getContext('2d');
+const CW=920,CH=480;
+canvas.width=CW;canvas.height=CH;
+const GOLD='#C9A84C',GREEN='#1A8B7F',RED='#e53935',CREAM='#F5F1E8';
+
+let playing=false,t=0,filterStrength=60;
+let particles=[];
+
+// Stages across the canvas
+const STAGES=[
+  {x:80,y:CH/2,label:'REALITY',sublabel:'Raw event',color:'rgba(180,240,180,.8)',icon:'🌍'},
+  {x:240,y:CH/2,label:'SOURCE',sublabel:'Journalist / Camera',color:'rgba(74,134,232,.8)',icon:'📷'},
+  {x:400,y:CH/2,label:'EDITOR',sublabel:'Publication choice',color:'rgba(201,168,76,.8)',icon:'✂️'},
+  {x:560,y:CH/2,label:'PLATFORM',sublabel:'Algorithm filter',color:'rgba(229,57,53,.8)',icon:'🔧'},
+  {x:720,y:CH/2,label:'YOUR FEED',sublabel:'Echo chamber',color:'rgba(160,80,220,.8)',icon:'📱'},
+  {x:860,y:CH/2,label:'YOU',sublabel:'What you believe',color:'rgba(245,241,232,.8)',icon:'🧠'},
+];
+
+const FILTER_NAMES=['Editorial bias','Advertiser pressure','Engagement algorithm','Tribal sorting','Confirmation reinforcement'];
+
+class Particle {
+  constructor(){
+    this.x=STAGES[0].x;
+    this.y=CH/2+(Math.random()-0.5)*30;
+    this.stageIdx=0;
+    this.targetX=STAGES[1].x;
+    this.speed=1.5+Math.random();
+    this.color=`hsl(${120+Math.random()*30},70%,60%)`;
+    this.size=6+Math.random()*3;
+    this.filtered=false;
+    this.distorted=0;
+    this.label=this.pickLabel();
+    this.alive=true;
+    this.alpha=1;
+  }
+  pickLabel(){
+    const labels=['True','True','True','True','True','Half-true','Context missing','Framed','Amplified','Buried'];
+    return labels[Math.floor(Math.random()*labels.length)];
+  }
+  update(){
+    if(!this.alive)return;
+    if(this.x<this.targetX){
+      this.x+=this.speed;
+      // Add wobble
+      this.y+=Math.sin(this.x*0.1)*0.3;
+    } else {
+      // Hit a stage — apply filter
+      this.stageIdx++;
+      if(this.stageIdx>=STAGES.length){
+        this.alive=false;
+        return;
+      }
+      this.targetX=STAGES[this.stageIdx].x;
+      // Apply filter
+      const filterChance=(filterStrength/100)*0.35;
+      if(Math.random()<filterChance && this.stageIdx>1){
+        if(Math.random()<0.3){
+          this.alive=false; // removed
+        } else {
+          this.distorted+=1;
+          this.color=`hsl(${40-this.distorted*10},80%,55%)`;
+          this.label=this.pickDistorted();
+        }
+      }
+    }
+  }
+  pickDistorted(){
+    const d=['Framed','Spun','Context missing','Clickbait','Amplified','Buried','Decontextualized'];
+    return d[Math.floor(Math.random()*d.length)];
+  }
+  draw(){
+    if(!this.alive)return;
+    ctx.globalAlpha=this.alpha;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=this.color;
+    ctx.fill();
+    if(this.distorted>0){
+      ctx.strokeStyle='rgba(229,57,53,.6)';
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+    }
+    // Label
+    if(this.size>5){
+      ctx.fillStyle='rgba(0,0,0,.7)';
+      ctx.font='7px Arial';
+      ctx.textAlign='center';
+      ctx.fillText(this.label,this.x,this.y+2);
+    }
+    ctx.globalAlpha=1;
+  }
+}
+
+let spawnTimer=0;
+let infoStep=0;
+const INFO_STEPS=[
+  'A real event happens in the world — the raw truth',
+  'A journalist or camera captures part of it — limited perspective',
+  'An editor decides what to publish and how to frame it',
+  'The platform\'s algorithm decides who sees it based on engagement potential',
+  'Your feed shows you content that matches your past behavior — the echo chamber',
+  'You receive a shaped, filtered version and form a belief based on it'
+];
+
+function drawStage(s,i){
+  // Pipe to next stage
+  if(i<STAGES.length-1){
+    const next=STAGES[i+1];
+    const filtAlpha=0.15+(filterStrength/100)*0.35;
+    ctx.strokeStyle=`rgba(229,57,53,${i>0?filtAlpha:0.1})`;
+    ctx.lineWidth=i>0?3:1.5;
+    ctx.setLineDash(i>0?[5,4]:[]);
+    ctx.beginPath();
+    ctx.moveTo(s.x+28,s.y);
+    ctx.lineTo(next.x-28,next.y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Filter icon
+    if(i>0&&i<STAGES.length-1){
+      const fx=(s.x+next.x)/2, fy=s.y;
+      const fAlpha=0.2+(filterStrength/100)*0.6;
+      ctx.fillStyle=`rgba(229,57,53,${fAlpha})`;
+      ctx.font='14px Arial';
+      ctx.textAlign='center';
+      ctx.fillText('▼',fx,fy+22);
+      ctx.fillStyle=`rgba(229,57,53,${fAlpha*0.7})`;
+      ctx.font='8px Arial';
+      ctx.fillText(FILTER_NAMES[i-1]||'',fx,fy+34);
+    }
+  }
+
+  // Stage circle
+  const isActive=infoStep===i;
+  ctx.beginPath();
+  ctx.arc(s.x,s.y,28,0,Math.PI*2);
+  ctx.fillStyle=isActive?'rgba(201,168,76,.15)':'rgba(0,0,0,.4)';
+  ctx.fill();
+  ctx.strokeStyle=isActive?GOLD:s.color;
+  ctx.lineWidth=isActive?2.5:1.5;
+  ctx.stroke();
+
+  // Icon
+  ctx.font='16px Arial';
+  ctx.textAlign='center';
+  ctx.fillText(s.icon,s.x,s.y+6);
+
+  // Labels
+  ctx.fillStyle=isActive?GOLD:s.color;
+  ctx.font='bold 10px Arial';
+  ctx.fillText(s.label,s.x,s.y+46);
+  ctx.fillStyle='rgba(245,241,232,.4)';
+  ctx.font='9px Arial';
+  ctx.fillText(s.sublabel,s.x,s.y+58);
+}
+
+function draw(){
+  ctx.clearRect(0,0,CW,CH);
+  // Dark green tint bg (farm allegory)
+  ctx.fillStyle='#040a02';
+  ctx.fillRect(0,0,CW,CH);
+
+  // Farm rows (field texture)
+  ctx.strokeStyle='rgba(26,60,10,.4)';
+  ctx.lineWidth=1;
+  for(let y=0;y<CH;y+=20){
+    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(CW,y);ctx.stroke();
+  }
+
+  // "Antenna" at left (reality source)
+  ctx.strokeStyle='rgba(180,240,180,.3)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(80,CH/2-30);ctx.lineTo(80,CH/2-80);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(80,CH/2-80);ctx.lineTo(60,CH/2-100);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(80,CH/2-80);ctx.lineTo(100,CH/2-100);ctx.stroke();
+
+  // "Screen" at right (you)
+  ctx.strokeStyle='rgba(245,241,232,.2)';ctx.lineWidth=2;
+  ctx.strokeRect(CW-46,CH/2-40,36,64);
+  ctx.fillStyle='rgba(74,134,232,.1)';
+  ctx.fillRect(CW-44,CH/2-38,32,60);
+
+  // Title
+  ctx.fillStyle='rgba(201,168,76,.25)';
+  ctx.font='bold 11px Arial';
+  ctx.textAlign='center';
+  ctx.fillText('THE INFORMATION FARM — How Truth Gets Shaped Before It Reaches You',CW/2,18);
+
+  // Stages
+  STAGES.forEach((s,i)=>drawStage(s,i));
+
+  // Particles
+  particles.forEach(p=>p.draw());
+
+  // Filtered count
+  const alive=particles.filter(p=>p.alive).length;
+  const distorted=particles.filter(p=>p.alive&&p.distorted>0).length;
+  const total=particles.length;
+  ctx.fillStyle='rgba(229,57,53,.6)';
+  ctx.font='10px Arial';
+  ctx.textAlign='left';
+  ctx.fillText(`Filter strength: ${filterStrength}% · Particles blocked: ${total-alive} · Distorted: ${distorted}`,14,CH-12);
+}
+
+let lastTime=0,animId=null;
+function loop(ts){
+  const dt=(ts-lastTime)/1000;lastTime=ts;
+  t+=dt;
+  spawnTimer+=dt;
+  if(spawnTimer>0.3&&particles.length<60){
+    particles.push(new Particle());
+    spawnTimer=0;
+    // Advance info step
+    infoStep=(infoStep+1)%STAGES.length;
+    document.getElementById('info-bar').innerHTML=`<strong>Stage ${infoStep+1}:</strong> ${INFO_STEPS[infoStep]}`;
+  }
+  particles.forEach(p=>p.update());
+  particles=particles.filter(p=>p.alive||p.x>STAGES[STAGES.length-1].x);
+  if(particles.length>80)particles=particles.slice(-60);
+  draw();
+  if(playing)animId=requestAnimationFrame(loop);
+}
+
+function togglePlay(){
+  playing=!playing;
+  document.getElementById('play-btn').textContent=playing?'⏸ Pause':'▶ Play';
+  if(playing){lastTime=performance.now();animId=requestAnimationFrame(loop);}
+  else if(animId)cancelAnimationFrame(animId);
+}
+
+function resetAnim(){
+  particles=[];t=0;infoStep=0;
+  document.getElementById('info-bar').innerHTML='Click <strong>Play</strong> to watch a truth particle travel from source to screen';
+  draw();
+}
+
+// QUIZ
+const QS=[
+  {q:"What is a 'filter bubble' in digital media?",opts:["An environment where algorithms only show you content matching your existing beliefs","A privacy setting that blocks ads","A software firewall","A news subscription service"],ans:0,exp:"A filter bubble is created when algorithms learn your preferences and show you increasingly similar content, creating an echo chamber where you rarely encounter viewpoints that challenge your own."},
+  {q:"What percentage of social media content does a typical platform algorithm show you?",opts:["Less than 10% of available content","About 50%","All of it, sorted by time","100%, but reordered"],ans:0,exp:"Algorithms typically show users a small fraction of available content — often less than 10% — selected based on what's predicted to maximize engagement (time on platform), not accuracy or completeness."},
+  {q:"What is 'framing' in media coverage?",opts:["Choosing which aspects of a story to emphasize, shaping audience perception","Using a camera frame correctly","Fabricating quotes","Displaying content in a box on screen"],ans:0,exp:"Framing is the art of emphasis — the same facts, presented with different context, emphasis, or surrounding information, can lead audiences to opposite conclusions. All journalism involves framing; the question is whether it's transparent."},
+  {q:"What is the first question a media-literate reader should ask about any information?",opts:["Who benefits from me believing this?","Is the grammar correct?","Is the source famous?","Was it published recently?"],ans:0,exp:"'Who benefits?' is the foundation of media literacy. Every piece of information is published by someone with a reason. Identifying that reason doesn't make the information false — but it tells you where to look for bias."},
+  {q:"What makes an 'echo chamber' self-reinforcing?",opts:["People seek content confirming existing beliefs; algorithms optimize for that","Echo chambers only exist on social media","People in echo chambers read more","Echo chambers are actually good for focus"],ans:0,exp:"Echo chambers are self-reinforcing because confirmation bias makes people seek confirming content, and algorithms reward engagement — which confirming content produces more of. The two forces amplify each other."},
+  {q:"What is 'astroturfing' in digital media?",opts:["Coordinated fake grassroots support made to appear organic","Growing crops on rooftops","A type of video production","Comment spam"],ans:0,exp:"Astroturfing is manufactured 'grassroots' support — companies, governments, or political groups create fake accounts, comments, or movements to make a position appear to have widespread public support when it doesn't."},
+  {q:"What is the 'illusion of explanatory depth'?",opts:["People believe they understand complex topics better than they actually do","Content that feels educational but isn't","The false depth of social media personas","Clickbait with technical language"],ans:0,exp:"The illusion of explanatory depth is a cognitive bias where people feel confident they understand something (climate policy, how a toilet works) but when asked to explain it in detail, realize their understanding was shallow. Social media compounds this because exposure feels like understanding."},
+  {q:"What should a sovereign thinker do when encountering a compelling news story?",opts:["Find the original source and seek a credibly opposing view","Share it immediately","Trust it if it confirms what you already know","Ignore it if it's uncomfortable"],ans:0,exp:"A sovereign thinker traces information back to its original source, looks for what's missing, asks who benefits, and actively seeks a credible opposing perspective. This isn't neutrality — it's epistemic responsibility."},
+];
+
+let qIdx=0,answered=false,qScore=0,qTotal=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let qOrder=shuffle([...Array(QS.length).keys()]);
+
+function setMode(m){
+  document.getElementById('btn-ex').className='mode-btn'+(m==='explore'?' active':'');
+  document.getElementById('btn-qz').className='mode-btn'+(m==='quiz'?' active':'');
+  document.getElementById('quiz-wrap').style.display=m==='quiz'?'block':'none';
+  if(m==='quiz'){qScore=0;qTotal=0;qIdx=0;qOrder=shuffle([...Array(QS.length).keys()]);showQ();}
+}
+function showQ(){
+  answered=false;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-opts').innerHTML=q.opts.map((o,i)=>`<button class="qopt" onclick="ansQ(${i})">${o}</button>`).join('');
+  document.getElementById('qfb').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  document.getElementById('score-ln').textContent=`Q${qTotal+1} · Score: ${qScore}/${qTotal}`;
+}
+function ansQ(i){
+  if(answered)return;answered=true;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.querySelectorAll('.qopt').forEach((o,idx)=>{
+    if(idx===q.ans)o.classList.add('correct');else if(idx===i)o.classList.add('wrong');o.disabled=true;
+  });
+  const ok=i===q.ans;if(ok)qScore++;qTotal++;
+  const fb=document.getElementById('qfb');
+  fb.className='qfb '+(ok?'pass':'fail');
+  fb.innerHTML=(ok?'✅ Correct! ':'❌ Not quite. ')+q.exp;
+  fb.style.display='block';
+  document.getElementById('next-btn').style.display='inline-flex';
+  document.getElementById('score-ln').textContent=`Score: ${qScore}/${qTotal}`;
+  const th={bronze:3,silver:6,gold:10,platinum:15};
+  for(const[n,v]of Object.entries(th))if(qScore>=v)document.getElementById('b-'+n).classList.add('earned');
+}
+function nextQ(){qIdx++;showQ();}
+
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Simple Machines Sandbox — GSU Science Interactive</title>
+<meta name="description" content="Six simple machines. Drag sliders and watch mechanical advantage multiply your force. The physics you can feel. Free from Global Sovereign University."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#1A8B7F;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#C9A84C;margin-bottom:6px}
+.subtitle{font-size:.95rem;color:rgba(245,241,232,.65);margin-bottom:20px;line-height:1.6}
+.teach{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:20px 22px;margin-bottom:20px}
+.teach h2{font-family:Georgia,serif;font-size:1.1rem;color:#C9A84C;margin-bottom:10px}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.75);line-height:1.65;margin-bottom:6px}
+.teach p:last-child{margin-bottom:0}
+.teach strong{color:#F5F1E8}
+/* MACHINE SELECTOR */
+.machine-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.m-tab{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:5px;border:1px solid rgba(201,168,76,.25);background:transparent;color:rgba(245,241,232,.5);cursor:pointer;transition:all .15s}
+.m-tab.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+/* PLAY AREA */
+.play-grid{display:grid;grid-template-columns:1fr 260px;gap:18px;margin-bottom:18px}
+.canvas-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden}
+canvas{display:block;width:100%}
+/* READOUT */
+.readout{display:flex;flex-direction:column;gap:10px}
+.r-card{background:#0a0800;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:14px 16px}
+.r-label{font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(245,241,232,.3);margin-bottom:4px}
+.r-value{font-family:Georgia,serif;font-size:1.5rem;font-weight:700;color:#C9A84C;line-height:1}
+.r-value.green{color:#1A8B7F}
+.r-value.white{color:#F5F1E8}
+.r-unit{font-size:.72rem;color:rgba(245,241,232,.4);margin-top:2px}
+/* SLIDERS */
+.slider-section{margin-bottom:16px}
+.sl-row{margin-bottom:12px}
+.sl-label{font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(245,241,232,.4);margin-bottom:4px;display:flex;justify-content:space-between}
+.sl-label span{color:#C9A84C;font-family:Georgia,serif;font-size:.9rem}
+input[type=range]{width:100%;accent-color:#C9A84C;cursor:pointer;display:block}
+/* FACT */
+.fact-panel{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.fact-label{font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,.4);margin-bottom:6px}
+.fact-text{font-size:.86rem;color:rgba(245,241,232,.75);line-height:1.6}
+/* QUIZ */
+.mode-row{display:flex;gap:10px;margin-bottom:16px}
+.mode-btn{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.5);cursor:pointer}
+.mode-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.quiz-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:20px;margin-bottom:16px;display:none}
+.quiz-q{font-family:Georgia,serif;font-size:.95rem;color:#F5F1E8;margin-bottom:12px;line-height:1.5}
+.qopt{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:9px 14px;font-size:.84rem;color:rgba(245,241,232,.7);cursor:pointer;text-align:left;display:block;width:100%;margin-bottom:7px}
+.qopt.correct{border-color:#1A8B7F;background:rgba(26,139,127,.1);color:#F5F1E8}
+.qopt.wrong{border-color:#e53935;background:rgba(229,57,53,.08)}
+.qfb{font-size:.84rem;line-height:1.6;padding:10px 14px;border-radius:6px;margin-bottom:10px;display:none}
+.qfb.pass{background:rgba(26,139,127,.1);border:1px solid rgba(26,139,127,.3)}
+.qfb.fail{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.2)}
+.next-btn{background:#C9A84C;color:#000;font-weight:800;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border:none;border-radius:5px;cursor:pointer;display:none}
+.score-ln{font-size:.75rem;color:rgba(245,241,232,.35);margin-top:8px}
+/* BADGES */
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.badge{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3}
+.badge.earned{opacity:1}
+.badge.bronze{color:#CD7F32;border-color:#CD7F32;background:rgba(205,127,50,.1)}
+.badge.silver{color:#C0C0C0;border-color:#C0C0C0;background:rgba(192,192,192,.1)}
+.badge.gold{color:#C9A84C;border-color:#C9A84C;background:rgba(201,168,76,.1)}
+.badge.platinum{color:#E5E4E2;border-color:#E5E4E2;background:rgba(229,228,226,.08)}
+.geno-invite{background:#000;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.geno-invite img{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-invite p{font-size:.82rem;color:rgba(245,241,232,.7);line-height:1.55}
+.geno-invite strong{color:#C9A84C}
+.geno-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1A8B7F;cursor:pointer;background:none;border:none;padding:0}
+@media(max-width:640px){.play-grid{grid-template-columns:1fr}h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Science · Simple Machines Sandbox</div>
+  <h1>Six Machines. One Law.</h1>
+  <p class="subtitle">Every machine ever built is one of six simple machines — or a combination of them. Change the numbers. Watch force multiply. Feel why a lever lets one person lift a boulder and a pulley lets a child raise a piano.</p>
+
+  <div class="teach">
+    <h2>The Law Behind All Machines</h2>
+    <p><strong>Work = Force × Distance.</strong> Machines don't reduce the work required — they redistribute it. You can apply <em>less</em> force over a <em>greater</em> distance, and accomplish the same work. That ratio is called <strong>Mechanical Advantage (MA)</strong>.</p>
+    <p>MA = Output Force ÷ Input Force. A MA of 5 means you apply 5× less force than the load — but you must push/pull 5× further. Nothing is free. The machine just makes the job possible.</p>
+  </div>
+
+  <div class="mode-row">
+    <button class="mode-btn active" id="btn-ex" onclick="setMode('explore')">Explore</button>
+    <button class="mode-btn" id="btn-qz" onclick="setMode('quiz')">Quiz Me</button>
+  </div>
+
+  <div class="machine-tabs">
+    <button class="m-tab active" onclick="selectMachine('lever')">⚖️ Lever</button>
+    <button class="m-tab" onclick="selectMachine('pulley')">🔄 Pulley</button>
+    <button class="m-tab" onclick="selectMachine('incline')">📐 Inclined Plane</button>
+    <button class="m-tab" onclick="selectMachine('wedge')">🔺 Wedge</button>
+    <button class="m-tab" onclick="selectMachine('screw')">🔩 Screw</button>
+    <button class="m-tab" onclick="selectMachine('wheel')">⭕ Wheel & Axle</button>
+  </div>
+
+  <div class="play-grid" id="explore-grid">
+    <div class="canvas-wrap"><canvas id="mc" width="640" height="360"></canvas></div>
+    <div class="readout">
+      <div class="r-card"><div class="r-label">Input Force</div><div class="r-value" id="r-fin">100</div><div class="r-unit">Newtons (you apply)</div></div>
+      <div class="r-card"><div class="r-label">Mechanical Advantage</div><div class="r-value green" id="r-ma">3.0</div><div class="r-unit">× force multiplier</div></div>
+      <div class="r-card"><div class="r-label">Output Force</div><div class="r-value" id="r-fout">300</div><div class="r-unit">Newtons (on load)</div></div>
+      <div class="r-card"><div class="r-label">Load Mass</div><div class="r-value white" id="r-mass">30.6</div><div class="r-unit">kg you can lift</div></div>
+    </div>
+  </div>
+
+  <div class="slider-section" id="sliders"></div>
+
+  <div class="fact-panel">
+    <div class="fact-label">Science Note</div>
+    <div class="fact-text" id="fact-text">Select a machine above to begin. Adjust the sliders to change the mechanical advantage and see how your input force multiplies into output force.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-wrap" id="quiz-wrap">
+    <div class="quiz-q" id="quiz-q"></div>
+    <div id="quiz-opts"></div>
+    <div class="qfb" id="qfb"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQ()">Next Question →</button>
+    <div class="score-ln" id="score-ln"></div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge bronze" id="b-bronze">🥉 Bronze</span>
+    <span class="badge silver" id="b-silver">🥈 Silver</span>
+    <span class="badge gold" id="b-gold">🥇 Gold</span>
+    <span class="badge platinum" id="b-platinum">💎 Platinum</span>
+  </div>
+
+  <div class="geno-invite">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <div>
+      <p><strong>GENO has memorized the full GSU Science curriculum</strong> — all six simple machines, Newton's laws, and how machines combine in compound tools. Ask him how a bicycle uses a wheel-and-axle, or why a wedge splits wood.</p>
+      <button class="geno-btn" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">💬 Ask GENO about machines →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('mc');
+const ctx = canvas.getContext('2d');
+const CW=640, CH=360;
+canvas.width=CW; canvas.height=CH;
+const GOLD='#C9A84C', GREEN='#1A8B7F', CREAM='#F5F1E8', DIM='rgba(245,241,232,.2)';
+
+let machine = 'lever';
+let params = { lever:{effort:3, load:1}, pulley:{pulleys:3}, incline:{length:6, height:2}, wedge:{length:8, width:2}, screw:{pitch:2, radius:4}, wheel:{wheel:8, axle:2} };
+let inputForce = 100;
+
+function getMa() {
+  const p = params[machine];
+  switch(machine) {
+    case 'lever': return p.effort / p.load;
+    case 'pulley': return p.pulleys;
+    case 'incline': return p.length / p.height;
+    case 'wedge': return p.length / p.width;
+    case 'screw': return (2 * Math.PI * p.radius) / p.pitch;
+    case 'wheel': return p.wheel / p.axle;
+  }
+}
+
+function updateReadout() {
+  const ma = getMa();
+  const fout = inputForce * ma;
+  document.getElementById('r-fin').textContent = Math.round(inputForce);
+  document.getElementById('r-ma').textContent = ma.toFixed(2);
+  document.getElementById('r-fout').textContent = Math.round(fout);
+  document.getElementById('r-mass').textContent = (fout / 9.8).toFixed(1);
+}
+
+function drawBg() {
+  ctx.clearRect(0,0,CW,CH);
+  ctx.fillStyle='#0a0800'; ctx.fillRect(0,0,CW,CH);
+  // Grid
+  ctx.strokeStyle='rgba(201,168,76,.05)'; ctx.lineWidth=1;
+  for(let x=0;x<CW;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,CH);ctx.stroke();}
+  for(let y=0;y<CH;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(CW,y);ctx.stroke();}
+}
+
+function label(text, x, y, color=GOLD, size=12) {
+  ctx.fillStyle=color; ctx.font=`bold ${size}px Arial`; ctx.textAlign='center'; ctx.fillText(text,x,y);
+}
+
+function drawLever() {
+  drawBg();
+  const p = params.lever;
+  const ma = getMa();
+  const fulcX = CW/2, fulcY = 240;
+  const beamY = fulcY - 20;
+  const totalBeam = 500;
+
+  // Distances proportional to lever arms
+  const total = p.effort + p.load;
+  const effortX = fulcX - (p.effort / total) * totalBeam * 0.9;
+  const loadX = fulcX + (p.load / total) * totalBeam * 0.9;
+
+  // Beam (tilts slightly under load)
+  const tilt = (ma > 1) ? -6 : 6;
+  ctx.save(); ctx.translate(fulcX, beamY); ctx.rotate(tilt * Math.PI/180);
+  ctx.fillStyle = '#3a2a10'; ctx.fillRect(-totalBeam/2, -8, totalBeam, 16);
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1.5; ctx.strokeRect(-totalBeam/2,-8,totalBeam,16);
+  ctx.restore();
+
+  // Fulcrum triangle
+  ctx.fillStyle='#C9A84C';
+  ctx.beginPath(); ctx.moveTo(fulcX-20, fulcY+40); ctx.lineTo(fulcX+20, fulcY+40); ctx.lineTo(fulcX, beamY+8); ctx.closePath(); ctx.fill();
+
+  // Ground
+  ctx.fillStyle='#1a1200'; ctx.fillRect(0, fulcY+40, CW, 30);
+  ctx.strokeStyle='rgba(201,168,76,.3)'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(0,fulcY+40); ctx.lineTo(CW,fulcY+40); ctx.stroke();
+
+  // Effort arrow (input)
+  const efX2 = fulcX - (p.effort/total)*totalBeam*0.9;
+  ctx.strokeStyle='#4a86e8'; ctx.fillStyle='#4a86e8'; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.moveTo(efX2, beamY+tilt*p.effort*0.1 - 80); ctx.lineTo(efX2, beamY+tilt*p.effort*0.1 - 20); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(efX2,beamY+tilt*p.effort*0.1-20); ctx.lineTo(efX2-8,beamY+tilt*p.effort*0.1-36); ctx.lineTo(efX2+8,beamY+tilt*p.effort*0.1-36); ctx.closePath(); ctx.fill();
+  label(`${Math.round(inputForce)}N`, efX2, beamY+tilt*p.effort*0.1-90, '#4a86e8', 11);
+  label('EFFORT', efX2, beamY+tilt*p.effort*0.1-78, '#4a86e8', 10);
+
+  // Load block
+  const ldX = fulcX + (p.load/total)*totalBeam*0.9;
+  ctx.fillStyle='#5C4A2A';
+  ctx.fillRect(ldX-25, beamY-60, 50, 48);
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1; ctx.strokeRect(ldX-25,beamY-60,50,48);
+  label(`${Math.round(inputForce*ma)}N`, ldX, beamY-68, '#e53935', 11);
+  label('LOAD', ldX, beamY-14, CREAM, 10);
+
+  // Arm labels
+  label(`Effort arm: ${p.effort}m`, (efX2+fulcX)/2, beamY+28, DIM, 10);
+  label(`Load arm: ${p.load}m`, (ldX+fulcX)/2, beamY+28, DIM, 10);
+  label(`MA = ${ma.toFixed(1)}`, fulcX, beamY+50, GOLD, 13);
+}
+
+function drawPulley() {
+  drawBg();
+  const p = params.pulley;
+  const n = Math.round(p.pulleys);
+  const ma = n;
+  const cx = CW/2;
+
+  // Ceiling
+  ctx.fillStyle='#2a2010'; ctx.fillRect(0,0,CW,20);
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(0,20); ctx.lineTo(CW,20); ctx.stroke();
+
+  // Draw pulleys
+  const spacing = 60;
+  for(let i=0;i<n;i++) {
+    const px = cx + (i - (n-1)/2) * spacing;
+    const py = i%2===0 ? 60 : 160;
+    ctx.beginPath(); ctx.arc(px,py,22,0,Math.PI*2);
+    ctx.strokeStyle=GOLD; ctx.lineWidth=2.5; ctx.stroke();
+    ctx.fillStyle='#1a1000'; ctx.fill();
+    ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2);
+    ctx.fillStyle=GOLD; ctx.fill();
+    // rope
+    ctx.strokeStyle=CREAM; ctx.lineWidth=1.5; ctx.setLineDash([2,3]);
+    if(i<n-1){
+      const nx=cx + ((i+1)-(n-1)/2)*spacing;
+      const ny=(i+1)%2===0?60:160;
+      ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(nx,ny); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  // Load block
+  ctx.fillStyle='#5C4A2A'; ctx.fillRect(cx-30,220,60,50);
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1; ctx.strokeRect(cx-30,220,60,50);
+  label(`${Math.round(inputForce*ma)}N`, cx, 215, '#e53935', 11);
+  label('LOAD', cx, 250, CREAM, 12);
+
+  // Effort label
+  label(`You pull: ${Math.round(inputForce)}N`, 80, CH-30, '#4a86e8', 12);
+  label(`MA = ${ma} pulleys`, CW-100, CH-30, GOLD, 12);
+  label(`Load = ${Math.round(inputForce*ma)}N`, CW/2, CH-30, '#e53935', 12);
+}
+
+function drawIncline() {
+  drawBg();
+  const p = params.incline;
+  const ma = p.length / p.height;
+  const margin = 80;
+  const baseY = CH - 60;
+  const topX = CW - margin;
+  const topY = baseY - p.height * 30;
+  const baseX = margin;
+
+  // Inclined surface
+  ctx.fillStyle='#2a2010';
+  ctx.beginPath(); ctx.moveTo(baseX,baseY); ctx.lineTo(topX,topY); ctx.lineTo(topX,baseY); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(baseX,baseY); ctx.lineTo(topX,topY); ctx.stroke();
+  // Ground
+  ctx.fillStyle='#1a1200'; ctx.fillRect(0,baseY,CW,40);
+  ctx.strokeStyle='rgba(201,168,76,.3)'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(0,baseY); ctx.lineTo(CW,baseY); ctx.stroke();
+
+  // Box on incline
+  const t = 0.5;
+  const bx = baseX + (topX-baseX)*t, by = baseY + (topY-baseY)*t;
+  const ang = Math.atan2(topY-baseY, topX-baseX);
+  ctx.save(); ctx.translate(bx,by); ctx.rotate(ang);
+  ctx.fillStyle='#5C4A2A'; ctx.fillRect(-20,-20,40,40);
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1; ctx.strokeRect(-20,-20,40,40);
+  ctx.restore();
+
+  // Dimension labels
+  label(`Length: ${p.length}m`, (baseX+topX)/2, (baseY+topY)/2 - 20, DIM, 11);
+  label(`Height: ${p.height}m`, topX+30, (baseY+topY)/2, DIM, 11);
+  label(`MA = L÷H = ${ma.toFixed(1)}`, CW/2, baseY+30, GOLD, 13);
+  label(`Push: ${Math.round(inputForce)}N`, 140, baseY-20, '#4a86e8', 11);
+  label(`Lifts: ${Math.round(inputForce*ma)}N`, topX-60, topY-20, '#e53935', 11);
+}
+
+function drawWedge() {
+  drawBg();
+  const p = params.wedge;
+  const ma = p.length/p.width;
+  const cx=CW/2, cy=CH/2;
+  const wl=p.length*25, ww=p.width*18;
+
+  ctx.fillStyle='#8B7355';
+  ctx.beginPath(); ctx.moveTo(cx,cy-wl/2); ctx.lineTo(cx+ww/2,cy+wl/2); ctx.lineTo(cx-ww/2,cy+wl/2); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(cx,cy-wl/2); ctx.lineTo(cx+ww/2,cy+wl/2); ctx.lineTo(cx-ww/2,cy+wl/2); ctx.closePath(); ctx.stroke();
+
+  // Arrows showing splitting force
+  ctx.strokeStyle=GREEN; ctx.fillStyle=GREEN; ctx.lineWidth=2;
+  const arrowY = cy+10;
+  // Left push
+  ctx.beginPath(); ctx.moveTo(cx-ww/2-10,arrowY); ctx.lineTo(cx-ww/2-60,arrowY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx-ww/2-60,arrowY); ctx.lineTo(cx-ww/2-48,arrowY-7); ctx.lineTo(cx-ww/2-48,arrowY+7); ctx.closePath(); ctx.fill();
+  // Right push
+  ctx.beginPath(); ctx.moveTo(cx+ww/2+10,arrowY); ctx.lineTo(cx+ww/2+60,arrowY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx+ww/2+60,arrowY); ctx.lineTo(cx+ww/2+48,arrowY-7); ctx.lineTo(cx+ww/2+48,arrowY+7); ctx.closePath(); ctx.fill();
+  // Down arrow (input)
+  ctx.strokeStyle='#4a86e8'; ctx.fillStyle='#4a86e8';
+  ctx.beginPath(); ctx.moveTo(cx,cy-wl/2-60); ctx.lineTo(cx,cy-wl/2-10); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx,cy-wl/2-10); ctx.lineTo(cx-8,cy-wl/2-22); ctx.lineTo(cx+8,cy-wl/2-22); ctx.closePath(); ctx.fill();
+
+  label(`Length: ${p.length}m`, cx, cy+wl/2+24, DIM, 11);
+  label(`Width: ${p.width}m`, cx+ww/2+80, cy+wl/4, DIM, 11);
+  label(`MA = ${ma.toFixed(1)}`, cx, cy-wl/2-70, GOLD, 13);
+  label(`Input: ${Math.round(inputForce)}N down`, cx+80, cy-wl/2-45, '#4a86e8', 10);
+  label(`Output: ±${Math.round(inputForce*ma/2)}N sideways`, cx+80, cy, GREEN, 10);
+}
+
+function drawScrew() {
+  drawBg();
+  const p = params.screw;
+  const ma = (2*Math.PI*p.radius)/p.pitch;
+  const cx=CW/2, cy=CH/2;
+  const sh=180;
+
+  // Screw shaft
+  ctx.fillStyle='#3a3030'; ctx.fillRect(cx-12,cy-sh/2,24,sh);
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1; ctx.strokeRect(cx-12,cy-sh/2,24,sh);
+  // Threads
+  ctx.strokeStyle='rgba(201,168,76,.6)'; ctx.lineWidth=1.5;
+  for(let y=cy-sh/2+p.pitch*8; y<cy+sh/2; y+=p.pitch*8) {
+    ctx.beginPath(); ctx.moveTo(cx-18,y); ctx.lineTo(cx+18,y); ctx.stroke();
+  }
+  // Circle head
+  ctx.beginPath(); ctx.arc(cx,cy-sh/2-20,p.radius*8,0,Math.PI*2);
+  ctx.fillStyle='#5C4A2A'; ctx.fill();
+  ctx.strokeStyle=GOLD; ctx.lineWidth=1.5; ctx.stroke();
+
+  // Torque arrow
+  ctx.strokeStyle='#4a86e8'; ctx.lineWidth=2;
+  const ar = p.radius*8+10;
+  ctx.beginPath(); ctx.arc(cx,cy-sh/2-20,ar,0,1.5*Math.PI); ctx.stroke();
+
+  label(`Radius: ${p.radius}cm`, cx+80, cy-sh/2-20, DIM, 11);
+  label(`Pitch: ${p.pitch}mm/turn`, cx, cy+sh/2+24, DIM, 11);
+  label(`MA = 2πr÷p = ${ma.toFixed(1)}`, cx, cy+sh/2+44, GOLD, 12);
+  label(`Input torque: ${Math.round(inputForce)}N`, cx-90, cy-sh/2-40, '#4a86e8', 10);
+  label(`Thrust force: ${Math.round(inputForce*ma)}N`, cx+90, cy, '#e53935', 10);
+}
+
+function drawWheel() {
+  drawBg();
+  const p = params.wheel;
+  const ma = p.wheel/p.axle;
+  const cx=CW/2, cy=CH/2;
+
+  // Wheel
+  ctx.beginPath(); ctx.arc(cx,cy,p.wheel*18,0,Math.PI*2);
+  ctx.strokeStyle=GOLD; ctx.lineWidth=3; ctx.stroke();
+  ctx.fillStyle='rgba(201,168,76,.05)'; ctx.fill();
+  // Spokes
+  ctx.strokeStyle='rgba(201,168,76,.3)'; ctx.lineWidth=1.5;
+  for(let a=0;a<6;a++){
+    const ang=a*Math.PI/3;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(ang)*p.wheel*18,cy+Math.sin(ang)*p.wheel*18); ctx.stroke();
+  }
+  // Axle
+  ctx.beginPath(); ctx.arc(cx,cy,p.axle*18,0,Math.PI*2);
+  ctx.strokeStyle=GREEN; ctx.lineWidth=2.5; ctx.stroke();
+  ctx.fillStyle='rgba(26,139,127,.1)'; ctx.fill();
+
+  // Force arrows
+  ctx.strokeStyle='#4a86e8'; ctx.fillStyle='#4a86e8'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(cx+p.wheel*18,cy-40); ctx.lineTo(cx+p.wheel*18,cy-10); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx+p.wheel*18,cy-10); ctx.lineTo(cx+p.wheel*18-6,cy-22); ctx.lineTo(cx+p.wheel*18+6,cy-22); ctx.closePath(); ctx.fill();
+
+  ctx.strokeStyle='#e53935'; ctx.fillStyle='#e53935'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(cx+p.axle*18,cy-60); ctx.lineTo(cx+p.axle*18,cy-20); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx+p.axle*18,cy-20); ctx.lineTo(cx+p.axle*18-6,cy-32); ctx.lineTo(cx+p.axle*18+6,cy-32); ctx.closePath(); ctx.fill();
+
+  label(`Wheel r: ${p.wheel}cm`, cx, cy-p.wheel*18-16, GOLD, 11);
+  label(`Axle r: ${p.axle}cm`, cx+p.axle*18+30, cy-10, GREEN, 11);
+  label(`MA = W÷A = ${ma.toFixed(1)}`, cx, cy+p.wheel*18+24, GOLD, 13);
+  label(`Input: ${Math.round(inputForce)}N`, cx+p.wheel*18+16, cy-48, '#4a86e8', 10);
+  label(`Output: ${Math.round(inputForce*ma)}N`, cx+p.axle*18+16, cy-68, '#e53935', 10);
+}
+
+const DRAWERS = {lever:drawLever,pulley:drawPulley,incline:drawIncline,wedge:drawWedge,screw:drawScrew,wheel:drawWheel};
+const FACTS = {
+  lever:"A lever multiplies force by moving the fulcrum closer to the load. Archimedes said: 'Give me a lever long enough and a fulcrum, and I shall move the world.' Ancient Egyptians used levers to build the pyramids.",
+  pulley:"Each additional pulley halves the required input force (but doubles the rope distance). Block-and-tackle pulley systems let one sailor control a sail that would take ten people to haul manually.",
+  incline:"The inclined plane trades distance for force. A loading ramp 6m long rising 1m needs only 1/6 the force of lifting straight up — but you push 6× further. Ramps appear everywhere from ancient pyramid construction to modern wheelchair access.",
+  wedge:"A wedge is a moving inclined plane. It converts forward force into sideways splitting force. The sharper (longer) the wedge, the greater the mechanical advantage. Axes, nails, chisels, and door stops are all wedges.",
+  screw:"A screw is an inclined plane wrapped around a cylinder. Each turn of the screwdriver travels a large circle while the tip advances only one pitch (thread spacing). This gives enormous mechanical advantage — screws can hold thousands of pounds.",
+  wheel:"The wheel and axle is two cylinders of different sizes connected at the same point. Steering wheels, doorknobs, screwdrivers, and wrenches all use this principle — you push with a large radius and the small axle applies amplified torque."
+};
+const SLIDER_CONFIGS = {
+  lever:[
+    {key:'effort',label:'Effort Arm',min:1,max:10,step:0.5},
+    {key:'load',label:'Load Arm',min:1,max:10,step:0.5}
+  ],
+  pulley:[{key:'pulleys',label:'Number of Pulleys',min:1,max:8,step:1}],
+  incline:[
+    {key:'length',label:'Ramp Length (m)',min:1,max:12,step:0.5},
+    {key:'height',label:'Rise Height (m)',min:1,max:6,step:0.5}
+  ],
+  wedge:[
+    {key:'length',label:'Wedge Length (m)',min:2,max:12,step:0.5},
+    {key:'width',label:'Wedge Width (m)',min:1,max:6,step:0.5}
+  ],
+  screw:[
+    {key:'pitch',label:'Thread Pitch (mm)',min:1,max:8,step:0.5},
+    {key:'radius',label:'Handle Radius (cm)',min:1,max:10,step:0.5}
+  ],
+  wheel:[
+    {key:'wheel',label:'Wheel Radius (cm)',min:2,max:16,step:1},
+    {key:'axle',label:'Axle Radius (cm)',min:1,max:6,step:0.5}
+  ]
+};
+
+function buildSliders() {
+  const cfg = SLIDER_CONFIGS[machine];
+  const p = params[machine];
+  let html = `<div class="sl-row"><div class="sl-label">Input Force (you apply) <span id="sl-fin">${inputForce}</span> N</div><input type="range" min="10" max="500" value="${inputForce}" oninput="inputForce=+this.value;document.getElementById('sl-fin').textContent=this.value;refresh()"/></div>`;
+  cfg.forEach(c => {
+    html += `<div class="sl-row"><div class="sl-label">${c.label} <span id="sl-${c.key}">${p[c.key]}</span></div><input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${p[c.key]}" oninput="params['${machine}']['${c.key}']=+this.value;document.getElementById('sl-${c.key}').textContent=(+this.value).toFixed(1);refresh()"/></div>`;
+  });
+  document.getElementById('sliders').innerHTML = html;
+}
+
+function selectMachine(m) {
+  machine = m;
+  document.querySelectorAll('.m-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('fact-text').textContent = FACTS[m];
+  buildSliders();
+  refresh();
+}
+
+function refresh() {
+  DRAWERS[machine]();
+  updateReadout();
+}
+
+// ── QUIZ ──
+const QS=[
+  {q:"A lever has an effort arm of 4m and a load arm of 1m. What is the mechanical advantage?",opts:["4","0.25","5","3"],ans:0,exp:"MA = effort arm ÷ load arm = 4 ÷ 1 = 4. You push with 4× less force than the load — but push 4× further."},
+  {q:"A pulley system with 5 ropes supporting the load has a mechanical advantage of:",opts:["5","2.5","10","1"],ans:0,exp:"Each supporting rope rope shares the load equally. 5 ropes means MA = 5. You apply 1/5 of the load weight."},
+  {q:"An inclined plane (ramp) is 9 meters long and rises 3 meters. What is the MA?",opts:["3","6","0.33","12"],ans:0,exp:"MA = length ÷ height = 9 ÷ 3 = 3. You need 3× less force than lifting straight up, but travel 3× the distance."},
+  {q:"What is the fundamental trade-off in ALL simple machines?",opts:["Less force for more distance","More force for less distance","Force for energy","Speed for weight"],ans:0,exp:"ALL simple machines trade force for distance. You multiply force, but you must move through more distance. Total work (force × distance) stays the same. No machine creates free energy."},
+  {q:"A screw has a handle radius of 8cm and thread pitch of 2mm. The MA is approximately:",opts:["251","25","8","16"],ans:0,exp:"MA = (2π × r) ÷ pitch = (2 × 3.14 × 8) ÷ 0.2 = 50.3 ÷ 0.2 = 251. Screws have enormous MA — that's why a small screwdriver can hold enormous loads."},
+  {q:"A wheel-and-axle has a wheel radius of 12cm and axle radius of 3cm. What is the MA?",opts:["4","0.25","9","36"],ans:0,exp:"MA = wheel radius ÷ axle radius = 12 ÷ 3 = 4. A steering wheel uses this principle — a small force at the large wheel creates large torque at the small steering column."},
+  {q:"Which simple machine is a nail?",opts:["Wedge","Lever","Screw","Inclined plane"],ans:0,exp:"A nail is a wedge — it converts the downward hammering force into sideways splitting force that parts the wood fibers. The sharper (longer) the nail, the greater the mechanical advantage."},
+  {q:"What does 'work' mean in physics?",opts:["Force × Distance","Force only","Mass × Speed","Energy ÷ Time"],ans:0,exp:"Work = Force × Distance. Machines don't reduce work required — they redistribute it. Less force means more distance. More force (like a compound pulley) means less distance. The work input always equals the work output (minus friction losses)."},
+  {q:"A Class 1 lever has the fulcrum between the effort and the load. Which is an example?",opts:["See-saw","Wheelbarrow","Tweezers","Fishing rod"],ans:0,exp:"A see-saw (teeter-totter) has the fulcrum in the middle, with effort and load on opposite ends — Class 1. A wheelbarrow is Class 2 (load between fulcrum and effort). Tweezers are Class 3 (effort between fulcrum and load)."},
+  {q:"Why are simple machines still used in the age of motors and computers?",opts:["They require no energy input","They're cheap, reliable, and force multipliers in tight spaces","They work faster than motors","They need no maintenance"],ans:1,exp:"Simple machines have no moving parts to break, cost almost nothing, work in any environment, and amplify force exactly where needed. A car jack, a bottle cap, a door hinge — simple machines are everywhere because they solve real problems cheaply."},
+];
+
+let qIdx=0,answered=false,qScore=0,qTotal=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let qOrder=shuffle([...Array(QS.length).keys()]);
+
+function setMode(m){
+  document.getElementById('btn-ex').className='mode-btn'+(m==='explore'?' active':'');
+  document.getElementById('btn-qz').className='mode-btn'+(m==='quiz'?' active':'');
+  document.getElementById('explore-grid').style.display=m==='explore'?'grid':'none';
+  document.getElementById('sliders').style.display=m==='explore'?'block':'none';
+  document.getElementById('quiz-wrap').style.display=m==='quiz'?'block':'none';
+  if(m==='quiz'){qScore=0;qTotal=0;qIdx=0;qOrder=shuffle([...Array(QS.length).keys()]);showQ();}
+}
+
+function showQ(){
+  answered=false;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-opts').innerHTML=q.opts.map((o,i)=>`<button class="qopt" onclick="ansQ(${i})">${o}</button>`).join('');
+  document.getElementById('qfb').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  document.getElementById('score-ln').textContent=`Q${qTotal+1} · Score: ${qScore}/${qTotal}`;
+}
+function ansQ(i){
+  if(answered)return; answered=true;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.querySelectorAll('.qopt').forEach((o,idx)=>{
+    if(idx===q.ans)o.classList.add('correct');
+    else if(idx===i)o.classList.add('wrong');
+    o.disabled=true;
+  });
+  const ok=i===q.ans; if(ok)qScore++; qTotal++;
+  const fb=document.getElementById('qfb');
+  fb.className='qfb '+(ok?'pass':'fail');
+  fb.innerHTML=(ok?'✅ Correct! ':'❌ Not quite. ')+q.exp;
+  fb.style.display='block';
+  document.getElementById('next-btn').style.display='inline-flex';
+  document.getElementById('score-ln').textContent=`Score: ${qScore}/${qTotal}`;
+  const t={bronze:3,silver:6,gold:10,platinum:15};
+  for(const[n,v]of Object.entries(t)) if(qScore>=v) document.getElementById('b-'+n).classList.add('earned');
+}
+function nextQ(){qIdx++;showQ();}
+
+// Init
+selectMachine('lever');
+document.getElementById('fact-text').textContent = FACTS['lever'];
+</script>
+</body>
+</html>

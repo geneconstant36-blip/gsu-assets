@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Arch That Stands — GSU Stonemasons Interactive</title>
+<meta name="description" content="Build a stone arch. Load the keystone. Watch it hold — or fall. Understand why the arch is the most powerful shape in masonry. Free from Global Sovereign University."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px 48px}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#1A8B7F;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#C9A84C;margin-bottom:6px}
+.subtitle{font-size:.95rem;color:rgba(245,241,232,.65);margin-bottom:20px;line-height:1.6}
+.teach{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:20px 22px;margin-bottom:20px}
+.teach h2{font-family:Georgia,serif;font-size:1.1rem;color:#C9A84C;margin-bottom:10px}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.75);line-height:1.65;margin-bottom:6px}
+.teach p:last-child{margin-bottom:0}
+.teach strong{color:#F5F1E8}
+/* CANVAS */
+.canvas-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative}
+canvas{display:block;width:100%}
+.status-bar{position:absolute;top:12px;left:0;right:0;text-align:center;pointer-events:none}
+.status-pill{display:inline-block;padding:5px 16px;border-radius:20px;font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.status-pill.holding{background:rgba(26,139,127,.2);border:1px solid rgba(26,139,127,.5);color:#1A8B7F}
+.status-pill.falling{background:rgba(229,57,53,.15);border:1px solid rgba(229,57,53,.4);color:#e53935}
+.status-pill.building{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:#C9A84C}
+/* CONTROLS */
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.ctrl-card{background:#0a0800;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:14px 16px}
+.ctrl-label{font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(245,241,232,.35);margin-bottom:8px}
+.slider{width:100%;accent-color:#C9A84C;cursor:pointer}
+.ctrl-value{font-family:Georgia,serif;font-size:1.2rem;font-weight:700;color:#C9A84C;margin-top:4px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.action-btn{font-size:.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:5px;cursor:pointer;border:none}
+.action-btn.gold{background:#C9A84C;color:#000}
+.action-btn.outline{background:transparent;border:1px solid rgba(201,168,76,.4);color:#C9A84C}
+.action-btn.red{background:rgba(229,57,53,.15);border:1px solid rgba(229,57,53,.4);color:#e53935}
+/* FACT PANEL */
+.fact-panel{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:8px;padding:14px 16px;margin-bottom:16px;min-height:70px}
+.fact-label{font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(201,168,76,.5);margin-bottom:6px}
+.fact-text{font-size:.88rem;color:rgba(245,241,232,.8);line-height:1.6}
+/* QUIZ */
+.mode-btn{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.5);cursor:pointer}
+.mode-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.quiz-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:20px;margin-bottom:16px;display:none}
+.quiz-q{font-family:Georgia,serif;font-size:.95rem;color:#F5F1E8;margin-bottom:12px;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.quiz-opt{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:9px 14px;font-size:.84rem;color:rgba(245,241,232,.7);cursor:pointer;text-align:left}
+.quiz-opt.correct{border-color:#1A8B7F;background:rgba(26,139,127,.1);color:#F5F1E8}
+.quiz-opt.wrong{border-color:#e53935;background:rgba(229,57,53,.08)}
+.quiz-fb{font-size:.84rem;line-height:1.6;padding:10px 14px;border-radius:6px;margin-bottom:10px;display:none}
+.quiz-fb.pass{background:rgba(26,139,127,.1);border:1px solid rgba(26,139,127,.3)}
+.quiz-fb.fail{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.2)}
+.next-btn{background:#C9A84C;color:#000;font-weight:800;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border:none;border-radius:5px;cursor:pointer;display:none}
+.score-ln{font-size:.75rem;color:rgba(245,241,232,.35);margin-top:8px}
+/* BADGES */
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.badge{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3}
+.badge.earned{opacity:1}
+.badge.bronze{color:#CD7F32;border-color:#CD7F32;background:rgba(205,127,50,.1)}
+.badge.silver{color:#C0C0C0;border-color:#C0C0C0;background:rgba(192,192,192,.1)}
+.badge.gold{color:#C9A84C;border-color:#C9A84C;background:rgba(201,168,76,.1)}
+.badge.platinum{color:#E5E4E2;border-color:#E5E4E2;background:rgba(229,228,226,.08)}
+/* GENO */
+.geno-invite{background:#000;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.geno-invite img{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-invite p{font-size:.82rem;color:rgba(245,241,232,.7);line-height:1.55}
+.geno-invite strong{color:#C9A84C}
+.geno-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1A8B7F;cursor:pointer;background:none;border:none;padding:0}
+@media(max-width:600px){.controls{grid-template-columns:1fr}h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Stonemasons · Pattern A Physics Sandbox</div>
+  <h1>The Arch That Stands</h1>
+  <p class="subtitle">The arch is 4,000 years old and still the strongest shape masonry knows. Load the keystone. Add weight. Push with wind. Understand — with your own hands — why it holds and when it falls.</p>
+
+  <div class="teach">
+    <h2>Before You Play — The Secret of the Arch</h2>
+    <p>A flat stone beam fails under compression — it cracks. An arch <strong>converts that downward force into outward thrust</strong>, spreading the load into the walls on either side. Every stone is wedge-shaped (called a <em>voussoir</em>). The <strong>keystone</strong> at the top locks them all in place.</p>
+    <p>The arch doesn't pull. It pushes. Remove the keystone and the whole structure fails. <strong>That keystone is also called the boss.</strong> Now you know where the word comes from.</p>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+    <button class="mode-btn active" id="btn-explore" onclick="setMode('explore')">Explore</button>
+    <button class="mode-btn" id="btn-quiz" onclick="setMode('quiz')">Quiz Me</button>
+  </div>
+
+  <!-- CANVAS -->
+  <div class="canvas-wrap">
+    <canvas id="arch-canvas" width="860" height="420"></canvas>
+    <div class="status-bar"><span class="status-pill building" id="status-pill">Building the Arch...</span></div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls" id="explore-controls">
+    <div class="ctrl-card">
+      <div class="ctrl-label">Load on Keystone</div>
+      <input type="range" class="slider" id="load-slider" min="0" max="100" value="0" oninput="updateLoad()"/>
+      <div class="ctrl-value" id="load-val">0 tons</div>
+    </div>
+    <div class="ctrl-card">
+      <div class="ctrl-label">Wind / Lateral Force</div>
+      <input type="range" class="slider" id="wind-slider" min="0" max="100" value="0" oninput="updateWind()"/>
+      <div class="ctrl-value" id="wind-val">0 mph</div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="action-btn gold" onclick="removeKeystone()">Remove Keystone</button>
+    <button class="action-btn outline" onclick="resetArch()">Reset Arch</button>
+    <button class="action-btn red" onclick="collapse()">Collapse</button>
+  </div>
+
+  <div class="fact-panel">
+    <div class="fact-label">What You're Seeing</div>
+    <div class="fact-text" id="fact-text">Slide the Load slider to add weight to the arch's keystone. Watch how the thrust lines (shown in gold) spread force into the abutments. The arch is strongest under compression — add load and it actually becomes MORE stable, up to a point.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-wrap" id="quiz-wrap">
+    <div class="quiz-q" id="quiz-q"></div>
+    <div class="quiz-opts" id="quiz-opts"></div>
+    <div class="quiz-fb" id="quiz-fb"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQ()">Next Question →</button>
+    <div class="score-ln" id="score-ln"></div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge bronze" id="b-bronze">🥉 Bronze</span>
+    <span class="badge silver" id="b-silver">🥈 Silver</span>
+    <span class="badge gold" id="b-gold">🥇 Gold</span>
+    <span class="badge platinum" id="b-platinum">💎 Platinum</span>
+  </div>
+
+  <div class="geno-invite">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <div>
+      <p><strong>GENO has memorized The Sovereign Stonemason</strong> — every chapter on voussoirs, mortar, bonds, and the physics of the arch. Ask him why Roman arches survive 2,000 years, or how to mix mortar for a garden wall.</p>
+      <button class="geno-btn" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">💬 Ask GENO about arches →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('arch-canvas');
+const ctx = canvas.getContext('2d');
+const CW = 860, CH = 420;
+canvas.width = CW; canvas.height = CH;
+
+const GOLD = '#C9A84C';
+const GREEN = '#1A8B7F';
+const STONE = '#8B7355';
+const STONE_DARK = '#5C4A2A';
+const KEYSTONE_COLOR = '#C9A84C';
+
+let load = 0, wind = 0;
+let keystoneRemoved = false;
+let collapsed = false;
+let collapseProgress = 0;
+let animFrame = null;
+let score = 0, total = 0;
+
+// Arch geometry
+const ARCH_CX = CW / 2;
+const ARCH_BASE_Y = 340;
+const ARCH_R = 160;
+const N_VOUSSOIRS = 11; // odd so keystone is center
+const ABUTMENT_W = 90;
+const ABUTMENT_H = 180;
+
+function getVoussoir(i) {
+  // i goes from 0 (left base) to N_VOUSSOIRS-1 (right base)
+  // Center is keystone at i = Math.floor(N_VOUSSOIRS/2)
+  const half = (N_VOUSSOIRS - 1) / 2;
+  const angRange = Math.PI; // semicircle
+  const angStep = angRange / N_VOUSSOIRS;
+  const ang = Math.PI + (i + 0.5) * angStep; // from left to right, π to 2π
+  const innerR = ARCH_R - 24;
+  const outerR = ARCH_R + 8;
+  const a1 = Math.PI + i * angStep;
+  const a2 = Math.PI + (i + 1) * angStep;
+  return {
+    i, ang,
+    isKeystone: i === Math.floor(N_VOUSSOIRS / 2),
+    a1, a2,
+    cx: ARCH_CX + Math.cos(ang) * ARCH_R,
+    cy: ARCH_BASE_Y + Math.sin(ang) * ARCH_R,
+    innerR, outerR
+  };
+}
+
+function drawArch(progress = 1) {
+  ctx.clearRect(0, 0, CW, CH);
+
+  // Sky/ground
+  ctx.fillStyle = '#0a0800';
+  ctx.fillRect(0, 0, CW, CH);
+
+  // Ground
+  ctx.fillStyle = '#1a1200';
+  ctx.fillRect(0, ARCH_BASE_Y + 20, CW, CH);
+
+  // Abutments (pillars)
+  const leftX = ARCH_CX - ARCH_R - ABUTMENT_W / 2 + 10;
+  const rightX = ARCH_CX + ARCH_R - ABUTMENT_W / 2 - 10;
+
+  const drawAbutment = (x) => {
+    ctx.fillStyle = '#2a2010';
+    ctx.fillRect(x, ARCH_BASE_Y - ABUTMENT_H + 40, ABUTMENT_W, ABUTMENT_H);
+    // stone courses
+    ctx.strokeStyle = 'rgba(201,168,76,.15)';
+    ctx.lineWidth = 1;
+    for (let y = ARCH_BASE_Y - ABUTMENT_H + 40; y < ARCH_BASE_Y + 40; y += 24) {
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + ABUTMENT_W, y); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.strokeRect(x, ARCH_BASE_Y - ABUTMENT_H + 40, ABUTMENT_W, ABUTMENT_H);
+    ctx.stroke();
+  };
+  drawAbutment(leftX - 10);
+  drawAbutment(rightX + 10);
+
+  if (collapsed && collapseProgress > 0) {
+    drawCollapse(collapseProgress);
+    return;
+  }
+
+  // Draw voussoirs
+  for (let i = 0; i < N_VOUSSOIRS; i++) {
+    const v = getVoussoir(i);
+    if (v.isKeystone && keystoneRemoved) continue;
+
+    // Apply wind sway
+    const swayX = wind * 0.4 * Math.sin(Date.now() * 0.002) * progress;
+    const swayScale = 1 + (wind * 0.001);
+
+    ctx.save();
+    ctx.translate(swayX * (i / N_VOUSSOIRS - 0.5), 0);
+
+    ctx.beginPath();
+    ctx.arc(ARCH_CX, ARCH_BASE_Y, v.outerR, v.a1, v.a2);
+    ctx.arc(ARCH_CX, ARCH_BASE_Y, v.innerR, v.a2, v.a1, true);
+    ctx.closePath();
+
+    const isKeystone = v.isKeystone;
+    ctx.fillStyle = isKeystone ? (load > 80 ? '#8B0000' : KEYSTONE_COLOR) : STONE_DARK;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(201,168,76,.4)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Stone texture lines
+    ctx.strokeStyle = 'rgba(0,0,0,.3)';
+    ctx.lineWidth = 0.5;
+    const midAng = (v.a1 + v.a2) / 2;
+    const tx1 = ARCH_CX + Math.cos(midAng) * v.innerR;
+    const ty1 = ARCH_BASE_Y + Math.sin(midAng) * v.innerR;
+    const tx2 = ARCH_CX + Math.cos(midAng) * v.outerR;
+    const ty2 = ARCH_BASE_Y + Math.sin(midAng) * v.outerR;
+    ctx.beginPath(); ctx.moveTo(tx1, ty1); ctx.lineTo(tx2, ty2); ctx.stroke();
+
+    ctx.restore();
+  }
+
+  // Thrust line visualization
+  if (load > 10 || wind > 10) {
+    drawThrustLines();
+  }
+
+  // Keystone label
+  if (!keystoneRemoved) {
+    const kv = getVoussoir(Math.floor(N_VOUSSOIRS / 2));
+    const kTop = ARCH_BASE_Y - ARCH_R - 32;
+    ctx.fillStyle = load > 80 ? '#FF6B6B' : GOLD;
+    ctx.font = 'bold 12px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('KEYSTONE', ARCH_CX, kTop);
+
+    // Load visualization
+    if (load > 0) {
+      const loadH = (load / 100) * 60;
+      ctx.fillStyle = 'rgba(229,57,53,0.6)';
+      ctx.fillRect(ARCH_CX - 15, kTop - loadH - 10, 30, loadH);
+      ctx.fillStyle = '#e53935';
+      ctx.font = 'bold 11px Arial';
+      ctx.fillText(Math.round(load) + ' tons', ARCH_CX, kTop - loadH - 14);
+
+      // Downward arrows
+      for (let a = -1; a <= 1; a++) {
+        ctx.fillStyle = '#e53935';
+        ctx.beginPath();
+        ctx.moveTo(ARCH_CX + a * 10, kTop - 2);
+        ctx.lineTo(ARCH_CX + a * 10 - 5, kTop - 14);
+        ctx.lineTo(ARCH_CX + a * 10 + 5, kTop - 14);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+  }
+
+  // Wind arrow
+  if (wind > 5) {
+    const arrowY = ARCH_BASE_Y - ARCH_R;
+    const arrowLen = wind * 1.2;
+    ctx.strokeStyle = '#4a86e8';
+    ctx.fillStyle = '#4a86e8';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(20, arrowY);
+    ctx.lineTo(20 + arrowLen, arrowY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(20 + arrowLen, arrowY);
+    ctx.lineTo(20 + arrowLen - 10, arrowY - 6);
+    ctx.lineTo(20 + arrowLen - 10, arrowY + 6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#4a86e8';
+    ctx.font = '11px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText('WIND ' + Math.round(wind) + ' mph', 22, arrowY - 10);
+  }
+
+  // Status
+  updateStatus();
+}
+
+function drawThrustLines() {
+  const loadFactor = load / 100;
+  const windFactor = wind / 100;
+  ctx.strokeStyle = `rgba(201,168,76,${0.3 + loadFactor * 0.5})`;
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([4, 4]);
+
+  // Draw idealized thrust line through arch
+  ctx.beginPath();
+  const steps = 60;
+  for (let s = 0; s <= steps; s++) {
+    const t = s / steps;
+    const ang = Math.PI + t * Math.PI;
+    const thrustR = ARCH_R - 8 + loadFactor * 16 + windFactor * (t - 0.5) * 40;
+    const x = ARCH_CX + Math.cos(ang) * thrustR;
+    const y = ARCH_BASE_Y + Math.sin(ang) * thrustR;
+    s === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Label
+  ctx.fillStyle = 'rgba(201,168,76,.6)';
+  ctx.font = '10px Arial';
+  ctx.textAlign = 'left';
+  ctx.fillText('Thrust line', ARCH_CX - ARCH_R - 20, ARCH_BASE_Y - 8);
+}
+
+let collapseVoussoirs = [];
+function collapse() {
+  if (collapsed) return;
+  collapsed = true;
+  collapseVoussoirs = Array.from({length: N_VOUSSOIRS}, (_, i) => ({
+    i, vx: (Math.random() - 0.5) * 3, vy: Math.random() * -2 - 1,
+    rot: (Math.random() - 0.5) * 0.2, x: 0, y: 0
+  }));
+  updateStatus('collapse');
+  updateFact('The arch has collapsed. Without the keystone (or with too much lateral force), the thrust line escapes the arch and it fails catastrophically. This is why abutments must be massive — they resist the outward thrust.');
+  animateCollapse();
+}
+
+function animateCollapse() {
+  collapseProgress = Math.min(1, collapseProgress + 0.02);
+  drawArch(1 - collapseProgress);
+  drawCollapse(collapseProgress);
+  if (collapseProgress < 1) requestAnimationFrame(animateCollapse);
+}
+
+function drawCollapse(p) {
+  collapseVoussoirs.forEach(v => {
+    const vd = getVoussoir(v.i);
+    v.x += v.vx * p * 3;
+    v.y += (v.vy + p * 8) * p;
+    v.rot += 0.02;
+
+    const cx = ARCH_CX + Math.cos((vd.a1+vd.a2)/2) * ARCH_R + v.x * p * 20;
+    const cy = ARCH_BASE_Y + Math.sin((vd.a1+vd.a2)/2) * ARCH_R + v.y * p * 30;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(v.rot * p * 5);
+    ctx.fillStyle = vd.isKeystone ? GOLD : STONE_DARK;
+    ctx.fillRect(-14, -10, 28, 20);
+    ctx.strokeStyle = 'rgba(201,168,76,.3)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(-14, -10, 28, 20);
+    ctx.restore();
+  });
+}
+
+function removeKeystone() {
+  keystoneRemoved = true;
+  updateFact('The keystone has been removed. Without it, the voussoirs have no locking mechanism — the arch loses its compression ring and the stones slide inward. The Romans knew: the keystone IS the arch.');
+  setTimeout(collapse, 600);
+}
+
+function resetArch() {
+  keystoneRemoved = false; collapsed = false; collapseProgress = 0;
+  load = 0; wind = 0;
+  document.getElementById('load-slider').value = 0;
+  document.getElementById('wind-slider').value = 0;
+  document.getElementById('load-val').textContent = '0 tons';
+  document.getElementById('wind-val').textContent = '0 mph';
+  updateFact('Slide the Load slider to add weight to the arch\'s keystone. Watch how the thrust lines spread force into the abutments. The arch is strongest under compression.');
+  draw();
+}
+
+function updateLoad() {
+  load = parseInt(document.getElementById('load-slider').value);
+  document.getElementById('load-val').textContent = load + ' tons';
+  if (load > 90 && !collapsed) {
+    updateFact('⚠️ Critical load! The thrust line is escaping the arch boundaries. At this point the arch will crack and the stones will slide. Real arches fail when the thrust line exits the middle third of the masonry.');
+    setTimeout(collapse, 1200);
+  } else if (load > 60) {
+    updateFact('Heavy load. The keystone is turning red — it is under enormous compression stress. Notice the thrust lines steepening. The abutments are the only thing keeping this standing now.');
+  } else if (load > 20) {
+    updateFact('Good load. The arch is doing what it was designed to do — converting downward force into outward thrust along the thrust line. This is why arches can carry bridges, cathedrals, and aqueducts.');
+  }
+  draw();
+}
+
+function updateWind() {
+  wind = parseInt(document.getElementById('wind-slider').value);
+  document.getElementById('wind-val').textContent = wind + ' mph';
+  if (wind > 80 && !collapsed) {
+    updateFact('⚠️ Extreme lateral force! Arches resist vertical load brilliantly but lateral (sideways) force is their weakness. This is why ancient Roman arch bridges have massive side walls — to resist lateral forces.');
+    setTimeout(collapse, 1000);
+  } else if (wind > 40) {
+    updateFact('Notice the thrust line shifting sideways. One abutment is now taking more load than the other. In real masonry, this asymmetry causes cracking on the overloaded side first.');
+  }
+  draw();
+}
+
+function updateStatus(state) {
+  const pill = document.getElementById('status-pill');
+  if (state === 'collapse' || collapsed) {
+    pill.className = 'status-pill falling'; pill.textContent = 'Arch Collapsed';
+  } else if (load > 70 || wind > 70 || keystoneRemoved) {
+    pill.className = 'status-pill falling'; pill.textContent = 'Critical — Failing';
+  } else if (load > 0 || wind > 0) {
+    pill.className = 'status-pill holding'; pill.textContent = 'Holding — Arch Stable';
+  } else {
+    pill.className = 'status-pill building'; pill.textContent = 'Arch Ready';
+  }
+}
+
+function updateFact(text) { document.getElementById('fact-text').textContent = text; }
+
+function draw() { drawArch(1); }
+
+// ── QUIZ ──
+const QS = [
+  {q:"What is the name of the center stone at the top of an arch that locks all other stones in place?",opts:["Keystone","Voussoir","Lintel","Corbel"],ans:0,exp:"The keystone (also called 'the boss') is the wedge-shaped stone at the very top of the arch. It is the last stone placed and its weight locks the entire arch under compression."},
+  {q:"What type of force does an arch convert downward loads into?",opts:["Outward thrust","Upward tension","Rotational torque","Shear"],ans:0,exp:"The arch converts vertical (downward) force into outward horizontal thrust, which is resisted by the abutments (side walls). This compression is what makes the arch so strong."},
+  {q:"What are the individual wedge-shaped stones that make up an arch called?",opts:["Voussoirs","Keystones","Headers","Quoins"],ans:0,exp:"Voussoirs are the individual wedge-shaped stones. Their tapered shape ensures that when assembled in an arch, the compressive forces flow through them rather than creating tension."},
+  {q:"Why are arches stronger than flat stone beams (lintels)?",opts:["Arches work in compression; beams work in tension","Arches are heavier","Arches use more stones","Arches are curved"],ans:0,exp:"Stone is very strong in compression but weak in tension. A flat beam bends under load, creating tension in its bottom face — and stone cracks under tension. An arch puts every stone in compression, which stone handles brilliantly."},
+  {q:"What is the 'thrust line' in an arch?",opts:["The path of compressive force through the arch","The mortar joint alignment","The center line of each stone","The wind direction"],ans:0,exp:"The thrust line shows the path compressive force travels through the arch. If the thrust line stays within the arch, it stands. If it exits the masonry (due to overload or lateral force), the arch will crack and fail."},
+  {q:"Why do Roman arch bridges have massive side walls and piers?",opts:["To resist the outward lateral thrust of the arch","To add aesthetic detail","To support the roadbed only","To prevent flooding"],ans:0,exp:"Arches push outward as well as downward. The abutments (side supports) must be massive to resist this outward thrust. Without sufficient abutment mass, the arch spreads and collapses."},
+  {q:"The 'middle third rule' in masonry says the thrust line must:",opts:["Stay within the middle third of the arch thickness","Stay in the outer third","Cross the center line","Travel vertically"],ans:0,exp:"For a masonry arch to remain stable, the thrust line must stay within the middle third of the arch's thickness. If it exits this zone, the masonry opens up on one face (a 'hinge') and the arch may fail."},
+  {q:"A mason is building a semicircular arch over a doorway 4 feet wide. The arch's radius is:",opts:["2 feet","4 feet","6 feet","8 feet"],ans:0,exp:"A semicircular arch (also called a Roman arch) has a radius equal to half the span. For a 4-foot-wide opening, the radius is 2 feet."},
+];
+
+let qIdx=0,answered=false,qScore=0,qTotal=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let qOrder=shuffle([...Array(QS.length).keys()]);
+
+function setMode(m){
+  document.getElementById('btn-explore').className='mode-btn'+(m==='explore'?' active':'');
+  document.getElementById('btn-quiz').className='mode-btn'+(m==='quiz'?' active':'');
+  document.getElementById('explore-controls').style.display=m==='explore'?'grid':'none';
+  document.getElementById('quiz-wrap').style.display=m==='quiz'?'block':'none';
+  if(m==='quiz'){qScore=0;qTotal=0;qIdx=0;qOrder=shuffle([...Array(QS.length).keys()]);showQ();}
+}
+
+function showQ(){
+  answered=false;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-opts').innerHTML=q.opts.map((o,i)=>`<button class="quiz-opt" onclick="ansQ(${i})">${o}</button>`).join('');
+  document.getElementById('quiz-fb').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  document.getElementById('score-ln').textContent=`Question ${qTotal+1} · Score: ${qScore}/${qTotal}`;
+}
+
+function ansQ(i){
+  if(answered)return; answered=true;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.querySelectorAll('.quiz-opt').forEach((o,idx)=>{
+    if(idx===q.ans)o.classList.add('correct');
+    else if(idx===i)o.classList.add('wrong');
+    o.disabled=true;
+  });
+  const ok=i===q.ans;
+  if(ok)qScore++;
+  qTotal++;
+  const fb=document.getElementById('quiz-fb');
+  fb.className='quiz-fb '+(ok?'pass':'fail');
+  fb.innerHTML=(ok?'✅ Correct! ':'❌ Not quite. ')+q.exp;
+  fb.style.display='block';
+  document.getElementById('next-btn').style.display='inline-flex';
+  document.getElementById('score-ln').textContent=`Score: ${qScore}/${qTotal}`;
+  updateBadges();
+}
+
+function nextQ(){qIdx++;showQ();}
+
+function updateBadges(){
+  const t={bronze:3,silver:6,gold:10,platinum:15};
+  for(const[n,v]of Object.entries(t)) if(qScore>=v) document.getElementById('b-'+n).classList.add('earned');
+}
+
+// Init
+draw();
+setInterval(()=>{ if(!collapsed && (load > 0 || wind > 0)) draw(); }, 50);
+</script>
+</body>
+</html>

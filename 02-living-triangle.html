@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Living Triangle — GSU Trades & Math Interactive</title>
+<meta name="description" content="Drag any corner of a right triangle and watch rise, run, hypotenuse, and angles update live. The Pythagorean theorem you can feel. Free from Global Sovereign University."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#1A8B7F;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#C9A84C;margin-bottom:6px}
+.subtitle{font-size:.95rem;color:rgba(245,241,232,.65);margin-bottom:24px;line-height:1.6}
+/* TEACH PANEL */
+.teach{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:20px 22px;margin-bottom:24px}
+.teach h2{font-family:Georgia,serif;font-size:1.1rem;color:#C9A84C;margin-bottom:10px}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.75);line-height:1.65;margin-bottom:8px}
+.teach p:last-child{margin-bottom:0}
+.teach strong{color:#F5F1E8}
+.formula{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.f-pill{background:#000;border:1px solid rgba(201,168,76,.35);border-radius:6px;padding:6px 14px;font-family:Georgia,serif;font-size:.95rem;color:#C9A84C}
+/* PLAY AREA */
+.play-area{display:grid;grid-template-columns:1fr 220px;gap:20px;margin-bottom:20px}
+.canvas-wrap{position:relative;background:#0a0800;border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden;touch-action:none}
+canvas{display:block;width:100%;cursor:crosshair}
+.static-fallback{display:none;padding:32px;text-align:center;color:rgba(245,241,232,.5);font-size:.85rem}
+/* READOUT PANEL */
+.readout{display:flex;flex-direction:column;gap:10px}
+.r-card{background:#0a0800;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:14px 16px}
+.r-label{font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(245,241,232,.35);margin-bottom:4px}
+.r-value{font-family:Georgia,serif;font-size:1.6rem;font-weight:700;color:#C9A84C;line-height:1}
+.r-unit{font-size:.75rem;color:rgba(245,241,232,.4);margin-top:2px}
+.r-card.green .r-value{color:#1A8B7F}
+.r-card.white .r-value{color:#F5F1E8}
+.proof-check{background:rgba(26,139,127,.1);border:1px solid rgba(26,139,127,.3);border-radius:8px;padding:12px 14px;margin-top:4px}
+.proof-check .r-label{color:#1A8B7F}
+.proof-eq{font-family:Georgia,serif;font-size:.9rem;color:#F5F1E8;margin-top:4px;line-height:1.5}
+/* MODE CONTROLS */
+.controls{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.mode-btn{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.5);cursor:pointer;transition:all .15s}
+.mode-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.snap-toggle{display:flex;align-items:center;gap:7px;font-size:.75rem;color:rgba(245,241,232,.5);cursor:pointer;margin-left:auto}
+.snap-toggle input{accent-color:#C9A84C;width:14px;height:14px}
+/* PRESETS */
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.preset-btn{font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:4px;border:1px solid rgba(201,168,76,.25);background:transparent;color:rgba(245,241,232,.6);cursor:pointer}
+.preset-btn:hover{border-color:#C9A84C;color:#C9A84C}
+/* BADGE */
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.badge{padding:6px 14px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.35}
+.badge.earned{opacity:1}
+.badge.bronze{color:#CD7F32;border-color:#CD7F32;background:rgba(205,127,50,.1)}
+.badge.silver{color:#C0C0C0;border-color:#C0C0C0;background:rgba(192,192,192,.1)}
+.badge.gold{color:#C9A84C;border-color:#C9A84C;background:rgba(201,168,76,.1)}
+.badge.platinum{color:#E5E4E2;border-color:#E5E4E2;background:rgba(229,228,226,.1)}
+.badge-desc{font-size:.72rem;color:rgba(245,241,232,.4);margin-top:6px}
+/* GENO */
+.geno-invite{background:#000;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.geno-invite img{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-invite p{font-size:.82rem;color:rgba(245,241,232,.7);line-height:1.55}
+.geno-invite strong{color:#C9A84C}
+.geno-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1A8B7F;cursor:pointer;background:none;border:none;padding:0}
+/* QUIZ */
+.quiz-section{margin-top:8px}
+.quiz-q{font-family:Georgia,serif;font-size:1rem;color:#F5F1E8;margin-bottom:14px;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.quiz-opt{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:10px 14px;font-size:.85rem;color:rgba(245,241,232,.7);cursor:pointer;text-align:left;transition:border-color .15s}
+.quiz-opt:hover{border-color:#C9A84C;color:#F5F1E8}
+.quiz-opt.correct{border-color:#1A8B7F;background:rgba(26,139,127,.1);color:#F5F1E8}
+.quiz-opt.wrong{border-color:#e53935;background:rgba(229,57,53,.08);color:rgba(245,241,232,.5)}
+.quiz-feedback{font-size:.85rem;line-height:1.6;padding:10px 14px;border-radius:6px;margin-bottom:10px}
+.quiz-feedback.pass{background:rgba(26,139,127,.1);border:1px solid rgba(26,139,127,.3);color:#F5F1E8}
+.quiz-feedback.fail{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.2);color:#F5F1E8}
+.next-btn{background:#C9A84C;color:#000;font-weight:800;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;padding:9px 20px;border:none;border-radius:5px;cursor:pointer}
+.score-line{font-size:.8rem;color:rgba(245,241,232,.4);margin-top:8px}
+@media(max-width:640px){
+  .play-area{grid-template-columns:1fr}
+  h1{font-size:1.5rem}
+  .r-value{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Trades & Math · The Living Triangle</div>
+  <h1>Drag It. Feel It. Own It.</h1>
+  <p class="subtitle">The Pythagorean theorem isn't a formula to memorize — it's a relationship you can see and feel. Drag any corner of this triangle and watch rise, run, hypotenuse, and angles update live. This is the math every trade runs on.</p>
+
+  <!-- TEACH -->
+  <div class="teach">
+    <h2>Before You Play — Understand This</h2>
+    <p>Every roof, every ramp, every staircase, every brace in a building is a right triangle. The three sides have names that carpenters, framers, and electricians use every single day:</p>
+    <p><strong>Rise</strong> = how far up. <strong>Run</strong> = how far across. <strong>Hypotenuse</strong> = the diagonal — always the longest side, always opposite the right angle.</p>
+    <p>The Pythagorean theorem says: <strong>rise² + run² = hypotenuse²</strong>. Drag the triangle and watch that equation prove itself — live — every time you move a point.</p>
+    <div class="formula">
+      <span class="f-pill">a² + b² = c²</span>
+      <span class="f-pill">Pitch = Rise ÷ Run</span>
+      <span class="f-pill">3-4-5 Rule: the builder's shortcut</span>
+    </div>
+  </div>
+
+  <!-- MODES -->
+  <div class="controls">
+    <button class="mode-btn active" id="btn-explore" onclick="setMode('explore')">Explore</button>
+    <button class="mode-btn" id="btn-quiz" onclick="setMode('quiz')">Quiz Me</button>
+    <label class="snap-toggle"><input type="checkbox" id="snap-cb" onchange="toggleSnap()"/> Snap to whole numbers</label>
+  </div>
+
+  <!-- PRESETS -->
+  <div class="presets">
+    <span style="font-size:.72rem;color:rgba(245,241,232,.35);align-self:center">Try:</span>
+    <button class="preset-btn" onclick="setPreset(3,4,5)">3-4-5 Classic</button>
+    <button class="preset-btn" onclick="setPreset(5,12,13)">5-12-13</button>
+    <button class="preset-btn" onclick="setPreset(6,8,10)">Roof 6:8</button>
+    <button class="preset-btn" onclick="setPreset(1,1,0)">45° Equal</button>
+    <button class="preset-btn" onclick="setPreset(8,6,0)">Stair 8:6</button>
+  </div>
+
+  <!-- PLAY AREA -->
+  <div class="play-area" id="explore-panel">
+    <div class="canvas-wrap">
+      <canvas id="tri-canvas" width="680" height="400"></canvas>
+      <div class="static-fallback" id="static-fallback">
+        <p>📐 Right Triangle</p>
+        <p style="margin-top:8px">Rise (a) · Run (b) · Hypotenuse (c)</p>
+        <p style="margin-top:8px">a² + b² = c²</p>
+      </div>
+    </div>
+    <div class="readout">
+      <div class="r-card">
+        <div class="r-label">Rise (a)</div>
+        <div class="r-value" id="r-rise">4.0</div>
+        <div class="r-unit">units</div>
+      </div>
+      <div class="r-card">
+        <div class="r-label">Run (b)</div>
+        <div class="r-value" id="r-run">3.0</div>
+        <div class="r-unit">units</div>
+      </div>
+      <div class="r-card green">
+        <div class="r-label">Hypotenuse (c)</div>
+        <div class="r-value" id="r-hyp">5.0</div>
+        <div class="r-unit">units · longest side</div>
+      </div>
+      <div class="r-card white">
+        <div class="r-label">Angle A (at base)</div>
+        <div class="r-value" id="r-angA">53.1°</div>
+        <div class="r-unit">opposite the rise</div>
+      </div>
+      <div class="r-card white">
+        <div class="r-label">Pitch</div>
+        <div class="r-value" id="r-pitch">1.33</div>
+        <div class="r-unit">rise ÷ run</div>
+      </div>
+      <div class="proof-check">
+        <div class="r-label">Proof: a²+b²=c²</div>
+        <div class="proof-eq" id="r-proof">16 + 9 = 25 ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ PANEL -->
+  <div id="quiz-panel" style="display:none;margin-bottom:20px">
+    <div class="teach" style="margin-bottom:16px">
+      <h2>Quiz Mode — Apply What You Know</h2>
+      <p>Each question gives you real trade measurements. Use the triangle above to explore, then answer below. <strong>10 questions · Infinite play</strong></p>
+    </div>
+    <div class="quiz-section">
+      <div class="quiz-q" id="quiz-q"></div>
+      <div class="quiz-opts" id="quiz-opts"></div>
+      <div class="quiz-feedback" id="quiz-fb" style="display:none"></div>
+      <button class="next-btn" id="next-btn" style="display:none" onclick="nextQ()">Next Question →</button>
+      <div class="score-line" id="score-line"></div>
+    </div>
+  </div>
+
+  <!-- BADGES -->
+  <div class="badge-row">
+    <span class="badge bronze" id="b-bronze">🥉 Bronze</span>
+    <span class="badge silver" id="b-silver">🥈 Silver</span>
+    <span class="badge gold" id="b-gold">🥇 Gold</span>
+    <span class="badge platinum" id="b-platinum">💎 Platinum</span>
+  </div>
+  <div class="badge-desc" id="badge-desc">Answer quiz questions to earn badges. Bronze = 3 correct · Silver = 6 · Gold = 10 · Platinum = 15 across all sessions.</div>
+
+  <!-- GENO -->
+  <div class="geno-invite">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <div>
+      <p><strong>GENO has memorized the entire GSU Trades Math curriculum.</strong> Ask him why the 3-4-5 triangle works, how to calculate roof pitch, or how electricians use right triangles to run conduit. He answers in 32 languages, 24/7.</p>
+      <button class="geno-btn" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">💬 Ask GENO about triangles →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CANVAS SETUP ──
+const canvas = document.getElementById('tri-canvas');
+const ctx = canvas.getContext('2d');
+const GOLD = '#C9A84C';
+const GREEN = '#1A8B7F';
+const CREAM = '#F5F1E8';
+const DIM = 'rgba(245,241,232,.25)';
+
+if (!ctx) {
+  document.getElementById('static-fallback').style.display = 'block';
+  canvas.style.display = 'none';
+}
+
+// Canvas logical size
+const CW = 680, CH = 400;
+canvas.width = CW; canvas.height = CH;
+
+// Triangle vertices in logical coords (origin = bottom-left of right angle)
+// A = right angle (bottom-left), B = bottom-right (run), C = top (rise)
+let pts = { A: {x:100, y:300}, B: {x:340, y:300}, C: {x:100, y:80} };
+let dragging = null;
+let snapOn = false;
+let mode = 'explore';
+let score = 0, total = 0, streak = 0;
+
+function toLogical(e) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = CW / rect.width, scaleY = CH / rect.height;
+  const touch = e.touches ? e.touches[0] : e;
+  return { x: (touch.clientX - rect.left) * scaleX, y: (touch.clientY - rect.top) * scaleY };
+}
+
+function dist(p, q) { return Math.sqrt((p.x-q.x)**2 + (p.y-q.y)**2); }
+
+function hitTest(p) {
+  const r = 18;
+  for (const k of ['A','B','C']) if (dist(p, pts[k]) < r) return k;
+  return null;
+}
+
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+function snap(v) { return snapOn ? Math.round(v) : Math.round(v * 10) / 10; }
+
+// Convert canvas coords to "real" units (1 unit = 40px)
+const SCALE = 40;
+function getRise() { return snap(Math.abs(pts.C.y - pts.A.y) / SCALE); }
+function getRun()  { return snap(Math.abs(pts.B.x - pts.A.x) / SCALE); }
+function getHyp()  { return snap(Math.sqrt(getRise()**2 + getRun()**2)); }
+function getAngA() { return snap(Math.atan2(getRise(), getRun()) * 180 / Math.PI); }
+function getPitch(){ const r = getRun(); return r === 0 ? '∞' : snap(getRise() / r); }
+
+function updateReadout() {
+  const rise = getRise(), run = getRun(), hyp = getHyp();
+  const angA = getAngA(), pitch = getPitch();
+  document.getElementById('r-rise').textContent = rise.toFixed(1);
+  document.getElementById('r-run').textContent = run.toFixed(1);
+  document.getElementById('r-hyp').textContent = hyp.toFixed(1);
+  document.getElementById('r-angA').textContent = typeof angA === 'number' ? angA.toFixed(1) + '°' : angA;
+  document.getElementById('r-pitch').textContent = typeof pitch === 'number' ? pitch.toFixed(2) : pitch;
+  const a2 = (rise**2).toFixed(1), b2 = (run**2).toFixed(1), c2 = (hyp**2).toFixed(1);
+  const check = Math.abs(rise**2 + run**2 - hyp**2) < 0.5;
+  document.getElementById('r-proof').textContent = `${a2} + ${b2} = ${c2} ${check ? '✓' : '≈'}`;
+}
+
+function draw() {
+  ctx.clearRect(0, 0, CW, CH);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(201,168,76,.06)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < CW; x += SCALE) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke(); }
+  for (let y = 0; y < CH; y += SCALE) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke(); }
+
+  const {A, B, C} = pts;
+
+  // Right angle marker at A
+  const sz = 16;
+  ctx.strokeStyle = 'rgba(201,168,76,.5)';
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(A.x, A.y - sz, sz, sz);
+
+  // Triangle fill
+  ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y); ctx.lineTo(C.x,C.y); ctx.closePath();
+  ctx.fillStyle = 'rgba(201,168,76,.07)';
+  ctx.fill();
+
+  // Sides
+  const drawSide = (p1, p2, color, lw) => {
+    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y);
+    ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.stroke();
+  };
+  drawSide(A, B, GOLD, 2.5);   // run
+  drawSide(A, C, GOLD, 2.5);   // rise
+  drawSide(B, C, GREEN, 3);    // hypotenuse
+
+  // Labels
+  ctx.font = 'bold 13px Arial';
+  ctx.textAlign = 'center';
+  // Run label
+  ctx.fillStyle = GOLD;
+  ctx.fillText(`Run = ${getRun().toFixed(1)}`, (A.x+B.x)/2, A.y + 22);
+  // Rise label
+  ctx.save();
+  ctx.translate(A.x - 24, (A.y+C.y)/2);
+  ctx.fillText(`Rise = ${getRise().toFixed(1)}`, 0, 0);
+  ctx.restore();
+  // Hyp label
+  ctx.fillStyle = GREEN;
+  const mx = (B.x+C.x)/2, my = (B.y+C.y)/2;
+  const ang = Math.atan2(C.y-B.y, C.x-B.x);
+  ctx.save();
+  ctx.translate(mx, my);
+  ctx.rotate(ang);
+  ctx.fillText(`c = ${getHyp().toFixed(1)}`, 0, -10);
+  ctx.restore();
+
+  // Angle arc at A
+  const runLen = dist(A,B), riseLen = dist(A,C);
+  if (runLen > 10 && riseLen > 10) {
+    const angRad = Math.atan2(riseLen, runLen);
+    ctx.beginPath();
+    ctx.arc(A.x, A.y, 30, -angRad, 0);
+    ctx.strokeStyle = 'rgba(245,241,232,.4)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(245,241,232,.6)';
+    ctx.font = '11px Arial';
+    ctx.fillText(getAngA().toFixed(0)+'°', A.x + 38, A.y - 8);
+  }
+
+  // Drag handles
+  const drawHandle = (p, active) => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, Math.PI*2);
+    ctx.fillStyle = active ? GOLD : 'rgba(201,168,76,.4)';
+    ctx.fill();
+    ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke();
+  };
+  drawHandle(A, dragging==='A'); drawHandle(B, dragging==='B'); drawHandle(C, dragging==='C');
+
+  // Instruction hint
+  if (!dragging) {
+    ctx.fillStyle = 'rgba(245,241,232,.2)';
+    ctx.font = '12px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText('Drag the gold handles', 8, 18);
+  }
+}
+
+// ── DRAG EVENTS ──
+function startDrag(e) { e.preventDefault(); const p = toLogical(e); dragging = hitTest(p); }
+function moveDrag(e) {
+  if (!dragging) return; e.preventDefault();
+  const p = toLogical(e);
+  const margin = 20;
+  if (dragging === 'B') {
+    pts.B.x = clamp(p.x, pts.A.x + SCALE, CW - margin);
+  } else if (dragging === 'C') {
+    pts.C.y = clamp(p.y, margin, pts.A.y - SCALE);
+    pts.C.x = pts.A.x; // keep rise vertical
+  } else if (dragging === 'A') {
+    const newX = clamp(p.x, margin, pts.B.x - SCALE);
+    const newY = clamp(p.y, pts.C.y + SCALE, CH - margin);
+    const dx = newX - pts.A.x, dy = newY - pts.A.y;
+    pts.A.x = newX; pts.A.y = newY;
+    pts.B.y = newY;
+    pts.C.x = newX; pts.C.y += dy;
+  }
+  draw(); updateReadout();
+}
+function endDrag() { dragging = null; draw(); }
+
+canvas.addEventListener('mousedown', startDrag);
+canvas.addEventListener('mousemove', moveDrag);
+canvas.addEventListener('mouseup', endDrag);
+canvas.addEventListener('touchstart', startDrag, {passive:false});
+canvas.addEventListener('touchmove', moveDrag, {passive:false});
+canvas.addEventListener('touchend', endDrag);
+
+// ── PRESETS ──
+function setPreset(rise, run, _) {
+  const cx = 100, cy = 300;
+  pts.A = {x:cx, y:cy};
+  pts.B = {x:cx + run*SCALE, y:cy};
+  pts.C = {x:cx, y:cy - rise*SCALE};
+  // Center in canvas
+  const midX = (pts.A.x + pts.B.x)/2;
+  const shift = CW/2 - midX;
+  ['A','B','C'].forEach(k => pts[k].x += shift);
+  draw(); updateReadout();
+}
+
+function toggleSnap() { snapOn = document.getElementById('snap-cb').checked; updateReadout(); }
+
+// ── QUIZ ──
+const QUESTIONS = [
+  { q:"A roof framing triangle has a rise of 6 ft and a run of 8 ft. What is the hypotenuse (rafter length)?", opts:["10 ft","12 ft","14 ft","9 ft"], ans:0, exp:"6² + 8² = 36 + 64 = 100. √100 = 10 ft. The classic 3-4-5 doubled." },
+  { q:"A stair stringer has a rise of 7 in and a run of 11 in per step. What is the pitch ratio?", opts:["0.64","1.57","0.78","1.43"], ans:0, exp:"Pitch = Rise ÷ Run = 7 ÷ 11 = 0.636. Round to 0.64." },
+  { q:"An electrician runs conduit diagonally across a 9 ft × 12 ft room corner-to-corner. How long is the conduit?", opts:["15 ft","16 ft","13 ft","21 ft"], ans:0, exp:"9² + 12² = 81 + 144 = 225. √225 = 15 ft. Another 3-4-5 family." },
+  { q:"A mason checks a wall corner using the 3-4-5 rule. They mark 3 ft on one wall and 4 ft on the other. The diagonal must measure exactly:", opts:["5 ft","6 ft","7 ft","4.5 ft"], ans:0, exp:"3² + 4² = 9 + 16 = 25. √25 = 5. This is how trades have squared corners for centuries." },
+  { q:"A ramp rises 3 ft over a horizontal run of 36 ft. What is the pitch (rise ÷ run)?", opts:["1:12","1:10","1:8","1:6"], ans:0, exp:"3 ÷ 36 = 1/12. ADA requires 1:12 maximum ramp pitch — now you know why." },
+  { q:"The hypotenuse of a right triangle is 13 ft and the rise is 5 ft. What is the run?", opts:["12 ft","11 ft","10 ft","8 ft"], ans:0, exp:"c² - a² = b². 13² - 5² = 169 - 25 = 144. √144 = 12 ft." },
+  { q:"A framer sets a rafter with a 4-in rise per 12-in run. What angle does this make with the horizontal?", opts:["18.4°","30°","45°","22.6°"], ans:0, exp:"arctan(4/12) = arctan(0.333) ≈ 18.4°. This is called a '4 in 12 pitch' roof." },
+  { q:"Two plumbers are running pipe. One runs 6 ft up, one runs 8 ft across. What length of pipe connects them diagonally?", opts:["10 ft","12 ft","7 ft","11 ft"], ans:0, exp:"6² + 8² = 36 + 64 = 100. √100 = 10 ft." },
+  { q:"A 45° right triangle has equal rise and run of 5 ft each. What is the hypotenuse?", opts:["7.07 ft","6 ft","8 ft","10 ft"], ans:0, exp:"5² + 5² = 50. √50 = 7.07 ft. This is 5√2." },
+  { q:"A window opening is 3 ft wide and 4 ft tall. What is the diagonal measurement (for cutting a brace)?", opts:["5 ft","6 ft","4.5 ft","7 ft"], ans:0, exp:"3² + 4² = 25. √25 = 5 ft. The 3-4-5 triangle appears everywhere in construction." },
+];
+
+let qIdx = 0, qOrder = [], answered = false;
+function shuffle(arr) { for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr; }
+
+function startQuiz() {
+  qOrder = shuffle([...Array(QUESTIONS.length).keys()]);
+  qIdx = 0; score = 0; total = 0;
+  showQ();
+}
+
+function showQ() {
+  answered = false;
+  const q = QUESTIONS[qOrder[qIdx % qOrder.length]];
+  document.getElementById('quiz-q').textContent = q.q;
+  const opts = document.getElementById('quiz-opts');
+  opts.innerHTML = q.opts.map((o,i) => `<button class="quiz-opt" onclick="answerQ(${i})">${o}</button>`).join('');
+  document.getElementById('quiz-fb').style.display = 'none';
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('score-line').textContent = `Question ${total+1} · Score: ${score}/${total}`;
+}
+
+function answerQ(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[qOrder[qIdx % qOrder.length]];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach((o,idx) => {
+    if (idx === q.ans) o.classList.add('correct');
+    else if (idx === i) o.classList.add('wrong');
+    o.disabled = true;
+  });
+  const correct = i === q.ans;
+  if (correct) { score++; streak++; } else { streak = 0; }
+  total++;
+  const fb = document.getElementById('quiz-fb');
+  fb.className = 'quiz-feedback ' + (correct ? 'pass' : 'fail');
+  fb.innerHTML = (correct ? '✅ Correct! ' : '❌ Not quite. ') + q.exp;
+  fb.style.display = 'block';
+  document.getElementById('next-btn').style.display = 'inline-flex';
+  document.getElementById('score-line').textContent = `Score: ${score}/${total} · Streak: ${streak}`;
+  updateBadges();
+}
+
+function nextQ() { qIdx++; showQ(); }
+
+function updateBadges() {
+  const thresholds = {bronze:3, silver:6, gold:10, platinum:15};
+  for (const [name, thresh] of Object.entries(thresholds)) {
+    const el = document.getElementById('b-' + name);
+    if (score >= thresh) { el.classList.add('earned'); }
+  }
+  const earned = score >= 15 ? 'Platinum' : score >= 10 ? 'Gold' : score >= 6 ? 'Silver' : score >= 3 ? 'Bronze' : null;
+  if (earned) document.getElementById('badge-desc').textContent = `🎉 ${earned} earned! Keep going — play again for the next badge.`;
+}
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('btn-explore').className = 'mode-btn' + (m==='explore'?' active':'');
+  document.getElementById('btn-quiz').className = 'mode-btn' + (m==='quiz'?' active':'');
+  document.getElementById('explore-panel').style.display = m==='explore'?'grid':'none';
+  document.getElementById('quiz-panel').style.display = m==='quiz'?'block':'none';
+  if (m==='quiz') startQuiz();
+}
+
+// ── INIT ──
+setPreset(4, 3, 5);
+draw();
+updateReadout();
+</script>
+</body>
+</html>

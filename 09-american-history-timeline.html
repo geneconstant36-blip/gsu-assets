@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The American Story — GSU History Animated Timeline</title>
+<meta name="description" content="12 pivotal moments in American history — animated, explained, and contextualized. The story nobody told you straight. Free from Global Sovereign University."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#1A8B7F;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#C9A84C;margin-bottom:6px}
+.subtitle{font-size:.95rem;color:rgba(245,241,232,.65);margin-bottom:20px;line-height:1.6}
+.teach{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:20px 22px;margin-bottom:20px}
+.teach h2{font-family:Georgia,serif;font-size:1.1rem;color:#C9A84C;margin-bottom:10px}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.75);line-height:1.65;margin-bottom:6px}
+.teach p:last-child{margin-bottom:0}
+.teach strong{color:#F5F1E8}
+/* TIMELINE NAV */
+.era-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.era-btn{font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1px solid rgba(201,168,76,.2);background:transparent;color:rgba(245,241,232,.45);cursor:pointer;transition:all .15s}
+.era-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+/* CANVAS */
+.canvas-wrap{background:#05080a;border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden;margin-bottom:14px;position:relative}
+canvas{display:block;width:100%}
+/* EVENT CARD */
+.event-card{background:#0a0f12;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:20px 22px;margin-bottom:16px;display:none}
+.event-card.visible{display:block}
+.event-year{font-family:Georgia,serif;font-size:1.8rem;font-weight:700;color:#C9A84C;line-height:1}
+.event-title{font-family:Georgia,serif;font-size:1.1rem;color:#F5F1E8;margin:6px 0 10px}
+.event-body{font-size:.88rem;color:rgba(245,241,232,.75);line-height:1.7;margin-bottom:10px}
+.event-sig{font-size:.82rem;font-style:italic;color:rgba(201,168,76,.7);border-left:2px solid rgba(201,168,76,.3);padding-left:12px;margin-bottom:10px;line-height:1.6}
+.event-why{font-size:.82rem;color:rgba(26,139,127,.8);margin-bottom:0}
+.event-why strong{color:#1A8B7F}
+/* CONTROLS */
+.ctrl-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.c-btn{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.6);cursor:pointer}
+.c-btn.gold{background:#C9A84C;color:#000;border-color:#C9A84C}
+.progress-bar{flex:1;height:4px;background:rgba(201,168,76,.1);border-radius:2px;overflow:hidden;min-width:100px}
+.progress-fill{height:100%;background:#C9A84C;transition:width .3s}
+.event-counter{font-size:.75rem;color:rgba(245,241,232,.35);white-space:nowrap}
+/* QUIZ */
+.mode-row{display:flex;gap:10px;margin-bottom:16px}
+.mode-btn{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.5);cursor:pointer}
+.mode-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.quiz-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:20px;margin-bottom:16px;display:none}
+.quiz-q{font-family:Georgia,serif;font-size:.95rem;color:#F5F1E8;margin-bottom:12px;line-height:1.5}
+.qopt{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:9px 14px;font-size:.84rem;color:rgba(245,241,232,.7);cursor:pointer;text-align:left;display:block;width:100%;margin-bottom:7px}
+.qopt.correct{border-color:#1A8B7F;background:rgba(26,139,127,.1);color:#F5F1E8}
+.qopt.wrong{border-color:#e53935;background:rgba(229,57,53,.08)}
+.qfb{font-size:.84rem;line-height:1.6;padding:10px 14px;border-radius:6px;margin-bottom:10px;display:none}
+.qfb.pass{background:rgba(26,139,127,.1);border:1px solid rgba(26,139,127,.3)}
+.qfb.fail{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.2)}
+.next-btn{background:#C9A84C;color:#000;font-weight:800;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border:none;border-radius:5px;cursor:pointer;display:none}
+.score-ln{font-size:.75rem;color:rgba(245,241,232,.35);margin-top:8px}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.badge{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3}
+.badge.earned{opacity:1}
+.badge.bronze{color:#CD7F32;border-color:#CD7F32;background:rgba(205,127,50,.1)}
+.badge.silver{color:#C0C0C0;border-color:#C0C0C0;background:rgba(192,192,192,.1)}
+.badge.gold{color:#C9A84C;border-color:#C9A84C;background:rgba(201,168,76,.1)}
+.badge.platinum{color:#E5E4E2;border-color:#E5E4E2;background:rgba(229,228,226,.08)}
+.geno-invite{background:#000;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.geno-invite img{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-invite p{font-size:.82rem;color:rgba(245,241,232,.7);line-height:1.55}
+.geno-invite strong{color:#C9A84C}
+.geno-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1A8B7F;cursor:pointer;background:none;border:none;padding:0}
+@media(max-width:600px){h1{font-size:1.5rem}.era-tabs{gap:4px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU American History · Animated Timeline</div>
+  <h1>The American Story</h1>
+  <p class="subtitle">Twelve pivotal moments — from a declaration that changed the world to the digital age that is rewriting it. Not a list of dates to memorize. A story of ideas, choices, and consequences that still live in your life today.</p>
+
+  <div class="teach">
+    <h2>History Is Not a List of Dates</h2>
+    <p>Every event in American history was a <strong>choice made by real people</strong> under real pressure — not the inevitable unfolding of some grand plan. Understanding why things happened is more valuable than memorizing when. The sovereign citizen asks not just "what happened?" but <strong>"what were the stakes, and who had to decide?"</strong></p>
+  </div>
+
+  <div class="mode-row">
+    <button class="mode-btn active" id="btn-ex" onclick="setMode('explore')">Read the Story</button>
+    <button class="mode-btn" id="btn-qz" onclick="setMode('quiz')">Quiz Me</button>
+  </div>
+
+  <div class="era-tabs" id="era-tabs"></div>
+
+  <div class="canvas-wrap">
+    <canvas id="hist" width="920" height="120"></canvas>
+  </div>
+
+  <div class="ctrl-row">
+    <button class="c-btn" onclick="prevEvent()">◀ Previous</button>
+    <button class="c-btn gold" onclick="nextEvent()">Next ▶</button>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="event-counter" id="event-counter">Event 1 of 12</div>
+  </div>
+
+  <div class="event-card visible" id="event-card">
+    <div class="event-year" id="ev-year"></div>
+    <div class="event-title" id="ev-title"></div>
+    <div class="event-body" id="ev-body"></div>
+    <div class="event-sig" id="ev-sig"></div>
+    <div class="event-why" id="ev-why"></div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-wrap" id="quiz-wrap">
+    <div class="quiz-q" id="quiz-q"></div>
+    <div id="quiz-opts"></div>
+    <div class="qfb" id="qfb"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQ()">Next Question →</button>
+    <div class="score-ln" id="score-ln"></div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge bronze" id="b-bronze">🥉 Bronze</span>
+    <span class="badge silver" id="b-silver">🥈 Silver</span>
+    <span class="badge gold" id="b-gold">🥇 Gold</span>
+    <span class="badge platinum" id="b-platinum">💎 Platinum</span>
+  </div>
+
+  <div class="geno-invite">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <div>
+      <p><strong>GENO has memorized the full GSU American History curriculum</strong> — the founding era, the Civil War, the industrial age, both World Wars, the Civil Rights movement, and the digital revolution. Ask him what Thomas Paine actually wrote, or why Reconstruction failed.</p>
+      <button class="geno-btn" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">💬 Ask GENO about American history →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const EVENTS=[
+  {
+    year:1776, era:'Founding',
+    title:'The Declaration of Independence',
+    body:'On July 4, 1776, the Continental Congress formally adopted a document written primarily by Thomas Jefferson declaring that thirteen American colonies were no longer subject to British rule. It was the first time a people had formally declared not just independence, but a philosophical basis for it: that rights are not granted by governments, but are inherent to all people — and that governments exist only to protect those rights. When they fail, the people have the right to alter or abolish them.',
+    sig:'"We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness." — Declaration of Independence, 1776',
+    why:'<strong>Why it still matters:</strong> The Declaration\'s core argument — that rights precede government — is the philosophical foundation of every civil rights movement, every protest, and every challenge to governmental overreach that followed. It is not just a historical document. It is the operating manual.'
+  },
+  {
+    year:1787, era:'Founding',
+    title:'The Constitutional Convention',
+    body:'Fifty-five delegates gathered in Philadelphia in the summer of 1787 to fix the broken Articles of Confederation — the first attempt at a national government that had proved almost entirely ineffective. What emerged was entirely new: a Constitution creating a federal republic with three separate branches, checks and balances, and a Bill of Rights soon added. James Madison, called the Father of the Constitution, engineered a system designed not to trust any single person or faction with too much power.',
+    sig:'"If men were angels, no government would be necessary. If angels were to govern men, neither external nor internal controls on government would be necessary." — James Madison, Federalist No. 51',
+    why:'<strong>Why it still matters:</strong> The separation of powers, the Bill of Rights, and federalism are not ancient history — they are the rules of the current game. Every Supreme Court case, every veto, every free speech dispute is the Constitution operating in real time.'
+  },
+  {
+    year:1803, era:'Expansion',
+    title:'The Louisiana Purchase',
+    body:'For $15 million — roughly four cents per acre — President Thomas Jefferson doubled the size of the United States by purchasing 828,000 square miles of territory from Napoleon\'s France. Jefferson had no clear constitutional authority to make the deal, which troubled him greatly as a strict constitutionalist. He did it anyway, reasoning that the opportunity was too great to pass up. The purchase opened the continent and made America\'s westward expansion inevitable.',
+    sig:'"The Constitution has made no provision for our holding foreign territory, still less for incorporating foreign nations into our Union. The executive, in seizing the fugitive occurrence... have done an act beyond the Constitution." — Thomas Jefferson in a private letter, 1803',
+    why:'<strong>Why it still matters:</strong> The Louisiana Purchase is the first major example of executive action that exceeded the literal text of the Constitution. This tension — between constitutional limits and practical necessity — has defined American governance ever since.'
+  },
+  {
+    year:1861, era:'Civil War',
+    title:'The Civil War Begins',
+    body:'On April 12, 1861, Confederate forces opened fire on Fort Sumter in South Carolina, beginning the bloodiest conflict in American history. The war\'s root cause was slavery — specifically the question of whether it would expand into new territories. Southern states, fearing their way of life and economic system was threatened, had seceded from the Union. Over four years, 620,000 Americans died — more than in all other American wars combined through Vietnam.',
+    sig:'"A house divided against itself cannot stand. I believe this government cannot endure, permanently, half slave and half free." — Abraham Lincoln, 1858',
+    why:'<strong>Why it still matters:</strong> The Civil War settled by force what the Constitution had left unresolved by compromise: whether the United States was one nation or a voluntary compact of states. The 13th, 14th, and 15th Amendments that followed are still actively interpreted in courts today.'
+  },
+  {
+    year:1865, era:'Civil War',
+    title:'Emancipation and Reconstruction',
+    body:'The 13th Amendment, ratified in December 1865, formally abolished slavery in the United States. What followed — Reconstruction — was one of the most ambitious and ultimately tragic experiments in American history: an attempt to rebuild the South, integrate four million formerly enslaved people into civic life, and remake a society. It produced Black senators, representatives, and business owners. Then it was deliberately dismantled, replaced with Jim Crow laws and a century of enforced segregation.',
+    sig:'"We have the wolf by the ear, and we can neither hold him, nor safely let him go. Justice is in one scale, and self-preservation in the other." — Thomas Jefferson on slavery (1820) — a contradiction the nation finally confronted at enormous cost.',
+    why:'<strong>Why it still matters:</strong> Reconstruction\'s failure — the withdrawal of federal protection and the subsequent rise of Jim Crow — produced inequalities whose effects persist in housing, education, and wealth distribution today. Understanding what was attempted and why it was defeated is essential context for modern policy debates.'
+  },
+  {
+    year:1920, era:'Reform',
+    title:'Women\'s Suffrage — The 19th Amendment',
+    body:'On August 18, 1920, the 19th Amendment was ratified, guaranteeing women the right to vote. The suffrage movement had fought for over 70 years — since the 1848 Seneca Falls Convention. The final ratification came down to a single vote in the Tennessee legislature, cast by a 24-year-old who changed his vote after receiving a letter from his mother urging him to "be a good boy." The movement demonstrated that constitutional change is possible through sustained, organized civic action.',
+    sig:'"The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any State on account of sex." — 19th Amendment, U.S. Constitution, 1920',
+    why:'<strong>Why it still matters:</strong> The suffrage movement is the model for all subsequent constitutional amendments by popular movement. It proved that a democratic republic can correct its own moral failures — but only through sustained, organized, multigenerational effort.'
+  },
+  {
+    year:1941, era:'World Wars',
+    title:'America Enters World War II',
+    body:'The December 7, 1941 attack on Pearl Harbor brought the United States into the most destructive conflict in human history. Over the next four years, 16 million Americans served in the military. The U.S. became what Franklin Roosevelt called "the arsenal of democracy" — producing half the world\'s weapons while fighting on two fronts simultaneously. The war ended with atomic bombs dropped on Hiroshima and Nagasaki — a decision that remains contested to this day.',
+    sig:'"Yesterday, December 7, 1941 — a date which will live in infamy — the United States of America was suddenly and deliberately attacked by naval and air forces of the Empire of Japan." — Franklin D. Roosevelt, Address to Congress, December 8, 1941',
+    why:'<strong>Why it still matters:</strong> World War II produced the post-war international order — the United Nations, NATO, the Marshall Plan, the nuclear age, the Cold War — and established American military and economic dominance that shaped the entire second half of the 20th century.'
+  },
+  {
+    year:1954, era:'Civil Rights',
+    title:'Brown v. Board of Education',
+    body:'On May 17, 1954, the U.S. Supreme Court unanimously ruled in Brown v. Board of Education that racial segregation in public schools was unconstitutional — overturning the 1896 Plessy v. Ferguson "separate but equal" doctrine. Chief Justice Earl Warren\'s unanimous opinion declared that separate educational facilities are inherently unequal. The decision triggered massive resistance in the South and set in motion the legal dismantling of Jim Crow, culminating in the Civil Rights Act of 1964 and the Voting Rights Act of 1965.',
+    sig:'"We conclude that, in the field of public education, the doctrine of \'separate but equal\' has no place. Separate educational facilities are inherently unequal." — Chief Justice Earl Warren, Brown v. Board of Education, 1954',
+    why:'<strong>Why it still matters:</strong> Brown v. Board established the principle that equal protection under the 14th Amendment is not satisfied by formal equality but requires substantive equality of opportunity. This reasoning drives modern equal protection jurisprudence in education, housing, employment, and voting rights.'
+  },
+  {
+    year:1963, era:'Civil Rights',
+    title:'The March on Washington',
+    body:'On August 28, 1963, over 250,000 people gathered at the Lincoln Memorial in Washington, D.C. — the largest demonstration in American history to that point. The march demanded civil and economic rights for Black Americans and culminated in Dr. Martin Luther King Jr.\'s "I Have a Dream" speech. The event built the political momentum that led directly to the Civil Rights Act of 1964, which outlawed discrimination based on race, color, religion, sex, or national origin.',
+    sig:'"I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character." — Dr. Martin Luther King Jr., August 28, 1963',
+    why:'<strong>Why it still matters:</strong> The March on Washington demonstrated the power of nonviolent mass mobilization in a democracy. It showed that public moral pressure, sustained and organized, can move legislation that seemed politically impossible — a lesson that applies to every subsequent social movement.'
+  },
+  {
+    year:1969, era:'Space Age',
+    title:'Moon Landing — Apollo 11',
+    body:'On July 20, 1969, Neil Armstrong became the first human to walk on the Moon, fulfilling John F. Kennedy\'s 1961 challenge to land a man on the Moon before the decade ended. The Apollo program employed 400,000 people, cost $25 billion ($175 billion in today\'s dollars), and produced the integrated circuit and computing advances that directly enabled the digital revolution. It was the largest peacetime mobilization of human and industrial effort in history.',
+    sig:'"That\'s one small step for man, one giant leap for mankind." — Neil Armstrong, July 20, 1969',
+    why:'<strong>Why it still matters:</strong> Apollo demonstrated that a democracy can execute a decade-long, multi-hundred-billion-dollar technical project with a fixed deadline and succeed. The technologies it pioneered — miniaturized electronics, software, materials science — are in every device you own.'
+  },
+  {
+    year:1989, era:'Cold War End',
+    title:'The Fall of the Berlin Wall',
+    body:'On November 9, 1989, East German authorities unexpectedly announced that citizens could freely cross the Berlin Wall — the physical symbol of the Cold War divide between Soviet communism and Western democracy. Within hours, crowds began dismantling the Wall by hand. Within two years, the Soviet Union dissolved. The Cold War — which had consumed trillions of dollars, produced 50,000 nuclear warheads, and shaped every American foreign policy decision for 44 years — was over.',
+    sig:'"Mr. Gorbachev, tear down this wall!" — President Ronald Reagan, Brandenburg Gate, Berlin, June 12, 1987',
+    why:'<strong>Why it still matters:</strong> The Cold War\'s end created the unipolar moment — a period of American geopolitical dominance — that shaped the 1990s expansion, the war on terror, and the current era of great-power competition with China and Russia. Every current foreign policy debate is downstream of 1989.'
+  },
+  {
+    year:2001, era:'Modern',
+    title:'September 11 and the Age of Security',
+    body:'On September 11, 2001, 19 al-Qaeda hijackers killed 2,977 Americans in coordinated attacks on the World Trade Center and the Pentagon. The attacks triggered the longest wars in American history (Afghanistan 2001–2021, Iraq 2003–2011), the creation of the Department of Homeland Security, the PATRIOT Act, mass surveillance programs, and a fundamental reshaping of American civil liberties and foreign policy. The decisions made in the months after 9/11 still govern airport security, immigration policy, and intelligence law today.',
+    sig:'"Freedom itself was attacked this morning by a faceless coward, and freedom will be defended." — President George W. Bush, September 11, 2001',
+    why:'<strong>Why it still matters:</strong> The post-9/11 security architecture — surveillance, detention powers, executive authority over war — represents the largest expansion of government power since World War II. Many provisions remain active. The tension between security and liberty that 9/11 forced open is still unresolved.'
+  },
+];
+
+const CW=920,CH=120;
+const canvas=document.getElementById('hist');
+const ctx=canvas.getContext('2d');
+canvas.width=CW;canvas.height=CH;
+const GOLD='#C9A84C',GREEN='#1A8B7F';
+
+let current=0;
+
+const ERAS=[...new Set(EVENTS.map(e=>e.era))];
+const ERA_COLORS={'Founding':'#4a86e8','Expansion':'#1A8B7F','Civil War':'#e53935','Reform':'#ff9800','World Wars':'#9c27b0','Civil Rights':'#C9A84C','Space Age':'#00bcd4','Cold War End':'#8bc34a','Modern':'#f5f1e8'};
+
+function drawTimeline(){
+  ctx.clearRect(0,0,CW,CH);
+  ctx.fillStyle='#05080a';ctx.fillRect(0,0,CW,CH);
+
+  const pad=40, tw=CW-pad*2;
+  const minY=EVENTS[0].year, maxY=EVENTS[EVENTS.length-1].year;
+  const toX=y=>pad+(y-minY)/(maxY-minY)*tw;
+
+  // Line
+  ctx.strokeStyle='rgba(201,168,76,.2)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(pad,CH/2);ctx.lineTo(pad+tw,CH/2);ctx.stroke();
+
+  // Era color bands
+  EVENTS.forEach((ev,i)=>{
+    if(i<EVENTS.length-1){
+      const x1=toX(ev.year), x2=toX(EVENTS[i+1].year);
+      ctx.fillStyle=(ERA_COLORS[ev.era]||GOLD).replace(')',',0.06)').replace('rgb','rgba');
+      ctx.fillRect(x1,0,x2-x1,CH);
+    }
+  });
+
+  // Events
+  EVENTS.forEach((ev,i)=>{
+    const x=toX(ev.year);
+    const isActive=i===current;
+    const above=i%2===0;
+    const r=isActive?9:5;
+
+    // Connector
+    ctx.strokeStyle=isActive?(ERA_COLORS[ev.era]||GOLD):'rgba(201,168,76,.2)';
+    ctx.lineWidth=isActive?1.5:1;
+    ctx.beginPath();ctx.moveTo(x,CH/2);ctx.lineTo(x,above?18:CH-18);ctx.stroke();
+
+    // Dot
+    ctx.beginPath();ctx.arc(x,CH/2,r,0,Math.PI*2);
+    ctx.fillStyle=isActive?(ERA_COLORS[ev.era]||GOLD):'rgba(201,168,76,.35)';
+    ctx.fill();
+    if(isActive){ctx.strokeStyle='#000';ctx.lineWidth=2;ctx.stroke();}
+
+    // Year
+    ctx.fillStyle=isActive?(ERA_COLORS[ev.era]||GOLD):'rgba(201,168,76,.5)';
+    ctx.font=isActive?'bold 10px Arial':'9px Arial';
+    ctx.textAlign='center';
+    ctx.fillText(ev.year,x,above?12:CH-4);
+  });
+
+  // Era labels at bottom
+  ctx.fillStyle='rgba(201,168,76,.2)';ctx.font='8px Arial';ctx.textAlign='center';
+  const eraDone=new Set();
+  EVENTS.forEach(ev=>{
+    if(!eraDone.has(ev.era)){
+      eraDone.add(ev.era);
+      ctx.fillStyle=(ERA_COLORS[ev.era]||'rgba(201,168,76,.3)').replace('rgb','rgba').replace(')',',0.5)');
+      // Don't draw era labels — too crowded
+    }
+  });
+}
+
+function buildEraTabs(){
+  const tabs=document.getElementById('era-tabs');
+  const eras=[{label:'All',val:'all'},...ERAS.map(e=>({label:e,val:e}))];
+  tabs.innerHTML=eras.map(e=>`<button class="era-btn ${e.val==='all'?'active':''}" onclick="filterEra('${e.val}',this)" style="${ERA_COLORS[e.val]?'border-color:'+ERA_COLORS[e.val]+';':''}">${e.label}</button>`).join('');
+}
+
+let filteredEvents=EVENTS;
+function filterEra(era,btn){
+  document.querySelectorAll('.era-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filteredEvents=era==='all'?EVENTS:EVENTS.filter(e=>e.era===era);
+  current=0;
+  showEvent(0);
+}
+
+function showEvent(idx){
+  const ev=EVENTS[idx];
+  document.getElementById('ev-year').textContent=ev.year;
+  document.getElementById('ev-title').textContent=ev.title;
+  document.getElementById('ev-body').textContent=ev.body;
+  document.getElementById('ev-sig').textContent=ev.sig;
+  document.getElementById('ev-why').innerHTML=ev.why;
+  document.getElementById('event-card').className='event-card visible';
+  const pct=((idx+1)/EVENTS.length)*100;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('event-counter').textContent=`Event ${idx+1} of ${EVENTS.length}`;
+  drawTimeline();
+}
+
+function nextEvent(){
+  if(current<EVENTS.length-1){current++;showEvent(current);}
+}
+function prevEvent(){
+  if(current>0){current--;showEvent(current);}
+}
+
+buildEraTabs();
+showEvent(0);
+
+// QUIZ
+const QS=[
+  {q:"What year was the Declaration of Independence adopted, and what was its core philosophical claim?",opts:["1776 — that rights are inherent to people and government exists only to protect them","1787 — that a strong federal government is necessary","1783 — that America had won the Revolutionary War","1789 — that the Constitution should replace the Articles of Confederation"],ans:0,exp:"July 4, 1776. Jefferson's core argument — that rights precede government and are not granted by it — was revolutionary. Governments that fail to protect rights can be altered or abolished. This remains the founding logic of American civic life."},
+  {q:"What did James Madison design into the Constitution, and why?",opts:["Separation of powers and checks and balances — because no single person or faction should be trusted with too much power","A strong executive — because the Articles of Confederation had been too weak","A bicameral legislature only","Protections for slavery that would prevent civil war"],ans:0,exp:"Madison engineered a system of divided power precisely because he believed all humans and factions are self-interested. Checks and balances force cooperation and prevent any single branch from dominating the others."},
+  {q:"The Louisiana Purchase doubled U.S. territory for how much?",opts:["$15 million (about 4 cents per acre)","$100 million","$3 million","It was a military conquest, not a purchase"],ans:0,exp:"$15 million — roughly $340 million today. Jefferson was deeply troubled because he saw no clear constitutional authority for the purchase. He did it anyway, establishing a precedent for executive action beyond the literal text of the Constitution."},
+  {q:"What was the root cause of the Civil War, according to Confederate declarations of secession themselves?",opts:["The preservation and expansion of slavery","Tariff disputes only","Cultural differences only","States' rights in general"],ans:0,exp:"Confederate declarations of secession (South Carolina, Mississippi, Georgia, Texas) explicitly named slavery as the primary cause. The 'states' rights' framing became prominent after the war as a retrospective justification. The primary right being asserted was the right to hold enslaved people."},
+  {q:"What happened to Reconstruction, and why does it matter?",opts:["It was deliberately dismantled, replaced with Jim Crow laws that enforced segregation for a century","It succeeded fully — racial equality was achieved by 1880","It was ended by the Civil Rights Act of 1964","It was never seriously attempted"],ans:0,exp:"Reconstruction produced remarkable progress — Black senators, congressmen, landowners, and schools — then was systematically dismantled after 1877 when federal troops withdrew. The resulting Jim Crow system lasted until the 1960s. Its legacy in wealth and opportunity gaps persists today."},
+  {q:"The 19th Amendment (women's suffrage) was ratified in what year, and how long had the movement fought?",opts:["1920 — after over 70 years of organized effort since 1848","1865 — with the end of the Civil War","1913 — as part of Progressive Era reforms","1932 — during the New Deal"],ans:0,exp:"1920, ratified 72 years after the 1848 Seneca Falls Convention. The final vote came down to one Tennessee legislator who changed his vote after a letter from his mother. It proved constitutional change through sustained civic action is possible — but requires multigenerational commitment."},
+  {q:"What did the Apollo program produce beyond the Moon landing?",opts:["Integrated circuits, computing advances, and miniaturized electronics that enabled the digital revolution","Nuclear weapons","The interstate highway system","The internet"],ans:0,exp:"Apollo employed 400,000 people and spent $25 billion (≈$175B today). The demand for lightweight, reliable computers drove miniaturization of electronics that directly enabled the personal computer revolution. Every device you own contains technology descended from Apollo."},
+  {q:"What did Brown v. Board of Education (1954) overturn, and what principle did it establish?",opts:["It overturned 'separate but equal' (Plessy v. Ferguson) and established that separate facilities are inherently unequal","It integrated the U.S. military","It gave voting rights to Black Americans","It overturned Dred Scott"],ans:0,exp:"Brown overturned the 1896 Plessy v. Ferguson ruling that 'separate but equal' facilities satisfied the 14th Amendment's equal protection clause. Warren's unanimous ruling established that equal protection requires substantive equality of opportunity, not just formal equality."},
+  {q:"What is the lasting constitutional significance of post-9/11 legislation like the PATRIOT Act?",opts:["It represented the largest expansion of government surveillance and executive power since WWII — many provisions remain active","It expired in 2010","It was ruled entirely unconstitutional","It only affected non-citizens"],ans:0,exp:"Post-9/11 legislation created surveillance authorities, detention powers, and executive war-making capabilities that were entirely new to peacetime. Many remain in effect. The tension between security and civil liberties that 9/11 forced open — warrantless surveillance, indefinite detention, kill lists — is still litigated today."},
+  {q:"The March on Washington (1963) directly contributed to what legislation?",opts:["The Civil Rights Act of 1964, which outlawed discrimination based on race, color, religion, sex, or national origin","The 14th Amendment","The Voting Rights Act of 1870","Brown v. Board of Education"],ans:0,exp:"The March on Washington, with 250,000 attendees and Dr. King's 'I Have a Dream' speech, built the political momentum that pushed Congress to pass the Civil Rights Act of 1964 — the most comprehensive civil rights legislation since Reconstruction."},
+];
+
+let qIdx=0,answered=false,qScore=0,qTotal=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let qOrder=shuffle([...Array(QS.length).keys()]);
+
+function setMode(m){
+  document.getElementById('btn-ex').className='mode-btn'+(m==='explore'?' active':'');
+  document.getElementById('btn-qz').className='mode-btn'+(m==='quiz'?' active':'');
+  document.getElementById('event-card').style.display=m==='explore'?'block':'none';
+  document.getElementById('quiz-wrap').style.display=m==='quiz'?'block':'none';
+  document.querySelector('.ctrl-row').style.display=m==='explore'?'flex':'none';
+  document.getElementById('era-tabs').style.display=m==='explore'?'flex':'none';
+  if(m==='quiz'){qScore=0;qTotal=0;qIdx=0;qOrder=shuffle([...Array(QS.length).keys()]);showQ();}
+}
+function showQ(){
+  answered=false;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-opts').innerHTML=q.opts.map((o,i)=>`<button class="qopt" onclick="ansQ(${i})">${o}</button>`).join('');
+  document.getElementById('qfb').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  document.getElementById('score-ln').textContent=`Q${qTotal+1} · Score: ${qScore}/${qTotal}`;
+}
+function ansQ(i){
+  if(answered)return;answered=true;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.querySelectorAll('.qopt').forEach((o,idx)=>{
+    if(idx===q.ans)o.classList.add('correct');else if(idx===i)o.classList.add('wrong');o.disabled=true;
+  });
+  const ok=i===q.ans;if(ok)qScore++;qTotal++;
+  const fb=document.getElementById('qfb');
+  fb.className='qfb '+(ok?'pass':'fail');
+  fb.innerHTML=(ok?'✅ Correct! ':'❌ Not quite. ')+q.exp;
+  fb.style.display='block';
+  document.getElementById('next-btn').style.display='inline-flex';
+  document.getElementById('score-ln').textContent=`Score: ${qScore}/${qTotal}`;
+  const th={bronze:3,silver:6,gold:10,platinum:15};
+  for(const[n,v]of Object.entries(th))if(qScore>=v)document.getElementById('b-'+n).classList.add('earned');
+}
+function nextQ(){qIdx++;showQ();}
+</script>
+</body>
+</html>

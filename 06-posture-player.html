@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Posture Player — GSU Debate & Leadership Interactive</title>
+<meta name="description" content="Your body speaks before you do. See 10 postures and gestures, learn what they signal, and practice sovereign body language. Free from Global Sovereign University."/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 48px}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#1A8B7F;margin-bottom:8px}
+h1{font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#C9A84C;margin-bottom:6px}
+.subtitle{font-size:.95rem;color:rgba(245,241,232,.65);margin-bottom:20px;line-height:1.6}
+.teach{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:20px 22px;margin-bottom:20px}
+.teach h2{font-family:Georgia,serif;font-size:1.1rem;color:#C9A84C;margin-bottom:10px}
+.teach p{font-size:.88rem;color:rgba(245,241,232,.75);line-height:1.65;margin-bottom:6px}
+.teach p:last-child{margin-bottom:0}
+.teach strong{color:#F5F1E8}
+/* LAYOUT */
+.main-grid{display:grid;grid-template-columns:280px 1fr;gap:20px;margin-bottom:20px}
+/* FIGURE CANVAS */
+.canvas-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden}
+canvas{display:block;width:100%}
+/* POSTURE LIST */
+.posture-panel{display:flex;flex-direction:column;gap:8px}
+.posture-btn{background:#0a0800;border:1px solid rgba(201,168,76,.18);border-radius:8px;padding:12px 14px;cursor:pointer;text-align:left;transition:border-color .15s}
+.posture-btn:hover,.posture-btn.active{border-color:#C9A84C;background:rgba(201,168,76,.07)}
+.posture-btn h3{font-family:Georgia,serif;font-size:.9rem;font-weight:700;color:#C9A84C;margin-bottom:3px}
+.posture-btn p{font-size:.75rem;color:rgba(245,241,232,.5);line-height:1.4}
+.posture-btn .signal{font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-top:5px;padding:2px 8px;border-radius:4px;display:inline-block}
+.signal.power{background:rgba(26,139,127,.15);color:#1A8B7F;border:1px solid rgba(26,139,127,.3)}
+.signal.weak{background:rgba(229,57,53,.1);color:#e53935;border:1px solid rgba(229,57,53,.25)}
+.signal.mixed{background:rgba(201,168,76,.1);color:#C9A84C;border:1px solid rgba(201,168,76,.25)}
+/* DESCRIPTION */
+.desc-panel{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.desc-panel h2{font-family:Georgia,serif;font-size:1.1rem;color:#C9A84C;margin-bottom:8px}
+.desc-panel p{font-size:.88rem;color:rgba(245,241,232,.75);line-height:1.65;margin-bottom:6px}
+.desc-panel p:last-child{margin-bottom:0}
+.desc-panel strong{color:#F5F1E8}
+/* QUIZ */
+.mode-row{display:flex;gap:10px;margin-bottom:16px}
+.mode-btn{font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:5px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(245,241,232,.5);cursor:pointer}
+.mode-btn.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+.quiz-wrap{background:#0a0800;border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:20px;margin-bottom:16px;display:none}
+.quiz-q{font-family:Georgia,serif;font-size:.95rem;color:#F5F1E8;margin-bottom:12px;line-height:1.5}
+.qopt{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:9px 14px;font-size:.84rem;color:rgba(245,241,232,.7);cursor:pointer;text-align:left;display:block;width:100%;margin-bottom:7px}
+.qopt.correct{border-color:#1A8B7F;background:rgba(26,139,127,.1);color:#F5F1E8}
+.qopt.wrong{border-color:#e53935;background:rgba(229,57,53,.08)}
+.qfb{font-size:.84rem;line-height:1.6;padding:10px 14px;border-radius:6px;margin-bottom:10px;display:none}
+.qfb.pass{background:rgba(26,139,127,.1);border:1px solid rgba(26,139,127,.3)}
+.qfb.fail{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.2)}
+.next-btn{background:#C9A84C;color:#000;font-weight:800;font-size:.78rem;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border:none;border-radius:5px;cursor:pointer;display:none}
+.score-ln{font-size:.75rem;color:rgba(245,241,232,.35);margin-top:8px}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.badge{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;border:1px solid;opacity:.3}
+.badge.earned{opacity:1}
+.badge.bronze{color:#CD7F32;border-color:#CD7F32;background:rgba(205,127,50,.1)}
+.badge.silver{color:#C0C0C0;border-color:#C0C0C0;background:rgba(192,192,192,.1)}
+.badge.gold{color:#C9A84C;border-color:#C9A84C;background:rgba(201,168,76,.1)}
+.badge.platinum{color:#E5E4E2;border-color:#E5E4E2;background:rgba(229,228,226,.08)}
+.geno-invite{background:#000;border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.geno-invite img{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(201,168,76,.4);flex-shrink:0}
+.geno-invite p{font-size:.82rem;color:rgba(245,241,232,.7);line-height:1.55}
+.geno-invite strong{color:#C9A84C}
+.geno-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#1A8B7F;cursor:pointer;background:none;border:none;padding:0}
+@media(max-width:640px){.main-grid{grid-template-columns:1fr}h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">GSU Debate & Leadership · The Posture Player</div>
+  <h1>Your Body Speaks First.</h1>
+  <p class="subtitle">Before you say a word, your posture has already made a statement. Research shows people form lasting impressions within 7 seconds — and 55% of communication is body language. Select a posture below and see exactly what you're signaling.</p>
+
+  <div class="teach">
+    <h2>The Mehrabian Rule</h2>
+    <p>In any communication, <strong>55% of impact comes from body language</strong>, 38% from tone of voice, and only 7% from the actual words. This means you can lose an argument before you open your mouth — or win one before you speak.</p>
+    <p>A sovereign communicator controls all three channels. This interactive trains the first and hardest one: <strong>your physical presence</strong>.</p>
+  </div>
+
+  <div class="mode-row">
+    <button class="mode-btn active" id="btn-ex" onclick="setMode('explore')">Explore Postures</button>
+    <button class="mode-btn" id="btn-qz" onclick="setMode('quiz')">Quiz Me</button>
+  </div>
+
+  <div class="main-grid" id="explore-panel">
+    <div class="posture-panel" id="posture-list"></div>
+    <div class="canvas-wrap"><canvas id="fig" width="400" height="500"></canvas></div>
+  </div>
+
+  <div class="desc-panel" id="desc-panel">
+    <h2 id="desc-title">Select a posture to begin</h2>
+    <p id="desc-body">Click any posture on the left to see the 2D figure demonstrate it, along with the science of what it signals and how to use it.</p>
+    <p id="desc-science"></p>
+    <p id="desc-use"></p>
+  </div>
+
+  <div class="quiz-wrap" id="quiz-wrap">
+    <div class="quiz-q" id="quiz-q"></div>
+    <div id="quiz-opts"></div>
+    <div class="qfb" id="qfb"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQ()">Next Question →</button>
+    <div class="score-ln" id="score-ln"></div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge bronze" id="b-bronze">🥉 Bronze</span>
+    <span class="badge silver" id="b-silver">🥈 Silver</span>
+    <span class="badge gold" id="b-gold">🥇 Gold</span>
+    <span class="badge platinum" id="b-platinum">💎 Platinum</span>
+  </div>
+
+  <div class="geno-invite">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"/>
+    <div>
+      <p><strong>GENO has memorized GSU's full Debate and Leadership curriculum</strong> — the Three-Round Protocol, the Steel Man method, body language science, and strategic persuasion. Ask him how to open a debate, or what to do with your hands.</p>
+      <button class="geno-btn" onclick="document.dispatchEvent(new CustomEvent('geno:open'))">💬 Ask GENO about body language →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('fig');
+const ctx = canvas.getContext('2d');
+const CW=400, CH=500;
+canvas.width=CW; canvas.height=CH;
+const GOLD='#C9A84C', GREEN='#1A8B7F', CREAM='#F5F1E8';
+
+// Figure drawing primitives
+// All positions relative to center (200, 250)
+function drawFigure(pose) {
+  ctx.clearRect(0,0,CW,CH);
+  ctx.fillStyle='#0a0800'; ctx.fillRect(0,0,CW,CH);
+
+  // Floor
+  ctx.fillStyle='#1a1200'; ctx.fillRect(0,CH-30,CW,30);
+  ctx.strokeStyle='rgba(201,168,76,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(0,CH-30); ctx.lineTo(CW,CH-30); ctx.stroke();
+
+  const cx=200, hy=120; // head center y
+  const neck=hy+32, shoulder=neck+22;
+  const hip=shoulder+110, knee=hip+80, foot=knee+70;
+  const P=pose;
+
+  // Shadow
+  ctx.fillStyle='rgba(201,168,76,.06)';
+  ctx.beginPath(); ctx.ellipse(cx,CH-28,35,8,0,0,Math.PI*2); ctx.fill();
+
+  // ── BODY ──
+  ctx.strokeStyle=CREAM; ctx.lineWidth=3; ctx.lineCap='round';
+  // Spine
+  ctx.beginPath(); ctx.moveTo(cx,neck); ctx.lineTo(cx+P.spineShift||0,hip); ctx.stroke();
+
+  // ── LEGS ──
+  ctx.lineWidth=3;
+  // Left leg
+  const lkneeX=cx-(P.leftKneeOut||20), lkneeY=knee+(P.leftKneeDrop||0);
+  const lfootX=cx-(P.leftFootOut||20), lfootY=foot+(P.leftFootDrop||0);
+  ctx.beginPath(); ctx.moveTo(cx-(P.hipW||12),hip); ctx.lineTo(lkneeX,lkneeY); ctx.lineTo(lfootX,lfootY); ctx.stroke();
+  // Right leg
+  const rkneeX=cx+(P.rightKneeOut||20), rkneeY=knee+(P.rightKneeDrop||0);
+  const rfootX=cx+(P.rightFootOut||20), rfootY=foot+(P.rightFootDrop||0);
+  ctx.beginPath(); ctx.moveTo(cx+(P.hipW||12),hip); ctx.lineTo(rkneeX,rkneeY); ctx.lineTo(rfootX,rfootY); ctx.stroke();
+
+  // ── ARMS ──
+  const lElbowX=cx-(P.leftElbowX||55), lElbowY=shoulder+(P.leftElbowY||60);
+  const lHandX=cx-(P.leftHandX||60), lHandY=shoulder+(P.leftHandY||110);
+  ctx.beginPath(); ctx.moveTo(cx-(P.shoulderW||22),shoulder); ctx.lineTo(lElbowX,lElbowY); ctx.lineTo(lHandX,lHandY); ctx.stroke();
+  const rElbowX=cx+(P.rightElbowX||55), rElbowY=shoulder+(P.rightElbowY||60);
+  const rHandX=cx+(P.rightHandX||60), rHandY=shoulder+(P.rightHandY||110);
+  ctx.beginPath(); ctx.moveTo(cx+(P.shoulderW||22),shoulder); ctx.lineTo(rElbowX,rElbowY); ctx.lineTo(rHandX,rHandY); ctx.stroke();
+
+  // ── HEAD ──
+  ctx.beginPath(); ctx.arc(cx+(P.headShift||0),hy,24,0,Math.PI*2);
+  ctx.strokeStyle=CREAM; ctx.lineWidth=3; ctx.stroke();
+  ctx.fillStyle='rgba(245,241,232,.08)'; ctx.fill();
+
+  // Eyes (show orientation of gaze)
+  const eyeY=hy+(P.chinTilt||0);
+  const eyeLx=cx+(P.headShift||0)-8, eyeRx=cx+(P.headShift||0)+8;
+  ctx.fillStyle=GOLD;
+  ctx.beginPath(); ctx.arc(eyeLx,eyeY,3,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(eyeRx,eyeY,3,0,Math.PI*2); ctx.fill();
+
+  // Signal annotation
+  if(P.signals) {
+    P.signals.forEach((s,i)=>{
+      ctx.fillStyle=s.color||'rgba(201,168,76,.5)';
+      ctx.font='10px Arial'; ctx.textAlign='left';
+      ctx.fillText('← '+s.text, s.x, s.y);
+      ctx.beginPath(); ctx.arc(s.x-6,s.y-4,3,0,Math.PI*2); ctx.fill();
+    });
+  }
+
+  // Posture name
+  if(P.name){
+    ctx.fillStyle=GOLD; ctx.font='bold 13px Georgia'; ctx.textAlign='center';
+    ctx.fillText(P.name,CW/2,22);
+  }
+}
+
+const POSTURES = [
+  {
+    id:'sovereign', name:'Sovereign Stance', signal:'power',
+    signalText:'Power',
+    title:'The Sovereign Stance',
+    body:'Feet shoulder-width apart. Weight evenly distributed. Spine tall. Shoulders back and down. Chin level with the ground. This is the posture of calm authority — it takes up space without aggression.',
+    science:'Research by Amy Cuddy (Harvard) shows that "power postures" raise testosterone by 20% and lower cortisol by 25% within 2 minutes. You don\'t just look more confident — you become more confident.',
+    use:'Use before entering any high-stakes situation. Hold it for 2 minutes alone before a debate, interview, or presentation.',
+    pose:{leftKneeOut:22,rightKneeOut:22,leftFootOut:22,rightFootOut:22,leftHandY:115,rightHandY:115,leftElbowX:50,rightElbowX:50,signals:[{text:'Chin level',x:240,y:115},{text:'Shoulders back',x:240,y:165},{text:'Feet at width',x:240,y:430}]}
+  },
+  {
+    id:'openpalm', name:'Open Palm Gesture', signal:'power',
+    signalText:'Trust Signal',
+    title:'The Open Palm',
+    body:'Arms slightly away from the body, palms visible and facing forward or upward. This is the oldest trust signal in human communication — it shows you carry no weapon and have nothing to hide.',
+    science:'Evolutionary psychology: showing open palms signals non-aggression. Studies show audiences rate speakers with open palm gestures as more credible, honest, and persuasive than those who hide their hands.',
+    use:'Use when making key claims or asking for agreement. Never put your hands in your pockets when you need someone to trust you.',
+    pose:{leftHandX:80,rightHandX:80,leftHandY:90,rightHandY:90,leftElbowX:55,rightElbowX:55,leftElbowY:55,rightElbowY:55,signals:[{text:'Palms open',x:60,y:360,color:'rgba(26,139,127,.7)'},{text:'Visible & forward',x:240,y:330,color:'rgba(26,139,127,.7)'}]}
+  },
+  {
+    id:'steeple', name:'The Steeple', signal:'power',
+    signalText:'Confidence',
+    title:'The Steeple',
+    body:'Fingertips touch lightly, forming a steeple shape in front of the body, elbows out. Associated with high-confidence, evaluative thinking, and self-assurance.',
+    science:'The steeple is one of the most universally recognized confidence gestures. It is frequently used by people in positions of authority — judges, CEOs, professors — when making considered judgments.',
+    use:'Use when delivering a considered judgment or after making a key point. Warning: overuse reads as arrogant. Reserve for your strongest moments.',
+    pose:{leftElbowX:30,rightElbowX:30,leftElbowY:40,rightElbowY:40,leftHandX:12,rightHandX:12,leftHandY:60,rightHandY:60,signals:[{text:'Fingertips touching',x:220,y:280,color:GOLD}]}
+  },
+  {
+    id:'crossed', name:'Arms Crossed', signal:'mixed',
+    signalText:'Barrier Signal',
+    title:'Arms Crossed — The Barrier',
+    body:'Arms folded across the chest. Often misread as "defensive" — but it is more accurately a self-soothing gesture. The person is creating a physical barrier, often against an uncomfortable idea or cold environment.',
+    science:'Context matters. In a cold room, crossed arms mean nothing. In a debate after you make a strong point, crossed arms from your opponent often signal discomfort with your argument — watch for it.',
+    use:'Avoid crossing your own arms when you want to be perceived as open. But learn to read it in others — it often signals the moment to ask a question rather than pile on more argument.',
+    pose:{leftElbowX:20,rightElbowX:20,leftElbowY:30,rightElbowY:30,leftHandX:-18,rightHandX:-18,leftHandY:45,rightHandY:45,signals:[{text:'Barrier gesture',x:220,y:265,color:'rgba(201,168,76,.6)'}]}
+  },
+  {
+    id:'slumped', name:'Collapsed Posture', signal:'weak',
+    signalText:'Low Status',
+    title:'The Collapsed Posture',
+    body:'Head forward. Shoulders rolled in. Spine curved. Chest compressed. This posture physically signals low status, defeat, or low confidence — and it produces those feelings in the person holding it.',
+    science:'Expansive postures are linked to higher hormone profiles. Contracted postures suppress them. You can\'t think confidently in a collapsed body. Posture is not cosmetic — it is biochemical.',
+    use:'This is the posture to recognize and eliminate in yourself. If you catch yourself here, don\'t "think positive" — change your physical shape first. The biochemistry follows the body, not the mind.',
+    pose:{spineShift:15,leftKneeOut:18,rightKneeOut:18,leftFootOut:18,rightFootOut:18,headShift:12,chinTilt:8,leftElbowX:35,rightElbowX:35,leftHandY:120,rightHandY:120,signals:[{text:'Head forward',x:240,y:115},{text:'Chest compressed',x:240,y:190}]}
+  },
+  {
+    id:'lean', name:'Forward Lean', signal:'power',
+    signalText:'Engagement',
+    title:'The Forward Lean',
+    body:'Upper body inclines slightly toward the other person. Weight shifts forward onto the balls of the feet. This posture signals genuine interest, engagement, and that you consider what they\'re saying important.',
+    science:'Mirroring and lean are the two strongest non-verbal signals of rapport. When two people are genuinely engaged, they unconsciously lean toward each other and mirror each other\'s gestures.',
+    use:'Use in active listening. In a debate, lean in when your opponent speaks — it signals confidence (you\'re not afraid of their words) and respect (you\'re actually listening).',
+    pose:{spineShift:-10,headShift:-8,leftElbowX:45,rightElbowX:45,leftHandY:110,rightHandY:110,chinTilt:-3,signals:[{text:'Leaning in = engaged',x:220,y:200,color:GOLD}]}
+  },
+  {
+    id:'chin', name:'Chin Down — Submission', signal:'weak',
+    signalText:'Submission',
+    title:'Chin Down — Submission Signal',
+    body:'Head tilted forward, chin toward chest, eyes looking up. This is a classic submission or uncertainty gesture. It makes the speaker appear smaller and less confident.',
+    science:'The chin down/eyes up gaze is associated with uncertainty and seeking approval. Politicians and executives are specifically trained to avoid this — it undermines every word that follows.',
+    use:'Become aware of this in yourself, especially when nervous. The counter-move: gently raise your chin so it\'s parallel to the floor. Chin up = power; chin down = deference.',
+    pose:{chinTilt:10,headShift:0,signals:[{text:'Chin tucked',x:240,y:120},{text:'Eyes up',x:240,y:105}]}
+  },
+  {
+    id:'point', name:'The Point', signal:'weak',
+    signalText:'Aggression Signal',
+    title:'The Point — Avoid It',
+    body:'Index finger extended, pointing at another person. This is one of the most universally disliked gestures across cultures. It triggers defensive reactions and damages rapport.',
+    science:'Pointing is perceived as accusatory in virtually every culture studied. Studies show that audiences rate pointed-at speakers as more aggressive and less trustworthy than those using open-hand gestures.',
+    use:'Replace pointing with the "baton gesture" — all four fingers together, palm slightly upward — when you need to direct attention. Never point at a person during a debate. You will lose the room.',
+    pose:{rightElbowX:70,rightElbowY:10,rightHandX:100,rightHandY:-20,signals:[{text:'Point = aggression',x:165,y:210,color:'rgba(229,57,53,.7)'}]}
+  },
+  {
+    id:'wide', name:'Wide Stance — Territory', signal:'power',
+    signalText:'Territory Claim',
+    title:'Wide Stance — Territorial Claim',
+    body:'Feet significantly wider than shoulder width. Weight solid and distributed. This is a territorial claim — it says "I belong here and I am not leaving." Often seen in military, law enforcement, and high-confidence speakers.',
+    science:'Wider stances are associated with higher dominance ratings in both self-report and observer studies. They signal stability and rootedness. Importantly, they also reduce the physical sensation of anxiety.',
+    use:'Use when you need to hold your ground — literally and figuratively. In a panel debate, a wide stance after delivering a strong point anchors the message in the audience\'s perception.',
+    pose:{leftKneeOut:45,rightKneeOut:45,leftFootOut:50,rightFootOut:50,hipW:20,signals:[{text:'Wide = "I am here"',x:220,y:400,color:GOLD}]}
+  },
+  {
+    id:'nod', name:'The Slow Nod', signal:'power',
+    signalText:'Mastery Signal',
+    title:'The Slow Nod',
+    body:'A slow, deliberate nod of the head — one or two beats, measured and calm. This is entirely different from rapid nodding, which signals anxiety and agreement-seeking.',
+    science:'Fast nodding signals "yes yes please go on I agree with you" — it gives power to the speaker. Slow nodding says "I hear you and I am evaluating what you\'re saying." It keeps power with the nodder.',
+    use:'In a debate, slow nod when your opponent finishes a point you plan to rebut. It shows confidence (you\'re not rattled), respect (you listened), and signals that you\'ve heard them and are about to respond.',
+    pose:{chinTilt:-5,leftHandY:115,rightHandY:115,signals:[{text:'Slow = evaluating',x:240,y:95,color:GOLD},{text:'Fast = approval seeking',x:240,y:107,color:'rgba(229,57,53,.5)'}]}
+  },
+];
+
+let currentPose=0;
+
+function buildList(){
+  const panel=document.getElementById('posture-list');
+  panel.innerHTML=POSTURES.map((p,i)=>`
+    <button class="posture-btn ${i===0?'active':''}" onclick="selectPose(${i})" id="pb-${i}">
+      <h3>${p.name}</h3>
+      <p>${p.title}</p>
+      <span class="signal ${p.signal}">${p.signalText}</span>
+    </button>
+  `).join('');
+}
+
+function selectPose(i){
+  currentPose=i;
+  document.querySelectorAll('.posture-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));
+  const p=POSTURES[i];
+  drawFigure({...p.pose,name:p.name});
+  document.getElementById('desc-title').textContent=p.title;
+  document.getElementById('desc-body').textContent=p.body;
+  document.getElementById('desc-science').innerHTML='<strong>The Science:</strong> '+p.science;
+  document.getElementById('desc-use').innerHTML='<strong>How to Use It:</strong> '+p.use;
+}
+
+buildList();
+selectPose(0);
+
+// ── QUIZ ──
+const QS=[
+  {q:"According to the Mehrabian Rule, what percentage of communication impact comes from body language?",opts:["55%","38%","7%","45%"],ans:0,exp:"55% body language, 38% tone of voice, 7% words. This is why skilled debaters and leaders invest heavily in physical presence — the words are actually the smallest channel."},
+  {q:"What does a 'steeple' hand gesture typically signal?",opts:["High confidence and self-assurance","Submission and uncertainty","Aggression","Boredom"],ans:0,exp:"The steeple — fingertips lightly touching to form a point — is universally associated with confidence and considered judgment. It's frequently used by authority figures when making deliberate assessments."},
+  {q:"Why should you avoid pointing at someone during a debate?",opts:["It triggers defensive reactions and is perceived as aggressive across cultures","It looks informal","It slows your argument","It reveals which hand is dominant"],ans:0,exp:"Pointing is one of the most universally disliked gestures. Studies show it causes audiences to rate speakers as aggressive and untrustworthy. Replace it with an open-hand 'baton' gesture."},
+  {q:"What does the 'forward lean' signal to an opponent in a debate?",opts:["You are confident and genuinely engaged with their argument","You are about to attack","You are tired","You want them to stop"],ans:0,exp:"Leaning in signals engagement and confidence — you're not afraid of what they're saying, and you're taking it seriously. Combined with a slow nod, it's one of the most powerful listening signals in debate."},
+  {q:"Research shows 'power postures' held for 2 minutes cause what physical change?",opts:["Testosterone rises 20%, cortisol drops 25%","Blood pressure increases","Adrenaline spikes","Heart rate drops by half"],ans:0,exp:"Amy Cuddy's research at Harvard found that holding expansive, open postures for just 2 minutes produces measurable hormonal shifts — more confidence hormones, less stress hormone. Posture is biochemistry."},
+  {q:"What's the difference between fast nodding and slow nodding in a debate?",opts:["Fast = approval-seeking; Slow = evaluating from a position of confidence","Fast = confident; Slow = uncertain","They mean the same thing","Speed has no significance"],ans:0,exp:"Fast nodding gives power away — it signals 'yes, please continue, I agree.' Slow nodding says 'I hear you and I'm evaluating.' Slow nodding keeps authority with the listener."},
+  {q:"Why is the collapsed (slumped) posture harmful beyond appearance?",opts:["It biochemically suppresses confidence hormones","It only looks bad, with no real effect","It tightens muscles","It reduces oxygen intake"],ans:0,exp:"Posture isn't just cosmetic — contracted postures suppress testosterone and raise cortisol. You literally cannot think as confidently in a collapsed body. Changing your posture changes your biochemistry."},
+  {q:"The open palm gesture signals what to an audience?",opts:["Honesty and non-aggression — an evolutionary trust signal","That you have no answer","Submission","That you want to shake hands"],ans:0,exp:"Showing open palms is one of the oldest human trust signals — evolutionarily, it shows you carry no weapon. Research consistently finds that open-palm speakers are rated as more credible and persuasive."},
+];
+
+let qIdx=0,answered=false,qScore=0,qTotal=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+let qOrder=shuffle([...Array(QS.length).keys()]);
+
+function setMode(m){
+  document.getElementById('btn-ex').className='mode-btn'+(m==='explore'?' active':'');
+  document.getElementById('btn-qz').className='mode-btn'+(m==='quiz'?' active':'');
+  document.getElementById('explore-panel').style.display=m==='explore'?'grid':'none';
+  document.getElementById('desc-panel').style.display=m==='explore'?'block':'none';
+  document.getElementById('quiz-wrap').style.display=m==='quiz'?'block':'none';
+  if(m==='quiz'){qScore=0;qTotal=0;qIdx=0;qOrder=shuffle([...Array(QS.length).keys()]);showQ();}
+}
+
+function showQ(){
+  answered=false;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-opts').innerHTML=q.opts.map((o,i)=>`<button class="qopt" onclick="ansQ(${i})">${o}</button>`).join('');
+  document.getElementById('qfb').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  document.getElementById('score-ln').textContent=`Q${qTotal+1} · Score: ${qScore}/${qTotal}`;
+}
+function ansQ(i){
+  if(answered)return; answered=true;
+  const q=QS[qOrder[qIdx%qOrder.length]];
+  document.querySelectorAll('.qopt').forEach((o,idx)=>{
+    if(idx===q.ans)o.classList.add('correct'); else if(idx===i)o.classList.add('wrong'); o.disabled=true;
+  });
+  const ok=i===q.ans; if(ok)qScore++; qTotal++;
+  const fb=document.getElementById('qfb');
+  fb.className='qfb '+(ok?'pass':'fail');
+  fb.innerHTML=(ok?'✅ Correct! ':'❌ Not quite. ')+q.exp;
+  fb.style.display='block';
+  document.getElementById('next-btn').style.display='inline-flex';
+  document.getElementById('score-ln').textContent=`Score: ${qScore}/${qTotal}`;
+  const th={bronze:3,silver:6,gold:10,platinum:15};
+  for(const[n,v]of Object.entries(th)) if(qScore>=v) document.getElementById('b-'+n).classList.add('earned');
+}
+function nextQ(){qIdx++;showQ();}
+</script>
+</body>
+</html>
