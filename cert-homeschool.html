@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+     GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
+     ROUTING: Standalone app -> commit to gsu-assets, served at
+              read.globalsovereignuniversity.org/cert-civics.html
+              Then on /certification, set the Civics card's button href
+              to that URL and flip its status to "Live".
+
+     THIS FILE IS ALSO THE MASTER TEMPLATE. To create the next subject's
+     certification (e.g. Writification), copy this file and edit ONLY:
+       ZONE B  — the CONFIG block (subject name, serialPrefix, prepHref).
+       ZONE C  — the QUESTIONS pool (author a real, checked bank for the subject).
+     Everything else (scoring, serials, Firebase recording, public verify,
+     the certificate, GENO, brand) is shared and never needs editing.
+
+     SPEC (matches the /certification page promise):
+       · 30 questions drawn at random from the pool, options shuffled
+       · a 30:00 countdown runs in the upper-right; time-out auto-submits
+       · the learner's score is saved on their own device (localStorage)
+       · 80% to pass for Silver, 90% for Gold (below 80% = keep studying)
+       · a unique serial number issued and recorded the moment you pass
+       · free, anonymous, no account, publicly verifiable by anyone
+     FIREBASE NOTE: certificates live in the "gsu-certification" project,
+       collection "certifications" (doc id = serial), governed by the rules
+       Gene set: public read; create requires anon auth + subject(string) +
+       score(number) + revoked==false; update/delete blocked (permanent;
+       admin-only revocation honored by the verify box via a "revoked:true"
+       field). This engine writes revoked:false and creates the record ONCE,
+       when the learner clicks "Issue My Certificate" — so the chosen name is
+       baked into the single immutable record and no client update is needed.
+     >>> SET CONFIG.firebase BELOW to the gsu-certification Web config. <<
+============================================================================ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homeschool Comprehension Certification — Free & Verifiable | GSU</title>
+<meta name="description" content="Earn the free Homeschool Certificate of Comprehension from Global Sovereign University. Questions drawn from real GSU homeschool guides on spelling, science, civics, character, geography, history, and the flag. Anonymous, no account, free, with a unique publicly verifiable serial number.">
+<meta property="og:title" content="Homeschool Comprehension Certification — Free & Verifiable | GSU">
+<meta property="og:description" content="Questions sourced from real GSU homeschool guides. Free, anonymous, no login — from a 501(c)(3).">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Homeschool Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of GSU's free homeschool guides covering spelling method, hands-on science, civics, character education, geography, American history, and flag history."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is the Homeschool certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
+{"@type":"Question","name":"How is the certificate verified?","acceptedAnswer":{"@type":"Answer","text":"When you pass, a unique serial number is issued and recorded. Anyone can confirm it is genuine using the Verify a Certificate box, with no login required."}},
+{"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Questions are drawn at random from GSU's free Homeschool guides. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}}]}
+</script>
+<style>
+  :root{--bg:#000000;--panel:#13110b;--gold:#C9A84C;--cream:#F5F1E8;--line:rgba(201,168,76,.28)}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 18px 56px}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--cream);line-height:1.18;margin:0 0 .4em}
+  .gold{color:var(--gold)}
+  .kick{letter-spacing:.18em;text-transform:uppercase;font-size:.74rem;font-weight:700;color:var(--gold);margin-bottom:8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .center{text-align:center}
+  .btn{display:inline-block;background:var(--gold);color:#000000;font-weight:800;border:0;padding:13px 26px;border-radius:8px;font-size:1rem;cursor:pointer;text-decoration:none}
+  .btn:hover{background:var(--cream)}
+  .btn.ghost{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+  .btn.ghost:hover{background:var(--gold);color:#000000}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .muted{color:rgba(245,241,232,.7);font-size:.92rem}
+  .rules{list-style:none;padding:0;margin:18px 0 24px;display:grid;gap:10px;text-align:left}
+  .rules li{background:rgba(10,9,7,.5);border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-size:.95rem}
+  .rules b{color:var(--gold)}
+  .bar{height:8px;background:rgba(245,241,232,.12);border-radius:99px;overflow:hidden;margin:0 0 6px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .25s}
+  .qmeta{display:flex;justify-content:space-between;font-size:.8rem;color:rgba(245,241,232,.65);margin-bottom:14px;letter-spacing:.04em}
+  .q{font-family:Georgia,serif;font-size:1.25rem;margin:0 0 18px}
+  .opts{display:grid;gap:10px}
+  .opt{background:rgba(10,9,7,.5);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:left;color:var(--cream);font-size:1rem;cursor:pointer;transition:border-color .15s,background .15s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:#7CB342;background:rgba(124,179,66,.12)}
+  .opt.wrong{border-color:#C0552F;background:rgba(192,85,47,.12)}
+  .opt[disabled]{cursor:default}
+  .why{margin-top:14px;border-left:3px solid var(--gold);padding:10px 14px;background:rgba(10,9,7,.5);border-radius:0 8px 8px 0;font-size:.95rem}
+  .why .geno{display:flex;gap:10px;align-items:flex-start}
+  .why img{width:34px;height:34px;border-radius:50%;border:2px solid var(--gold);flex:0 0 auto}
+  .next{margin-top:18px;text-align:right}
+  .scorebig{font-family:Georgia,serif;font-size:3rem;color:var(--gold);line-height:1}
+  .tierbadge{display:inline-block;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;padding:6px 14px;border-radius:99px;margin:10px 0}
+  .tier-gold{background:var(--gold);color:#000000}
+  .tier-silver{background:#cdd2da;color:#000000}
+  .tier-none{background:transparent;color:rgba(245,241,232,.7);border:1px solid var(--line)}
+  .field{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+  .field input{background:#000000;border:1px solid var(--line);color:var(--cream);border-radius:8px;padding:11px 13px;font-size:1rem;min-width:200px}
+  .serial{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--gold);font-size:1.15rem;letter-spacing:.06em;word-break:break-all}
+  canvas{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin-top:8px}
+  .hr{height:1px;background:var(--line);margin:30px 0}
+  .verify-result{margin-top:14px;font-size:.95rem}
+  .ok{color:#7CB342}.bad{color:#e0856f}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+  summary{font-family:Georgia,serif;font-weight:700;cursor:pointer;color:var(--cream)}
+  details p{margin:10px 0 0;color:rgba(245,241,232,.85);font-size:.93rem}
+  .foot{margin-top:30px;font-size:.82rem;color:rgba(245,241,232,.55);text-align:center}
+  .foot a{color:var(--gold)}
+  .hide{display:none}
+  .clock{position:fixed;top:14px;right:14px;z-index:60;background:#13110b;border:1px solid var(--line);border-radius:10px;padding:9px 14px 8px;text-align:center;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;font-size:1.1rem;color:var(--gold);letter-spacing:.06em;box-shadow:0 6px 22px rgba(0,0,0,.55)}
+  .clock .lbl{display:block;font-size:.5rem;letter-spacing:.2em;color:rgba(245,241,232,.55);font-weight:700;margin-bottom:2px}
+  .clock.warn{color:#e6b94f;border-color:#e6b94f}
+  .clock.danger{color:#e0856f;border-color:#e0856f;animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.55}}
+  @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
+</style>
+</head>
+<body><script src="/return-bar.js"></script>
+<div id="clock" class="clock hide"><span class="lbl">TIME LEFT</span><span id="clockT">30:00</span></div>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section id="intro" class="card center">
+    <div class="kick" id="k-subject">Homeschool · Certificate of Comprehension</div>
+    <h1>Prove You <span class="gold">Comprehend It.</span></h1>
+    <p class="muted">Free, anonymous, no account — and when you pass, a unique serial number anyone on Earth can verify. This is competence on the record, not a participation ribbon.</p>
+    <ul class="rules">
+      <li><b>30 questions</b>, drawn at random — a fresh set every attempt.</li>
+      <li>A <b>30:00 timer</b> runs in the corner — when it reaches zero, the test submits automatically.</li>
+      <li><b>Silver</b> at 80% &nbsp;·&nbsp; <b>Gold</b> at 90%. Below 80%, keep studying and retake free.</li>
+      <li>Pass and you get a <b>serial-numbered certificate</b>, recorded for public verification.</li>
+      <li>GENO explains every answer as you go, in 32 languages.</li>
+    </ul>
+    <button class="btn" id="startBtn">Begin the Certification →</button>
+    <p class="muted" id="deviceNote" style="margin-top:12px"></p>
+    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/homeschool">Prepare free at the Homeschool campus →</a></p>
+  </section>
+
+  <!-- EXAM -->
+  <section id="exam" class="card hide">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="qmeta"><span id="qcount">Question 1 of 30</span><span id="scorerun">Score 0</span></div>
+    <p class="q" id="qtext">—</p>
+    <div class="opts" id="opts"></div>
+    <div id="whyBox" class="why hide"></div>
+    <div class="next"><button class="btn hide" id="nextBtn">Next →</button></div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card center hide">
+    <div class="kick">Result</div>
+    <div class="scorebig" id="r-score">0/30</div>
+    <div id="r-tier"></div>
+    <h2 id="r-head">—</h2>
+    <p class="muted" id="r-msg"></p>
+
+    <div id="passBlock" class="hide">
+      <div class="field">
+        <input id="aliasInput" maxlength="36" placeholder="Name for the certificate (optional)">
+        <button class="btn" id="issueBtn">Issue My Certificate →</button>
+      </div>
+      <p class="muted">Your serial number</p>
+      <p class="serial" id="r-serial">—</p>
+      <p class="muted" id="recordNote">Add your name if you like, then issue your certificate to record it for public verification.</p>
+      <canvas id="certCanvas" width="1200" height="800"></canvas>
+      <div style="margin-top:16px"><button class="btn ghost" id="dlBtn">Download Certificate (PNG)</button></div>
+    </div>
+
+    <div class="next center" style="margin-top:20px">
+      <button class="btn ghost" id="retakeBtn">Take It Again →</button>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- VERIFY -->
+  <section class="card">
+    <div class="kick">Public Verification</div>
+    <h3>Verify a Certificate</h3>
+    <p class="muted">Anyone can confirm a GSU certificate is genuine. Enter a serial number — no account, nothing to install.</p>
+    <div class="field" style="justify-content:flex-start">
+      <input id="verifyInput" placeholder="e.g. GSU-CIV-LXK3F9Q2">
+      <button class="btn" id="verifyBtn">Verify →</button>
+    </div>
+    <div class="verify-result muted" id="verifyResult"></div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- FAQ -->
+  <section>
+    <details><summary>Is this really free, with no account?</summary><p>Yes — free forever, anonymous, no login. The Foundation for Global Instruction is a 501(c)(3) nonprofit. The optional name on the certificate is the only thing you type, and it is your choice.</p></details>
+    <details><summary>How does the verification work?</summary><p>When you pass, a unique serial number is generated and recorded. Anyone can paste that serial into the box above to confirm the subject, the tier (Silver or Gold), and the date — proving the certificate is real without revealing any personal information.</p></details>
+    <details><summary>Can I retake it?</summary><p>As many times as you like, free. A new random set of 30 questions is drawn each attempt, so it rewards real comprehension, not memorizing one form.</p></details>
+  </section>
+
+  <div style="height:1px;background:rgba(201,168,76,.25);max-width:760px;margin:40px auto 0"></div>
+<section style="max-width:760px;margin:28px auto 0;border:1px solid rgba(201,168,76,.28);border-radius:14px;background:#000000;padding:26px 28px;text-align:center;font-family:Georgia,serif">
+  <div style="color:#C9A84C;letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;font-family:Arial,sans-serif">More Free Certifications</div>
+  <p style="color:#cdbf90;margin:10px 0 16px;font-size:15px;line-height:1.6">Every GSU Certificate of Comprehension is free, anonymous, and publicly verifiable. Prove what you know across the campus:</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center"><a href="cert-readification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Readification</a><a href="cert-writification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Writification</a><a href="cert-spellification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Spellification</a><a href="cert-mathification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Mathification</a><a href="cert-financification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Financification</a><a href="cert-tradification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Tradification</a><a href="cert-thinkification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Thinkification</a><a href="cert-civics.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Civics</a><a href="cert-american-history.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">American History</a><a href="cert-geography.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Geography</a><a href="cert-science.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Science</a><a href="cert-lawification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Lawification</a><a href="cert-first-aid.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">First Aid</a><a href="cert-homeschool.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Homeschool</a></div>
+</section>
+<p class="foot">A free certification of Global Sovereign University · The Foundation for Global Instruction, a 501(c)(3) public benefit nonprofit, Eugene, Oregon · <a href="/quid-pro-quo">Support the mission</a></p>
+</div>
+
+<!-- Firebase (compat) — guarded; the exam runs even if these fail to load -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+/* ====================== ZONE B — CONFIG (edit per subject) ================= */
+const CONFIG = {
+  subject: "Homeschool",
+  serialPrefix: "GSU-HMS",
+  subjectLine: "Homeschool · Certificate of Comprehension",
+  prepHref: "/homeschool",
+  drawCount: 30,
+  timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
+  silverPct: 0.80,
+  goldPct: 0.90,
+  // CERTIFICATES LIVE IN THE "gsu-certification" PROJECT (not gsu-handshake).
+  // Paste that project's Web config below — get it from:
+  // Firebase Console -> gsu-certification -> Project settings -> "Your apps"
+  // -> Web app -> SDK setup and configuration. Only the 3 ALL-CAPS values
+  // need filling; the rest follow gsu-certification's standard naming.
+  firebase: {
+    apiKey: "AIzaSyAmFycf1iMeISLzjWgbxnuSB1BJ3BuWB_U",
+    authDomain: "gsu-certification.firebaseapp.com",
+    projectId: "gsu-certification",
+    storageBucket: "gsu-certification.firebasestorage.app",
+    messagingSenderId: "124413390849",
+    appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
+  }
+};
+
+/* ====================== ZONE C — QUESTION POOL (author per subject) ========
+   Each item: { q, opts:[4 strings], a: index of correct option, why }
+   Keep answers objectively correct and the "why" short and plain. The engine
+   draws CONFIG.drawCount at random and shuffles each question's options.
+=========================================================================== */
+const POOL = [
+  {q:"In Sound First, what are the five steps of the spelling method taught for mapping words into memory?", opts:["Read, Copy, Test, Repeat, Forget", "HEAR, SAY, TAP, BUILD, WRITE", "List, Quiz, Score, File, Move On", "Look, Cover, Write, Check, Reward"], a:1, why:"Sound First teaches five steps, always in the same order: HEAR, SAY, TAP, BUILD, WRITE, designed to train orthographic mapping rather than memorization."},
+  {q:"According to Sound First, what is the purpose of the SAY step in the spelling method?", opts:["To make the lesson longer", "Confirmation that the child heard the word correctly before moving forward", "To test spelling ability directly", "To skip ahead to writing faster"], a:1, why:"The book explains SAY is confirmation, not busywork — children sometimes mishear words, and repeating it back catches that before writing begins."},
+  {q:"What does Sound First say about the traditional weekly spelling list and Friday test model?", opts:["It is the most effective method available", "Many kids can be trained to pass the test without becoming better spellers, because it relies on short-term memory", "It always produces lasting long-term learning", "It is the only method recommended in the book"], a:1, why:"The book states plainly that the list-and-copy model 'looks like work' and produces a score, but spelling is a long-term memory skill that isn't built by short-term cramming."},
+  {q:"In Sound First, what is the 'TAP' step primarily teaching a child to do?", opts:["Tap a pencil rhythmically for fun", "Hear a spoken word as a sequence of individual sounds and hold them in order (sound segmentation)", "Memorize a word's letters visually", "Type the word on a keyboard"], a:1, why:"TAP is described as the gateway skill of sound segmentation — turning spelling from 'remember the word' into 'build the word' by hearing its individual sounds in order."},
+  {q:"According to The Kitchen Table Laboratory, what is a hypothesis?", opts:["A proven scientific fact", "Your best current idea, stated in a way that can be tested — it is allowed to be wrong", "A guess that must always be correct to count", "A vocabulary word with no practical use"], a:1, why:"The book defines a hypothesis as a testable starting point, not a fancy guess that must be right: 'The hypothesis is not graded. The honesty is.'"},
+  {q:"In The Kitchen Table Laboratory, what is the independent variable in an experiment?", opts:["The thing you measure or observe in response", "The thing you change on purpose, the 'if' part of the test", "Something that should never be changed", "A variable that has no effect on results"], a:1, why:"The book defines the independent variable as the 'if' part — the thing you deliberately change, such as water temperature in a sugar-dissolving experiment."},
+  {q:"According to The Kitchen Table Laboratory, what are 'controlled variables'?", opts:["Variables that are too dangerous to use", "The things you keep the same so your test is fair", "The same thing as the dependent variable", "Variables that change automatically during the test"], a:1, why:"Controlled variables are described as the things kept the same to ensure a fair test — for example, using the same amount of water and sugar type."},
+  {q:"What myth about science does The Kitchen Table Laboratory directly challenge in Chapter 1?", opts:["That science is too easy for most families", "That real science requires a laboratory and that you must already know the answers to teach it", "That science should never involve questions", "That experiments always succeed on the first try"], a:1, why:"Chapter 1 lists several myths it challenges, including 'Real science requires a laboratory' and 'You have to know the answers to teach science.'"},
+  {q:"According to The Kitchen Table Laboratory, what does the book say about an experiment that 'does not work' as expected?", opts:["It means the child failed", "It directly challenges the myth that an unexpected result is a failure — unexpected results are still real data", "It should never be discussed with the child", "It means the recipe for the experiment was wrong"], a:1, why:"The book names 'If the experiment does not work, it is a failure' as one of the myths it sets out to correct, reframing unexpected results as valuable, honest data."},
+  {q:"In The Civic Workshop, what does the book identify as the 'Spectator Problem' in how civics is usually taught?", opts:["Students watch too much television", "Civics is often taught as memorizing vocabulary and diagrams for a quiz, rather than as practiced, lived citizenship", "Civics class has too many field trips", "Students are not allowed to ask questions in civics class"], a:1, why:"The book contrasts tidy textbook civics (vocabulary lists, diagrams, quizzes) with the messy, procedural reality of self-government, arguing real citizenship must be practiced, not just studied."},
+  {q:"According to The Civic Workshop, what kinds of decisions does the book say shape a child's daily life more than a presidential election?", opts:["National holidays", "Small, local decisions like crosswalk placement, library hours, and park maintenance", "Decisions made by foreign governments", "Decisions that never affect families directly"], a:1, why:"The book specifically names local, unglamorous decisions — crosswalks, library hours, park bathrooms, class size limits — as the civics that touches daily life most directly."},
+  {q:"In Teaching Moral Values to Kids, what does the book say is usually true about why young children lie?", opts:["It always indicates the child will become a dishonest adult", "It is often a normal developmental milestone or a clumsy attempt to solve a problem, not evidence of bad character", "Lying in young children should always be treated as a serious character crisis", "Only deliberately 'bad' children ever lie"], a:1, why:"The book reframes lying as commonly developmental rather than a character flaw, noting that even the ability to lie convincingly requires cognitive growth."},
+  {q:"According to Teaching Moral Values to Kids, what tends to happen when a child's lie is treated as a 'character crisis' every time?", opts:["The child will always tell the truth afterward", "The child usually lies more, not less, because the truth becomes too 'expensive' emotionally", "There is no effect on future honesty", "The child becomes permanently incapable of honesty"], a:1, why:"The book warns that responding to every lie with shame teaches a child that telling the truth is too costly, which tends to increase lying rather than reduce it."},
+  {q:"In Teaching Moral Values to Kids, what is described as a common reason elementary-age children tell 'self-protective lies'?", opts:["A desire to harm their parents", "To avoid disappointment, punishment, or the painful feeling of being in trouble, especially as they become aware of fairness and reputation", "Because they enjoy lying for its own sake", "Because they cannot understand the concept of truth at that age"], a:1, why:"The book explains that as children become aware of rules, fairness, and reputation, self-protective lies (like 'I did my homework') often emerge to avoid disappointment or punishment, not to harm others."},
+  {q:"According to Teaching Moral Values to Kids, what shift does the book recommend moving away from 'Who started it?' toward?", opts:["Punishing both children equally without discussion", "Asking 'What happened, and what needs repair?' to reduce defensive, lawyer-like behavior", "Ignoring the conflict entirely", "Asking only the older child what happened"], a:1, why:"The book recommends repair-based language over courtroom-style blame-finding, arguing children tell more truth when they believe honesty leads to solutions rather than exile."},
+  {q:"In History You Can Touch, what problem does the book identify with simply reading a date and having a child repeat it back?", opts:["It works perfectly and needs no further method", "The date often does not stick in long-term memory — by Friday, it is gone", "Reading dates is illegal in homeschool settings", "Children always remember dates this way"], a:1, why:"The book opens by describing the familiar cycle of underlining a date, repeating it back with confidence, and then it being forgotten by Friday — motivating its 'Read, Then Do' method."},
+  {q:"What is the core teaching method of History You Can Touch, according to its table of contents?", opts:["Read, Then Do — combining reading with hands-on activity", "Memorize, Then Forget", "Watch a video, then take a quiz", "Skip the reading and only do activities"], a:1, why:"Chapter 2 of the book is titled 'The Method: Read, Then Do,' establishing that hands-on activity paired with reading is the core approach to making history stick."},
+  {q:"In The Living Map, what problem does the book identify with the 'stack of flashcards' approach to teaching geography?", opts:["Flashcards are too expensive for most families", "A child may chant capitals on Monday, miss them on Wednesday, and the lesson collapses into bargaining and resistance by Friday", "Flashcards work perfectly and require no other method", "Geography cannot be taught with cards at all"], a:1, why:"The book describes a child who can recite capitals briefly but loses the information days later, with lessons collapsing into bargaining — motivating its alternative approach to geography."},
+  {q:"What is the title and theme of Chapter 1 in The Living Map?", opts:["\"The World Is a List\" — geography should be memorized as lists", "\"The World Is Not a List\" — arguing against pure memorization of facts like capitals", "\"Geography Is Optional\" — arguing the subject is unnecessary", "\"Maps Are Outdated\" — arguing physical maps should not be used"], a:1, why:"Chapter 1 is titled 'The World Is Not a List,' setting up the book's argument against rote memorization of geographic facts in favor of a more connected approach."},
+  {q:"According to Sound First, what should a parent say in the HEAR step — and what should they avoid saying?", opts:["Give hints like 'It starts like...' before saying the word", "Simply state the word clearly with no letters, hints, or list references — just the spoken word", "Spell the word out loud first", "Show the word written down before saying it aloud"], a:1, why:"The book specifies the HEAR step should be just the spoken word offered cleanly — no letters, no hints, no references to 'the list' — to keep the focus on sound first."},
+  {q:"In The Kitchen Table Laboratory, what does the dependent variable measure in an experiment?", opts:["The variable that is deliberately changed", "What you watch or measure in response to the change — the 'then' part of the test", "A variable that has nothing to do with the hypothesis", "The temperature of the room only"], a:1, why:"The dependent variable is the 'then' part of a hypothesis — what is measured or observed in response, such as how quickly sugar dissolves."},
+{q:"In Biology - How Life Works (Homeschool Edition), what does the book say distinguishes a living thing from a non-living object that moves, like a ceiling fan?", opts:["Living things must be visible to the naked eye", "Living things are organized into cells, use energy to grow, respond to environment, maintain internal balance, and make more living things", "Only animals count as living things, not plants", "Living things never change over time"], a:1, why:"The book lists these criteria for life: organized into cells, using energy to grow and do work, responding to environment, maintaining internal balance, and reproducing -- distinguishing living things from moving objects like a fan."},
+  {q:"According to Biology - How Life Works, can a plant be considered alive even though it does not run, jump, or bark?", opts:["No, only moving creatures are alive", "Yes -- a plant is still alive, busy, and solving problems in its own quiet way, even without moving like an animal", "Plants are a special non-living category", "The book does not address plants"], a:1, why:"The book explicitly states a plant 'does not run, jump, or bark, but it is still alive, still busy, still solving problems in its own quiet way.'"},
+  {q:"In Genetics - Homeschool Edition, how does the book describe the relationship between DNA, genes, and proteins?", opts:["DNA and genes are the same thing with no distinction", "DNA is the full set of instructions; genes are smaller instruction sets within DNA; a gene is like a recipe that tells a cell how to make a protein", "Genes are visible traits themselves, with no biological process involved", "Proteins create genes, not the other way around"], a:1, why:"The book uses a cookbook analogy: DNA is the full instruction set, genes are individual recipes within it, and a gene tells the cell how to make a specific protein, which then helps produce an observable trait."},
+  {q:"According to Genetics - Homeschool Edition, what role can environment play in how a genetic trait appears, using the book's freckles example?", opts:["Environment has no effect on genetic traits at all", "Environment can affect how a trait shows up, such as sunlight affecting the appearance of freckles -- like an extra ingredient alongside the genetic recipe", "Only environment determines all traits, with genes playing no role", "Freckles are not connected to genetics in the book"], a:1, why:"The book describes environment as an 'extra ingredient' in the chain from gene to protein to observable trait, using sunlight's effect on freckles as a concrete example."},
+  {q:"In Civic Literacy for Kids, what analogy does the book use to explain why government power is divided into three branches?", opts:["A sports team with only one player", "Avoiding one person being the principal, teacher, referee, and hall monitor all at once -- which would not be fair", "A single judge who makes and enforces all rules alone is described as ideal", "There is no analogy used in the book"], a:1, why:"The book compares undivided government power to one person being the principal, teacher, referee, and hall monitor simultaneously -- explaining why power is instead split among three branches."},
+  {q:"According to Civic Literacy for Kids, what is the Bill of Rights described as?", opts:["A set of punishments for breaking laws", "A list of promises -- the first ten amendments to the Constitution that protect people, not just government officials", "A document that only applies to elected officials", "An optional set of suggestions with no real protective power"], a:1, why:"The book calls the Bill of Rights 'a list of promises' -- the first ten amendments meant to protect ordinary people, calling it readers' 'Secret Shield' in the chapter title."},
+  {q:"In Civic Literacy for Kids, how does the book define what a constitutional 'right' fundamentally is?", opts:["A prize given only to popular or powerful people", "A boundary -- it draws a line and says government cannot cross it, regardless of who is in charge", "Something the government can revoke at any time for any reason", "A privilege only adults can have"], a:1, why:"The book states: 'rights are not prizes you win for being popular... Rights are more like boundaries. They draw a line and say, Stop. You cant cross this line.'"},
+  {q:"In Old Glory, what do the thirteen stripes on the American flag represent?", opts:["The thirteen branches of the military", "The thirteen original colonies that became the first states", "Thirteen famous American presidents", "Thirteen years since independence was declared"], a:1, why:"The book explains the thirteen stripes stand for the thirteen original colonies, comparing them to thirteen threads twisted into one strong rope -- unity without sameness."},
+  {q:"According to Old Glory, what specific date does the book associate with the Flag Resolution describing the new national flag's design?", opts:["July 4, 1776", "June 14, 1777", "September 17, 1787", "December 25, 1776"], a:1, why:"The book cites the Flag Resolution of June 14, 1777, in which Congress described thirteen stripes and thirteen white stars in a blue field 'representing a new constellation.'"},
+  {q:"In Old Glory, what message does the book say the flag's stripes carry beyond representing the colonies?", opts:["A message of competition between states", "A message of equality -- none of the stripes is bigger or more important than the others", "A message that only some states matter more than others", "No symbolic message at all, only decoration"], a:1, why:"The book states stripes 'show equality' -- unlike a crown or throne that signals one powerful figure, the stripes are simple, repeating, and shared equally."},
+  {q:"According to History You Can Touch, what is the book's central critique of teaching history through dates alone?", opts:["Dates are the most important part of history and should be the sole focus", "A child can repeat a date back with confidence on the day they learn it, but by Friday the date is often forgotten -- it does not stick without a hands-on method", "History should never include any dates at all", "Dates are easier to remember than any other historical detail"], a:1, why:"The book opens by describing a child who underlines and repeats a date confidently, only to have it 'gone' by Friday -- motivating its 'Read, Then Do' hands-on method instead of rote memorization."},
+  {q:"In The Civic Workshop, what does the book say a child can pass a civics test and still not know how to do?", opts:["Recite the names of all U.S. presidents", "Know what to do in real situations, like an unsafe bus stop, a spreading rumor, or evaluating a local official's claim", "Memorize the three branches of government", "Identify the flag's colors"], a:1, why:"The book argues a child can pass a tidy civics quiz and still not know practically what to do when a bus stop is unsafe, a rumor spreads, or a local claim needs evaluating -- the gap between testing and practiced citizenship."},
+  {q:"According to Sound First, why does the book say a weekly spelling list often becomes 'a guessing game with prizes'?", opts:["Because all children spell perfectly using lists", "Because children who happen to guess well get praised as 'good at spelling' while those who guess poorly get mislabeled as careless or lazy, when both are really responding to weak instruction", "Because spelling lists always include prizes for winners", "Because the book recommends games instead of any instruction"], a:1, why:"The book explains that list-based memorization rewards guessing ability rather than real spelling skill, unfairly labeling children who guess poorly as careless when the instructional model itself is the weak point."},
+{q:"In Morals, Character, Values (Middle Years guide), how does the book define delayed gratification?", opts:["Refusing to ever enjoy anything immediately", "The skill of choosing a larger, later good over a smaller, immediate relief", "A punishment given to children who misbehave", "A reward system based only on grades"], a:1, why:"The book defines delayed gratification as choosing a larger, later good over a smaller, immediate relief -- the bridge between knowing the right choice and actually following through on it."},
+  {q:"According to Morals, Character, Values, what phrase does the book use to summarize why fast relief (like a shortcut or a quick lie) often costs more later?", opts:["\"Fast relief is usually expensive\" -- the bill comes due later, often at a worse time", "\"Fast relief is always free\" -- there are no real consequences", "\"Waiting never pays off\" -- urgency is always correct", "\"Children should never wait for anything\""], a:1, why:"The book states plainly: 'Fast relief is usually expensive... If you use a shortcut today, you still have to pay for the missing skill later. The bill just comes due at a worse time.'"},
+  {q:"In The Civic Workshop, what does the book mean by the family rule \"cite or retract\"?", opts:["Children must always agree with whatever an adult says", "If you put a fact on the table in family discussion, you owe the table a source for it", "Only adults are allowed to state facts at home", "Facts should never be discussed at the dinner table"], a:1, why:"The book describes 'cite or retract' as a conversational family rule: if you state a fact, you owe a source -- the starting discipline before lateral reading is introduced."},
+  {q:"According to The Civic Workshop, what is the kid-friendly phrase the book suggests using to explain lateral reading?", opts:["\"Always trust the first website you find\"", "\"Don't get interviewed by the page\" -- meaning you should leave the page to find context elsewhere before deciding what to believe", "\"Never read more than one source\"", "\"Screenshots are always proof\""], a:1, why:"The book's phrase is 'Don't get interviewed by the page' -- a reminder that a website introducing itself in its best light is not the same as outside verification."},
+  {q:"In The Civic Workshop, why does the book say a website's own \"About\" page is not enough to judge its credibility?", opts:["About pages are always illegal to publish", "A site introducing itself is like asking someone to write their own background check -- it shows the best possible light, not independent verification", "About pages never contain any true information", "Only government websites are allowed to have About pages"], a:1, why:"The book compares trusting a site's self-description to 'asking someone to write their own background check' -- independent, outside verification (lateral reading) is what actually confirms credibility."},
+  {q:"According to Genetics - Homeschool Edition, what is a Punnett square used for?", opts:["Measuring a child's height over time", "A grid tool that maps the possible genotype outcomes when two parents' alleles combine, showing probabilities rather than guarantees", "A type of microscope used to view DNA directly", "A device for extracting DNA from strawberries"], a:1, why:"The book describes a Punnett square as 'a map of possibilities' showing what could happen and how likely each outcome is, compared to a weather forecast that gives probabilities, not guarantees."},
+  {q:"In Genetics - Homeschool Edition, in the book's Punnett square example, what genotype is Parent A described as having for body color (P=dominant purple, p=recessive green)?", opts:["pp -- fully green with no hidden purple allele", "Pp -- purple in appearance but carrying a hidden green allele", "PP -- purple with no hidden alleles at all", "The book does not specify a genotype for either parent"], a:1, why:"The book describes Parent A as Pp -- purple in appearance (since purple is dominant) but carrying a hidden recessive green allele, paired with Parent B who is pp (green-green)."},
+  {q:"According to Genetics - Homeschool Edition, what comparison does the book use to explain why genetics predictions are not guarantees?", opts:["Genetics predictions are compared to lottery numbers, implying total randomness with no pattern", "Genetics predictions are compared to weather forecasts -- giving probabilities, not guarantees, for one specific outcome", "Genetics predictions are described as always being 100% certain", "The book says genetics cannot predict anything at all"], a:1, why:"The book uses the analogy that genetics predictions, like weather forecasts, give probabilities rather than guarantees for any one specific individual outcome."},
+  {q:"In Sound First, what does the book identify as the actual long-term memory skill spelling requires, as opposed to short-term cramming?", opts:["Spelling is described as a sport you can peak on for a single Friday performance", "Spelling is described as a long-term memory skill that is not impressed by one-week, list-based performances", "Spelling requires no memory at all, only guessing", "Spelling is identical to reading comprehension with no distinct skill"], a:1, why:"The book contrasts spelling-as-sport (peaking for a Friday test) with the reality that 'spelling is a long-term memory skill, and long-term memory is not impressed by one-week performances.'"},
+  {q:"According to The Kitchen Table Laboratory, what does the book recommend a parent say to a child to reduce the fear of being wrong with a hypothesis?", opts:["\"You must always get the hypothesis correct or redo the experiment\"", "\"The hypothesis is not graded. The honesty is.\"", "\"Only smart kids can make good hypotheses\"", "\"Hypotheses are not allowed to ever be wrong\""], a:1, why:"The book recommends saying, 'The hypothesis is not graded. The honesty is,' to counter the idea, often absorbed from school, that being wrong is shameful in science."},
+  {q:"In Teaching Moral Values to Kids, what does the book say is true about the cognitive development required to tell a convincing lie?", opts:["Lying requires no real thinking at all", "The ability to lie convincingly actually requires cognitive growth -- it is not automatically a sign of bad character", "Only adults are capable of telling any kind of lie", "Lying ability has nothing to do with brain development"], a:1, why:"The book notes that 'the ability to lie convincingly requires cognitive growth,' reframing early lying as a developmental milestone rather than evidence of a flawed character."},
+  {q:"According to Old Glory, what comparison does the book use to describe the unity represented by the flag's thirteen stripes?", opts:["Thirteen separate flags with no connection to one another", "Thirteen threads twisted together into a rope -- a single thread can snap, but a twisted rope can pull something heavy", "Thirteen identical copies of the exact same symbol with no individual meaning", "The stripes are described as having no symbolic meaning at all"], a:1, why:"The book compares the stripes to 'thirteen threads in a rope. One thread can snap. A rope, twisted together, can pull something heavy' -- illustrating that unity does not require sameness."},
+{q:"According to History of America for Kids, what major discovery changed human life in the Americas about 5,000 years ago?", opts:["The invention of the wheel", "Learning to grow their own food through farming, instead of relying only on hunting and gathering", "The discovery of metal tools", "The invention of writing"], a:1, why:"The book describes farming as a discovery 'like a superpower' -- instead of spending all day searching for food, people could plant seeds and know where their next meal would come from, freeing time for building, art, and complex societies."},
+  {q:"In History of America for Kids, what are the \"Three Sisters\" of Native American agriculture?", opts:["Three Native American leaders from history", "Corn, beans, and squash -- three crops grown together because they helped each other thrive", "Three different Native American nations", "Three rivers important to early farming"], a:1, why:"The book explains the Three Sisters (corn, beans, squash) were grown together because corn gave beans something to climb, beans added nitrogen to the soil, and squash covered the ground to retain moisture and block weeds."},
+  {q:"According to History of America for Kids, how did the corn grown by ancient Native Americans differ from corn eaten today?", opts:["Ancient corn was identical in every way to modern corn", "Ancient corn had tiny kernels and grew on cobs no bigger than a thumb", "Ancient corn was larger than modern corn", "The book does not mention any differences"], a:1, why:"The book notes that ancient corn 'looked very different' from today's corn, with tiny kernels growing on cobs no bigger than a thumb, gradually improved over many generations of seed-saving."},
+  {q:"In Civic Literacy for Kids, what everyday example does the book use to explain why voting matters in a community?", opts:["Choosing what color to paint a house", "A town having to agree on one giant pizza everyone must eat, when people want different toppings", "Picking a single book for a whole school to read", "The book uses no everyday example"], a:1, why:"The book uses the image of a whole town ordering one giant pizza that everyone must eat -- since people want different toppings, voting becomes the peaceful method the group uses to decide together."},
+  {q:"According to Civic Literacy for Kids, what is voting fundamentally about, beyond just what an individual personally wants?", opts:["Voting is purely about getting exactly what one person wants, with no regard for others", "Voting is also about what a person thinks is best for the whole community, given that communities include many different people with different needs", "Voting has nothing to do with community needs", "Only the loudest person's preference should count in a vote"], a:1, why:"The book emphasizes that voting isn't just about personal preference -- it's also about considering what is best for a community made up of people with different lives, needs, and ideas."},
+{q:"According to Biology - How Life Works, what tool does the book describe as a \"zoom lens for biology\" that lets you explore the micro-world?", opts:["A telescope", "A microscope -- it makes the image bigger to your eyes so tiny details become observable", "A magnifying glass attached to a phone", "The book says no tool is needed to see microbes"], a:1, why:"The book describes a microscope as a 'zoom lens for biology' that does not make things bigger in real life, but makes the image bigger to your eyes, turning tiny details into something observable."},
+  {q:"In Biology - How Life Works, what surprising places does the book say can serve as a \"micro-world\" habitat?", opts:["Only the deep ocean counts as a micro-world habitat", "A drop of water, your cheek, or the fuzzy corner of old bread can all be a habitat for microscopic life", "Micro-worlds only exist in laboratories", "The book says micro-worlds do not really exist"], a:1, why:"The book lists everyday examples like a drop of water, your cheek, and moldy bread as places that can be habitats for microscopic living things, full of 'homes' and 'travelers.'"},
+  {q:"In The Living Map, what is the purpose of having a child sketch the world from memory, even imperfectly?", opts:["To create a perfectly accurate piece of art for display", "To build a usable \"inner globe\" -- a mental frame for geography that does not depend on a printed map", "To test the child and assign a grade based on accuracy", "Memory sketching is discouraged in the book"], a:1, why:"The book states the goal is not artistic accuracy but 'a usable inner globe' -- giving the mind a frame so later geography lessons have somewhere to land, explicitly saying 'We're not making art. We're building a tool.'"},
+  {q:"According to The Living Map, what order of priorities does the book recommend for teaching geography: picture, relationships, or names?", opts:["Names first, then relationships, then picture", "Picture first, relationships second, names last", "Only names matter; picture and relationships are unnecessary", "All three should be taught in random order with no structure"], a:1, why:"The book states the guiding principle as 'picture first, relationships second, names last' -- starting with a basic mental shape of the world before layering in connections and place names."},
+{q:"According to History You Can Touch, what is fermentation, as the book defines it?", opts:["A process that only happens in modern industrial factories", "What happens when humans partner with microorganisms to change food -- microbes eat sugars and produce acids, gases, and alcohols", "A type of cooking that uses only high heat", "A process unrelated to food or microbes"], a:1, why:"The book defines fermentation as a partnership between humans and microorganisms, where microbes eating sugars produce acids, gases, and alcohols -- the difference between milk and yogurt, or grain porridge and bread."},
+  {q:"In History You Can Touch, what does the book say fermentation explains the difference between, regarding bread?", opts:["The difference between two completely unrelated foods", "The difference between heavy grain porridge and dough that rises, traps air, and becomes bread that is easier to chew and digest", "The book does not connect fermentation to bread at all", "Fermentation has no effect on grain products"], a:1, why:"The book explains fermentation is the difference between grain porridge, which is heavy, and grain dough that rises and traps air to become bread that is easier to chew, digest, and keep."},
+  {q:"According to The Civic Workshop, what is the book's simplified, kid-usable summary of what each of the three branches of government does?", opts:["Congress runs the work, the President makes the rules, courts have no role", "Congress makes the rules, the President runs the work, the courts referee the arguments", "All three branches do the exact same job for redundancy", "The book provides no summary of the branches at all"], a:1, why:"The book offers this working handle for families: 'Congress makes the rules. The President runs the work. The courts referee the arguments' -- a simplified but useful starting summary."},
+  {q:"In The Civic Workshop, what analogy does the book use to describe how the three branches of government interact in real life, as opposed to a tidy diagram?", opts:["Three strangers who never interact with one another", "Three people trying to carry a couch up a staircase together -- each has a grip and a job, and the couch moves slowly on purpose", "A single person operating all three branches alone for efficiency", "A race where one branch tries to finish before the others"], a:1, why:"The book compares the branches to three people carrying a couch up a staircase -- each has a grip and a role, sometimes blocking each other, with the deliberate slowness preventing any one branch from dropping the couch alone."},
+{q:"According to History You Can Touch, what new problem does the book say appears once an ancient community grows past a certain size?", opts:["A problem with finding enough food, which never improves with population growth", "A coordination problem -- the need to move information faster than feet can carry it, constrained by distance and line of sight", "A problem that has no relation to communication at all", "The book says larger communities have no new problems to solve"], a:1, why:"The book frames civilization as 'the ability to move information faster than feet can carry it,' explaining that ancient communication was constrained by the stubborn facts of distance and line of sight."}
+];
+];
+
+/* ====================== SHARED ENGINE (do not edit per subject) =========== */
+(function(){
+  // expose pure logic for testing (no answer key leaked)
+  window.GSUCERT = {
+    tier: function(correct,total){
+      const p = correct/total;
+      if(p >= CONFIG.goldPct) return "Gold";
+      if(p >= CONFIG.silverPct) return "Silver";
+      return null;
+    },
+    makeSerial: function(){
+      const t = Date.now().toString(36).toUpperCase();
+      const r = Math.random().toString(36).slice(2,6).toUpperCase();
+      return CONFIG.serialPrefix + "-" + t.slice(-5) + r.slice(0,2);
+    }
+  };
+
+  // ---- Firebase (guarded) ----
+  let db=null, authReady=false;
+  try{
+    if(window.firebase && firebase.initializeApp){
+      firebase.initializeApp(CONFIG.firebase);
+      db = firebase.firestore();
+      firebase.auth().signInAnonymously().then(()=>authReady=true).catch(()=>{});
+    }
+  }catch(e){ db=null; }
+
+  const $ = id => document.getElementById(id);
+  const shuffle = arr => { const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+  // apply config to copy
+  $("k-subject").textContent = CONFIG.subjectLine;
+  $("prepLink").href = CONFIG.prepHref;
+
+  let quiz=[], idx=0, correct=0, answered=false, lastTier=null, lastSerial="", alias="", issued=false, lastQuizIdx=[];
+  let timerId=null, timeLeft=CONFIG.timeLimitSec;
+
+  // ---- on-device score (localStorage) ----
+  const LS_KEY = "gsu_cert_"+CONFIG.serialPrefix;
+  function saveLocal(extra){
+    try{
+      const tot=(quiz.length||CONFIG.drawCount);
+      const r=Object.assign({subject:CONFIG.subject,score:correct,total:tot,pct:Math.round(correct/tot*100),tier:lastTier,dateISO:new Date().toISOString()},extra||{});
+      localStorage.setItem(LS_KEY, JSON.stringify(r));
+    }catch(e){}
+  }
+  function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||"null"); }catch(e){ return null; } }
+
+  // ---- on-device "seen question" memory: a learner never gets the same question twice in a
+  // row across attempts until the entire pool has been exhausted, at which point it reshuffles
+  // and starts a fresh cycle. This guarantees GENO's review of each question's "why" explanation
+  // always introduces NEW material, maximizing comprehension instead of repeat-testing. ----
+  const SEEN_KEY = "gsu_cert_seen_"+CONFIG.serialPrefix;
+  function loadSeen(){
+    try{
+      const raw = localStorage.getItem(SEEN_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    }catch(e){ return []; }
+  }
+  function saveSeen(idxArr){
+    try{ localStorage.setItem(SEEN_KEY, JSON.stringify(idxArr)); }catch(e){}
+  }
+  (function(){
+    const p=loadLocal(), el=$("deviceNote"); if(!el) return;
+    if(p && p.tier){ el.innerHTML='<b style="color:var(--gold)">On this device:</b> you earned <b>'+p.tier+'</b> ('+p.pct+'%)'+(p.serial?' \u00b7 <span style="font-family:monospace">'+p.serial+'</span>':'')+'. Your score is saved here \u2014 retake anytime to improve it. Every retake draws new questions you have not seen yet, until the full bank cycles.'; }
+    else if(p){ el.innerHTML='<b style="color:var(--gold)">On this device:</b> last score '+p.pct+'%, saved here \u2014 keep climbing. Every retake draws new questions you have not seen yet, until the full bank cycles.'; }
+  })();
+
+  // ---- countdown clock (counts down from CONFIG.timeLimitSec) ----
+  function fmtClock(s){ const m=Math.floor(s/60), ss=s%60; return m+":"+(ss<10?"0":"")+ss; }
+  function paintClock(){
+    const c=$("clock"); if(!c) return;
+    $("clockT").textContent=fmtClock(Math.max(0,timeLeft));
+    c.classList.toggle("warn", timeLeft<=300 && timeLeft>60);
+    c.classList.toggle("danger", timeLeft<=60);
+  }
+  function startClock(){
+    timeLeft=CONFIG.timeLimitSec;
+    const c=$("clock"); if(c) c.className="clock";
+    paintClock();
+    clearInterval(timerId);
+    timerId=setInterval(function(){ timeLeft--; paintClock(); if(timeLeft<=0){ stopClock(); finish(true); } },1000);
+  }
+  function stopClock(){ clearInterval(timerId); timerId=null; const c=$("clock"); if(c) c.className="clock hide"; }
+
+  function buildQuiz(){
+    // No-repeat engine (v2): maintains an ordered "seen queue" of pool indices (oldest seen
+    // first). Each draw takes unseen questions first; if more are needed, it tops off from the
+    // OLDEST entries in the seen queue that were NOT in the immediately-prior attempt -- this
+    // guarantees a learner is never re-served a question from their last attempt, as long as
+    // the pool is larger than the draw count. Once every question has cycled through, the
+    // queue naturally wraps and starts preferring the next-oldest batch again. GENO's "why"
+    // explanation is therefore always attached to material the learner has not just seen.
+    const allIdx = POOL.map((_,i)=>i);
+    const seenQueue = loadSeen(); // ordered array, oldest first
+    const seenSet = new Set(seenQueue);
+    const lastDrawSet = new Set(lastQuizIdx);
+
+    let unseenIdx = allIdx.filter(i=>!seenSet.has(i));
+    let drawIdx = [];
+
+    if(unseenIdx.length >= CONFIG.drawCount){
+      drawIdx = shuffle(unseenIdx).slice(0, CONFIG.drawCount);
+    } else {
+      drawIdx = unseenIdx.slice();
+      const need = Math.min(CONFIG.drawCount, POOL.length) - drawIdx.length;
+      // top off from oldest-seen, excluding anything in the immediately-prior attempt
+      let candidates = seenQueue.filter(i => !drawIdx.includes(i) && !lastDrawSet.has(i));
+      let topOff = candidates.slice(0, need);
+      if(topOff.length < need){
+        // pool is smaller than draw count (rare edge case) -- allow prior-attempt repeats
+        // only as an absolute last resort so the exam can still reach CONFIG.drawCount
+        const remaining = seenQueue.filter(i => !drawIdx.includes(i) && !topOff.includes(i));
+        topOff = topOff.concat(remaining.slice(0, need - topOff.length));
+      }
+      drawIdx = drawIdx.concat(topOff);
+    }
+    drawIdx = shuffle(drawIdx);
+    lastQuizIdx = drawIdx.slice();
+
+    quiz = drawIdx.map(i=>{
+      const item = POOL[i];
+      const order = shuffle([0,1,2,3]);
+      return {
+        q: item.q,
+        opts: order.map(o=>item.opts[o]),
+        a: order.indexOf(item.a),
+        why: item.why,
+        _poolIdx: i
+      };
+    });
+
+    // update the seen queue: move drawn items to the end (most-recently-seen), preserve
+    // relative order of everything else so older unattempted questions surface first
+    const drawSet = new Set(drawIdx);
+    const updatedQueue = seenQueue.filter(i => !drawSet.has(i)).concat(drawIdx);
+    saveSeen(updatedQueue);
+  }
+
+  function renderQ(){
+    answered=false;
+    const item = quiz[idx];
+    $("qcount").textContent = "Question "+(idx+1)+" of "+quiz.length;
+    $("scorerun").textContent = "Score "+correct;
+    $("barFill").style.width = ((idx)/quiz.length*100)+"%";
+    $("qtext").textContent = item.q;
+    const wrap = $("opts"); wrap.innerHTML="";
+    item.opts.forEach((txt,i)=>{
+      const b=document.createElement("button");
+      b.className="opt"; b.textContent=txt;
+      if(location.hash==="#test" && i===item.a) b.dataset.c="1";
+      b.onclick=()=>choose(i,b);
+      wrap.appendChild(b);
+    });
+    $("whyBox").className="why hide";
+    $("nextBtn").className="btn hide";
+    resize();
+  }
+
+  function choose(i, btn){
+    if(answered) return;
+    answered=true;
+    const item=quiz[idx];
+    const buttons=[...document.querySelectorAll(".opt")];
+    buttons.forEach(b=>b.disabled=true);
+    buttons[item.a].classList.add("correct");
+    if(i===item.a){ correct++; }
+    else { btn.classList.add("wrong"); }
+    $("scorerun").textContent="Score "+correct;
+    $("whyBox").className="why";
+    $("whyBox").innerHTML='<div class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"><div><b style="color:var(--gold)">GENO:</b> '+item.why+'</div></div>';
+    $("nextBtn").className="btn";
+    $("nextBtn").textContent = (idx+1<quiz.length) ? "Next →" : "See My Result →";
+    resize();
+  }
+
+  $("nextBtn").onclick=()=>{
+    if(idx+1<quiz.length){ idx++; renderQ(); }
+    else finish();
+  };
+
+  function finish(auto){
+    stopClock();
+    $("exam").className="card hide";
+    $("results").className="card center";
+    const total=quiz.length;
+    $("r-score").textContent = correct+"/"+total;
+    lastTier = window.GSUCERT.tier(correct,total);
+    const tb=$("r-tier");
+    if(lastTier==="Gold"){ tb.innerHTML='<span class="tierbadge tier-gold">Gold · Verified</span>'; }
+    else if(lastTier==="Silver"){ tb.innerHTML='<span class="tierbadge tier-silver">Silver · Verified</span>'; }
+    else { tb.innerHTML='<span class="tierbadge tier-none">Not yet — keep climbing</span>'; }
+
+    if(lastTier){
+      $("r-head").textContent = "You earned the "+CONFIG.subject+" Certificate.";
+      $("r-msg").textContent = "Add a name if you like, then issue your certificate to record it for public verification.";
+      $("passBlock").className="";
+      lastSerial = window.GSUCERT.makeSerial();
+      $("r-serial").textContent = lastSerial;
+      alias=""; issued=false;
+      $("aliasInput").value=""; $("aliasInput").disabled=false;
+      $("issueBtn").disabled=false; $("issueBtn").textContent="Issue My Certificate →";
+      $("recordNote").textContent="Add your name if you like, then issue your certificate to record it for public verification.";
+      drawCert();
+    } else {
+      const need = Math.ceil(CONFIG.silverPct*total);
+      $("r-head").textContent = "So close — "+need+"/"+total+" earns Silver.";
+      $("r-msg").textContent = "You missed "+(total-correct)+". Review with GENO or the campus, then retake free — a fresh set is drawn every time.";
+      $("passBlock").className="hide";
+    }
+    saveLocal(lastTier?{serial:lastSerial}:undefined);
+    $("barFill").style.width="100%";
+    resize();
+  }
+
+  function recordSerial(){
+    if(!db){ $("recordNote").textContent="(Offline — your certificate and serial are valid; public registry will sync when online.)"; return; }
+    const doc={ serial:lastSerial, subject:CONFIG.subject, tier:lastTier, score:correct, total:quiz.length,
+      pct:Math.round(correct/quiz.length*100), alias:alias||"Anonymous", revoked:false, dateISO:new Date().toISOString() };
+    db.collection("certifications").doc(lastSerial).set(doc)
+      .then(()=>{ $("recordNote").textContent="Recorded to the public registry — verifiable by serial."; })
+      .catch(()=>{ $("recordNote").textContent="(Certificate valid; registry write pending.)"; });
+  }
+
+  $("aliasInput").addEventListener("input",()=>{
+    if(issued) return;
+    alias = ($("aliasInput").value||"").trim().slice(0,36);
+    drawCert();
+  });
+  $("issueBtn").onclick=()=>{
+    if(issued) return;
+    alias = ($("aliasInput").value||"").trim().slice(0,36);
+    drawCert();
+    issued=true;
+    $("issueBtn").disabled=true; $("aliasInput").disabled=true;
+    $("issueBtn").textContent="Certificate Issued ✓";
+    recordSerial();
+    saveLocal({serial:lastSerial, alias:alias});
+  };
+
+  function drawCert(){
+    const c=$("certCanvas"), x=c.getContext("2d");
+    x.fillStyle="#000000"; x.fillRect(0,0,1200,800);
+    x.strokeStyle="#C9A84C"; x.lineWidth=6; x.strokeRect(26,26,1148,748);
+    x.strokeStyle="rgba(201,168,76,.5)"; x.lineWidth=2; x.strokeRect(44,44,1112,712);
+    x.textAlign="center";
+    x.fillStyle="#C9A84C"; x.font="700 26px Georgia"; x.fillText("GLOBAL SOVEREIGN UNIVERSITY", 600, 130);
+    x.fillStyle="rgba(245,241,232,.8)"; x.font="18px Arial"; x.fillText("The Foundation for Global Instruction · 501(c)(3)", 600, 162);
+    x.fillStyle="#F5F1E8"; x.font="italic 30px Georgia"; x.fillText("Certificate of Comprehension", 600, 250);
+    x.fillStyle="#C9A84C"; x.font="700 64px Georgia"; x.fillText(CONFIG.subject, 600, 332);
+    x.fillStyle="#F5F1E8"; x.font="24px Arial"; x.fillText("awarded to", 600, 400);
+    x.fillStyle="#F5F1E8"; x.font="700 44px Georgia"; x.fillText(alias||"Anonymous Learner", 600, 456);
+    x.fillStyle = lastTier==="Gold" ? "#C9A84C" : "#cdd2da";
+    x.font="700 30px Arial"; x.fillText((lastTier||"").toUpperCase()+"  ·  "+Math.round(correct/quiz.length*100)+"%", 600, 520);
+    x.fillStyle="rgba(245,241,232,.85)"; x.font="20px Arial";
+    x.fillText(new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}), 600, 600);
+    x.fillStyle="#C9A84C"; x.font="600 24px monospace"; x.fillText(lastSerial, 600, 660);
+    x.fillStyle="rgba(245,241,232,.6)"; x.font="16px Arial"; x.fillText("Verify this serial at globalsovereignuniversity.org/certification", 600, 712);
+  }
+
+  $("dlBtn").onclick=()=>{
+    const a=document.createElement("a");
+    a.download = CONFIG.serialPrefix+"-certificate.png";
+    a.href=$("certCanvas").toDataURL("image/png");
+    a.click();
+  };
+
+  $("startBtn").onclick=()=>{
+    buildQuiz(); idx=0; correct=0;
+    $("intro").className="card center hide";
+    $("results").className="card center hide";
+    $("exam").className="card";
+    renderQ();
+    startClock();
+  };
+  $("retakeBtn").onclick=()=>{ $("startBtn").click(); };
+
+  // ---- Public verify ----
+  $("verifyBtn").onclick=()=>{
+    const s=($("verifyInput").value||"").trim().toUpperCase();
+    const out=$("verifyResult");
+    if(!s){ out.innerHTML='<span class="bad">Enter a serial number.</span>'; return; }
+    if(!db){ out.innerHTML='<span class="muted">Verification is offline right now — try again when connected.</span>'; return; }
+    out.textContent="Checking…";
+    db.collection("certifications").doc(s).get().then(d=>{
+      if(d.exists){
+        const v=d.data();
+        if(v.revoked===true){
+          out.innerHTML='<span class="bad">✗ This certificate has been revoked and is no longer valid.</span>';
+        } else {
+          out.innerHTML='<span class="ok">✓ Valid.</span> '+v.subject+' · '+v.tier+' · '+v.pct+'% · '+(v.alias||"Anonymous")+' · '+new Date(v.dateISO).toLocaleDateString();
+        }
+      } else {
+        out.innerHTML='<span class="bad">✗ No certificate found with that serial.</span>';
+      }
+    }).catch(()=>{ out.innerHTML='<span class="bad">Could not reach the registry. Try again shortly.</span>'; });
+  };
+
+  // ---- iframe auto-resize (if embedded) ----
+  function resize(){
+    try{ parent.postMessage({gsuCert:true, h:document.body.scrollHeight}, "*"); }catch(e){}
+  }
+  window.addEventListener("load", resize);
+  window.addEventListener("resize", resize);
+})();
+</script>
+</body>
+</html>
