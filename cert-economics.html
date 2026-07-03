@@ -2,8 +2,8 @@
 <!-- ============================================================================
      GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
      ROUTING: Standalone app -> commit to gsu-assets, served at
-              read.globalsovereignuniversity.org/cert-writification.html
-              Then on /certification, set the Writification card's button href
+              read.globalsovereignuniversity.org/cert-economics.html
+              Then on /certification, set the Economics card's button href
               to that URL and flip its status to "Live".
 
      THIS FILE IS ALSO THE MASTER TEMPLATE. To create the next subject's
@@ -34,22 +34,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Writification Comprehension Certification — Free & Verifiable | GSU</title>
-<meta name="description" content="Earn the free Writification Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
-<meta property="og:title" content="Writification Comprehension Certification — Free & Verifiable | GSU">
+<title>Economics Comprehension Certification — Free & Verifiable | GSU</title>
+<meta name="description" content="Earn the free Economics Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
+<meta property="og:title" content="Economics Comprehension Certification — Free & Verifiable | GSU">
 <meta property="og:description" content="30 questions. 80% Silver, 90% Gold. A unique, publicly verifiable serial number. Free, anonymous, no login — from a 501(c)(3).">
 <meta property="og:type" content="website">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Writification Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of foundational writing: grammar, punctuation, capitalization, parts of speech, usage, spelling, and clear, complete sentences and paragraphs."}
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Economics Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of economics: scarcity and trade-offs, supply and demand, incentives, money and inflation, trade and specialization, and how free markets coordinate millions of choices."}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Is the Writification certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
+{"@type":"Question","name":"Is the Economics certification free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
 {"@type":"Question","name":"How is the certificate verified?","acceptedAnswer":{"@type":"Answer","text":"When you pass, a unique serial number is issued and recorded. Anyone can confirm it is genuine using the Verify a Certificate box, with no login required."}},
 {"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Thirty questions are drawn at random. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.globalsovereignuniversity.org/"},{"@type":"ListItem","position":2,"name":"Certification","item":"https://www.globalsovereignuniversity.org/certification"},{"@type":"ListItem","position":3,"name":"Writification Certification Exam","item":"https://read.globalsovereignuniversity.org/cert-writification.html"}]}
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.globalsovereignuniversity.org/"},{"@type":"ListItem","position":2,"name":"Certification","item":"https://www.globalsovereignuniversity.org/certification"},{"@type":"ListItem","position":3,"name":"Economics Certification Exam","item":"https://read.globalsovereignuniversity.org/cert-economics.html"}]}
 </script>
 <style>
   :root{--bg:#000000;--panel:#13110b;--gold:#C9A84C;--cream:#F5F1E8;--line:rgba(201,168,76,.28)}
@@ -117,7 +117,7 @@
 
   <!-- INTRO -->
   <section id="intro" class="card center">
-    <div class="kick" id="k-subject">Writification · Certificate of Comprehension</div>
+    <div class="kick" id="k-subject">Economics · Certificate of Comprehension</div>
     <h1>Prove You <span class="gold">Comprehend It.</span></h1>
     <p class="muted">Free, anonymous, no account — and when you pass, a unique serial number anyone on Earth can verify. This is competence on the record, not a participation ribbon.</p>
     <ul class="rules">
@@ -129,7 +129,7 @@
     </ul>
     <button class="btn" id="startBtn">Begin the Certification →</button>
     <p class="muted" id="deviceNote" style="margin-top:12px"></p>
-    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/writification">Prepare free at the Writification campus →</a></p>
+    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/economics">Prepare free at the Economics campus →</a></p>
   </section>
 
   <!-- EXAM -->
@@ -175,7 +175,7 @@
     <h3>Verify a Certificate</h3>
     <p class="muted">Anyone can confirm a GSU certificate is genuine. Enter a serial number — no account, nothing to install.</p>
     <div class="field" style="justify-content:flex-start">
-      <input id="verifyInput" placeholder="e.g. GSU-WRIT-LXK3F9Q2">
+      <input id="verifyInput" placeholder="e.g. GSU-SPELL-LXK3F9Q2">
       <button class="btn" id="verifyBtn">Verify →</button>
     </div>
     <div class="verify-result muted" id="verifyResult"></div>
@@ -206,10 +206,10 @@
 <script>
 /* ====================== ZONE B — CONFIG (edit per subject) ================= */
 const CONFIG = {
-  subject: "Writification",
-  serialPrefix: "GSU-WRIT",
-  subjectLine: "Writification · Certificate of Comprehension",
-  prepHref: "/writification",
+  subject: "Economics",
+  serialPrefix: "GSU-ECON",
+  subjectLine: "Economics · Certificate of Comprehension",
+  prepHref: "/economics",
   drawCount: 30,
   timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
   silverPct: 0.80,
@@ -235,42 +235,42 @@ const CONFIG = {
    draws CONFIG.drawCount at random and shuffles each question's options.
 =========================================================================== */
 const POOL = [
-  {"q": "Choose the correct word: \"____ going to love the new library.\"", "opts": ["They're", "Their", "There", "Thier"], "a": 0, "why": "They're = they are; the sentence needs 'they are going.'"},
-  {"q": "Choose the correct word: \"____ welcome to join us.\"", "opts": ["You're", "Your", "Yore", "Youre"], "a": 0, "why": "You're = you are: 'you are welcome.'"},
-  {"q": "Choose the correct word: \"The dog wagged ____ tail.\"", "opts": ["its", "it's", "its'", "it is"], "a": 0, "why": "'Its' (no apostrophe) shows possession; 'it's' means 'it is.'"},
-  {"q": "Choose the correct verb: \"The list of items ____ on the desk.\"", "opts": ["is", "are", "were", "being"], "a": 0, "why": "The subject is 'list' (singular), so use 'is.'"},
-  {"q": "Which phrase shows one cat owning a toy?", "opts": ["the cats toy", "the cat's toy", "the cats' toy", "the cat toy's"], "a": 1, "why": "One owner adds apostrophe-s: the cat's toy."},
-  {"q": "Which sentence joins the two ideas correctly?", "opts": ["I was tired, so I went to bed.", "I was tired, I went to bed.", "I was tired I went to bed.", "I was, tired so I went to bed."], "a": 0, "why": "Two complete thoughts need a conjunction or period; 'so' joins them correctly."},
-  {"q": "Which sentence is capitalized correctly?", "opts": ["We visited Paris in July.", "we visited paris in july.", "We visited paris in July.", "We Visited Paris In July."], "a": 0, "why": "Proper nouns (Paris) and months (July) are capitalized; ordinary words are not."},
-  {"q": "Contract \"do not\" correctly.", "opts": ["don't", "do'nt", "dont'", "do not's"], "a": 0, "why": "The apostrophe replaces the missing 'o' in not: don't."},
-  {"q": "In \"She ran quickly,\" the word 'quickly' is a(n):", "opts": ["adverb", "adjective", "noun", "verb"], "a": 0, "why": "It tells how she ran; adverbs modify verbs."},
-  {"q": "In \"the bright sun,\" the word 'bright' is a(n):", "opts": ["adjective", "adverb", "noun", "verb"], "a": 0, "why": "It describes the noun 'sun,' so it is an adjective."},
-  {"q": "Which word is a noun?", "opts": ["happiness", "run", "quickly", "very"], "a": 0, "why": "'Happiness' names a thing (an idea); that makes it a noun."},
-  {"q": "What is the past tense of \"go\"?", "opts": ["went", "goed", "gone", "going"], "a": 0, "why": "'Go' is irregular; its simple past is 'went.'"},
-  {"q": "Choose the correct pronoun: \"Between you and ____, this is hard.\"", "opts": ["me", "I", "myself", "mine"], "a": 0, "why": "After a preposition use the object pronoun 'me.'"},
-  {"q": "Choose the correct word: \"She is taller ____ her brother.\"", "opts": ["than", "then", "that", "thane"], "a": 0, "why": "'Than' compares; 'then' refers to time."},
-  {"q": "Choose the correct word: \"The medicine had a strong ____.\"", "opts": ["effect", "affect", "afect", "efect"], "a": 0, "why": "'Effect' (noun) is the result; 'affect' is usually a verb."},
-  {"q": "Which is a complete sentence?", "opts": ["Birds fly.", "Because it rained.", "When the bell rang.", "Running down the street."], "a": 0, "why": "It has a subject (birds) and a verb (fly); the others are fragments."},
-  {"q": "Which is punctuated correctly?", "opts": ["She said, \"Hello.\"", "She said \"Hello\".", "She said, \"Hello\".", "She, said \"Hello.\""], "a": 0, "why": "A comma introduces the quote and the period sits inside the quotation marks."},
-  {"q": "Choose the correct word: \"I want to come ____.\"", "opts": ["too", "to", "two", "tooo"], "a": 0, "why": "'Too' means also; 'to' is a preposition and 'two' is the number."},
-  {"q": "Which book title uses correct title capitalization?", "opts": ["The Old Man and the Sea", "The old man and the sea", "the Old Man And The Sea", "THE old man and the sea"], "a": 0, "why": "Capitalize the first, last, and all major words in a title."},
-  {"q": "Choose the correct verb: \"Each of the students ____ a book.\"", "opts": ["has", "have", "having", "haves"], "a": 0, "why": "'Each' is singular, so it takes 'has.'"},
-  {"q": "What is the plural of \"child\"?", "opts": ["children", "childs", "childes", "childrens"], "a": 0, "why": "'Child' has an irregular plural: children."},
-  {"q": "What is the plural of \"leaf\"?", "opts": ["leaves", "leafs", "leafes", "leave's"], "a": 0, "why": "Many words ending in -f change to -ves: leaves."},
-  {"q": "Which sentence is in the active voice?", "opts": ["The cat chased the mouse.", "The mouse was chased by the cat.", "The mouse, chased by the cat.", "Being chased, the mouse ran."], "a": 0, "why": "In active voice the subject (cat) performs the action."},
-  {"q": "Which word is a conjunction that joins ideas?", "opts": ["and", "slowly", "blue", "happy"], "a": 0, "why": "'And' is a coordinating conjunction that links words or ideas."},
-  {"q": "Is this list punctuated correctly? \"I bought apples, bread, and milk.\"", "opts": ["Yes — items in a series take commas.", "No — remove all the commas.", "No — use semicolons instead.", "No — lists never use commas."], "a": 0, "why": "Items in a series are separated by commas."},
-  {"q": "Choose the correct word: \"The ____ of the school greeted us.\"", "opts": ["principal", "principle", "principel", "prinicipal"], "a": 0, "why": "A 'principal' is a person (head of a school); a 'principle' is a rule."},
-  {"q": "Best correction of \"It was late we kept working.\"", "opts": ["It was late, but we kept working.", "It was late we kept working.", "It was, late but we kept working.", "It was late but, we kept working."], "a": 0, "why": "Two clauses need punctuation and a conjunction to join them."},
-  {"q": "Choose the formal pronoun: \"Every player must bring ____ own gear.\"", "opts": ["his or her", "their", "its", "our"], "a": 0, "why": "'Every player' is singular, so a singular pronoun fits in formal writing."},
-  {"q": "Which spelling of this word (meaning 'needed') is correct?", "opts": ["necessary", "neccessary", "necesary", "neccesary"], "a": 0, "why": "Necessary has one c and two s's."},
-  {"q": "Which spelling of this word (meaning 'for certain') is correct?", "opts": ["definitely", "definately", "definatly", "definitley"], "a": 0, "why": "It is spelled definitely — the word 'finite' is hidden inside."},
-  {"q": "A topic sentence in a paragraph:", "opts": ["states the paragraph's main idea", "always asks a question", "lists the sources", "is always the last sentence"], "a": 0, "why": "It tells the reader what the paragraph is mainly about."},
-  {"q": "Which word is a synonym for \"happy\"?", "opts": ["joyful", "sad", "tired", "angry"], "a": 0, "why": "Synonyms share meaning; 'joyful' means happy."},
-  {"q": "Which word is an antonym for \"begin\"?", "opts": ["end", "start", "open", "commence"], "a": 0, "why": "Antonyms are opposites; 'end' is the opposite of 'begin.'"},
-  {"q": "Identify the verb in \"Dogs bark loudly.\"", "opts": ["bark", "Dogs", "loudly", "the"], "a": 0, "why": "'Bark' is the action word — the verb."},
-  {"q": "Choose the correct word: \"My friend and ____ went hiking.\"", "opts": ["I", "me", "myself", "mine"], "a": 0, "why": "As the subject, use 'I': 'my friend and I went.'"},
-  {"q": "Which sentence uses a colon correctly?", "opts": ["Bring three things: a pen, paper, and a map.", "Bring three things; a pen, paper, and a map.", "Bring three things, a pen, paper, and a map.", "Bring: three things a pen, paper, and a map."], "a": 0, "why": "A colon introduces a list after a complete sentence."}
+  {q:"What is scarcity?", opts:["Unlimited wants meeting limited resources — the starting point of all economics","Having no money at all","A shortage caused only by bad weather","A tax on rare goods"], a:0, why:"There is never enough time, money, or material for everything everyone wants — so every person and nation must choose."},
+  {q:"What is opportunity cost?", opts:["The value of the next-best thing you give up when you choose","The sticker price of an item","A fee for missing a payment","The cost of opening a business"], a:0, why:"Spend Saturday working and the opportunity cost is the fishing trip you skipped."},
+  {q:"What is a trade-off?", opts:["Giving up some of one thing to get more of another","Trading only with other countries","Swapping identical items","A penalty in a contract"], a:0, why:"More spending on one goal means less for another — scarcity forces trade-offs."},
+  {q:"When the price of a good rises, what do buyers usually do?", opts:["Buy less of it","Buy more of it","Ignore prices completely","Buy the same amount forever"], a:0, why:"That is the law of demand: higher price, lower quantity demanded."},
+  {q:"When the price of a good rises, what do producers usually do?", opts:["Offer more of it for sale","Offer less of it","Stop producing entirely","Hide their goods"], a:0, why:"That is the law of supply: higher prices pull more production into the market."},
+  {q:"What happens to price when a good is scarce but demand is high?", opts:["The price tends to rise","The price tends to fall","The price is unaffected","The good becomes free"], a:0, why:"Many buyers chasing few goods bid the price up — prices ration what is scarce."},
+  {q:"What is an incentive?", opts:["A reward or penalty that changes what people choose to do","A kind of bank account","A government building","A type of coin"], a:0, why:"Raise the reward and more people act; raise the cost and fewer do — incentives steer behavior."},
+  {q:"What do prices do in a market economy?", opts:["Act as signals telling producers and buyers what is wanted and what it costs","Get set randomly","Only confuse people","Stay fixed by law forever"], a:0, why:"A rising price shouts ‘make more of this’; a falling price says ‘make less.’"},
+  {q:"What is inflation?", opts:["A general rise in prices that shrinks what each dollar buys","A rise in the stock market","When banks close","A tax refund"], a:0, why:"When prices rise across the economy, the same money buys less than before."},
+  {q:"What are the three classic functions of money?", opts:["Medium of exchange, store of value, unit of account","Paper, metal, and plastic","Saving, taxing, and printing","Buying, selling, and borrowing"], a:0, why:"Money lets you trade, save value over time, and measure prices in one common unit."},
+  {q:"Why is barter — trading goods directly — so difficult?", opts:["Both sides must want exactly what the other has","It is illegal","Goods cannot move","Barter requires banks"], a:0, why:"Money solves the ‘double coincidence of wants’ problem that makes barter clumsy."},
+  {q:"What is specialization?", opts:["Focusing on producing what you do best and trading for the rest","Owning many businesses","Working only in a laboratory","Refusing to trade"], a:0, why:"The baker bakes, the farmer farms — and trade makes both better off."},
+  {q:"What is the division of labor?", opts:["Splitting production into smaller tasks so each worker becomes expert at one","Splitting wages equally","Dividing a company in half","Working half days"], a:0, why:"Adam Smith’s pin factory showed workers dividing tasks produce vastly more together."},
+  {q:"Why do two people voluntarily trade?", opts:["Both expect to be better off, or they would not trade","One is always cheated","The law forces them","Trade is random"], a:0, why:"Voluntary exchange happens because each side values what they get more than what they give."},
+  {q:"What is supply and demand together used to explain?", opts:["How market prices are determined","How elections work","How weather changes","How machines are built"], a:0, why:"Where the amount offered meets the amount wanted, the market finds its price."},
+  {q:"What is profit?", opts:["Revenue minus costs","All the money a business collects","The owner’s salary only","Money borrowed from a bank"], a:0, why:"Profit is what remains after every cost is paid — the signal a business is creating value."},
+  {q:"What is a market economy?", opts:["One where prices and production are guided by buyers and sellers making free choices","One where the state sets all prices","One with no money","One without any rules"], a:0, why:"In markets, millions of voluntary choices — not a central planner — direct resources."},
+  {q:"What is a command economy?", opts:["One where the government decides what is produced and at what price","One run by small businesses","One based only on farming","One with no government"], a:0, why:"Central planners replace price signals — and history shows shortages usually follow."},
+  {q:"What did Adam Smith mean by the ‘invisible hand’?", opts:["Self-interested people serving others through voluntary trade, without being ordered to","A secret group controlling money","Government regulation","Luck in business"], a:0, why:"The butcher serves your dinner not from kindness but because trade rewards serving others."},
+  {q:"What is competition good for in a market?", opts:["Pushing quality up and prices down for customers","Destroying all businesses","Keeping prices high","Eliminating choices"], a:0, why:"When sellers must win your business, you get better goods at better prices."},
+  {q:"What is a monopoly?", opts:["A single seller with no real competition","A board game rule in law","A store with two branches","Any large building"], a:0, why:"With no competitor to lose customers to, a monopoly can raise prices and lower quality."},
+  {q:"What is interest?", opts:["The price paid for borrowing money, or earned for lending it","A hobby","A tax on food","Free money from banks"], a:0, why:"Borrow and you pay interest; save and the bank pays you — money has a rental price."},
+  {q:"What is a budget?", opts:["A plan for income and spending","A kind of loan","A government tax","A store receipt"], a:0, why:"A budget puts every dollar on assignment before it disappears."},
+  {q:"What does GDP measure?", opts:["The total value of goods and services a country produces in a year","The gold in a country’s vaults","The number of banks","Government salaries"], a:0, why:"Gross Domestic Product is the broadest scoreboard of a nation’s production."},
+  {q:"What is a recession?", opts:["A period when the economy shrinks and unemployment usually rises","A holiday season","A rise in exports","A new currency"], a:0, why:"When production falls for months on end, economists call it a recession."},
+  {q:"What is human capital?", opts:["The skills, knowledge, and health that make a person more productive","Money kept at home","Robots in factories","A company’s buildings"], a:0, why:"Education and skill are capital you carry — the surest investment a person can make."},
+  {q:"What is capital in economics?", opts:["Tools, machines, and buildings used to produce other goods","Only cash","A country’s main city","Stocks alone"], a:0, why:"A fishing net is capital: a produced good used to produce more goods."},
+  {q:"What is an export?", opts:["A good produced at home and sold to another country","A good bought from abroad","A kind of tax","A shipping company"], a:0, why:"Exports flow out; imports flow in — both sides of trade can gain."},
+  {q:"What is comparative advantage?", opts:["Being able to produce something at a lower opportunity cost than others","Being bigger than competitors","Having more advertising","Owning more land"], a:0, why:"Even if you are better at everything, you gain by focusing where your sacrifice is smallest and trading."},
+  {q:"What is a sunk cost?", opts:["Money already spent that cannot be recovered — and should not drive future decisions","A shipping fee","A cost that always returns","Money in a savings account"], a:0, why:"The ticket is paid whether or not you sit through a bad movie — decide on the future, not the past."},
+  {q:"What is diminishing returns?", opts:["Adding more of one input eventually adds less and less extra output","Profits that always fall","A refund policy","Shrinking money supply"], a:0, why:"The tenth worker in a tiny kitchen adds far less than the second did."},
+  {q:"What is an entrepreneur’s role in the economy?", opts:["Spotting needs and organizing resources to serve them, risking their own effort and money","Collecting taxes","Setting national prices","Printing currency"], a:0, why:"Entrepreneurs are the economy’s scouts — they find problems worth solving and bear the risk."},
+  {q:"What generally happens when the money supply grows much faster than production?", opts:["Prices rise — inflation","Prices fall to zero","Nothing changes","Exports stop"], a:0, why:"More dollars chasing the same goods bids prices upward."},
+  {q:"What is a wage?", opts:["Payment for labor","A tax on workers","A business loan","Free government money"], a:0, why:"Wages are the price of labor — set, like other prices, by supply and demand for skills."},
+  {q:"What are substitute goods?", opts:["Goods that can replace each other, like tea and coffee","Goods always bought together","Fake products","Imported goods only"], a:0, why:"When coffee gets pricey, some buyers switch to tea — substitutes compete."},
+  {q:"Why does a $20 bill have value?", opts:["Because people trust and accept it in exchange","Because it is made of gold","Because it never wears out","Because banks say a prayer over it"], a:0, why:"Modern money works on shared trust — it is valuable because everyone accepts it."}
 ];
 
 /* ====================== SHARED ENGINE (do not edit per subject) =========== */
