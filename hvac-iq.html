@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HVAC IQ Challenge — Test Your Trade Smarts | GSU</title>
+<meta name="description" content="Play the HVAC IQ Challenge: ten quick questions on the refrigeration cycle, EPA 608, airflow and more. Free, fast, replayable — then earn your free HVAC certificate.">
+<style>html,body{margin:0;background:#000}</style>
+</head>
+<body>
+<section id="gsu-hvaciq">
+<style>
+#gsu-hvaciq{--gold:#C9A84C;--gb:#FFE9A8;--cream:#F5F1E8;--teal:#1A8B7F;--dim:#cfc9ba;--mut:#8a8578;--ok:#2ec77e;--no:#e0685a;background:#000;color:var(--cream);font-family:Georgia,'Times New Roman',serif;line-height:1.55;width:100%}
+#gsu-hvaciq *{box-sizing:border-box}
+#gsu-hvaciq .wrap{max-width:720px;margin:0 auto;padding:52px 22px 60px}
+#gsu-hvaciq .eyebrow{text-align:center;text-transform:uppercase;letter-spacing:3px;font-size:.72rem;color:var(--teal);font-weight:700;margin-bottom:12px;font-family:Arial,Helvetica,sans-serif}
+#gsu-hvaciq h1{text-align:center;color:var(--gold);font-size:2.2rem;font-weight:700;margin:0 0 8px;line-height:1.1}
+#gsu-hvaciq .lede{text-align:center;color:var(--dim);font-size:1rem;max-width:540px;margin:0 auto 6px}
+#gsu-hvaciq .note{text-align:center;color:var(--mut);font-size:.76rem;font-family:Arial,Helvetica,sans-serif;margin:0 auto 24px}
+#gsu-hvaciq .bar{display:flex;justify-content:center;gap:24px;margin-bottom:16px;font-family:Arial,Helvetica,sans-serif}
+#gsu-hvaciq .bar b{display:block;color:var(--gold);font-size:1.4rem;font-weight:800;line-height:1}
+#gsu-hvaciq .bar span{font-size:.64rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut)}
+#gsu-hvaciq .q{background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:26px 22px}
+#gsu-hvaciq .qnum{font-family:Arial,Helvetica,sans-serif;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+#gsu-hvaciq .qtext{color:var(--gb);font-size:1.22rem;font-weight:700;margin-bottom:18px;line-height:1.35}
+#gsu-hvaciq .opt{display:block;width:100%;text-align:left;cursor:pointer;background:#111;border:1px solid rgba(201,168,76,.25);border-radius:11px;padding:13px 16px;margin-bottom:10px;color:var(--cream);font-family:Georgia,serif;font-size:.98rem;transition:.12s}
+#gsu-hvaciq .opt:hover:not(:disabled){border-color:var(--gold);transform:translateY(-2px)}
+#gsu-hvaciq .opt:disabled{cursor:default}
+#gsu-hvaciq .opt.right{border-color:var(--ok);background:rgba(46,199,126,.12);color:#eafff3}
+#gsu-hvaciq .opt.wrong{border-color:var(--no);background:rgba(224,104,90,.12);color:#ffeae6}
+#gsu-hvaciq .why{margin-top:6px;font-size:.9rem;color:var(--dim);min-height:20px;line-height:1.5}
+#gsu-hvaciq .why b{color:var(--gold)}
+#gsu-hvaciq .btn{font-family:Arial,Helvetica,sans-serif;cursor:pointer;font-weight:800;letter-spacing:.4px;border-radius:9px;padding:12px 26px;font-size:.85rem;border:1px solid var(--gold);background:var(--gold);color:#1a1404;margin-top:8px}
+#gsu-hvaciq .btn.ghost{background:transparent;color:var(--gold)}
+#gsu-hvaciq .foot{text-align:center;margin-top:16px}
+#gsu-hvaciq .end{text-align:center;background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid rgba(201,168,76,.35);border-radius:16px;padding:32px 24px}
+#gsu-hvaciq .end .score{font-family:Arial,Helvetica,sans-serif;font-size:3rem;font-weight:800;color:var(--gb);line-height:1}
+#gsu-hvaciq .end .rank{color:var(--gold);font-size:1.5rem;font-weight:700;margin:6px 0 4px}
+#gsu-hvaciq .end p{color:var(--dim);margin:6px auto 0;max-width:440px}
+#gsu-hvaciq .bridge{margin-top:22px;padding-top:22px;border-top:1px solid rgba(201,168,76,.25)}
+#gsu-hvaciq .bridge h3{color:var(--cream);font-size:1.15rem;margin:0 0 6px}
+#gsu-hvaciq .bridge p{color:var(--dim);font-size:.95rem;margin:0 0 14px}
+#gsu-hvaciq .certbtn{display:inline-block;background:var(--gold);color:#1a1404;font-family:Arial,Helvetica,sans-serif;font-weight:800;font-size:.92rem;padding:14px 30px;border-radius:10px;text-decoration:none}
+#gsu-hvaciq .hide{display:none}
+@media(max-width:560px){#gsu-hvaciq h1{font-size:1.8rem}}
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">HVAC Trade &middot; Play</div>
+  <h1>HVAC IQ Challenge</h1>
+  <p class="lede">Ten quick questions on the trade &mdash; the refrigeration cycle, EPA 608, airflow, electrical, and more. See how sharp your HVAC smarts are.</p>
+  <p class="note">Just for fun &mdash; this is a warm-up, not the exam. The real Certificate of Comprehension is a separate, free test.</p>
+
+  <div id="hq-game">
+    <div class="bar">
+      <div><b id="hq-qn">1</b><span>Question</span></div>
+      <div><b id="hq-score">0</b><span>Correct</span></div>
+      <div><b id="hq-best">&mdash;</b><span>Best</span></div>
+    </div>
+    <div class="q">
+      <div class="qnum" id="hq-qnum">Question 1 of 10</div>
+      <div class="qtext" id="hq-qtext">&nbsp;</div>
+      <div id="hq-opts"></div>
+      <div class="why" id="hq-why"></div>
+      <div class="foot"><button class="btn hide" id="hq-next">Next &rarr;</button></div>
+    </div>
+  </div>
+
+  <div id="hq-end" class="end hide">
+    <div class="score"><span id="hq-final">0</span>/10</div>
+    <div class="rank" id="hq-rank">&nbsp;</div>
+    <p id="hq-blurb">&nbsp;</p>
+    <div class="foot"><button class="btn ghost" id="hq-again">Play Again</button></div>
+    <div class="bridge">
+      <h3>Ready for the real thing?</h3>
+      <p>Pass the free HVAC Certificate of Comprehension and get a verifiable certificate with your name on it.</p>
+      <a class="certbtn" href="https://read.globalsovereignuniversity.org/cert-hvac.html">Earn Your Free Certificate &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('gsu-hvaciq');
+  var $=function(id){return document.getElementById(id);};
+  var BANK=[
+    {q:"What does HVAC stand for?",o:["Heating, Ventilation & Air Conditioning","High-Voltage Air Control","Heat, Vapor & Airflow Calibration","Home Ventilation & Air Cleaning"],a:0,w:"HVAC = Heating, Ventilation, and Air Conditioning."},
+    {q:"In the refrigeration cycle, which part releases heat to the outside?",o:["Evaporator","Condenser","Thermostat","Filter drier"],a:1,w:"The condenser rejects heat as the refrigerant condenses from vapor to liquid."},
+    {q:"Which component absorbs heat from the indoor air?",o:["Condenser","Compressor","Evaporator","Reversing valve"],a:2,w:"The evaporator absorbs indoor heat as refrigerant boils from liquid to vapor."},
+    {q:"Which certification is legally required to handle refrigerant?",o:["OSHA 10","EPA Section 608","NATE Core","ASE A7"],a:1,w:"EPA Section 608 is the federal certification required to work with refrigerant."},
+    {q:"Venting refrigerant into the atmosphere is:",o:["Allowed in small amounts","Only illegal for shops","Illegal under the Clean Air Act","Fine if it's R-410A"],a:2,w:"Knowingly venting refrigerant is prohibited under the Clean Air Act."},
+    {q:"'Superheat' refers to refrigerant vapor that is:",o:["Below its boiling point","Above its boiling point","Frozen solid","At 32\u00b0F"],a:1,w:"Superheat is how many degrees the vapor is above its saturation (boiling) temperature."},
+    {q:"A heat pump reverses between heating and cooling using the:",o:["Reversing valve","Capacitor","Condensate pump","Sight glass"],a:0,w:"The reversing valve changes the direction of refrigerant flow to switch modes."},
+    {q:"Heat energy is measured in:",o:["Volts","Amps","BTUs","PSI"],a:2,w:"A BTU (British Thermal Unit) is the standard measure of heat energy."},
+    {q:"The new lower-flammability, lower-GWP refrigerants are classified as:",o:["A1","A2L","B3","C1"],a:1,w:"A2L refrigerants are mildly flammable with much lower global-warming potential."},
+    {q:"Duct static pressure is typically measured in:",o:["Decibels","Inches of water column","Foot-pounds","Lumens"],a:1,w:"Static pressure is read in inches of water column (in. w.c.)."},
+    {q:"The device that meters refrigerant into the evaporator is the:",o:["Compressor","Metering device (TXV)","Accumulator","Contactor"],a:1,w:"The metering device \u2014 often a thermostatic expansion valve \u2014 controls refrigerant flow into the evaporator."},
+    {q:"A run capacitor in an HVAC system:",o:["Filters the air","Stores/delivers charge to run motors","Measures pressure","Cools the refrigerant"],a:1,w:"Capacitors store and release electrical energy to start and run the motors."}
+  ];
+  var order=[], i=0, score=0, answered=false;
+  var best=null; try{var b=localStorage.getItem('gsu_hvaciq_best'); if(b)best=parseInt(b,10);}catch(e){}
+
+  function shuffle(a){for(var j=a.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1));var t=a[j];a[j]=a[k];a[k]=t;}return a;}
+  function start(){
+    order=shuffle(BANK.map(function(_,ix){return ix;})).slice(0,10);
+    i=0;score=0;
+    $('hq-end').classList.add('hide'); $('hq-game').classList.remove('hide');
+    render();
+  }
+  function render(){
+    answered=false;
+    var q=BANK[order[i]];
+    $('hq-qn').textContent=i+1; $('hq-score').textContent=score;
+    $('hq-best').innerHTML=(best!=null?best+'/10':'&mdash;');
+    $('hq-qnum').textContent='Question '+(i+1)+' of 10';
+    $('hq-qtext').textContent=q.q;
+    $('hq-why').innerHTML=''; $('hq-next').classList.add('hide');
+    var html='';
+    q.o.forEach(function(opt,ix){ html+='<button class="opt" data-ix="'+ix+'">'+opt+'</button>'; });
+    $('hq-opts').innerHTML=html;
+    var btns=root.querySelectorAll('.opt');
+    for(var b2=0;b2<btns.length;b2++){ btns[b2].onclick=function(){ choose(parseInt(this.getAttribute('data-ix'),10)); }; }
+  }
+  function choose(ix){
+    if(answered)return; answered=true;
+    var q=BANK[order[i]];
+    var btns=root.querySelectorAll('.opt');
+    for(var b2=0;b2<btns.length;b2++){ btns[b2].disabled=true; }
+    if(ix===q.a){ score++; btns[ix].className='opt right'; }
+    else { btns[ix].className='opt wrong'; btns[q.a].className='opt right'; }
+    $('hq-score').textContent=score;
+    $('hq-why').innerHTML=(ix===q.a?'<b>Correct.</b> ':'<b>Not quite.</b> ')+q.w;
+    $('hq-next').textContent = (i<9?'Next \u2192':'See My Score \u2192');
+    $('hq-next').classList.remove('hide');
+  }
+  function next(){
+    if(i<9){ i++; render(); } else { finish(); }
+  }
+  function finish(){
+    $('hq-game').classList.add('hide'); $('hq-end').classList.remove('hide');
+    $('hq-final').textContent=score;
+    var rank, blurb;
+    if(score<=4){rank='Keep Studying';blurb='A solid start \u2014 the free field guide and GENO will get you there fast.';}
+    else if(score<=6){rank='Apprentice';blurb='You\u2019ve got the basics. A little more study and the certificate is in reach.';}
+    else if(score<=8){rank='Journeyman';blurb='Strong trade smarts \u2014 you\u2019re ready to sit the real certificate exam.';}
+    else {rank='Master Tech';blurb='Outstanding. Go make it official with a verifiable certificate.';}
+    $('hq-rank').textContent=rank; $('hq-blurb').textContent=blurb;
+    if(best==null||score>best){ best=score; try{localStorage.setItem('gsu_hvaciq_best',String(best));}catch(e){} }
+  }
+  $('hq-next').onclick=next;
+  $('hq-again').onclick=start;
+  start();
+})();
+</script>
+</section>
+</body>
+</html>
