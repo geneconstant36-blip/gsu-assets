@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HVAC IQ Challenge — Test Your Trade Smarts | GSU</title>
-<meta name="description" content="Play the HVAC IQ Challenge: ten quick questions on the refrigeration cycle, EPA 608, airflow and more. Free, fast, replayable — then earn your free HVAC certificate.">
+<title>HVAC IQ Challenge — Apprentice to Master | GSU</title>
+<meta name="description" content="Climb three levels of the HVAC IQ Challenge — Apprentice, Journeyman, Master — then earn your free HVAC certificate. Free, fast, replayable.">
 <style>html,body{margin:0;background:#000}</style>
 </head>
 <body>
@@ -15,11 +15,21 @@
 #gsu-hvaciq .wrap{max-width:720px;margin:0 auto;padding:52px 22px 60px}
 #gsu-hvaciq .eyebrow{text-align:center;text-transform:uppercase;letter-spacing:3px;font-size:.72rem;color:var(--teal);font-weight:700;margin-bottom:12px;font-family:Arial,Helvetica,sans-serif}
 #gsu-hvaciq h1{text-align:center;color:var(--gold);font-size:2.2rem;font-weight:700;margin:0 0 8px;line-height:1.1}
-#gsu-hvaciq .lede{text-align:center;color:var(--dim);font-size:1rem;max-width:540px;margin:0 auto 6px}
-#gsu-hvaciq .note{text-align:center;color:var(--mut);font-size:.76rem;font-family:Arial,Helvetica,sans-serif;margin:0 auto 24px}
-#gsu-hvaciq .bar{display:flex;justify-content:center;gap:24px;margin-bottom:16px;font-family:Arial,Helvetica,sans-serif}
-#gsu-hvaciq .bar b{display:block;color:var(--gold);font-size:1.4rem;font-weight:800;line-height:1}
-#gsu-hvaciq .bar span{font-size:.64rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut)}
+#gsu-hvaciq .lede{text-align:center;color:var(--dim);font-size:1rem;max-width:560px;margin:0 auto 6px}
+#gsu-hvaciq .note{text-align:center;color:var(--mut);font-size:.76rem;font-family:Arial,Helvetica,sans-serif;margin:0 auto 26px}
+#gsu-hvaciq .levels{display:grid;gap:14px}
+#gsu-hvaciq .lvl{cursor:pointer;text-align:left;background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid rgba(201,168,76,.3);border-radius:14px;padding:20px 22px;display:flex;align-items:center;gap:18px;transition:.13s}
+#gsu-hvaciq .lvl:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 12px 28px rgba(0,0,0,.5)}
+#gsu-hvaciq .lvl .tier{font-family:Arial,Helvetica,sans-serif;font-weight:800;font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:#1a1404;background:var(--gold);border-radius:20px;padding:5px 12px;white-space:nowrap}
+#gsu-hvaciq .lvl .lt{flex:1}
+#gsu-hvaciq .lvl .ln{color:var(--gb);font-size:1.2rem;font-weight:700}
+#gsu-hvaciq .lvl .ld{color:var(--dim);font-size:.86rem;margin-top:2px}
+#gsu-hvaciq .lvl .lb{font-family:Arial,Helvetica,sans-serif;font-size:.66rem;letter-spacing:1px;text-transform:uppercase;color:var(--mut);text-align:right;white-space:nowrap}
+#gsu-hvaciq .lvl .lb b{display:block;color:var(--gold);font-size:1.2rem;font-weight:800}
+#gsu-hvaciq .bar{display:flex;justify-content:center;gap:22px;margin-bottom:14px;font-family:Arial,Helvetica,sans-serif;align-items:center}
+#gsu-hvaciq .bar b{display:block;color:var(--gold);font-size:1.35rem;font-weight:800;line-height:1}
+#gsu-hvaciq .bar span{font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut)}
+#gsu-hvaciq .tierpill{font-family:Arial,Helvetica,sans-serif;font-weight:800;font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:#1a1404;background:var(--gold);border-radius:20px;padding:4px 12px}
 #gsu-hvaciq .q{background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:26px 22px}
 #gsu-hvaciq .qnum{font-family:Arial,Helvetica,sans-serif;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
 #gsu-hvaciq .qtext{color:var(--gb);font-size:1.22rem;font-weight:700;margin-bottom:18px;line-height:1.35}
@@ -33,26 +43,32 @@
 #gsu-hvaciq .btn{font-family:Arial,Helvetica,sans-serif;cursor:pointer;font-weight:800;letter-spacing:.4px;border-radius:9px;padding:12px 26px;font-size:.85rem;border:1px solid var(--gold);background:var(--gold);color:#1a1404;margin-top:8px}
 #gsu-hvaciq .btn.ghost{background:transparent;color:var(--gold)}
 #gsu-hvaciq .foot{text-align:center;margin-top:16px}
+#gsu-hvaciq .back{display:inline-block;cursor:pointer;color:var(--mut);font-family:Arial,Helvetica,sans-serif;font-size:.78rem;margin-top:14px;text-decoration:underline}
 #gsu-hvaciq .end{text-align:center;background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid rgba(201,168,76,.35);border-radius:16px;padding:32px 24px}
 #gsu-hvaciq .end .score{font-family:Arial,Helvetica,sans-serif;font-size:3rem;font-weight:800;color:var(--gb);line-height:1}
 #gsu-hvaciq .end .rank{color:var(--gold);font-size:1.5rem;font-weight:700;margin:6px 0 4px}
-#gsu-hvaciq .end p{color:var(--dim);margin:6px auto 0;max-width:440px}
+#gsu-hvaciq .end p{color:var(--dim);margin:6px auto 0;max-width:460px}
 #gsu-hvaciq .bridge{margin-top:22px;padding-top:22px;border-top:1px solid rgba(201,168,76,.25)}
 #gsu-hvaciq .bridge h3{color:var(--cream);font-size:1.15rem;margin:0 0 6px}
 #gsu-hvaciq .bridge p{color:var(--dim);font-size:.95rem;margin:0 0 14px}
 #gsu-hvaciq .certbtn{display:inline-block;background:var(--gold);color:#1a1404;font-family:Arial,Helvetica,sans-serif;font-weight:800;font-size:.92rem;padding:14px 30px;border-radius:10px;text-decoration:none}
 #gsu-hvaciq .hide{display:none}
-@media(max-width:560px){#gsu-hvaciq h1{font-size:1.8rem}}
+@media(max-width:560px){#gsu-hvaciq h1{font-size:1.8rem}#gsu-hvaciq .lvl{flex-wrap:wrap}}
 </style>
 
 <div class="wrap">
   <div class="eyebrow">HVAC Trade &middot; Play</div>
   <h1>HVAC IQ Challenge</h1>
-  <p class="lede">Ten quick questions on the trade &mdash; the refrigeration cycle, EPA 608, airflow, electrical, and more. See how sharp your HVAC smarts are.</p>
-  <p class="note">Just for fun &mdash; this is a warm-up, not the exam. The real Certificate of Comprehension is a separate, free test.</p>
+  <p class="lede">Three levels of trade smarts. Climb from Apprentice to Master &mdash; then go prove it for real.</p>
+  <p class="note">Just for fun &mdash; a warm-up, not the exam. The real Certificate of Comprehension is a separate, free test.</p>
 
-  <div id="hq-game">
+  <!-- LEVEL SELECT -->
+  <div id="hq-levels" class="levels"></div>
+
+  <!-- QUIZ -->
+  <div id="hq-game" class="hide">
     <div class="bar">
+      <span class="tierpill" id="hq-tier">Apprentice</span>
       <div><b id="hq-qn">1</b><span>Question</span></div>
       <div><b id="hq-score">0</b><span>Correct</span></div>
       <div><b id="hq-best">&mdash;</b><span>Best</span></div>
@@ -64,13 +80,19 @@
       <div class="why" id="hq-why"></div>
       <div class="foot"><button class="btn hide" id="hq-next">Next &rarr;</button></div>
     </div>
+    <div style="text-align:center"><span class="back" id="hq-quit">&larr; Back to levels</span></div>
   </div>
 
+  <!-- END -->
   <div id="hq-end" class="end hide">
     <div class="score"><span id="hq-final">0</span>/10</div>
     <div class="rank" id="hq-rank">&nbsp;</div>
     <p id="hq-blurb">&nbsp;</p>
-    <div class="foot"><button class="btn ghost" id="hq-again">Play Again</button></div>
+    <div class="foot">
+      <button class="btn" id="hq-nextlvl">Next Level &rarr;</button>
+      <button class="btn ghost" id="hq-again">Replay</button>
+    </div>
+    <div class="foot" style="margin-top:4px"><span class="back" id="hq-tolevels">&larr; All levels</span></div>
     <div class="bridge">
       <h3>Ready for the real thing?</h3>
       <p>Pass the free HVAC Certificate of Comprehension and get a verifiable certificate with your name on it.</p>
@@ -83,36 +105,90 @@
 (function(){
   var root=document.getElementById('gsu-hvaciq');
   var $=function(id){return document.getElementById(id);};
-  var BANK=[
-    {q:"What does HVAC stand for?",o:["Heating, Ventilation & Air Conditioning","High-Voltage Air Control","Heat, Vapor & Airflow Calibration","Home Ventilation & Air Cleaning"],a:0,w:"HVAC = Heating, Ventilation, and Air Conditioning."},
-    {q:"In the refrigeration cycle, which part releases heat to the outside?",o:["Evaporator","Condenser","Thermostat","Filter drier"],a:1,w:"The condenser rejects heat as the refrigerant condenses from vapor to liquid."},
-    {q:"Which component absorbs heat from the indoor air?",o:["Condenser","Compressor","Evaporator","Reversing valve"],a:2,w:"The evaporator absorbs indoor heat as refrigerant boils from liquid to vapor."},
-    {q:"Which certification is legally required to handle refrigerant?",o:["OSHA 10","EPA Section 608","NATE Core","ASE A7"],a:1,w:"EPA Section 608 is the federal certification required to work with refrigerant."},
-    {q:"Venting refrigerant into the atmosphere is:",o:["Allowed in small amounts","Only illegal for shops","Illegal under the Clean Air Act","Fine if it's R-410A"],a:2,w:"Knowingly venting refrigerant is prohibited under the Clean Air Act."},
-    {q:"'Superheat' refers to refrigerant vapor that is:",o:["Below its boiling point","Above its boiling point","Frozen solid","At 32\u00b0F"],a:1,w:"Superheat is how many degrees the vapor is above its saturation (boiling) temperature."},
-    {q:"A heat pump reverses between heating and cooling using the:",o:["Reversing valve","Capacitor","Condensate pump","Sight glass"],a:0,w:"The reversing valve changes the direction of refrigerant flow to switch modes."},
-    {q:"Heat energy is measured in:",o:["Volts","Amps","BTUs","PSI"],a:2,w:"A BTU (British Thermal Unit) is the standard measure of heat energy."},
-    {q:"The new lower-flammability, lower-GWP refrigerants are classified as:",o:["A1","A2L","B3","C1"],a:1,w:"A2L refrigerants are mildly flammable with much lower global-warming potential."},
-    {q:"Duct static pressure is typically measured in:",o:["Decibels","Inches of water column","Foot-pounds","Lumens"],a:1,w:"Static pressure is read in inches of water column (in. w.c.)."},
-    {q:"The device that meters refrigerant into the evaporator is the:",o:["Compressor","Metering device (TXV)","Accumulator","Contactor"],a:1,w:"The metering device \u2014 often a thermostatic expansion valve \u2014 controls refrigerant flow into the evaporator."},
-    {q:"A run capacitor in an HVAC system:",o:["Filters the air","Stores/delivers charge to run motors","Measures pressure","Cools the refrigerant"],a:1,w:"Capacitors store and release electrical energy to start and run the motors."}
+  var TIERS=[
+    {name:"Apprentice",label:"Good",desc:"The fundamentals every tech starts with.",
+     bank:[
+      {q:"What does HVAC stand for?",o:["Heating, Ventilation & Air Conditioning","High-Voltage Air Control","Heat, Vapor & Airflow Calibration","Home Ventilation & Air Cleaning"],a:0,w:"HVAC = Heating, Ventilation, and Air Conditioning."},
+      {q:"Which component releases heat to the outdoors?",o:["Evaporator","Condenser","Thermostat","Air filter"],a:1,w:"The condenser rejects heat as refrigerant condenses from vapor to liquid."},
+      {q:"Which component absorbs heat from indoor air?",o:["Condenser","Compressor","Evaporator","Blower"],a:2,w:"The evaporator absorbs indoor heat as refrigerant boils to vapor."},
+      {q:"Which certification is required to handle refrigerant?",o:["OSHA 10","EPA Section 608","NATE Core","ASE A7"],a:1,w:"EPA Section 608 is the federal certification for handling refrigerant."},
+      {q:"Heat energy is measured in:",o:["Volts","BTUs","PSI","Lumens"],a:1,w:"A BTU (British Thermal Unit) is the standard measure of heat energy."},
+      {q:"The compressor's main job is to:",o:["Filter the air","Pressurize and circulate the refrigerant","Measure temperature","Drain condensate"],a:1,w:"The compressor pressurizes and moves refrigerant around the loop."},
+      {q:"What controls the system based on room temperature?",o:["Thermostat","Capacitor","Condenser","Drain pan"],a:0,w:"The thermostat senses temperature and switches the system on and off."},
+      {q:"What moves conditioned air through the home?",o:["Compressor","Blower / air handler","Reversing valve","Sight glass"],a:1,w:"The blower in the air handler pushes air through the ducts."},
+      {q:"An air filter's job is to:",o:["Cool the refrigerant","Trap dust and particles","Store electricity","Meter refrigerant"],a:1,w:"Filters capture dust and particles to protect the system and the air."},
+      {q:"Venting refrigerant into the atmosphere is:",o:["Allowed in small amounts","Illegal","Fine outdoors","Required"],a:1,w:"Knowingly venting refrigerant is prohibited under the Clean Air Act."},
+      {q:"In the evaporator, the refrigerant:",o:["Freezes solid","Boils to vapor and absorbs heat","Stays liquid","Turns to powder"],a:1,w:"Low-pressure refrigerant boils in the evaporator, pulling heat from the air."},
+      {q:"Refrigerant is best described as:",o:["A lubricant only","A fluid that moves heat by changing state","A type of metal","An electrical part"],a:1,w:"Refrigerant carries heat by cycling between liquid and vapor."},
+      {q:"A filter's MERV rating tells you:",o:["Its price","How well it captures particles","Its size in inches","Its color"],a:1,w:"MERV rates how effectively a filter captures particles."}
+     ]},
+    {name:"Journeyman",label:"Better",desc:"Applied know-how: components, electrical, airflow.",
+     bank:[
+      {q:"A heat pump switches between heating and cooling using the:",o:["Reversing valve","Capacitor","Condensate pump","Air filter"],a:0,w:"The reversing valve changes refrigerant flow direction to switch modes."},
+      {q:"Duct static pressure is measured in:",o:["Decibels","Inches of water column","Foot-pounds","Amps"],a:1,w:"Static pressure is read in inches of water column (in. w.c.)."},
+      {q:"The metering device (TXV) controls:",o:["Fan speed","Refrigerant flow into the evaporator","Voltage","Air filtration"],a:1,w:"It meters refrigerant into the evaporator to match the load."},
+      {q:"A run capacitor:",o:["Cleans the air","Stores and delivers charge to run motors","Measures pressure","Cools refrigerant"],a:1,w:"Capacitors store and release energy to start and run motors."},
+      {q:"A contactor is:",o:["A refrigerant","An electrically operated switch that powers the outdoor unit","A type of filter","A gauge"],a:1,w:"The contactor is a relay that switches high-voltage power to the condensing unit."},
+      {q:"'Superheat' is refrigerant vapor that is:",o:["Below its boiling point","Above its boiling point","Frozen","At 32\u00b0F"],a:1,w:"Superheat is the degrees a vapor sits above its saturation temperature."},
+      {q:"'Subcooling' is refrigerant liquid that is:",o:["Above its condensing temperature","Cooled below its condensing temperature","Boiling","Vented"],a:1,w:"Subcooling is how far the liquid is cooled below its condensing point."},
+      {q:"A manifold gauge set reads:",o:["Airflow","System pressures","Voltage","Humidity"],a:1,w:"The manifold gauges show high- and low-side system pressures."},
+      {q:"Low airflow across the evaporator coil can cause it to:",o:["Overheat","Freeze up","Rust instantly","Leak oil"],a:1,w:"Too little airflow drops coil temperature and it can ice over."},
+      {q:"The condensate drain removes:",o:["Refrigerant","Water from dehumidification","Oil","Dust"],a:1,w:"As the coil dehumidifies, water collects and drains away."},
+      {q:"A heat pump's defrost cycle:",o:["Cools the house faster","Melts frost off the outdoor coil in heating mode","Cleans the filter","Recharges refrigerant"],a:1,w:"In cold weather the outdoor coil frosts; defrost briefly melts it."},
+      {q:"A dirty condenser coil typically causes:",o:["Low head pressure","High head pressure","No effect","Frozen compressor"],a:1,w:"Poor heat rejection at a dirty condenser drives head pressure up."},
+      {q:"A TXV adjusts refrigerant flow based on:",o:["Airflow","Superheat","Voltage","Time of day"],a:1,w:"A thermostatic expansion valve modulates flow to maintain target superheat."}
+     ]},
+    {name:"Master",label:"Best",desc:"Advanced: EPA 608, refrigerants, diagnostics.",
+     bank:[
+      {q:"A2L refrigerants are classified as:",o:["Non-flammable, high-GWP","Mildly flammable, lower-GWP","Toxic and heavy","Inert gases"],a:1,w:"A2L refrigerants are mildly flammable with much lower global-warming potential."},
+      {q:"Under EPA 608, Type II certification covers:",o:["Small appliances","High-pressure appliances","Low-pressure appliances","Motor vehicles"],a:1,w:"Type II covers high-pressure appliances such as split systems and heat pumps."},
+      {q:"EPA 608 Type III certification covers:",o:["High-pressure appliances","Low-pressure appliances and chillers","Small appliances","Vehicles"],a:1,w:"Type III covers low-pressure appliances like centrifugal chillers."},
+      {q:"A recovery cylinder should never be filled beyond:",o:["50%","80%","95%","100%"],a:1,w:"Never exceed 80% liquid to leave room for thermal expansion."},
+      {q:"ODP stands for:",o:["Ozone Depletion Potential","Optimal Duct Pressure","Overload Delay Protection","Oil Drain Point"],a:0,w:"ODP = Ozone Depletion Potential, a measure of a refrigerant's ozone harm."},
+      {q:"GWP stands for:",o:["Gas Working Pressure","Global Warming Potential","Ground Wire Placement","General Water Purge"],a:1,w:"GWP = Global Warming Potential, a refrigerant's climate impact vs. CO2."},
+      {q:"High superheat with low suction pressure usually indicates:",o:["Overcharge","The system is low on refrigerant","A dirty filter","Too much airflow"],a:1,w:"Starved evaporator: high superheat + low suction points to an undercharge."},
+      {q:"Flowing nitrogen while brazing is done to:",o:["Cool the joint","Prevent oxidation (scale) inside the tubing","Add refrigerant","Test for leaks"],a:1,w:"Nitrogen purges oxygen so no scale forms inside the copper during brazing."},
+      {q:"A micron gauge measures:",o:["Airflow","Deep vacuum during evacuation","Voltage","Superheat"],a:1,w:"A micron gauge reads the deep vacuum level when evacuating a system."},
+      {q:"R-410A operates at pressures that are ___ than R-22:",o:["Lower","Higher","Identical","Unrelated"],a:1,w:"R-410A runs at noticeably higher pressures than the older R-22."},
+      {q:"Non-condensables (like air) in a system cause:",o:["Low head pressure","High head pressure","Better efficiency","Nothing"],a:1,w:"Trapped non-condensables raise head pressure and hurt performance."},
+      {q:"Which section of the Clean Air Act governs stationary refrigerant work?",o:["Section 402","Section 608","Section 112","Section 26"],a:1,w:"Section 608 governs servicing of stationary refrigeration and AC equipment."},
+      {q:"'Recovering' refrigerant means:",o:["Venting it safely","Removing it into a container without venting","Reusing it on the spot","Mixing two types"],a:1,w:"Recovery removes refrigerant into an approved container \u2014 never to the air."}
+     ]}
   ];
-  var order=[], i=0, score=0, answered=false;
-  var best=null; try{var b=localStorage.getItem('gsu_hvaciq_best'); if(b)best=parseInt(b,10);}catch(e){}
+  var tier=0, order=[], i=0, score=0, answered=false;
+  var best=[null,null,null];
+  try{ for(var b=0;b<3;b++){var v=localStorage.getItem('gsu_hvaciq_best_'+b); if(v)best[b]=parseInt(v,10);} }catch(e){}
 
+  function show(id){ ['hq-levels','hq-game','hq-end'].forEach(function(x){ $(x).classList.toggle('hide', x!==id); }); }
   function shuffle(a){for(var j=a.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1));var t=a[j];a[j]=a[k];a[k]=t;}return a;}
-  function start(){
-    order=shuffle(BANK.map(function(_,ix){return ix;})).slice(0,10);
+
+  function levels(){
+    var html='';
+    TIERS.forEach(function(T,ix){
+      var bs=(best[ix]!=null?best[ix]+'/10':'\u2014');
+      html+='<div class="lvl" data-t="'+ix+'"><span class="tier">'+T.label+'</span>'+
+            '<div class="lt"><div class="ln">'+T.name+'</div><div class="ld">'+T.desc+'</div></div>'+
+            '<div class="lb">Best<b>'+bs+'</b></div></div>';
+    });
+    $('hq-levels').innerHTML=html;
+    var cards=root.querySelectorAll('.lvl');
+    for(var c=0;c<cards.length;c++){ cards[c].onclick=function(){ startTier(parseInt(this.getAttribute('data-t'),10)); }; }
+    show('hq-levels');
+  }
+  function startTier(t){
+    tier=t;
+    var n=Math.min(10, TIERS[t].bank.length);
+    order=shuffle(TIERS[t].bank.map(function(_,ix){return ix;})).slice(0,n);
     i=0;score=0;
-    $('hq-end').classList.add('hide'); $('hq-game').classList.remove('hide');
-    render();
+    $('hq-tier').textContent=TIERS[t].name;
+    show('hq-game'); render();
   }
   function render(){
     answered=false;
-    var q=BANK[order[i]];
+    var q=TIERS[tier].bank[order[i]];
     $('hq-qn').textContent=i+1; $('hq-score').textContent=score;
-    $('hq-best').innerHTML=(best!=null?best+'/10':'&mdash;');
-    $('hq-qnum').textContent='Question '+(i+1)+' of 10';
+    $('hq-best').innerHTML=(best[tier]!=null?best[tier]+'/10':'&mdash;');
+    $('hq-qnum').textContent='Question '+(i+1)+' of '+order.length;
     $('hq-qtext').textContent=q.q;
     $('hq-why').innerHTML=''; $('hq-next').classList.add('hide');
     var html='';
@@ -123,33 +199,38 @@
   }
   function choose(ix){
     if(answered)return; answered=true;
-    var q=BANK[order[i]];
+    var q=TIERS[tier].bank[order[i]];
     var btns=root.querySelectorAll('.opt');
     for(var b2=0;b2<btns.length;b2++){ btns[b2].disabled=true; }
     if(ix===q.a){ score++; btns[ix].className='opt right'; }
     else { btns[ix].className='opt wrong'; btns[q.a].className='opt right'; }
     $('hq-score').textContent=score;
     $('hq-why').innerHTML=(ix===q.a?'<b>Correct.</b> ':'<b>Not quite.</b> ')+q.w;
-    $('hq-next').textContent = (i<9?'Next \u2192':'See My Score \u2192');
+    $('hq-next').textContent=(i<order.length-1?'Next \u2192':'See My Score \u2192');
     $('hq-next').classList.remove('hide');
   }
-  function next(){
-    if(i<9){ i++; render(); } else { finish(); }
-  }
+  function next(){ if(i<order.length-1){ i++; render(); } else { finish(); } }
   function finish(){
-    $('hq-game').classList.add('hide'); $('hq-end').classList.remove('hide');
+    show('hq-end');
+    var total=order.length, pct=score/total;
     $('hq-final').textContent=score;
-    var rank, blurb;
-    if(score<=4){rank='Keep Studying';blurb='A solid start \u2014 the free field guide and GENO will get you there fast.';}
-    else if(score<=6){rank='Apprentice';blurb='You\u2019ve got the basics. A little more study and the certificate is in reach.';}
-    else if(score<=8){rank='Journeyman';blurb='Strong trade smarts \u2014 you\u2019re ready to sit the real certificate exam.';}
-    else {rank='Master Tech';blurb='Outstanding. Go make it official with a verifiable certificate.';}
+    var tn=TIERS[tier].name, rank, blurb;
+    if(pct<0.5){rank='Keep Studying';blurb='A solid start at '+tn+' level \u2014 the free field guide and GENO will get you there fast.';}
+    else if(pct<0.7){rank=tn+' \u2014 Rising';blurb='You\u2019ve got a real grip on this level. Run it again or step up.';}
+    else if(pct<0.9){rank=tn+' \u2014 Sharp';blurb='Strong work. You\u2019re ready to climb to the next level.';}
+    else {rank=tn+' \u2014 Master of the Level';blurb=(tier<2?'Outstanding \u2014 take on the next tier.':'Outstanding \u2014 you\u2019re ready to make it official.');}
     $('hq-rank').textContent=rank; $('hq-blurb').textContent=blurb;
-    if(best==null||score>best){ best=score; try{localStorage.setItem('gsu_hvaciq_best',String(best));}catch(e){} }
+    if(best[tier]==null||score>best[tier]){ best[tier]=score; try{localStorage.setItem('gsu_hvaciq_best_'+tier,String(score));}catch(e){} }
+    var nl=$('hq-nextlvl');
+    if(tier<2){ nl.classList.remove('hide'); nl.textContent=TIERS[tier+1].name+' Level \u2192'; }
+    else { nl.classList.add('hide'); }
   }
   $('hq-next').onclick=next;
-  $('hq-again').onclick=start;
-  start();
+  $('hq-again').onclick=function(){ startTier(tier); };
+  $('hq-nextlvl').onclick=function(){ if(tier<2) startTier(tier+1); };
+  $('hq-quit').onclick=levels;
+  $('hq-tolevels').onclick=levels;
+  levels();
 })();
 </script>
 </section>
