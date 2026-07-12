@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sovereign Deal | A Bargaining Trainer | GSU</title>
+<meta name="description" content="Learn the real economics of the deal. Hidden information, threat points, and the Nash Bargaining Solution — taught through play. A free training ground for the working sovereign, from Global Sovereign University.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #000; color: #F5F1E8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.6; min-height: 100vh; }
+  .sd-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .sd-crumb { padding: 14px 20px; font-size: 13px;
+    color: rgba(245, 241, 232, 0.55);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15); }
+  .sd-crumb a { color: rgba(245, 241, 232, 0.75); text-decoration: none; }
+  .sd-crumb a:hover { color: #C9A84C; }
+
+  /* HERO */
+  .sd-hero { padding: 60px 20px 40px; text-align: center;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3); }
+  .sd-eyebrow { color: #C9A84C; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 20px; }
+  .sd-hero h1 { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 52px; font-weight: 700; line-height: 1.05; margin-bottom: 16px; }
+  .sd-hero-sub { font-family: Georgia, serif; color: #F5F1E8;
+    font-style: italic; font-size: 20px; line-height: 1.4;
+    max-width: 720px; margin: 0 auto 20px; }
+  .sd-hero-lede { color: rgba(245, 241, 232, 0.85); font-size: 16px;
+    max-width: 680px; margin: 0 auto; line-height: 1.6; }
+
+  /* GAME AREA */
+  .sd-game { padding: 40px 20px 60px; }
+  .sd-round-header { display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+  .sd-round-num { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 22px; font-weight: 700; }
+  .sd-turns-left { color: #F5F1E8; font-size: 14px; opacity: 0.85; }
+  .sd-turns-left b { color: #C9A84C; }
+
+  /* CARDS AT TOP */
+  .sd-cards { display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; margin-bottom: 32px; }
+  .sd-card { border: 1px solid rgba(201, 168, 76, 0.35);
+    background: rgba(201, 168, 76, 0.04); border-radius: 6px;
+    padding: 22px 24px; }
+  .sd-card-eyebrow { color: #C9A84C; font-size: 10.5px; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 10px; }
+  .sd-card-name { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 22px; font-weight: 700; line-height: 1.15; margin-bottom: 8px; }
+  .sd-card-story { color: #F5F1E8; font-size: 14px; opacity: 0.9;
+    line-height: 1.55; margin-bottom: 12px; }
+  .sd-card-need { font-family: Georgia, serif; color: #F5F1E8;
+    font-size: 14.5px; font-style: italic; line-height: 1.5;
+    padding-top: 12px;
+    border-top: 1px solid rgba(201, 168, 76, 0.2); }
+  .sd-card-need b { color: #C9A84C; font-style: normal; }
+  .sd-card-hidden { color: rgba(245, 241, 232, 0.55);
+    font-size: 14px; font-style: italic; padding-top: 12px;
+    border-top: 1px solid rgba(201, 168, 76, 0.2); }
+
+  /* INVENTORIES */
+  .sd-table-eyebrow { color: #C9A84C; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 700; text-align: center;
+    margin: 32px 0 20px; }
+  .sd-inventories { display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; margin-bottom: 32px; }
+  .sd-inv { border: 1px solid rgba(201, 168, 76, 0.25);
+    background: rgba(0, 0, 0, 0.4); border-radius: 6px; padding: 20px 22px; }
+  .sd-inv-title { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 15px; font-weight: 700; margin-bottom: 14px;
+    text-transform: uppercase; letter-spacing: 1px; }
+  .sd-inv-items { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sd-inv-item { display: flex; justify-content: space-between;
+    align-items: center; padding: 10px 12px;
+    background: rgba(201, 168, 76, 0.06);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    border-radius: 4px; font-size: 14px; }
+  .sd-inv-item.desperation { border-color: rgba(201, 168, 76, 0.5);
+    background: rgba(201, 168, 76, 0.12); }
+  .sd-inv-item-name { color: #F5F1E8; font-family: Georgia, serif; }
+  .sd-inv-item-qty { color: #C9A84C; font-weight: 700; font-size: 16px; }
+
+  /* DIALOGUE */
+  .sd-dialogue { border-left: 3px solid #C9A84C;
+    background: rgba(201, 168, 76, 0.05); border-radius: 0 6px 6px 0;
+    padding: 20px 24px; margin-bottom: 28px; }
+  .sd-dialogue-who { color: #C9A84C; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+  .sd-dialogue-text { font-family: Georgia, serif; color: #F5F1E8;
+    font-size: 16.5px; font-style: italic; line-height: 1.5; }
+
+  /* TRADE BUILDER */
+  .sd-builder { border: 1.5px solid rgba(201, 168, 76, 0.4);
+    background: rgba(201, 168, 76, 0.03); border-radius: 8px;
+    padding: 26px 28px; margin-bottom: 24px; }
+  .sd-builder-title { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 20px; font-weight: 700; margin-bottom: 20px; text-align: center; }
+  .sd-builder-grid { display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 18px; align-items: center; margin-bottom: 20px; }
+  .sd-builder-side { padding: 18px; border-radius: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(201, 168, 76, 0.2); }
+  .sd-builder-label { color: #C9A84C; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 12px; text-align: center; }
+  .sd-builder-arrows { display: flex; justify-content: center; align-items: center;
+    font-size: 24px; color: #C9A84C; font-weight: 700; }
+  .sd-builder-select { display: flex; flex-direction: column; gap: 8px; }
+  .sd-builder-select label { display: flex; justify-content: space-between;
+    align-items: center; padding: 8px 12px; background: rgba(201, 168, 76, 0.06);
+    border: 1px solid rgba(201, 168, 76, 0.15); border-radius: 4px;
+    cursor: pointer; font-size: 13.5px; color: #F5F1E8;
+    font-family: Georgia, serif; transition: all 0.15s ease; }
+  .sd-builder-select label:hover { border-color: rgba(201, 168, 76, 0.4); }
+  .sd-builder-select input[type="number"] {
+    width: 46px; padding: 4px 6px; background: rgba(0, 0, 0, 0.7);
+    color: #C9A84C; border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 3px; font-family: Georgia, serif; font-size: 14px;
+    font-weight: 700; text-align: center; outline: none; }
+  .sd-builder-select input[type="number"]:focus { border-color: #C9A84C; }
+  .sd-builder-select .qty-avail { color: rgba(245, 241, 232, 0.5);
+    font-size: 11px; margin-left: 8px; }
+
+  /* ACTIONS */
+  .sd-actions { display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap; }
+  .sd-btn { padding: 12px 24px; font-family: Georgia, serif;
+    font-size: 15px; font-weight: 700; border: 2px solid #C9A84C;
+    border-radius: 4px; cursor: pointer; transition: all 0.2s ease;
+    text-decoration: none; display: inline-block; }
+  .sd-btn-primary { background: #C9A84C; color: #000; }
+  .sd-btn-primary:hover { background: #d4b866; transform: translateY(-2px); }
+  .sd-btn-ghost { background: transparent; color: #C9A84C; }
+  .sd-btn-ghost:hover { background: rgba(201, 168, 76, 0.1);
+    transform: translateY(-2px); }
+  .sd-btn-danger { background: transparent;
+    color: rgba(245, 241, 232, 0.7);
+    border-color: rgba(245, 241, 232, 0.4); }
+  .sd-btn-danger:hover { color: #F5F1E8;
+    border-color: rgba(245, 241, 232, 0.7); }
+  .sd-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* PROBING */
+  .sd-probes { display: flex; gap: 10px; justify-content: center;
+    flex-wrap: wrap; margin-top: 16px; padding-top: 20px;
+    border-top: 1px solid rgba(201, 168, 76, 0.15); }
+  .sd-probe-btn { padding: 8px 14px; font-family: Georgia, serif;
+    font-size: 13px; color: rgba(245, 241, 232, 0.85);
+    background: transparent; border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: 20px; cursor: pointer; transition: all 0.15s ease; }
+  .sd-probe-btn:hover { border-color: #C9A84C; color: #C9A84C; }
+  .sd-probe-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .sd-probe-count { color: #C9A84C; font-weight: 700; margin-left: 6px; }
+
+  /* DEBRIEF MODAL */
+  .sd-modal-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px); z-index: 100;
+    display: none; align-items: flex-start; justify-content: center;
+    overflow-y: auto; padding: 40px 20px; }
+  .sd-modal-bg.show { display: flex; }
+  .sd-modal { background: #0a0805;
+    border: 1.5px solid rgba(201, 168, 76, 0.5);
+    border-radius: 10px; max-width: 900px; width: 100%;
+    padding: 40px 40px 32px; box-shadow: 0 20px 60px rgba(201, 168, 76, 0.2); }
+  .sd-modal-eyebrow { color: #C9A84C; font-size: 12px; letter-spacing: 2.5px;
+    text-transform: uppercase; font-weight: 700; text-align: center; margin-bottom: 12px; }
+  .sd-modal h2 { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 38px; font-weight: 700; text-align: center;
+    line-height: 1.1; margin-bottom: 24px; }
+  .sd-rating { text-align: center; padding: 20px 0 28px;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2); margin-bottom: 28px; }
+  .sd-rating-tier { display: inline-block; padding: 8px 20px;
+    font-family: Georgia, serif; font-size: 22px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; border-radius: 4px;
+    border: 2px solid; }
+  .sd-rating-tier.gold { background: rgba(212, 175, 55, 0.15); color: #f4c430;
+    border-color: #f4c430; }
+  .sd-rating-tier.silver { background: rgba(192, 192, 192, 0.12); color: #d0d0d0;
+    border-color: #b0b0b0; }
+  .sd-rating-tier.bronze { background: rgba(176, 141, 87, 0.12); color: #cd9662;
+    border-color: #b08d57; }
+  .sd-rating-tier.walked { background: rgba(245, 241, 232, 0.08);
+    color: rgba(245, 241, 232, 0.6);
+    border-color: rgba(245, 241, 232, 0.35); }
+  .sd-rating-score { color: #F5F1E8; font-size: 16px; margin-top: 10px; }
+  .sd-rating-score b { color: #C9A84C; }
+
+  .sd-modal-section { margin-bottom: 26px; }
+  .sd-modal-section h3 { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 18px; font-weight: 700; margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 1px solid rgba(201, 168, 76, 0.2); }
+  .sd-modal-body { color: #F5F1E8; font-size: 15px; line-height: 1.65; }
+  .sd-modal-body p { margin-bottom: 10px; }
+  .sd-modal-body b { color: #C9A84C; }
+
+  .sd-utility-grid { display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; margin: 12px 0; }
+  .sd-utility-cell { padding: 16px; background: rgba(201, 168, 76, 0.05);
+    border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 6px; }
+  .sd-utility-cell-title { color: #C9A84C; font-size: 12px; letter-spacing: 1.5px;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+  .sd-utility-cell-value { font-family: Georgia, serif; color: #F5F1E8;
+    font-size: 22px; font-weight: 700; }
+  .sd-utility-cell-detail { color: rgba(245, 241, 232, 0.7);
+    font-size: 12.5px; margin-top: 4px; }
+
+  .sd-coaching { padding: 20px 24px;
+    background: rgba(201, 168, 76, 0.06);
+    border-left: 3px solid #C9A84C;
+    border-radius: 0 6px 6px 0; margin-top: 16px; }
+  .sd-coaching-title { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .sd-coaching-body { color: #F5F1E8; font-size: 14.5px; line-height: 1.65; }
+  .sd-coaching-body p { margin-bottom: 8px; }
+
+  .sd-modal-actions { display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap; margin-top: 32px; padding-top: 24px;
+    border-top: 1px solid rgba(201, 168, 76, 0.2); }
+
+  /* THEORY SECTION BELOW GAME */
+  .sd-theory { padding: 80px 20px; border-top: 1px solid rgba(201, 168, 76, 0.2);
+    background: rgba(201, 168, 76, 0.02); }
+  .sd-theory-h2 { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 32px; font-weight: 700; text-align: center;
+    margin-bottom: 40px; }
+  .sd-theory-grid { display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 22px; max-width: 1000px; margin: 0 auto; }
+  .sd-theory-card { padding: 26px 24px; border: 1px solid rgba(201, 168, 76, 0.3);
+    background: rgba(201, 168, 76, 0.04); border-radius: 6px; }
+  .sd-theory-card h3 { font-family: Georgia, serif; color: #C9A84C;
+    font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .sd-theory-card p { color: #F5F1E8; font-size: 14px; line-height: 1.6;
+    opacity: 0.92; }
+
+  /* FOOTER */
+  .sd-close { padding: 60px 20px; text-align: center;
+    border-top: 1px solid rgba(201, 168, 76, 0.2); }
+  .sd-close p { color: rgba(245, 241, 232, 0.6); font-size: 13px;
+    font-style: italic; }
+
+  /* MOBILE */
+  @media (max-width: 780px) {
+    .sd-hero h1 { font-size: 36px; }
+    .sd-hero-sub { font-size: 17px; }
+    .sd-cards { grid-template-columns: 1fr; }
+    .sd-inventories { grid-template-columns: 1fr; }
+    .sd-builder-grid { grid-template-columns: 1fr; gap: 12px; }
+    .sd-builder-arrows { transform: rotate(90deg); }
+    .sd-theory-grid { grid-template-columns: 1fr; }
+    .sd-modal { padding: 28px 22px; }
+    .sd-modal h2 { font-size: 28px; }
+    .sd-utility-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sd-crumb">
+  <div class="sd-wrap">
+    <a href="https://www.globalsovereignuniversity.org/">Home</a>
+    &nbsp;&rsaquo;&nbsp;
+    The Sovereign Deal
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="sd-hero">
+  <div class="sd-wrap">
+    <div class="sd-eyebrow">Global Sovereign University &middot; The Sovereign Barter</div>
+    <h1>The Sovereign Deal</h1>
+    <p class="sd-hero-sub">A Bargaining Trainer for the Working Sovereign</p>
+    <p class="sd-hero-lede">Every deal in the real world has hidden information on both sides. Learn to read it, hold your own tells, and walk away with your fair share. This is the training ground the market economy cannot teach you \u2014 free, no login, no score reported anywhere but back to you.</p>
+  </div>
+</section>
+
+<!-- GAME -->
+<section class="sd-game">
+  <div class="sd-wrap">
+
+    <div class="sd-round-header">
+      <div class="sd-round-num" id="sd-round-title">Round 1</div>
+      <div class="sd-turns-left">Turns remaining: <b id="sd-turns">5</b></div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="sd-cards">
+      <div class="sd-card" id="sd-opp-card">
+        <div class="sd-card-eyebrow">Your Counterpart</div>
+        <div class="sd-card-name" id="sd-opp-name">The Miller of Highwood</div>
+        <div class="sd-card-story" id="sd-opp-story">A steady trader from the northern mill towns. Word says his last convoy came in short.</div>
+        <div class="sd-card-hidden">Their true need is hidden from you. Read their words. Watch what they will and won't part with.</div>
+      </div>
+      <div class="sd-card">
+        <div class="sd-card-eyebrow">Your Hidden Card</div>
+        <div class="sd-card-name" id="sd-my-need-name">Famine at Home</div>
+        <div class="sd-card-story" id="sd-my-need-story">Your village faces a hungry winter. Food is worth three times its market value to you \u2014 privately. Do not let it show.</div>
+        <div class="sd-card-need">You desperately need: <b id="sd-my-need-item">Food</b></div>
+      </div>
+    </div>
+
+    <!-- INVENTORIES -->
+    <div class="sd-table-eyebrow">\u2014 The Bargaining Table \u2014</div>
+    <div class="sd-inventories">
+      <div class="sd-inv">
+        <div class="sd-inv-title">Their Wagon</div>
+        <div class="sd-inv-items" id="sd-opp-inv"></div>
+      </div>
+      <div class="sd-inv">
+        <div class="sd-inv-title">Your Wagon</div>
+        <div class="sd-inv-items" id="sd-my-inv"></div>
+      </div>
+    </div>
+
+    <!-- DIALOGUE -->
+    <div class="sd-dialogue" id="sd-dialogue">
+      <div class="sd-dialogue-who" id="sd-dialogue-who">The Miller of Highwood says:</div>
+      <div class="sd-dialogue-text" id="sd-dialogue-text">"State your offer, friend. I have wagons to load before dusk."</div>
+    </div>
+
+    <!-- TRADE BUILDER -->
+    <div class="sd-builder">
+      <div class="sd-builder-title">Propose a Trade</div>
+      <div class="sd-builder-grid">
+        <div class="sd-builder-side">
+          <div class="sd-builder-label">You give from your wagon</div>
+          <div class="sd-builder-select" id="sd-give-select"></div>
+        </div>
+        <div class="sd-builder-arrows">\u21c4</div>
+        <div class="sd-builder-side">
+          <div class="sd-builder-label">You receive from their wagon</div>
+          <div class="sd-builder-select" id="sd-get-select"></div>
+        </div>
+      </div>
+      <div class="sd-actions">
+        <button class="sd-btn sd-btn-primary" id="sd-propose">Propose This Trade</button>
+        <button class="sd-btn sd-btn-danger" id="sd-walkaway">Walk Away From The Table</button>
+      </div>
+      <div class="sd-probes">
+        <button class="sd-probe-btn" data-probe="abundance">What do you have plenty of?</button>
+        <button class="sd-probe-btn" data-probe="scarcity">What are you short on?</button>
+        <button class="sd-probe-btn" data-probe="time">How pressed are you for time?</button>
+        <span class="sd-probe-count" style="align-self: center;">Probes remaining: <b id="sd-probes-left">3</b></span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- THEORY -->
+<section class="sd-theory">
+  <div class="sd-wrap">
+    <h2 class="sd-theory-h2">The Economics Behind the Deal</h2>
+    <div class="sd-theory-grid">
+      <div class="sd-theory-card">
+        <h3>Hidden Desperation</h3>
+        <p>Every party in a real deal has a good that is worth more to them than the market price says. That private valuation is invisible until you reveal it. The negotiator's first job: read the other side's without showing your own.</p>
+      </div>
+      <div class="sd-theory-card">
+        <h3>The Contract Zone</h3>
+        <p>Between your walk-away point and theirs lies a range where a deal is possible for both sides. Every dollar of surplus in that zone gets split. Who takes the larger share depends on leverage, patience, and information.</p>
+      </div>
+      <div class="sd-theory-card">
+        <h3>The Nash Bargaining Solution</h3>
+        <p>Mathematician John Nash proved that a fair deal between two rational parties maximizes the product of their utility gains above their walk-away points. Your debrief shows you the Nash split for every deal you struck \u2014 and how close you came.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="sd-close">
+  <div class="sd-wrap">
+    <p>A hand up, not a handout. &mdash; The Foundation for Global Instruction &middot; A 501(c)(3) nonprofit &middot; EIN 39-2716552</p>
+  </div>
+</section>
+
+<!-- DEBRIEF MODAL -->
+<div class="sd-modal-bg" id="sd-modal-bg">
+  <div class="sd-modal">
+    <div class="sd-modal-eyebrow" id="sd-modal-eyebrow">The Deal Is Struck</div>
+    <h2 id="sd-modal-title">Debrief</h2>
+
+    <div class="sd-rating">
+      <div class="sd-rating-tier" id="sd-rating-tier">SILVER</div>
+      <div class="sd-rating-score" id="sd-rating-score">You captured 78% of the theoretical surplus.</div>
+    </div>
+
+    <div class="sd-modal-section">
+      <h3>The Deal You Made</h3>
+      <div class="sd-modal-body" id="sd-deal-summary"></div>
+    </div>
+
+    <div class="sd-modal-section">
+      <h3>Their Hidden Card</h3>
+      <div class="sd-modal-body" id="sd-opp-reveal"></div>
+    </div>
+
+    <div class="sd-modal-section">
+      <h3>Utility Analysis</h3>
+      <div class="sd-utility-grid">
+        <div class="sd-utility-cell">
+          <div class="sd-utility-cell-title">Your Gain</div>
+          <div class="sd-utility-cell-value" id="sd-my-gain">+8</div>
+          <div class="sd-utility-cell-detail" id="sd-my-gain-detail">from a starting utility of 18</div>
+        </div>
+        <div class="sd-utility-cell">
+          <div class="sd-utility-cell-title">Their Gain</div>
+          <div class="sd-utility-cell-value" id="sd-opp-gain">+6</div>
+          <div class="sd-utility-cell-detail" id="sd-opp-gain-detail">from a starting utility of 14</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd-modal-section">
+      <h3>The Nash Bargaining Solution</h3>
+      <div class="sd-modal-body" id="sd-nash-body"></div>
+    </div>
+
+    <div class="sd-coaching">
+      <div class="sd-coaching-title">Coaching Notes</div>
+      <div class="sd-coaching-body" id="sd-coaching"></div>
+    </div>
+
+    <div class="sd-modal-actions">
+      <button class="sd-btn sd-btn-primary" id="sd-play-again">Play Another Round</button>
+    </div>
+  </div>
+</div>
+
+<!-- GENO WIDGET (standing rule) -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async></script>
+
+<script>
+/* ============================================================================
+   THE SOVEREIGN DEAL
+   Core game engine for a browser-based negotiation trainer.
+
+   Model:
+     - Two parties (Player + AI Counterpart) with public inventories of 4 goods
+     - Each has a hidden Desperation Card: one good is worth 3x their private
+       value; all others = 1x
+     - Both parties can compute utility privately; the game reveals both hidden
+       values only during the post-deal debrief
+     - The Nash Bargaining Solution is computed by brute-force over all
+       feasible one-shot trades and used to score the deal the player struck
+   ============================================================================ */
+
+const GOODS = ['Food', 'Medicine', 'Tools', 'Fuel'];
+
+const OPPONENTS = [
+  {
+    name: 'The Miller of Highwood',
+    story: 'A steady trader from the northern mill towns. Word says his last convoy came in short.',
+    style: 'cautious',
+    threshold: 3,           // AI wants at least +3 utility to accept
+    tellStrength: 0.6,      // how honestly their dialogue hints
+    lines: {
+      opener: '"State your offer, friend. I have wagons to load before dusk."',
+      accept: '"Aye. That will do. Let us shake on it and be done."',
+      reject_bad: '"You test my patience. That is no offer for a man in my position."',
+      reject_ok: '"Close, but not quite. Sweeten it and we may have a deal."',
+      counter: '"I would sooner see it this way \u2014"',
+      walkaway_threat: '"Then I bid you good day, and mean it."'
+    }
+  },
+  {
+    name: 'The Widow Anseth of Blackwater',
+    story: 'She runs her late husband\u2019s trading house. Sharper than most and no stranger to a hard bargain.',
+    style: 'cagey',
+    threshold: 2,
+    tellStrength: 0.3,
+    lines: {
+      opener: '"Speak plainly. I have no time for dancing."',
+      accept: '"So it is done. Try not to look pleased with yourself."',
+      reject_bad: '"You must be joking. I did not walk here from Blackwater for that."',
+      reject_ok: '"Not enough. Try again."',
+      counter: '"Here is what I will accept \u2014"',
+      walkaway_threat: '"Then we are finished. Do not come knocking at my door again."'
+    }
+  },
+  {
+    name: 'Brother Corwin of the Rowan Priory',
+    story: 'A monk sent by his abbey to trade. He believes in the fair deal on principle and will tell you what he needs.',
+    style: 'transparent',
+    threshold: 1,
+    tellStrength: 0.95,
+    lines: {
+      opener: '"Peace to you. Let us make an honest trade if we can."',
+      accept: '"That is fair. Bless you for it."',
+      reject_bad: '"I cannot accept that in good conscience. Reconsider."',
+      reject_ok: '"Very close to fair. Meet me a small step further."',
+      counter: '"I would propose instead \u2014"',
+      walkaway_threat: '"Then I shall pray we meet again on better terms."'
+    }
+  },
+  {
+    name: 'Karl the Trapper of the Fen Country',
+    story: 'He drives hard. Says his goods came dear and expects to be paid in kind.',
+    style: 'aggressive',
+    threshold: 4,
+    tellStrength: 0.4,
+    lines: {
+      opener: '"Show me what you have. And do not waste my time with charity."',
+      accept: '"Fine. Fair enough. Load it up."',
+      reject_bad: '"Insulting. I trekked ten leagues for better than that."',
+      reject_ok: '"Nearly. But I do not haul my goods for nearly."',
+      counter: '"Here is where I stand \u2014"',
+      walkaway_threat: '"Then we\u2019re done, and you can freeze for all I care."'
+    }
+  }
+];
+
+const DESPERATIONS = {
+  Food: {
+    name: 'Famine at Home',
+    story: 'Your village faces a hungry winter. Food is worth three times its market value to you \u2014 privately. Do not let it show.'
+  },
+  Medicine: {
+    name: 'The Fever',
+    story: 'A fever has taken hold in your household. Medicine is worth three times its market value to you \u2014 privately. Do not let it show.'
+  },
+  Tools: {
+    name: 'The Broken Forge',
+    story: 'Your village\u2019s only smith lost her tools in a fire. Replacements are worth three times market value to you. Do not let it show.'
+  },
+  Fuel: {
+    name: 'The Long Cold',
+    story: 'Winter came early and the woodpile is thin. Fuel is worth three times market value to you \u2014 privately. Do not let it show.'
+  }
+};
+
+/* ---------- Game State ---------- */
+let state = null;
+
+function newGame() {
+  const oppIdx = Math.floor(Math.random() * OPPONENTS.length);
+  const opponent = OPPONENTS[oppIdx];
+
+  // Determine hidden desperations (must be different so trade has utility)
+  const myNeed = GOODS[Math.floor(Math.random() * GOODS.length)];
+  let oppNeed;
+  do {
+    oppNeed = GOODS[Math.floor(Math.random() * GOODS.length)];
+  } while (oppNeed === myNeed);
+
+  // Build inventories — the counterpart holds more of the good you need,
+  // and you hold more of the good they need. This ensures a beneficial deal is possible.
+  const myInv = { Food: 3, Medicine: 3, Tools: 3, Fuel: 3 };
+  const oppInv = { Food: 3, Medicine: 3, Tools: 3, Fuel: 3 };
+
+  // Shift 2 units of oppNeed from opponent to player (player holds what opp needs)
+  myInv[oppNeed] += 2;
+  oppInv[oppNeed] -= 2;
+  // Shift 2 units of myNeed from player to opponent (opp holds what player needs)
+  oppInv[myNeed] += 2;
+  myInv[myNeed] -= 2;
+
+  // Private value tables (1 for everything, 3 for the desperation good)
+  const myValues = { Food: 1, Medicine: 1, Tools: 1, Fuel: 1 };
+  myValues[myNeed] = 3;
+  const oppValues = { Food: 1, Medicine: 1, Tools: 1, Fuel: 1 };
+  oppValues[oppNeed] = 3;
+
+  state = {
+    opponent,
+    myNeed,
+    oppNeed,
+    myInv,
+    oppInv,
+    myValues,
+    oppValues,
+    myStartUtility: computeUtility(myInv, myValues),
+    oppStartUtility: computeUtility(oppInv, oppValues),
+    turnsLeft: 5,
+    probesLeft: 3,
+    dealDone: false,
+    walkedAway: false,
+    finalTrade: null,       // { give: {good: qty}, get: {good: qty} }
+    lastProbe: null,
+    dialogueHistory: []
+  };
+
+  renderAll();
+  setDialogue(state.opponent.name + ' says:', state.opponent.lines.opener);
+}
+
+function computeUtility(inv, values) {
+  let u = 0;
+  for (const g of GOODS) u += inv[g] * values[g];
+  return u;
+}
+
+/* ---------- Rendering ---------- */
+function renderAll() {
+  document.getElementById('sd-round-title').textContent = 'Round 1';
+  document.getElementById('sd-turns').textContent = state.turnsLeft;
+  document.getElementById('sd-probes-left').textContent = state.probesLeft;
+
+  document.getElementById('sd-opp-name').textContent = state.opponent.name;
+  document.getElementById('sd-opp-story').textContent = state.opponent.story;
+
+  document.getElementById('sd-my-need-name').textContent = DESPERATIONS[state.myNeed].name;
+  document.getElementById('sd-my-need-story').textContent = DESPERATIONS[state.myNeed].story;
+  document.getElementById('sd-my-need-item').textContent = state.myNeed;
+
+  renderInv('sd-opp-inv', state.oppInv, null);
+  renderInv('sd-my-inv', state.myInv, state.myNeed);
+
+  renderTradeBuilder();
+
+  // Reset probe buttons
+  document.querySelectorAll('.sd-probe-btn').forEach(b => {
+    b.disabled = state.probesLeft <= 0;
+  });
+  document.getElementById('sd-propose').disabled = false;
+  document.getElementById('sd-walkaway').disabled = false;
+}
+
+function renderInv(elId, inv, desperationGood) {
+  const el = document.getElementById(elId);
+  el.innerHTML = '';
+  for (const g of GOODS) {
+    const item = document.createElement('div');
+    item.className = 'sd-inv-item' + (g === desperationGood ? ' desperation' : '');
+    item.innerHTML =
+      '<span class="sd-inv-item-name">' + g + '</span>' +
+      '<span class="sd-inv-item-qty">' + inv[g] + '</span>';
+    el.appendChild(item);
+  }
+}
+
+function renderTradeBuilder() {
+  renderSelect('sd-give-select', state.myInv, 'give');
+  renderSelect('sd-get-select', state.oppInv, 'get');
+}
+
+function renderSelect(elId, inv, side) {
+  const el = document.getElementById(elId);
+  el.innerHTML = '';
+  for (const g of GOODS) {
+    const row = document.createElement('label');
+    row.innerHTML =
+      '<span>' + g + '<span class="qty-avail">(you can offer up to ' + inv[g] + ')</span></span>' +
+      '<input type="number" min="0" max="' + inv[g] + '" value="0" data-good="' + g + '" data-side="' + side + '">';
+    el.appendChild(row);
+  }
+}
+
+function setDialogue(who, text) {
+  document.getElementById('sd-dialogue-who').textContent = who;
+  document.getElementById('sd-dialogue-text').textContent = text;
+  state.dialogueHistory.push({ who, text });
+}
+
+function readProposal() {
+  const give = {}; const get = {};
+  document.querySelectorAll('#sd-give-select input').forEach(i => {
+    const q = Math.max(0, Math.min(state.myInv[i.dataset.good], parseInt(i.value) || 0));
+    if (q > 0) give[i.dataset.good] = q;
+  });
+  document.querySelectorAll('#sd-get-select input').forEach(i => {
+    const q = Math.max(0, Math.min(state.oppInv[i.dataset.good], parseInt(i.value) || 0));
+    if (q > 0) get[i.dataset.good] = q;
+  });
+  return { give, get };
+}
+
+function utilityChange(trade, myOrOpp) {
+  // Positive if beneficial to that party
+  const values = myOrOpp === 'my' ? state.myValues : state.oppValues;
+  const invGetSide = myOrOpp === 'my' ? trade.get : trade.give;
+  const invGiveSide = myOrOpp === 'my' ? trade.give : trade.get;
+  let change = 0;
+  for (const g of GOODS) {
+    change += (invGetSide[g] || 0) * values[g];
+    change -= (invGiveSide[g] || 0) * values[g];
+  }
+  return change;
+}
+
+function applyTrade(trade) {
+  for (const g of GOODS) {
+    state.myInv[g] -= (trade.give[g] || 0);
+    state.myInv[g] += (trade.get[g] || 0);
+    state.oppInv[g] += (trade.give[g] || 0);
+    state.oppInv[g] -= (trade.get[g] || 0);
+  }
+}
+
+function tradeIsFeasible(trade) {
+  for (const g of GOODS) {
+    if ((trade.give[g] || 0) > state.myInv[g]) return false;
+    if ((trade.get[g] || 0) > state.oppInv[g]) return false;
+  }
+  const anyGive = GOODS.some(g => (trade.give[g] || 0) > 0);
+  const anyGet = GOODS.some(g => (trade.get[g] || 0) > 0);
+  return anyGive && anyGet;
+}
+
+/* ---------- Nash Bargaining Solution (brute force) ---------- */
+function findNashOptimum() {
+  // Search all single-shot trades within reasonable bounds (each good 0..3)
+  // that leave both parties with non-negative gain
+  let best = { product: -1, trade: null, myGain: 0, oppGain: 0 };
+  const range = [0, 1, 2, 3];
+
+  // Enumerate: player gives some Q1 of good A, some Q2 of good B ...
+  // and gets some quantity of another good. Keep the search bounded.
+  const items = GOODS;
+
+  // Limit combinations: player gives ONE type and gets ONE type (most trades in game are single-good swaps)
+  // Then also try one-give-two-get and two-give-one-get patterns
+  for (const gaveG of items) {
+    for (const gotG of items) {
+      if (gaveG === gotG) continue;
+      for (const gQ of range) {
+        for (const rQ of range) {
+          if (gQ === 0 && rQ === 0) continue;
+          if (gQ > state.myInv[gaveG]) continue;
+          if (rQ > state.oppInv[gotG]) continue;
+
+          const trade = { give: {}, get: {} };
+          if (gQ > 0) trade.give[gaveG] = gQ;
+          if (rQ > 0) trade.get[gotG] = rQ;
+
+          const myG = utilityChange(trade, 'my');
+          const oppG = utilityChange(trade, 'opp');
+          if (myG <= 0 || oppG <= 0) continue;
+
+          const prod = myG * oppG;
+          if (prod > best.product) {
+            best = { product: prod, trade, myGain: myG, oppGain: oppG };
+          }
+        }
+      }
+    }
+  }
+
+  return best;
+}
+
+/* ---------- Opponent decision logic ---------- */
+function opponentDecide(trade) {
+  const oppGain = utilityChange(trade, 'opp');
+  const myGain = utilityChange(trade, 'my');
+
+  if (oppGain >= state.opponent.threshold) {
+    return { action: 'accept', myGain, oppGain };
+  }
+
+  // Not enough gain — decide reject vs. counter
+  if (oppGain <= 0) {
+    return { action: 'reject_bad', myGain, oppGain };
+  }
+
+  // Positive but under threshold: counter
+  // Find a counter that gives opponent at least threshold, minimizing player pain
+  const counter = findCounter(trade);
+  if (counter) {
+    return { action: 'counter', counter, myGain, oppGain };
+  }
+  return { action: 'reject_ok', myGain, oppGain };
+}
+
+function findCounter(originalTrade) {
+  // Adjust the quantities to make it acceptable to opponent while staying feasible
+  // Try increasing 'give' quantity or decreasing 'get' quantity
+  const originalGiveTotal = Object.values(originalTrade.give).reduce((a,b)=>a+b, 0);
+  const originalGetTotal = Object.values(originalTrade.get).reduce((a,b)=>a+b, 0);
+
+  const giveGood = Object.keys(originalTrade.give)[0];
+  const getGood = Object.keys(originalTrade.get)[0];
+  if (!giveGood || !getGood) return null;
+
+  // Try: same items, ask player to give one more OR receive one less
+  const counter1 = {
+    give: { [giveGood]: (originalTrade.give[giveGood] || 0) + 1 },
+    get: { [getGood]: originalTrade.get[getGood] || 0 }
+  };
+  if (tradeIsFeasible(counter1) &&
+      utilityChange(counter1, 'opp') >= state.opponent.threshold) {
+    return counter1;
+  }
+
+  const counter2 = {
+    give: { [giveGood]: originalTrade.give[giveGood] || 0 },
+    get: { [getGood]: Math.max(1, (originalTrade.get[getGood] || 0) - 1) }
+  };
+  if (tradeIsFeasible(counter2) &&
+      utilityChange(counter2, 'opp') >= state.opponent.threshold) {
+    return counter2;
+  }
+
+  return null;
+}
+
+/* ---------- Probing ---------- */
+function handleProbe(kind) {
+  if (state.probesLeft <= 0) return;
+  state.probesLeft--;
+  state.turnsLeft--;
+  document.getElementById('sd-probes-left').textContent = state.probesLeft;
+  document.getElementById('sd-turns').textContent = state.turnsLeft;
+
+  let response = '';
+  const opp = state.opponent;
+  const need = state.oppNeed;
+  const honest = Math.random() < opp.tellStrength;
+
+  if (kind === 'abundance') {
+    // What do you have plenty of?
+    // Truthful: something they have a lot of (not their need)
+    const abundant = GOODS
+      .filter(g => g !== need)
+      .sort((a, b) => state.oppInv[b] - state.oppInv[a])[0];
+    if (honest) {
+      response = '"I have more ' + abundant.toLowerCase() + ' than I know what to do with, if you must know."';
+    } else {
+      // Misdirect
+      const random = GOODS[Math.floor(Math.random() * GOODS.length)];
+      response = '"Plenty of everything. Nothing spare, if that\u2019s what you mean."';
+    }
+  } else if (kind === 'scarcity') {
+    // What are you short on?
+    // Truthful counterparts admit their need; cagey ones deflect
+    if (honest) {
+      response = '"If you must know \u2014 I could use more ' + need.toLowerCase() + ', though I will not pay a fortune for it."';
+    } else {
+      const decoy = GOODS.filter(g => g !== need)[Math.floor(Math.random() * 3)];
+      response = '"I could always use more ' + decoy.toLowerCase() + ', I suppose."';
+    }
+  } else if (kind === 'time') {
+    // How pressed are you for time?
+    if (opp.style === 'aggressive') {
+      response = '"Time enough. Do not think you can rush me into a bad trade."';
+    } else if (opp.style === 'transparent') {
+      response = '"Truly? I would prefer to leave by nightfall. My people are waiting."';
+    } else if (opp.style === 'cautious') {
+      response = '"I have time. And I use it. That is why I make good trades."';
+    } else {
+      response = '"That is my business. Focus on the trade."';
+    }
+  }
+
+  setDialogue(opp.name + ' says:', response);
+
+  if (state.turnsLeft <= 0) {
+    endWithoutDeal();
+  }
+}
+
+/* ---------- Main proposal handler ---------- */
+function handlePropose() {
+  const trade = readProposal();
+  if (!tradeIsFeasible(trade)) {
+    setDialogue('The trader looks at you flatly:',
+      '"That is not a trade. Put something on both sides of the table."');
+    return;
+  }
+
+  state.turnsLeft--;
+  document.getElementById('sd-turns').textContent = state.turnsLeft;
+
+  const decision = opponentDecide(trade);
+  const opp = state.opponent;
+
+  if (decision.action === 'accept') {
+    applyTrade(trade);
+    state.finalTrade = trade;
+    state.dealDone = true;
+    setDialogue(opp.name + ' says:', opp.lines.accept);
+    setTimeout(() => showDebrief(), 900);
+    return;
+  }
+
+  if (decision.action === 'reject_bad') {
+    setDialogue(opp.name + ' says:', opp.lines.reject_bad);
+  } else if (decision.action === 'reject_ok') {
+    setDialogue(opp.name + ' says:', opp.lines.reject_ok);
+  } else if (decision.action === 'counter') {
+    const c = decision.counter;
+    const giveG = Object.keys(c.give)[0];
+    const getG = Object.keys(c.get)[0];
+    const counterText = opp.lines.counter + ' ' +
+      c.give[giveG] + ' of your ' + giveG.toLowerCase() +
+      ' for ' + c.get[getG] + ' of my ' + getG.toLowerCase() + '."';
+    setDialogue(opp.name + ' says:', counterText);
+    // Pre-fill the trade builder with the counter
+    populateBuilder(c);
+  }
+
+  if (state.turnsLeft <= 0) {
+    endWithoutDeal();
+  }
+}
+
+function populateBuilder(trade) {
+  document.querySelectorAll('#sd-give-select input').forEach(i => {
+    i.value = trade.give[i.dataset.good] || 0;
+  });
+  document.querySelectorAll('#sd-get-select input').forEach(i => {
+    i.value = trade.get[i.dataset.good] || 0;
+  });
+}
+
+function handleWalkaway() {
+  state.walkedAway = true;
+  setDialogue(state.opponent.name + ' says:', state.opponent.lines.walkaway_threat);
+  setTimeout(() => showDebrief(), 900);
+}
+
+function endWithoutDeal() {
+  setDialogue('The bargaining ends:',
+    '"The light is fading. Perhaps we meet again."');
+  state.walkedAway = true;
+  setTimeout(() => showDebrief(), 1200);
+}
+
+/* ---------- Debrief ---------- */
+function showDebrief() {
+  const modal = document.getElementById('sd-modal-bg');
+  const nash = findNashOptimum();
+
+  let myGain = 0, oppGain = 0;
+  let dealText = '';
+
+  if (state.walkedAway) {
+    dealText = '<p>You walked away from the table. No deal was struck. In some rounds, this is exactly the right call \u2014 your walk-away point <i>is</i> your leverage. In others, it means leaving surplus on the table.</p>';
+  } else if (state.finalTrade) {
+    myGain = utilityChange(state.finalTrade, 'my');
+    oppGain = utilityChange(state.finalTrade, 'opp');
+    dealText = '<p>You gave: <b>' + summarizeGoods(state.finalTrade.give) + '</b></p>' +
+               '<p>You received: <b>' + summarizeGoods(state.finalTrade.get) + '</b></p>';
+  }
+
+  // Determine rating
+  let tier = 'walked';
+  let tierText = 'WALKED AWAY';
+  let scoreText = '';
+  const nashSurplus = nash.myGain + nash.oppGain;
+  const actualSurplus = myGain + oppGain;
+  let percentCaptured = 0;
+
+  if (!state.walkedAway) {
+    percentCaptured = nash.myGain > 0 ? Math.round((myGain / nash.myGain) * 100) : 0;
+    if (myGain >= nash.myGain * 0.90) { tier = 'gold'; tierText = 'GOLD'; }
+    else if (myGain >= nash.myGain * 0.70) { tier = 'silver'; tierText = 'SILVER'; }
+    else if (myGain > 0) { tier = 'bronze'; tierText = 'BRONZE'; }
+    else { tier = 'bronze'; tierText = 'DEAL STRUCK'; }
+    scoreText = 'You captured ' + percentCaptured + '% of the Nash-optimal share available to you.';
+  } else {
+    scoreText = 'The Nash Bargaining Solution suggested a deal was possible worth +' + nash.myGain + ' to you.';
+  }
+
+  document.getElementById('sd-rating-tier').className = 'sd-rating-tier ' + tier;
+  document.getElementById('sd-rating-tier').textContent = tierText;
+  document.getElementById('sd-rating-score').textContent = scoreText;
+
+  document.getElementById('sd-deal-summary').innerHTML = dealText;
+
+  // Reveal opponent's card
+  document.getElementById('sd-opp-reveal').innerHTML =
+    '<p>Your counterpart\u2019s hidden need was <b>' + state.oppNeed + '</b>. ' +
+    'For them, ' + state.oppNeed.toLowerCase() + ' was worth three times its market value. ' +
+    'Their private valuation drove every counter-offer they made.</p>';
+
+  // Utility analysis
+  document.getElementById('sd-my-gain').textContent = (myGain >= 0 ? '+' : '') + myGain;
+  document.getElementById('sd-my-gain-detail').textContent =
+    'from a starting utility of ' + state.myStartUtility;
+  document.getElementById('sd-opp-gain').textContent = (oppGain >= 0 ? '+' : '') + oppGain;
+  document.getElementById('sd-opp-gain-detail').textContent =
+    'from a starting utility of ' + state.oppStartUtility;
+
+  // Nash body
+  let nashBody = '';
+  if (nash.trade) {
+    nashBody = '<p>The mathematically optimal deal (maximizing the product of both parties\u2019 gains) would have been:</p>' +
+      '<p><b>Give:</b> ' + summarizeGoods(nash.trade.give) + '<br>' +
+      '<b>Receive:</b> ' + summarizeGoods(nash.trade.get) + '</p>' +
+      '<p>That deal would have given you a utility gain of <b>+' + nash.myGain + '</b> and them a gain of <b>+' + nash.oppGain + '</b>. ' +
+      'Total surplus created: <b>' + (nash.myGain + nash.oppGain) + '</b>.</p>';
+  } else {
+    nashBody = '<p>Given the starting inventories and hidden needs, no single-shot trade generated positive gains for both parties. In that case, walking away preserved your position.</p>';
+  }
+  document.getElementById('sd-nash-body').innerHTML = nashBody;
+
+  // Coaching notes
+  document.getElementById('sd-coaching').innerHTML = generateCoaching(myGain, oppGain, nash, percentCaptured);
+
+  modal.classList.add('show');
+}
+
+function summarizeGoods(bundle) {
+  const parts = [];
+  for (const g of GOODS) {
+    if (bundle[g] && bundle[g] > 0) {
+      parts.push(bundle[g] + ' ' + g);
+    }
+  }
+  return parts.length ? parts.join(' + ') : 'nothing';
+}
+
+function generateCoaching(myGain, oppGain, nash, pct) {
+  const notes = [];
+  const opp = state.opponent;
+
+  if (state.walkedAway && nash.trade) {
+    notes.push('<p><b>You walked away when a deal was available.</b> The Nash Solution shows a trade existed that would have given you +' + nash.myGain + ' utility. Walking away preserved your position, but you left surplus on the table.</p>');
+    if (state.probesLeft === 3) {
+      notes.push('<p>You did not use any probing questions. Those are how you discover what the counterpart truly needs before you have to reveal what you need.</p>');
+    }
+    return notes.join('');
+  }
+
+  if (state.walkedAway) {
+    notes.push('<p><b>Walking away was correct.</b> No trade in the feasible set would have given both parties a positive gain \u2014 this table had no deal to be made. Sometimes the best deal is no deal.</p>');
+    return notes.join('');
+  }
+
+  if (myGain >= nash.myGain * 0.90) {
+    notes.push('<p><b>You extracted very close to the maximum share available to you.</b> You read your counterpart\u2019s desperation without revealing your own. That is the entire craft.</p>');
+  } else if (myGain >= nash.myGain * 0.70) {
+    notes.push('<p><b>A solid deal.</b> You captured most of the surplus available to you but left some on the table. Consider whether you revealed your need too plainly, or whether you could have pressed for slightly better terms.</p>');
+  } else if (myGain > 0) {
+    notes.push('<p><b>You made a deal, but your counterpart took the larger share.</b> This usually means one of two things: you telegraphed your desperation, or you accepted the first offer that felt "fair" without probing for what they truly needed.</p>');
+  } else {
+    notes.push('<p><b>You accepted a deal that hurt you.</b> This is the deepest lesson of the exercise. You gave away utility you did not have to give. Next round, walk away if the numbers do not add up in your head.</p>');
+  }
+
+  if (state.probesLeft === 3) {
+    notes.push('<p>You did not use any probing questions this round. Probes cost a turn but can reveal the counterpart\u2019s hidden need before you have to commit. The best negotiators ask more than they tell.</p>');
+  } else if (state.probesLeft >= 1) {
+    notes.push('<p>You still had ' + state.probesLeft + ' probing question' + (state.probesLeft === 1 ? '' : 's') + ' available. Consider whether more information would have shifted your bid.</p>');
+  }
+
+  if (opp.style === 'transparent') {
+    notes.push('<p>Your counterpart was <b>Brother Corwin</b>, a transparent trader. His dialogue was reliable \u2014 what he said was mostly what he meant. Recognizing counterpart style is half the game.</p>');
+  } else if (opp.style === 'cagey') {
+    notes.push('<p>Your counterpart was <b>' + opp.name + '</b>, a cagey trader. Her tells were mostly misdirection. Against a cagey trader, watch their inventory more than their words.</p>');
+  } else if (opp.style === 'aggressive') {
+    notes.push('<p>Your counterpart was <b>' + opp.name + '</b>, an aggressive trader. He set a high acceptance threshold. Against aggressive counterparts, small gains are often the best available.</p>');
+  }
+
+  return notes.join('');
+}
+
+/* ---------- Wire up ---------- */
+document.getElementById('sd-propose').addEventListener('click', handlePropose);
+document.getElementById('sd-walkaway').addEventListener('click', handleWalkaway);
+document.querySelectorAll('.sd-probe-btn').forEach(b => {
+  b.addEventListener('click', () => handleProbe(b.dataset.probe));
+});
+document.getElementById('sd-play-again').addEventListener('click', () => {
+  document.getElementById('sd-modal-bg').classList.remove('show');
+  newGame();
+});
+
+// Kick off
+newGame();
+</script>
+
+</body>
+</html>
