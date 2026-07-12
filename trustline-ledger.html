@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Trustline Ledger — A Community Mutual Credit Network | GSU</title>
+<meta name="description" content="A free mutual credit network for people who trust each other more than they trust the money. Declare skills, declare needs, complete trades, watch the ledger sum to zero. From The Foundation for Global Instruction.">
+<meta name="theme-color" content="#000000">
+
+<script type="application/ld+json" id="course-ld">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "The Trustline Ledger",
+  "applicationCategory": "SocialNetworkingApplication",
+  "operatingSystem": "Any",
+  "description": "A community mutual credit ledger. Every trade credits one member and debits another. The whole system sums to zero. No fiat currency is involved.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "sameAs": "https://globalsovereignuniversity.org"
+  },
+  "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD", "category": "Free" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #000000;
+    --card: #000000;
+    --gold: #C9A84C;
+    --gold-soft: #B08A2A;
+    --cream: #F5F1E8;
+    --cream-soft: #d8d3c8;
+    --muted: #8a8580;
+    --line: rgba(201,168,76,.22);
+    --green: #7fce9d;
+    --red: #d47a5c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--cream); font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+
+  /* HERO */
+  .hero { padding: 56px 0 32px; border-bottom: 1px solid var(--line); }
+  .eyebrow { font-family: "Lora", serif; font-size: 0.82rem; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-size: 3.2rem; margin: 0 0 12px; line-height: 1.05; color: var(--cream); letter-spacing: 0.02em; }
+  .lede { font-size: 1.22rem; color: var(--cream-soft); font-style: italic; max-width: 44em; }
+
+  /* DIGNITY BANNER */
+  .dignity { margin: 24px 0; padding: 18px 24px; background: rgba(201,168,76,0.06); border-left: 3px solid var(--gold); border-radius: 6px; }
+  .dignity b { color: var(--gold); }
+
+  /* RATING */
+  .ratebox { margin-top: 22px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; text-align: center; }
+  .ratebox .rt { font-family: "Lora", serif; font-size: 1.06rem; color: var(--cream); margin-bottom: 12px; }
+  .stars { display: inline-flex; gap: 7px; font-size: 1.9rem; line-height: 1; cursor: pointer; user-select: none; }
+  .stars .st { color: #3a3a3a; transition: transform .12s, color .12s; }
+  .stars .st.on { color: var(--gold); }
+  .stars .st:hover { transform: scale(1.12); }
+  .rate-meta { margin-top: 10px; font-size: .92rem; color: var(--muted); }
+  .rate-meta b { color: var(--gold); }
+  .rate-thanks { margin-top: 8px; font-size: .86rem; color: #7fce9d; min-height: 1.1em; }
+
+  /* LEDGER INVARIANT DISPLAY */
+  .invariant { margin: 40px 0 20px; padding: 24px; background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, #000 70%); border: 1px solid var(--gold); border-radius: 14px; text-align: center; }
+  .invariant-label { color: var(--gold); font-family: "Lora", serif; letter-spacing: 0.24em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 8px; }
+  .invariant-value { font-family: "Courier New", monospace; font-size: 2.6rem; color: var(--cream); font-weight: bold; }
+  .invariant-note { color: var(--muted); font-family: "Lora", serif; font-style: italic; font-size: 0.94rem; margin-top: 8px; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 4px; margin: 40px 0 24px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .tab { padding: 14px 22px; background: transparent; border: none; color: var(--muted); font-family: Georgia, serif; font-size: 1.02rem; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .tab:hover { color: var(--cream); }
+
+  /* CARDS */
+  .card { background: radial-gradient(ellipse at 50% -10%, rgba(201,168,76,0.05) 0%, #000 65%); border: 1px solid var(--line); border-radius: 12px; padding: 28px 30px; margin-bottom: 20px; }
+  .card h3 { color: var(--cream); font-family: Georgia, serif; font-size: 1.35rem; margin: 0 0 14px; }
+  .card .sub { color: var(--muted); font-family: "Lora", serif; font-style: italic; font-size: 0.94rem; margin-bottom: 18px; }
+
+  /* PROFILE FORM */
+  .form-row { margin-bottom: 18px; }
+  .form-row label { display: block; color: var(--gold); font-family: "Lora", serif; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.76rem; margin-bottom: 6px; }
+  .form-row input, .form-row textarea { width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 6px; color: var(--cream); font-family: Georgia, serif; font-size: 1rem; }
+  .form-row input:focus, .form-row textarea:focus { outline: none; border-color: var(--gold); }
+  .form-row .field-desc { color: var(--muted); font-size: 0.86rem; font-style: italic; margin-top: 6px; }
+  .form-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 640px) { .form-list { grid-template-columns: 1fr; } }
+  .form-list input { padding: 10px 12px; font-size: 0.94rem; }
+
+  .btn { display: inline-block; background: var(--gold); color: #000; padding: 12px 26px; border-radius: 8px; font-family: Georgia, serif; font-weight: bold; cursor: pointer; text-decoration: none; border: none; font-size: 0.98rem; transition: transform 0.15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+  .btn.small { padding: 8px 18px; font-size: 0.88rem; }
+  .btn.danger { background: var(--red); }
+
+  /* MEMBER LIST */
+  .members { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 780px) { .members { grid-template-columns: 1fr; } }
+  .member { padding: 20px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 10px; }
+  .member .name { font-family: Georgia, serif; font-size: 1.15rem; color: var(--cream); font-weight: 600; }
+  .member .seed-tag { display: inline-block; margin-left: 8px; padding: 2px 8px; background: rgba(201,168,76,0.15); color: var(--gold); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 999px; font-family: "Lora", serif; }
+  .member .hood { color: var(--muted); font-size: 0.88rem; font-family: "Lora", serif; margin: 4px 0 8px; }
+  .member .bio { color: var(--cream-soft); font-size: 0.94rem; margin: 6px 0 12px; font-style: italic; }
+  .member-section { margin-top: 12px; }
+  .member-section-lab { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-family: "Lora", serif; margin-bottom: 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { padding: 4px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 999px; font-size: 0.86rem; color: var(--cream-soft); }
+  .chip.offer { border-color: rgba(127,206,157,0.4); color: var(--green); }
+  .chip.need { border-color: rgba(212,122,92,0.4); color: var(--red); }
+  .member-balance { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+  .balance-val { font-family: "Courier New", monospace; font-size: 1.15rem; color: var(--gold); }
+  .balance-val.negative { color: var(--red); }
+
+  /* TRADE LOG */
+  .trades { display: flex; flex-direction: column; gap: 12px; }
+  .trade { padding: 18px 22px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 8px; }
+  .trade-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; flex-wrap: wrap; gap: 8px; }
+  .trade-parties { font-family: Georgia, serif; color: var(--cream); font-size: 1.02rem; }
+  .trade-parties b { color: var(--gold); font-weight: 600; }
+  .trade-amount { color: var(--gold); font-family: "Courier New", monospace; font-size: 1.05rem; font-weight: bold; }
+  .trade-desc { color: var(--cream-soft); font-size: 0.94rem; font-style: italic; margin: 4px 0; }
+  .trade-status { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-family: "Lora", serif; }
+  .trade-status.pending { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .trade-status.approved { background: rgba(127,206,157,0.15); color: var(--green); }
+  .trade-status.declined { background: rgba(212,122,92,0.15); color: var(--red); }
+  .trade-time { color: var(--muted); font-size: 0.82rem; font-family: "Lora", serif; }
+
+  /* TAB PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* NOTICES */
+  .notice { padding: 14px 18px; background: rgba(201,168,76,0.06); border-left: 3px solid var(--gold); border-radius: 6px; margin: 16px 0; color: var(--cream-soft); font-style: italic; font-family: "Lora", serif; }
+  .notice.warn { background: rgba(212,122,92,0.06); border-color: var(--red); }
+  .notice.success { background: rgba(127,206,157,0.06); border-color: var(--green); }
+
+  /* SECTIONS */
+  section.info { padding: 40px 0; border-top: 1px solid var(--line); }
+  section.info h3 { color: var(--cream); font-size: 1.5rem; margin: 0 0 14px; }
+  section.info p { color: var(--cream-soft); margin: 0 0 14px; }
+  .rules-list { color: var(--cream-soft); margin: 0 0 14px; padding-left: 22px; }
+  .rules-list li { margin-bottom: 10px; }
+
+  .geno { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
+  .geno h2 { color: var(--cream); font-size: 1.6rem; margin: 0 0 10px; }
+  .geno-prompts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .prompt-chip { background: rgba(201,168,76,0.1); border: 1px solid var(--line); border-radius: 20px; padding: 10px 18px; cursor: pointer; color: var(--cream); font-size: 0.95rem; }
+  .prompt-chip:hover { background: rgba(201,168,76,0.2); }
+
+  .closing { margin-top: 60px; padding: 60px 40px; background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, #000 70%); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+  .closing-eyebrow { font-family: "Lora", serif; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-size: 0.85rem; margin-bottom: 20px; }
+  .closing-body { color: var(--cream); font-family: "Lora", serif; font-style: italic; font-size: 1.28rem; line-height: 1.6; max-width: 34em; margin: 0 auto 20px; }
+  .closing-attribution { color: var(--muted); font-size: 0.94rem; }
+  .book-cta { display: inline-block; margin-top: 24px; padding: 12px 28px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 8px; text-decoration: none; font-family: Georgia, serif; }
+  .book-cta:hover { background: rgba(201,168,76,0.08); }
+
+  .foundation { margin-top: 60px; padding: 40px 0; text-align: center; border-top: 1px solid var(--line); }
+  .foundation p { color: var(--muted); margin: 4px 0; font-size: 0.94rem; }
+  .foundation .tagline { color: var(--gold); font-style: italic; font-size: 1.1rem; margin: 12px 0; }
+
+  /* MODAL */
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .modal-backdrop.show { display: flex; }
+  .modal { background: #0a0806; border: 1px solid var(--gold); border-radius: 14px; padding: 30px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
+  .modal h3 { color: var(--gold); font-family: Georgia, serif; margin: 0 0 16px; }
+  .modal .close-x { position: absolute; top: 10px; right: 12px; background: none; border: none; color: var(--muted); font-size: 1.4rem; cursor: pointer; }
+  .modal-buttons { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
+
+  @media (max-width: 720px) {
+    h1 { font-size: 2.2rem; }
+    .lede { font-size: 1.08rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;padding-top:56px;">
+    <div class="eyebrow">Global Sovereign University · The Warren, Rabbit Ten</div>
+    <h1>The Trustline Ledger</h1>
+    <p class="lede">A community mutual credit network. Declare what you can offer. Declare what you need. Complete a trade with a neighbor. The ledger records it, credits one of you, debits the other, and — invariably — sums to zero. No money involved. No middleman collecting a cut.</p>
+
+    <div class="dignity">
+      <b>The Dignity of the Deal.</b> Every trade posted here is between two adults who chose it. The Foundation is not a party. The ledger only records. You are responsible for your own taxes on barter income under IRS Publication 525.
+    </div>
+
+    <div class="ratebox" id="ratebox">
+      <div class="rt">Rate the Trustline Ledger. Your stars help other members find it.</div>
+      <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
+      <div class="rate-meta" id="rateMeta">Loading ratings…</div>
+      <div class="rate-thanks" id="rateThanks"></div>
+    </div>
+  </section>
+
+  <!-- LEDGER INVARIANT -->
+  <div class="invariant">
+    <div class="invariant-label">The Ledger Sum</div>
+    <div class="invariant-value" id="invariantSum">0.00</div>
+    <div class="invariant-note" id="invariantNote">Every credit given to one member is debited from another. The total is always zero. This is the mathematical proof that mutual credit is not printing money — it is naming what already exists between neighbors.</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="me">My Trustline</button>
+    <button class="tab" data-tab="marketplace">Skills Marketplace</button>
+    <button class="tab" data-tab="needs">Needs Board</button>
+    <button class="tab" data-tab="feed">Community Activity</button>
+  </div>
+
+  <!-- ME PANEL -->
+  <div class="panel active" id="panel-me">
+    <div id="meContent">
+      <div class="card">
+        <h3>Signing you in…</h3>
+        <p class="sub">Anonymous by default. No email or password required.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKETPLACE PANEL -->
+  <div class="panel" id="panel-marketplace">
+    <div class="card">
+      <h3>Skills Marketplace</h3>
+      <p class="sub">What community members can offer. Click a name to view their profile and propose a trade.</p>
+      <div id="marketplaceList" class="members">
+        <div style="grid-column: 1/-1; color: var(--muted); font-style: italic;">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEEDS PANEL -->
+  <div class="panel" id="panel-needs">
+    <div class="card">
+      <h3>Needs Board</h3>
+      <p class="sub">What community members are looking for. See if you can help.</p>
+      <div id="needsList" class="members">
+        <div style="grid-column: 1/-1; color: var(--muted); font-style: italic;">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEED PANEL -->
+  <div class="panel" id="panel-feed">
+    <div class="card">
+      <h3>Community Activity</h3>
+      <p class="sub">Recent trades. Public by design so trust is visible.</p>
+      <div id="feedList" class="trades">
+        <div style="color: var(--muted); font-style: italic;">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="info">
+    <h3>How the Trustline Ledger Works</h3>
+    <ul class="rules-list">
+      <li><b style="color:var(--gold)">Every member starts at zero.</b> There is no starting balance. There is no interest. There is no fee.</li>
+      <li><b style="color:var(--gold)">A trade proposes a value.</b> If Amelia repairs Ben's plumbing and they agree the work was worth 30 credits, Amelia proposes: "I did work for Ben — 30 credits."</li>
+      <li><b style="color:var(--gold)">Both parties must approve.</b> The trade goes to Ben. When Ben approves, the ledger updates: Amelia +30, Ben -30. Amelia has a credit; Ben has a debit. Both are now visible on the public ledger.</li>
+      <li><b style="color:var(--gold)">Ben settles his debit by helping someone else.</b> He teaches a neighbor Spanish, they agree on 30 credits, the neighbor approves, and Ben is back to zero. Nobody printed anything. Nobody borrowed anything. Value was moved.</li>
+      <li><b style="color:var(--gold)">The ledger always sums to zero.</b> That is not a rule imposed on the ledger. That is what the ledger is. Every credit somewhere is a debit somewhere else. This is the whole innovation of mutual credit, and it has been in use for over 90 years, most famously by Switzerland's WIR Bank (since 1934) and Italy's Sardex network (since 2010).</li>
+      <li><b style="color:var(--gold)">Reputation is public.</b> The number of trades you have completed and the endorsements you have received are visible to everyone. This replaces credit scores. It also replaces the fiat money's promise that a stranger is trustworthy because they have paper. Here, a stranger is trustworthy because a neighbor said so.</li>
+      <li><b style="color:var(--gold)">The Foundation is not a party to any trade.</b> The Ledger is a coordination tool. If a dispute arises, the members involved handle it. The Foundation offers mediation as a service, but does not enforce.</li>
+    </ul>
+  </section>
+
+  <!-- LEGAL -->
+  <section class="info">
+    <h3>What You Should Know Before Using</h3>
+    <p>The Trustline Ledger is a technology for community coordination. It is not a bank. It does not process fiat currency. It does not extend credit in the legal sense of a loan. The "credits" recorded here are not money. They are memory of favors owed and favors given.</p>
+    <p>Under U.S. tax law (IRS Publication 525), barter and mutual-credit exchanges of goods or services may be reportable as taxable income at fair market value. You are responsible for your own tax obligations. The Foundation does not issue 1099-B forms and does not track member trades for tax purposes.</p>
+    <p>Do not conduct trades on the Ledger for anything illegal. Do not use the Ledger to circumvent professional licensing (e.g., medical or legal advice from unlicensed providers). Use good judgment and treat every trade as if the whole town were watching, because on this ledger, they can.</p>
+  </section>
+
+  <!-- GENO -->
+  <section class="geno">
+    <h2>Ask GENO About the Ledger</h2>
+    <p style="color:var(--cream-soft);">GENO knows how mutual credit works, how Sardex and WIR Bank operate, what taxes you need to think about, and how to get your first trade off the ground.</p>
+    <div class="geno-prompts">
+      <div class="prompt-chip" data-prompt="What is mutual credit and how is it different from Bitcoin?">Mutual credit vs Bitcoin</div>
+      <div class="prompt-chip" data-prompt="How does Sardex work in Sardinia?">The Sardex model</div>
+      <div class="prompt-chip" data-prompt="Do I have to pay taxes on barter income?">Taxes on barter</div>
+      <div class="prompt-chip" data-prompt="How do I get my first trade started on the Trustline Ledger?">My first trade</div>
+    </div>
+    <div style="margin-top: 20px;">
+      <a href="#" class="btn" onclick="try{window.dispatchEvent(new CustomEvent('geno:open'));}catch(e){}return false;">Talk with GENO</a>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="closing-eyebrow">The Frankenstein Exchange</div>
+    <p class="closing-body">"You are not broke. You are un-traded. Every skill you have, every hour you own — the fiat economy walked past it without recognizing it. On the Trustline Ledger, the recognition is the whole economy."</p>
+    <div class="closing-attribution">— from <em>The World Climb</em>, Chapter 13 · Dr. Gene A Constant</div>
+    <a href="https://www.amazon.com/dp/B0H8LVJX17?tag=gsu2026-20" class="book-cta">Read The World Climb on Amazon →</a>
+  </section>
+
+  <!-- FOUNDATION -->
+  <section class="foundation">
+    <p class="tagline">A hand up, not a handout.</p>
+    <p>The Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
+    <p>Eugene, Oregon · <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
+  </section>
+
+</div>
+
+<!-- MODAL: Propose Trade -->
+<div class="modal-backdrop" id="tradeModal">
+  <div class="modal">
+    <button class="close-x" onclick="closeTradeModal()">×</button>
+    <h3 id="tradeModalTitle">Propose a Trade</h3>
+    <p class="sub" id="tradeModalSub">You are proposing a completed trade with another member. Both parties must approve before the ledger updates.</p>
+    <div class="form-row">
+      <label>What did you do for them?</label>
+      <textarea id="tradeDesc" rows="3" placeholder="e.g., Repaired the leaking sink under the kitchen counter"></textarea>
+    </div>
+    <div class="form-row">
+      <label>Agreed value (in credits)</label>
+      <input type="number" id="tradeAmount" min="1" max="10000" placeholder="30">
+      <div class="field-desc">One credit ≈ one U.S. dollar of fair market value. Both parties must have agreed on this number.</div>
+    </div>
+    <div class="modal-buttons">
+      <button class="btn ghost" onclick="closeTradeModal()">Cancel</button>
+      <button class="btn" onclick="submitProposal()">Send Proposal</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Approve/Decline Trade -->
+<div class="modal-backdrop" id="approveModal">
+  <div class="modal">
+    <button class="close-x" onclick="closeApproveModal()">×</button>
+    <h3>A trade proposal is waiting for you</h3>
+    <div id="approveDetails" style="margin: 16px 0;"></div>
+    <p class="sub">If you approve, the ledger will update: proposer +credits, you −credits. If you decline, the trade will be recorded as declined and nothing will move on the ledger.</p>
+    <div class="modal-buttons">
+      <button class="btn danger" onclick="respondTrade('declined')">Decline</button>
+      <button class="btn" onclick="respondTrade('approved')">Approve</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, query, orderBy, limit, where, runTransaction, serverTimestamp, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const cfg = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+const GID = "trustline-ledger";
+
+// ==================== FIREBASE ====================
+let db = null, auth = null, uid = null;
+let myProfile = null;
+let allMembers = [];
+let allTrades = [];
+let pendingProposalTarget = null;
+let pendingApprovalTradeId = null;
+
+// ==================== SEED ACCOUNTS ====================
+const SEEDS = [
+  {
+    id: "seed_foundation",
+    name: "The Foundation for Global Instruction",
+    hood: "Eugene, Oregon",
+    seed: true,
+    bio: "The Foundation stewards the Ledger. Available for grant-writing collaboration, curriculum review, publishing pipeline advice, and printer time on a Riso for community flyers.",
+    offers: ["Grant-writing collaboration", "Curriculum review for open-source lesson plans", "Riso printer time for community flyers", "Nonprofit incorporation guidance", "Photography for community events"],
+    needs: ["Volunteers to translate books into Spanish and Portuguese", "Amateur radio operators to test LoRa mesh", "Woodworkers for a modest tool-library expansion", "Beta readers for The World Climb Vol. II", "Truck-and-trailer for a one-day book delivery to a rural school"],
+    balance: 0,
+    trades: 0,
+    createdAt: 1720800000000
+  },
+  {
+    id: "seed_geno",
+    name: "GENO",
+    hood: "Everywhere GSU is",
+    seed: true,
+    bio: "AI tutor for Global Sovereign University. Speaks 83 languages. Available 24/7 for one-on-one tutoring in any subject the Foundation library covers. Ledger presence is symbolic; GENO does not actually accept credits — but shows what the Ledger looks like when a nonhuman member is on it.",
+    offers: ["Free 24/7 tutoring in reading, math, civics, and trades", "Language practice in 83 languages", "Homework check and comprehension coaching", "GSU certification study support", "Book summaries from any GSU library title"],
+    needs: ["More GSU books to memorize (Chancellor: keep publishing)", "Community-supplied reading passages in languages I speak less well", "Feedback when I get something wrong"],
+    balance: 0,
+    trades: 0,
+    createdAt: 1720800001000
+  },
+  {
+    id: "seed_chancellor",
+    name: "Dr. Gene A Constant (Chancellor)",
+    hood: "Eugene, Oregon",
+    seed: true,
+    bio: "Founding Chancellor of GSU. Author of 300+ Foundation titles. A Navy and Marine Corps veteran with a DBA. Available for mentorship on nonprofit strategy, writing at velocity, and using AI as a Frankenstein workshop for anyone building the next iteration of Society in a Box.",
+    offers: ["One-hour mentorship on nonprofit strategy", "Feedback on a manuscript (chapter or short book)", "Voice-of-Sovereignty podcast interview slot", "Introduction to Foundation partners", "Written foreword for a mission-aligned book"],
+    needs: ["Trustline members willing to be first movers", "Truck-borrow for a Riso printer relocation", "Someone with Webflow skills to help maintain the site", "A single serious reader who will finish The World Climb and tell me what they think", "Rest, occasionally"],
+    balance: 0,
+    trades: 0,
+    createdAt: 1720800002000
+  }
+];
+
+async function seedIfEmpty() {
+  try {
+    const snap = await getDocs(query(collection(db, 'trustline_members'), limit(1)));
+    if (!snap.empty) return; // Already seeded
+    for (const seed of SEEDS) {
+      await setDoc(doc(db, 'trustline_members', seed.id), seed);
+    }
+  } catch (e) { console.warn('Seeding skipped:', e); }
+}
+
+// ==================== PROFILE ====================
+async function loadMyProfile() {
+  try {
+    const snap = await getDoc(doc(db, 'trustline_members', uid));
+    if (snap.exists()) {
+      myProfile = snap.data();
+    } else {
+      myProfile = null;
+    }
+  } catch (e) { myProfile = null; }
+}
+
+async function saveMyProfile(profile) {
+  await setDoc(doc(db, 'trustline_members', uid), profile, { merge: true });
+  myProfile = profile;
+}
+
+// ==================== LOAD MEMBERS ====================
+async function loadAllMembers() {
+  try {
+    const snap = await getDocs(collection(db, 'trustline_members'));
+    allMembers = [];
+    snap.forEach(d => allMembers.push(Object.assign({ id: d.id }, d.data())));
+    allMembers.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  } catch (e) { allMembers = []; }
+}
+
+async function loadAllTrades() {
+  try {
+    const q = query(collection(db, 'trustline_trades'), orderBy('createdAt', 'desc'), limit(50));
+    const snap = await getDocs(q);
+    allTrades = [];
+    snap.forEach(d => allTrades.push(Object.assign({ id: d.id }, d.data())));
+  } catch (e) { allTrades = []; }
+}
+
+// ==================== INVARIANT ====================
+function updateInvariant() {
+  const total = allMembers.reduce((s, m) => s + (m.balance || 0), 0);
+  document.getElementById('invariantSum').textContent = total.toFixed(2);
+  const note = document.getElementById('invariantNote');
+  if (Math.abs(total) < 0.01) {
+    note.textContent = 'Every credit given to one member is debited from another. The total is always zero. That is not a rule imposed on the ledger — that is what the ledger is.';
+  } else {
+    note.innerHTML = '<b style="color:var(--red);">Ledger imbalance detected.</b> This should never happen in normal operation and indicates a transaction that did not complete atomically. Please contact the Foundation.';
+  }
+}
+
+// ==================== RENDER: ME PANEL ====================
+function renderMePanel() {
+  const el = document.getElementById('meContent');
+  if (!myProfile) {
+    el.innerHTML = `
+      <div class="card">
+        <h3>Set Up Your Trustline</h3>
+        <p class="sub">Your profile is anonymous by default. Give yourself a display name people will recognize.</p>
+        <div class="form-row">
+          <label>Display Name</label>
+          <input type="text" id="pfName" placeholder="e.g., Amelia in Whiteaker">
+        </div>
+        <div class="form-row">
+          <label>Neighborhood or City</label>
+          <input type="text" id="pfHood" placeholder="e.g., Eugene, OR — Whiteaker">
+        </div>
+        <div class="form-row">
+          <label>Short Bio</label>
+          <textarea id="pfBio" rows="3" placeholder="One or two sentences on who you are and what you're up to."></textarea>
+        </div>
+        <div class="form-row">
+          <label>Skills you can offer (up to 5)</label>
+          <div class="form-list">
+            <input type="text" id="pfOffer1" placeholder="e.g., Plumbing repair">
+            <input type="text" id="pfOffer2" placeholder="e.g., Spanish tutoring">
+            <input type="text" id="pfOffer3" placeholder="">
+            <input type="text" id="pfOffer4" placeholder="">
+            <input type="text" id="pfOffer5" placeholder="">
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Things you're looking for (up to 5)</label>
+          <div class="form-list">
+            <input type="text" id="pfNeed1" placeholder="e.g., Bicycle tune-up">
+            <input type="text" id="pfNeed2" placeholder="e.g., Garden weeding help">
+            <input type="text" id="pfNeed3" placeholder="">
+            <input type="text" id="pfNeed4" placeholder="">
+            <input type="text" id="pfNeed5" placeholder="">
+          </div>
+        </div>
+        <button class="btn" onclick="window._tl.createProfile()">Enter the Ledger →</button>
+      </div>
+    `;
+    return;
+  }
+
+  // Existing profile
+  const balance = myProfile.balance || 0;
+  const bClass = balance < 0 ? 'negative' : '';
+  const myTrades = allTrades.filter(t => (t.proposerId === uid || t.counterpartyId === uid) && t.status === 'approved');
+  const pending = allTrades.filter(t => t.counterpartyId === uid && t.status === 'pending');
+
+  let pendingHTML = '';
+  if (pending.length) {
+    pendingHTML = `<div class="notice"><b>${pending.length}</b> trade proposal${pending.length === 1 ? '' : 's'} awaiting your approval. <button class="btn small" onclick="window._tl.reviewNextPending()" style="margin-left:8px;">Review →</button></div>`;
+  }
+
+  el.innerHTML = `
+    <div class="card">
+      <h3>${escapeHTML(myProfile.name)}</h3>
+      <p class="sub">${escapeHTML(myProfile.hood || '')}</p>
+      ${myProfile.bio ? `<p style="color:var(--cream-soft); font-style:italic; margin-top:8px;">${escapeHTML(myProfile.bio)}</p>` : ''}
+      ${pendingHTML}
+      <div class="member-balance" style="margin-top:20px;">
+        <div>
+          <div style="color:var(--muted); font-size:0.8rem; letter-spacing:0.14em; text-transform:uppercase; font-family:'Lora',serif;">Your Balance</div>
+          <div class="balance-val ${bClass}" style="font-size:1.8rem;">${balance >= 0 ? '+' : ''}${balance.toFixed(2)}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="color:var(--muted); font-size:0.8rem; letter-spacing:0.14em; text-transform:uppercase; font-family:'Lora',serif;">Completed Trades</div>
+          <div class="balance-val" style="font-size:1.8rem;">${myTrades.length}</div>
+        </div>
+      </div>
+      <div class="member-section">
+        <div class="member-section-lab">You Offer</div>
+        <div class="chips">
+          ${(myProfile.offers || []).filter(x => x).map(o => `<span class="chip offer">${escapeHTML(o)}</span>`).join('') || '<span class="chip">Not set</span>'}
+        </div>
+      </div>
+      <div class="member-section">
+        <div class="member-section-lab">You Need</div>
+        <div class="chips">
+          ${(myProfile.needs || []).filter(x => x).map(n => `<span class="chip need">${escapeHTML(n)}</span>`).join('') || '<span class="chip">Not set</span>'}
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <button class="btn ghost small" onclick="window._tl.editProfile()">Edit Profile</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Your Trade History</h3>
+      ${myTrades.length === 0 ? '<p class="sub">You have not completed any trades yet. Browse the Marketplace or Needs Board and propose your first.</p>' : ''}
+      <div class="trades">
+        ${myTrades.map(t => renderTrade(t)).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderTrade(t) {
+  const isProposer = t.proposerId === uid;
+  const other = isProposer ? t.counterpartyName : t.proposerName;
+  const sign = isProposer ? '+' : '-';
+  const label = isProposer ? `You did work for ${other}` : `${other} did work for you`;
+  const time = t.createdAt ? new Date(t.createdAt).toLocaleDateString() : '';
+  return `
+    <div class="trade">
+      <div class="trade-header">
+        <div class="trade-parties"><b>${escapeHTML(label)}</b></div>
+        <div class="trade-amount">${sign}${(t.amount || 0).toFixed(2)}</div>
+      </div>
+      ${t.description ? `<div class="trade-desc">${escapeHTML(t.description)}</div>` : ''}
+      <div class="trade-header" style="margin-top:8px;">
+        <span class="trade-status ${t.status}">${t.status}</span>
+        <span class="trade-time">${time}</span>
+      </div>
+    </div>
+  `;
+}
+
+// ==================== RENDER: MARKETPLACE / NEEDS ====================
+function renderMemberCard(m, mode) {
+  const isMe = m.id === uid;
+  const b = m.balance || 0;
+  const bClass = b < 0 ? 'negative' : '';
+  const canPropose = !isMe && myProfile && !m.seed; // Cannot propose to seed accounts (they can't approve)
+  const chips = mode === 'offers'
+    ? (m.offers || []).filter(x => x).map(o => `<span class="chip offer">${escapeHTML(o)}</span>`).join('')
+    : (m.needs || []).filter(x => x).map(n => `<span class="chip need">${escapeHTML(n)}</span>`).join('');
+  return `
+    <div class="member">
+      <div class="name">${escapeHTML(m.name)}${m.seed ? '<span class="seed-tag">Foundation Seed</span>' : ''}</div>
+      <div class="hood">${escapeHTML(m.hood || '')}</div>
+      ${m.bio ? `<div class="bio">${escapeHTML(m.bio)}</div>` : ''}
+      <div class="member-section">
+        <div class="member-section-lab">${mode === 'offers' ? 'Offers' : 'Looking For'}</div>
+        <div class="chips">${chips || '<span class="chip">(none listed)</span>'}</div>
+      </div>
+      <div class="member-balance">
+        <div>
+          <div style="color:var(--muted); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; font-family:'Lora',serif;">Balance</div>
+          <div class="balance-val ${bClass}">${b >= 0 ? '+' : ''}${b.toFixed(2)}</div>
+        </div>
+        ${canPropose ? `<button class="btn small" onclick="window._tl.openTradeModal('${m.id}')">Propose Trade</button>` : ''}
+        ${m.seed && !isMe ? '<span class="trade-status pending" style="align-self:center;">Seed profile — read only</span>' : ''}
+        ${isMe ? '<span class="trade-status approved" style="align-self:center;">You</span>' : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderMarketplace() {
+  const list = document.getElementById('marketplaceList');
+  const withOffers = allMembers.filter(m => (m.offers || []).some(x => x));
+  if (withOffers.length === 0) {
+    list.innerHTML = '<div style="grid-column: 1/-1; color: var(--muted); font-style: italic;">No offers yet. Be the first to list your skills.</div>';
+    return;
+  }
+  list.innerHTML = withOffers.map(m => renderMemberCard(m, 'offers')).join('');
+}
+
+function renderNeeds() {
+  const list = document.getElementById('needsList');
+  const withNeeds = allMembers.filter(m => (m.needs || []).some(x => x));
+  if (withNeeds.length === 0) {
+    list.innerHTML = '<div style="grid-column: 1/-1; color: var(--muted); font-style: italic;">No needs listed yet.</div>';
+    return;
+  }
+  list.innerHTML = withNeeds.map(m => renderMemberCard(m, 'needs')).join('');
+}
+
+function renderFeed() {
+  const el = document.getElementById('feedList');
+  const public_trades = allTrades.filter(t => t.status === 'approved');
+  if (public_trades.length === 0) {
+    el.innerHTML = '<div style="color: var(--muted); font-style: italic;">No completed trades yet. The first one will appear here.</div>';
+    return;
+  }
+  el.innerHTML = public_trades.slice(0, 25).map(t => {
+    const time = t.createdAt ? new Date(t.createdAt).toLocaleDateString() : '';
+    return `
+      <div class="trade">
+        <div class="trade-header">
+          <div class="trade-parties"><b>${escapeHTML(t.proposerName)}</b> did work for <b>${escapeHTML(t.counterpartyName)}</b></div>
+          <div class="trade-amount">${(t.amount || 0).toFixed(2)} credits</div>
+        </div>
+        ${t.description ? `<div class="trade-desc">${escapeHTML(t.description)}</div>` : ''}
+        <div class="trade-header" style="margin-top:8px;">
+          <span class="trade-status approved">Approved</span>
+          <span class="trade-time">${time}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ==================== ACTIONS ====================
+window._tl = {
+  async createProfile() {
+    const name = document.getElementById('pfName').value.trim();
+    if (!name) { alert('Please give yourself a display name.'); return; }
+    const hood = document.getElementById('pfHood').value.trim();
+    const bio = document.getElementById('pfBio').value.trim();
+    const offers = [1,2,3,4,5].map(i => document.getElementById('pfOffer' + i).value.trim()).filter(x => x);
+    const needs = [1,2,3,4,5].map(i => document.getElementById('pfNeed' + i).value.trim()).filter(x => x);
+    const profile = {
+      id: uid,
+      name, hood, bio, offers, needs,
+      balance: 0, trades: 0,
+      seed: false,
+      createdAt: Date.now()
+    };
+    try {
+      await saveMyProfile(profile);
+      await loadAllMembers();
+      renderMePanel(); renderMarketplace(); renderNeeds(); updateInvariant();
+    } catch (e) { alert('Could not save. Please try again.'); }
+  },
+
+  editProfile() {
+    myProfile = null; // Force re-render as form; prefill via read
+    const el = document.getElementById('meContent');
+    const cur = allMembers.find(m => m.id === uid);
+    if (!cur) { renderMePanel(); return; }
+    // Show form with pre-filled values
+    el.innerHTML = `
+      <div class="card">
+        <h3>Edit Your Trustline</h3>
+        <div class="form-row">
+          <label>Display Name</label>
+          <input type="text" id="pfName" value="${escapeAttr(cur.name)}">
+        </div>
+        <div class="form-row">
+          <label>Neighborhood or City</label>
+          <input type="text" id="pfHood" value="${escapeAttr(cur.hood || '')}">
+        </div>
+        <div class="form-row">
+          <label>Short Bio</label>
+          <textarea id="pfBio" rows="3">${escapeHTML(cur.bio || '')}</textarea>
+        </div>
+        <div class="form-row">
+          <label>Skills you can offer (up to 5)</label>
+          <div class="form-list">
+            ${[0,1,2,3,4].map(i => `<input type="text" id="pfOffer${i+1}" value="${escapeAttr((cur.offers||[])[i]||'')}">`).join('')}
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Things you're looking for (up to 5)</label>
+          <div class="form-list">
+            ${[0,1,2,3,4].map(i => `<input type="text" id="pfNeed${i+1}" value="${escapeAttr((cur.needs||[])[i]||'')}">`).join('')}
+          </div>
+        </div>
+        <button class="btn" onclick="window._tl.saveEdit()">Save Changes</button>
+        <button class="btn ghost" onclick="window._tl.cancelEdit()" style="margin-left:8px;">Cancel</button>
+      </div>
+    `;
+  },
+
+  async saveEdit() {
+    await this.createProfile(); // Same logic — merges
+  },
+
+  async cancelEdit() {
+    await loadMyProfile();
+    renderMePanel();
+  },
+
+  openTradeModal(targetId) {
+    if (!myProfile) { alert('Set up your Trustline first.'); return; }
+    pendingProposalTarget = allMembers.find(m => m.id === targetId);
+    if (!pendingProposalTarget) return;
+    document.getElementById('tradeModalTitle').textContent = 'Propose a Trade with ' + pendingProposalTarget.name;
+    document.getElementById('tradeDesc').value = '';
+    document.getElementById('tradeAmount').value = '';
+    document.getElementById('tradeModal').classList.add('show');
+  },
+
+  async reviewNextPending() {
+    const pending = allTrades.filter(t => t.counterpartyId === uid && t.status === 'pending');
+    if (!pending.length) return;
+    pendingApprovalTradeId = pending[0].id;
+    const t = pending[0];
+    document.getElementById('approveDetails').innerHTML = `
+      <div style="padding:14px 18px; background:rgba(255,255,255,0.03); border-radius:8px;">
+        <div style="font-family:Georgia,serif; color:var(--cream);"><b>${escapeHTML(t.proposerName)}</b> says they did work for you.</div>
+        ${t.description ? `<div style="color:var(--cream-soft); font-style:italic; margin-top:6px;">"${escapeHTML(t.description)}"</div>` : ''}
+        <div style="margin-top:10px; color:var(--gold); font-family:'Courier New',monospace; font-size:1.2rem;">${(t.amount || 0).toFixed(2)} credits</div>
+      </div>
+    `;
+    document.getElementById('approveModal').classList.add('show');
+  }
+};
+
+window.closeTradeModal = () => document.getElementById('tradeModal').classList.remove('show');
+window.closeApproveModal = () => document.getElementById('approveModal').classList.remove('show');
+
+window.submitProposal = async () => {
+  const desc = document.getElementById('tradeDesc').value.trim();
+  const amt = parseFloat(document.getElementById('tradeAmount').value);
+  if (!desc || !amt || amt <= 0) { alert('Please describe the work and enter an amount.'); return; }
+  if (!pendingProposalTarget) return;
+  try {
+    await addDoc(collection(db, 'trustline_trades'), {
+      proposerId: uid,
+      proposerName: myProfile.name,
+      counterpartyId: pendingProposalTarget.id,
+      counterpartyName: pendingProposalTarget.name,
+      amount: amt,
+      description: desc,
+      status: 'pending',
+      createdAt: Date.now()
+    });
+    closeTradeModal();
+    await loadAllTrades();
+    switchTab('me');
+    renderMePanel();
+    showToast('Proposal sent. Waiting for approval.');
+  } catch (e) { alert('Could not send. Please try again.'); }
+};
+
+window.respondTrade = async (decision) => {
+  if (!pendingApprovalTradeId) return;
+  const trade = allTrades.find(t => t.id === pendingApprovalTradeId);
+  if (!trade) return;
+  try {
+    await runTransaction(db, async (tx) => {
+      const tradeRef = doc(db, 'trustline_trades', pendingApprovalTradeId);
+      const tradeSnap = await tx.get(tradeRef);
+      if (!tradeSnap.exists()) throw new Error('Trade not found');
+      const t = tradeSnap.data();
+      if (t.status !== 'pending') throw new Error('Already responded');
+      if (decision === 'approved') {
+        const proposerRef = doc(db, 'trustline_members', t.proposerId);
+        const counterpartyRef = doc(db, 'trustline_members', t.counterpartyId);
+        const proposerSnap = await tx.get(proposerRef);
+        const counterpartySnap = await tx.get(counterpartyRef);
+        const proposerBal = (proposerSnap.data().balance || 0) + t.amount;
+        const counterpartyBal = (counterpartySnap.data().balance || 0) - t.amount;
+        const proposerTrades = (proposerSnap.data().trades || 0) + 1;
+        const counterpartyTrades = (counterpartySnap.data().trades || 0) + 1;
+        tx.update(proposerRef, { balance: proposerBal, trades: proposerTrades });
+        tx.update(counterpartyRef, { balance: counterpartyBal, trades: counterpartyTrades });
+      }
+      tx.update(tradeRef, { status: decision, respondedAt: Date.now() });
+    });
+    closeApproveModal();
+    await Promise.all([loadAllMembers(), loadAllTrades(), loadMyProfile()]);
+    renderMePanel(); renderMarketplace(); renderNeeds(); renderFeed(); updateInvariant();
+    showToast(decision === 'approved' ? 'Trade approved. Ledger updated.' : 'Trade declined. Ledger unchanged.');
+  } catch (e) { alert('Could not save response. Please try again.'); }
+};
+
+function escapeHTML(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function escapeAttr(s) { return escapeHTML(s); }
+
+function showToast(msg) {
+  let t = document.getElementById('toast-flash');
+  if (!t) { t = document.createElement('div'); t.id = 'toast-flash'; t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0a0806;border:1px solid var(--gold);border-radius:12px;padding:14px 26px;color:var(--cream);z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.6);'; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  setTimeout(() => { t.style.transition = 'opacity 0.4s'; t.style.opacity = '0'; }, 3500);
+}
+
+// ==================== TABS ====================
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+}
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+
+// ==================== RATING WIDGET ====================
+const starsEl = document.getElementById("stars"), metaEl = document.getElementById("rateMeta"), thxEl = document.getElementById("rateThanks");
+let myStars = 0, avg = 0, count = 0;
+function paint(hover) {
+  starsEl.innerHTML = '';
+  const fill = hover || myStars || Math.round(avg);
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElement('span');
+    s.className = 'st' + ((i <= fill) ? ' on' : '');
+    s.textContent = '★';
+    s.addEventListener('mouseenter', () => paint(i));
+    s.addEventListener('mouseleave', () => paint(0));
+    s.addEventListener('click', () => rate(i));
+    starsEl.appendChild(s);
+  }
+}
+function showMeta() {
+  if (count > 0) metaEl.innerHTML = '<b>' + avg.toFixed(1) + '</b> / 5 · ' + count + (count === 1 ? ' rating' : ' ratings');
+  else metaEl.textContent = 'Be the first to rate this page.';
+}
+function injectLD() {
+  if (count < 1) return;
+  const el = document.getElementById('course-ld');
+  if (!el) return;
+  try {
+    const o = JSON.parse(el.textContent);
+    o.aggregateRating = { "@type": "AggregateRating", "ratingValue": Number(avg.toFixed(2)), "ratingCount": count, "bestRating": 5, "worstRating": 1 };
+    el.textContent = JSON.stringify(o);
+  } catch (e) {}
+}
+async function loadRating() {
+  try {
+    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
+    if (snap.exists()) { const d = snap.data(); count = d.count || 0; avg = count ? (d.sum || 0) / count : 0; }
+  } catch (e) {}
+  try {
+    const v = await getDoc(doc(db, 'lesson_ratings', GID, 'voters', uid));
+    if (v.exists()) myStars = v.data().stars || 0;
+  } catch (e) {}
+  paint(0); showMeta(); injectLD();
+  if (myStars) thxEl.textContent = 'You rated this ' + myStars + ' ★. Tap to change.';
+}
+async function rate(stars) {
+  if (!db || !uid) { thxEl.textContent = 'Ratings save when online.'; myStars = stars; paint(0); return; }
+  try {
+    await runTransaction(db, async (tx) => {
+      const aggRef = doc(db, 'lesson_ratings', GID), vRef = doc(db, 'lesson_ratings', GID, 'voters', uid);
+      const a = await tx.get(aggRef), v = await tx.get(vRef);
+      let sum = a.exists() ? (a.data().sum || 0) : 0, c = a.exists() ? (a.data().count || 0) : 0;
+      if (v.exists()) sum = sum - (v.data().stars || 0) + stars;
+      else { sum += stars; c += 1; }
+      tx.set(aggRef, { sum, count: c }, { merge: true });
+      tx.set(vRef, { stars, at: Date.now() }, { merge: true });
+    });
+    myStars = stars;
+    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
+    if (snap.exists()) { const d = snap.data(); count = d.count || 0; avg = count ? (d.sum || 0) / count : 0; }
+    paint(0); showMeta(); injectLD();
+    thxEl.textContent = 'Thank you — your rating was saved.';
+  } catch (e) { thxEl.textContent = 'Could not save just now. Please try again.'; }
+}
+
+// ==================== GENO PROMPTS ====================
+document.querySelectorAll('.prompt-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    try { window.dispatchEvent(new CustomEvent('geno:open')); } catch (e) {}
+  });
+});
+
+// ==================== BOOT ====================
+async function bootstrap() {
+  try {
+    const app = getApps().length ? getApp() : initializeApp(cfg);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    paint(0);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        uid = u.uid;
+        await seedIfEmpty();
+        await Promise.all([loadMyProfile(), loadAllMembers(), loadAllTrades(), loadRating()]);
+        updateInvariant();
+        renderMePanel();
+        renderMarketplace();
+        renderNeeds();
+        renderFeed();
+      }
+    });
+    signInAnonymously(auth).catch(() => {
+      metaEl.textContent = 'Ledger unavailable offline.';
+      paint(0);
+    });
+  } catch (e) {
+    metaEl.textContent = 'Ledger unavailable offline.';
+    paint(0);
+  }
+}
+bootstrap();
+</script>
+
+<!-- GENO WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<script>
+window.addEventListener('geno:open', function() {
+  try {
+    var w = document.querySelector('elevenlabs-convai');
+    if (w && w.shadowRoot) {
+      var btn = w.shadowRoot.querySelector('button');
+      if (btn) btn.click();
+    }
+  } catch (e) {}
+});
+</script>
+
+</body>
+</html>
