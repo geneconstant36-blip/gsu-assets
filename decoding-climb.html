@@ -73,7 +73,38 @@
   .climb-divider .eyebrow{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
   .climb-divider p{color:var(--muted);font-size:.98rem;max-width:46ch;margin:0 auto;}
 
+
+  /* ============ 5-STAR RATING WIDGET (site-wide) ============ */
+  .ratebox { margin: 24px 0; background: #000000; border: 1px solid rgba(201,168,76,.22); border-radius: 16px; padding: 22px; text-align: center; }
+  .ratebox .rt { font-family: 'Lora', Georgia, serif; font-size: 1.06rem; color: #F5F1E8; margin-bottom: 12px; }
+  .ratebox .stars { display: inline-flex; gap: 7px; font-size: 1.9rem; line-height: 1; cursor: pointer; user-select: none; }
+  .ratebox .stars .st { color: #3a3a3a; transition: transform .12s, color .12s; }
+  .ratebox .stars .st.on { color: #C9A84C; }
+  .ratebox .stars .st:hover { transform: scale(1.12); }
+  .ratebox .rate-meta { margin-top: 10px; font-size: .92rem; color: #8a8580; }
+  .ratebox .rate-meta b { color: #C9A84C; }
+  .ratebox .rate-thanks { margin-top: 8px; font-size: .86rem; color: #7fce9d; min-height: 1.1em; }
 </style>
+
+<script type="application/ld+json" id="course-ld">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "The Decoding Climb",
+  "description": "Free decoding assessment and reading fluency ladder — 52 questions across four tiers.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "sameAs": "https://globalsovereignuniversity.org"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0.00",
+    "priceCurrency": "USD",
+    "category": "Free"
+  }
+}
+</script>
 </head>
 <body><script src="/return-bar.js"></script>
 <div class="wrap">
@@ -83,7 +114,16 @@
     <h1>The Decoding Climb</h1>
     <p class="sub">Fifty-two questions. Four tiers — Bronze, Silver, Gold, Platinum. Climb as far as you can; your best is saved.</p>
   </div>
-  <div class="reader">
+  
+
+<!-- 5-STAR RATING WIDGET — top of page per Chancellor directive -->
+<div class="ratebox" id="ratebox">
+  <div class="rt">Was this lesson helpful?</div>
+  <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
+  <div class="rate-meta" id="rateMeta">Loading ratings…</div>
+  <div class="rate-thanks" id="rateThanks"></div>
+</div>
+<div class="reader">
 <div class="eyebrow">Reading Helix · Volume 3 · Chapter One · Read First</div>
 <h2>From Rules to Reading</h2>
 <div class="booktag">From <i>The Reader&#x27;s Toolkit: Decoding</i> — free to keep, by Dr. Gene A. Constant</div>
@@ -333,5 +373,30 @@ load();
 </script>
 <!-- ===== /GSU 5-STAR RATING WIDGET ===== -->
 
+
+<!-- 5-STAR RATING WIDGET — Firebase (gsu-handshake) + aggregateRating injection -->
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",storageBucket:"gsu-handshake.firebasestorage.app",messagingSenderId:"301089416765",appId:"1:301089416765:web:dff926a7aa52191e9a6c54"};
+const GID="decoding-climb";
+const starsEl=document.getElementById('stars'),metaEl=document.getElementById('rateMeta'),thxEl=document.getElementById('rateThanks');
+let rdb=null,ruid=null,myStars=0,avg=0,count=0;
+function paint(hover){starsEl.innerHTML='';const fill=hover||myStars||Math.round(avg);for(let i=1;i<=5;i++){const s=document.createElement('span');s.className='st'+((i<=fill)?' on':'');s.textContent='\u2605';s.setAttribute('role','radio');s.addEventListener('mouseenter',()=>paint(i));s.addEventListener('mouseleave',()=>paint(0));s.addEventListener('click',()=>rate(i));starsEl.appendChild(s);}}
+function showMeta(){if(count>0){metaEl.innerHTML='<b>'+avg.toFixed(1)+'</b> / 5 \u00b7 '+count+(count===1?' rating':' ratings');}else{metaEl.textContent='Be the first to rate this page.';}}
+function injectLD(){if(count<1)return;const el=document.getElementById('course-ld');if(!el)return;try{const o=JSON.parse(el.textContent);o.aggregateRating={"@type":"AggregateRating","ratingValue":Number(avg.toFixed(2)),"ratingCount":count,"bestRating":5,"worstRating":1};el.textContent=JSON.stringify(o);}catch(e){}}
+async function load(){try{const snap=await getDoc(doc(rdb,'lesson_ratings',GID));if(snap.exists()){const d=snap.data();count=d.count||0;avg=count?(d.sum||0)/count:0;}}catch(e){}
+  try{const v=await getDoc(doc(rdb,'lesson_ratings',GID,'voters',ruid));if(v.exists())myStars=v.data().stars||0;}catch(e){}
+  paint(0);showMeta();injectLD();if(myStars)thxEl.textContent='You rated this '+myStars+' \u2605. Tap to change.';}
+async function rate(stars){if(!rdb||!ruid){thxEl.textContent='Ratings save when online.';myStars=stars;paint(0);return;}
+  try{await runTransaction(rdb,async(tx)=>{const aggRef=doc(rdb,'lesson_ratings',GID),vRef=doc(rdb,'lesson_ratings',GID,'voters',ruid);const a=await tx.get(aggRef),v=await tx.get(vRef);let sum=a.exists()?(a.data().sum||0):0,c=a.exists()?(a.data().count||0):0;if(v.exists()){sum=sum-(v.data().stars||0)+stars;}else{sum+=stars;c+=1;}tx.set(aggRef,{sum,count:c},{merge:true});tx.set(vRef,{stars,at:Date.now()},{merge:true});});
+    myStars=stars;const snap=await getDoc(doc(rdb,'lesson_ratings',GID));if(snap.exists()){const d=snap.data();count=d.count||0;avg=count?(d.sum||0)/count:0;}
+    paint(0);showMeta();injectLD();thxEl.textContent='Thank you \u2014 your rating was saved.';}catch(e){thxEl.textContent='Could not save just now. Please try again.';}}
+try{const app=getApps().length?getApp():initializeApp(cfg);const auth=getAuth(app);rdb=getFirestore(app);paint(0);
+  onAuthStateChanged(auth,(u)=>{if(u){ruid=u.uid;load();}});
+  signInAnonymously(auth).catch(()=>{metaEl.textContent='Ratings are unavailable offline.';paint(0);});
+}catch(e){metaEl.textContent='Ratings are unavailable offline.';paint(0);}
+</script>
 </body>
 </html>

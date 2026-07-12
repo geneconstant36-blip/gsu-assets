@@ -140,13 +140,17 @@
   .chapter-full .prose p:first-of-type::first-letter{font-family:'Lora',serif;font-size:3.4rem;line-height:.8;float:left;color:var(--gold);padding:6px 12px 0 0;}
   /* ratings */
   .ratewrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:8px 20px 80px;}
-  .ratebox{margin-top:26px;background:var(--card);border:1px solid rgba(201,168,76,.25);border-radius:16px;padding:24px;text-align:center;}
-  .ratebox .rt{font-family:'Lora',serif;font-size:1.18rem;color:#fff;margin-bottom:14px;}
-  .stars{display:inline-flex;gap:7px;font-size:2rem;line-height:1;cursor:pointer;user-select:none;}
-  .stars .st{color:#3a4456;transition:transform .12s,color .12s;}
-  .stars .st.on{color:var(--gold);} .stars .st:hover{transform:scale(1.12);}
-  .rate-meta{margin-top:12px;font-size:.92rem;color:var(--muted);} .rate-meta b{color:var(--gold);}
-  .rate-thanks{margin-top:8px;font-size:.86rem;color:var(--good);min-height:1.1em;}
+
+  /* ============ 5-STAR RATING WIDGET (site-wide) ============ */
+  .ratebox { margin: 24px 0; background: #000000; border: 1px solid rgba(201,168,76,.22); border-radius: 16px; padding: 22px; text-align: center; }
+  .ratebox .rt { font-family: 'Lora', Georgia, serif; font-size: 1.06rem; color: #F5F1E8; margin-bottom: 12px; }
+  .ratebox .stars { display: inline-flex; gap: 7px; font-size: 1.9rem; line-height: 1; cursor: pointer; user-select: none; }
+  .ratebox .stars .st { color: #3a3a3a; transition: transform .12s, color .12s; }
+  .ratebox .stars .st.on { color: #C9A84C; }
+  .ratebox .stars .st:hover { transform: scale(1.12); }
+  .ratebox .rate-meta { margin-top: 10px; font-size: .92rem; color: #8a8580; }
+  .ratebox .rate-meta b { color: #C9A84C; }
+  .ratebox .rate-thanks { margin-top: 8px; font-size: .86rem; color: #7fce9d; min-height: 1.1em; }
 </style>
 </head>
 <body><script src="/return-bar.js"></script>
@@ -163,7 +167,16 @@
     <p class="sub">Climb 52 questions across four tiers &mdash; Bronze, Silver, Gold, Platinum. Earn your tag a place on the champions board. Your best is saved automatically.</p>
   </div>
 
-  <div class="ladder">
+  
+
+<!-- 5-STAR RATING WIDGET — top of page per Chancellor directive -->
+<div class="ratebox" id="ratebox">
+  <div class="rt">Was this lesson helpful?</div>
+  <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
+  <div class="rate-meta" id="rateMeta">Loading ratings…</div>
+  <div class="rate-thanks" id="rateThanks"></div>
+</div>
+<div class="ladder">
     <div class="ladder-track"><div class="ladder-fill" id="ladderFill"></div></div>
     <div class="ladder-ticks">
       <span class="b" id="tk-b">&#129353; Bronze 13</span>
@@ -212,12 +225,6 @@
 
 <!-- ===== RATINGS ===== -->
 <div class="ratewrap">
-  <div class="ratebox" id="ratebox">
-    <div class="rt">Was this lesson helpful?</div>
-    <div class="stars" id="stars" role="radiogroup" aria-label="Rate this lesson 1 to 5 stars"></div>
-    <div class="rate-meta" id="rateMeta">Loading ratings&hellip;</div>
-    <div class="rate-thanks" id="rateThanks"></div>
-  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -362,7 +369,7 @@ async function finish(){const tr=tierFor(score);setLadder(score);await saveScore
   loadBoard();}
 </script>
 
-<!-- GOLD STANDARD: genuine learner ratings -> real aggregateRating schema -->
+<!-- 5-STAR RATING WIDGET — Firebase (gsu-handshake) + aggregateRating injection -->
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -372,7 +379,7 @@ const GID="phonics-climb";
 const starsEl=document.getElementById('stars'),metaEl=document.getElementById('rateMeta'),thxEl=document.getElementById('rateThanks');
 let rdb=null,ruid=null,myStars=0,avg=0,count=0;
 function paint(hover){starsEl.innerHTML='';const fill=hover||myStars||Math.round(avg);for(let i=1;i<=5;i++){const s=document.createElement('span');s.className='st'+((i<=fill)?' on':'');s.textContent='\u2605';s.setAttribute('role','radio');s.addEventListener('mouseenter',()=>paint(i));s.addEventListener('mouseleave',()=>paint(0));s.addEventListener('click',()=>rate(i));starsEl.appendChild(s);}}
-function showMeta(){if(count>0){metaEl.innerHTML='<b>'+avg.toFixed(1)+'</b> / 5 \u00b7 '+count+(count===1?' rating':' ratings');}else{metaEl.textContent='Be the first to rate this lesson.';}}
+function showMeta(){if(count>0){metaEl.innerHTML='<b>'+avg.toFixed(1)+'</b> / 5 \u00b7 '+count+(count===1?' rating':' ratings');}else{metaEl.textContent='Be the first to rate this page.';}}
 function injectLD(){if(count<1)return;const el=document.getElementById('course-ld');if(!el)return;try{const o=JSON.parse(el.textContent);o.aggregateRating={"@type":"AggregateRating","ratingValue":Number(avg.toFixed(2)),"ratingCount":count,"bestRating":5,"worstRating":1};el.textContent=JSON.stringify(o);}catch(e){}}
 async function load(){try{const snap=await getDoc(doc(rdb,'lesson_ratings',GID));if(snap.exists()){const d=snap.data();count=d.count||0;avg=count?(d.sum||0)/count:0;}}catch(e){}
   try{const v=await getDoc(doc(rdb,'lesson_ratings',GID,'voters',ruid));if(v.exists())myStars=v.data().stars||0;}catch(e){}
