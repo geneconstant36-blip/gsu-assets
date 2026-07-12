@@ -1,538 +1,858 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Adult Literacy Lab — GSU Second Chance</title>
-<meta name="description" content="Free adult reading tool from GSU. You weren't bad at reading — you were taught wrong. The phonics code you were never given, rebuilt for adult dignity. No judgment, no login.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Reading Room — Global Sovereign University</title>
+<meta name="description" content="The Reading Room is a free, dignity-first place for adults returning to reading. Forty-two lessons across six paths. No login required. A hand up, not a handout.">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/adult-literacy-lab.html">
+
+<!-- COURSE JSON-LD — rating widget writes AggregateRating into this element -->
+<script type="application/ld+json" id="course-ld">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "The Reading Room",
+  "description": "Free structured reading recovery for adults. Six learning paths, forty-two lessons, dignity-first pedagogy.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "sameAs": "https://globalsovereignuniversity.org"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "courseWorkload": "PT15M",
+    "instructor": {
+      "@type": "Person",
+      "name": "Dr. Gene A Constant"
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0.00",
+    "priceCurrency": "USD",
+    "category": "Free"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
 <style>
-:root{--gold:#C9A84C;--dim:#5C502A;--cream:#F5F1E8;--teal:#1A8B7F;--red:#c0392b;--green:#1a6b3a;}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:960px;margin:0 auto;padding:22px 18px 48px}
-.kick{color:var(--gold);letter-spacing:.18em;font-size:.74rem;text-transform:uppercase;margin-bottom:6px}
-h1{font-size:1.85rem;line-height:1.15;margin:.2rem 0 .2rem;color:var(--cream)}
-.sub{color:#cabfa6;font-size:.97rem;margin:0 0 14px;max-width:64ch;line-height:1.55}
-.rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:12px 0 18px}
+  :root {
+    --bg: #000000;
+    --card: #000000;
+    --card-hi: rgba(201,168,76,0.06);
+    --gold: #C9A84C;
+    --gold-soft: #B08A2A;
+    --cream: #F5F1E8;
+    --cream-soft: #d8d3c8;
+    --muted: #8a8580;
+    --good: #7fce9d;
+    --line: rgba(201,168,76,.22);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--cream); font-family: Georgia, "Times New Roman", serif; line-height: 1.55; }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 22px; }
+  section { padding: 40px 0; }
 
-/* OPENING STATEMENT */
-.opening{background:linear-gradient(135deg,#0d0d0d,#070707);border:1px solid var(--dim);border-left:4px solid var(--gold);border-radius:14px;padding:24px 26px;margin-bottom:28px}
-.opening-headline{font-size:1.5rem;color:var(--cream);line-height:1.3;margin-bottom:12px}
-.opening-headline strong{color:var(--gold)}
-.opening-body{font-size:.97rem;color:#cabfa6;line-height:1.7;margin:0}
+  /* HERO */
+  .hero { padding: 56px 0 32px; border-bottom: 1px solid var(--line); }
+  .eyebrow { font-family: "Lora", Georgia, serif; font-size: 0.82rem; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-size: 3rem; margin: 0 0 12px; line-height: 1.1; color: var(--cream); }
+  .lede { font-size: 1.22rem; color: var(--cream-soft); font-style: italic; max-width: 42em; }
 
-/* PATH SELECTOR */
-.path-label{color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px}
-.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
-@media(max-width:560px){.path-grid{grid-template-columns:1fr}}
-.path-card{background:#0a0a0a;border:2px solid var(--dim);border-radius:12px;padding:18px;cursor:pointer;transition:all .18s}
-.path-card:hover{border-color:var(--gold)}
-.path-card.active{border-color:var(--gold);background:rgba(201,168,76,.06)}
-.path-num{font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
-.path-title{font-size:1rem;font-weight:bold;color:var(--cream);margin-bottom:4px}
-.path-desc{font-size:.82rem;color:#7c7458;line-height:1.35}
+  /* RATING WIDGET AT TOP */
+  .ratebox { margin-top: 28px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; text-align: center; }
+  .ratebox .rt { font-family: "Lora", Georgia, serif; font-size: 1.06rem; color: var(--cream); margin-bottom: 12px; }
+  .stars { display: inline-flex; gap: 7px; font-size: 1.9rem; line-height: 1; cursor: pointer; user-select: none; }
+  .stars .st { color: #3a3a3a; transition: transform .12s, color .12s; }
+  .stars .st.on { color: var(--gold); }
+  .stars .st:hover { transform: scale(1.12); }
+  .rate-meta { margin-top: 10px; font-size: .92rem; color: var(--muted); }
+  .rate-meta b { color: var(--gold); }
+  .rate-thanks { margin-top: 8px; font-size: .86rem; color: var(--good); min-height: 1.1em; }
 
-/* STAGE */
-.stage{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-bottom:22px}
-@media(max-width:680px){.stage{grid-template-columns:1fr}}
-.canvaswrap{background:#0a0a0a;border:1px solid var(--dim);border-top:3px solid var(--gold);border-radius:14px;padding:10px}
-canvas{width:100%;height:auto;display:block;border-radius:8px;background:radial-gradient(120% 120% at 60% 40%,#11100c 0%,#050505 70%)}
-.caption{font-size:.82rem;color:#bdb293;margin-top:7px;min-height:2.4em;line-height:1.35}
+  /* DIGNITY BANNER */
+  .dignity { margin: 28px 0 8px; background: linear-gradient(180deg, rgba(201,168,76,.06), rgba(201,168,76,.02)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 20px; text-align: center; }
+  .dignity-lead { font-family: "Lora", Georgia, serif; font-style: italic; color: var(--cream); font-size: 1.12rem; margin: 0 0 8px; }
+  .dignity-tag { font-family: Georgia, serif; color: var(--gold); font-size: 0.9rem; letter-spacing: 0.14em; text-transform: uppercase; }
 
-/* LESSON PANEL */
-.lesson-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:18px}
-.lesson-step{font-size:.7rem;color:var(--teal);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
-.lesson-title{font-size:1.3rem;color:var(--cream);font-weight:bold;margin-bottom:8px;line-height:1.2}
-.lesson-body{font-size:.93rem;color:#e7dec9;line-height:1.6;margin-bottom:12px}
-.lesson-body strong{color:var(--gold)}
-.lesson-example{background:#0f0f0f;border:1px solid var(--dim);border-radius:8px;padding:12px 14px;margin-bottom:12px}
-.lesson-example .word{font-size:1.5rem;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:.06em}
-.lesson-example .breakdown{font-size:.85rem;color:#cabfa6;line-height:1.4}
-.lesson-example .breakdown b{color:var(--cream)}
-.truth-box{background:#0f0f0f;border:1px solid var(--dim);border-left:3px solid var(--teal);border-radius:8px;padding:11px 14px;font-size:.87rem;color:#cabfa6;line-height:1.5;margin-bottom:12px}
-.truth-box strong{color:var(--teal)}
-.lesson-nav{display:flex;gap:8px;margin-top:10px}
-.lesson-btn{flex:1;background:transparent;border:1px solid var(--dim);color:#9c916f;padding:9px;border-radius:8px;font-family:Georgia,serif;cursor:pointer;font-size:.85rem}
-.lesson-btn:hover{border-color:var(--gold);color:var(--gold)}
-.lesson-btn.go{background:var(--gold);color:#000;border-color:var(--gold);font-weight:bold}
+  /* INTAKE */
+  .intake { margin-top: 32px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 28px; }
+  .intake h2 { color: var(--cream); font-size: 1.6rem; margin: 0 0 6px; }
+  .intake p.sub { color: var(--muted); margin: 0 0 20px; }
+  .q-block { margin-bottom: 22px; }
+  .q-label { color: var(--gold); font-size: 0.94rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .q-opts { display: flex; flex-wrap: wrap; gap: 10px; }
+  .q-opt { background: var(--card-hi); color: var(--cream); border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px; cursor: pointer; font-family: Georgia, serif; font-size: 0.98rem; transition: transform .1s, background .12s; }
+  .q-opt:hover { transform: translateY(-1px); background: rgba(201,168,76,.1); }
+  .q-opt.chosen { background: rgba(201,168,76,.18); border-color: var(--gold); color: var(--cream); }
+  .intake-submit { margin-top: 12px; background: var(--gold); color: #000; border: none; padding: 14px 28px; border-radius: 10px; font-family: Georgia, serif; font-weight: bold; font-size: 1.05rem; cursor: pointer; }
+  .intake-submit:disabled { opacity: 0.4; cursor: default; }
+  .intake-done { padding: 22px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; text-align: center; margin-top: 32px; color: var(--cream-soft); }
+  .intake-done b { color: var(--gold); }
 
-/* COMMON GAPS SECTION */
-.gaps-title{color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:12px}
-.gap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-bottom:22px}
-.gap-btn{background:#111;border:2px solid var(--dim);color:var(--cream);padding:10px 8px;border-radius:10px;font-family:Georgia,serif;font-size:1rem;cursor:pointer;text-align:center;transition:all .15s}
-.gap-btn small{display:block;font-size:.6rem;color:#7a6a40;margin-top:2px;letter-spacing:.04em}
-.gap-btn:hover{border-color:var(--gold)}
-.gap-btn[aria-pressed="true"]{background:var(--gold);color:#000;border-color:var(--gold);font-weight:bold}
-.gap-btn[aria-pressed="true"] small{color:#3a3208}
+  /* WORD OF THE DAY */
+  .wotd { margin-top: 40px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 28px; text-align: center; }
+  .wotd-eyebrow { font-family: "Lora", serif; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); font-size: 0.82rem; margin-bottom: 12px; }
+  .wotd-word { font-size: 2.4rem; color: var(--cream); font-weight: normal; margin: 8px 0; cursor: pointer; }
+  .wotd-word:hover { color: var(--gold); }
+  .wotd-say { display: inline-block; margin-left: 8px; font-size: 1.1rem; color: var(--gold); vertical-align: middle; }
+  .wotd-pron { color: var(--muted); font-style: italic; margin-bottom: 12px; }
+  .wotd-mean { color: var(--cream); font-size: 1.1rem; margin: 8px 0; }
+  .wotd-eg { color: var(--cream-soft); font-style: italic; margin: 10px 0; }
+  .wotd-root { color: var(--muted); font-size: 0.9rem; margin-top: 14px; }
 
-/* GAMES */
-.modetabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.modetab{background:#0a0a0a;border:1px solid var(--dim);color:#9c916f;padding:8px 16px;border-radius:8px;font-family:Georgia,serif;font-size:.88rem;cursor:pointer}
-.modetab.active{background:var(--gold);color:#000;font-weight:bold;border-color:var(--gold)}
-.game-panel{background:#0a0a0a;border:1px solid var(--dim);border-radius:14px;padding:20px;margin-bottom:22px}
-.score-row{display:flex;gap:16px;align-items:baseline;margin:0 0 10px;flex-wrap:wrap}
-.score-row b{color:var(--gold);font-size:1.2rem}
-.badge{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
-.badge.plat{background:var(--gold);color:#000}
-.feedback{font-size:.92rem;color:#e7dec9;min-height:2.2em;line-height:1.4;margin-bottom:10px}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.choice{background:#111;border:1px solid var(--dim);color:var(--cream);padding:14px 10px;border-radius:10px;font-family:Georgia,serif;font-size:1rem;cursor:pointer;text-align:center;transition:all .15s}
-.choice:hover{border-color:var(--gold)}
-.choice.right{background:#16351f;border-color:#43d692;color:#d8ffe6}
-.choice.wrong{background:#3a1414;border-color:#e0584f;color:#ffd8d4}
-.decode-word{font-size:2rem;color:var(--gold);font-weight:bold;text-align:center;margin-bottom:14px;letter-spacing:.08em}
+  /* CERTIFICATE PROGRESS BANNER */
+  .cert-banner { margin-top: 44px; background: radial-gradient(circle at top left, rgba(201,168,76,0.06), #000000 70%); border: 1px solid var(--gold); border-radius: 18px; padding: 32px; }
+  .cert-banner h2 { color: var(--gold); font-size: 1.6rem; margin: 0 0 8px; }
+  .cert-banner p { color: var(--cream-soft); margin: 0 0 22px; }
+  .cert-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 720px) { .cert-tiers { grid-template-columns: 1fr; } }
+  .cert-tier { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; text-align: center; }
+  .cert-tier.earned { border-color: var(--gold); background: rgba(201,168,76,.08); }
+  .cert-tier-icon { font-size: 2rem; margin-bottom: 8px; }
+  .cert-tier-name { font-family: Georgia, serif; font-size: 1.15rem; color: var(--cream); margin-bottom: 4px; }
+  .cert-tier-req { color: var(--muted); font-size: 0.88rem; }
+  .cert-tier-status { margin-top: 12px; color: var(--gold); font-weight: bold; }
+  .cert-serial { display: block; margin-top: 6px; font-family: "Courier New", monospace; font-size: 0.82rem; color: var(--cream-soft); }
 
-/* GENO + LINKS */
-.geno{margin-top:22px;background:linear-gradient(180deg,#0c0c0c,#070707);border:1px solid var(--dim);border-left:3px solid var(--gold);border-radius:12px;padding:14px 16px;font-size:.93rem;color:#d9cfb4}
-.geno b{color:var(--gold)}
-.cross-links{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.cross-links a{display:inline-block;border:1px solid var(--dim);color:#9c916f;padding:7px 14px;border-radius:8px;text-decoration:none;font-size:.83rem}
-.cross-links a:hover{border-color:var(--gold);color:var(--gold)}
-.foot{margin-top:14px;color:#7c7458;font-size:.8rem;line-height:1.5}
-.foot em{color:#a99f7e}
+  /* PATH GRID */
+  .paths-h { text-align: center; margin-top: 60px; }
+  .paths-h h2 { color: var(--cream); font-size: 2rem; margin: 0 0 8px; }
+  .paths-h p { color: var(--muted); margin: 0 auto; max-width: 44em; }
+  .paths { margin-top: 32px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 720px) { .paths { grid-template-columns: 1fr; } }
+  .path { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .path-eyebrow { font-family: "Lora", serif; letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.78rem; color: var(--gold); margin-bottom: 8px; }
+  .path h3 { color: var(--cream); font-size: 1.3rem; margin: 0 0 6px; }
+  .path .path-sub { color: var(--muted); font-size: 0.94rem; margin-bottom: 16px; }
+  .lessons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .lesson-tile { background: var(--card-hi); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; cursor: pointer; font-family: Georgia, serif; font-size: 0.95rem; color: var(--cream); transition: transform .1s, background .12s; position: relative; }
+  .lesson-tile:hover { transform: translateY(-2px); background: rgba(201,168,76,.14); }
+  .lesson-tile.done::after { content: "●"; color: var(--gold); position: absolute; top: 4px; right: 6px; font-size: 0.75rem; }
+  .path-progress { margin-top: 12px; color: var(--muted); font-size: 0.88rem; }
+  .path-progress b { color: var(--gold); }
+
+  /* LESSON MODAL */
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.94); z-index: 1000; padding: 40px 20px; overflow-y: auto; }
+  .modal.open { display: block; }
+  .modal-inner { max-width: 720px; margin: 0 auto; background: var(--card); border: 1px solid var(--gold); border-radius: 18px; padding: 36px; }
+  .modal-close { position: absolute; top: 20px; right: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 50%; width: 44px; height: 44px; color: var(--cream); font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .lesson-eyebrow { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 10px; }
+  .lesson-title { color: var(--cream); font-size: 1.7rem; margin: 0 0 20px; }
+  .teach { color: var(--cream); font-size: 1.08rem; margin-bottom: 24px; padding: 20px; background: var(--card-hi); border-left: 3px solid var(--gold); border-radius: 6px; }
+  .check-q { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .check-prompt { color: var(--cream); font-size: 1.15rem; margin-bottom: 20px; }
+  .check-opts { display: flex; flex-direction: column; gap: 10px; }
+  .check-opt { background: var(--card-hi); color: var(--cream); border: 1px solid var(--line); border-radius: 10px; padding: 14px 20px; cursor: pointer; font-family: Georgia, serif; font-size: 1rem; text-align: left; transition: background .12s; }
+  .check-opt:hover { background: rgba(201,168,76,.1); }
+  .check-opt.right { background: rgba(127,206,157,.2); border-color: var(--good); }
+  .check-opt.wrong { background: rgba(220,110,110,.15); border-color: #dc6e6e; }
+  .why { margin-top: 20px; padding: 16px; background: var(--card-hi); border-radius: 8px; color: var(--cream-soft); font-style: italic; display: none; }
+  .why.show { display: block; }
+  .lesson-actions { margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end; }
+  .btn { background: var(--gold); color: #000; border: none; padding: 12px 24px; border-radius: 10px; font-family: Georgia, serif; font-weight: bold; font-size: 1rem; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* GENO */
+  .geno { margin-top: 60px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 32px; }
+  .geno h2 { color: var(--cream); font-size: 1.6rem; margin: 0 0 10px; }
+  .geno p { color: var(--cream-soft); }
+  .geno-cta { margin-top: 16px; }
+
+  /* FOUNDATION FOOTER */
+  .foundation { margin-top: 80px; padding: 40px 0; text-align: center; border-top: 1px solid var(--line); }
+  .foundation p { color: var(--muted); margin: 4px 0; font-size: 0.94rem; }
+  .foundation .tagline { color: var(--gold); font-style: italic; font-size: 1.1rem; margin: 12px 0; }
+
+  /* TAP TO LISTEN visual cue */
+  [data-say] { cursor: pointer; }
+  [data-say]:hover::after { content: " 🔊"; color: var(--gold); font-size: 0.85em; }
+
+  /* ANNOUNCEMENT */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--card); border: 1px solid var(--gold); border-radius: 12px; padding: 16px 28px; color: var(--cream); z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,.6); opacity: 0; pointer-events: none; transition: opacity .3s; max-width: 90vw; }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 720px) {
+    h1 { font-size: 2.2rem; }
+    .lede { font-size: 1.1rem; }
+    .modal-inner { padding: 24px; }
+  }
 </style>
 </head>
-<body><script src="/return-bar.js"></script>
+<body>
+
 <div class="wrap">
-  <div class="kick">GSU · Second Chance · Adult Literacy Lab</div>
-  <h1>Adult Literacy Lab</h1>
-  <p class="sub">This lab is not for children. It is for every adult who finished school without the reading skills they were promised — and who is ready to learn the code they were never taught.</p>
-  <div class="rule"></div>
 
-  <!-- OPENING STATEMENT -->
-  <div class="opening">
-    <div class="opening-headline">You weren't bad at reading.<br><strong>You were taught wrong.</strong></div>
-    <div class="opening-body">For decades, American schools taught reading by asking children to guess words from pictures and context — a method called whole language. The science of reading shows this approach fails the majority of learners, particularly those who needed systematic phonics. If you struggled in school, the failure was not yours. It was the method's. This lab gives you the code you were never given — the same code the research says every reader needs — delivered with the dignity you deserve as an adult.</div>
-  </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">Global Sovereign University</div>
+    <h1 data-say="The Reading Room.">The Reading Room</h1>
+    <p class="lede" data-say="A free, dignity-first place for adults returning to reading. Forty-two lessons across six paths. No login. No email. No shame.">A free, dignity-first place for adults returning to reading. Forty-two lessons across six paths. No login. No email. No shame.</p>
 
-  <!-- PATH SELECTOR -->
-  <div class="path-label">Choose your starting point</div>
-  <div class="path-grid" id="pathGrid">
-    <div class="path-card active" data-path="code">
-      <div class="path-num">Path A</div>
-      <div class="path-title">The Alphabetic Code</div>
-      <div class="path-desc">Start here. Every letter represents a sound. Every sound has a letter. Learn the system from the ground up — fast, clear, no condescension.</div>
+    <!-- RATING WIDGET AT TOP per Chancellor directive -->
+    <div class="ratebox" id="ratebox">
+      <div class="rt">Rate The Reading Room. Your stars help other adult learners find it.</div>
+      <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
+      <div class="rate-meta" id="rateMeta">Loading ratings&hellip;</div>
+      <div class="rate-thanks" id="rateThanks"></div>
     </div>
-    <div class="path-card" data-path="gaps">
-      <div class="path-num">Path B</div>
-      <div class="path-title">Fix the Gaps</div>
-      <div class="path-desc">Already read but hit a wall on certain sounds? Target the specific phonics patterns that whole-language instruction leaves out.</div>
-    </div>
-    <div class="path-card" data-path="spelling">
-      <div class="path-num">Path C</div>
-      <div class="path-title">Spelling Confidence</div>
-      <div class="path-desc">The same code that unlocks reading also unlocks spelling. Work through the patterns that make English spelling make sense.</div>
-    </div>
-    <div class="path-card" data-path="fluency">
-      <div class="path-num">Path D</div>
-      <div class="path-title">Long Words</div>
-      <div class="path-desc">Can read short words but multi-syllable words stop you cold? The six syllable types give you an algorithm for any word you encounter.</div>
-    </div>
-  </div>
 
-  <!-- STAGE -->
-  <div class="stage">
-    <div>
-      <div class="canvaswrap">
-        <canvas id="c" width="560" height="440" role="img" aria-label="Mouth forming the current sound"></canvas>
+    <!-- DIGNITY BANNER -->
+    <div class="dignity">
+      <p class="dignity-lead" data-say="This is our deal. You show up. We show up. Nothing you can not do. Nothing we will not help with.">"This is our deal. You show up. We show up. Nothing you can't do. Nothing we won't help with."</p>
+      <div class="dignity-tag">The Dignity of the Deal</div>
+    </div>
+
+    <!-- INTAKE (shown to first-visit learners; hidden after completion) -->
+    <div class="intake" id="intake" style="display: none;">
+      <h2 data-say="Let us start here.">Let's start here.</h2>
+      <p class="sub" data-say="Three short questions. No right answers. This just helps us start you in a good spot.">Three short questions. No right answers. This just helps us start you in a good spot.</p>
+
+      <div class="q-block">
+        <div class="q-label">When did reading get hard for you?</div>
+        <div class="q-opts" data-q="when">
+          <div class="q-opt" data-v="always" data-say="I have always struggled with it.">I've always struggled with it</div>
+          <div class="q-opt" data-v="grew" data-say="It got harder as I grew up.">It got harder as I grew up</div>
+          <div class="q-opt" data-v="event" data-say="Something specific happened.">Something specific happened</div>
+          <div class="q-opt" data-v="untaught" data-say="I do not think I was taught well.">I don't think I was taught well</div>
+        </div>
       </div>
-      <div class="caption" id="caption" aria-live="polite"></div>
-    </div>
-    <div class="lesson-panel">
-      <div class="lesson-step" id="lessonStep">Path A · Lesson 1 of 8</div>
-      <div class="lesson-title" id="lessonTitle"></div>
-      <div class="lesson-body" id="lessonBody"></div>
-      <div class="lesson-example" id="lessonExample" style="display:none">
-        <div class="word" id="exWord"></div>
-        <div class="breakdown" id="exBreakdown"></div>
+
+      <div class="q-block">
+        <div class="q-label">What do you most want to read?</div>
+        <div class="q-opts" data-q="what">
+          <div class="q-opt" data-v="kids" data-say="Books to my kids.">Books to my kids</div>
+          <div class="q-opt" data-v="job" data-say="Job or work stuff.">Job or work stuff</div>
+          <div class="q-opt" data-v="book" data-say="A specific book I have wanted to read.">A specific book I've wanted to read</div>
+          <div class="q-opt" data-v="news" data-say="News and letters.">News and letters</div>
+          <div class="q-opt" data-v="enjoy" data-say="Just to enjoy it.">Just to enjoy it</div>
+        </div>
       </div>
-      <div class="truth-box" id="truthBox" style="display:none"></div>
-      <div class="lesson-nav">
-        <button class="lesson-btn" id="prevLesson">← Back</button>
-        <button class="lesson-btn go" id="nextLesson">Next →</button>
+
+      <div class="q-block">
+        <div class="q-label">How much time can you give this each day?</div>
+        <div class="q-opts" data-q="time">
+          <div class="q-opt" data-v="10" data-say="Ten minutes.">10 minutes</div>
+          <div class="q-opt" data-v="20" data-say="Twenty minutes.">20 minutes</div>
+          <div class="q-opt" data-v="30" data-say="Thirty minutes.">30 minutes</div>
+          <div class="q-opt" data-v="60" data-say="An hour.">An hour</div>
+        </div>
+      </div>
+
+      <button class="intake-submit" id="intakeSubmit" disabled>Start My Path</button>
+    </div>
+
+    <div class="intake-done" id="intakeDone" style="display: none;">
+      <p><b>Welcome back.</b> <span id="intakeSummary"></span></p>
+    </div>
+  </section>
+
+  <!-- WORD OF THE DAY -->
+  <section class="wotd" id="wotd">
+    <div class="wotd-eyebrow">Word of the Day</div>
+    <div class="wotd-word" id="wotdWord" data-say=""></div>
+    <div class="wotd-pron" id="wotdPron"></div>
+    <div class="wotd-mean" id="wotdMean" data-say=""></div>
+    <div class="wotd-eg" id="wotdEg" data-say=""></div>
+    <div class="wotd-root" id="wotdRoot"></div>
+  </section>
+
+  <!-- CERTIFICATE PROGRESS -->
+  <section>
+    <div class="cert-banner">
+      <h2>The Reading Room Certificate</h2>
+      <p>Earn a real, publicly-verifiable certificate as you complete paths. Bronze unlocks with Path A. Silver adds B and C. Gold means you finished all six.</p>
+      <div class="cert-tiers">
+        <div class="cert-tier" id="certBronze">
+          <div class="cert-tier-icon">🥉</div>
+          <div class="cert-tier-name">Bronze</div>
+          <div class="cert-tier-req">Complete Path A</div>
+          <div class="cert-tier-status" id="statusBronze">Locked</div>
+        </div>
+        <div class="cert-tier" id="certSilver">
+          <div class="cert-tier-icon">🥈</div>
+          <div class="cert-tier-name">Silver</div>
+          <div class="cert-tier-req">Complete Paths A + B + C</div>
+          <div class="cert-tier-status" id="statusSilver">Locked</div>
+        </div>
+        <div class="cert-tier" id="certGold">
+          <div class="cert-tier-icon">🥇</div>
+          <div class="cert-tier-name">Gold</div>
+          <div class="cert-tier-req">Complete all six paths</div>
+          <div class="cert-tier-status" id="statusGold">Locked</div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- GAP FIXER (shown on Path B) -->
-  <div id="gapSection" style="display:none">
-    <div class="gaps-title">The 10 most common phonics gaps left by whole-language instruction — tap one to work on it</div>
-    <div class="gap-grid" id="gapGrid"></div>
-  </div>
+  <!-- PATHS -->
+  <section>
+    <div class="paths-h">
+      <h2>Six Paths, Forty-Two Lessons</h2>
+      <p>Each path builds on the one before, but you can jump in wherever you like. Every lesson has a short teach and a short check. Your progress saves automatically.</p>
+    </div>
+    <div class="paths" id="pathContainer"><!-- rendered by JS --></div>
+  </section>
 
-  <!-- GAMES -->
-  <div class="modetabs">
-    <button class="modetab active" data-game="decode">Decode It</button>
-    <button class="modetab" data-game="pattern">Pattern Match</button>
-  </div>
+  <!-- GENO -->
+  <section class="geno">
+    <h2>Get GENO on your side</h2>
+    <p>GENO is the free AI tutor for Global Sovereign University. He talks with you in 83 languages, 24 hours a day, and has memorized every Foundation book. He will read something to you, explain a word, or just listen when you get frustrated. He is not a chatbot. He is a tutor.</p>
+    <div class="geno-cta">
+      <a href="#" onclick="try{window.dispatchEvent(new CustomEvent('geno:open'));}catch(e){}return false;" class="btn">Talk with GENO</a>
+    </div>
+  </section>
 
-  <div class="game-panel" id="game-decode">
-    <div class="score-row"><span>Streak <b id="dc-streak">0</b></span><span>Best <b id="dc-best">0</b></span><span class="badge" id="dc-badge">Warming up</span></div>
-    <div class="feedback" id="dc-feedback">Read the mouth position — which word does it spell?</div>
-    <div class="decode-word" id="dc-word"></div>
-    <div class="choices" id="dc-choices"></div>
-  </div>
+  <!-- FOUNDATION FOOTER -->
+  <section class="foundation">
+    <p class="tagline" data-say="A hand up, not a handout.">A hand up, not a handout.</p>
+    <p>The Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
+    <p>Eugene, Oregon · <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
+  </section>
 
-  <div class="game-panel" id="game-pattern" style="display:none">
-    <div class="score-row"><span>Streak <b id="pt-streak">0</b></span><span>Best <b id="pt-best">0</b></span><span class="badge" id="pt-badge">Warming up</span></div>
-    <div class="feedback" id="pt-feedback">Which pattern explains why this word is spelled this way?</div>
-    <div class="decode-word" id="pt-word"></div>
-    <div class="choices" id="pt-choices"></div>
-  </div>
-
-  <div class="geno">
-    <b>GENO AI Tutor</b> — a robot you can actually TALK to, in private, with no judgment. Ask anything: <em>"GENO, why can't I remember how to spell 'because'?"</em> or <em>"Can you explain what a short vowel is?"</em> or <em>"I want to practice reading slowly with you."</em> 32 languages, 24/7, free forever. No one is watching.
-  </div>
-  <div class="cross-links">
-    <a href="/second-chance">Second Chance Hub</a>
-    <a href="/the-mouth-that-makes-the-sound">The Mouth Lab</a>
-    <a href="/phoneme-forge">Phoneme Forge</a>
-    <a href="/vowel-valley">Vowel Valley</a>
-    <a href="/syllable-types">Syllable Types</a>
-    <a href="/free-tutor">Free Tutor</a>
-  </div>
-  <p class="foot">Adult Literacy Lab · Free forever from <em>Global Sovereign University</em>, a 501(c)(3) nonprofit.<br>"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant</p>
 </div>
 
-<script>
-(function(){
-"use strict";
+<!-- LESSON MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeLesson()">×</button>
+    <div class="lesson-eyebrow" id="lessonEyebrow"></div>
+    <h2 class="lesson-title" id="lessonTitle"></h2>
+    <div class="teach" id="lessonTeach"></div>
+    <div class="check-q">CHECK</div>
+    <div class="check-prompt" id="lessonPrompt"></div>
+    <div class="check-opts" id="lessonOpts"></div>
+    <div class="why" id="lessonWhy"></div>
+    <div class="lesson-actions">
+      <button class="btn ghost" onclick="closeLesson()">Close</button>
+      <button class="btn" id="lessonComplete" onclick="completeLesson()" disabled>Save & Continue</button>
+    </div>
+  </div>
+</div>
 
-// ===================== LESSON DATA =====================
-var PATHS = {
-  code: [
-    {title:"English is a code — and codes can be learned",
-     body:"Reading is not a talent. It is not something some people have and others don't. Reading is a manufactured technology — like riding a bicycle or driving a car. It requires instruction. The English writing system is a code: letters represent sounds, sounds combine into words. Once you know the code, every word becomes decodable. You are not starting from zero. You already know every sound in English — you use them every time you speak.",
-     truth:"<strong>The truth the schools didn't tell you:</strong> 80–85% of English words follow predictable phonics patterns. The code is real, it is consistent, and it can be taught in weeks — not years.",
-     phone:{s:"m",place:"Bilabial",manner:"nasal",voiced:true,lips:"closed",tip:"low",back:"low",nasal:true},
-     cap:"Every letter represents a sound your mouth already knows how to make. /m/ — lips close, voice hums through the nose."},
-    {title:"The mouth comes first — always",
-     body:"Before a letter means anything, there is a sound. Your mouth already makes every sound in English — you've been doing it your whole life. The letters are just pictures of those sounds. When you see the letter 'b', your brain should immediately trigger the sound your lips make when they pop open with voice. That connection — letter to sound — is called a grapheme-phoneme correspondence. It is the only thing you need to learn.",
-     truth:"<strong>What whole language got wrong:</strong> It asked you to look at a picture of a dog and guess the word 'dog'. That works for 500 common words. It fails completely at word 501. The code works for every word — including words you've never seen.",
-     phone:{s:"b",place:"Bilabial",manner:"stop",voiced:true,lips:"closed",tip:"low",back:"low",nasal:false},
-     cap:"/b/ — lips press together (same as /p/), then pop open with voice on. The mouth IS the code.",
-     example:{word:"bad",breakdown:"<b>b</b> = lip pop with voice · <b>a</b> = jaw drops, tongue low-forward · <b>d</b> = tongue taps ridge with voice"}},
-    {title:"Short vowels — the five sounds that unlock most words",
-     body:"Every syllable has one vowel. That vowel makes either a short sound or a long sound — and knowing which depends on the syllable type. The most common is the short vowel: the vowel is 'closed off' by a consonant after it, which shortens the sound. Five short vowels, five sounds, and they appear in the majority of single-syllable English words.",
-     truth:"<strong>The five short vowels:</strong> ă (cat) · ĕ (bed) · ĭ (sit) · ŏ (hot) · ŭ (cup). Every one of them is a sound your mouth already makes. What you may not know is that 'o' in 'son' and 'love' and 'come' makes the same short u sound — ŭ. That's not irregular. That's the code.",
-     phone:{s:"a",place:"Low front vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
-     cap:"Short a /æ/ — jaw fully open, tongue low and forward. The vowel in 'cat', 'map', 'hand'.",
-     example:{word:"cat",breakdown:"<b>c</b> = back tongue clicks · <b>a</b> = short a, jaw open · <b>t</b> = tongue taps ridge, no voice"}},
-    {title:"Long vowels — when the vowel says its own name",
-     body:"A long vowel is simply a vowel that says its own name: long a = /eɪ/ (the letter 'A'). Long e = /iː/ (the letter 'E'). Long i = /aɪ/ (the letter 'I'). Long o = /oʊ/ (the letter 'O'). Long u = /uː/ or /juː/ (the letter 'U'). Three things make a vowel go long: an open syllable (nothing after it), a silent e after a consonant, or a vowel team. Once you know these three patterns, you can always tell whether a vowel is long or short.",
-     truth:"<strong>The silent e rule:</strong> cake, bike, note, tune — the e is always silent but reaches back to make the first vowel long. Remove the e: cak, bik, not, tun — the vowel goes short immediately. The e is doing a job. It is not random.",
-     phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
-     cap:"Long e /iː/ — tongue as high and forward as possible, lips spread wide. The vowel says its own name.",
-     example:{word:"cake",breakdown:"<b>c</b> = /k/ click · <b>a</b> = long a (the silent e reaches back) · <b>k</b> = /k/ · <b>e</b> = silent, makes a long"}},
-    {title:"Digraphs — two letters, one sound",
-     body:"Some letter combinations are called digraphs: two letters that merge completely into one new sound. 'sh' is not /s/ + /h/ — it is a completely different sound made by pulling the tongue back and rounding the lips slightly. 'ch' is not /c/ + /h/ — it is a quick stop then release. 'th' appears in two forms: voiceless (thin, think) and voiced (the, this). 'ph' always makes /f/ — it comes from Greek. 'ck' always makes /k/ and only appears after a short vowel.",
-     truth:"<strong>Why 'ph' makes /f/:</strong> Because words like 'phone', 'photo', 'graph', and 'pharmacy' come from ancient Greek, where phi (φ) was the letter for /f/. When Latin scribes borrowed these words, they spelled phi as 'ph'. The code has history — and the history explains the 'exceptions'.",
-     phone:{s:"sh",place:"Post-alveolar",manner:"fricative",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
-     cap:"/ʃ/ — the sh digraph. Tongue back, lips slightly rounded forward. Two letters, one sound, one mouth position.",
-     example:{word:"phone",breakdown:"<b>ph</b> = /f/ (Greek origin) · <b>o</b> = long o (open syllable) · <b>ne</b> = VCe makes the o long"}},
-    {title:"The r-controlled vowel — why 'er', 'ir', and 'ur' all sound the same",
-     body:"When a vowel is followed by the letter r, the r takes over and changes the vowel sound completely. This is called an r-controlled vowel — or 'bossy r'. The vowel no longer makes its short or long sound. Instead it makes a new sound dominated by the r. 'ar' = /ɑːr/ (car, star). 'or' = /ɔːr/ (for, born). 'er', 'ir', and 'ur' all make the SAME sound: /ɜːr/ — as in her, bird, and burn.",
-     truth:"<strong>The er/ir/ur merger:</strong> 'her', 'bird', and 'burn' are spelled differently but sound identical in the stressed syllable. This is why 'girl' is not spelled 'gerl' or 'gurl' — they'd all work phonetically. When in doubt on these three, you have to know the word. But knowing the merger means you can always READ any of them correctly.",
-     phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
-     cap:"R-controlled vowel — tongue bunches back without touching anything, lips round. The r dominates the vowel entirely.",
-     example:{word:"her",breakdown:"<b>h</b> = breath from throat · <b>er</b> = r-controlled vowel, same sound as 'ir' in 'bird' and 'ur' in 'burn'"}},
-    {title:"Syllable division — the algorithm for long words",
-     body:"Long words stop adult readers cold — but they don't have to. Every long word is just a sequence of short syllables. And every syllable follows one of six types you already understand. The trick is knowing where to divide. Two key rules: (1) When two consonants appear between vowels (VC·CV), divide between them: rab·bit, nap·kin. (2) When one consonant appears between vowels (V·CV), usually divide before it and the first syllable is open with a long vowel: ti·ger, ba·by.",
-     truth:"<strong>Practice word: 'fantastic'</strong> — fan (closed, short a) · tas (closed, short a) · tic (closed, short i). Three closed syllables, three short vowels, completely predictable. The code works even when the word feels intimidating.",
-     phone:{s:"a",place:"Low front vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
-     cap:"Every syllable has one vowel sound. Break the word into syllables — identify the type of each one — and the vowel sound follows automatically.",
-     example:{word:"fantastic",breakdown:"<b>fan</b> = closed (short a) · <b>tas</b> = closed (short a) · <b>tic</b> = closed (short i)"}},
-    {title:"You have everything you need",
-     body:"You now have the framework: the alphabetic code, short and long vowels, digraphs, r-controlled vowels, and syllable division. These are not elementary school concepts — they are the scientific foundation of reading instruction. The most expensive reading programs in America teach exactly this sequence. You just received it free. The next step is practice: use every tool in this Arsenal, ask GENO anything, and read every day.",
-     truth:"<strong>What the research proves:</strong> Adults who receive systematic phonics instruction — even after decades of struggle — make dramatic gains in as little as 8–12 weeks of consistent practice. The brain retains plasticity for literacy acquisition throughout life. It is never too late.",
-     phone:{s:"m",place:"Bilabial",manner:"nasal",voiced:true,lips:"closed",tip:"low",back:"low",nasal:true},
-     cap:"Every word, every page, every book — the code is the same. You know the code now. Use it.",
-     example:{word:"reading",breakdown:"<b>read</b> = vowel team (ea = long e) · <b>ing</b> = closed syllable (short i)"}}
-  ],
-  gaps: [
-    {title:"The top phonics gaps left by whole language",
-     body:"Whole-language instruction left most adult readers with specific, predictable gaps. These are the patterns the method never taught directly because it relied on guessing instead of decoding. Use the gap selector below to target the exact pattern that trips you up. Each one can be closed in a single focused session.",
-     truth:"<strong>The most common gaps:</strong> vowel teams (ea, oa, ie), r-controlled vowels (er/ir/ur), silent letters (kn, wr, mb), the -ck/-tch rules, and long vowel patterns (VCe). These are not random — they are the exact patterns that guessing from context cannot teach.",
-     phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
-     cap:"Select a gap below to focus on that specific pattern."}
-  ],
-  spelling: [
-    {title:"Spelling is reading in reverse — the same code, the other direction",
-     body:"Reading is decoding: you see letters and convert them to sounds. Spelling is encoding: you hear sounds and convert them to letters. The code is identical — you just work it backwards. The key insight is that English spelling is not about memorizing words. It is about knowing the phoneme-grapheme correspondences so well that you can write any sound you hear. That is orthographic mapping — the goal of all spelling instruction.",
-     truth:"<strong>The FLOSS rule:</strong> F, L, S (and Z) double after a short vowel at the end of a one-syllable word: off, bell, class, buzz. The rule name spells itself. Once you know it, you will never again wonder whether 'off' has one f or two.",
-     phone:{s:"s",place:"Alveolar",manner:"fricative",voiced:false,lips:"spread",tip:"alveolar",back:"low",nasal:false},
-     cap:"/s/ — the hiss. This sound can be spelled 's', 'ss', 'c' (before e/i/y), 'sc', or 'st' (listen). Knowing all the spellings is the spelling code.",
-     example:{word:"class",breakdown:"<b>cl</b> = blend (two sounds) · <b>a</b> = short a (closed syllable) · <b>ss</b> = FLOSS rule (short vowel + double s)"}}
-  ],
-  fluency: [
-    {title:"Long words are just short syllables in a row",
-     body:"The six syllable types are your algorithm for every long word you encounter. Closed syllable = short vowel. Open syllable = long vowel. VCe = long vowel. Vowel team = team's sound. R-controlled = r-colored vowel. Consonant-le = unstressed /əl/. Every syllable in every English word is one of these six types. Identify the type, know the vowel, read the word.",
-     truth:"<strong>Test word: 'understanding'</strong> — un (closed) · der (r-controlled) · stand (closed) · ing (closed). Four syllables, four types, completely predictable. The word that felt impossible becomes obvious.",
-     phone:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true},
-     cap:"Long words yield to the six-type algorithm. Every syllable has one vowel sound — identify the type and the vowel follows.",
-     example:{word:"understanding",breakdown:"<b>un</b> = closed (short u) · <b>der</b> = r-controlled · <b>stand</b> = closed (short a) · <b>ing</b> = closed (short i)"}}
-  ]
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const cfg = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
 };
 
-var GAPS = [
-  {id:"ea",sym:"ea",label:"ea team",phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false},
-   note:"'ea' usually = long e (sea, eat, bean) but sometimes = short e (bread, head, dead). Context tells you which."},
-  {id:"oa",sym:"oa",label:"oa team",phone:{s:"oh",place:"Mid back glide",manner:"vowel",voiced:true,lips:"rounded",tip:"low",back:"mid",nasal:false},
-   note:"'oa' always = long o (boat, coat, road, soap). No exceptions. One of the most reliable vowel teams."},
-  {id:"kn",sym:"kn",label:"silent kn",phone:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true},
-   note:"'kn' = /n/ only. The k is always silent: knee, know, knight, knife, knot, knuckle. Old English origin — the k was once pronounced."},
-  {id:"wr",sym:"wr",label:"silent wr",phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false},
-   note:"'wr' = /r/ only. The w is always silent: write, wrist, wrong, wrap, wreck, wrestle. Old English — the w was once sounded."},
-  {id:"mb",sym:"mb",label:"silent mb",phone:{s:"m",place:"Bilabial",manner:"nasal",voiced:true,lips:"closed",tip:"low",back:"low",nasal:true},
-   note:"'mb' at word end = /m/ only. The b is silent: lamb, comb, bomb, thumb, climb, crumb, plumb."},
-  {id:"igh",sym:"igh",label:"igh pattern",phone:{s:"i",place:"Low to high glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
-   note:"'igh' = long i /aɪ/. Always. light, night, fight, high, sigh, thigh. The 'gh' is always silent in this pattern."},
-  {id:"tch",sym:"tch",label:"-tch rule",phone:{s:"ch",place:"Post-alveolar",manner:"affricate",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false},
-   note:"Short vowel + /ch/ sound at end of a syllable = always 'tch': catch, match, fetch, witch, notch, hutch. After a consonant or long vowel = 'ch': much, reach, teach."},
-  {id:"ck",sym:"ck",label:"-ck rule",phone:{s:"k",place:"Velar",manner:"stop",voiced:false,lips:"open",tip:"low",back:"velar",nasal:false},
-   note:"Short vowel + /k/ sound at end = always 'ck': back, duck, trick, block, stuck. After a consonant or long vowel = 'k': milk, desk, book, bike."},
-  {id:"schwa",sym:"ə",label:"schwa",phone:{s:"uh",place:"Mid central vowel",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"mid",nasal:false},
-   note:"The schwa /ə/ is the most common vowel in English. It's the unstressed 'uh': about, lemon, pencil, circus, doctor. Any vowel letter can spell it when unstressed."},
-  {id:"ou",sym:"ou/ow",label:"ou/ow",phone:{s:"ou",place:"Low to high back glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false},
-   note:"'ou' and 'ow' spell /aʊ/ (out, now) OR 'ow' spells /oʊ/ (low, snow). Context: 'ow' at word end or before 'n' usually = long o; elsewhere usually = /aʊ/."}
+const GID = "the-reading-room";
+
+// ================== 42 LESSONS =====================
+const LESSONS = {
+  A: {
+    name: "Alphabetic Code",
+    sub: "The sounds English letters make (not their names). Foundational.",
+    lessons: [
+      { id: "A-1", title: "Letters have names AND sounds", teach: "The letter B is called 'bee' when you name it. But when you read the word 'bat,' the letter B makes a short /b/ sound — not 'bee.' Reading uses the sounds, not the names.", prompt: "In the word 'cat,' what sound does the C make?", opts: ["'see'", "'kuh'", "'cat'"], right: 1, why: "The C in 'cat' makes a /k/ sound. Its name is 'see' but the sound in words is different." },
+      { id: "A-2", title: "Short vowel sounds", teach: "English has five short vowel sounds: /a/ as in cat, /e/ as in bed, /i/ as in sit, /o/ as in hot, /u/ as in cup. Every one is quick and closed. These five sounds unlock hundreds of the most common English words.", prompt: "Which word uses the SHORT /e/ sound?", opts: ["seat", "bed", "tree"], right: 1, why: "'Bed' uses the short /e/. 'Seat' and 'tree' use the long /ee/ sound." },
+      { id: "A-3", title: "Long vowel sounds", teach: "The long vowel sound is when the letter says its own name: /A/ as in 'cake,' /E/ as in 'me,' /I/ as in 'kite,' /O/ as in 'no,' /U/ as in 'cute.' Long vowels often show up with a silent 'e' at the end of the word.", prompt: "Which word has a LONG vowel?", opts: ["hop", "hope", "hot"], right: 1, why: "'Hope' has a long O — you hear the letter say its name. The silent E at the end makes the vowel long." },
+      { id: "A-4", title: "Consonant blends", teach: "Sometimes two consonants sit next to each other and you say both sounds quickly. Like 'st' in 'stop,' 'bl' in 'blue,' 'fr' in 'frog.' Both letters keep their sound — they just move fast.", prompt: "Which word starts with a BLEND?", opts: ["ship", "stop", "chat"], right: 1, why: "'Stop' starts with the ST blend — you hear both S and T. 'Ship' and 'chat' start with digraphs, which we cover next." },
+      { id: "A-5", title: "Consonant digraphs", teach: "Two letters, one sound. That's a digraph. 'Sh' as in 'ship' — one sound. 'Ch' as in 'chair' — one sound. 'Th' as in 'thin' — one sound. 'Wh' as in 'when.' Digraphs are not blends. They fuse.", prompt: "Which word uses a DIGRAPH?", opts: ["stop", "thin", "grip"], right: 1, why: "'Thin' starts with the TH digraph — one fused sound, not two." },
+      { id: "A-6", title: "The magic silent E", teach: "When a word ends in E and there's a vowel and one consonant before it, the E is usually silent AND it makes the earlier vowel long. 'Cap' becomes 'cape.' 'Bit' becomes 'bite.' 'Not' becomes 'note.' The E is the magic wand.", prompt: "What does silent E do to 'kit'?", opts: ["Nothing", "Makes it plural", "Makes the I long, so 'kite'"], right: 2, why: "Silent E turns 'kit' into 'kite' — the I now says its name." },
+      { id: "A-7", title: "Vowel teams", teach: "Some vowel pairs make one sound together. 'Ai' says /A/ as in 'rain.' 'Ee' says /E/ as in 'tree.' 'Oa' says /O/ as in 'boat.' 'Ie' can say /E/ as in 'field.' Two vowels walking together, the first one usually does the talking.", prompt: "What sound does 'ea' make in 'beach'?", opts: ["/eh/", "/ee/", "/ay/"], right: 1, why: "In 'beach,' EA makes the long /ee/ sound. Two vowels, one long sound." },
+      { id: "A-8", title: "R-controlled vowels", teach: "When R follows a vowel, it changes the vowel's sound. 'Ar' as in 'car.' 'Er' as in 'her.' 'Ir' as in 'bird.' 'Or' as in 'for.' 'Ur' as in 'burn.' The R is bossy — it pulls the vowel toward its own sound.", prompt: "Which word has an R-controlled vowel?", opts: ["cat", "car", "cake"], right: 1, why: "'Car' has AR — the R controls the A and gives it that /ar/ sound." }
+    ]
+  },
+  B: {
+    name: "Gap-Fixer",
+    sub: "The specific spots where beginner phonics loses adult readers. Direct and practical.",
+    lessons: [
+      { id: "B-1", title: "When C sounds like S", teach: "C usually makes /k/ (as in 'cat'). But when C is followed by E, I, or Y, it usually makes /s/. 'City,' 'cent,' 'cycle' — all soft C. If C is followed by A, O, or U, it stays /k/.", prompt: "What sound does C make in 'circle'?", opts: ["/k/", "/s/", "/ch/"], right: 1, why: "C is followed by I in 'circle,' so it makes /s/ — soft C." },
+      { id: "B-2", title: "When G sounds like J", teach: "G usually makes a hard /g/ sound (as in 'go'). But when G is followed by E, I, or Y, it often makes a /j/ sound. 'Gem,' 'giraffe,' 'gym' — all soft G. Same rule as C.", prompt: "What sound does G make in 'gentle'?", opts: ["hard /g/", "/j/", "/y/"], right: 1, why: "G is followed by E, so it usually makes /j/ — soft G." },
+      { id: "B-3", title: "Silent letters we ignore", teach: "Some letters in English are ghosts. Silent K in 'knee' and 'know.' Silent W in 'write' and 'wrong.' Silent B in 'thumb' and 'lamb.' Silent H in 'hour' and 'honest.' Don't sound them out. They're historical leftovers.", prompt: "Which letter is SILENT in 'knight'?", opts: ["K", "G", "H"], right: 0, why: "The K in 'knight' is silent. You say 'nite,' not 'kuh-nite.'" },
+      { id: "B-4", title: "The schwa sound", teach: "Every unstressed vowel in English tends to blur into a lazy 'uh' sound. That's called the schwa. In 'banana,' the a's at the start and end are schwas. In 'about,' the A is a schwa. Almost half of English syllables use it.", prompt: "Which vowel is a SCHWA in 'sofa'?", opts: ["the O", "the A at the end", "both"], right: 1, why: "The final A in 'sofa' is a schwa — pronounced 'uh,' not 'ah.'" },
+      { id: "B-5", title: "OU and OW", teach: "OU and OW often make the same sound. Both can say /ow/ as in 'shout' and 'cow.' Both can also say /oh/ as in 'shoulder' and 'show.' Context and word memory tell you which one.", prompt: "In 'cloud,' what sound does OU make?", opts: ["/oh/", "/ow/", "/oo/"], right: 1, why: "'Cloud' uses OU with the /ow/ sound. Same sound as OW in 'cow.'" },
+      { id: "B-6", title: "OO — two sounds", teach: "OO can make two different sounds. The long /oo/ as in 'moon,' 'food,' 'soon.' The short /oo/ as in 'book,' 'good,' 'look.' Your ear learns the difference with practice — but knowing there are two helps you stop feeling stuck.", prompt: "Which word uses SHORT OO?", opts: ["moon", "food", "book"], right: 2, why: "'Book' uses short OO — a quick, soft sound. 'Moon' and 'food' use long OO." },
+      { id: "B-7", title: "Y as a vowel", teach: "Y is a consonant at the start of a word (like 'yes'). But in the middle or end of a word, Y often acts as a vowel. In 'my,' Y sounds like /I/. In 'happy,' Y sounds like /E/. In 'gym,' Y sounds like /i/ short.", prompt: "In 'baby,' what sound does Y make?", opts: ["/y/", "/E/ (long ee)", "/I/ (long eye)"], right: 1, why: "Y at the end of a two-syllable word usually makes /E/ — 'baby' sounds like 'bay-bee.'" },
+      { id: "B-8", title: "Doubled consonants", teach: "When you see a doubled consonant like 'letter,' 'happy,' 'running,' the doubled letters don't make two sounds. They make one. But they DO signal that the vowel before them is short. That's their real job.", prompt: "In 'happy,' the double P tells you the A is:", opts: ["long", "short", "silent"], right: 1, why: "The double P keeps the A short. That's why 'hoping' and 'hopping' sound different — one P vs. two." },
+      { id: "B-9", title: "Common prefixes", teach: "A prefix is a piece added to the start of a word that changes its meaning. 'Un-' means 'not' (unhappy = not happy). 'Re-' means 'again' (redo = do again). 'Pre-' means 'before' (preview = view before). Learning ten prefixes unlocks thousands of words.", prompt: "What does 'un-' mean in 'unlock'?", opts: ["under", "not / opposite", "extra"], right: 1, why: "'Un-' means not or opposite. 'Unlock' means the opposite of lock." },
+      { id: "B-10", title: "Common suffixes", teach: "A suffix is a piece added to the end of a word. '-ed' makes past tense (walked, jumped). '-ing' shows action right now (walking, jumping). '-ly' turns an adjective into a description of how (quick becomes quickly). '-er' compares (fast, faster).", prompt: "What does '-ed' do in 'walked'?", opts: ["makes it plural", "makes it past tense", "makes it question"], right: 1, why: "'-ed' turns 'walk' into 'walked' — the action already happened." }
+    ]
+  },
+  C: {
+    name: "Spelling Confidence",
+    sub: "The spelling patterns that build a stable inner ruler for words.",
+    lessons: [
+      { id: "C-1", title: "I before E, except after C", teach: "The old rhyme mostly works: 'I before E, except after C, or when sounded like A, as in neighbor and weigh.' 'Believe,' 'piece,' 'chief' — I before E. 'Receive,' 'ceiling' — after C, so E before I.", prompt: "Which spelling is correct?", opts: ["recieve", "receive", "receeve"], right: 1, why: "After C, use EI, not IE. 'Receive' is correct." },
+      { id: "C-2", title: "Adding -ING to words ending in E", teach: "When a word ends in silent E and you add -ING, you drop the E. 'Make' becomes 'making,' not 'makeing.' 'Write' becomes 'writing.' 'Hope' becomes 'hoping.' The E goes away.", prompt: "How do you add -ING to 'bake'?", opts: ["bakeing", "baking", "bakking"], right: 1, why: "Drop the silent E before adding -ING. 'Bake' → 'baking.'" },
+      { id: "C-3", title: "Doubling consonants before -ING", teach: "When a short word ends in one vowel + one consonant (like 'run,' 'sit,' 'hop'), you double the last consonant before adding -ING. 'Run' → 'running.' 'Hop' → 'hopping.' The double keeps the vowel short.", prompt: "How do you add -ING to 'sit'?", opts: ["siting", "sitting", "siteing"], right: 1, why: "Short vowel + one consonant = double the consonant. 'Sit' → 'sitting.'" },
+      { id: "C-4", title: "Y to I when adding endings", teach: "When a word ends in Y and you add an ending (except -ING), the Y often changes to I. 'Happy' → 'happier,' 'happiest,' 'happily.' 'Try' → 'tried.' But keep the Y for -ING: 'trying,' 'crying.'", prompt: "What is 'happy' plus '-er'?", opts: ["happyer", "happier", "happiier"], right: 1, why: "Y at the end of a word turns to I when adding -er, -est, or -ly." },
+      { id: "C-5", title: "Plurals — S vs. ES", teach: "Most plurals just add S: 'cats,' 'dogs,' 'books.' But if the word ends in S, X, Z, CH, or SH, add ES: 'buses,' 'boxes,' 'churches,' 'wishes.' The extra E gives you room to say the plural.", prompt: "What is the plural of 'box'?", opts: ["boxs", "boxes", "boxies"], right: 1, why: "Words ending in X need ES. 'Box' → 'boxes.'" },
+      { id: "C-6", title: "Their, there, they're", teach: "Three words that sound the same but mean different things. 'Their' shows possession — their house. 'There' points to a place — over there. 'They're' is short for 'they are' — they're coming. Read the sentence to hear which one you need.", prompt: "Which is correct: '___ going to the store'?", opts: ["Their", "There", "They're"], right: 2, why: "'They're' is short for 'they are.' 'They are going to the store' → 'They're going to the store.'" }
+    ]
+  },
+  D: {
+    name: "Long-Word Syllable",
+    sub: "How to break long words into pieces so your eyes and voice can handle them.",
+    lessons: [
+      { id: "D-1", title: "Every syllable has one vowel sound", teach: "A syllable is a beat of a word. Every syllable has exactly one vowel sound (though it may use more than one vowel letter). 'Cat' has one syllable. 'Rabbit' has two: rab-bit. 'Butterfly' has three: but-ter-fly.", prompt: "How many syllables in 'basket'?", opts: ["1", "2", "3"], right: 1, why: "'Basket' has two syllables: bas-ket. Two vowel sounds, two beats." },
+      { id: "D-2", title: "Split between two consonants", teach: "When two consonants sit between two vowels, the syllable usually splits between them. 'Rabbit' splits: rab-bit. 'Mitten' splits: mit-ten. 'Napkin' splits: nap-kin. Look for the split, then read each piece.", prompt: "How would you split 'happen' into syllables?", opts: ["ha-ppen", "hap-pen", "happ-en"], right: 1, why: "Split between the two P's. 'Happen' → hap-pen." },
+      { id: "D-3", title: "Consonant + LE", teach: "Words ending in a consonant plus LE (like 'table,' 'little,' 'purple') take the consonant with the LE as its own syllable. 'Ta-ble.' 'Lit-tle.' 'Pur-ple.' The LE syllable sounds like /ul/.", prompt: "How do you split 'candle'?", opts: ["ca-ndle", "can-dle", "candl-e"], right: 1, why: "Take the D with the LE. 'Candle' → can-dle." },
+      { id: "D-4", title: "Prefix as a syllable", teach: "A prefix is almost always its own syllable. 'Un-' + 'happy' = un-hap-py. 'Re-' + 'build' = re-build. 'Pre-' + 'view' = pre-view. Cut the prefix off first, then work on the rest of the word.", prompt: "How would you split 'rewrite'?", opts: ["r-ewrite", "re-write", "rew-rite"], right: 1, why: "'Re-' is a prefix — split it off. 'Rewrite' → re-write." },
+      { id: "D-5", title: "Suffix as a syllable", teach: "A suffix is also usually its own syllable. '-ing' becomes /ing/. '-tion' becomes /shun/. '-ly' becomes /lee/. Cut the suffix, read what's left, then add the suffix back. 'Reading' → read + ing. 'Nation' → na + tion.", prompt: "How would you split 'walking'?", opts: ["wal-king", "walk-ing", "wa-lking"], right: 1, why: "'-ing' is a suffix — split it off. 'Walking' → walk-ing." },
+      { id: "D-6", title: "Attacking a long unknown word", teach: "When you hit a long word you don't know, do this: find the vowels first. Each vowel sound is one syllable. Split at prefixes and suffixes. Split between double consonants. Sound out each syllable slowly. Then say them faster together.", prompt: "First step when you meet a long unknown word?", opts: ["Guess from context", "Find the vowels", "Skip it"], right: 1, why: "Find the vowels first. Every vowel sound is one syllable. That gives you the beat count." }
+    ]
+  },
+  E: {
+    name: "Long-form Fluency",
+    sub: "Reading passages, articles, and whole documents with confidence and rhythm.",
+    lessons: [
+      { id: "E-1", title: "Reading a paragraph aloud", teach: "A paragraph has rhythm. Read to the punctuation, not to the line breaks. A comma is a small pause. A period is a full stop with a slight breath. Read a paragraph aloud slowly, then again a little faster. Speed comes from confidence, not from rushing.", prompt: "When you see a period, you should:", opts: ["skip to the next line", "take a small breath and pause", "read louder"], right: 1, why: "A period is a full stop. Small breath, small pause. Then continue." },
+      { id: "E-2", title: "Reading a longer passage in one sitting", teach: "For longer texts — a page, a chapter — set a target you know you can meet. Ten minutes. One page. Then close the book satisfied, not exhausted. Fluency grows when you close the book proud, not when you push past your limit.", prompt: "The right target for a longer passage is:", opts: ["the longest one you can force through", "one you know you can meet", "whatever the book suggests"], right: 1, why: "Confidence comes from meeting a target you set. Close proud, not exhausted." },
+      { id: "E-3", title: "Skimming vs. detailed reading", teach: "Not every word deserves the same attention. Skim to find the shape of a page: read headings, first sentences, and any bolded words. Detailed reading is slower and reserved for the parts that matter most. Skilled readers do both, choosing which as they go.", prompt: "Skimming means:", opts: ["reading every word quickly", "reading headings and first sentences to find the shape", "reading only the last paragraph"], right: 1, why: "Skimming finds the shape. It's not lazy — it's strategic." },
+      { id: "E-4", title: "Reading a news article", teach: "News articles use a pattern called the inverted pyramid: the most important information is at the top. Read the headline. Read the first paragraph. Then decide if you want the rest. You do not need to read to the end to know what happened.", prompt: "In a news article, the most important info is usually:", opts: ["at the end", "at the top", "in the middle"], right: 1, why: "News uses the inverted pyramid. Top-heavy on purpose. Read the top, decide if you want the rest." },
+      { id: "E-5", title: "Reading a story", teach: "Stories reward slower reading. Notice who is speaking, where they are, and what they feel. A story is not a race. If a paragraph moves you, read it twice. Reading a story well means letting it land, not clocking pages.", prompt: "The right pace for a story is:", opts: ["as fast as possible", "slow enough to let it land", "one page at a time no matter what"], right: 1, why: "Slower is better for stories. Let it land. Re-read what moves you." },
+      { id: "E-6", title: "Reading a document (form, contract, letter)", teach: "Documents are precision instruments. Read every word. Look for numbers, dates, and signatures. If you see a word you do not know, stop and look it up — do not guess. Reading a document you did not fully understand is worse than not reading it.", prompt: "When you meet a word you don't know in a document, you should:", opts: ["guess from context and move on", "stop and look it up", "sign anyway"], right: 1, why: "Documents demand precision. Look up any word you're not sure of. Do not guess." }
+    ]
+  },
+  F: {
+    name: "Vocabulary",
+    sub: "Building a working adult vocabulary that opens more of the world to you.",
+    lessons: [
+      { id: "F-1", title: "Root words — the seeds", teach: "Most English words grow from smaller pieces called roots. The root 'aud' means 'to hear' (audio, audience, auditorium). The root 'vis' means 'to see' (vision, visible, visitor). Learn ten roots and thousands of words start making sense.", prompt: "The root 'aud' means:", opts: ["to see", "to hear", "to build"], right: 1, why: "'Aud' means to hear. Audio, audience, auditorium — all about hearing." },
+      { id: "F-2", title: "Prefixes — pieces added to the front", teach: "A prefix is a piece attached to the start of a word that changes its meaning. 'Un-' means not (unfair = not fair). 'Re-' means again (retry = try again). 'Pre-' means before (preview = view before). 'Sub-' means under (submarine = under water).", prompt: "The prefix 'sub-' means:", opts: ["above", "under", "again"], right: 1, why: "'Sub-' means under. Submarine, submerge, subway — all involve going under." },
+      { id: "F-3", title: "Suffixes — pieces added to the end", teach: "A suffix changes what part of speech a word is or shifts its meaning. '-tion' turns actions into nouns (create → creation). '-able' means capable of (readable = capable of being read). '-ful' means full of (helpful = full of help).", prompt: "The suffix '-ful' means:", opts: ["without", "full of", "before"], right: 1, why: "'-ful' means full of. Helpful, cheerful, careful — all full of something." },
+      { id: "F-4", title: "Context clues", teach: "When you don't know a word, look at the words around it. 'The luminous star lit the whole street' — 'luminous' probably has to do with light, because it 'lit the whole street.' Context is a real tool. It won't always be right, but it will usually get you close.", prompt: "Context clues means:", opts: ["asking someone else", "using surrounding words to guess a meaning", "skipping the word"], right: 1, why: "Context clues means using nearby words to figure out an unknown one. Real, useful tool." },
+      { id: "F-5", title: "Word families", teach: "Words come in families. 'Act,' 'action,' 'active,' 'actor,' 'actress,' 'react,' 'reaction' — all from the same root. Once you know one member of a family, you can often guess the others. English is more organized than it looks.", prompt: "Which word is NOT in the same family as 'sign'?", opts: ["signal", "signature", "silent"], right: 2, why: "'Signal' and 'signature' both share the 'sign' root. 'Silent' does not." },
+      { id: "F-6", title: "Everyday vocabulary hacks", teach: "Three shortcuts. First: when you meet a new word, use it three times in the next week. It will stick. Second: keep a small list of words that surprised you. Third: read one thing above your level per week. That's how your vocabulary quietly grows.", prompt: "The fastest way to remember a new word is:", opts: ["look it up once", "use it three times in a week", "write it on paper"], right: 1, why: "Use it three times in a week. That's the shortcut that works." }
+    ]
+  }
+};
+
+// ================== 30 WORDS OF THE DAY (rotate by day of year) =====================
+const WOTD = [
+  { w: "sovereign", p: "SOV-rin", m: "Having supreme power; ruling oneself.", e: "The Foundation teaches sovereign living — the ability to stand on your own.", r: "From Old French 'soverain,' from Latin 'super' (above)." },
+  { w: "dignity", p: "DIG-nih-tee", m: "The quality of being worthy of honor and respect.", e: "The Reading Room is built on the dignity of every adult who walks in.", r: "From Latin 'dignitas,' meaning worthiness." },
+  { w: "resilient", p: "reh-ZIL-yent", m: "Able to bounce back from hardship.", e: "A resilient reader picks up the book again after a hard day.", r: "From Latin 'resilire,' to leap back." },
+  { w: "diligent", p: "DIL-ih-jent", m: "Working steadily and carefully.", e: "Diligent practice — even ten minutes a day — builds real skill.", r: "From Latin 'diligens,' careful, attentive." },
+  { w: "candid", p: "KAN-did", m: "Honest and straightforward.", e: "She gave a candid answer instead of what he wanted to hear.", r: "From Latin 'candidus,' white or pure." },
+  { w: "prudent", p: "PROO-dent", m: "Careful and thoughtful about consequences.", e: "The prudent reader looks up a word instead of guessing.", r: "From Latin 'prudens,' having foresight." },
+  { w: "eloquent", p: "EL-oh-kwent", m: "Expressing ideas clearly and beautifully.", e: "Even simple words can be eloquent when said honestly.", r: "From Latin 'eloqui,' to speak out." },
+  { w: "meticulous", p: "meh-TIK-yu-lus", m: "Very careful about details.", e: "The meticulous carpenter checks the measurement twice.", r: "From Latin 'meticulosus,' fearful, careful." },
+  { w: "gracious", p: "GRAY-shus", m: "Kind, courteous, generous.", e: "A gracious host makes every guest feel welcome.", r: "From Latin 'gratia,' favor or thanks." },
+  { w: "vigilant", p: "VIJ-ih-lent", m: "Watchful and alert.", e: "Stay vigilant when reading a contract — every word matters.", r: "From Latin 'vigilans,' keeping watch." },
+  { w: "sincere", p: "sin-SEER", m: "Genuine and honest, without pretense.", e: "A sincere apology is worth more than a fancy one.", r: "Perhaps from Latin 'sincerus,' pure, clean." },
+  { w: "tenacious", p: "teh-NAY-shus", m: "Holding firmly; not giving up.", e: "Tenacious readers finish books others put down.", r: "From Latin 'tenax,' holding fast." },
+  { w: "eminent", p: "EM-ih-nent", m: "Distinguished, respected in a field.", e: "The eminent scholar spent her life on one question.", r: "From Latin 'eminens,' standing out." },
+  { w: "prosperous", p: "PROS-per-us", m: "Thriving, doing well.", e: "A prosperous community shares its skills freely.", r: "From Latin 'prosperare,' to make happy or successful." },
+  { w: "endure", p: "en-DUR", m: "To bear hardship over time.", e: "The lesson endures because it was taught with care.", r: "From Latin 'indurare,' to make hard." },
+  { w: "sustain", p: "sus-TAIN", m: "To keep going, to support.", e: "Small daily practice sustains a lifelong reading habit.", r: "From Latin 'sustinere,' to hold up from below." },
+  { w: "genuine", p: "JEN-yoo-in", m: "Truly what it is claimed to be.", e: "A genuine friend tells you the hard truth kindly.", r: "From Latin 'genuinus,' natural, innate." },
+  { w: "profound", p: "pro-FOUND", m: "Deep in meaning or feeling.", e: "The book had a profound effect on how she saw her father.", r: "From Latin 'profundus,' deep." },
+  { w: "articulate", p: "ar-TIK-yu-lit", m: "Able to express thoughts clearly.", e: "She grew more articulate the more she read.", r: "From Latin 'articulare,' to divide into joints." },
+  { w: "steadfast", p: "STED-fast", m: "Firm, unwavering.", e: "A steadfast friend shows up on the hard days too.", r: "From Old English 'stedefaest,' firm in place." },
+  { w: "curious", p: "KYUR-ee-us", m: "Wanting to learn or know more.", e: "Curious readers ask 'why' at every page.", r: "From Latin 'curiosus,' careful, inquisitive." },
+  { w: "vibrant", p: "VY-brant", m: "Full of life and energy.", e: "The Reading Room is a vibrant place for adults returning to books.", r: "From Latin 'vibrare,' to shake." },
+  { w: "abundant", p: "uh-BUN-dent", m: "Present in large amounts.", e: "The Library offers abundant free books, no strings attached.", r: "From Latin 'abundare,' to overflow." },
+  { w: "acumen", p: "AK-yu-men", m: "Sharp, keen judgment.", e: "Financial acumen comes from practice, not just study.", r: "From Latin 'acumen,' sharpness, point." },
+  { w: "benevolent", p: "beh-NEV-oh-lent", m: "Well-meaning, kind.", e: "A benevolent teacher makes even mistakes feel safe.", r: "From Latin 'benevolens,' wishing well." },
+  { w: "cognizant", p: "KOG-nih-zent", m: "Aware, informed.", e: "Be cognizant of the words you use — they carry weight.", r: "From Latin 'cognoscens,' knowing." },
+  { w: "prevail", p: "pre-VAIL", m: "To win out, to be dominant.", e: "Patience will prevail over the hardest page.", r: "From Latin 'praevalere,' to have greater power." },
+  { w: "veracity", p: "veh-RAS-ih-tee", m: "Truthfulness.", e: "Check a source's veracity before trusting the story.", r: "From Latin 'verax,' truthful." },
+  { w: "wisdom", p: "WIZ-dum", m: "Deep understanding gained through experience.", e: "Wisdom is what remains after you forget the details.", r: "From Old English 'wisdom,' from 'wise' + '-dom.'" },
+  { w: "yield", p: "YEELD", m: "To give up; to produce.", e: "This land yields a good crop if you tend it right.", r: "From Old English 'gieldan,' to pay, repay." }
 ];
 
-// Decode game words
-var DECODE_WORDS = [
-  {w:"ship",opts:["ship","chip","shop","whip"],phone:{s:"sh",place:"Post-alveolar",manner:"fricative",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false}},
-  {w:"cake",opts:["cake","lake","cane","came"],phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false}},
-  {w:"bird",opts:["bird","burn","bard","bid"],phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false}},
-  {w:"phone",opts:["phone","bone","tone","cone"],phone:{s:"f",place:"Labiodental",manner:"fricative",voiced:false,lips:"teeth",tip:"low",back:"low",nasal:false}},
-  {w:"table",opts:["table","fable","cable","sable"],phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false}},
-  {w:"know",opts:["know","now","no","new"],phone:{s:"n",place:"Alveolar",manner:"nasal",voiced:true,lips:"open",tip:"alveolar",back:"low",nasal:true}},
-  {w:"rain",opts:["rain","rein","ran","reign"],phone:{s:"ee",place:"High front vowel",manner:"vowel",voiced:true,lips:"spread",tip:"low",back:"high",nasal:false}},
-  {w:"light",opts:["light","might","lite","liked"],phone:{s:"i",place:"Low to high glide",manner:"vowel",voiced:true,lips:"open",tip:"low",back:"low",nasal:false}},
-  {w:"nurse",opts:["nurse","purse","worse","curse"],phone:{s:"r",place:"Alveolar",manner:"approx",voiced:true,lips:"rounded",tip:"retro",back:"mid",nasal:false}},
-  {w:"catch",opts:["catch","latch","cash","cats"],phone:{s:"ch",place:"Post-alveolar",manner:"affricate",voiced:false,lips:"rounded",tip:"retro",back:"mid",nasal:false}}
-];
+// ================== APP =====================
+let db = null, auth = null, uid = null;
+let userProgress = { intake: null, lessons: {}, certificates: [] };
+let currentLesson = null, selectedAnswer = null;
 
-var PATTERN_WORDS = [
-  {w:"back",ans:"The -ck rule: short vowel + /k/ at syllable end = always 'ck'",opts:["The -ck rule","The -tch rule","Silent e rule","Open syllable"]},
-  {w:"cake",ans:"VCe (silent e): vowel + consonant + silent e = long vowel",opts:["VCe (silent e)","Vowel team","Open syllable","R-controlled"]},
-  {w:"rain",ans:"Vowel team: 'ai' always makes long a",opts:["Vowel team","VCe (silent e)","Open syllable","-ck rule"]},
-  {w:"me",ans:"Open syllable: vowel at end = long vowel says its name",opts:["Open syllable","Closed syllable","Vowel team","VCe (silent e)"]},
-  {w:"bird",ans:"R-controlled: vowel + r — the r takes over the vowel sound",opts:["R-controlled","Closed syllable","Vowel team","Open syllable"]},
-  {w:"off",ans:"FLOSS rule: short vowel + f at end of one-syllable word = 'ff'",opts:["FLOSS rule","R-controlled","VCe (silent e)","Vowel team"]},
-  {w:"table",ans:"Consonant-le: the 'ble' ending = unstressed /əl/ syllable",opts:["Consonant-le","Open syllable","Vowel team","Closed syllable"]},
-  {w:"knife",ans:"Silent kn: 'kn' always = /n/ — the k is silent",opts:["Silent kn","VCe (silent e)","Open syllable","FLOSS rule"]}
-];
+// Rating widget state
+const starsEl = document.getElementById('stars');
+const rateMetaEl = document.getElementById('rateMeta');
+const rateThxEl = document.getElementById('rateThanks');
+let myStars = 0, avgRating = 0, ratingCount = 0;
 
-// ===================== CANVAS ENGINE =====================
-var cv=document.getElementById('c'),ctx=cv.getContext('2d');
-var W=cv.width,H=cv.height;
-var fromS={},toS={},t=1,raf=null,manner="nasal",voiced=true,nasal=true,tAnim=0;
-function snap(p){return{lipGap:p.lips==="closed"?0:p.lips==="rounded"?10:p.lips==="spread"?22:p.lips==="teeth"?6:18,
-  lipRound:p.lips==="rounded"?1:p.lips==="spread"?-1:0,teeth:p.lips==="teeth"?1:0,
-  tipY:p.tip==="alveolar"?1:p.tip==="dental"?1:p.tip==="retro"?0.55:0,
-  tipX:p.tip==="dental"?1:p.tip==="retro"?-1:0,
-  backY:p.back==="velar"?1:p.back==="high"?0.85:p.back==="mid"?0.42:0,
-  jaw:(p.lips==="open"||p.manner==="vowel")?(p.back==="low"?1:0.55):0.2};}
-function lerp(a,b,k){return a+(b-a)*k;}
-function blend(){var o={};for(var k in fromS){o[k]=lerp(fromS[k],toS[k],ease(t));}return o;}
-function ease(x){return x<0?0:x>1?1:(1-Math.cos(Math.PI*x))/2;}
-function setPhone(p,animate){
-  fromS=blend();toS=snap(p);manner=p.manner;voiced=p.voiced;nasal=p.nasal||false;
-  t=animate?0:1;tAnim=0;
-  if(animate){if(raf)cancelAnimationFrame(raf);loop();}else{draw(blend());}
-}
-function loop(){t+=0.04;tAnim+=1;if(t>1)t=1;draw(blend());
-  if(t<1||manner==="fricative"||manner==="nasal"||voiced){if(t<1||tAnim<220)raf=requestAnimationFrame(loop);}}
-function draw(st){
-  ctx.clearRect(0,0,W,H);
-  var GOLD="#C9A84C",DIM="#5C502A",CREAM="#F5F1E8",TEAL="#2a7d77",pink="#caa6a0";
-  var midY=H*0.5;
-  ctx.lineWidth=2;ctx.strokeStyle="#2a2722";ctx.fillStyle="#0d0c0a";
-  ctx.beginPath();ctx.moveTo(60,40);ctx.bezierCurveTo(330,20,470,70,486,170);ctx.lineTo(516,196);ctx.lineTo(486,212);
-  ctx.bezierCurveTo(486,212,500,250,470,300);ctx.bezierCurveTo(500,360,470,400,420,410);
-  ctx.bezierCurveTo(300,440,110,430,60,380);ctx.lineTo(60,40);ctx.closePath();ctx.stroke();
-  ctx.strokeStyle=DIM;ctx.lineWidth=1.4;
-  ctx.beginPath();ctx.moveTo(300,120);ctx.bezierCurveTo(380,108,440,120,470,150);ctx.stroke();
-  var palY=midY-44;
-  ctx.strokeStyle="#7d6f3f";ctx.lineWidth=3;
-  ctx.beginPath();ctx.moveTo(150,palY+14);ctx.bezierCurveTo(280,palY-6,360,palY-2,430,palY+18);ctx.stroke();
-  ctx.beginPath();ctx.arc(432,palY+24,7,Math.PI*1.1,Math.PI*2.1);ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.stroke();
-  ctx.strokeStyle=nasal?TEAL:"#7d6f3f";ctx.lineWidth=3;
-  ctx.beginPath();
-  if(nasal){ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY-8,138,palY-26);}
-  else{ctx.moveTo(150,palY+14);ctx.quadraticCurveTo(150,palY+30,168,palY+44);}
-  ctx.stroke();
-  ctx.fillStyle=CREAM;ctx.fillRect(452,palY+28,10,18);
-  var jaw=st.jaw*30,floorY=midY+54+jaw;
-  var rootX=120,rootY=floorY-6,backX=250,backY=floorY-18-st.backY*64,bladeX=370,bladeY=floorY-14-(st.backY*30);
-  var tipX=452+st.tipX*8,tipY=floorY-10-st.tipY*52;
-  ctx.beginPath();ctx.moveTo(rootX,floorY+20);ctx.lineTo(rootX,rootY);
-  ctx.quadraticCurveTo(190,backY+6,backX,backY);ctx.quadraticCurveTo(315,bladeY-6,bladeX,bladeY);
-  ctx.quadraticCurveTo(425,tipY-4,tipX,tipY);ctx.lineTo(tipX,floorY+20);ctx.closePath();
-  var tg=ctx.createLinearGradient(0,floorY-60,0,floorY+20);tg.addColorStop(0,"#c98b86");tg.addColorStop(1,"#7d4f4c");
-  ctx.fillStyle=tg;ctx.strokeStyle="#5a3a37";ctx.lineWidth=1.5;ctx.fill();ctx.stroke();
-  ctx.fillStyle=CREAM;ctx.fillRect(452,floorY-2,10,16);
-  var lx=500,gap=st.lipGap,round=st.lipRound;
-  ctx.strokeStyle=pink;ctx.lineWidth=st.teeth>0.5?4:6;ctx.lineCap="round";
-  ctx.beginPath();ctx.moveTo(470,palY+22);ctx.quadraticCurveTo(lx+round*8,midY-gap,lx+14+round*6,midY-gap*0.5);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(456,floorY+6);ctx.quadraticCurveTo(lx+round*8,midY+gap,lx+14+round*6,midY+gap*0.5);ctx.stroke();
-  if(st.teeth>0.5){ctx.fillStyle=CREAM;ctx.fillRect(486,midY-10,9,15);}
-  var lvx=92,lvy=floorY+34,vib=voiced?(0.5+0.5*Math.sin(tAnim*0.45)):0;
-  ctx.beginPath();ctx.arc(lvx,lvy,12+vib*4,0,Math.PI*2);
-  ctx.fillStyle=voiced?"rgba(201,168,76,"+(0.38+vib*0.45)+")":"rgba(120,110,80,0.18)";ctx.fill();
-  ctx.fillStyle=voiced?GOLD:"#6f6750";ctx.font="11px Georgia";ctx.textAlign="center";ctx.fillText(voiced?"voice on":"voice off",lvx,lvy+30);
-  ctx.strokeStyle="rgba(120,200,255,0.55)";ctx.lineWidth=2;
-  if(nasal){ctx.beginPath();ctx.moveTo(150,palY);ctx.quadraticCurveTo(380,90,500,176);ctx.stroke();}
-  else if(manner==="fricative"||manner==="affricate"){var cxp=st.teeth>0.5?490:452;
-    for(var i=0;i<7;i++){var a=Math.random()*6.28,r=4+Math.random()*10;
-      ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(cxp+Math.cos(a)*r,midY+Math.sin(a)*r-2,1.4,0,6.28);ctx.fillStyle="#bfe3ff";ctx.fill();}ctx.globalAlpha=1;
-  } else if(manner==="stop"){if(t>0.78){for(var pi=0;pi<8;pi++){var pa=(pi/8)*6.28;ctx.beginPath();ctx.arc(520+Math.cos(pa)*(8+Math.random()*8),midY+Math.sin(pa)*(8+Math.random()*8),1.6,0,6.28);ctx.fillStyle="rgba(190,220,255,0.55)";ctx.fill();}}}
-  else{ctx.beginPath();ctx.moveTo(200,midY+10);ctx.quadraticCurveTo(420,midY,520,midY-2);ctx.globalAlpha=0.4;ctx.stroke();ctx.globalAlpha=1;}
-  ctx.fillStyle="#6f6750";ctx.font="11px Georgia";ctx.textAlign="left";ctx.fillText("nose",300,96);ctx.fillText("ridge",405,palY+6);ctx.fillText("tongue",250,floorY+34);
-  ctx.textAlign="right";ctx.fillText("lips",540,midY-gap-6);
+function paintStars(hover) {
+  starsEl.innerHTML = '';
+  const fill = hover || myStars || Math.round(avgRating);
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElement('span');
+    s.className = 'st' + ((i <= fill) ? ' on' : '');
+    s.textContent = '★';
+    s.setAttribute('role', 'radio');
+    s.addEventListener('mouseenter', () => paintStars(i));
+    s.addEventListener('mouseleave', () => paintStars(0));
+    s.addEventListener('click', () => rateStars(i));
+    starsEl.appendChild(s);
+  }
 }
 
-// ===================== LESSON SYSTEM =====================
-var currentPath="code";
-var currentLessonIdx=0;
-
-function loadLesson(path,idx){
-  currentPath=path;
-  var lessons=PATHS[path];
-  if(!lessons||!lessons.length)return;
-  currentLessonIdx=Math.max(0,Math.min(idx,lessons.length-1));
-  var lesson=lessons[currentLessonIdx];
-  document.getElementById('lessonStep').textContent=
-    'Path '+{code:'A',gaps:'B',spelling:'C',fluency:'D'}[path]+
-    ' · Lesson '+(currentLessonIdx+1)+' of '+lessons.length;
-  document.getElementById('lessonTitle').textContent=lesson.title;
-  document.getElementById('lessonBody').innerHTML=lesson.body;
-  var tb=document.getElementById('truthBox');
-  if(lesson.truth){tb.style.display='block';tb.innerHTML=lesson.truth;}else{tb.style.display='none';}
-  var ex=document.getElementById('lessonExample');
-  if(lesson.example){
-    ex.style.display='block';
-    document.getElementById('exWord').textContent=lesson.example.word;
-    document.getElementById('exBreakdown').innerHTML=lesson.example.breakdown;
-  } else {ex.style.display='none';}
-  if(lesson.phone)setPhone(lesson.phone,true);
-  if(lesson.cap)document.getElementById('caption').textContent=lesson.cap;
-  document.getElementById('prevLesson').style.opacity=currentLessonIdx===0?'0.3':'1';
-  document.getElementById('nextLesson').textContent=currentLessonIdx===lessons.length-1?'▶ Start again':'Next →';
-  document.getElementById('gapSection').style.display=path==='gaps'?'block':'none';
+function showRateMeta() {
+  if (ratingCount > 0) {
+    rateMetaEl.innerHTML = '<b>' + avgRating.toFixed(1) + '</b> / 5 · ' + ratingCount + (ratingCount === 1 ? ' rating' : ' ratings');
+  } else {
+    rateMetaEl.textContent = 'Be the first to rate The Reading Room.';
+  }
 }
 
-document.getElementById('prevLesson').addEventListener('click',function(){if(currentLessonIdx>0)loadLesson(currentPath,currentLessonIdx-1);});
-document.getElementById('nextLesson').addEventListener('click',function(){
-  var lessons=PATHS[currentPath];
-  if(currentLessonIdx>=lessons.length-1)loadLesson(currentPath,0);
-  else loadLesson(currentPath,currentLessonIdx+1);
-});
+function injectLD() {
+  if (ratingCount < 1) return;
+  const el = document.getElementById('course-ld');
+  if (!el) return;
+  try {
+    const o = JSON.parse(el.textContent);
+    o.aggregateRating = { "@type": "AggregateRating", "ratingValue": Number(avgRating.toFixed(2)), "ratingCount": ratingCount, "bestRating": 5, "worstRating": 1 };
+    el.textContent = JSON.stringify(o);
+  } catch (e) {}
+}
 
-// Path cards
-document.querySelectorAll('.path-card').forEach(function(card){
-  card.addEventListener('click',function(){
-    document.querySelectorAll('.path-card').forEach(function(c){c.classList.remove('active');});
-    card.classList.add('active');currentPath=card.dataset.path;loadLesson(card.dataset.path,0);
-    dcReset();ptReset();
+async function loadRating() {
+  try {
+    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
+    if (snap.exists()) {
+      const d = snap.data();
+      ratingCount = d.count || 0;
+      avgRating = ratingCount ? (d.sum || 0) / ratingCount : 0;
+    }
+  } catch (e) {}
+  try {
+    const v = await getDoc(doc(db, 'lesson_ratings', GID, 'voters', uid));
+    if (v.exists()) myStars = v.data().stars || 0;
+  } catch (e) {}
+  paintStars(0); showRateMeta(); injectLD();
+  if (myStars) rateThxEl.textContent = 'You rated this ' + myStars + ' ★. Tap to change.';
+}
+
+async function rateStars(stars) {
+  if (!db || !uid) { rateThxEl.textContent = 'Ratings save when online.'; myStars = stars; paintStars(0); return; }
+  try {
+    await runTransaction(db, async (tx) => {
+      const aggRef = doc(db, 'lesson_ratings', GID);
+      const vRef = doc(db, 'lesson_ratings', GID, 'voters', uid);
+      const a = await tx.get(aggRef);
+      const v = await tx.get(vRef);
+      let sum = a.exists() ? (a.data().sum || 0) : 0;
+      let c = a.exists() ? (a.data().count || 0) : 0;
+      if (v.exists()) { sum = sum - (v.data().stars || 0) + stars; }
+      else { sum += stars; c += 1; }
+      tx.set(aggRef, { sum, count: c }, { merge: true });
+      tx.set(vRef, { stars, at: Date.now() }, { merge: true });
+    });
+    myStars = stars;
+    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
+    if (snap.exists()) { const d = snap.data(); ratingCount = d.count || 0; avgRating = ratingCount ? (d.sum || 0) / ratingCount : 0; }
+    paintStars(0); showRateMeta(); injectLD();
+    rateThxEl.textContent = 'Thank you — your rating was saved.';
+  } catch (e) { rateThxEl.textContent = 'Could not save just now. Please try again.'; }
+}
+
+// ================== INTAKE =====================
+const intakeAnswers = { when: null, what: null, time: null };
+
+function bindIntake() {
+  document.querySelectorAll('.q-opts').forEach(group => {
+    const q = group.dataset.q;
+    group.querySelectorAll('.q-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        group.querySelectorAll('.q-opt').forEach(o => o.classList.remove('chosen'));
+        opt.classList.add('chosen');
+        intakeAnswers[q] = opt.dataset.v;
+        document.getElementById('intakeSubmit').disabled = !(intakeAnswers.when && intakeAnswers.what && intakeAnswers.time);
+      });
+    });
   });
-});
-
-// Gap grid
-var gapGrid=document.getElementById('gapGrid');
-GAPS.forEach(function(gap,idx){
-  var b=document.createElement('button');b.className='gap-btn';b.setAttribute('aria-pressed','false');
-  b.innerHTML=gap.sym+'<small>'+gap.label+'</small>';
-  b.addEventListener('click',function(){
-    document.querySelectorAll('.gap-btn').forEach(function(x){x.setAttribute('aria-pressed','false');});
-    b.setAttribute('aria-pressed','true');
-    setPhone(gap.phone,true);
-    document.getElementById('caption').textContent=gap.note;
-    document.getElementById('lessonTitle').textContent=gap.label+' — the pattern explained';
-    document.getElementById('lessonBody').textContent=gap.note;
-    document.getElementById('truthBox').style.display='none';
-    document.getElementById('lessonExample').style.display='none';
-  });
-  gapGrid.appendChild(b);
-});
-
-// ===================== DECODE GAME =====================
-var dcStreak=0,dcBest=0,dcLock=false;
-function dcReset(){dcStreak=0;dcBest=0;dcLock=false;
-  document.getElementById('dc-streak').textContent='0';document.getElementById('dc-best').textContent='0';
-  setBadge('dc-badge',0);dcNewRound();}
-function dcNewRound(){
-  dcLock=false;
-  var item=DECODE_WORDS[rnd(DECODE_WORDS.length)];
-  setPhone(item.phone,true);
-  document.getElementById('dc-word').textContent=item.w;
-  document.getElementById('dc-feedback').textContent='The mouth is showing you the key sound in "'+item.w+'". Which word matches this pattern?';
-  var opts=item.opts.slice();shuffle(opts);
-  var box=document.getElementById('dc-choices');box.innerHTML='';
-  opts.forEach(function(w){
-    var b=document.createElement('button');b.className='choice';b.textContent=w;
-    b.addEventListener('click',function(){dcGuess(w===item.w,item.w,b,box);});
-    box.appendChild(b);
-  });
-}
-function dcGuess(correct,ans,btn,box){
-  if(dcLock)return;dcLock=true;btn.classList.add(correct?'right':'wrong');
-  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===ans)ch.classList.add('right');});
-  if(correct){dcStreak++;if(dcStreak>dcBest)dcBest=dcStreak;
-    document.getElementById('dc-feedback').textContent='Correct! You decoded it. ✓';setTimeout(dcNewRound,1100);}
-  else{dcStreak=0;document.getElementById('dc-feedback').textContent='The answer was "'+ans+'". Look at the mouth position again.';setTimeout(dcNewRound,2000);}
-  document.getElementById('dc-streak').textContent=dcStreak;document.getElementById('dc-best').textContent=dcBest;setBadge('dc-badge',dcBest);
+  document.getElementById('intakeSubmit').addEventListener('click', saveIntake);
 }
 
-// ===================== PATTERN GAME =====================
-var ptStreak=0,ptBest=0,ptLock=false;
-function ptReset(){ptStreak=0;ptBest=0;ptLock=false;
-  document.getElementById('pt-streak').textContent='0';document.getElementById('pt-best').textContent='0';
-  setBadge('pt-badge',0);ptNewRound();}
-function ptNewRound(){
-  ptLock=false;
-  var item=PATTERN_WORDS[rnd(PATTERN_WORDS.length)];
-  document.getElementById('pt-word').textContent=item.w;
-  document.getElementById('pt-feedback').textContent='Which spelling rule or pattern explains why "'+item.w+'" is spelled this way?';
-  var opts=item.opts.slice();shuffle(opts);
-  var box=document.getElementById('pt-choices');box.innerHTML='';
-  opts.forEach(function(o){
-    var b=document.createElement('button');b.className='choice';b.textContent=o;
-    b.addEventListener('click',function(){ptGuess(o===item.ans,item,o,b,box);});
-    box.appendChild(b);
-  });
-}
-function ptGuess(correct,item,chosen,btn,box){
-  if(ptLock)return;ptLock=true;btn.classList.add(correct?'right':'wrong');
-  if(!correct)Array.prototype.forEach.call(box.children,function(ch){if(ch.textContent===item.ans)ch.classList.add('right');});
-  if(correct){ptStreak++;if(ptStreak>ptBest)ptBest=ptStreak;
-    document.getElementById('pt-feedback').textContent='Correct! '+item.ans+'.';setTimeout(ptNewRound,1200);}
-  else{ptStreak=0;document.getElementById('pt-feedback').textContent=item.ans+'.';setTimeout(ptNewRound,2200);}
-  document.getElementById('pt-streak').textContent=ptStreak;document.getElementById('pt-best').textContent=ptBest;setBadge('pt-badge',ptBest);
+async function saveIntake() {
+  if (!db || !uid) return;
+  const record = { ...intakeAnswers, completedAt: Date.now() };
+  try {
+    await setDoc(doc(db, 'reading_room_intakes', uid), record, { merge: true });
+    userProgress.intake = record;
+    renderIntakeState();
+    toast('Welcome. Your path is ready below.');
+  } catch (e) { toast('Could not save intake — but your session works.'); }
 }
 
-// GAME TABS
-document.querySelectorAll('.modetab').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    document.querySelectorAll('.modetab').forEach(function(b){b.classList.remove('active');});
-    btn.classList.add('active');var game=btn.dataset.game;
-    document.getElementById('game-decode').style.display=game==='decode'?'block':'none';
-    document.getElementById('game-pattern').style.display=game==='pattern'?'block':'none';
-    if(game==='decode')dcReset();else ptReset();
+function renderIntakeState() {
+  const intakeBox = document.getElementById('intake');
+  const doneBox = document.getElementById('intakeDone');
+  if (userProgress.intake && userProgress.intake.completedAt) {
+    intakeBox.style.display = 'none';
+    doneBox.style.display = 'block';
+    const map = {
+      when: { always: "You've always struggled — you're in the right place.", grew: "It got harder as you grew — we'll rebuild the foundation.", event: "Something specific happened — we're here now.", untaught: "You weren't taught properly — that's about to change." },
+      what: { kids: "reading to your kids", job: "job and work material", book: "a specific book you've wanted to read", news: "news and letters", enjoy: "reading for enjoyment" },
+      time: { "10": "10 minutes a day is plenty to start.", "20": "20 minutes a day builds real progress.", "30": "30 minutes a day is powerful.", "60": "An hour a day and you'll be surprised how fast." }
+    };
+    const w = map.when[userProgress.intake.when] || '';
+    const wh = map.what[userProgress.intake.what] || '';
+    const t = map.time[userProgress.intake.time] || '';
+    document.getElementById('intakeSummary').textContent = w + ' Your target: ' + wh + '. ' + t;
+  } else {
+    intakeBox.style.display = 'block';
+    doneBox.style.display = 'none';
+  }
+}
+
+// ================== WORD OF THE DAY =====================
+function renderWOTD() {
+  const day = Math.floor(Date.now() / 86400000) % WOTD.length;
+  const w = WOTD[day];
+  const wEl = document.getElementById('wotdWord');
+  wEl.textContent = w.w;
+  wEl.setAttribute('data-say', w.w + '. ' + w.m);
+  document.getElementById('wotdPron').textContent = '/' + w.p + '/';
+  const mEl = document.getElementById('wotdMean');
+  mEl.textContent = w.m;
+  mEl.setAttribute('data-say', w.m);
+  const eEl = document.getElementById('wotdEg');
+  eEl.textContent = '"' + w.e + '"';
+  eEl.setAttribute('data-say', w.e);
+  document.getElementById('wotdRoot').textContent = 'Origin: ' + w.r;
+}
+
+// ================== PATH RENDERING =====================
+function renderPaths() {
+  const container = document.getElementById('pathContainer');
+  container.innerHTML = '';
+  for (const pathId of ['A','B','C','D','E','F']) {
+    const path = LESSONS[pathId];
+    const done = path.lessons.filter(l => userProgress.lessons[l.id]).length;
+    const total = path.lessons.length;
+    const div = document.createElement('div');
+    div.className = 'path';
+    div.innerHTML = `
+      <div class="path-eyebrow">Path ${pathId}</div>
+      <h3>${path.name}</h3>
+      <div class="path-sub">${path.sub}</div>
+      <div class="lessons">
+        ${path.lessons.map(l => `<div class="lesson-tile ${userProgress.lessons[l.id] ? 'done' : ''}" data-lesson="${l.id}" data-path="${pathId}">${l.id}</div>`).join('')}
+      </div>
+      <div class="path-progress"><b>${done}</b> of ${total} complete</div>
+    `;
+    container.appendChild(div);
+  }
+  container.querySelectorAll('.lesson-tile').forEach(tile => {
+    tile.addEventListener('click', () => openLesson(tile.dataset.path, tile.dataset.lesson));
   });
-});
+  updateCertificates();
+}
 
-function rnd(n){return Math.floor(Math.random()*n);}
-function shuffle(a){for(var i=a.length-1;i>0;i--){var j=rnd(i+1),tmp=a[i];a[i]=a[j];a[j]=tmp;}}
-function setBadge(id,best){var bd=document.getElementById(id),label,plat=false;
-  if(best>=50){label="Platinum";plat=true;}else if(best>=25)label="Gold";
-  else if(best>=12)label="Silver";else if(best>=5)label="Bronze";else label="Warming up";
-  bd.textContent=label;bd.className="badge"+(plat?" plat":"");}
+// ================== LESSON MODAL =====================
+window.openLesson = function(pathId, lessonId) {
+  const path = LESSONS[pathId];
+  const lesson = path.lessons.find(l => l.id === lessonId);
+  if (!lesson) return;
+  currentLesson = { pathId, lesson };
+  selectedAnswer = null;
+  document.getElementById('lessonEyebrow').textContent = `Path ${pathId} · Lesson ${lesson.id}`;
+  document.getElementById('lessonTitle').textContent = lesson.title;
+  const teachEl = document.getElementById('lessonTeach');
+  teachEl.textContent = lesson.teach;
+  teachEl.setAttribute('data-say', lesson.teach);
+  const promptEl = document.getElementById('lessonPrompt');
+  promptEl.textContent = lesson.prompt;
+  promptEl.setAttribute('data-say', lesson.prompt);
+  const optsEl = document.getElementById('lessonOpts');
+  optsEl.innerHTML = '';
+  lesson.opts.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'check-opt';
+    btn.textContent = opt;
+    btn.setAttribute('data-say', opt);
+    btn.addEventListener('click', () => answerCheck(i, btn));
+    optsEl.appendChild(btn);
+  });
+  document.getElementById('lessonWhy').classList.remove('show');
+  document.getElementById('lessonComplete').disabled = true;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
 
-// INIT
-loadLesson("code",0);
-dcReset();
+window.closeLesson = function() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+  currentLesson = null;
+};
 
-})();
+function answerCheck(idx, btn) {
+  if (selectedAnswer !== null) return;
+  selectedAnswer = idx;
+  const right = currentLesson.lesson.right;
+  document.querySelectorAll('.check-opt').forEach((el, i) => {
+    if (i === right) el.classList.add('right');
+    else if (i === idx) el.classList.add('wrong');
+  });
+  const why = document.getElementById('lessonWhy');
+  why.textContent = currentLesson.lesson.why;
+  why.classList.add('show');
+  document.getElementById('lessonComplete').disabled = false;
+}
+
+window.completeLesson = async function() {
+  if (!currentLesson) return;
+  const { pathId, lesson } = currentLesson;
+  const wasRight = selectedAnswer === lesson.right;
+  userProgress.lessons[lesson.id] = { completedAt: Date.now(), correct: wasRight, pathId };
+  if (db && uid) {
+    try { await setDoc(doc(db, 'reading_room_progress', uid), { lessons: userProgress.lessons }, { merge: true }); }
+    catch (e) {}
+  }
+  closeLesson();
+  renderPaths();
+  toast('Lesson ' + lesson.id + ' saved.');
+};
+
+// ================== CERTIFICATES =====================
+function pathComplete(pathId) {
+  return LESSONS[pathId].lessons.every(l => userProgress.lessons[l.id]);
+}
+
+async function issueCertificate(level) {
+  if (userProgress.certificates.some(c => c.level === level)) return;
+  const now = new Date();
+  const serial = 'RR-' + now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+  const cert = { level, serial, issuedAt: Date.now() };
+  userProgress.certificates.push(cert);
+  if (db && uid) {
+    try {
+      await setDoc(doc(db, 'reading_room_certificates', serial), { level, serial, issuedAt: Date.now(), uid }, { merge: true });
+      await setDoc(doc(db, 'reading_room_progress', uid), { certificates: userProgress.certificates }, { merge: true });
+    } catch (e) {}
+  }
+  toast('★ ' + level + ' Certificate earned! Serial ' + serial);
+}
+
+function updateCertificates() {
+  const bronzeReady = pathComplete('A');
+  const silverReady = bronzeReady && pathComplete('B') && pathComplete('C');
+  const goldReady = silverReady && pathComplete('D') && pathComplete('E') && pathComplete('F');
+
+  const setTierState = (id, ready, statusId, level) => {
+    const box = document.getElementById(id);
+    const status = document.getElementById(statusId);
+    const cert = userProgress.certificates.find(c => c.level === level);
+    if (cert) {
+      box.classList.add('earned');
+      status.innerHTML = 'EARNED<span class="cert-serial">' + cert.serial + '</span>';
+    } else if (ready) {
+      box.classList.add('earned');
+      status.textContent = 'Ready to claim';
+      issueCertificate(level);
+    } else {
+      status.textContent = 'Locked';
+    }
+  };
+  setTierState('certBronze', bronzeReady, 'statusBronze', 'Bronze');
+  setTierState('certSilver', silverReady, 'statusSilver', 'Silver');
+  setTierState('certGold', goldReady, 'statusGold', 'Gold');
+}
+
+// ================== TAP TO LISTEN =====================
+function bindTapToListen() {
+  document.body.addEventListener('click', (ev) => {
+    const el = ev.target.closest('[data-say]');
+    if (!el || el.tagName === 'INPUT' || el.classList.contains('q-opt') || el.classList.contains('check-opt') || el.classList.contains('lesson-tile') || el.classList.contains('modal-close') || el.closest('.btn') || el.tagName === 'BUTTON') return;
+    if (!('speechSynthesis' in window)) return;
+    const text = el.dataset.say || el.textContent;
+    if (!text) return;
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  });
+}
+
+// ================== TOAST =====================
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ================== LOAD USER =====================
+async function loadUserProgress() {
+  if (!db || !uid) return;
+  try {
+    const snap = await getDoc(doc(db, 'reading_room_progress', uid));
+    if (snap.exists()) {
+      const d = snap.data();
+      userProgress.lessons = d.lessons || {};
+      userProgress.certificates = d.certificates || [];
+    }
+    const intakeSnap = await getDoc(doc(db, 'reading_room_intakes', uid));
+    if (intakeSnap.exists()) userProgress.intake = intakeSnap.data();
+  } catch (e) {}
+  renderIntakeState();
+  renderPaths();
+}
+
+// ================== BOOT =====================
+try {
+  const app = getApps().length ? getApp() : initializeApp(cfg);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  paintStars(0);
+  onAuthStateChanged(auth, (u) => {
+    if (u) {
+      uid = u.uid;
+      loadRating();
+      loadUserProgress();
+    }
+  });
+  signInAnonymously(auth).catch(() => {
+    rateMetaEl.textContent = 'Ratings are unavailable offline.';
+    paintStars(0);
+    renderIntakeState();
+    renderPaths();
+  });
+} catch (e) {
+  rateMetaEl.textContent = 'Ratings are unavailable offline.';
+  paintStars(0);
+  renderIntakeState();
+  renderPaths();
+}
+
+bindIntake();
+renderWOTD();
+bindTapToListen();
+renderPaths();
+
 </script>
+
+<!-- GENO WIDGET (unpinned unpkg loader + elevenlabs-convai + footer geno:open) -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<script>
+window.addEventListener('geno:open', function() {
+  try {
+    var w = document.querySelector('elevenlabs-convai');
+    if (w && w.shadowRoot) {
+      var btn = w.shadowRoot.querySelector('button');
+      if (btn) btn.click();
+    }
+  } catch (e) {}
+});
+</script>
+
 </body>
 </html>
