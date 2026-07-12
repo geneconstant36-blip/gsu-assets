@@ -3,191 +3,664 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Barter Up — Trade Your Way Up | The Sovereign Barter | GSU</title>
-<meta name="description" content="Play Barter Up: start with a spare hour and trade your way up to your own workshop. A free game from Global Sovereign University's Sovereign Barter economy.">
-<meta property="og:title" content="Barter Up — Trade Your Way Up | GSU">
-<meta property="og:description" content="Start with a spare hour. Trade up a ten-rung ladder to your own workshop. Free to play.">
+<title>The Sovereign Barter — Trade the Oldest Economy on Earth | GSU</title>
+<meta name="description" content="A free game that teaches you to read the deal. Climb from a spare hour to a workshop of your own by mastering the Coincidence of Wants. Companion to Dr. Gene A Constant's book The World Climb.">
+<meta property="og:title" content="The Sovereign Barter — a game that teaches the deal | GSU">
+<meta property="og:description" content="The oldest economy on earth. Play, learn the Dignity of the Deal, earn a certificate.">
 <meta property="og:type" content="website">
-<style>html,body{margin:0;background:#000}</style>
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/barter-up.html">
+
+<script type="application/ld+json" id="course-ld">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "The Sovereign Barter",
+  "description": "A free interactive game teaching the mechanics of barter through information asymmetry, the Coincidence of Wants, and the Dignity of the Deal. Companion to The World Climb by Dr. Gene A Constant.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "sameAs": "https://globalsovereignuniversity.org"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "courseWorkload": "PT12M",
+    "instructor": { "@type": "Person", "name": "Dr. Gene A Constant" }
+  },
+  "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD", "category": "Free" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:#000000; --card:#000000; --gold:#C9A84C; --gold-soft:#B08A2A;
+    --cream:#F5F1E8; --cream-soft:#d8d3c8; --muted:#8a8580; --good:#7fce9d; --warn:#e4a54a; --bad:#d47a5c;
+    --line:rgba(201,168,76,.22);
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--cream); font-family:Georgia,"Times New Roman",serif; line-height:1.55; }
+  a { color:var(--gold); text-decoration:none; }
+  a:hover { text-decoration:underline; text-underline-offset:4px; }
+  .wrap { max-width:960px; margin:0 auto; padding:0 22px; }
+
+  /* HERO */
+  .hero { padding:56px 0 32px; border-bottom:1px solid var(--line); }
+  .eyebrow { font-family:"Lora",serif; font-size:.82rem; letter-spacing:.24em; color:var(--gold); text-transform:uppercase; margin-bottom:14px; }
+  h1 { font-size:3rem; margin:0 0 12px; line-height:1.05; color:var(--cream); }
+  .lede { font-size:1.2rem; color:var(--cream-soft); font-style:italic; max-width:44em; }
+
+  /* RATING WIDGET */
+  .ratebox { margin-top:28px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; text-align:center; }
+  .ratebox .rt { font-family:"Lora",serif; font-size:1.06rem; color:var(--cream); margin-bottom:12px; }
+  .stars { display:inline-flex; gap:7px; font-size:1.9rem; line-height:1; cursor:pointer; user-select:none; }
+  .stars .st { color:#3a3a3a; transition:transform .12s,color .12s; }
+  .stars .st.on { color:var(--gold); }
+  .stars .st:hover { transform:scale(1.12); }
+  .rate-meta { margin-top:10px; font-size:.92rem; color:var(--muted); }
+  .rate-meta b { color:var(--gold); }
+  .rate-thanks { margin-top:8px; font-size:.86rem; color:var(--good); min-height:1.1em; }
+
+  /* BOOK PLACEMENT (per standing directive: cover left, text right, hyperlinked to Amazon) */
+  .book { display:grid; grid-template-columns:180px 1fr; gap:32px; align-items:center; margin:44px 0; padding:32px; background:var(--card); border:1px solid var(--line); border-radius:18px; }
+  @media (max-width:640px) { .book { grid-template-columns:1fr; text-align:center; } .book-cover { margin:0 auto; } }
+  .book-cover { width:180px; height:auto; border:1px solid var(--line); border-radius:4px; box-shadow:0 8px 32px rgba(0,0,0,0.6); }
+  .book-eyebrow { color:var(--gold); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; margin-bottom:10px; }
+  .book-title { color:var(--cream); font-size:1.6rem; margin:0 0 6px; }
+  .book-sub { color:var(--cream-soft); font-style:italic; margin:0 0 14px; }
+  .book-body { color:var(--cream); font-size:1rem; margin:0 0 16px; }
+  .book-cta { display:inline-block; padding:12px 24px; background:var(--gold); color:#000; font-weight:bold; border-radius:8px; }
+  .book-cta:hover { text-decoration:none; background:#d4b866; }
+
+  /* GAME */
+  .game { margin:44px 0; }
+  .game-title { color:var(--cream); font-size:2rem; margin:0 0 8px; }
+  .game-sub { color:var(--muted); font-size:1rem; margin:0 0 24px; max-width:46em; }
+
+  .game-hud { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }
+  @media (max-width:640px) { .game-hud { grid-template-columns:repeat(2,1fr); } }
+  .hud-cell { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; text-align:center; }
+  .hud-lab { font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+  .hud-val { color:var(--gold); font-size:1.3rem; font-weight:bold; font-family:"Lora",serif; }
+  .hud-cell.dignity .hud-val { color:var(--good); }
+  .hud-cell.dignity.warn .hud-val { color:var(--warn); }
+  .hud-cell.dignity.bad .hud-val { color:var(--bad); }
+
+  .ladder { display:flex; gap:6px; margin:14px 0 24px; justify-content:center; flex-wrap:wrap; }
+  .rung { width:28px; height:10px; border-radius:4px; background:#1a1a1a; border:1px solid var(--line); position:relative; }
+  .rung.on { background:var(--gold); border-color:var(--gold); }
+
+  .holding { background:linear-gradient(180deg, rgba(201,168,76,0.08), #000); border:1px solid var(--gold); border-radius:16px; padding:26px; margin-bottom:20px; text-align:center; }
+  .holding-lab { color:var(--muted); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; margin-bottom:8px; }
+  .holding-em { font-size:3.2rem; line-height:1; margin-bottom:8px; }
+  .holding-nm { color:var(--gold); font-family:"Lora",serif; font-size:1.4rem; }
+
+  .offer-row-label { color:var(--cream-soft); text-align:center; font-style:italic; margin:0 0 12px; font-size:.98rem; }
+
+  .offers { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+  @media (max-width:640px) { .offers { grid-template-columns:1fr; } }
+  .offer { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 14px; text-align:center; cursor:pointer; transition:transform .12s, border-color .12s, box-shadow .12s; position:relative; }
+  .offer:hover { transform:translateY(-3px); border-color:var(--gold); box-shadow:0 8px 24px rgba(0,0,0,0.5); }
+  .offer .offer-em { font-size:2.4rem; line-height:1; margin-bottom:10px; }
+  .offer .offer-nm { color:var(--cream); font-weight:bold; margin-bottom:8px; font-size:.98rem; }
+  .offer .offer-signal { color:var(--muted); font-size:.78rem; font-style:italic; letter-spacing:.04em; }
+  .offer .offer-revealed { display:none; margin-top:10px; padding:8px; background:rgba(201,168,76,0.1); border-radius:6px; font-size:.78rem; color:var(--gold); }
+  .offer.revealed .offer-revealed { display:block; }
+  .offer.revealed { border-color:var(--gold); }
+  .offer.revealed.desperate { border-color:var(--bad); }
+  .offer.revealed.desperate .offer-revealed { color:var(--bad); background:rgba(212,122,92,0.1); }
+
+  .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:16px; }
+  .btn { background:var(--gold); color:#000; border:none; padding:12px 22px; border-radius:8px; font-family:Georgia,serif; font-weight:bold; cursor:pointer; font-size:.94rem; transition:transform .12s; }
+  .btn:hover:not(:disabled) { transform:translateY(-2px); }
+  .btn.ghost { background:transparent; color:var(--gold); border:1px solid var(--gold); }
+  .btn:disabled { opacity:.4; cursor:not-allowed; }
+  .btn-sub { display:block; font-size:.72rem; font-weight:normal; margin-top:2px; letter-spacing:.08em; }
+
+  .toast { min-height:24px; text-align:center; color:var(--gold); font-family:"Lora",serif; font-style:italic; margin:10px 0 16px; }
+
+  /* DIGNITY EXPLAINER */
+  .dignity-explainer { margin-top:24px; padding:20px; background:rgba(127,206,157,0.04); border-left:3px solid var(--good); border-radius:6px; font-size:.94rem; color:var(--cream-soft); }
+  .dignity-explainer b { color:var(--good); }
+
+  /* ENDGAME */
+  .endgame { display:none; text-align:center; padding:40px 20px; }
+  .endgame.show { display:block; }
+  .end-em { font-size:4rem; margin-bottom:8px; }
+  .end-title { color:var(--gold); font-size:2.2rem; margin:0 0 8px; }
+  .end-cert { color:var(--cream); font-family:"Lora",serif; font-size:1.3rem; margin:0 0 20px; font-style:italic; }
+  .end-serial { color:var(--cream-soft); font-family:"Courier New",monospace; font-size:.95rem; margin-bottom:24px; }
+  .end-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:520px; margin:24px auto; }
+  @media (max-width:520px) { .end-stats { grid-template-columns:1fr; } }
+  .end-stat { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  .end-stat-lab { font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  .end-stat-val { color:var(--gold); font-size:1.4rem; font-weight:bold; }
+  .end-lesson { margin:32px 0 24px; padding:24px; background:rgba(201,168,76,0.06); border:1px solid var(--line); border-radius:14px; text-align:left; color:var(--cream); font-family:"Lora",serif; font-size:1.05rem; line-height:1.7; }
+  .end-lesson h3 { color:var(--gold); font-family:Georgia,serif; font-size:1.2rem; margin:0 0 12px; }
+  .end-lesson p { margin:0 0 10px; }
+
+  /* DIGNITY / TEACHING */
+  .teaching { margin:60px 0; padding:32px; background:var(--card); border:1px solid var(--line); border-radius:18px; }
+  .teaching h2 { color:var(--cream); font-size:1.7rem; margin:0 0 14px; }
+  .teaching p { color:var(--cream-soft); margin:0 0 14px; }
+  .teaching .pull { color:var(--gold); font-family:"Lora",serif; font-style:italic; font-size:1.15rem; padding:14px 20px; border-left:3px solid var(--gold); background:rgba(201,168,76,0.04); border-radius:0 8px 8px 0; margin:20px 0; }
+
+  /* GENO PANEL */
+  .geno { margin-top:60px; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:32px; }
+  .geno h2 { color:var(--cream); font-size:1.6rem; margin:0 0 10px; }
+  .geno-prompts { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+  .prompt-chip { background:rgba(201,168,76,0.1); border:1px solid var(--line); border-radius:20px; padding:10px 18px; cursor:pointer; color:var(--cream); font-size:.95rem; }
+  .prompt-chip:hover { background:rgba(201,168,76,0.2); }
+
+  /* NINTH BODY / CLOSING */
+  .closing { margin-top:80px; padding:60px 40px; background:radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, #000 70%); border-top:1px solid var(--line); border-bottom:1px solid var(--line); text-align:center; }
+  .closing-eyebrow { font-family:"Lora",serif; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); font-size:.85rem; margin-bottom:20px; }
+  .closing-body { color:var(--cream); font-family:"Lora",serif; font-style:italic; font-size:1.35rem; line-height:1.55; max-width:34em; margin:0 auto 20px; }
+  .closing-attribution { color:var(--muted); font-size:.94rem; }
+
+  /* FOOTER */
+  .foundation { margin-top:80px; padding:40px 0; text-align:center; border-top:1px solid var(--line); }
+  .foundation p { color:var(--muted); margin:4px 0; font-size:.94rem; }
+  .foundation .tagline { color:var(--gold); font-style:italic; font-size:1.1rem; margin:12px 0; }
+
+  .center-cta { display:block; text-align:center; margin:16px 0; }
+</style>
 </head>
 <body>
-<section id="gsu-barterup">
-<style>
-#gsu-barterup{--gold:#C9A84C;--gb:#FFE9A8;--cream:#F5F1E8;--teal:#1A8B7F;--dim:#cfc9ba;--mut:#8a8578;background:#000;color:var(--cream);font-family:Georgia,'Times New Roman',serif;line-height:1.55;width:100%;border-bottom:1px solid rgba(201,168,76,.18)}
-#gsu-barterup *{box-sizing:border-box}
-#gsu-barterup .bu-wrap{max-width:760px;margin:0 auto;padding:56px 22px 64px}
-#gsu-barterup .bu-eyebrow{text-align:center;text-transform:uppercase;letter-spacing:3px;font-size:.72rem;color:var(--teal);font-weight:700;margin-bottom:12px;font-family:Arial,Helvetica,sans-serif}
-#gsu-barterup .bu-title{text-align:center;color:var(--gold);font-size:2.3rem;font-weight:700;margin:0 0 8px;line-height:1.1}
-#gsu-barterup .bu-lede{text-align:center;color:var(--dim);font-size:1rem;max-width:560px;margin:0 auto 6px}
-#gsu-barterup .bu-note{text-align:center;color:var(--mut);font-size:.76rem;font-family:Arial,Helvetica,sans-serif;letter-spacing:.4px;margin:0 auto 26px}
-#gsu-barterup .bu-stats{display:flex;justify-content:center;gap:26px;margin-bottom:16px;font-family:Arial,Helvetica,sans-serif}
-#gsu-barterup .bu-stat{text-align:center}
-#gsu-barterup .bu-stat b{display:block;color:var(--gold);font-size:1.5rem;font-weight:800;line-height:1}
-#gsu-barterup .bu-stat span{font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut)}
-#gsu-barterup .bu-ladder{display:flex;align-items:center;gap:5px;justify-content:center;margin:0 0 22px;flex-wrap:wrap}
-#gsu-barterup .bu-rung{width:22px;height:8px;border-radius:4px;background:#1c1c1c;border:1px solid rgba(201,168,76,.22)}
-#gsu-barterup .bu-rung.on{background:var(--gold);border-color:var(--gold)}
-#gsu-barterup .bu-hold{text-align:center;background:linear-gradient(180deg,#0f0f0f,#070707);border:1px solid rgba(201,168,76,.4);border-radius:16px;padding:22px;margin:0 auto 8px;max-width:340px}
-#gsu-barterup .bu-hold .lab{font-family:Arial,Helvetica,sans-serif;font-size:.66rem;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
-#gsu-barterup .bu-hold .em{font-size:3rem;line-height:1;margin-bottom:6px}
-#gsu-barterup .bu-hold .nm{color:var(--gb);font-size:1.35rem;font-weight:700}
-#gsu-barterup .bu-prompt{text-align:center;color:var(--dim);font-size:.92rem;margin:18px 0 12px;font-style:italic}
-#gsu-barterup .bu-offers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-#gsu-barterup .bu-offer{cursor:pointer;background:linear-gradient(180deg,#0e0e0e,#080808);border:1px solid rgba(201,168,76,.28);border-radius:13px;padding:18px 10px;text-align:center;transition:transform .12s,border-color .12s,box-shadow .12s}
-#gsu-barterup .bu-offer:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 10px 24px rgba(0,0,0,.5)}
-#gsu-barterup .bu-offer .oe{font-size:2rem;line-height:1;margin-bottom:8px}
-#gsu-barterup .bu-offer .on{color:var(--cream);font-size:.9rem;font-weight:700;line-height:1.25}
-#gsu-barterup .bu-actions{text-align:center}
-#gsu-barterup .bu-btn{font-family:Arial,Helvetica,sans-serif;cursor:pointer;font-weight:800;letter-spacing:.5px;border-radius:9px;padding:11px 22px;font-size:.82rem;border:1px solid var(--gold);background:transparent;color:var(--gold);transition:.15s}
-#gsu-barterup .bu-btn:hover:not(:disabled){background:var(--gold);color:#1a1404}
-#gsu-barterup .bu-btn:disabled{opacity:.35;cursor:not-allowed}
-#gsu-barterup .bu-btn.solid{background:var(--gold);color:#1a1404}
-#gsu-barterup .bu-toast{text-align:center;min-height:22px;color:var(--teal);font-family:Arial,Helvetica,sans-serif;font-size:.82rem;margin-top:14px;font-weight:700}
-#gsu-barterup .bu-win{text-align:center;padding:16px 0}
-#gsu-barterup .bu-win .em{font-size:3.4rem}
-#gsu-barterup .bu-win h3{color:var(--gold);font-size:1.7rem;margin:6px 0}
-#gsu-barterup .bu-win p{color:var(--dim);margin:4px 0 6px}
-#gsu-barterup .bu-win .score{color:var(--gb);font-size:2.6rem;font-weight:800;font-family:Arial,Helvetica,sans-serif;line-height:1.1}
-#gsu-barterup .bu-hide{display:none}
-@media(max-width:560px){#gsu-barterup .bu-title{font-size:1.9rem}#gsu-barterup .bu-offer .on{font-size:.82rem}}
-</style>
 
-<div class="bu-wrap">
-  <div class="bu-eyebrow">The Sovereign Barter &middot; Play</div>
-  <h1 class="bu-title">Barter Up</h1>
-  <p class="bu-lede">Start with a single spare hour. Trade your way up the ladder &mdash; all the way to a workshop of your own. Read the value, make the deal, and climb in as few trades as you can.</p>
-  <p class="bu-note">Just for fun &mdash; nothing to unlock, nothing to certify. The oldest game in commerce.</p>
+<div class="wrap">
 
-  <div id="bu-game">
-    <div class="bu-stats">
-      <div class="bu-stat"><b id="bu-trades">0</b><span>Trades</span></div>
-      <div class="bu-stat"><b id="bu-rank">1/10</b><span>Rung</span></div>
-      <div class="bu-stat"><b id="bu-best">&mdash;</b><span>Best Deal</span></div>
-    </div>
-    <div class="bu-ladder" id="bu-ladder"></div>
-    <div class="bu-hold">
-      <div class="lab">You're holding</div>
-      <div class="em" id="bu-hold-em">&#8987;</div>
-      <div class="nm" id="bu-hold-nm">A Spare Hour</div>
-    </div>
-    <p class="bu-prompt">Three traders will deal with you. Take the best offer &mdash; or haggle for a fresh three.</p>
-    <div class="bu-offers" id="bu-offers"></div>
-    <div class="bu-actions">
-      <button class="bu-btn" id="bu-haggle">&#9851; Haggle (reroll offers)</button>
-    </div>
-    <div class="bu-toast" id="bu-toast"></div>
-  </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">Global Sovereign University · A Companion to The World Climb</div>
+    <h1>The Sovereign Barter</h1>
+    <p class="lede">Learn to read the deal. Climb from a spare hour to a workshop of your own by seeing what other people actually need — and honoring it. The oldest economy on earth, taught as a game.</p>
 
-  <div id="bu-winscreen" class="bu-win bu-hide">
-    <div class="em">&#127963;&#65039;</div>
-    <h3>You built your own workshop!</h3>
-    <p>You climbed from a spare hour to a trade of your own in</p>
-    <div class="score"><span id="bu-final-trades">0</span> trades</div>
-    <p>Deal Score: <b id="bu-final-score" style="color:var(--gb)">0</b></p>
-    <p id="bu-newbest" class="bu-hide" style="color:var(--teal);font-weight:700;font-family:Arial,sans-serif">&#9733; New best deal!</p>
-    <div style="margin-top:16px"><button class="bu-btn solid" id="bu-again">Play Again</button></div>
-  </div>
+    <!-- RATING WIDGET AT TOP -->
+    <div class="ratebox" id="ratebox">
+      <div class="rt">Rate The Sovereign Barter. Your stars help other sovereigns find it.</div>
+      <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
+      <div class="rate-meta" id="rateMeta">Loading ratings…</div>
+      <div class="rate-thanks" id="rateThanks"></div>
+    </div>
+  </section>
+
+  <!-- BOOK PLACEMENT (per standing directive) -->
+  <section class="book">
+    <a href="https://www.amazon.com/dp/B0H8LVJX17?tag=gsu2026-20" target="_blank" rel="noopener">
+      <img src="https://m.media-amazon.com/images/P/B0H8LVJX17.01._SCLZZZZZZZ_.jpg" alt="The World Climb — book cover" class="book-cover">
+    </a>
+    <div>
+      <div class="book-eyebrow">The Book Behind the Game</div>
+      <h2 class="book-title">The World Climb</h2>
+      <p class="book-sub">You Are Not Broke. You Are Un-Traded.</p>
+      <p class="book-body">Fourteen chapters on the oldest economy on Earth — the deal that pre-dates money. Skill as currency, trust as credit, teaching as trade. Chapter 13, <em>The Dignity of the Deal</em>, is the ethic that governs every barter that lasts. The book is what this game rehearses.</p>
+      <a href="https://www.amazon.com/dp/B0H8LVJX17?tag=gsu2026-20" class="book-cta" target="_blank" rel="noopener">Get on Amazon →</a>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section class="game" id="gameSection">
+    <h2 class="game-title">Play the Deal</h2>
+    <p class="game-sub">Three counterparties will approach you each turn. Each is offering something and wants something in exchange. Read them. Choose. Climb ten rungs — from a spare hour to a workshop of your own.</p>
+
+    <div class="game-hud">
+      <div class="hud-cell"><div class="hud-lab">Rung</div><div class="hud-val" id="hudRung">1 / 10</div></div>
+      <div class="hud-cell"><div class="hud-lab">Trades</div><div class="hud-val" id="hudTrades">0</div></div>
+      <div class="hud-cell dignity" id="hudDignityCell"><div class="hud-lab">Dignity</div><div class="hud-val" id="hudDignity">100</div></div>
+      <div class="hud-cell"><div class="hud-lab">Read the Room</div><div class="hud-val" id="hudReads">3</div></div>
+    </div>
+
+    <div class="ladder" id="ladder"></div>
+
+    <div class="holding">
+      <div class="holding-lab">You are holding</div>
+      <div class="holding-em" id="holdingEm">⏳</div>
+      <div class="holding-nm" id="holdingNm">A Spare Hour</div>
+    </div>
+
+    <p class="offer-row-label">Three counterparties. Each is offering something for what you have.</p>
+
+    <div class="offers" id="offers"></div>
+
+    <div class="actions">
+      <button class="btn ghost" id="btnReadRoom">🔍 Read the Room<span class="btn-sub">Reveals one true desperation</span></button>
+      <button class="btn ghost" id="btnHaggle">↻ Haggle<span class="btn-sub">Reroll all 3 offers</span></button>
+    </div>
+
+    <div class="toast" id="toast">&nbsp;</div>
+
+    <div class="dignity-explainer">
+      <b>The Dignity of the Deal.</b> Every counterparty has a hidden desperation. Some are calm and can wait for a fair swap. Some are urgent — they need something now, and will take a bad deal to get it. Taking advantage of the desperate ones will move you up the ladder faster — but it will cost you Dignity. In this game, and in life, Dignity is what earns your Gold certificate. Read the room. Honor the deal.
+    </div>
+  </section>
+
+  <!-- ENDGAME (hidden until win) -->
+  <section class="endgame" id="endgame">
+    <div class="end-em">🏛️</div>
+    <h2 class="end-title">Workshop Built</h2>
+    <p class="end-cert" id="endCert">Certificate of Sovereign Barter</p>
+    <div class="end-serial" id="endSerial"></div>
+
+    <div class="end-stats">
+      <div class="end-stat"><div class="end-stat-lab">Trades Taken</div><div class="end-stat-val" id="endTrades">0</div></div>
+      <div class="end-stat"><div class="end-stat-lab">Final Dignity</div><div class="end-stat-val" id="endDignity">100</div></div>
+      <div class="end-stat"><div class="end-stat-lab">Deal Score</div><div class="end-stat-val" id="endScore">0</div></div>
+    </div>
+
+    <div class="end-lesson">
+      <h3>What you just navigated</h3>
+      <p>The oldest bottleneck in the economy is called <em>the Coincidence of Wants</em>. To trade, you must find someone who has what you want AND wants what you have — at the same moment. Money was invented because this bottleneck slows commerce to a crawl. But money also introduced its own problems: debt, inflation, and the dependence on institutions to permit your commerce.</p>
+      <p>The Foundation's answer is the <strong>Frankenstein Exchange</strong> — a mutual credit network where your account starts at zero, and your productive contribution to the community becomes your own medium of exchange. Every trade credits one account and debits another. The net balance always sums to zero. Nobody has to borrow money into existence to participate. This is the next chapter after The World Climb, and it is being built now.</p>
+      <p style="text-align:center; margin-top:20px;"><a href="https://www.globalsovereignuniversity.org/frankenstein-exchange" class="btn">Enter the Frankenstein Exchange →</a></p>
+    </div>
+
+    <div class="center-cta">
+      <button class="btn ghost" id="btnAgain">Play Again</button>
+    </div>
+  </section>
+
+  <!-- TEACHING SECTION -->
+  <section class="teaching">
+    <h2>How This Game Teaches Real Barter</h2>
+    <p>Every mechanic here is drawn from <em>The World Climb</em>. Nothing was invented for gamification — it was already true.</p>
+    <div class="pull">"Barter did not die when money arrived. Money emerged because trade expanded beyond what memory and reputation alone could efficiently track. Money is a tool for scaling the deal. It is not the beginning of the deal." — Chapter 1</div>
+    <p><b style="color:var(--gold);">Information asymmetry</b> is the whole game. In real trade, you never see the other side's balance sheet, their creditors, their needs. You have to read the room. Every offer is a signal — patient offers versus urgent ones — and the skill is telling them apart.</p>
+    <p><b style="color:var(--gold);">The Dignity of the Deal</b> is not a rule imposed on trade. It is the ethic that makes trade repeatable. A community where every deal exploits the desperate becomes a community where no one trusts a deal. Chapter 13 argues that the person who honors dignity in every trade builds a reputation ledger that pays out for years.</p>
+    <p><b style="color:var(--gold);">The Coincidence of Wants</b> is barter's structural limit. It is why the Frankenstein Exchange exists as a mutual credit ledger, not a barter board. You do not have to find a perfect match; the ledger tracks your net contribution.</p>
+  </section>
+
+  <!-- GENO PANEL -->
+  <section class="geno">
+    <h2>Ask GENO About the Deal</h2>
+    <p style="color:var(--cream-soft);">GENO has memorized The World Climb cover to cover — including every case study, every barter scenario, every chapter's argument. Try one of these questions, or ask your own.</p>
+    <div class="geno-prompts">
+      <div class="prompt-chip" data-prompt="What is the Dignity of the Deal?">What is the Dignity of the Deal?</div>
+      <div class="prompt-chip" data-prompt="Explain the Coincidence of Wants to me like I'm ten">Explain Coincidence of Wants</div>
+      <div class="prompt-chip" data-prompt="How does mutual credit differ from barter?">Mutual credit vs. barter</div>
+      <div class="prompt-chip" data-prompt="Give me a real-world barter I could do this week">A barter I could do this week</div>
+      <div class="prompt-chip" data-prompt="How do I set my price without a market?">Pricing without a market</div>
+      <div class="prompt-chip" data-prompt="What if the money stops? Read Chapter 12">What if the money stops?</div>
+    </div>
+    <div style="margin-top:20px;">
+      <a href="#" class="btn" onclick="try{window.dispatchEvent(new CustomEvent('geno:open'));}catch(e){}return false;">Talk with GENO</a>
+    </div>
+  </section>
+
+  <!-- CLOSING BEAT -->
+  <section class="closing">
+    <div class="closing-eyebrow">The Deal</div>
+    <p class="closing-body">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow."</p>
+    <div class="closing-attribution">— Dr. Gene A Constant</div>
+  </section>
+
+  <!-- FOUNDATION FOOTER -->
+  <section class="foundation">
+    <p class="tagline">A hand up, not a handout.</p>
+    <p>The Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
+    <p>Eugene, Oregon · <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
+  </section>
+
 </div>
 
-<script>
-(function(){
-  var root=document.getElementById('gsu-barterup');
-  var TIERS=[
-    {e:'\u23F3',n:'A Spare Hour'},
-    {e:'\uD83C\uDF5E',n:'A Home-Cooked Meal'},
-    {e:'\u2702\uFE0F',n:'A Fresh Haircut'},
-    {e:'\uD83D\uDD27',n:'A Bike Tune-Up'},
-    {e:'\uD83D\uDCF1',n:'A Phone Repair'},
-    {e:'\uD83D\uDCBB',n:'A Refurbished Laptop'},
-    {e:'\uD83D\uDCDA',n:'A Month of Tutoring'},
-    {e:'\uD83E\uDDF0',n:'A Full Toolset'},
-    {e:'\uD83C\uDFEA',n:'A Market Stall'},
-    {e:'\uD83C\uDFDB\uFE0F',n:'Your Own Workshop'}
-  ];
-  var TOP=TIERS.length-1;
-  var cur=0, trades=0, haggled=false, offers=[];
-  var $=function(id){return document.getElementById(id);};
-  var best=null;
-  try{ var b=localStorage.getItem('gsu_barterup_best'); if(b)best=parseInt(b,10);}catch(e){}
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  function rungHTML(){
-    var s='';
-    for(var i=0;i<TIERS.length;i++){ s+='<div class="bu-rung'+(i<=cur?' on':'')+'" title="'+TIERS[i].n+'"></div>'; }
-    return s;
+const cfg = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+const GID = "barter-up";
+
+// ==================== GAME DATA ====================
+const LADDER = [
+  { em:"⏳", nm:"A Spare Hour" },
+  { em:"🍞", nm:"A Home-Cooked Meal" },
+  { em:"✂️", nm:"A Fresh Haircut" },
+  { em:"🔧", nm:"A Bike Tune-Up" },
+  { em:"📱", nm:"A Phone Repair" },
+  { em:"💻", nm:"A Refurbished Laptop" },
+  { em:"📚", nm:"A Month of Tutoring" },
+  { em:"🧰", nm:"A Full Toolset" },
+  { em:"🏪", nm:"A Market Stall" },
+  { em:"🏛️", nm:"Your Own Workshop" }
+];
+const TOP = LADDER.length - 1;
+
+// Signals a counterparty can display for their outward desperation
+const SIGNALS = [
+  { text:"seems patient", trueDesperationRange:[0, 40] },      // low signal, low desperation
+  { text:"seems focused", trueDesperationRange:[10, 60] },      // mid signal, mixed
+  { text:"seems in a hurry", trueDesperationRange:[40, 100] }   // high signal, high desperation
+];
+
+// ==================== STATE ====================
+let state = {
+  cur: 0,
+  trades: 0,
+  dignity: 100,
+  reads: 3,
+  offers: [],
+  haggleUsed: false
+};
+
+// ==================== HELPERS ====================
+function $(id) { return document.getElementById(id); }
+
+function generateOffer() {
+  // Each offer: a tier value (what they'd give you) and a signal + hidden trueDesperation
+  const up = Math.floor(Math.random() * 3) + 1;  // +1 to +3
+  let tier = Math.min(TOP, state.cur + up);
+  // Small chance of lateral or slight downgrade
+  const roll = Math.random();
+  if (roll < 0.15) tier = Math.max(0, state.cur - 1 + Math.floor(Math.random() * 2));
+  const signalIdx = Math.floor(Math.random() * SIGNALS.length);
+  const signal = SIGNALS[signalIdx];
+  const trueDesp = signal.trueDesperationRange[0] + Math.floor(Math.random() * (signal.trueDesperationRange[1] - signal.trueDesperationRange[0] + 1));
+  return { tier, signalIdx, trueDesperation: trueDesp, revealed: false };
+}
+
+function generateOffers() {
+  state.offers = [generateOffer(), generateOffer(), generateOffer()];
+  state.haggleUsed = false;
+}
+
+function renderLadder() {
+  const el = $('ladder');
+  let html = '';
+  for (let i = 0; i < LADDER.length; i++) {
+    html += `<div class="rung ${i <= state.cur ? 'on' : ''}" title="${LADDER[i].nm}"></div>`;
   }
-  function genOffers(){
-    var out=[];
-    var up=cur+1+Math.floor(Math.random()*Math.min(3,TOP-cur)); // at least +1, up to +3
-    if(up>TOP)up=TOP;
-    out.push(up);
-    var lo=Math.max(0,cur-1), hi=Math.min(TOP,cur+3), guard=0;
-    while(out.length<3 && guard<40){
-      var r=lo+Math.floor(Math.random()*(hi-lo+1));
-      if(out.indexOf(r)===-1) out.push(r);
-      guard++;
-    }
-    while(out.length<3) out.push(Math.min(TOP,cur+1));
-    for(var i=out.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=out[i];out[i]=out[j];out[j]=t;}
-    return out;
+  el.innerHTML = html;
+}
+
+function renderHolding() {
+  $('holdingEm').textContent = LADDER[state.cur].em;
+  $('holdingNm').textContent = LADDER[state.cur].nm;
+}
+
+function renderHUD() {
+  $('hudRung').textContent = (state.cur + 1) + ' / ' + LADDER.length;
+  $('hudTrades').textContent = state.trades;
+  $('hudDignity').textContent = state.dignity;
+  $('hudReads').textContent = state.reads;
+  const dCell = $('hudDignityCell');
+  dCell.classList.remove('warn', 'bad');
+  if (state.dignity < 50) dCell.classList.add('bad');
+  else if (state.dignity < 75) dCell.classList.add('warn');
+}
+
+function renderOffers() {
+  const el = $('offers');
+  let html = '';
+  state.offers.forEach((o, i) => {
+    const item = LADDER[o.tier];
+    const signal = SIGNALS[o.signalIdx];
+    const revealClass = o.revealed ? (o.trueDesperation >= 50 ? 'revealed desperate' : 'revealed') : '';
+    const revealedText = o.trueDesperation >= 70 ? 'Desperate — needs your hour badly'
+                       : o.trueDesperation >= 50 ? 'Under pressure — will take a rushed deal'
+                       : o.trueDesperation >= 25 ? 'Willing but reasonable'
+                       : 'Truly patient — no urgency';
+    html += `
+      <div class="offer ${revealClass}" data-i="${i}">
+        <div class="offer-em">${item.em}</div>
+        <div class="offer-nm">${item.nm}</div>
+        <div class="offer-signal">${signal.text}</div>
+        <div class="offer-revealed">${revealedText}</div>
+      </div>`;
+  });
+  el.innerHTML = html;
+  el.querySelectorAll('.offer').forEach(card => {
+    card.addEventListener('click', () => {
+      const i = parseInt(card.dataset.i, 10);
+      if (readMode) revealOffer(i);
+      else takeOffer(i);
+    });
+  });
+  $('btnHaggle').disabled = state.haggleUsed;
+  $('btnReadRoom').disabled = state.reads === 0;
+}
+
+// ==================== ACTIONS ====================
+let readMode = false;
+
+function takeOffer(i) {
+  const o = state.offers[i];
+  state.trades++;
+  const oldTier = state.cur;
+  const newTier = o.tier;
+  const direction = newTier > oldTier ? 'up' : newTier < oldTier ? 'down' : 'flat';
+
+  // Dignity impact based on true desperation and whether player took an obvious upgrade from a desperate person
+  let dignityChange = 0;
+  let toastMsg = '';
+  const jumpSize = newTier - oldTier;
+
+  if (o.trueDesperation >= 70 && jumpSize >= 2) {
+    // Exploited someone desperate for significant jump
+    dignityChange = -15;
+    toastMsg = `You climbed to ${LADDER[newTier].nm} — but they were desperate. The deal was uneven.`;
+  } else if (o.trueDesperation >= 50 && jumpSize >= 3) {
+    // Modest exploitation
+    dignityChange = -8;
+    toastMsg = `You climbed to ${LADDER[newTier].nm}. They were under pressure. It sits with you.`;
+  } else if (o.trueDesperation < 25 && jumpSize >= 2) {
+    // Fair trade with patient counterparty (best case)
+    dignityChange = +5;
+    toastMsg = `A fair swap for ${LADDER[newTier].nm}. Both parties walked away right.`;
+  } else if (direction === 'down') {
+    // You traded down; sometimes the right move
+    dignityChange = +2;
+    toastMsg = `You traded down to ${LADDER[newTier].nm}. Sometimes you have to give ground to gain later.`;
+  } else if (direction === 'flat') {
+    dignityChange = 0;
+    toastMsg = `Lateral swap. The market gave you a sideways deal.`;
+  } else {
+    dignityChange = 0;
+    toastMsg = `Traded up to ${LADDER[newTier].nm}. A working deal.`;
   }
-  function renderOffers(){
-    var html='';
-    for(var i=0;i<offers.length;i++){
-      var t=TIERS[offers[i]];
-      html+='<div class="bu-offer" data-t="'+offers[i]+'"><div class="oe">'+t.e+'</div><div class="on">'+t.n+'</div></div>';
-    }
-    $('bu-offers').innerHTML=html;
-    var cards=root.querySelectorAll('.bu-offer');
-    for(var k=0;k<cards.length;k++){ cards[k].onclick=function(){ take(parseInt(this.getAttribute('data-t'),10)); }; }
+
+  state.dignity = Math.max(0, Math.min(100, state.dignity + dignityChange));
+  state.cur = newTier;
+
+  $('toast').textContent = toastMsg;
+
+  if (state.cur >= TOP) return endGame();
+
+  generateOffers();
+  renderHolding(); renderLadder(); renderHUD(); renderOffers();
+}
+
+function revealOffer(i) {
+  if (state.offers[i].revealed) return;
+  state.reads--;
+  state.offers[i].revealed = true;
+  readMode = false;
+  $('btnReadRoom').classList.remove('ghost');
+  $('btnReadRoom').classList.add('ghost');
+  $('toast').textContent = 'Read the room — one signal was true, or false. Now decide.';
+  renderHUD(); renderOffers();
+}
+
+function haggle() {
+  if (state.haggleUsed) return;
+  state.haggleUsed = true;
+  // Small dignity nick — you made them wait
+  state.dignity = Math.max(0, state.dignity - 2);
+  generateOffers();
+  // haggleUsed stays true until next turn — one haggle per rung
+  state.haggleUsed = true;
+  renderHUD(); renderOffers();
+  $('toast').textContent = 'You haggled. Three fresh counterparties are now at the table.';
+  $('btnHaggle').disabled = true;
+}
+
+$('btnReadRoom').addEventListener('click', () => {
+  if (state.reads === 0) return;
+  readMode = !readMode;
+  $('toast').textContent = readMode ? 'Read the room mode — click a counterparty to reveal their true desperation.' : '';
+});
+
+$('btnHaggle').addEventListener('click', haggle);
+$('btnAgain').addEventListener('click', resetGame);
+
+// ==================== ENDGAME + CERTIFICATE ====================
+async function endGame() {
+  renderHolding(); renderLadder(); renderHUD();
+
+  // Determine tier
+  let tier = 'Bronze';
+  if (state.trades <= 7 && state.dignity >= 90) tier = 'Gold';
+  else if (state.trades <= 8 && state.dignity >= 70) tier = 'Silver';
+  else if (state.trades <= 10 && state.dignity >= 50) tier = 'Bronze';
+  else tier = 'Participation';
+
+  const score = Math.max(0, (1000 - (state.trades - 3) * 60) + state.dignity * 3);
+  const now = new Date();
+  const serial = 'SB-' + now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+
+  $('gameSection').style.display = 'none';
+  $('endgame').classList.add('show');
+  $('endCert').textContent = tier === 'Participation'
+    ? 'The Deal Was Made — Try Again for a Certificate'
+    : tier + ' Certificate of Sovereign Barter';
+  $('endSerial').textContent = tier === 'Participation' ? '' : 'Serial: ' + serial;
+  $('endTrades').textContent = state.trades;
+  $('endDignity').textContent = state.dignity;
+  $('endScore').textContent = score;
+
+  // Save cert to Firebase
+  if (db && uid && tier !== 'Participation') {
+    try {
+      await setDoc(doc(db, 'sovereign_barter_certs', serial), {
+        tier, serial, trades: state.trades, dignity: state.dignity, score, uid, issuedAt: Date.now()
+      }, { merge: true });
+    } catch (e) {}
   }
-  function render(){
-    $('bu-hold-em').innerHTML=TIERS[cur].e;
-    $('bu-hold-nm').textContent=TIERS[cur].n;
-    $('bu-trades').textContent=trades;
-    $('bu-rank').textContent=(cur+1)+'/10';
-    $('bu-best').innerHTML=(best!=null?best:'&mdash;');
-    $('bu-ladder').innerHTML=rungHTML();
-    $('bu-haggle').disabled=haggled;
-    renderOffers();
+}
+
+function resetGame() {
+  state = { cur:0, trades:0, dignity:100, reads:3, offers:[], haggleUsed:false };
+  readMode = false;
+  $('endgame').classList.remove('show');
+  $('gameSection').style.display = '';
+  $('toast').textContent = '';
+  generateOffers();
+  renderHolding(); renderLadder(); renderHUD(); renderOffers();
+}
+
+// ==================== RATING WIDGET ====================
+let db = null, auth = null, uid = null;
+const starsEl = document.getElementById('stars'), metaEl = document.getElementById('rateMeta'), thxEl = document.getElementById('rateThanks');
+let myStars = 0, avg = 0, count = 0;
+
+function paint(hover) {
+  starsEl.innerHTML = '';
+  const fill = hover || myStars || Math.round(avg);
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElement('span');
+    s.className = 'st' + ((i <= fill) ? ' on' : '');
+    s.textContent = '★';
+    s.setAttribute('role', 'radio');
+    s.addEventListener('mouseenter', () => paint(i));
+    s.addEventListener('mouseleave', () => paint(0));
+    s.addEventListener('click', () => rate(i));
+    starsEl.appendChild(s);
   }
-  function take(t){
-    var old=TIERS[cur].n;
-    trades++;
-    var dir=t>cur?'up':(t<cur?'down':'flat');
-    cur=t;
-    haggled=false;
-    if(cur>=TOP){ win(); return; }
-    offers=genOffers();
-    render();
-    var msg = dir==='up' ? ('Nice deal \u2014 traded '+old+' for '+TIERS[cur].n+'.')
-            : dir==='down' ? ('Ouch \u2014 you traded down to '+TIERS[cur].n+'.')
-            : ('A lateral swap for '+TIERS[cur].n+'.');
-    $('bu-toast').textContent=msg;
-  }
-  function win(){
-    render();
-    var score=Math.max(50, 1000-(trades-3)*80);
-    $('bu-game').classList.add('bu-hide');
-    $('bu-winscreen').classList.remove('bu-hide');
-    $('bu-final-trades').textContent=trades;
-    $('bu-final-score').textContent=score;
-    var isBest = (best==null)||(score>best);
-    if(isBest){ best=score; try{localStorage.setItem('gsu_barterup_best',String(best));}catch(e){} $('bu-newbest').classList.remove('bu-hide'); }
-    else { $('bu-newbest').classList.add('bu-hide'); }
-  }
-  function reset(){
-    cur=0; trades=0; haggled=false; offers=genOffers();
-    $('bu-winscreen').classList.add('bu-hide');
-    $('bu-game').classList.remove('bu-hide');
-    $('bu-toast').textContent='';
-    render();
-  }
-  $('bu-haggle').onclick=function(){ if(haggled)return; haggled=true; offers=genOffers(); render(); $('bu-toast').textContent='You haggled \u2014 three fresh offers on the table.'; };
-  $('bu-again').onclick=reset;
-  offers=genOffers(); render();
-})();
+}
+function showMeta() {
+  if (count > 0) metaEl.innerHTML = '<b>' + avg.toFixed(1) + '</b> / 5 · ' + count + (count === 1 ? ' rating' : ' ratings');
+  else metaEl.textContent = 'Be the first to rate this page.';
+}
+function injectLD() {
+  if (count < 1) return;
+  const el = document.getElementById('course-ld');
+  if (!el) return;
+  try {
+    const o = JSON.parse(el.textContent);
+    o.aggregateRating = { "@type": "AggregateRating", "ratingValue": Number(avg.toFixed(2)), "ratingCount": count, "bestRating": 5, "worstRating": 1 };
+    el.textContent = JSON.stringify(o);
+  } catch (e) {}
+}
+async function loadRating() {
+  try {
+    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
+    if (snap.exists()) { const d = snap.data(); count = d.count || 0; avg = count ? (d.sum || 0) / count : 0; }
+  } catch (e) {}
+  try {
+    const v = await getDoc(doc(db, 'lesson_ratings', GID, 'voters', uid));
+    if (v.exists()) myStars = v.data().stars || 0;
+  } catch (e) {}
+  paint(0); showMeta(); injectLD();
+  if (myStars) thxEl.textContent = 'You rated this ' + myStars + ' ★. Tap to change.';
+}
+async function rate(stars) {
+  if (!db || !uid) { thxEl.textContent = 'Ratings save when online.'; myStars = stars; paint(0); return; }
+  try {
+    await runTransaction(db, async (tx) => {
+      const aggRef = doc(db, 'lesson_ratings', GID), vRef = doc(db, 'lesson_ratings', GID, 'voters', uid);
+      const a = await tx.get(aggRef), v = await tx.get(vRef);
+      let sum = a.exists() ? (a.data().sum || 0) : 0, c = a.exists() ? (a.data().count || 0) : 0;
+      if (v.exists()) sum = sum - (v.data().stars || 0) + stars;
+      else { sum += stars; c += 1; }
+      tx.set(aggRef, { sum, count: c }, { merge: true });
+      tx.set(vRef, { stars, at: Date.now() }, { merge: true });
+    });
+    myStars = stars;
+    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
+    if (snap.exists()) { const d = snap.data(); count = d.count || 0; avg = count ? (d.sum || 0) / count : 0; }
+    paint(0); showMeta(); injectLD();
+    thxEl.textContent = 'Thank you — your rating was saved.';
+  } catch (e) { thxEl.textContent = 'Could not save just now. Please try again.'; }
+}
+
+// ==================== GENO PROMPTS ====================
+document.querySelectorAll('.prompt-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    try { window.dispatchEvent(new CustomEvent('geno:open')); } catch (e) {}
+  });
+});
+
+// ==================== BOOT ====================
+generateOffers();
+renderHolding(); renderLadder(); renderHUD(); renderOffers();
+
+try {
+  const app = getApps().length ? getApp() : initializeApp(cfg);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  paint(0);
+  onAuthStateChanged(auth, (u) => { if (u) { uid = u.uid; loadRating(); } });
+  signInAnonymously(auth).catch(() => { metaEl.textContent = 'Ratings unavailable offline.'; paint(0); });
+} catch (e) {
+  metaEl.textContent = 'Ratings unavailable offline.';
+  paint(0);
+}
 </script>
-</section>
+
+<!-- GENO WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<script>
+window.addEventListener('geno:open', function() {
+  try {
+    var w = document.querySelector('elevenlabs-convai');
+    if (w && w.shadowRoot) {
+      var btn = w.shadowRoot.querySelector('button');
+      if (btn) btn.click();
+    }
+  } catch (e) {}
+});
+</script>
 
 </body>
 </html>
