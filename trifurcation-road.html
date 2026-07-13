@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Trifurcation Road — Master Comprehension's Infinite Road | GSU</title>
+<meta name="description" content="A branching reading-comprehension quest with three roads. Good builds confidence. Better sharpens focus. Best is Master Comprehension's infinite road. Fail a passage and the road below rises to meet your feet. All three endings are honored.">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/trifurcation-road.html">
+
+<script type="application/ld+json" id="course-ld">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Trifurcation Road",
+  "description": "A three-road reading comprehension quest. The Good road builds confidence. The Better road sharpens focus. The Best road is Master Comprehension's infinite road. All three endings are honored.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "sameAs": "https://globalsovereignuniversity.org"
+  },
+  "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD", "category": "Free" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #000000;
+    --card: #000000;
+    --gold: #C9A84C;
+    --cream: #F5F1E8;
+    --cream-soft: #d8d3c8;
+    --muted: #8a8580;
+    --line: rgba(201,168,76,.22);
+
+    /* Road-specific palettes */
+    --good-primary: #F5C34C;
+    --good-glow: rgba(245,195,76,0.14);
+    --good-line: rgba(245,195,76,0.30);
+    --good-deep: #7a5a15;
+
+    --better-primary: #5AAFEB;
+    --better-glow: rgba(90,175,235,0.12);
+    --better-line: rgba(90,175,235,0.30);
+    --better-deep: #1a4a6e;
+
+    --best-primary: #C084E8;
+    --best-glow: rgba(192,132,232,0.12);
+    --best-line: rgba(192,132,232,0.30);
+    --best-deep: #4a1e6e;
+  }
+
+  /* Body tints change based on current-road class on <body> */
+  body.road-good { --road-primary: var(--good-primary); --road-glow: var(--good-glow); --road-line: var(--good-line); --road-deep: var(--good-deep); }
+  body.road-better { --road-primary: var(--better-primary); --road-glow: var(--better-glow); --road-line: var(--better-line); --road-deep: var(--better-deep); }
+  body.road-best { --road-primary: var(--best-primary); --road-glow: var(--best-glow); --road-line: var(--best-line); --road-deep: var(--best-deep); }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--cream); font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; line-height: 1.7; -webkit-font-smoothing: antialiased; transition: background 0.6s; }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 22px; }
+
+  /* HERO */
+  .hero { padding: 56px 0 32px; border-bottom: 1px solid var(--line); }
+  .eyebrow { font-family: "Lora", serif; font-size: 0.82rem; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+  h1 { font-size: 3.2rem; margin: 0 0 12px; line-height: 1.05; color: var(--cream); letter-spacing: 0.02em; }
+  .lede { font-size: 1.24rem; color: var(--cream-soft); font-style: italic; max-width: 44em; }
+
+  /* RATING */
+  .ratebox { margin-top: 28px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; text-align: center; }
+  .ratebox .rt { font-family: "Lora", serif; font-size: 1.06rem; color: var(--cream); margin-bottom: 12px; }
+  .stars { display: inline-flex; gap: 7px; font-size: 1.9rem; line-height: 1; cursor: pointer; user-select: none; }
+  .stars .st { color: #3a3a3a; transition: transform .12s, color .12s; }
+  .stars .st.on { color: var(--gold); }
+  .stars .st:hover { transform: scale(1.12); }
+  .rate-meta { margin-top: 10px; font-size: .92rem; color: var(--muted); }
+  .rate-meta b { color: var(--gold); }
+  .rate-thanks { margin-top: 8px; font-size: .86rem; color: #7fce9d; min-height: 1.1em; }
+
+  /* INTRO: three-road preview */
+  .roads-preview { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 32px 0; }
+  @media (max-width: 700px) { .roads-preview { grid-template-columns: 1fr; } }
+  .road-card { padding: 24px; border-radius: 12px; text-align: center; border: 1px solid; }
+  .road-card.good { background: radial-gradient(ellipse at top, rgba(245,195,76,0.10) 0%, #000 70%); border-color: var(--good-line); }
+  .road-card.better { background: radial-gradient(ellipse at top, rgba(90,175,235,0.08) 0%, #000 70%); border-color: var(--better-line); }
+  .road-card.best { background: radial-gradient(ellipse at top, rgba(192,132,232,0.10) 0%, #000 70%); border-color: var(--best-line); }
+  .road-card h3 { font-family: Georgia, serif; font-size: 1.6rem; margin: 0 0 8px; letter-spacing: 0.06em; }
+  .road-card.good h3 { color: var(--good-primary); }
+  .road-card.better h3 { color: var(--better-primary); }
+  .road-card.best h3 { color: var(--best-primary); }
+  .road-card .tagline { color: var(--cream-soft); font-style: italic; font-size: 0.98rem; margin: 6px 0 12px; }
+  .road-card .sub { color: var(--muted); font-size: 0.86rem; font-family: "Lora", serif; letter-spacing: 0.06em; }
+
+  /* JOURNEY UI */
+  .journey { margin: 44px 0 60px; }
+  .journey-header { margin-bottom: 22px; }
+
+  .road-indicator { display: flex; gap: 14px; justify-content: center; margin-bottom: 26px; align-items: center; font-family: "Lora", serif; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.78rem; }
+  .road-tick { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.28); transition: all 0.5s; }
+  .road-tick.active { border-color: currentColor; }
+  .road-tick.good.active { color: var(--good-primary); background: rgba(245,195,76,0.09); }
+  .road-tick.better.active { color: var(--better-primary); background: rgba(90,175,235,0.09); }
+  .road-tick.best.active { color: var(--best-primary); background: rgba(192,132,232,0.09); }
+  .road-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+
+  .step-counter { text-align: center; color: var(--muted); font-family: "Lora", serif; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.72rem; margin-bottom: 22px; }
+
+  .card { background: radial-gradient(ellipse at 50% -10%, var(--road-glow, rgba(201,168,76,0.06)) 0%, #000 65%); border: 1px solid var(--road-line, var(--line)); border-radius: 14px; padding: 42px 36px; margin-bottom: 24px; animation: fadeIn 0.55s ease-out; transition: border-color 0.6s; }
+  @media (max-width: 640px) { .card { padding: 28px 22px; } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .card h2 { font-family: Georgia, serif; font-size: clamp(1.7rem, 4vw, 2.3rem); color: var(--cream); font-weight: 700; margin: 0 0 22px; line-height: 1.2; }
+
+  /* PASSAGE — this is the reading material */
+  .passage { background: rgba(255,255,255,0.02); border-left: 3px solid var(--road-primary, var(--gold)); border-radius: 6px; padding: 24px 28px; margin: 24px 0; font-family: "Lora", serif; color: var(--cream); font-size: 1.08rem; line-height: 1.85; transition: border-color 0.6s; }
+  .passage-label { font-family: Georgia, serif; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.72rem; color: var(--road-primary, var(--gold)); margin-bottom: 12px; transition: color 0.6s; }
+  .passage p { margin: 0 0 12px; }
+  .passage p:last-child { margin-bottom: 0; }
+  .passage em { color: var(--road-primary, var(--gold)); font-style: italic; }
+
+  .prompt { font-family: Georgia, serif; font-size: 1.15rem; color: var(--cream); margin: 24px 0 4px; font-weight: 600; }
+  .prompt-sub { font-family: "Lora", serif; font-style: italic; color: var(--muted); font-size: 0.94rem; margin-bottom: 20px; }
+
+  .demotion-banner { background: rgba(212,122,92,0.10); border-left: 3px solid #d47a5c; border-radius: 6px; padding: 16px 20px; margin: 20px 0; color: var(--cream-soft); font-style: italic; font-family: "Lora", serif; }
+  .demotion-banner b { color: #d47a5c; font-style: normal; }
+
+  .choices { margin-top: 20px; }
+  .choices-label { text-align: center; color: var(--road-primary, var(--gold)); font-family: "Lora", serif; letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.72rem; margin-bottom: 18px; padding: 14px 0 0; border-top: 1px solid var(--road-line, var(--line)); transition: color 0.6s, border-color 0.6s; }
+  .choice { display: block; width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--road-line, var(--line)); border-radius: 6px; padding: 18px 22px; margin-bottom: 12px; text-align: left; color: var(--cream); font-family: Georgia, serif; font-size: 1.05rem; line-height: 1.5; cursor: pointer; transition: all 0.22s; }
+  .choice:hover { border-color: var(--road-primary, var(--gold)); background: var(--road-glow, rgba(201,168,76,0.05)); transform: translateX(3px); }
+  .choice .flavor { display: block; margin-top: 8px; color: var(--muted); font-size: 0.9rem; font-style: italic; }
+
+  /* ENDING */
+  .ending { text-align: center; padding: 30px 20px; }
+  .ending-crest { font-size: 3.6rem; margin-bottom: 12px; color: var(--road-primary, var(--gold)); transition: color 0.6s; }
+  .ending-title { color: var(--road-primary, var(--gold)); font-size: 2.3rem; font-family: Georgia, serif; margin: 0 0 8px; transition: color 0.6s; }
+  .ending-subtitle { color: var(--cream-soft); font-family: "Lora", serif; font-style: italic; font-size: 1.15rem; margin: 0 0 24px; }
+  .ending-body { text-align: left; color: var(--cream); font-family: "Lora", serif; font-size: 1.1rem; line-height: 1.85; max-width: 34em; margin: 0 auto 30px; }
+  .ending-body p { margin: 0 0 14px; }
+  .ending-body em { color: var(--road-primary, var(--gold)); transition: color 0.6s; }
+
+  .ending-cert { margin: 24px 0; padding: 24px; background: var(--road-glow, rgba(201,168,76,0.05)); border: 1px solid var(--road-primary, var(--gold)); border-radius: 12px; transition: all 0.6s; }
+  .ending-cert-lab { color: var(--muted); font-family: "Lora", serif; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.72rem; margin-bottom: 8px; }
+  .ending-cert-serial { color: var(--road-primary, var(--gold)); font-family: "Courier New", monospace; font-size: 1.05rem; transition: color 0.6s; }
+
+  .btn { display: inline-block; background: var(--road-primary, var(--gold)); color: #000; padding: 14px 30px; border-radius: 8px; font-family: Georgia, serif; font-weight: bold; cursor: pointer; text-decoration: none; border: none; font-size: 1rem; transition: transform 0.15s, background 0.6s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--road-primary, var(--gold)); border: 1px solid var(--road-primary, var(--gold)); transition: color 0.6s, border-color 0.6s; }
+  .btn.best-btn { background: var(--best-primary); color: #000; }
+  .btn.better-btn { background: var(--better-primary); color: #000; }
+
+  /* INTRO SCREEN */
+  .intro { padding: 20px 0; }
+  .intro-body { color: var(--cream-soft); font-size: 1.08rem; line-height: 1.8; margin: 24px 0; max-width: 44em; }
+  .intro-body p { margin: 0 0 18px; }
+  .intro-body em { color: var(--gold); }
+  .intro-meta { display: flex; gap: 28px; flex-wrap: wrap; margin: 32px 0; color: var(--muted); font-family: "Lora", serif; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; }
+  .intro-meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .intro-meta span::before { content: "✦"; color: var(--gold); }
+  .resume { margin: 24px 0; padding: 20px; background: var(--road-glow, rgba(201,168,76,0.06)); border: 1px solid var(--road-line, var(--line)); border-radius: 8px; transition: all 0.6s; }
+  .resume b { color: var(--road-primary, var(--gold)); }
+
+  .start-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+  @media (max-width: 600px) { .start-choices { grid-template-columns: 1fr; } }
+  .start-choices button { padding: 22px 24px; border-radius: 10px; font-family: Georgia, serif; font-size: 1.1rem; cursor: pointer; border: 2px solid; transition: all 0.2s; text-align: center; background: transparent; color: var(--cream); font-weight: 600; }
+  .start-choices .go-better { border-color: var(--better-primary); }
+  .start-choices .go-better:hover { background: rgba(90,175,235,0.10); }
+  .start-choices .go-best { border-color: var(--best-primary); }
+  .start-choices .go-best:hover { background: rgba(192,132,232,0.10); }
+  .start-choices .go-tag { display: block; font-size: 0.82rem; margin-top: 6px; color: var(--muted); font-style: italic; font-weight: 400; letter-spacing: 0.06em; }
+
+  /* SECTIONS */
+  section { padding: 40px 0; border-top: 1px solid var(--line); }
+  section h3 { color: var(--cream); font-size: 1.5rem; margin: 0 0 14px; }
+  section p { color: var(--cream-soft); margin: 0 0 14px; }
+  .rules-list { color: var(--cream-soft); margin: 0 0 14px; padding-left: 22px; }
+  .rules-list li { margin-bottom: 8px; }
+
+  .geno { margin-top: 60px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
+  .geno h2 { color: var(--cream); font-size: 1.6rem; margin: 0 0 10px; }
+  .geno-prompts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .prompt-chip { background: rgba(201,168,76,0.1); border: 1px solid var(--line); border-radius: 20px; padding: 10px 18px; cursor: pointer; color: var(--cream); font-size: 0.95rem; }
+  .prompt-chip:hover { background: rgba(201,168,76,0.2); }
+
+  .closing { margin-top: 80px; padding: 60px 40px; background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, #000 70%); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+  .closing-eyebrow { font-family: "Lora", serif; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-size: 0.85rem; margin-bottom: 20px; }
+  .closing-body { color: var(--cream); font-family: "Lora", serif; font-style: italic; font-size: 1.35rem; line-height: 1.55; max-width: 34em; margin: 0 auto 20px; }
+  .closing-attribution { color: var(--muted); font-size: 0.94rem; }
+
+  .foundation { margin-top: 80px; padding: 40px 0; text-align: center; border-top: 1px solid var(--line); }
+  .foundation p { color: var(--muted); margin: 4px 0; font-size: 0.94rem; }
+  .foundation .tagline { color: var(--gold); font-style: italic; font-size: 1.1rem; margin: 12px 0; }
+
+  @media (max-width: 720px) {
+    h1 { font-size: 2.2rem; }
+    .lede { font-size: 1.08rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;padding-top:56px;">
+    <div class="eyebrow">Global Sovereign University · A Reading-Comprehension Quest</div>
+    <h1>Trifurcation Road</h1>
+    <p class="lede">Three roads. Only two are chosen; the third rises to meet your feet when the passage in front of you outruns your reading. Every ending is honored. Nobody who keeps walking is turned away.</p>
+
+    <div class="ratebox" id="ratebox">
+      <div class="rt">Rate Trifurcation Road. Your stars help other travelers find it.</div>
+      <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
+      <div class="rate-meta" id="rateMeta">Loading ratings…</div>
+      <div class="rate-thanks" id="rateThanks"></div>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section class="journey" id="journey">
+
+    <!-- INTRO SCREEN -->
+    <div id="introScreen">
+      <div class="intro">
+        <div class="intro-body">
+          <p>Ahead of you, three roads run into the same country. Each road ends at the same wonder — but each road walks it differently.</p>
+        </div>
+
+        <div class="roads-preview">
+          <div class="road-card good">
+            <h3>GOOD</h3>
+            <div class="tagline">Confidence Begins Here.</div>
+            <div class="sub">Where the road opens for readers still finding their footing.</div>
+          </div>
+          <div class="road-card better">
+            <h3>BETTER</h3>
+            <div class="tagline">I want to be a sharp reader.</div>
+            <div class="sub">Focused energy. Direct passages. Real questions.</div>
+          </div>
+          <div class="road-card best">
+            <h3>BEST</h3>
+            <div class="tagline">Master Comprehension's Infinite Road.</div>
+            <div class="sub">Dense passages. Inference. Tone. Judgment.</div>
+          </div>
+        </div>
+
+        <div class="intro-body">
+          <p>You cannot choose the <em>Good</em> road at the start. Good is where the road opens for you if the passage in front of you is more than you can read today — and there is nothing wrong with that, and nothing final about that. On Good, you will finish. On Good, you will build confidence for the next walk.</p>
+          <p>The road takes about twenty minutes if you read carefully. Your place is saved. You can leave and come back. Every road has a certificate at its end.</p>
+        </div>
+
+        <div class="intro-meta">
+          <span>Five gates on each road</span>
+          <span>Three endings</span>
+          <span>Auto-save</span>
+          <span>Free forever</span>
+        </div>
+
+        <div id="resumeBlock"></div>
+
+        <div class="start-choices" id="startChoices">
+          <button class="go-better" id="btnBetter">
+            Enter through the Sharp Reader's gate
+            <span class="go-tag">The Better road</span>
+          </button>
+          <button class="go-best" id="btnBest">
+            Enter through Master Comprehension's gate
+            <span class="go-tag">The Best road — hardest by design</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME SCREEN (rendered dynamically) -->
+    <div id="gameScreen" style="display:none;"></div>
+
+    <!-- ENDING SCREEN (rendered dynamically) -->
+    <div id="endingScreen" style="display:none;"></div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <h3>How the Road Works</h3>
+    <ul class="rules-list">
+      <li>At each gate, you read a passage. Then you answer one comprehension question about it.</li>
+      <li>On the <b style="color:var(--best-primary)">Best</b> road, the passage is dense and the question probes inference, tone, or synthesis. Right answer → continue on Best. Wrong → the road below rises. You continue on <b style="color:var(--better-primary)">Better</b>.</li>
+      <li>On the <b style="color:var(--better-primary)">Better</b> road, passages are direct. Questions test clear meaning. Wrong → you continue on <b style="color:var(--good-primary)">Good</b>.</li>
+      <li>On the <b style="color:var(--good-primary)">Good</b> road, you cannot be demoted. You will finish. That is the point of Good.</li>
+      <li>Three endings await you. <em>Master Comprehension</em>, at the end of the Best road. <em>The Sharp Reader</em>, at the end of the Better road. <em>The Confident Reader</em>, at the end of the Good road. All three are counted. All three earn certificates.</li>
+    </ul>
+  </section>
+
+  <!-- GENO -->
+  <section class="geno" style="border-top:none;">
+    <h2>Ask GENO About the Road</h2>
+    <p style="color:var(--cream-soft);">GENO reads in 83 languages. If a passage confuses you, ask him what a word means or what the writer might be doing. He will not answer the comprehension question for you — but he will help you think about it.</p>
+    <div class="geno-prompts">
+      <div class="prompt-chip" data-prompt="Who is Master Comprehension in Trifurcation Road?">Who is Master Comprehension?</div>
+      <div class="prompt-chip" data-prompt="Why does the Good road matter if it's the easiest?">Why does Good matter?</div>
+      <div class="prompt-chip" data-prompt="How do I get better at inference in reading?">How do I get better at inference?</div>
+      <div class="prompt-chip" data-prompt="Can I take Trifurcation Road again after finishing?">Can I walk it again?</div>
+    </div>
+    <div style="margin-top: 20px;">
+      <a href="#" class="btn" onclick="try{window.dispatchEvent(new CustomEvent('geno:open'));}catch(e){}return false;">Talk with GENO</a>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="closing-eyebrow">Master Comprehension's Promise</div>
+    <p class="closing-body">"The road you read is the road you read. Do not measure your walk against the walk you wish you had taken. The measure is: did you understand what you were looking at, honestly? If you did, at any level, you have already arrived somewhere the road wanted you to arrive."</p>
+    <div class="closing-attribution">— Trifurcation Road, closing beat</div>
+  </section>
+
+  <!-- FOUNDATION -->
+  <section class="foundation">
+    <p class="tagline">A hand up, not a handout.</p>
+    <p>The Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
+    <p>Eugene, Oregon · <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
+  </section>
+
+</div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const cfg = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+const GID = "trifurcation-road";
+
+/* ============================================================
+   GATES DATA
+   Each gate has three versions: best, better, good.
+   Each gate has a passage + question + choices.
+   Choices: {label, correct: true/false}
+   Correct on Best/Better → continue on same road
+   Wrong on Best → demote to Better at next gate
+   Wrong on Better → demote to Good at next gate
+   On Good → always correct (no demotion possible)
+============================================================ */
+
+const GATES = [
+  // ============ GATE 1 ============
+  {
+    id: 1,
+    best: {
+      title: "The First Gate — The Merchant's Ledger",
+      passage: [
+        "Old Levi kept his ledger not in numbers but in weight — a small brass scale beside the book. When a boy came asking for a job, Levi would put a stone on one side and a coin on the other, and ask the boy which was heavier. It was never a trick question. The stone was always heavier.",
+        "\"You want to work for me,\" Levi would say, \"because you need the coin more than the stone. Fine. That is honest. But remember: the day comes when what you want is the stone. That day is the day you have become a man. Not before.\"",
+        "The boy who took the job never understood what Levi meant until many years later. By then, Levi was gone, and the ledger and the scale had passed to the boy, who was no longer a boy."
+      ],
+      prompt: "What is the stone standing for in Levi's teaching?",
+      sub: "Consider the whole shape of the passage before answering.",
+      choices: [
+        { label: "The literal weight of the material — heavier than money, and therefore more valuable", correct: false },
+        { label: "The point in a life when a person seeks meaning and permanence more than income", correct: true },
+        { label: "A test Levi uses to see whether the boy is strong enough to lift heavy objects", correct: false },
+        { label: "The years of service that must be paid before a worker can inherit a business", correct: false }
+      ]
+    },
+    better: {
+      title: "The First Gate — The Merchant's Scale",
+      passage: [
+        "Old Levi kept a brass scale beside his ledger. When a boy came asking for work, Levi would put a stone on one pan and a coin on the other, and ask which was heavier. The stone was always heavier.",
+        "\"You want to work for me,\" Levi would say, \"because you need the coin. That is honest. But remember: someday, what you want will be the stone.\""
+      ],
+      prompt: "What does Levi mean when he says 'someday, what you want will be the stone'?",
+      sub: "The stone and the coin are compared directly.",
+      choices: [
+        { label: "That heavy work becomes more rewarding than money over time", correct: true },
+        { label: "That older workers get paid in materials instead of coins", correct: false },
+        { label: "That the boy will eventually own the scale", correct: false },
+        { label: "That coins get lighter as they age", correct: false }
+      ]
+    },
+    good: {
+      title: "The First Gate — The Merchant's Lesson",
+      passage: [
+        "Old Levi kept a small scale on his counter. When a boy asked for a job, Levi put a stone on one side and a coin on the other. He asked which was heavier. The stone was heavier.",
+        "Levi said: \"You want the coin now. Someday you will want the stone.\""
+      ],
+      prompt: "Which side of the scale was heavier?",
+      sub: "This one is straightforward.",
+      choices: [
+        { label: "The stone", correct: true },
+        { label: "The coin", correct: false },
+        { label: "They weighed the same", correct: false }
+      ]
+    }
+  },
+
+  // ============ GATE 2 ============
+  {
+    id: 2,
+    best: {
+      title: "The Second Gate — The Argument Under the Argument",
+      passage: [
+        "The senator's speech, praised in the morning papers as \"a triumph of moderation,\" contained the phrase, three separate times, \"of course we all agree that some measure of reform is inevitable.\" The reporters, transcribing dutifully, did not notice how the phrase functioned: it was not a claim about the audience's beliefs, which the senator did not know, but a shape into which the audience was invited to fit itself. To refuse the phrase was to become, by the phrase's own construction, unreasonable. It was a very old trick, older than the senator, and older than the newspaper reporting it as new."
+      ],
+      prompt: "What is the writer's central point about the senator's phrase?",
+      sub: "The final sentence is doing significant work.",
+      choices: [
+        { label: "The senator's phrase is a factual statement about the state of public opinion", correct: false },
+        { label: "The senator has genuinely persuaded the audience through rhetorical skill", correct: false },
+        { label: "The phrase pre-defines dissent as unreasonable, forcing the audience into agreement", correct: true },
+        { label: "The reporters have failed the audience by not fact-checking the senator's data", correct: false }
+      ]
+    },
+    better: {
+      title: "The Second Gate — The Senator's Trick",
+      passage: [
+        "The senator kept repeating: \"Of course we all agree that some measure of reform is inevitable.\"",
+        "The reporters wrote it down without commenting. But the phrase was doing something. It was not describing what people believed. It was telling them what they were supposed to believe — and marking anyone who disagreed as unreasonable."
+      ],
+      prompt: "How is the senator's phrase being used?",
+      sub: "Look at what the phrase makes disagreement look like.",
+      choices: [
+        { label: "As a summary of public opinion the senator has researched", correct: false },
+        { label: "As a way of framing anyone who disagrees as unreasonable", correct: true },
+        { label: "As a modest suggestion the senator invites the audience to reject", correct: false },
+        { label: "As a request for the reporters to check the facts", correct: false }
+      ]
+    },
+    good: {
+      title: "The Second Gate — Words That Push",
+      passage: [
+        "A senator said, over and over, \"Of course we all agree that reform is coming.\"",
+        "But not everyone agreed. The senator was using the words to make people feel like they had to agree, even if they didn't."
+      ],
+      prompt: "What was the senator trying to do with his repeated phrase?",
+      sub: "The passage tells you directly.",
+      choices: [
+        { label: "Report the news accurately", correct: false },
+        { label: "Make people feel like they had to agree", correct: true },
+        { label: "Ask the reporters a question", correct: false }
+      ]
+    }
+  },
+
+  // ============ GATE 3 ============
+  {
+    id: 3,
+    best: {
+      title: "The Third Gate — What the Silence Meant",
+      passage: [
+        "When Aunt Marlene finally spoke of her husband, twenty-seven years after his funeral, she did not describe him. She described, instead, the drawer where he had kept his socks. It had a broken pull. He had never fixed it. She had never asked him to. Every morning for thirty-one years he had gripped it by the wood and pulled straight up, and every evening he had pushed it closed with two fingers on the front, because the pull would not have withstood a push.",
+        "She was quiet for a long moment. Then she said: \"I could have fixed it any time. I did not fix it because if I had fixed it he would have said thank you, and I did not want to hear him say thank you for that. I wanted him to say thank you for the other things.\""
+      ],
+      prompt: "What is the deepest insight the passage offers about Aunt Marlene?",
+      sub: "Marlene is describing a small thing that means a large thing.",
+      choices: [
+        { label: "That she resented her husband for his failure to fix a household object", correct: false },
+        { label: "That her love expressed itself through a private restraint her husband never fully saw", correct: true },
+        { label: "That the drawer's broken pull was a mechanical problem she was too busy to fix", correct: false },
+        { label: "That her husband was ungrateful and refused to thank her for anything", correct: false }
+      ]
+    },
+    better: {
+      title: "The Third Gate — The Drawer",
+      passage: [
+        "Aunt Marlene talked about her husband, twenty-seven years after his funeral. She did not talk about who he was. She talked about the drawer where he kept his socks. It had a broken pull. He never fixed it. She could have fixed it herself, but she never did.",
+        "\"I could have fixed it,\" she said. \"But then he would have thanked me for the drawer. I wanted him to thank me for the bigger things.\""
+      ],
+      prompt: "Why did Marlene never fix the drawer?",
+      sub: "Her explanation is direct.",
+      choices: [
+        { label: "Because she didn't know how to fix drawers", correct: false },
+        { label: "Because she wanted her husband's gratitude to be about bigger things than a drawer", correct: true },
+        { label: "Because her husband would not let her fix it", correct: false },
+        { label: "Because she forgot about it every day", correct: false }
+      ]
+    },
+    good: {
+      title: "The Third Gate — The Broken Pull",
+      passage: [
+        "Aunt Marlene remembered her husband. She remembered his sock drawer. It had a broken pull. He had never fixed it. She had never fixed it either. For thirty-one years, they had opened the drawer by the wood."
+      ],
+      prompt: "What was broken on the drawer?",
+      sub: "The passage says it plainly.",
+      choices: [
+        { label: "The wood", correct: false },
+        { label: "The pull", correct: true },
+        { label: "The socks", correct: false }
+      ]
+    }
+  },
+
+  // ============ GATE 4 ============
+  {
+    id: 4,
+    best: {
+      title: "The Fourth Gate — What the Data Doesn't Say",
+      passage: [
+        "The economist's paper reported that, in the counties studied, wages had grown 4.2 percent over the decade, adjusted for inflation. The paper was widely cited as evidence that the working class in these counties had, contrary to popular perception, done well.",
+        "What the paper did not disclose was that its \"working class\" excluded anyone who had left the workforce during the period. It also excluded anyone whose hours had fallen below thirty per week — a category that grew from 8 percent to 22 percent of the original population during the same decade. The 4.2 percent was, therefore, the wage growth of those who had survived. It said nothing about those who had not, and their absence was the argument the paper was not making, but was quietly permitting the reader to fill in on their own."
+      ],
+      prompt: "What is the writer's argument about the economist's paper?",
+      sub: "The final sentence contains the deepest claim.",
+      choices: [
+        { label: "The paper's methodology is flawed but its conclusions remain broadly correct", correct: false },
+        { label: "The paper's exclusions make its finding meaningless as a statement about the working class", correct: false },
+        { label: "The paper's silences do rhetorical work — allowing readers to infer conclusions the data does not support", correct: true },
+        { label: "The paper deliberately falsified data to reach a predetermined political conclusion", correct: false }
+      ]
+    },
+    better: {
+      title: "The Fourth Gate — Missing Numbers",
+      passage: [
+        "An economist reported that wages had grown 4.2% in the studied counties. Newspapers said this proved the working class was doing well.",
+        "But the study left out anyone who had lost their job. And it left out anyone whose hours had fallen below thirty a week — a group that had grown from 8% of the population to 22% over the same decade."
+      ],
+      prompt: "Why does the writer question the economist's conclusion?",
+      sub: "The passage tells you what was left out.",
+      choices: [
+        { label: "The 4.2% is only the wage growth of people who still had full-time jobs, not the whole working class", correct: true },
+        { label: "The economist made a math error in calculating 4.2%", correct: false },
+        { label: "The newspapers should have used a different economist", correct: false },
+        { label: "The counties were the wrong ones to study", correct: false }
+      ]
+    },
+    good: {
+      title: "The Fourth Gate — The Study",
+      passage: [
+        "An economist did a study. He said wages went up 4.2% in ten years.",
+        "But he only looked at people who still had jobs. He left out the people who had lost their jobs or whose hours had been cut."
+      ],
+      prompt: "Who did the economist leave out of his study?",
+      sub: "This is stated in the passage.",
+      choices: [
+        { label: "People who had lost their jobs or whose hours had been cut", correct: true },
+        { label: "People who lived in cities", correct: false },
+        { label: "People whose wages went up", correct: false }
+      ]
+    }
+  },
+
+  // ============ GATE 5 — THE FINAL GATE ============
+  {
+    id: 5,
+    best: {
+      title: "The Fifth Gate — Master Comprehension's Threshold",
+      passage: [
+        "The last passage of the road is a passage about reading itself. A woman, old now, describes the moment as a girl when she first understood that a page could lie to her, and that the lie could be honest — meaning: that the writer might not have known they were lying, and that the shape of the lie could reveal what the writer wished were true, and that this revelation was, if you knew how to read for it, worth more than the truth the writer thought they were telling.",
+        "\"After that,\" she said, \"I could never read the same way again. I could not read for information. I could only read for people. Behind every page there was a person, and behind that person there was another person they were trying to be, and behind that person there was the person they were most afraid of becoming. All three of them were on the page. Learning to read all three at once — that is the whole education. It never ends. Master Comprehension is not a title anyone gives you. It is a road you keep walking.\""
+      ],
+      prompt: "What is the final claim the passage is making about mastery of reading?",
+      sub: "Read the last three sentences very carefully. What is Master Comprehension?",
+      choices: [
+        { label: "That Master Comprehension is a formal credential earned through study of technical texts", correct: false },
+        { label: "That mastery is a continuous practice of reading multiple layers of a writer at once — not a title, but a road", correct: true },
+        { label: "That old readers eventually stop reading for meaning and read only for hidden lies", correct: false },
+        { label: "That every writer is deliberately trying to deceive their readers, and skilled readers detect this", correct: false }
+      ]
+    },
+    better: {
+      title: "The Fifth Gate — The Old Reader",
+      passage: [
+        "An old woman spoke about reading. She said, when she was a girl, she first noticed that a page could lie to her without the writer knowing. The writer might really believe what they wrote — but the way they wrote it revealed something else, something they wished were true.",
+        "\"After that,\" she said, \"I read differently. Behind every page there was a person. Behind that person there was who they wanted to be. Behind that, who they were afraid of being. I could read all three. That is what reading well means. It's not a title. It's a road you keep walking.\""
+      ],
+      prompt: "How does the old woman describe great reading?",
+      sub: "She uses direct comparisons.",
+      choices: [
+        { label: "As reading three layers of the writer at once — who they are, want to be, and fear being", correct: true },
+        { label: "As memorizing the writer's exact words for later recitation", correct: false },
+        { label: "As catching factual errors in the text", correct: false },
+        { label: "As waiting until the writer finishes the book to ask questions", correct: false }
+      ]
+    },
+    good: {
+      title: "The Fifth Gate — What Reading Is",
+      passage: [
+        "An old woman said, \"Reading is not about knowing all the words. It is about understanding the person who wrote them. Every book has a person behind it. When you can see the person, you are reading well.\""
+      ],
+      prompt: "According to the old woman, what does reading well mean?",
+      sub: "Her definition is right in the passage.",
+      choices: [
+        { label: "Knowing all the words in the dictionary", correct: false },
+        { label: "Understanding the person who wrote the book", correct: true },
+        { label: "Finishing every book quickly", correct: false }
+      ]
+    }
+  }
+];
+
+// ==================== ENDINGS ====================
+const ENDINGS = {
+  master: {
+    title: "Master Comprehension",
+    crest: "★",
+    subtitle: "You walked the Best road all the way through. You read every passage at its deepest level. Master Comprehension acknowledges you.",
+    body: [
+      "There is no diploma. There is no ceremony. There is only the recognition — quiet, internal, and permanent — that you can now read a page the way a locksmith looks at a lock.",
+      "You know what the writer wanted you to think. You know what the writer wanted to be true. You know what the writer was afraid of being. You saw all three at once, on every gate.",
+      "Master Comprehension's road, as the old woman said in the fifth passage, is not a title. It is a road you keep walking. But you have walked it once, all the way through, without falling to the road below. That is a rare thing. The next book you pick up will know."
+    ]
+  },
+  sharp: {
+    title: "The Sharp Reader",
+    crest: "✦",
+    subtitle: "You walked the Better road to its end — or you were demoted from the Best road and continued to Better without falling further. Either way, you are sharper than you were an hour ago.",
+    body: [
+      "The Better road is the road most careful readers actually walk. It is not the easiest road. It is not the hardest. It is the road that says: I will read closely, I will read fairly, I will read for what is said, and I will not be fooled by what is not said.",
+      "You did that. The passage about the senator, the passage about the drawer, the passage about the economist's missing numbers — you saw what was there, and you saw what was structural rather than what was decorative.",
+      "You are a Sharp Reader. Sharpness does not require mastery. It requires attention. You have proven you can bring the attention. Master Comprehension's road remains open above you. Return when you're ready."
+    ]
+  },
+  confident: {
+    title: "The Confident Reader",
+    crest: "◈",
+    subtitle: "The road opened to the Good road for you, more than once. You did not stop. You finished. This is not a small thing.",
+    body: [
+      "The Good road is the road nobody talks about, because it is the road nobody wants to have needed. But this is the road that produces readers. Confidence is not a decoration on reading. Confidence is what keeps a reader turning pages when the meaning has not yet resolved.",
+      "You built that confidence today, at least a little. You walked past a passage about a merchant, and one about a broken drawer, and one about an old woman explaining what reading is. You did not stop. You did not give up. You finished the road.",
+      "The Better road and the Best road are not shut against you. They are simply above you today. Come back tomorrow. Or the day after. The road does not care how many walks you need. It only counts whether you walked."
+    ]
+  }
+};
+
+// ==================== STATE ====================
+let state = {
+  currentRoad: null,       // 'best' | 'better' | 'good'
+  currentGate: 0,          // 0 = intro; 1..5 = gates; 6 = ending
+  correctCount: 0,
+  demotions: 0,
+  visited: [],
+  startedAt: null,
+  endingReached: null,
+  serial: null
+};
+
+let justDemoted = false;
+
+const $ = id => document.getElementById(id);
+
+// ==================== FIREBASE ====================
+let db = null, auth = null, uid = null;
+
+async function saveState() {
+  if (!db || !uid) return;
+  try {
+    await setDoc(doc(db, 'trifurcation_progress', uid), state, { merge: true });
+  } catch (e) {}
+}
+
+async function loadState() {
+  if (!db || !uid) return false;
+  try {
+    const snap = await getDoc(doc(db, 'trifurcation_progress', uid));
+    if (snap.exists()) {
+      state = Object.assign(state, snap.data());
+      return true;
+    }
+  } catch (e) {}
+  return false;
+}
+
+async function issueEndingSerial(endingKey) {
+  const now = new Date();
+  const prefix = endingKey === 'master' ? 'COMP' : endingKey === 'sharp' ? 'SHARP' : 'CONF';
+  const serial = 'TR-' + prefix + '-' + now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+  state.serial = serial;
+  if (db && uid) {
+    try {
+      await setDoc(doc(db, 'trifurcation_endings', serial), {
+        ending: endingKey,
+        serial,
+        correct: state.correctCount,
+        demotions: state.demotions,
+        path: state.visited,
+        uid,
+        issuedAt: Date.now()
+      }, { merge: true });
+    } catch (e) {}
+  }
+  return serial;
+}
+
+// ==================== NAVIGATION ====================
+function setBodyRoad(road) {
+  document.body.classList.remove('road-good', 'road-better', 'road-best');
+  if (road) document.body.classList.add('road-' + road);
+}
+
+function showGate() {
+  if (state.currentGate < 1 || state.currentGate > 5) return;
+  const gate = GATES[state.currentGate - 1];
+  const version = gate[state.currentRoad];
+  const key = `g${state.currentGate}_${state.currentRoad}`;
+  if (!state.visited.includes(key)) state.visited.push(key);
+  setBodyRoad(state.currentRoad);
+  saveState();
+
+  $("introScreen").style.display = "none";
+  $("endingScreen").style.display = "none";
+  const g = $("gameScreen");
+  g.style.display = "block";
+
+  const roadTicks = ['good', 'better', 'best'].map(r =>
+    `<div class="road-tick ${r} ${r === state.currentRoad ? 'active' : ''}"><span class="road-dot"></span>${r.toUpperCase()}</div>`
+  ).join('');
+
+  let banner = '';
+  if (justDemoted) {
+    banner = `<div class="demotion-banner"><b>The passage outran you. The road below rose to meet your feet.</b> You are now walking the <b>${state.currentRoad.toUpperCase()}</b> road. Read on. This road has its own ending, and its own certificate, and its own honor.</div>`;
+    justDemoted = false;
+  }
+
+  g.innerHTML = `
+    <div class="journey-header">
+      <div class="road-indicator">${roadTicks}</div>
+      <div class="step-counter">Gate ${state.currentGate} of 5 · ${state.currentRoad.toUpperCase()} road</div>
+    </div>
+    <article class="card">
+      <h2>${escapeHTML(version.title)}</h2>
+      ${banner}
+      <div class="passage-label">Read the passage</div>
+      <div class="passage">
+        ${version.passage.map(p => `<p>${escapeHTML(p)}</p>`).join("")}
+      </div>
+      <div class="prompt">${escapeHTML(version.prompt)}</div>
+      <div class="prompt-sub">${escapeHTML(version.sub)}</div>
+      <div class="choices">
+        <div class="choices-label">Choose your answer</div>
+        ${version.choices.map((c, i) => `
+          <button class="choice" data-i="${i}" data-correct="${c.correct}">
+            ${escapeHTML(c.label)}
+          </button>`).join("")}
+      </div>
+    </article>
+  `;
+
+  g.querySelectorAll('.choice').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const correct = btn.dataset.correct === 'true';
+      handleAnswer(correct);
+    });
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function handleAnswer(correct) {
+  if (correct) {
+    state.correctCount++;
+    // Continue on same road
+  } else {
+    // Demote if not already on Good
+    if (state.currentRoad === 'best') {
+      state.currentRoad = 'better';
+      state.demotions++;
+      justDemoted = true;
+    } else if (state.currentRoad === 'better') {
+      state.currentRoad = 'good';
+      state.demotions++;
+      justDemoted = true;
+    }
+    // On Good, an "incorrect" isn't possible in-game — all good choices are treated as continuation
+    // But defensively, if somehow reached here on Good, just continue
+  }
+  state.currentGate++;
+  if (state.currentGate > 5) {
+    // Ending
+    const endingKey = state.currentRoad === 'best' ? 'master' : state.currentRoad === 'better' ? 'sharp' : 'confident';
+    state.endingReached = endingKey;
+    showEnding(endingKey);
+  } else {
+    saveState();
+    showGate();
+  }
+}
+
+async function showEnding(endingKey) {
+  const ending = ENDINGS[endingKey];
+  const serial = await issueEndingSerial(endingKey);
+  setBodyRoad(state.currentRoad);
+
+  $("introScreen").style.display = "none";
+  $("gameScreen").style.display = "none";
+  const e = $("endingScreen");
+  e.style.display = "block";
+
+  e.innerHTML = `
+    <div class="card ending">
+      <div class="ending-crest">${ending.crest}</div>
+      <h2 class="ending-title">${escapeHTML(ending.title)}</h2>
+      <p class="ending-subtitle">${escapeHTML(ending.subtitle)}</p>
+      <div class="ending-body">
+        ${ending.body.map(p => `<p>${escapeHTML(p)}</p>`).join("")}
+      </div>
+      <div class="ending-cert">
+        <div class="ending-cert-lab">Certificate of Completion</div>
+        <div class="ending-cert-serial">${escapeHTML(serial)}</div>
+      </div>
+      <div style="margin-top:24px;">
+        <div style="color:var(--muted); font-size:0.92rem; margin-bottom:16px;">
+          You answered <b style="color:var(--road-primary);">${state.correctCount}</b> of 5 correctly.
+          ${state.demotions ? `The road opened below you <b style="color:#d47a5c;">${state.demotions}</b> time${state.demotions === 1 ? '' : 's'}.` : `You held your road all the way through.`}
+        </div>
+        <button class="btn ghost" onclick="location.reload()">Walk the Road Again</button>
+        <a href="/library" style="margin-left:12px;" class="btn ghost">The Library</a>
+      </div>
+    </div>
+  `;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function escapeHTML(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ==================== INTRO ====================
+function showIntro(hadPriorState) {
+  setBodyRoad(null);
+  $("gameScreen").style.display = "none";
+  $("endingScreen").style.display = "none";
+  $("introScreen").style.display = "block";
+  const resumeBlock = $("resumeBlock");
+  if (hadPriorState && state.currentRoad && state.currentGate >= 1 && state.currentGate <= 5 && !state.endingReached) {
+    resumeBlock.innerHTML = `
+      <div class="resume">
+        <b>You have a walk in progress.</b><br>
+        <span style="color:var(--muted); font-size: 0.92rem; font-style: italic;">You are on the ${state.currentRoad.toUpperCase()} road, at Gate ${state.currentGate}.</span>
+        <div style="margin-top:14px;">
+          <button class="btn" onclick="window._tr.resume()">Continue Walking →</button>
+          <button class="btn ghost" onclick="window._tr.restart()" style="margin-left:8px;">Start Over</button>
+        </div>
+      </div>
+    `;
+    $("startChoices").style.display = "none";
+  }
+}
+
+window._tr = {
+  resume() { showGate(); },
+  restart() {
+    state = { currentRoad: null, currentGate: 0, correctCount: 0, demotions: 0, visited: [], startedAt: null, endingReached: null, serial: null };
+    justDemoted = false;
+    saveState();
+    location.reload();
+  }
+};
+
+$("btnBetter").addEventListener("click", () => {
+  state.currentRoad = "better";
+  state.currentGate = 1;
+  state.startedAt = new Date().toISOString();
+  showGate();
+});
+$("btnBest").addEventListener("click", () => {
+  state.currentRoad = "best";
+  state.currentGate = 1;
+  state.startedAt = new Date().toISOString();
+  showGate();
+});
+
+// ==================== RATING WIDGET ====================
+const starsEl = $("stars"), metaEl = $("rateMeta"), thxEl = $("rateThanks");
+let myStars = 0, avg = 0, count = 0;
+
+function paint(hover) {
+  starsEl.innerHTML = '';
+  const fill = hover || myStars || Math.round(avg);
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElement('span');
+    s.className = 'st' + ((i <= fill) ? ' on' : '');
+    s.textContent = '★';
+    s.setAttribute('role', 'radio');
+    s.addEventListener('mouseenter', () => paint(i));
+    s.addEventListener('mouseleave', () => paint(0));
+    s.addEventListener('click', () => rate(i));
+    starsEl.appendChild(s);
+  }
+}
+function showMeta() {
+  if (count > 0) metaEl.innerHTML = '<b>' + avg.toFixed(1) + '</b> / 5 · ' + count + (count === 1 ? ' rating' : ' ratings');
+  else metaEl.textContent = 'Be the first to rate this page.';
+}
+function injectLD() {
+  if (count < 1) return;
+  const el = document.getElementById('course-ld');
+  if (!el) return;
+  try {
+    const o = JSON.parse(el.textContent);
+    o.aggregateRating = { "@type": "AggregateRating", "ratingValue": Number(avg.toFixed(2)), "ratingCount": count, "bestRating": 5, "worstRating": 1 };
+    el.textContent = JSON.stringify(o);
+  } catch (e) {}
+}
+async function loadRating() {
+  try {
+    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
+    if (snap.exists()) { const d = snap.data(); count = d.count || 0; avg = count ? (d.sum || 0) / count : 0; }
+  } catch (e) {}
+  try {
+    const v = await getDoc(doc(db, 'lesson_ratings', GID, 'voters', uid));
+    if (v.exists()) myStars = v.data().stars || 0;
+  } catch (e) {}
+  paint(0); showMeta(); injectLD();
+  if (myStars) thxEl.textContent = 'You rated this ' + myStars + ' ★. Tap to change.';
+}
+async function rate(stars) {
+  if (!db || !uid) { thxEl.textContent = 'Ratings save when online.'; myStars = stars; paint(0); return; }
+  try {
+    await runTransaction(db, async (tx) => {
+      const aggRef = doc(db, 'lesson_ratings', GID), vRef = doc(db, 'lesson_ratings', GID, 'voters', uid);
+      const a = await tx.get(aggRef), v = await tx.get(vRef);
+      let sum = a.exists() ? (a.data().sum || 0) : 0, c = a.exists() ? (a.data().count || 0) : 0;
+      if (v.exists()) sum = sum - (v.data().stars || 0) + stars;
+      else { sum += stars; c += 1; }
+      tx.set(aggRef, { sum, count: c }, { merge: true });
+      tx.set(vRef, { stars, at: Date.now() }, { merge: true });
+    });
+    myStars = stars;
+    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
+    if (snap.exists()) { const d = snap.data(); count = d.count || 0; avg = count ? (d.sum || 0) / count : 0; }
+    paint(0); showMeta(); injectLD();
+    thxEl.textContent = 'Thank you — your rating was saved.';
+  } catch (e) { thxEl.textContent = 'Could not save just now. Please try again.'; }
+}
+
+// ==================== GENO PROMPTS ====================
+document.querySelectorAll('.prompt-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    try { window.dispatchEvent(new CustomEvent('geno:open')); } catch (e) {}
+  });
+});
+
+// ==================== BOOT ====================
+async function bootstrap() {
+  try {
+    const app = getApps().length ? getApp() : initializeApp(cfg);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    paint(0);
+    onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        uid = u.uid;
+        const hadPrior = await loadState();
+        await loadRating();
+        showIntro(hadPrior);
+      }
+    });
+    signInAnonymously(auth).catch(() => {
+      metaEl.textContent = 'Ratings unavailable offline.';
+      paint(0);
+      showIntro(false);
+    });
+  } catch (e) {
+    metaEl.textContent = 'Ratings unavailable offline.';
+    paint(0);
+    showIntro(false);
+  }
+}
+bootstrap();
+</script>
+
+<!-- GENO WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<script>
+window.addEventListener('geno:open', function() {
+  try {
+    var w = document.querySelector('elevenlabs-convai');
+    if (w && w.shadowRoot) {
+      var btn = w.shadowRoot.querySelector('button');
+      if (btn) btn.click();
+    }
+  } catch (e) {}
+});
+</script>
+
+</body>
+</html>
