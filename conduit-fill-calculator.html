@@ -179,6 +179,21 @@ NOTES:
     </div>
   </div>
 
+  <section class="txt" id="drillsec">
+    <h2>Drill Mode — The Tool in Reverse</h2>
+    <p>Part of <strong style="color:var(--gold)">The Talking Toolbox</strong>. The meter generates the pull; you name the pipe. Endless problems, graded on the spot — five straight and the trade is yours.</p>
+    <div class="panel">
+      <p id="dq" style="color:var(--cream);min-height:48px">Press New Problem to start the drill.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0">
+        <select id="dans" style="background:#0d0b07;border:1px solid var(--line);border-radius:6px;color:var(--cream);font-size:1.05rem;padding:12px 14px;font-family:inherit;width:190px"></select>
+        <button onclick="dcheck()" style="background:var(--gold);color:#000;border:none;font-weight:700;padding:12px 24px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:1rem">Check</button>
+        <button onclick="dnew()" style="background:transparent;color:var(--gold);border:1px solid var(--gold);font-weight:700;padding:11px 22px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:1rem">New Problem</button>
+      </div>
+      <p id="dfb" style="min-height:44px;color:var(--dim)"></p>
+      <p style="color:var(--gold);font-family:Georgia,serif">Streak: <span id="dstreak">0</span> &nbsp;·&nbsp; Best: <span id="dbest">0</span></p>
+    </div>
+  </section>
+
   <section class="txt">
     <h2>How the Fill Rules Work</h2>
     <p>The NEC doesn't let you stuff a pipe. Chapter 9, Table 1 limits how much of a conduit's cross-section your conductors may occupy: <strong style="color:var(--gold)">53% for one conductor, 31% for two, and 40% for three or more</strong>. The two-wire limit is the strictest because a pair lies side by side and binds on bends; three or more nest and pull cleaner.</p>
@@ -281,6 +296,39 @@ NOTES:
   [csize].concat(wires).forEach(function(el){el.addEventListener('change',calc);});
   ['q1','q2','q3','q4'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});
   calc();
+
+  /* ── DRILL MODE — The Talking Toolbox ── */
+  var D={streak:0,best:0,ans:null,work:''};
+  var DT=[["14 AWG",0.0097],["12 AWG",0.0133],["10 AWG",0.0211],["8 AWG",0.0366],["6 AWG",0.0507],["4 AWG",0.0824]];
+  var dsel=document.getElementById('dans');
+  CONDUIT.EMT.forEach(function(c){var o=document.createElement('option');o.value=c[0];o.textContent=c[0]+' EMT';dsel.appendChild(o);});
+  function dnew(){
+    var groups=1+Math.floor(Math.random()*2),parts=[],total=0,count=0,used=[];
+    for(var g=0;g<groups;g++){
+      var t;do{t=DT[Math.floor(Math.random()*DT.length)];}while(used.indexOf(t[0])>-1);
+      used.push(t[0]);
+      var n=2+Math.floor(Math.random()*5);
+      parts.push(n+' × '+t[0]);total+=n*t[1];count+=n;
+    }
+    var limit=count===1?0.53:(count===2?0.31:0.40),need=total/limit,found=null;
+    for(var j=0;j<CONDUIT.EMT.length;j++){if(CONDUIT.EMT[j][1]>=need){found=CONDUIT.EMT[j][0];break;}}
+    if(!found){dnew();return;}
+    D.ans=found;
+    D.work='Total area '+total.toFixed(4)+' in² across '+count+' conductors → '+(limit*100)+'% rule → need '+need.toFixed(3)+' in² → '+found+' EMT.';
+    document.getElementById('dq').textContent='THHN pull: '+parts.join(' + ')+'. What is the smallest EMT trade size that fits?';
+    document.getElementById('dfb').textContent='';
+  }
+  function dcheck(){
+    if(D.ans===null){dnew();return;}
+    var ok=dsel.value===D.ans,fb=document.getElementById('dfb');
+    if(ok){D.streak++;if(D.streak>D.best)D.best=D.streak;
+      fb.innerHTML='<span style="color:var(--pass);font-weight:700">CORRECT.</span> '+D.work+(D.streak>=5?' <span style="color:var(--gold)">Streak of '+D.streak+' — clean pulls all day. This is Chapter 5 of Job-Site Math.</span>':'');
+    }else{D.streak=0;
+      fb.innerHTML='<span style="color:var(--fail);font-weight:700">NOT QUITE.</span> '+D.work+' Ask GENO to talk it through.';}
+    document.getElementById('dstreak').textContent=D.streak;
+    document.getElementById('dbest').textContent=D.best;
+    D.ans=null;
+  }
 </script>
 </body>
 </html>

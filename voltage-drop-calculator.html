@@ -220,6 +220,21 @@ NOTES:
     </div>
   </div>
 
+  <section class="txt" id="drillsec">
+    <h2>Drill Mode — The Tool in Reverse</h2>
+    <p>Part of <strong style="color:var(--gold)">The Talking Toolbox</strong>. Instead of you feeding the meter, the meter feeds you: endless generated job-site problems, graded on the spot. Build a streak of five and you've earned the wire.</p>
+    <div class="panel">
+      <p id="dq" style="color:var(--cream);min-height:48px">Press New Problem to start the drill.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0">
+        <input id="dans" type="text" inputmode="decimal" placeholder="Your answer" style="background:#0d0b07;border:1px solid var(--line);border-radius:6px;color:var(--cream);font-size:1.05rem;padding:12px 14px;font-family:inherit;width:170px">
+        <button class="btn" onclick="dcheck()" style="background:var(--gold);color:#000;border:none;font-weight:700;padding:12px 24px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:1rem">Check</button>
+        <button onclick="dnew()" style="background:transparent;color:var(--gold);border:1px solid var(--gold);font-weight:700;padding:11px 22px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:1rem">New Problem</button>
+      </div>
+      <p id="dfb" style="min-height:44px;color:var(--dim)"></p>
+      <p style="color:var(--gold);font-family:Georgia,serif">Streak: <span id="dstreak">0</span> &nbsp;·&nbsp; Best: <span id="dbest">0</span></p>
+    </div>
+  </section>
+
   <section class="txt">
     <h2>How the Math Works</h2>
     <p>Every foot of conductor has resistance, and the current has to travel out to the load and back. Single-phase voltage drop is <strong style="color:var(--gold)">VD = 2 × K × I × L ÷ CM</strong>; three-phase replaces the 2 with 1.732. K is the metal's resistance constant (about 12.9 for copper, 21.2 for aluminum), I is your load in amps, L is one-way length in feet, and CM is the wire's cross-section in circular mils. Bigger wire means more circular mils, which means less drop — that's the whole game.</p>
@@ -304,6 +319,41 @@ NOTES:
     document.getElementById(id).addEventListener('change',calc);
   });
   calc();
+
+  /* ── DRILL MODE — The Talking Toolbox ── */
+  var D={streak:0,best:0,ans:null,mode:null,work:''};
+  var DW=[["14 AWG",4110],["12 AWG",6530],["10 AWG",10380],["8 AWG",16510],["6 AWG",26240],["4 AWG",41740]];
+  function dnew(){
+    var mult=Math.random()<0.7?2:1.732;
+    var metal=Math.random()<0.75?[12.9,'copper']:[21.2,'aluminum'];
+    var w=DW[Math.floor(Math.random()*DW.length)];
+    var V=[120,208,240,277][Math.floor(Math.random()*4)];
+    var I=5*(2+Math.floor(Math.random()*10));
+    var L=25+5*Math.floor(Math.random()*36);
+    var vd=mult*metal[0]*I*L/w[1], pct=vd/V*100;
+    D.mode=Math.random()<0.5?'pct':'pf';
+    D.work=(mult===2?'Single-phase':'Three-phase')+': VD = '+(mult===2?'2':'1.732')+' × '+metal[0]+' × '+I+' × '+L+' ÷ '+w[1]+' = '+vd.toFixed(2)+' V, which is '+pct.toFixed(1)+'% of '+V+' V.';
+    var setup='A '+(mult===2?'single-phase':'three-phase')+' '+V+'-volt circuit carries '+I+' amps over '+L+' feet (one-way) on '+w[0]+' '+metal[1]+'.';
+    if(D.mode==='pct'){D.ans=pct;document.getElementById('dq').textContent=setup+' What is the percent voltage drop? (one decimal)';}
+    else{D.ans=pct<=3?'yes':'no';document.getElementById('dq').textContent=setup+' Does it pass the 3% recommendation? (yes or no)';}
+    document.getElementById('dans').value='';document.getElementById('dfb').textContent='';
+    document.getElementById('dans').focus();
+  }
+  function dcheck(){
+    if(D.ans===null){dnew();return;}
+    var raw=document.getElementById('dans').value.trim().toLowerCase(),ok=false;
+    if(D.mode==='pct'){var n=parseFloat(raw.replace('%',''));ok=!isNaN(n)&&Math.abs(n-D.ans)<=0.15;}
+    else{ok=(raw==='yes'||raw==='y')===(D.ans==='yes')&&raw!=='';}
+    var fb=document.getElementById('dfb');
+    if(ok){D.streak++;if(D.streak>D.best)D.best=D.streak;
+      fb.innerHTML='<span style="color:var(--pass);font-weight:700">CORRECT.</span> '+D.work+(D.streak>=5?' <span style="color:var(--gold)">Streak of '+D.streak+' — you\u2019re running the crew. This is Chapter 4 of Job-Site Math.</span>':'');
+    }else{D.streak=0;
+      fb.innerHTML='<span style="color:var(--fail);font-weight:700">NOT QUITE.</span> '+D.work+' Ask GENO to walk it through out loud.';}
+    document.getElementById('dstreak').textContent=D.streak;
+    document.getElementById('dbest').textContent=D.best;
+    D.ans=null;
+  }
+  document.getElementById('dans').addEventListener('keydown',function(e){if(e.key==='Enter')dcheck();});
 </script>
 </body>
 </html>

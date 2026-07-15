@@ -222,6 +222,21 @@ NOTES:
     </div>
   </div>
 
+  <section class="txt" id="drillsec">
+    <h2>Drill Mode — The Tool in Reverse</h2>
+    <p>Part of <strong style="color:var(--gold)">The Talking Toolbox</strong>. The meter describes the room; you size the unit. Endless problems, graded within field tolerance — five straight and you think like a tech.</p>
+    <div class="panel">
+      <p id="dq" style="color:var(--cream);min-height:48px">Press New Problem to start the drill.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0">
+        <input id="dans" type="text" inputmode="numeric" placeholder="BTU/hr" style="background:#0d0b07;border:1px solid var(--line);border-radius:6px;color:var(--cream);font-size:1.05rem;padding:12px 14px;font-family:inherit;width:170px">
+        <button onclick="dcheck()" style="background:var(--gold);color:#000;border:none;font-weight:700;padding:12px 24px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:1rem">Check</button>
+        <button onclick="dnew()" style="background:transparent;color:var(--gold);border:1px solid var(--gold);font-weight:700;padding:11px 22px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:1rem">New Problem</button>
+      </div>
+      <p id="dfb" style="min-height:44px;color:var(--dim)"></p>
+      <p style="color:var(--gold);font-family:Georgia,serif">Streak: <span id="dstreak">0</span> &nbsp;·&nbsp; Best: <span id="dbest">0</span></p>
+    </div>
+  </section>
+
   <section class="txt">
     <h2>Why Bigger Is Not Better</h2>
     <p>The rookie instinct is to oversize "just to be safe." An oversized air conditioner <strong style="color:var(--gold)">short-cycles</strong>: it slams the temperature down, shuts off before it has wrung the humidity out of the air, and leaves the room cold, clammy, and hard on the compressor. Correct sizing beats big sizing every time.</p>
@@ -292,6 +307,36 @@ NOTES:
   ['ceil','sun','insul','climate','people'].forEach(function(id){document.getElementById(id).addEventListener('change',calc);});
   document.getElementById('kitchen').addEventListener('change',calc);
   calc();
+
+  /* ── DRILL MODE — The Talking Toolbox ── */
+  var D={streak:0,best:0,ans:null,work:''};
+  function dnew(){
+    var L=10+Math.floor(Math.random()*15),W=8+Math.floor(Math.random()*11),sq=L*W;
+    var sun=[[1,'average sun'],[1.1,'very sunny'],[0.9,'heavily shaded']][Math.floor(Math.random()*3)];
+    var ins=[[1,'average insulation'],[1.15,'poor insulation'],[0.9,'well insulated']][Math.floor(Math.random()*3)];
+    var extra=Math.floor(Math.random()*4);
+    var kit=Math.random()<0.3;
+    var btu=sq*20*sun[0]*ins[0]+extra*600+(kit?4000:0);
+    D.ans=btu;
+    D.work=sq+' sq ft × 20 = '+(sq*20)+(sun[0]!==1?'; sun ×'+sun[0]:'')+(ins[0]!==1?'; insulation ×'+ins[0]:'')+(extra?'; +'+extra*600+' for '+(extra+2)+' occupants':'')+(kit?'; +4,000 kitchen':'')+' = '+Math.round(btu).toLocaleString()+' BTU/hr.';
+    document.getElementById('dq').textContent='A '+L+' × '+W+' room, '+sun[1]+', '+ins[1]+', '+(extra+2)+' regular occupants'+(kit?', opens to the kitchen':'')+'. Estimate the cooling load in BTU/hr (within 10%).';
+    document.getElementById('dans').value='';document.getElementById('dfb').textContent='';
+    document.getElementById('dans').focus();
+  }
+  function dcheck(){
+    if(D.ans===null){dnew();return;}
+    var n=parseFloat(document.getElementById('dans').value.replace(/[,\s]/g,''));
+    var ok=!isNaN(n)&&Math.abs(n-D.ans)/D.ans<=0.10;
+    var fb=document.getElementById('dfb');
+    if(ok){D.streak++;if(D.streak>D.best)D.best=D.streak;
+      fb.innerHTML='<span style="color:var(--pass);font-weight:700">CORRECT.</span> '+D.work+(D.streak>=5?' <span style="color:var(--gold)">Streak of '+D.streak+' — you size like a tech. This is Chapter 6 of Job-Site Math.</span>':'');
+    }else{D.streak=0;
+      fb.innerHTML='<span style="color:var(--fail);font-weight:700">NOT QUITE.</span> '+D.work+' Ask GENO to walk the adjustments out loud.';}
+    document.getElementById('dstreak').textContent=D.streak;
+    document.getElementById('dbest').textContent=D.best;
+    D.ans=null;
+  }
+  document.getElementById('dans').addEventListener('keydown',function(e){if(e.key==='Enter')dcheck();});
 </script>
 </body>
 </html>
