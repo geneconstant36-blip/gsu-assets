@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<!-- ════════════════════════════════════════════════════════════════
+GSU TOOL BENCH · VOLTAGE DROP CALCULATOR · July 15, 2026 · STAGING
+GENE'S STEPS (≈3 min):
+  1. Upload this file to geneconstant36-blip/gsu-assets repo root as
+     voltage-drop-calculator.html
+  2. Live URL becomes:
+     https://read.globalsovereignuniversity.org/voltage-drop-calculator.html
+  3. Nothing goes live on the Webflow side until you paste the Tool Bench
+     hub embed (separate file) and say publish.
+NOTES:
+  · GENO Widget Law compliant: one unpinned loader, one convai element,
+    footer geno:open opener.
+  · Educational disclaimer included (NEC / local code verification).
+  · JSON-LD: WebApplication + FAQPage + BreadcrumbList.
+════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Voltage Drop Calculator — Copper &amp; Aluminum, Single &amp; Three-Phase | GSU Tool Bench</title>
+<meta name="description" content="Free voltage drop calculator for electricians and students. Single-phase and three-phase, copper and aluminum, AWG through 500 kcmil. Instant percent drop, pass/fail against the NEC 3% recommendation, and the minimum wire size that passes. No login. Works on any phone. From Global Sovereign University.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/voltage-drop-calculator.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "GSU Voltage Drop Calculator",
+  "url": "https://read.globalsovereignuniversity.org/voltage-drop-calculator.html",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Global Sovereign University",
+    "url": "https://www.globalsovereignuniversity.org"
+  },
+  "description": "Free single-phase and three-phase voltage drop calculator for copper and aluminum conductors, with percent drop and minimum passing wire size."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Tradification", "item": "https://www.globalsovereignuniversity.org/tradification" },
+    { "@type": "ListItem", "position": 2, "name": "GSU Tool Bench", "item": "https://www.globalsovereignuniversity.org/tradification" },
+    { "@type": "ListItem", "position": 3, "name": "Voltage Drop Calculator", "item": "https://read.globalsovereignuniversity.org/voltage-drop-calculator.html" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is an acceptable voltage drop?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The NEC informational notes recommend no more than 3% voltage drop on a branch circuit, and no more than 5% combined across the feeder and branch circuit together. Some jurisdictions and specifications make these limits mandatory, so always confirm with your local code authority." }
+    },
+    {
+      "@type": "Question",
+      "name": "What formula does this calculator use?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Single-phase: VD = 2 × K × I × L ÷ CM. Three-phase: VD = 1.732 × K × I × L ÷ CM. K is the resistance constant (approximately 12.9 for copper, 21.2 for aluminum, in ohm-circular-mil per foot), I is load current in amps, L is the one-way circuit length in feet, and CM is the conductor's cross-section in circular mils." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does wire length matter so much?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Resistance grows with every foot of conductor, in both directions of the circuit. A wire size that is fine at 40 feet can drop too much voltage at 150 feet, which is why long runs to detached garages, well pumps, and gate openers so often need to be upsized." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this calculator a substitute for the NEC or a licensed electrician?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. It is a free educational estimating tool from Global Sovereign University. Final conductor sizing must account for ampacity, temperature ratings, terminations, and local amendments — verify every result against the current NEC and your local inspector, and have licensed professionals perform electrical work." }
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --black:#000000; --gold:#C9A84C; --cream:#F5F1E8;
+    --dim:rgba(245,241,232,.72); --line:rgba(201,168,76,.35);
+    --panel:rgba(201,168,76,.07); --pass:#4CAF7D; --fail:#E05B4B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);color:var(--cream);font-family:Verdana,Geneva,sans-serif;font-size:16px;line-height:1.65}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif;color:var(--gold);line-height:1.25}
+  a{color:var(--gold)}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+
+  /* Return bar */
+  .returnbar{background:#0d0b07;border-bottom:1px solid var(--line);padding:10px 0}
+  .returnbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .returnbar a{text-decoration:none;font-size:.9rem;letter-spacing:.04em}
+  .rb-brand{font-family:Georgia,serif;color:var(--cream);font-size:.9rem}
+  .rb-brand span{color:var(--gold)}
+
+  /* Hero */
+  .hero{text-align:center;padding:56px 20px 34px;border-bottom:1px solid var(--line)}
+  .hero .eyebrow{color:var(--gold);letter-spacing:.28em;font-size:.75rem;text-transform:uppercase;margin-bottom:14px}
+  .hero h1{font-size:clamp(1.9rem,4.5vw,3rem);margin-bottom:14px}
+  .hero p{max-width:44em;margin:0 auto;color:var(--dim)}
+
+  /* Calculator */
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:42px 0}
+  @media(max-width:820px){.calc{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:26px}
+  .panel h2{font-size:1.25rem;margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .field select,.field input{width:100%;background:#0d0b07;border:1px solid var(--line);border-radius:6px;color:var(--cream);font-size:1.05rem;padding:12px 14px;font-family:inherit}
+  .field select:focus,.field input:focus{outline:2px solid var(--gold);outline-offset:1px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+  /* Results — the meter */
+  .meter{text-align:center;padding:8px 0 18px}
+  .meter .big{font-family:Georgia,serif;font-size:clamp(2.6rem,7vw,4rem);color:var(--gold)}
+  .meter .unit{font-size:1rem;color:var(--dim);letter-spacing:.1em}
+  .verdict{display:inline-block;margin:10px 0 4px;padding:8px 22px;border-radius:24px;font-weight:700;letter-spacing:.05em}
+  .verdict.pass{background:rgba(76,175,125,.15);color:var(--pass);border:1px solid var(--pass)}
+  .verdict.fail{background:rgba(224,91,75,.13);color:var(--fail);border:1px solid var(--fail)}
+  .rows{margin-top:14px;border-top:1px solid var(--line)}
+  .rows div{display:flex;justify-content:space-between;padding:10px 4px;border-bottom:1px solid rgba(201,168,76,.15);font-size:.95rem}
+  .rows div span:last-child{color:var(--gold);font-weight:700}
+
+  /* Sections */
+  section.txt{padding:38px 0;border-top:1px solid var(--line)}
+  section.txt h2{font-size:1.5rem;margin-bottom:14px}
+  section.txt p{max-width:44em;color:var(--dim);margin-bottom:14px}
+  .faq details{border:1px solid var(--line);border-radius:8px;margin-bottom:12px;background:var(--panel)}
+  .faq summary{cursor:pointer;padding:15px 18px;font-family:Georgia,serif;color:var(--gold);font-size:1.05rem}
+  .faq details p{padding:0 18px 16px;color:var(--dim);max-width:none}
+
+  /* Book CTA */
+  .cta{border:1px solid var(--gold);border-radius:10px;padding:28px;text-align:center;margin:10px 0 4px;background:var(--panel)}
+  .cta h2{font-size:1.4rem;margin-bottom:10px}
+  .cta p{margin:0 auto 16px;max-width:40em;color:var(--dim)}
+  .btn{display:inline-block;background:var(--gold);color:#000;text-decoration:none;font-weight:700;padding:13px 30px;border-radius:6px;letter-spacing:.04em;margin:4px 6px}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+
+  .disclaimer{font-size:.82rem;color:rgba(245,241,232,.5);max-width:52em;margin:26px auto 0;text-align:center}
+  footer{border-top:1px solid var(--line);padding:34px 20px;text-align:center;margin-top:40px}
+  footer p{color:var(--dim);font-size:.9rem;margin-bottom:12px}
+  .geno-open{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--gold);border-radius:30px;color:var(--gold);padding:9px 20px;font-size:.95rem;cursor:pointer;font-family:inherit}
+  .geno-open img{width:34px;height:34px;border-radius:50%}
+</style>
+</head>
+<body>
+
+<div class="returnbar">
+  <div class="wrap">
+    <a href="https://www.globalsovereignuniversity.org/tradification">← Back to Tradification</a>
+    <div class="rb-brand">GLOBAL SOVEREIGN <span>UNIVERSITY</span> · Tool Bench</div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">The GSU Tool Bench · Free Forever · No Login</div>
+  <h1>Voltage Drop Calculator</h1>
+  <p>Single-phase and three-phase, copper and aluminum, 14 AWG through 500 kcmil. Enter your run and load — the meter answers instantly, tells you whether the run passes the NEC 3% recommendation, and names the smallest wire that does.</p>
+</div>
+
+<div class="wrap">
+  <div class="calc">
+    <div class="panel">
+      <h2>Circuit Inputs</h2>
+      <div class="two">
+        <div class="field">
+          <label for="phase">System</label>
+          <select id="phase">
+            <option value="2">Single-Phase</option>
+            <option value="1.732">Three-Phase</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="metal">Conductor</label>
+          <select id="metal">
+            <option value="12.9">Copper (K ≈ 12.9)</option>
+            <option value="21.2">Aluminum (K ≈ 21.2)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="wire">Wire Size</label>
+        <select id="wire"></select>
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="volts">System Voltage</label>
+          <select id="volts">
+            <option>120</option><option selected>240</option><option>208</option>
+            <option>277</option><option>480</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="amps">Load (Amps)</label>
+          <input id="amps" type="number" inputmode="decimal" min="0" step="0.1" value="20">
+        </div>
+      </div>
+      <div class="field">
+        <label for="feet">One-Way Length (Feet)</label>
+        <input id="feet" type="number" inputmode="decimal" min="0" step="1" value="100">
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>The Meter</h2>
+      <div class="meter">
+        <div class="big" id="pct">—</div>
+        <div class="unit">PERCENT VOLTAGE DROP</div>
+        <div><span class="verdict pass" id="verdict">ENTER VALUES</span></div>
+      </div>
+      <div class="rows">
+        <div><span>Volts Dropped</span><span id="vd">—</span></div>
+        <div><span>Voltage at the Load</span><span id="vload">—</span></div>
+        <div><span>NEC Recommendation (Branch)</span><span>≤ 3%</span></div>
+        <div><span>Smallest Wire That Passes 3%</span><span id="minwire">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="txt">
+    <h2>How the Math Works</h2>
+    <p>Every foot of conductor has resistance, and the current has to travel out to the load and back. Single-phase voltage drop is <strong style="color:var(--gold)">VD = 2 × K × I × L ÷ CM</strong>; three-phase replaces the 2 with 1.732. K is the metal's resistance constant (about 12.9 for copper, 21.2 for aluminum), I is your load in amps, L is one-way length in feet, and CM is the wire's cross-section in circular mils. Bigger wire means more circular mils, which means less drop — that's the whole game.</p>
+    <p>The NEC informational notes recommend keeping branch-circuit drop at or under 3%, and feeder plus branch combined at or under 5%. Motors that start hard, well pumps at the end of long runs, and detached buildings are where this bites in real life.</p>
+  </section>
+
+  <section class="txt faq">
+    <h2>Frequently Asked Questions</h2>
+    <details><summary>What is an acceptable voltage drop?</summary><p>The NEC informational notes recommend no more than 3% on a branch circuit and no more than 5% across the feeder and branch combined. Some jurisdictions and job specifications make those limits mandatory — confirm with your local authority.</p></details>
+    <details><summary>Why does wire length matter so much?</summary><p>Resistance accumulates with every foot, out and back. A size that is fine at 40 feet can fail at 150 feet, which is why long runs to garages, well pumps, and gates so often get upsized.</p></details>
+    <details><summary>Does this replace ampacity sizing?</summary><p>No. Voltage drop and ampacity are two separate checks — a conductor must pass both. This tool handles the drop side; ampacity depends on insulation type, temperature, terminations, and conditions of use in the NEC tables.</p></details>
+    <details><summary>Is this a substitute for the NEC or a licensed electrician?</summary><p>No. It is a free educational estimating tool. Verify every result against the current NEC and your local inspector, and have licensed professionals perform electrical work.</p></details>
+  </section>
+
+  <div class="cta">
+    <h2>This Page Is Chapter 4 of a Book</h2>
+    <p><em>Job-Site Math: The Sovereign Tradesman's Field Companion</em> by Dr. Gene A. Constant teaches this exact math — worked examples, practice problems, and a full answer key — for $3.99 on Kindle. And GENO, the GSU AI tutor, has memorized the entire book: he'll walk you through any chapter out loud, 24/7, in 83 languages.</p>
+    <a class="btn" href="https://www.amazon.com/dp/B0H8ZRLWPZ?tag=gsu2026-20" rel="nofollow sponsored">Get Job-Site Math — $3.99</a>
+    <a class="btn ghost" href="#" onclick="openGeno();return false;">Ask GENO to Explain It</a>
+  </div>
+
+  <p class="disclaimer">Educational tool provided free by Global Sovereign University, a program of The Foundation for Global Instruction (501(c)(3)). Results are estimates using standard K-factor approximations. Final conductor sizing must be verified against the current National Electrical Code, local amendments, and a licensed electrician or inspector. Electrical work can kill — when in doubt, hire a professional.</p>
+</div>
+
+<footer>
+  <p>The GSU Tool Bench · Free forever. Works on any phone. No login.</p>
+  <button class="geno-open" onclick="openGeno()">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+    GENO AI Tutor available 24/7 — a robot you can actually TALK to
+  </button>
+</footer>
+
+<!-- GENO WIDGET LAW — single pipeline -->
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script>
+  function openGeno(){
+    window.dispatchEvent(new CustomEvent('geno:open'));
+    var w=document.querySelector('elevenlabs-convai');
+    if(w){ try{ (w.shadowRoot&&w.shadowRoot.querySelector('button'))?w.shadowRoot.querySelector('button').click():w.click(); }catch(e){} }
+  }
+
+  /* ── Calculator ── */
+  var SIZES=[
+    ["14 AWG",4110],["12 AWG",6530],["10 AWG",10380],["8 AWG",16510],
+    ["6 AWG",26240],["4 AWG",41740],["3 AWG",52620],["2 AWG",66360],
+    ["1 AWG",83690],["1/0 AWG",105600],["2/0 AWG",133100],["3/0 AWG",167800],
+    ["4/0 AWG",211600],["250 kcmil",250000],["300 kcmil",300000],
+    ["350 kcmil",350000],["400 kcmil",400000],["500 kcmil",500000]
+  ];
+  var wireSel=document.getElementById('wire');
+  SIZES.forEach(function(s,i){
+    var o=document.createElement('option');o.value=s[1];o.textContent=s[0];
+    if(s[0]==="12 AWG")o.selected=true;wireSel.appendChild(o);
+  });
+
+  function calc(){
+    var mult=parseFloat(document.getElementById('phase').value),
+        K=parseFloat(document.getElementById('metal').value),
+        CM=parseFloat(wireSel.value),
+        V=parseFloat(document.getElementById('volts').value),
+        I=parseFloat(document.getElementById('amps').value),
+        L=parseFloat(document.getElementById('feet').value);
+    var pctEl=document.getElementById('pct'),vEl=document.getElementById('vd'),
+        loadEl=document.getElementById('vload'),verEl=document.getElementById('verdict'),
+        minEl=document.getElementById('minwire');
+    if(!(I>0&&L>0&&V>0&&CM>0)){pctEl.textContent='—';vEl.textContent='—';loadEl.textContent='—';
+      minEl.textContent='—';verEl.textContent='ENTER VALUES';verEl.className='verdict pass';return;}
+    var vd=mult*K*I*L/CM, pct=vd/V*100;
+    pctEl.textContent=pct.toFixed(2)+'%';
+    vEl.textContent=vd.toFixed(2)+' V';
+    loadEl.textContent=(V-vd).toFixed(1)+' V';
+    if(pct<=3){verEl.textContent='PASSES 3% RECOMMENDATION';verEl.className='verdict pass';}
+    else{verEl.textContent='EXCEEDS 3% — UPSIZE THE WIRE';verEl.className='verdict fail';}
+    // smallest wire meeting 3%
+    var needCM=mult*K*I*L/(V*0.03), found=null;
+    for(var i=0;i<SIZES.length;i++){ if(SIZES[i][1]>=needCM){found=SIZES[i][0];break;} }
+    minEl.textContent=found||'Over 500 kcmil — parallel runs';
+  }
+  ['phase','metal','wire','volts','amps','feet'].forEach(function(id){
+    document.getElementById(id).addEventListener('input',calc);
+    document.getElementById(id).addEventListener('change',calc);
+  });
+  calc();
+</script>
+</body>
+</html>

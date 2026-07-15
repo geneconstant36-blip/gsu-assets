@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!-- ════════════════════════════════════════════════════════════════
+GSU TOOL BENCH · HVAC BTU SIZING CALCULATOR · July 15, 2026 · STAGING
+GENE'S STEPS (≈3 min):
+  1. Upload to geneconstant36-blip/gsu-assets repo root as
+     hvac-btu-calculator.html
+  2. Live URL: https://read.globalsovereignuniversity.org/hvac-btu-calculator.html
+  3. Webflow untouched until the Tool Bench hub embed is pasted and you
+     say publish.
+NOTES:
+  · Rule-of-thumb cooling load: 20 BTU/sq ft base with adjustments for
+    ceiling height, sun, insulation, occupants, kitchen, climate.
+  · Explicitly framed as an estimate; Manual J named as the real standard.
+  · Cross-links the EPA 608 Study Guide (natural fit for HVAC visitors).
+  · GENO Widget Law compliant.
+════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free HVAC BTU Calculator — Room AC &amp; Mini-Split Sizing | GSU Tool Bench</title>
+<meta name="description" content="Free BTU calculator for sizing window units, mini-splits, and room air conditioners. Adjusts for ceiling height, sun exposure, insulation, occupants, kitchens, and climate. Instant BTU/hr and tonnage. No login. Works on any phone. From Global Sovereign University.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/hvac-btu-calculator.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "GSU HVAC BTU Sizing Calculator",
+  "url": "https://read.globalsovereignuniversity.org/hvac-btu-calculator.html",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Global Sovereign University", "url": "https://www.globalsovereignuniversity.org" },
+  "description": "Free room air conditioner and mini-split BTU sizing estimator with adjustments for ceiling height, sun, insulation, occupancy, kitchen heat, and climate."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Tradification", "item": "https://www.globalsovereignuniversity.org/tradification" },
+    { "@type": "ListItem", "position": 2, "name": "GSU Tool Bench", "item": "https://www.globalsovereignuniversity.org/tradification" },
+    { "@type": "ListItem", "position": 3, "name": "HVAC BTU Calculator", "item": "https://read.globalsovereignuniversity.org/hvac-btu-calculator.html" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many BTUs do I need per square foot?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The common rule of thumb for cooling is roughly 20 BTU per square foot of floor area, then adjusted upward for high ceilings, strong sun, poor insulation, extra occupants, and kitchen heat, and downward for shade and good insulation. A professional Manual J load calculation is the accurate standard." }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I oversize an air conditioner?",
+      "acceptedAnswer": { "@type": "Answer", "text": "An oversized unit short-cycles: it cools the air fast, shuts off before dehumidifying, and leaves the room cold and clammy while wearing out the compressor. Bigger is not better in cooling — correctly sized is better." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a ton of cooling?",
+      "acceptedAnswer": { "@type": "Answer", "text": "One ton of cooling equals 12,000 BTU per hour — historically the heat absorbed by melting one ton of ice in 24 hours. A 24,000 BTU mini-split is a 2-ton unit." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this a substitute for a Manual J calculation?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. This is a free educational estimator from Global Sovereign University for rough sizing of room units and mini-splits. Whole-home equipment should be sized with an ACCA Manual J load calculation performed by a qualified HVAC professional." }
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --black:#000000; --gold:#C9A84C; --cream:#F5F1E8;
+    --dim:rgba(245,241,232,.72); --line:rgba(201,168,76,.35);
+    --panel:rgba(201,168,76,.07); --pass:#4CAF7D; --fail:#E05B4B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);color:var(--cream);font-family:Verdana,Geneva,sans-serif;font-size:16px;line-height:1.65}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif;color:var(--gold);line-height:1.25}
+  a{color:var(--gold)}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  .returnbar{background:#0d0b07;border-bottom:1px solid var(--line);padding:10px 0}
+  .returnbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .returnbar a{text-decoration:none;font-size:.9rem;letter-spacing:.04em}
+  .rb-brand{font-family:Georgia,serif;color:var(--cream);font-size:.9rem}
+  .rb-brand span{color:var(--gold)}
+  .hero{text-align:center;padding:56px 20px 34px;border-bottom:1px solid var(--line)}
+  .hero .eyebrow{color:var(--gold);letter-spacing:.28em;font-size:.75rem;text-transform:uppercase;margin-bottom:14px}
+  .hero h1{font-size:clamp(1.9rem,4.5vw,3rem);margin-bottom:14px}
+  .hero p{max-width:44em;margin:0 auto;color:var(--dim)}
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:42px 0}
+  @media(max-width:820px){.calc{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:26px}
+  .panel h2{font-size:1.25rem;margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .field select,.field input{width:100%;background:#0d0b07;border:1px solid var(--line);border-radius:6px;color:var(--cream);font-size:1.05rem;padding:12px 14px;font-family:inherit}
+  .field select:focus,.field input:focus{outline:2px solid var(--gold);outline-offset:1px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .check{display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--dim)}
+  .check input{width:22px;height:22px;accent-color:var(--gold)}
+  .meter{text-align:center;padding:8px 0 18px}
+  .meter .big{font-family:Georgia,serif;font-size:clamp(2.4rem,6.5vw,3.8rem);color:var(--gold)}
+  .meter .unit{font-size:1rem;color:var(--dim);letter-spacing:.1em}
+  .rows{margin-top:14px;border-top:1px solid var(--line)}
+  .rows div{display:flex;justify-content:space-between;padding:10px 4px;border-bottom:1px solid rgba(201,168,76,.15);font-size:.95rem}
+  .rows div span:last-child{color:var(--gold);font-weight:700}
+  section.txt{padding:38px 0;border-top:1px solid var(--line)}
+  section.txt h2{font-size:1.5rem;margin-bottom:14px}
+  section.txt p{max-width:44em;color:var(--dim);margin-bottom:14px}
+  .faq details{border:1px solid var(--line);border-radius:8px;margin-bottom:12px;background:var(--panel)}
+  .faq summary{cursor:pointer;padding:15px 18px;font-family:Georgia,serif;color:var(--gold);font-size:1.05rem}
+  .faq details p{padding:0 18px 16px;color:var(--dim);max-width:none}
+  .cta{border:1px solid var(--gold);border-radius:10px;padding:28px;text-align:center;margin:10px 0 4px;background:var(--panel)}
+  .cta h2{font-size:1.4rem;margin-bottom:10px}
+  .cta p{margin:0 auto 16px;max-width:40em;color:var(--dim)}
+  .btn{display:inline-block;background:var(--gold);color:#000;text-decoration:none;font-weight:700;padding:13px 30px;border-radius:6px;letter-spacing:.04em;margin:4px 6px}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+  .disclaimer{font-size:.82rem;color:rgba(245,241,232,.5);max-width:52em;margin:26px auto 0;text-align:center}
+  footer{border-top:1px solid var(--line);padding:34px 20px;text-align:center;margin-top:40px}
+  footer p{color:var(--dim);font-size:.9rem;margin-bottom:12px}
+  .geno-open{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--gold);border-radius:30px;color:var(--gold);padding:9px 20px;font-size:.95rem;cursor:pointer;font-family:inherit}
+  .geno-open img{width:34px;height:34px;border-radius:50%}
+</style>
+</head>
+<body>
+
+<div class="returnbar">
+  <div class="wrap">
+    <a href="https://www.globalsovereignuniversity.org/tradification">← Back to Tradification</a>
+    <div class="rb-brand">GLOBAL SOVEREIGN <span>UNIVERSITY</span> · Tool Bench</div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">The GSU Tool Bench · Free Forever · No Login</div>
+  <h1>HVAC BTU Sizing Calculator</h1>
+  <p>Size a window unit, portable AC, or mini-split the way a tech estimates it: floor area, ceiling height, sun, insulation, bodies in the room, kitchen heat, and climate. The meter answers in BTU/hr and tons — and tells you why oversizing is the classic mistake.</p>
+</div>
+
+<div class="wrap">
+  <div class="calc">
+    <div class="panel">
+      <h2>Room Inputs</h2>
+      <div class="two">
+        <div class="field">
+          <label for="len">Room Length (ft)</label>
+          <input id="len" type="number" inputmode="decimal" min="0" step="1" value="15">
+        </div>
+        <div class="field">
+          <label for="wid">Room Width (ft)</label>
+          <input id="wid" type="number" inputmode="decimal" min="0" step="1" value="12">
+        </div>
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="ceil">Ceiling Height</label>
+          <select id="ceil">
+            <option value="1">8 ft (standard)</option>
+            <option value="1.12">9 ft</option>
+            <option value="1.25">10 ft</option>
+            <option value="1.4">Vaulted / 12 ft+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="sun">Sun Exposure</label>
+          <select id="sun">
+            <option value="1">Average</option>
+            <option value="1.1">Very sunny room</option>
+            <option value="0.9">Heavily shaded</option>
+          </select>
+        </div>
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="insul">Insulation</label>
+          <select id="insul">
+            <option value="1">Average</option>
+            <option value="1.15">Poor / older building</option>
+            <option value="0.9">Well insulated / new build</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="climate">Climate</label>
+          <select id="climate">
+            <option value="1">Moderate</option>
+            <option value="1.1">Hot (Gulf, desert Southwest)</option>
+            <option value="0.95">Cool (northern tier)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="people">People Regularly in the Room</label>
+        <select id="people">
+          <option value="0">1–2</option>
+          <option value="600">3</option>
+          <option value="1200">4</option>
+          <option value="1800">5</option>
+          <option value="2400">6+</option>
+        </select>
+      </div>
+      <label class="check"><input id="kitchen" type="checkbox"> This room is (or opens to) a kitchen (+4,000 BTU)</label>
+    </div>
+
+    <div class="panel">
+      <h2>The Meter</h2>
+      <div class="meter">
+        <div class="big" id="btu">—</div>
+        <div class="unit">BTU / HR COOLING (ESTIMATE)</div>
+      </div>
+      <div class="rows">
+        <div><span>Floor Area</span><span id="sqft">—</span></div>
+        <div><span>Tons of Cooling</span><span id="tons">—</span></div>
+        <div><span>Common Unit Size to Shop</span><span id="unit">—</span></div>
+        <div><span>The Real Standard</span><span>ACCA Manual J</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="txt">
+    <h2>Why Bigger Is Not Better</h2>
+    <p>The rookie instinct is to oversize "just to be safe." An oversized air conditioner <strong style="color:var(--gold)">short-cycles</strong>: it slams the temperature down, shuts off before it has wrung the humidity out of the air, and leaves the room cold, clammy, and hard on the compressor. Correct sizing beats big sizing every time.</p>
+    <p>The rule of thumb here — about 20 BTU per square foot, adjusted for the room's real conditions — is how a tech ballparks a window unit or single-zone mini-split. Whole-home equipment deserves the real instrument: an ACCA Manual J load calculation, which accounts for windows, orientation, infiltration, and duct losses room by room.</p>
+  </section>
+
+  <section class="txt faq">
+    <h2>Frequently Asked Questions</h2>
+    <details><summary>How many BTUs per square foot?</summary><p>Roughly 20 BTU per square foot for cooling, adjusted up for high ceilings, sun, poor insulation, occupants, and kitchen heat, and down for shade and tight construction. Manual J is the accurate standard.</p></details>
+    <details><summary>What happens if I oversize?</summary><p>Short-cycling: fast cooling, poor dehumidification, a cold-and-clammy room, and premature compressor wear. Size to the load, not to fear.</p></details>
+    <details><summary>What is a "ton" of cooling?</summary><p>12,000 BTU per hour — the heat absorbed by melting one ton of ice in 24 hours. A 24,000 BTU mini-split is a 2-ton unit.</p></details>
+    <details><summary>Is this a substitute for Manual J?</summary><p>No. It is a free educational estimator for room units and single zones. Whole-home systems should be sized by a qualified HVAC professional using ACCA Manual J.</p></details>
+  </section>
+
+  <div class="cta">
+    <h2>This Page Is Chapter 6 of a Book</h2>
+    <p><em>Job-Site Math: The Sovereign Tradesman's Field Companion</em> by Dr. Gene A. Constant teaches this exact math — BTU sizing, the sin of oversizing, CFM and delta-T, with a full answer key — for $3.99 on Kindle. And GENO, the GSU AI tutor, has memorized the entire book: he'll quiz you on any chapter out loud, 24/7, in 83 languages.</p>
+    <a class="btn" href="https://www.amazon.com/dp/B0H8ZRLWPZ?tag=gsu2026-20" rel="nofollow sponsored">Get Job-Site Math — $3.99</a>
+    <a class="btn ghost" href="#" onclick="openGeno();return false;">Ask GENO to Explain It</a>
+  </div>
+
+  <p class="disclaimer">Educational tool provided free by Global Sovereign University, a program of The Foundation for Global Instruction (501(c)(3)). Results are rule-of-thumb estimates for room air conditioners and single-zone mini-splits. Whole-home equipment must be sized with an ACCA Manual J load calculation by a qualified HVAC professional, and refrigerant work requires EPA Section 608 certification.</p>
+</div>
+
+<footer>
+  <p>The GSU Tool Bench · Free forever. Works on any phone. No login.</p>
+  <button class="geno-open" onclick="openGeno()">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+    GENO AI Tutor available 24/7 — a robot you can actually TALK to
+  </button>
+</footer>
+
+<!-- GENO WIDGET LAW — single pipeline -->
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script>
+  function openGeno(){
+    window.dispatchEvent(new CustomEvent('geno:open'));
+    var w=document.querySelector('elevenlabs-convai');
+    if(w){ try{ (w.shadowRoot&&w.shadowRoot.querySelector('button'))?w.shadowRoot.querySelector('button').click():w.click(); }catch(e){} }
+  }
+
+  function calc(){
+    var L=parseFloat(document.getElementById('len').value)||0,
+        W=parseFloat(document.getElementById('wid').value)||0,
+        ceilF=parseFloat(document.getElementById('ceil').value),
+        sunF=parseFloat(document.getElementById('sun').value),
+        insF=parseFloat(document.getElementById('insul').value),
+        cliF=parseFloat(document.getElementById('climate').value),
+        ppl=parseFloat(document.getElementById('people').value),
+        kit=document.getElementById('kitchen').checked?4000:0;
+    var btuEl=document.getElementById('btu'),sqEl=document.getElementById('sqft'),
+        tEl=document.getElementById('tons'),uEl=document.getElementById('unit');
+    var sq=L*W;
+    if(!(sq>0)){btuEl.textContent='—';sqEl.textContent='—';tEl.textContent='—';uEl.textContent='—';return;}
+    var btu=sq*20*ceilF*sunF*insF*cliF+ppl+kit;
+    btu=Math.round(btu/100)*100;
+    btuEl.textContent=btu.toLocaleString();
+    sqEl.textContent=Math.round(sq).toLocaleString()+' sq ft';
+    tEl.textContent=(btu/12000).toFixed(2);
+    var COMMON=[5000,6000,8000,10000,12000,14000,18000,24000,30000,36000];
+    var pick=null;
+    for(var i=0;i<COMMON.length;i++){ if(COMMON[i]>=btu){pick=COMMON[i];break;} }
+    uEl.textContent=pick?pick.toLocaleString()+' BTU class':'Multi-zone / Manual J territory';
+  }
+  ['len','wid'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});
+  ['ceil','sun','insul','climate','people'].forEach(function(id){document.getElementById(id).addEventListener('change',calc);});
+  document.getElementById('kitchen').addEventListener('change',calc);
+  calc();
+</script>
+</body>
+</html>
