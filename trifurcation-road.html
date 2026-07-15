@@ -1,336 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Trifurcation Road — Master Comprehension's Infinite Road | GSU</title>
-<meta name="description" content="A branching reading-comprehension quest with three roads. Good builds confidence. Better sharpens focus. Best is Master Comprehension's infinite road. Fail a passage and the road below rises to meet your feet. All three endings are honored.">
-<meta name="theme-color" content="#000000">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trifurcation Road — The Chapter Walk | Master Comprehension's Infinite Road | GSU</title>
+<meta name="description" content="The crown jewel of comprehension at Global Sovereign University. Read a real chapter of The World Climb, then walk twelve gates on three roads — GOOD, BETTER, BEST. Wrong answers send you back. Certification is earned, never gifted.">
+<meta name="author" content="Dr. Gene A Constant, Global Sovereign University">
+<meta name="robots" content="index,follow">
 <link rel="canonical" href="https://read.globalsovereignuniversity.org/trifurcation-road.html">
-
-<script type="application/ld+json" id="course-ld">
-{
-  "@context": "https://schema.org",
-  "@type": "Course",
-  "name": "Trifurcation Road",
-  "description": "A three-road reading comprehension quest. The Good road builds confidence. The Better road sharpens focus. The Best road is Master Comprehension's infinite road. All three endings are honored.",
-  "provider": {
-    "@type": "EducationalOrganization",
-    "name": "Global Sovereign University",
-    "sameAs": "https://globalsovereignuniversity.org"
-  },
-  "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD", "category": "Free" }
-}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Course","name":"Trifurcation Road — The Chapter Walk","description":"A twelve-gate comprehension walk over Chapter 1 of The World Climb. Three roads: GOOD, BETTER, BEST. Certification is earned through demonstrated comprehension.","provider":{"@type":"Organization","name":"Global Sovereign University","url":"https://www.globalsovereignuniversity.org"},"isAccessibleForFree":true,"hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT40M"}}
 </script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-
+<!-- WHY WE PLAY strip reserved: paste the gsu-why-we-play manifesto block directly below <body> when supplied. -->
 <style>
-  :root {
-    --bg: #000000;
-    --card: #000000;
-    --gold: #C9A84C;
-    --cream: #F5F1E8;
-    --cream-soft: #d8d3c8;
-    --muted: #8a8580;
-    --line: rgba(201,168,76,.22);
-
-    /* Road-specific palettes */
-    --good-primary: #F5C34C;
-    --good-glow: rgba(245,195,76,0.14);
-    --good-line: rgba(245,195,76,0.30);
-    --good-deep: #7a5a15;
-
-    --better-primary: #5AAFEB;
-    --better-glow: rgba(90,175,235,0.12);
-    --better-line: rgba(90,175,235,0.30);
-    --better-deep: #1a4a6e;
-
-    --best-primary: #C084E8;
-    --best-glow: rgba(192,132,232,0.12);
-    --best-line: rgba(192,132,232,0.30);
-    --best-deep: #4a1e6e;
-  }
-
-  /* Body tints change based on current-road class on <body> */
-  body.road-good { --road-primary: var(--good-primary); --road-glow: var(--good-glow); --road-line: var(--good-line); --road-deep: var(--good-deep); }
-  body.road-better { --road-primary: var(--better-primary); --road-glow: var(--better-glow); --road-line: var(--better-line); --road-deep: var(--better-deep); }
-  body.road-best { --road-primary: var(--best-primary); --road-glow: var(--best-glow); --road-line: var(--best-line); --road-deep: var(--best-deep); }
-
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--cream); font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; line-height: 1.7; -webkit-font-smoothing: antialiased; transition: background 0.6s; }
-  a { color: var(--gold); text-decoration: none; }
-  a:hover { text-decoration: underline; text-underline-offset: 4px; }
-  .wrap { max-width: 820px; margin: 0 auto; padding: 0 22px; }
-
-  /* HERO */
-  .hero { padding: 56px 0 32px; border-bottom: 1px solid var(--line); }
-  .eyebrow { font-family: "Lora", serif; font-size: 0.82rem; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
-  h1 { font-size: 3.2rem; margin: 0 0 12px; line-height: 1.05; color: var(--cream); letter-spacing: 0.02em; }
-  .lede { font-size: 1.24rem; color: var(--cream-soft); font-style: italic; max-width: 44em; }
-
-  /* RATING */
-  .ratebox { margin-top: 28px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; text-align: center; }
-  .ratebox .rt { font-family: "Lora", serif; font-size: 1.06rem; color: var(--cream); margin-bottom: 12px; }
-  .stars { display: inline-flex; gap: 7px; font-size: 1.9rem; line-height: 1; cursor: pointer; user-select: none; }
-  .stars .st { color: #3a3a3a; transition: transform .12s, color .12s; }
-  .stars .st.on { color: var(--gold); }
-  .stars .st:hover { transform: scale(1.12); }
-  .rate-meta { margin-top: 10px; font-size: .92rem; color: var(--muted); }
-  .rate-meta b { color: var(--gold); }
-  .rate-thanks { margin-top: 8px; font-size: .86rem; color: #7fce9d; min-height: 1.1em; }
-
-  /* INTRO: three-road preview */
-  .roads-preview { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 32px 0; }
-  @media (max-width: 700px) { .roads-preview { grid-template-columns: 1fr; } }
-  .road-card { padding: 24px; border-radius: 12px; text-align: center; border: 1px solid; }
-  .road-card.good { background: radial-gradient(ellipse at top, rgba(245,195,76,0.10) 0%, #000 70%); border-color: var(--good-line); }
-  .road-card.better { background: radial-gradient(ellipse at top, rgba(90,175,235,0.08) 0%, #000 70%); border-color: var(--better-line); }
-  .road-card.best { background: radial-gradient(ellipse at top, rgba(192,132,232,0.10) 0%, #000 70%); border-color: var(--best-line); }
-  .road-card h3 { font-family: Georgia, serif; font-size: 1.6rem; margin: 0 0 8px; letter-spacing: 0.06em; }
-  .road-card.good h3 { color: var(--good-primary); }
-  .road-card.better h3 { color: var(--better-primary); }
-  .road-card.best h3 { color: var(--best-primary); }
-  .road-card .tagline { color: var(--cream-soft); font-style: italic; font-size: 0.98rem; margin: 6px 0 12px; }
-  .road-card .sub { color: var(--muted); font-size: 0.86rem; font-family: "Lora", serif; letter-spacing: 0.06em; }
-
-  /* JOURNEY UI */
-  .journey { margin: 44px 0 60px; }
-  .journey-header { margin-bottom: 22px; }
-
-  .road-indicator { display: flex; gap: 14px; justify-content: center; margin-bottom: 26px; align-items: center; font-family: "Lora", serif; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.78rem; }
-  .road-tick { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.28); transition: all 0.5s; }
-  .road-tick.active { border-color: currentColor; }
-  .road-tick.good.active { color: var(--good-primary); background: rgba(245,195,76,0.09); }
-  .road-tick.better.active { color: var(--better-primary); background: rgba(90,175,235,0.09); }
-  .road-tick.best.active { color: var(--best-primary); background: rgba(192,132,232,0.09); }
-  .road-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-
-  .step-counter { text-align: center; color: var(--muted); font-family: "Lora", serif; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.72rem; margin-bottom: 22px; }
-
-  .card { background: radial-gradient(ellipse at 50% -10%, var(--road-glow, rgba(201,168,76,0.06)) 0%, #000 65%); border: 1px solid var(--road-line, var(--line)); border-radius: 14px; padding: 42px 36px; margin-bottom: 24px; animation: fadeIn 0.55s ease-out; transition: border-color 0.6s; }
-  @media (max-width: 640px) { .card { padding: 28px 22px; } }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-  .card h2 { font-family: Georgia, serif; font-size: clamp(1.7rem, 4vw, 2.3rem); color: var(--cream); font-weight: 700; margin: 0 0 22px; line-height: 1.2; }
-
-  /* PASSAGE — this is the reading material */
-  .passage { background: rgba(255,255,255,0.02); border-left: 3px solid var(--road-primary, var(--gold)); border-radius: 6px; padding: 24px 28px; margin: 24px 0; font-family: "Lora", serif; color: var(--cream); font-size: 1.08rem; line-height: 1.85; transition: border-color 0.6s; }
-  .passage-label { font-family: Georgia, serif; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.72rem; color: var(--road-primary, var(--gold)); margin-bottom: 12px; transition: color 0.6s; }
-  .passage p { margin: 0 0 12px; }
-  .passage p:last-child { margin-bottom: 0; }
-  .passage em { color: var(--road-primary, var(--gold)); font-style: italic; }
-
-  .prompt { font-family: Georgia, serif; font-size: 1.15rem; color: var(--cream); margin: 24px 0 4px; font-weight: 600; }
-  .prompt-sub { font-family: "Lora", serif; font-style: italic; color: var(--muted); font-size: 0.94rem; margin-bottom: 20px; }
-
-  .demotion-banner { background: rgba(212,122,92,0.10); border-left: 3px solid #d47a5c; border-radius: 6px; padding: 16px 20px; margin: 20px 0; color: var(--cream-soft); font-style: italic; font-family: "Lora", serif; }
-  .demotion-banner b { color: #d47a5c; font-style: normal; }
-
-  .choices { margin-top: 20px; }
-  .choices-label { text-align: center; color: var(--road-primary, var(--gold)); font-family: "Lora", serif; letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.72rem; margin-bottom: 18px; padding: 14px 0 0; border-top: 1px solid var(--road-line, var(--line)); transition: color 0.6s, border-color 0.6s; }
-  .choice { display: block; width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--road-line, var(--line)); border-radius: 6px; padding: 18px 22px; margin-bottom: 12px; text-align: left; color: var(--cream); font-family: Georgia, serif; font-size: 1.05rem; line-height: 1.5; cursor: pointer; transition: all 0.22s; }
-  .choice:hover { border-color: var(--road-primary, var(--gold)); background: var(--road-glow, rgba(201,168,76,0.05)); transform: translateX(3px); }
-  .choice .flavor { display: block; margin-top: 8px; color: var(--muted); font-size: 0.9rem; font-style: italic; }
-
-  /* ENDING */
-  .ending { text-align: center; padding: 30px 20px; }
-  .ending-crest { font-size: 3.6rem; margin-bottom: 12px; color: var(--road-primary, var(--gold)); transition: color 0.6s; }
-  .ending-title { color: var(--road-primary, var(--gold)); font-size: 2.3rem; font-family: Georgia, serif; margin: 0 0 8px; transition: color 0.6s; }
-  .ending-subtitle { color: var(--cream-soft); font-family: "Lora", serif; font-style: italic; font-size: 1.15rem; margin: 0 0 24px; }
-  .ending-body { text-align: left; color: var(--cream); font-family: "Lora", serif; font-size: 1.1rem; line-height: 1.85; max-width: 34em; margin: 0 auto 30px; }
-  .ending-body p { margin: 0 0 14px; }
-  .ending-body em { color: var(--road-primary, var(--gold)); transition: color 0.6s; }
-
-  .ending-cert { margin: 24px 0; padding: 24px; background: var(--road-glow, rgba(201,168,76,0.05)); border: 1px solid var(--road-primary, var(--gold)); border-radius: 12px; transition: all 0.6s; }
-  .ending-cert-lab { color: var(--muted); font-family: "Lora", serif; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.72rem; margin-bottom: 8px; }
-  .ending-cert-serial { color: var(--road-primary, var(--gold)); font-family: "Courier New", monospace; font-size: 1.05rem; transition: color 0.6s; }
-
-  .btn { display: inline-block; background: var(--road-primary, var(--gold)); color: #000; padding: 14px 30px; border-radius: 8px; font-family: Georgia, serif; font-weight: bold; cursor: pointer; text-decoration: none; border: none; font-size: 1rem; transition: transform 0.15s, background 0.6s; }
-  .btn:hover { transform: translateY(-2px); }
-  .btn.ghost { background: transparent; color: var(--road-primary, var(--gold)); border: 1px solid var(--road-primary, var(--gold)); transition: color 0.6s, border-color 0.6s; }
-  .btn.best-btn { background: var(--best-primary); color: #000; }
-  .btn.better-btn { background: var(--better-primary); color: #000; }
-
-  /* INTRO SCREEN */
-  .intro { padding: 20px 0; }
-  .intro-body { color: var(--cream-soft); font-size: 1.08rem; line-height: 1.8; margin: 24px 0; max-width: 44em; }
-  .intro-body p { margin: 0 0 18px; }
-  .intro-body em { color: var(--gold); }
-  .intro-meta { display: flex; gap: 28px; flex-wrap: wrap; margin: 32px 0; color: var(--muted); font-family: "Lora", serif; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; }
-  .intro-meta span { display: inline-flex; align-items: center; gap: 8px; }
-  .intro-meta span::before { content: "✦"; color: var(--gold); }
-  .resume { margin: 24px 0; padding: 20px; background: var(--road-glow, rgba(201,168,76,0.06)); border: 1px solid var(--road-line, var(--line)); border-radius: 8px; transition: all 0.6s; }
-  .resume b { color: var(--road-primary, var(--gold)); }
-
-  .start-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
-  @media (max-width: 600px) { .start-choices { grid-template-columns: 1fr; } }
-  .start-choices button { padding: 22px 24px; border-radius: 10px; font-family: Georgia, serif; font-size: 1.1rem; cursor: pointer; border: 2px solid; transition: all 0.2s; text-align: center; background: transparent; color: var(--cream); font-weight: 600; }
-  .start-choices .go-better { border-color: var(--better-primary); }
-  .start-choices .go-better:hover { background: rgba(90,175,235,0.10); }
-  .start-choices .go-best { border-color: var(--best-primary); }
-  .start-choices .go-best:hover { background: rgba(192,132,232,0.10); }
-  .start-choices .go-tag { display: block; font-size: 0.82rem; margin-top: 6px; color: var(--muted); font-style: italic; font-weight: 400; letter-spacing: 0.06em; }
-
-  /* SECTIONS */
-  section { padding: 40px 0; border-top: 1px solid var(--line); }
-  section h3 { color: var(--cream); font-size: 1.5rem; margin: 0 0 14px; }
-  section p { color: var(--cream-soft); margin: 0 0 14px; }
-  .rules-list { color: var(--cream-soft); margin: 0 0 14px; padding-left: 22px; }
-  .rules-list li { margin-bottom: 8px; }
-
-  .geno { margin-top: 60px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
-  .geno h2 { color: var(--cream); font-size: 1.6rem; margin: 0 0 10px; }
-  .geno-prompts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-  .prompt-chip { background: rgba(201,168,76,0.1); border: 1px solid var(--line); border-radius: 20px; padding: 10px 18px; cursor: pointer; color: var(--cream); font-size: 0.95rem; }
-  .prompt-chip:hover { background: rgba(201,168,76,0.2); }
-
-  .closing { margin-top: 80px; padding: 60px 40px; background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, #000 70%); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
-  .closing-eyebrow { font-family: "Lora", serif; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-size: 0.85rem; margin-bottom: 20px; }
-  .closing-body { color: var(--cream); font-family: "Lora", serif; font-style: italic; font-size: 1.35rem; line-height: 1.55; max-width: 34em; margin: 0 auto 20px; }
-  .closing-attribution { color: var(--muted); font-size: 0.94rem; }
-
-  .foundation { margin-top: 80px; padding: 40px 0; text-align: center; border-top: 1px solid var(--line); }
-  .foundation p { color: var(--muted); margin: 4px 0; font-size: 0.94rem; }
-  .foundation .tagline { color: var(--gold); font-style: italic; font-size: 1.1rem; margin: 12px 0; }
-
-  @media (max-width: 720px) {
-    h1 { font-size: 2.2rem; }
-    .lede { font-size: 1.08rem; }
-  }
+:root{
+ --black:#000; --gold:#C9A84C; --cream:#F5F1E8; --muted:#b9b3a6;
+ --good:#E8C55A; --better:#5AAFEB; --best:#C084E8;
+ --tier:var(--better);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+body{background:var(--black);color:var(--cream);font-family:Georgia,'Times New Roman',serif;line-height:1.7}
+body.t-good{--tier:var(--good)} body.t-better{--tier:var(--better)} body.t-best{--tier:var(--best)}
+a{color:var(--gold)} button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+.hero{text-align:center;padding:60px 0 30px}
+.eyebrow{color:var(--gold);letter-spacing:.34em;text-transform:uppercase;font-size:.72rem;margin-bottom:16px}
+h1{font-weight:normal;font-size:clamp(2rem,5vw,3rem)}
+.sub{color:var(--muted);margin-top:10px;font-size:1.02rem}
+.fork-hero{margin:34px auto 6px;max-width:900px}
+.fork-hero figure{margin:0;border:1px solid rgba(201,168,76,.55);border-radius:10px;padding:8px;background:#000;box-shadow:0 24px 60px rgba(0,0,0,.65),inset 0 0 0 1px rgba(201,168,76,.15)}
+.fork-hero img{display:block;width:100%;height:auto;border-radius:6px}
+.fork-hero figcaption{text-align:center;color:var(--muted);font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 6px 4px}
+.fork-hero figcaption b{color:var(--gold);font-weight:normal}
+.panel{border:1px solid rgba(201,168,76,.4);border-radius:10px;padding:28px;margin:30px 0;background:rgba(201,168,76,.03)}
+.panel h2{font-weight:normal;color:var(--gold);font-size:1.3rem;margin-bottom:14px}
+.panel p{color:var(--muted);margin-bottom:12px}
+.panel p strong{color:var(--cream);font-weight:normal}
+.lawline{border-left:3px solid var(--gold);padding:10px 16px;color:var(--cream);font-style:italic;margin:16px 0}
+.roadsig{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.roadsig div{border:1px solid;border-radius:8px;padding:14px;text-align:center}
+.roadsig .rg{border-color:var(--good);color:var(--good)} .roadsig .rb{border-color:var(--better);color:var(--better)} .roadsig .rs{border-color:var(--best);color:var(--best)}
+.roadsig b{display:block;font-weight:normal;letter-spacing:.2em;margin-bottom:6px}
+.roadsig span{color:var(--muted);font-size:.82rem;font-style:italic}
+@media(max-width:640px){.roadsig{grid-template-columns:1fr}}
+/* chapter pane */
+.chapter{max-height:430px;overflow-y:auto;border:1px solid rgba(201,168,76,.35);border-radius:8px;padding:26px;background:#050505;margin:16px 0}
+.chapter h3{color:var(--gold);font-weight:normal;font-size:1.1rem;margin:22px 0 10px}
+.chapter h3:first-child{margin-top:0}
+.chapter p{margin-bottom:1em;color:var(--cream);font-size:1.02rem}
+.chapter strong{color:var(--gold);font-weight:normal}
+.readnote{color:var(--muted);font-size:.85rem;margin:8px 0 18px}
+.bigbtn{background:var(--gold);color:#000;border:0;border-radius:5px;padding:15px 30px;font-size:1.02rem}
+.bigbtn:hover{opacity:.87}
+.linebtn{background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:5px;padding:14px 24px;font-size:.95rem}
+.linebtn:hover{background:rgba(201,168,76,.12)}
+/* walk */
+#walk{display:none}
+.trail{display:flex;gap:6px;justify-content:center;margin:26px 0 8px;flex-wrap:wrap}
+.stone{width:26px;height:26px;border-radius:50%;border:1px solid rgba(201,168,76,.45);display:flex;align-items:center;justify-content:center;font-size:.68rem;color:var(--muted);transition:all .3s}
+.stone.done{background:var(--tier);border-color:var(--tier);color:#000}
+.stone.here{border-color:var(--tier);color:var(--tier);box-shadow:0 0 12px var(--tier);transform:scale(1.2)}
+.tierbanner{text-align:center;margin:10px 0 4px;letter-spacing:.3em;text-transform:uppercase;font-size:.8rem;color:var(--tier);transition:color .4s}
+.tiersub{text-align:center;color:var(--muted);font-size:.82rem;font-style:italic;margin-bottom:16px}
+.vignette{max-width:520px;margin:0 auto 20px}
+.vignette svg{display:block;width:100%;height:auto}
+.wpname{text-align:center;color:var(--cream);font-size:1.15rem;margin-bottom:20px}
+.wpname b{color:var(--tier);font-weight:normal}
+.qcard{border:1px solid var(--tier);border-radius:10px;padding:26px;background:rgba(0,0,0,.5);transition:border-color .4s}
+.qkind{color:var(--tier);font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;margin-bottom:12px}
+.qtext{font-size:1.12rem;margin-bottom:20px}
+.opt{display:block;width:100%;text-align:left;background:transparent;border:1px solid rgba(245,241,232,.28);border-radius:6px;color:var(--cream);padding:14px 18px;font-size:1rem;margin-bottom:10px;transition:all .15s}
+.opt:hover{border-color:var(--tier);background:rgba(255,255,255,.03)}
+.opt.sel{border-color:var(--tier);background:rgba(255,255,255,.06)}
+.typedrow{display:flex;gap:10px;flex-wrap:wrap}
+.typedrow input{flex:1;min-width:220px;background:#0a0a0a;border:1px solid rgba(201,168,76,.5);border-radius:6px;color:var(--cream);padding:14px 16px;font-size:1rem;font-family:inherit}
+.ordslot{color:var(--muted);font-size:.85rem;margin-bottom:10px;min-height:1.2em}
+.ordslot b{color:var(--tier);font-weight:normal}
+.qactions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.submitbtn{background:var(--tier);color:#000;border:0;border-radius:5px;padding:13px 26px;font-size:.98rem;transition:background .4s}
+.submitbtn:disabled{opacity:.35;cursor:default}
+.resetord{background:transparent;border:1px solid rgba(245,241,232,.3);color:var(--muted);border-radius:5px;padding:12px 18px;font-size:.85rem}
+.verdict{margin-top:18px;border-radius:8px;padding:16px 18px;display:none}
+.verdict.ok{display:block;border:1px solid #7fce9d;color:#7fce9d;background:rgba(127,206,157,.07)}
+.verdict.bad{display:block;border:1px solid #d47a5c;color:#d47a5c;background:rgba(212,122,92,.08)}
+.verdict p{margin:0 0 6px} .verdict p:last-child{margin:0}
+.verdict .nextbtn{margin-top:12px;background:var(--tier);color:#000;border:0;border-radius:5px;padding:11px 22px;font-size:.92rem}
+.runstats{text-align:center;color:var(--muted);font-size:.8rem;margin:18px 0 40px}
+/* endings */
+#ending{display:none;text-align:center;padding:30px 0 10px}
+#ending h2{font-weight:normal;font-size:2rem;color:var(--tier);margin-bottom:8px}
+#ending .edesc{color:var(--muted);max-width:36em;margin:0 auto 24px}
+.cert{border:2px solid var(--tier);border-radius:12px;max-width:640px;margin:0 auto 24px;padding:40px 30px;background:#020202}
+.cert .c1{color:var(--gold);letter-spacing:.3em;text-transform:uppercase;font-size:.72rem;margin-bottom:14px}
+.cert .cname{font-size:1.8rem;margin:10px 0;border-bottom:1px solid rgba(201,168,76,.4);display:inline-block;padding:0 24px 6px;min-width:50%}
+.cert .ctitle{color:var(--tier);font-size:1.25rem;margin:14px 0 6px}
+.cert .cserial{font-family:'Courier New',monospace;color:var(--tier);margin-top:14px;font-size:1rem}
+.cert .cdate{color:var(--muted);font-size:.85rem;margin-top:6px}
+.cert .cfoot{color:var(--muted);font-size:.75rem;margin-top:18px;font-style:italic}
+.nameentry{margin:0 auto 20px;max-width:420px;display:flex;gap:10px}
+.nameentry input{flex:1;background:#0a0a0a;border:1px solid rgba(201,168,76,.5);border-radius:6px;color:var(--cream);padding:13px 16px;font-size:1rem;font-family:inherit}
+.closing{text-align:center;color:var(--muted);font-style:italic;max-width:38em;margin:50px auto 70px;padding:0 20px}
+.bookrow{display:flex;gap:26px;align-items:center;margin:6px 0 22px;flex-wrap:wrap}
+.bookcoverbox{width:170px;flex-shrink:0}
+.bookcover{display:block;width:100%;height:auto;border:1px solid rgba(201,168,76,.6);border-radius:4px;box-shadow:0 14px 34px rgba(0,0,0,.7)}
+.spinefallback{display:none;width:170px;min-height:252px;border:1px solid var(--gold);border-radius:4px;background:linear-gradient(160deg,rgba(201,168,76,.16),rgba(0,0,0,0) 55%),#050505;flex-direction:column;justify-content:space-between;padding:18px 12px;text-align:center;box-shadow:0 14px 34px rgba(0,0,0,.7)}
+.spinefallback .s-top{color:var(--gold);font-size:.52rem;letter-spacing:.26em;text-transform:uppercase}
+.spinefallback .s-title{font-size:1.15rem;line-height:1.25;color:var(--cream)}
+.spinefallback .s-rule{color:var(--gold);letter-spacing:.4em;font-size:.7rem}
+.spinefallback .s-author{color:var(--muted);font-size:.66rem}
+.bookmeta{flex:1;min-width:240px}
+.bookmeta h3{font-weight:normal;font-size:1.3rem;margin-bottom:2px}
+.bm-sub{color:var(--gold);font-size:.9rem;margin-bottom:10px}
+.bm-p{color:var(--muted);font-size:.92rem;margin-bottom:14px}
+.bm-ctas{display:flex;gap:10px;flex-wrap:wrap}
+.bm-gold{display:inline-block;text-decoration:none;background:var(--gold);color:#000;border-radius:4px;padding:11px 18px;font-size:.9rem}
+.bm-line{display:inline-block;text-decoration:none;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:10px 16px;font-size:.88rem}
+.bm-disc{color:var(--muted);font-size:.66rem;margin-top:10px}
+/* master seal on the highest certificate */
+.cert .seal{display:none;margin:16px auto 0;width:96px}
+.cert.master .seal{display:block}
+.cert.master{box-shadow:0 0 44px rgba(192,132,232,.25), inset 0 0 24px rgba(201,168,76,.08)}
+.cert .geno-endorse{display:none;align-items:center;gap:12px;justify-content:center;margin-top:18px;border-top:1px solid rgba(201,168,76,.3);padding-top:16px}
+.cert.master .geno-endorse{display:flex}
+.cert .geno-endorse img{width:40px;height:40px;border-radius:50%}
+.cert .geno-endorse span{color:var(--muted);font-size:.78rem;font-style:italic;max-width:24em;text-align:left}
+.walloptin{display:flex;align-items:flex-start;gap:10px;max-width:420px;margin:0 auto 16px;color:var(--muted);font-size:.85rem;text-align:left;cursor:pointer}
+.walloptin input{margin-top:4px;accent-color:#C9A84C;width:16px;height:16px}
+@media print{ body *{visibility:hidden} .cert,.cert *{visibility:visible} .cert{position:fixed;inset:0;margin:auto;border-color:#000} }
 </style>
 </head>
-<body>
+<body class="t-better">
 
 <div class="wrap">
+ <section class="hero">
+  <p class="eyebrow">Global Sovereign University · The Crown Jewel of Comprehension</p>
+  <h1>Trifurcation Road</h1>
+  <p class="sub">The Chapter Walk · Chapter 1 of <em>The World Climb</em> · Twelve gates. Three roads. One honest certificate.</p>
+ </section>
 
-  <!-- HERO -->
-  <section class="hero" style="border-top:none;padding-top:56px;">
-    <div class="eyebrow">Global Sovereign University · A Reading-Comprehension Quest</div>
-    <h1>Trifurcation Road</h1>
-    <p class="lede">Three roads. Only two are chosen; the third rises to meet your feet when the passage in front of you outruns your reading. Every ending is honored. Nobody who keeps walking is turned away.</p>
+ <div class="fork-hero">
+  <figure>
+   <img src="trifurcation-road-fork.jpg" alt="The Trifurcation Road: a golden country road named GOOD where confidence begins, a blue digital highway named BETTER of focused energy, and a purple cosmic road named BEST — Master Comprehension's infinite road" width="1184" height="840" loading="eager">
+   <figcaption>One road in &nbsp;·&nbsp; <b>GOOD</b> — <b>BETTER</b> — <b>BEST</b> &nbsp;·&nbsp; the road decides who stays</figcaption>
+  </figure>
+ </div>
 
-    <div class="ratebox" id="ratebox">
-      <div class="rt">Rate Trifurcation Road. Your stars help other travelers find it.</div>
-      <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
-      <div class="rate-meta" id="rateMeta">Loading ratings…</div>
-      <div class="rate-thanks" id="rateThanks"></div>
+ <section class="panel" id="lawpanel">
+  <h2>The Law of the Road</h2>
+  <p><strong>This road cannot be guessed.</strong> A missed question never returns. The next gate asks something different, drawn from a deep well. Answers change their number, their order, and sometimes there are no choices at all — only your own words. Some gates demand you select every true statement; some demand you place events in order. Elimination will not save you. Only the chapter will.</p>
+  <div class="lawline">Certification here is earned, never gifted. GSU does not print gradeflation.</div>
+  <div class="roadsig">
+   <div class="rg"><b>GOOD</b><span>Confidence begins here.</span></div>
+   <div class="rb"><b>BETTER</b><span>Focused energy. The walk begins here.</span></div>
+   <div class="rs"><b>BEST</b><span>Master Comprehension&#39;s infinite road.</span></div>
+  </div>
+  <p>You begin on the <strong>Better</strong> road. Answer three gates in a row correctly and the purple road opens — <strong>Best</strong>. Miss a gate and the road pushes you back a stone and down a road. On <strong>Good</strong>, you cannot fall further — but a miss slides you back two stones. Twelve gates stand between you and the end. The road you finish on is the certificate you earn: only those who pass the final gate on <strong>Best</strong> earn <em>Master Comprehension&#39;s Infinite Road</em>.</p>
+ </section>
+
+ <section class="panel" id="readgate">
+  <h2>First: Read the Chapter</h2>
+  <div class="bookrow">
+   <div class="bookcoverbox">
+    <img src="worldclimb-cover.jpg" alt="The World Climb — The Oldest Economy on Earth, Reborn — by Dr. Gene A Constant" class="bookcover" onerror="this.style.display='none';document.getElementById('coverfallback').style.display='flex';">
+    <div class="spinefallback" id="coverfallback">
+     <div class="s-top">Global Sovereign University</div>
+     <div class="s-title">THE<br>WORLD<br>CLIMB</div>
+     <div class="s-rule">— ♦ —</div>
+     <div class="s-author">Dr. Gene A Constant</div>
     </div>
-  </section>
-
-  <!-- JOURNEY -->
-  <section class="journey" id="journey">
-
-    <!-- INTRO SCREEN -->
-    <div id="introScreen">
-      <div class="intro">
-        <div class="intro-body">
-          <p>Ahead of you, three roads run into the same country. Each road ends at the same wonder — but each road walks it differently.</p>
-        </div>
-
-        <div class="roads-preview">
-          <div class="road-card good">
-            <h3>GOOD</h3>
-            <div class="tagline">Confidence Begins Here.</div>
-            <div class="sub">Where the road opens for readers still finding their footing.</div>
-          </div>
-          <div class="road-card better">
-            <h3>BETTER</h3>
-            <div class="tagline">I want to be a sharp reader.</div>
-            <div class="sub">Focused energy. Direct passages. Real questions.</div>
-          </div>
-          <div class="road-card best">
-            <h3>BEST</h3>
-            <div class="tagline">Master Comprehension's Infinite Road.</div>
-            <div class="sub">Dense passages. Inference. Tone. Judgment.</div>
-          </div>
-        </div>
-
-        <div class="intro-body">
-          <p>You cannot choose the <em>Good</em> road at the start. Good is where the road opens for you if the passage in front of you is more than you can read today — and there is nothing wrong with that, and nothing final about that. On Good, you will finish. On Good, you will build confidence for the next walk.</p>
-          <p>The road takes about twenty minutes if you read carefully. Your place is saved. You can leave and come back. Every road has a certificate at its end.</p>
-        </div>
-
-        <div class="intro-meta">
-          <span>Five gates on each road</span>
-          <span>Three endings</span>
-          <span>Auto-save</span>
-          <span>Free forever</span>
-        </div>
-
-        <div id="resumeBlock"></div>
-
-        <div class="start-choices" id="startChoices">
-          <button class="go-better" id="btnBetter">
-            Enter through the Sharp Reader's gate
-            <span class="go-tag">The Better road</span>
-          </button>
-          <button class="go-best" id="btnBest">
-            Enter through Master Comprehension's gate
-            <span class="go-tag">The Best road — hardest by design</span>
-          </button>
-        </div>
-      </div>
+   </div>
+   <div class="bookmeta">
+    <h3>The World Climb</h3>
+    <p class="bm-sub">The Oldest Economy on Earth, Reborn</p>
+    <p class="bm-p">This walk tests a real book — fourteen chapters on building a barter life alongside the money life you already have. Read it free, forever. If it earns a place on your shelf, the Kindle is $3.99 and every purchase funds the Foundation.</p>
+    <div class="bm-ctas">
+     <a class="bm-gold" href="https://www.amazon.com/s?k=The+World+Climb+Gene+Constant&tag=gsu2026-20" rel="noopener" target="_blank">Own the Kindle — $3.99</a>
+     <a class="bm-line" href="https://read.globalsovereignuniversity.org/worldclimb-reader.html">Read it free — whole book</a>
     </div>
+    <p class="bm-disc">As an Amazon Associate, GSU earns from qualifying purchases.</p>
+   </div>
+  </div>
+  <p>The road tests <strong>Chapter 1 — The Oldest Economy on Earth</strong>, exactly as written. Read it here, or read it with your place saved and free listen-aloud in the <a href="https://read.globalsovereignuniversity.org/worldclimb-reader.html">Sovereign Reading Room</a>. GENO has memorized the entire book if you want a study partner — in any of 83 languages.</p>
+  <div class="chapter" id="chapterPane">
+<h3>Part 1 · Barter Before Money: The First Trades</h3>
+<p>Before there was a coin to clink in a pocket, before there was a bank to approve or deny you, there was a human being with something another human being wanted. That is the first economy. Not paper. Not metal. Not numbers in an account. The deal.</p>
+<p>It is easy to imagine barter as primitive, a rough draft of “real” commerce. But that story comes from the modern habit of treating money as the center of gravity. If you shift your eyes back far enough, the center of gravity changes. Early people did not wake up “broke” because there was no concept of being broke in the way we mean it now. There was hunger, there was winter, there was risk, there was effort. And there was the oldest solution any group of humans has ever built: exchange.</p>
+<p>Picture a small settlement at the edge of a river. The details differ by continent and century, but the bones of the scene are the same. Someone returns from the water with fish. Someone else has gathered roots and wild onions. Another has the patience and knowledge to shape a sharp edge from stone, and someone has learned how to bind that edge to wood with sinew so it holds. In this world, a “job” is not a title. It is a contribution. And a contribution becomes a claim: I did this, so I can reasonably ask for that.</p>
+<p>The first trades were not likely conducted with stiff, formal negotiation the way people imagine a barter transaction today. There were no price tags. There was no official scale. There was only need, observation, and memory.</p>
+<p>Need is simple: my child is hungry, your fire is hot, the rain is coming, and my shelter leaks. Observation is practical: you are good with your hands, you seem to have more grain than you can eat, and you have extra clay pots stacked by the wall. Memory is the glue: you helped me last winter; you refused my sister; you always bring back more than you need; you are fair; you are selfish. In small groups, memory is a kind of ledger. It keeps accounts without ink.</p>
+<p>If you want to understand barter before money, do not start by imagining strangers meeting on a road like two merchants in a storybook. Start by imagining neighbors. Most early exchange happened among people who were going to see each other again. That matters because it changes the shape of the deal. When you meet again, cheating is expensive. When reputation travels faster than you can, dishonesty is a poor strategy. The trade is not only about goods; it is about belonging.</p>
+<p>An early hunter might return with meat. Fresh meat is urgent. It spoils. The value is high, but the window is short. A person who knows how to preserve meat by smoking it has something the hunter needs: time. Another person has the skill to stitch hides into warm clothing. In a cash economy, you might say, “What do you charge?” In an early barter economy, the question is closer to, “How do we make sure everyone makes it through the season?”</p>
+<p>That question is not charity. It is logistics. Survival is a team project.</p>
+<p>So a portion of meat becomes future warmth: a hide worked into a cloak. Another portion becomes tools: a new spear shaft, a repaired knife, and a stronger cord. Another portion becomes labor: someone spends a day helping patch a roof before the wind picks up.</p>
+<p>The meat moves through the group like a pulse, and in return the hunter’s household becomes stronger. Not because of money, but because value has been translated.</p>
+<p>This is a key idea you will see again and again in this book: value does not disappear when cash disappears. It changes language. Money is one language of value. Barter is another. And barter is older, not because it is less sophisticated, but because it was built directly on what humans can do for each other.</p>
+<p>In the earliest communities, specialization began quietly. The person who could shape stone reliably made more blades than they personally needed. The person who understood plants could treat wounds and sickness. The person with the patience to fire clay without cracking it became the source of containers that made storage possible. Specialization creates surplus, and surplus creates trade.</p>
+<p>And trade creates a strange miracle: it allows you to live beyond your own hands.</p>
+<p>When you can trade, you do not need to be the best at everything. You need to be useful at something. That is a different kind of security than modern people are taught to chase. Today, security is often portrayed as a number: a salary, a savings balance, a credit score. In the first economy, security was a network and a reputation: the remembered evidence that you are the kind of person who contributes and trades fairly. If you hear an echo of the book’s promise here, you should. You are not broke; you are simply un-traded. The earliest humans could not afford to let anyone’s ability sit idle, because unused ability was wasted survival.</p>
+<p>There is another misconception that needs correcting: the idea that barter is always a direct swap of equal items at the same moment. That kind of trade exists, and we will talk about it later because it is useful. But early exchange often had a softer edge. It was common for the exchange to be delayed, uneven in the moment, and balanced over time. You give me fish today; I help you build a fence tomorrow, and you share grain when the harvest comes. The “currency” was trust, and the interest rate was reputation.</p>
+<p>This is important because it shows that the first deals were not merely transactions. They were relationships with terms.</p>
+<p>If you want to see how barter likely worked before money, imagine a simple problem: a family needs a new shelter. One person can cut and place the heavy posts. Another can weave reeds for the roof. Another can shape pegs. Another can watch the children. The shelter goes up because labor is traded and coordinated and because the family building the shelter will owe favors, food, protection, or future labor to those who helped. No one needs a coin to understand this. It is a human instinct dressed in practical clothing: I help you now; you help me later. If I never help anyone, I am a burden. If I help and no one ever helps me, I am being exploited. So the group develops norms, spoken and unspoken, that keep exchange roughly fair.</p>
+<p>Fair does not mean equal. It means it&#x27;s acceptable to both sides given the need, timing, and risk.</p>
+<p>A sharp knife in a world of dull stones is not “worth” the same as a basket of berries even if both are valuable. A knife lasts, makes other tasks easier, and can save a life. But berries might be the difference between a child sleeping hungry and one fed that night.</p>
+<p>The worth shifts with context. Barter teaches you to look at context the way money tries to make you ignore it.</p>
+<p>There is also a deeper layer to the earliest trades: the exchange of knowledge. A person who knows where the animals migrate or how to find water in a dry season holds a kind of wealth that cannot be held in the hand. Teaching that knowledge is a trade too. In early societies, knowledge was not only power; it was survival equipment. You might trade a place near the fire, protection, food, or status in exchange for being taught. Over generations, this becomes craft, apprenticeship, and tradition. The old economy is not only about things. It is about skills moving from one mind to another.</p>
+<p>If you strip away the romance and the myths, the first economy can be described in one sentence: humans noticed each other’s strengths and used exchange to turn those strengths into shared stability.</p>
+<p>And yes, there were strangers too. As groups grew, paths formed. Rivers became highways. Coasts became trade lines. People met at seasonal gatherings, at places where salt could be collected, where obsidian could be found, and where animals passed through. Strangers who did not share a daily life still found ways to trade because trade is a way to reduce uncertainty. If I can leave this meeting with goods I cannot easily make, I increase my odds. If I can build a reputation across groups, I increase my safety when I travel. Even when trust is thin, the desire to trade is thick.</p>
+<p>Those early stranger-trades also reveal something modern readers should remember: money did not replace barter because barter was “bad.” Money emerged because trade expanded beyond what memory and reputation alone could efficiently track. When exchanges stretched across distance and time, people needed a portable, agreed-upon measure. Money is a tool for scaling the deal. It is not the beginning of the deal.</p>
+<p>So when we talk about barter roaring back in uncertain times, we are not talking about a trendy hack or a desperate fallback. We are talking about a return to a foundation that has always been under our feet. The first trades were born from necessity, yes, but also from creativity. People looked at what they had, looked at what they could do, and asked the question that still powers every climb you will make in this book:</p>
+<p>“What do you need, and what do I have that can help?”</p>
+<p>That question built the first economy. It can build your next one, too.</p>
+<h3>Part 2 · How Societies Thrived Without Currency</h3>
+<p>If the first economy was the deal, then the first prosperity was coordination.</p>
+<p>Modern people tend to picture life without currency as a constant scramble, as if the absence of money meant the absence of order. But the opposite is closer to the truth. When you remove price tags, people do not stop valuing things. They become more precise about what value actually is: usefulness, timing, skill, reliability, and access. A society does not thrive because it has coins. It thrives because it can move food, labor, tools, and knowledge to where they are needed, when they are needed, without breaking trust in the process.</p>
+<p>Return to that river settlement you pictured earlier. Fish come in waves. Roots and onions come on different schedules. Clay needs time to be gathered, shaped, dried, and fired. Hides need scraping and smoking. Roofs need patching before storms, not after.</p>
+<p>Currency makes these timing problems easy to hide because money can sit still while value moves later.</p>
+<p>But early societies solved the same problem by building human systems that kept value moving even when no one carried “payment” in their pocket.</p>
+<p>One of the most important systems was specialization with obligation.</p>
+<p>As soon as someone became the reliable blade maker, the group quietly rearranged around that fact. Not with official titles, but with expectation. The blade maker did not need to spend as many hours hunting for food because the group understood that sharp tools increased everyone’s odds. In return, the blade-maker was expected to keep producing, repairing, and teaching. This is how a “job” existed long before jobs had names: your consistent usefulness earned you consistent support.</p>
+<p>In a cash world, it can sound like a trap: “So the group just supported the specialist?” But remember the earlier point: most exchange was among neighbors who would see each other again. A specialist who stopped contributing would not keep receiving. A group that failed to support its specialist would lose the specialist’s output and soon pay for it in slower harvests, torn clothing, untreated injuries, and wasted time. The system policed itself because the consequences were immediate. Survival made accountability practical.</p>
+<p>Specialization also created a second miracle: surplus.</p>
+<p>Surplus is not only “extra stuff.” It is extra capacity. If the potter can make containers faster than each household can, then food can be stored. If food can be stored, the group can ride out lean weeks. If the group can ride out lean weeks, people can spend time on tasks that do not pay off today, like improving shelters, experimenting with crops, or training apprentices. That is how thriving begins: the moment a community can invest rather than merely react.</p>
+<p>Without currency, communities learned to keep rough accounts using the tools that were always available: memory, reputation, and ritual.</p>
+<p>We already touched on memory as a kind of ledger. In a small group, everyone knows who helped raise whose shelter, who shared meat when a hunt failed, who repaired tools without being asked. That knowledge is not abstract. It affects who gets help first when the river floods or when sickness hits. In that sense, reputation was not a social extra. It was infrastructure.</p>
+<p>But memory alone becomes messy as groups grow. So societies developed patterns that made exchanges easier to track and harder to deny. Certain kinds of giving became public. Certain kinds of obligations became ceremonial. Feasts, shared workdays, seasonal gatherings, and communal projects were not only cultural. They were economic technology.</p>
+<p>Consider a roof-patching day before the rains. In a modern setting, you might hire labor. In the old economy, you assembled it. One household called in the kind of help that builds “credit” in human terms. The people who came were fed. They were thanked in front of others. Their effort was witnessed. The family receiving the help did not hand out coins, but they did something equally powerful: they acknowledged a debt that everyone now knew existed. That public witness mattered. It turned a private favor into a social fact, which made the future repayment more reliable.</p>
+<p>This is one reason barter is often misunderstood today. People imagine it as two individuals haggling over a direct swap.</p>
+<p>But whole communities thrived through a wider system of exchange, one that blended direct trades with delayed returns, mutual aid, and shared projects. The “currency” was the community’s agreement about what counted as fair and what counted as shameful.</p>
+<p>Fairness, remember, did not mean equal. It meant &quot;acceptable&quot; given the context: need, timing, and risk. A hunter who returned with meat was not only offering food. They were offering calories at the exact moment calories mattered. A person who could preserve that meat by smoking it offered something different: the ability to stretch the value across weeks. Those are different forms of wealth. A thriving society knew how to translate between them.</p>
+<p>Translation is the right word. Barter is a translation economy. It turns one kind of value into another without requiring money as the middle language.</p>
+<p>Meat becomes labor. Labor becomes shelter. Shelter becomes safety. Safety becomes time. Time becomes learning. Learning becomes a better tool. Better tools become more food. The loop tightens. The community climbs.</p>
+<p>And knowledge, as mentioned earlier, was one of the most valuable things traded because it could multiply without being consumed. A clay pot traded to you means I no longer have that pot. But a technique taught to you means we both have it. Early societies built thriving networks by moving knowledge the way modern economies move capital.</p>
+<p>This is where apprenticeships enter the story. An apprentice was not “working for free.” An apprentice was trading present effort for future ability. The expert was trading time and guidance for current assistance and for the security of knowing the craft would continue. In a world where a single skilled person could become a bottleneck for the whole community, training was not a luxury. It was risk management.</p>
+<p>A village with one healer and no students was fragile. A village with three people who knew the plants, the bandages, and the signs of fever was resilient. The trade that created that resilience might look like this: “Come gather with me. Help me prepare. Watch and learn. In return, your family eats at my fire, and when you can do this work, you will be supported too.” That is not a paycheck. That is a ladder.</p>
+<p>Societies also thrived without currency by building shared stores and shared rules around them. Grain, dried fish, salt, and tools could be pooled, protected, and rationed during hard times. This was not communism in the modern political sense, and it was not charity. It was insurance built out of relationships. The pool existed because everyone understood two truths at once: some seasons are generous, and some seasons are brutal; and no individual can perfectly predict which one will hit them next.</p>
+<p>Pooling does not work without norms. Who is allowed to draw from the store? How much? Under what conditions? Who guards it? Who decides? These are economic questions even if no one uses economic vocabulary. Many societies answered with a blend of elders’ authority, public accountability, and reciprocal obligation. If you consistently contributed when you had surplus, you earned the right to draw when you didn’t. If you consistently refused to contribute, you found yourself last in line when the winter came.</p>
+<p>Again, reputation becomes enforcement. Not through abstract moralizing, but through practical consequence. In a cash economy, you can sometimes hide behind anonymity.</p>
+<p>In a small barter economy, you are rarely anonymous. People know where you live, and they remember.</p>
+<p>Even trade with strangers, which we began to glimpse at the end of the last section, contributed to thriving. Seasonal meeting places were more than markets. They were information exchanges. Who had diseases spreading? Which routes were safe? What new tool designs were circulating? What plants were being cultivated in a distant valley? People did not only carry goods along rivers and coasts. They carried updates. That made long-distance barter a way of reducing uncertainty, and reducing uncertainty is one of the fastest ways a society becomes more stable.</p>
+<p>Notice what is absent in all of this: the idea that money is what makes growth possible. Growth came from the ability to make agreements, to honor them, and to build systems where agreements could scale beyond two people standing face-to-face.</p>
+<p>That is why money arrived later. Not because humans finally became “advanced,” but because the deal became too big for bare memory to hold. When you are trading with people who do not know your childhood stories, when exchange stretches across seasons and miles, the old ledger of reputation has gaps. Money, in its earliest forms, helped bridge those gaps. It was a tool for trust at distance.</p>
+<p>But before that tool existed, societies still managed to thrive because they invested in a different kind of wealth: social coherence. They built networks where usefulness was recognized, contribution was expected, and debts were not always written down but were felt and remembered. They also built a powerful internal compass about value, because when there is no price tag to lean on, you have to actually think.</p>
+<p>And that brings us back to the promise you heard earlier: you are not broke; you are simply un-traded.</p>
+<p>Early people could not afford to leave ability unused. A person who could weave, carry, cook, mend, teach, carve, calm a frightened child, or find water in dry ground was not “poor” because they lacked coins. They were wealthy in the only sense that mattered: they could translate what they could do into what they needed, through the deal.</p>
+<p>Thriving without currency was never about romantic simplicity. It was about practical intelligence: noticing strengths, coordinating effort, storing surplus, moving knowledge, and enforcing fairness through reputation. It was a system built from human nature under pressure, refined by necessity, and kept alive by one repeated question, asked in a thousand different voices: “What do you need, and what can I offer that helps?”</p>
+<h3>Part 3 · Why Barter Never Truly Disappeared</h3>
+<p>If money was invented to help the deal scale, it is tempting to tell a simple story: barter was the old way, money was the upgrade, and the old way faded out like a tool left behind. But human systems rarely work like clean replacements. The truth is messier and more useful for you: barter never truly disappeared because the deal is not a technology that can be retired. It is a human reflex.</p>
+<p>Even in a world of banks, apps, and tap-to-pay, people still trade value directly whenever money becomes inconvenient, unavailable, inappropriate, or simply less meaningful than trust. Sometimes the trade is obvious and practical, like a neighbor helping you move a couch in exchange for you watching their dog next weekend.</p>
+<p>Sometimes it is quiet and almost invisible, like the way families operate: a parent cooks, a teenager fixes the Wi-Fi, someone else drives, someone else translates a form, and no one sends an invoice. That is not “outside the economy.” That is the oldest economy running under a modern roof.</p>
+<p>You can see why this matters if you return to the ideas we just built: memory as a ledger, reputation as infrastructure, and exchange as translation. Those mechanisms did not vanish when coins arrived. Money added a new language, but it never erased the old one. People still keep private ledgers in their minds. They still notice who shows up. They still feel the difference between someone who contributes and someone who only takes. And they still form agreements that are not primarily about price tags but about timing, reliability, and relationships.</p>
+<p>In fact, money often pushes barter into the places where it shines most: within communities, within trusted networks, and within moments of uncertainty.</p>
+<p>Think about what money is designed to do. It makes it easier to trade with strangers. It compresses value into a portable symbol. It lets you measure and compare quickly. Those are superpowers, especially when trade spans distance. But those same superpowers can also flatten the human detail that barter naturally forces you to look at. Money is efficient, but it can be blunt. Barter is slower, but it is precise in a different way. It asks, “What do you need right now?” It asks, “What do I have that actually helps?” It asks, “What makes this fair given our situation?”</p>
+<p>Those questions do not stop being relevant just because a currency exists.</p>
+<p>Barter stays alive wherever money has blind spots. One blind spot is cash scarcity. Not poverty in the moralized sense, but the simple fact that cash can be tight even when value is abundant. A person can be skilled, hardworking, and useful and still have an empty wallet because wages lag, bills spike, a job disappears, or a bank draws a line. In those moments, the oldest economy steps forward because it does not require permission. There is no approval process for usefulness. There is only the deal.</p>
+<p>Another blind spot is trust. Money is excellent for transactions where you do not want a relationship. You buy the thing. You leave. You do not owe each other anything beyond the receipt. But a large part of human life is not built on one-and-done exchanges. It is built on repeated contact: neighborhoods, schools, workplaces, extended families, religious communities, local clubs, and small business ecosystems. In those places, the ongoing relationship has value of its own. Barter naturally strengthens that value because it turns exchange into a shared story rather than a solitary purchase.</p>
+<p>This is why you still see barter thriving in the same pattern as that river settlement from earlier, just wearing modern clothing. The names change, but the bones are the same.</p>
+<p>A person who knows how to fix things becomes the modern blade maker. Maybe it is a mechanic who can keep old cars alive, or the friend who can diagnose a laptop in ten minutes, or the neighbor who can repair a leaky pipe before it turns into a disaster. Their skill creates surplus for others: time saved, money not spent, problems prevented. And people respond the same way early communities did, with specialization and obligation. They do not always pay cash. They bring meals. They offer childcare. They help with a remodel. They connect the fixer to someone else who needs the skill. They repay in the currency of access and support, which is how barter often works when the deal is ongoing.</p>
+<p>You also see barter in the way knowledge moves. In earlier pages, we talked about teaching as survival equipment and apprenticeship as a ladder. That never stopped, either. Modern life is full of knowledge trades: “Show me how to do this spreadsheet, and I’ll help you prep for your interview.” “Teach me the basics of your language and I’ll tutor your kid in math.” “Let me shadow you for a day, and I’ll volunteer at your event.” These are not sentimental favors. They are practical exchanges where one kind of value becomes another without passing through money.</p>
+<p>And then there are moments when money does not disappear entirely but becomes an awkward tool for what is happening. Not everything wants a price tag. There are times when offering cash feels like an insult or a distance maker, as if you are trying to buy your way out of a relationship. In many cultures and families, certain acts of help are supposed to create a bond, not end it. When you attend to someone’s need during sickness, grief, or crisis, the exchange is often delayed and social rather than immediate and numerical. People remember. Memory becomes the ledger again. The debt is not a bill. It is a thread.</p>
+<p>If you want proof that barter never went away, look at what happens when a system shakes. When a storm cuts off roads, when a recession dries up spending, when a supply chain hiccups, and when inflation makes yesterday’s wages feel smaller, people instinctively start asking barter questions. Who has extra? Who can fix it? Who can cook? Who has a generator? Who can share a ride? Who knows how to preserve food? It sounds like crisis, but it is also clarity. In a pinch, the brain returns to the oldest logic: identify strengths, coordinate, exchange, and survive.</p>
+<p>This is not romantic. It is not a hobby. It is the same practical intelligence we described earlier when the settlement stored food and pooled resources. When pressure rises, the deal becomes visible again.</p>
+<p>There is also a quieter reason barter persists: because money is not the only measure people care about. Even in stable times, barter can express values that money cannot easily express. Trading services can preserve dignity when receiving help might otherwise feel like charity. It can keep someone contributing when cash income is low. It can let a person build a reputation when they lack formal credentials. It can include the unbanked, the young, the newly arrived, and the people whose skills are real but not yet recognized by a marketplace that requires paperwork.</p>
+<p>In other words, barter remains because it keeps the economy human-sized. It is a way for people to say, “I see what you can do,” and “Here is what I can do,” and “Let’s make a fair exchange.” That sense of being seen, not as a number but as a contributor, is a form of wealth that money does not automatically provide.</p>
+<p>Of course, barter can be messy. Reputation can be unfair. Memory can be selective. Communities can exclude. Old systems can become rigid. None of this is perfect. But notice something important: money has its own versions of those problems. The point is not that barter is pure. The point is that barter is resilient because it is adaptable. It can be formal or informal, immediate or delayed, private or public, direct or chained through a network. It can run alongside money or replace it when money falters.</p>
+<p>And in modern life, barter often survives by hiding in plain sight, wearing new names. People call it “networking.” They call it “mutual aid.”</p>
+<p>They call it “skills exchange,” “time banking,” “favor trading,” “community support,” “side hustles,” and “collaboration.” But the engine is the same one that moved meat through a settlement like a pulse, turning calories into roofs and roofs into safety and safety into time.</p>
+<p>Underneath all the branding, there is still the same question that built the first economy: “What do you need, and what do I have that can help?”</p>
+<p>Here is the crucial connection to the promise of this book. If barter never truly disappeared, then the ladder it offers is not theoretical. It is not a museum piece. It is here, now, running through your daily life like an underground river. You do not need to invent a new economy. You need to notice the one that still exists and step into it with intention.</p>
+<p>That begins with seeing barter not as desperation but as translation. The river settlement did not “fall back” on barter. It climbed with it. People noticed each other’s strengths, specialized, built trust, and moved value where it was needed. Money later made certain things easier, especially at distance, but it did not erase the deal because the deal is older than money and closer to the ground.</p>
+<p>So when you hear someone say barter is outdated, remember what that claim really means. It means they have forgotten how much of life still runs on cooperation, reputation, and exchange that cannot be reduced to a receipt. They have mistaken one ladder for the only ladder.</p>
+<p>In the next chapter, we are going to bring this down to the level of your own life. Because if barter never died, then the most dangerous lie is not that money is useful. It is. The most dangerous lie is that money is the only proof you have value. The old economy has been waiting for you, not as a fantasy, but as a practical way to begin climbing from exactly where you are.</p>
+  </div>
+  <p class="readnote">About 5,000 words · roughly 20 minutes read carefully. The gates quote nothing at you — they ask what the chapter meant.</p>
+  <button class="bigbtn" id="beginBtn">I have read the chapter — open the road</button>
+ </section>
 
-    <!-- GAME SCREEN (rendered dynamically) -->
-    <div id="gameScreen" style="display:none;"></div>
+ <section id="walk">
+  <div class="trail" id="trail"></div>
+  <div class="tierbanner" id="tierbanner">THE BETTER ROAD</div>
+  <div class="tiersub" id="tiersub">Focused energy.</div>
+  <div class="vignette" id="vignette" aria-hidden="true"></div>
+  <div class="wpname" id="wpname"></div>
+  <div class="qcard" id="qcard"></div>
+  <div class="verdict" id="verdict"></div>
+  <div class="runstats" id="runstats"></div>
+ </section>
 
-    <!-- ENDING SCREEN (rendered dynamically) -->
-    <div id="endingScreen" style="display:none;"></div>
-  </section>
+ <section id="ending">
+  <h2 id="endtitle"></h2>
+  <p class="edesc" id="enddesc"></p>
+  <div class="nameentry" id="nameentry">
+   <input type="text" id="certname" maxlength="60" placeholder="Your name, as it should appear" aria-label="Your name for the certificate">
+   <button class="bigbtn" id="claimBtn">Claim it</button>
+  </div>
+  <label class="walloptin" id="walloptin" style="display:none">
+   <input type="checkbox" id="wallcb">
+   <span>Add my name to the <strong style="color:var(--cream);font-weight:normal">GSU Summit Champions wall</strong> — a public honor roll of Masters of the Infinite Road (first name and serial only).</span>
+  </label>
+  <div class="cert" id="cert" style="display:none">
+   <div class="c1">Global Sovereign University · Trifurcation Road</div>
+   <div>certifies that</div>
+   <div class="cname" id="cn"></div>
+   <div>has walked the Chapter Walk over Chapter 1 of <em>The World Climb</em><br>and earned the ending</div>
+   <div class="ctitle" id="ct"></div>
+   <div class="cserial" id="cs"></div>
+   <div class="cdate" id="cd"></div>
+   <div class="seal" aria-hidden="true"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="30" fill="none" stroke="#C9A84C" stroke-width="2"/><circle cx="50" cy="50" r="36" fill="none" stroke="#C9A84C" stroke-width=".8" opacity=".6"/><path d="M22 62 Q14 50 22 38 M26 66 Q16 50 26 34" stroke="#C9A84C" fill="none" stroke-width="1.4"/><path d="M78 62 Q86 50 78 38 M74 66 Q84 50 74 34" stroke="#C9A84C" fill="none" stroke-width="1.4"/><path d="M50 30 l5 11 12 1 -9 8 3 12 -11-6 -11 6 3-12 -9-8 12-1z" fill="#C9A84C"/><text x="50" y="86" text-anchor="middle" fill="#C9A84C" font-family="Georgia,serif" font-size="7.5" letter-spacing="2">INFINITE ROAD</text></svg></div>
+   <div class="geno-endorse" aria-label="GENO endorsement">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+    <span>GENO, the GSU AI Tutor, stands with this Master as a study partner — 24/7, in any of 83 languages.</span>
+   </div>
+   <div class="cfoot">Earned, never gifted. Verifiable by serial at Global Sovereign University.</div>
+  </div>
+  <div id="endactions" style="display:none">
+   <button class="linebtn" onclick="window.print()">Print the certificate</button>
+   <button class="linebtn" id="againBtn">Walk it again — the road is never the same</button>
+  </div>
+ </section>
 
-  <!-- HOW IT WORKS -->
-  <section>
-    <h3>How the Road Works</h3>
-    <ul class="rules-list">
-      <li>At each gate, you read a passage. Then you answer one comprehension question about it.</li>
-      <li>On the <b style="color:var(--best-primary)">Best</b> road, the passage is dense and the question probes inference, tone, or synthesis. Right answer → continue on Best. Wrong → the road below rises. You continue on <b style="color:var(--better-primary)">Better</b>.</li>
-      <li>On the <b style="color:var(--better-primary)">Better</b> road, passages are direct. Questions test clear meaning. Wrong → you continue on <b style="color:var(--good-primary)">Good</b>.</li>
-      <li>On the <b style="color:var(--good-primary)">Good</b> road, you cannot be demoted. You will finish. That is the point of Good.</li>
-      <li>Three endings await you. <em>Master Comprehension</em>, at the end of the Best road. <em>The Sharp Reader</em>, at the end of the Better road. <em>The Confident Reader</em>, at the end of the Good road. All three are counted. All three earn certificates.</li>
-    </ul>
-  </section>
-
-  <!-- GENO -->
-  <section class="geno" style="border-top:none;">
-    <h2>Ask GENO About the Road</h2>
-    <p style="color:var(--cream-soft);">GENO reads in 83 languages. If a passage confuses you, ask him what a word means or what the writer might be doing. He will not answer the comprehension question for you — but he will help you think about it.</p>
-    <div class="geno-prompts">
-      <div class="prompt-chip" data-prompt="Who is Master Comprehension in Trifurcation Road?">Who is Master Comprehension?</div>
-      <div class="prompt-chip" data-prompt="Why does the Good road matter if it's the easiest?">Why does Good matter?</div>
-      <div class="prompt-chip" data-prompt="How do I get better at inference in reading?">How do I get better at inference?</div>
-      <div class="prompt-chip" data-prompt="Can I take Trifurcation Road again after finishing?">Can I walk it again?</div>
-    </div>
-    <div style="margin-top: 20px;">
-      <a href="#" class="btn" onclick="try{window.dispatchEvent(new CustomEvent('geno:open'));}catch(e){}return false;">Talk with GENO</a>
-    </div>
-  </section>
-
-  <!-- CLOSING -->
-  <section class="closing">
-    <div class="closing-eyebrow">Master Comprehension's Promise</div>
-    <p class="closing-body">"The road you read is the road you read. Do not measure your walk against the walk you wish you had taken. The measure is: did you understand what you were looking at, honestly? If you did, at any level, you have already arrived somewhere the road wanted you to arrive."</p>
-    <div class="closing-attribution">— Trifurcation Road, closing beat</div>
-  </section>
-
-  <!-- FOUNDATION -->
-  <section class="foundation">
-    <p class="tagline">A hand up, not a handout.</p>
-    <p>The Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
-    <p>Eugene, Oregon · <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
-  </section>
-
+ <p class="closing">“Own the path you are walking today. Do not waste energy regretting a wrong turn or a missed exit. Your only real competition is the version of you that wanted to quit.” — Dr. Gene A Constant</p>
 </div>
+
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
 
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const cfg = {
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig = {
   apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
   authDomain: "gsu-handshake.firebaseapp.com",
   projectId: "gsu-handshake",
@@ -338,650 +338,261 @@ const cfg = {
   messagingSenderId: "301089416765",
   appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
 };
-const GID = "trifurcation-road";
-
-/* ============================================================
-   GATES DATA
-   Each gate has three versions: best, better, good.
-   Each gate has a passage + question + choices.
-   Choices: {label, correct: true/false}
-   Correct on Best/Better → continue on same road
-   Wrong on Best → demote to Better at next gate
-   Wrong on Better → demote to Good at next gate
-   On Good → always correct (no demotion possible)
-============================================================ */
-
-const GATES = [
-  // ============ GATE 1 ============
-  {
-    id: 1,
-    best: {
-      title: "The First Gate — The Merchant's Ledger",
-      passage: [
-        "Old Levi kept his ledger not in numbers but in weight — a small brass scale beside the book. When a boy came asking for a job, Levi would put a stone on one side and a coin on the other, and ask the boy which was heavier. It was never a trick question. The stone was always heavier.",
-        "\"You want to work for me,\" Levi would say, \"because you need the coin more than the stone. Fine. That is honest. But remember: the day comes when what you want is the stone. That day is the day you have become a man. Not before.\"",
-        "The boy who took the job never understood what Levi meant until many years later. By then, Levi was gone, and the ledger and the scale had passed to the boy, who was no longer a boy."
-      ],
-      prompt: "What is the stone standing for in Levi's teaching?",
-      sub: "Consider the whole shape of the passage before answering.",
-      choices: [
-        { label: "The literal weight of the material — heavier than money, and therefore more valuable", correct: false },
-        { label: "The point in a life when a person seeks meaning and permanence more than income", correct: true },
-        { label: "A test Levi uses to see whether the boy is strong enough to lift heavy objects", correct: false },
-        { label: "The years of service that must be paid before a worker can inherit a business", correct: false }
-      ]
-    },
-    better: {
-      title: "The First Gate — The Merchant's Scale",
-      passage: [
-        "Old Levi kept a brass scale beside his ledger. When a boy came asking for work, Levi would put a stone on one pan and a coin on the other, and ask which was heavier. The stone was always heavier.",
-        "\"You want to work for me,\" Levi would say, \"because you need the coin. That is honest. But remember: someday, what you want will be the stone.\""
-      ],
-      prompt: "What does Levi mean when he says 'someday, what you want will be the stone'?",
-      sub: "The stone and the coin are compared directly.",
-      choices: [
-        { label: "That heavy work becomes more rewarding than money over time", correct: true },
-        { label: "That older workers get paid in materials instead of coins", correct: false },
-        { label: "That the boy will eventually own the scale", correct: false },
-        { label: "That coins get lighter as they age", correct: false }
-      ]
-    },
-    good: {
-      title: "The First Gate — The Merchant's Lesson",
-      passage: [
-        "Old Levi kept a small scale on his counter. When a boy asked for a job, Levi put a stone on one side and a coin on the other. He asked which was heavier. The stone was heavier.",
-        "Levi said: \"You want the coin now. Someday you will want the stone.\""
-      ],
-      prompt: "Which side of the scale was heavier?",
-      sub: "This one is straightforward.",
-      choices: [
-        { label: "The stone", correct: true },
-        { label: "The coin", correct: false },
-        { label: "They weighed the same", correct: false }
-      ]
-    }
-  },
-
-  // ============ GATE 2 ============
-  {
-    id: 2,
-    best: {
-      title: "The Second Gate — The Argument Under the Argument",
-      passage: [
-        "The senator's speech, praised in the morning papers as \"a triumph of moderation,\" contained the phrase, three separate times, \"of course we all agree that some measure of reform is inevitable.\" The reporters, transcribing dutifully, did not notice how the phrase functioned: it was not a claim about the audience's beliefs, which the senator did not know, but a shape into which the audience was invited to fit itself. To refuse the phrase was to become, by the phrase's own construction, unreasonable. It was a very old trick, older than the senator, and older than the newspaper reporting it as new."
-      ],
-      prompt: "What is the writer's central point about the senator's phrase?",
-      sub: "The final sentence is doing significant work.",
-      choices: [
-        { label: "The senator's phrase is a factual statement about the state of public opinion", correct: false },
-        { label: "The senator has genuinely persuaded the audience through rhetorical skill", correct: false },
-        { label: "The phrase pre-defines dissent as unreasonable, forcing the audience into agreement", correct: true },
-        { label: "The reporters have failed the audience by not fact-checking the senator's data", correct: false }
-      ]
-    },
-    better: {
-      title: "The Second Gate — The Senator's Trick",
-      passage: [
-        "The senator kept repeating: \"Of course we all agree that some measure of reform is inevitable.\"",
-        "The reporters wrote it down without commenting. But the phrase was doing something. It was not describing what people believed. It was telling them what they were supposed to believe — and marking anyone who disagreed as unreasonable."
-      ],
-      prompt: "How is the senator's phrase being used?",
-      sub: "Look at what the phrase makes disagreement look like.",
-      choices: [
-        { label: "As a summary of public opinion the senator has researched", correct: false },
-        { label: "As a way of framing anyone who disagrees as unreasonable", correct: true },
-        { label: "As a modest suggestion the senator invites the audience to reject", correct: false },
-        { label: "As a request for the reporters to check the facts", correct: false }
-      ]
-    },
-    good: {
-      title: "The Second Gate — Words That Push",
-      passage: [
-        "A senator said, over and over, \"Of course we all agree that reform is coming.\"",
-        "But not everyone agreed. The senator was using the words to make people feel like they had to agree, even if they didn't."
-      ],
-      prompt: "What was the senator trying to do with his repeated phrase?",
-      sub: "The passage tells you directly.",
-      choices: [
-        { label: "Report the news accurately", correct: false },
-        { label: "Make people feel like they had to agree", correct: true },
-        { label: "Ask the reporters a question", correct: false }
-      ]
-    }
-  },
-
-  // ============ GATE 3 ============
-  {
-    id: 3,
-    best: {
-      title: "The Third Gate — What the Silence Meant",
-      passage: [
-        "When Aunt Marlene finally spoke of her husband, twenty-seven years after his funeral, she did not describe him. She described, instead, the drawer where he had kept his socks. It had a broken pull. He had never fixed it. She had never asked him to. Every morning for thirty-one years he had gripped it by the wood and pulled straight up, and every evening he had pushed it closed with two fingers on the front, because the pull would not have withstood a push.",
-        "She was quiet for a long moment. Then she said: \"I could have fixed it any time. I did not fix it because if I had fixed it he would have said thank you, and I did not want to hear him say thank you for that. I wanted him to say thank you for the other things.\""
-      ],
-      prompt: "What is the deepest insight the passage offers about Aunt Marlene?",
-      sub: "Marlene is describing a small thing that means a large thing.",
-      choices: [
-        { label: "That she resented her husband for his failure to fix a household object", correct: false },
-        { label: "That her love expressed itself through a private restraint her husband never fully saw", correct: true },
-        { label: "That the drawer's broken pull was a mechanical problem she was too busy to fix", correct: false },
-        { label: "That her husband was ungrateful and refused to thank her for anything", correct: false }
-      ]
-    },
-    better: {
-      title: "The Third Gate — The Drawer",
-      passage: [
-        "Aunt Marlene talked about her husband, twenty-seven years after his funeral. She did not talk about who he was. She talked about the drawer where he kept his socks. It had a broken pull. He never fixed it. She could have fixed it herself, but she never did.",
-        "\"I could have fixed it,\" she said. \"But then he would have thanked me for the drawer. I wanted him to thank me for the bigger things.\""
-      ],
-      prompt: "Why did Marlene never fix the drawer?",
-      sub: "Her explanation is direct.",
-      choices: [
-        { label: "Because she didn't know how to fix drawers", correct: false },
-        { label: "Because she wanted her husband's gratitude to be about bigger things than a drawer", correct: true },
-        { label: "Because her husband would not let her fix it", correct: false },
-        { label: "Because she forgot about it every day", correct: false }
-      ]
-    },
-    good: {
-      title: "The Third Gate — The Broken Pull",
-      passage: [
-        "Aunt Marlene remembered her husband. She remembered his sock drawer. It had a broken pull. He had never fixed it. She had never fixed it either. For thirty-one years, they had opened the drawer by the wood."
-      ],
-      prompt: "What was broken on the drawer?",
-      sub: "The passage says it plainly.",
-      choices: [
-        { label: "The wood", correct: false },
-        { label: "The pull", correct: true },
-        { label: "The socks", correct: false }
-      ]
-    }
-  },
-
-  // ============ GATE 4 ============
-  {
-    id: 4,
-    best: {
-      title: "The Fourth Gate — What the Data Doesn't Say",
-      passage: [
-        "The economist's paper reported that, in the counties studied, wages had grown 4.2 percent over the decade, adjusted for inflation. The paper was widely cited as evidence that the working class in these counties had, contrary to popular perception, done well.",
-        "What the paper did not disclose was that its \"working class\" excluded anyone who had left the workforce during the period. It also excluded anyone whose hours had fallen below thirty per week — a category that grew from 8 percent to 22 percent of the original population during the same decade. The 4.2 percent was, therefore, the wage growth of those who had survived. It said nothing about those who had not, and their absence was the argument the paper was not making, but was quietly permitting the reader to fill in on their own."
-      ],
-      prompt: "What is the writer's argument about the economist's paper?",
-      sub: "The final sentence contains the deepest claim.",
-      choices: [
-        { label: "The paper's methodology is flawed but its conclusions remain broadly correct", correct: false },
-        { label: "The paper's exclusions make its finding meaningless as a statement about the working class", correct: false },
-        { label: "The paper's silences do rhetorical work — allowing readers to infer conclusions the data does not support", correct: true },
-        { label: "The paper deliberately falsified data to reach a predetermined political conclusion", correct: false }
-      ]
-    },
-    better: {
-      title: "The Fourth Gate — Missing Numbers",
-      passage: [
-        "An economist reported that wages had grown 4.2% in the studied counties. Newspapers said this proved the working class was doing well.",
-        "But the study left out anyone who had lost their job. And it left out anyone whose hours had fallen below thirty a week — a group that had grown from 8% of the population to 22% over the same decade."
-      ],
-      prompt: "Why does the writer question the economist's conclusion?",
-      sub: "The passage tells you what was left out.",
-      choices: [
-        { label: "The 4.2% is only the wage growth of people who still had full-time jobs, not the whole working class", correct: true },
-        { label: "The economist made a math error in calculating 4.2%", correct: false },
-        { label: "The newspapers should have used a different economist", correct: false },
-        { label: "The counties were the wrong ones to study", correct: false }
-      ]
-    },
-    good: {
-      title: "The Fourth Gate — The Study",
-      passage: [
-        "An economist did a study. He said wages went up 4.2% in ten years.",
-        "But he only looked at people who still had jobs. He left out the people who had lost their jobs or whose hours had been cut."
-      ],
-      prompt: "Who did the economist leave out of his study?",
-      sub: "This is stated in the passage.",
-      choices: [
-        { label: "People who had lost their jobs or whose hours had been cut", correct: true },
-        { label: "People who lived in cities", correct: false },
-        { label: "People whose wages went up", correct: false }
-      ]
-    }
-  },
-
-  // ============ GATE 5 — THE FINAL GATE ============
-  {
-    id: 5,
-    best: {
-      title: "The Fifth Gate — Master Comprehension's Threshold",
-      passage: [
-        "The last passage of the road is a passage about reading itself. A woman, old now, describes the moment as a girl when she first understood that a page could lie to her, and that the lie could be honest — meaning: that the writer might not have known they were lying, and that the shape of the lie could reveal what the writer wished were true, and that this revelation was, if you knew how to read for it, worth more than the truth the writer thought they were telling.",
-        "\"After that,\" she said, \"I could never read the same way again. I could not read for information. I could only read for people. Behind every page there was a person, and behind that person there was another person they were trying to be, and behind that person there was the person they were most afraid of becoming. All three of them were on the page. Learning to read all three at once — that is the whole education. It never ends. Master Comprehension is not a title anyone gives you. It is a road you keep walking.\""
-      ],
-      prompt: "What is the final claim the passage is making about mastery of reading?",
-      sub: "Read the last three sentences very carefully. What is Master Comprehension?",
-      choices: [
-        { label: "That Master Comprehension is a formal credential earned through study of technical texts", correct: false },
-        { label: "That mastery is a continuous practice of reading multiple layers of a writer at once — not a title, but a road", correct: true },
-        { label: "That old readers eventually stop reading for meaning and read only for hidden lies", correct: false },
-        { label: "That every writer is deliberately trying to deceive their readers, and skilled readers detect this", correct: false }
-      ]
-    },
-    better: {
-      title: "The Fifth Gate — The Old Reader",
-      passage: [
-        "An old woman spoke about reading. She said, when she was a girl, she first noticed that a page could lie to her without the writer knowing. The writer might really believe what they wrote — but the way they wrote it revealed something else, something they wished were true.",
-        "\"After that,\" she said, \"I read differently. Behind every page there was a person. Behind that person there was who they wanted to be. Behind that, who they were afraid of being. I could read all three. That is what reading well means. It's not a title. It's a road you keep walking.\""
-      ],
-      prompt: "How does the old woman describe great reading?",
-      sub: "She uses direct comparisons.",
-      choices: [
-        { label: "As reading three layers of the writer at once — who they are, want to be, and fear being", correct: true },
-        { label: "As memorizing the writer's exact words for later recitation", correct: false },
-        { label: "As catching factual errors in the text", correct: false },
-        { label: "As waiting until the writer finishes the book to ask questions", correct: false }
-      ]
-    },
-    good: {
-      title: "The Fifth Gate — What Reading Is",
-      passage: [
-        "An old woman said, \"Reading is not about knowing all the words. It is about understanding the person who wrote them. Every book has a person behind it. When you can see the person, you are reading well.\""
-      ],
-      prompt: "According to the old woman, what does reading well mean?",
-      sub: "Her definition is right in the passage.",
-      choices: [
-        { label: "Knowing all the words in the dictionary", correct: false },
-        { label: "Understanding the person who wrote the book", correct: true },
-        { label: "Finishing every book quickly", correct: false }
-      ]
-    }
-  }
-];
-
-// ==================== ENDINGS ====================
-const ENDINGS = {
-  master: {
-    title: "Master Comprehension",
-    crest: "★",
-    subtitle: "You walked the Best road all the way through. You read every passage at its deepest level. Master Comprehension acknowledges you.",
-    body: [
-      "There is no diploma. There is no ceremony. There is only the recognition — quiet, internal, and permanent — that you can now read a page the way a locksmith looks at a lock.",
-      "You know what the writer wanted you to think. You know what the writer wanted to be true. You know what the writer was afraid of being. You saw all three at once, on every gate.",
-      "Master Comprehension's road, as the old woman said in the fifth passage, is not a title. It is a road you keep walking. But you have walked it once, all the way through, without falling to the road below. That is a rare thing. The next book you pick up will know."
-    ]
-  },
-  sharp: {
-    title: "The Sharp Reader",
-    crest: "✦",
-    subtitle: "You walked the Better road to its end — or you were demoted from the Best road and continued to Better without falling further. Either way, you are sharper than you were an hour ago.",
-    body: [
-      "The Better road is the road most careful readers actually walk. It is not the easiest road. It is not the hardest. It is the road that says: I will read closely, I will read fairly, I will read for what is said, and I will not be fooled by what is not said.",
-      "You did that. The passage about the senator, the passage about the drawer, the passage about the economist's missing numbers — you saw what was there, and you saw what was structural rather than what was decorative.",
-      "You are a Sharp Reader. Sharpness does not require mastery. It requires attention. You have proven you can bring the attention. Master Comprehension's road remains open above you. Return when you're ready."
-    ]
-  },
-  confident: {
-    title: "The Confident Reader",
-    crest: "◈",
-    subtitle: "The road opened to the Good road for you, more than once. You did not stop. You finished. This is not a small thing.",
-    body: [
-      "The Good road is the road nobody talks about, because it is the road nobody wants to have needed. But this is the road that produces readers. Confidence is not a decoration on reading. Confidence is what keeps a reader turning pages when the meaning has not yet resolved.",
-      "You built that confidence today, at least a little. You walked past a passage about a merchant, and one about a broken drawer, and one about an old woman explaining what reading is. You did not stop. You did not give up. You finished the road.",
-      "The Better road and the Best road are not shut against you. They are simply above you today. Come back tomorrow. Or the day after. The road does not care how many walks you need. It only counts whether you walked."
-    ]
-  }
-};
-
-// ==================== STATE ====================
-let state = {
-  currentRoad: null,       // 'best' | 'better' | 'good'
-  currentGate: 0,          // 0 = intro; 1..5 = gates; 6 = ending
-  correctCount: 0,
-  demotions: 0,
-  visited: [],
-  startedAt: null,
-  endingReached: null,
-  serial: null
-};
-
-let justDemoted = false;
-
-const $ = id => document.getElementById(id);
-
-// ==================== FIREBASE ====================
-let db = null, auth = null, uid = null;
-
-async function saveState() {
-  if (!db || !uid) return;
-  try {
-    await setDoc(doc(db, 'trifurcation_progress', uid), state, { merge: true });
-  } catch (e) {}
-}
-
-async function loadState() {
-  if (!db || !uid) return false;
-  try {
-    const snap = await getDoc(doc(db, 'trifurcation_progress', uid));
-    if (snap.exists()) {
-      state = Object.assign(state, snap.data());
-      return true;
-    }
-  } catch (e) {}
-  return false;
-}
-
-async function issueEndingSerial(endingKey) {
+let db=null, uid=null;
+try{
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  db = getFirestore(app);
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, u => { if(u) uid = u.uid; });
+  signInAnonymously(auth).catch(()=>{});
+}catch(e){}
+window.gsuIssueSerial = async function(endingKey, stats){
   const now = new Date();
   const prefix = endingKey === 'master' ? 'COMP' : endingKey === 'sharp' ? 'SHARP' : 'CONF';
-  const serial = 'TR-' + prefix + '-' + now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
-  state.serial = serial;
+  const serial = 'TR-' + prefix + '-' + now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
   if (db && uid) {
-    try {
-      await setDoc(doc(db, 'trifurcation_endings', serial), {
-        ending: endingKey,
-        serial,
-        correct: state.correctCount,
-        demotions: state.demotions,
-        path: state.visited,
-        uid,
-        issuedAt: Date.now()
-      }, { merge: true });
-    } catch (e) {}
+    try{
+      await setDoc(doc(db, 'trifurcation_endings', serial), Object.assign({
+        ending: endingKey, serial, uid, issuedAt: Date.now(), version: 'chapter-walk-v3'
+      }, stats||{}), { merge:true });
+    }catch(e){}
   }
   return serial;
-}
-
-// ==================== NAVIGATION ====================
-function setBodyRoad(road) {
-  document.body.classList.remove('road-good', 'road-better', 'road-best');
-  if (road) document.body.classList.add('road-' + road);
-}
-
-function showGate() {
-  if (state.currentGate < 1 || state.currentGate > 5) return;
-  const gate = GATES[state.currentGate - 1];
-  const version = gate[state.currentRoad];
-  const key = `g${state.currentGate}_${state.currentRoad}`;
-  if (!state.visited.includes(key)) state.visited.push(key);
-  setBodyRoad(state.currentRoad);
-  saveState();
-
-  $("introScreen").style.display = "none";
-  $("endingScreen").style.display = "none";
-  const g = $("gameScreen");
-  g.style.display = "block";
-
-  const roadTicks = ['good', 'better', 'best'].map(r =>
-    `<div class="road-tick ${r} ${r === state.currentRoad ? 'active' : ''}"><span class="road-dot"></span>${r.toUpperCase()}</div>`
-  ).join('');
-
-  let banner = '';
-  if (justDemoted) {
-    banner = `<div class="demotion-banner"><b>The passage outran you. The road below rose to meet your feet.</b> You are now walking the <b>${state.currentRoad.toUpperCase()}</b> road. Read on. This road has its own ending, and its own certificate, and its own honor.</div>`;
-    justDemoted = false;
-  }
-
-  g.innerHTML = `
-    <div class="journey-header">
-      <div class="road-indicator">${roadTicks}</div>
-      <div class="step-counter">Gate ${state.currentGate} of 5 · ${state.currentRoad.toUpperCase()} road</div>
-    </div>
-    <article class="card">
-      <h2>${escapeHTML(version.title)}</h2>
-      ${banner}
-      <div class="passage-label">Read the passage</div>
-      <div class="passage">
-        ${version.passage.map(p => `<p>${escapeHTML(p)}</p>`).join("")}
-      </div>
-      <div class="prompt">${escapeHTML(version.prompt)}</div>
-      <div class="prompt-sub">${escapeHTML(version.sub)}</div>
-      <div class="choices">
-        <div class="choices-label">Choose your answer</div>
-        ${version.choices.map((c, i) => `
-          <button class="choice" data-i="${i}" data-correct="${c.correct}">
-            ${escapeHTML(c.label)}
-          </button>`).join("")}
-      </div>
-    </article>
-  `;
-
-  g.querySelectorAll('.choice').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const correct = btn.dataset.correct === 'true';
-      handleAnswer(correct);
-    });
-  });
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function handleAnswer(correct) {
-  if (correct) {
-    state.correctCount++;
-    // Continue on same road
-  } else {
-    // Demote if not already on Good
-    if (state.currentRoad === 'best') {
-      state.currentRoad = 'better';
-      state.demotions++;
-      justDemoted = true;
-    } else if (state.currentRoad === 'better') {
-      state.currentRoad = 'good';
-      state.demotions++;
-      justDemoted = true;
-    }
-    // On Good, an "incorrect" isn't possible in-game — all good choices are treated as continuation
-    // But defensively, if somehow reached here on Good, just continue
-  }
-  state.currentGate++;
-  if (state.currentGate > 5) {
-    // Ending
-    const endingKey = state.currentRoad === 'best' ? 'master' : state.currentRoad === 'better' ? 'sharp' : 'confident';
-    state.endingReached = endingKey;
-    showEnding(endingKey);
-  } else {
-    saveState();
-    showGate();
-  }
-}
-
-async function showEnding(endingKey) {
-  const ending = ENDINGS[endingKey];
-  const serial = await issueEndingSerial(endingKey);
-  setBodyRoad(state.currentRoad);
-
-  $("introScreen").style.display = "none";
-  $("gameScreen").style.display = "none";
-  const e = $("endingScreen");
-  e.style.display = "block";
-
-  e.innerHTML = `
-    <div class="card ending">
-      <div class="ending-crest">${ending.crest}</div>
-      <h2 class="ending-title">${escapeHTML(ending.title)}</h2>
-      <p class="ending-subtitle">${escapeHTML(ending.subtitle)}</p>
-      <div class="ending-body">
-        ${ending.body.map(p => `<p>${escapeHTML(p)}</p>`).join("")}
-      </div>
-      <div class="ending-cert">
-        <div class="ending-cert-lab">Certificate of Completion</div>
-        <div class="ending-cert-serial">${escapeHTML(serial)}</div>
-      </div>
-      <div style="margin-top:24px;">
-        <div style="color:var(--muted); font-size:0.92rem; margin-bottom:16px;">
-          You answered <b style="color:var(--road-primary);">${state.correctCount}</b> of 5 correctly.
-          ${state.demotions ? `The road opened below you <b style="color:#d47a5c;">${state.demotions}</b> time${state.demotions === 1 ? '' : 's'}.` : `You held your road all the way through.`}
-        </div>
-        <button class="btn ghost" onclick="location.reload()">Walk the Road Again</button>
-        <a href="/library" style="margin-left:12px;" class="btn ghost">The Library</a>
-      </div>
-    </div>
-  `;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function escapeHTML(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-}
-
-// ==================== INTRO ====================
-function showIntro(hadPriorState) {
-  setBodyRoad(null);
-  $("gameScreen").style.display = "none";
-  $("endingScreen").style.display = "none";
-  $("introScreen").style.display = "block";
-  const resumeBlock = $("resumeBlock");
-  if (hadPriorState && state.currentRoad && state.currentGate >= 1 && state.currentGate <= 5 && !state.endingReached) {
-    resumeBlock.innerHTML = `
-      <div class="resume">
-        <b>You have a walk in progress.</b><br>
-        <span style="color:var(--muted); font-size: 0.92rem; font-style: italic;">You are on the ${state.currentRoad.toUpperCase()} road, at Gate ${state.currentGate}.</span>
-        <div style="margin-top:14px;">
-          <button class="btn" onclick="window._tr.resume()">Continue Walking →</button>
-          <button class="btn ghost" onclick="window._tr.restart()" style="margin-left:8px;">Start Over</button>
-        </div>
-      </div>
-    `;
-    $("startChoices").style.display = "none";
-  }
-}
-
-window._tr = {
-  resume() { showGate(); },
-  restart() {
-    state = { currentRoad: null, currentGate: 0, correctCount: 0, demotions: 0, visited: [], startedAt: null, endingReached: null, serial: null };
-    justDemoted = false;
-    saveState();
-    location.reload();
-  }
 };
+</script>
 
-$("btnBetter").addEventListener("click", () => {
-  state.currentRoad = "better";
-  state.currentGate = 1;
-  state.startedAt = new Date().toISOString();
-  showGate();
-});
-$("btnBest").addEventListener("click", () => {
-  state.currentRoad = "best";
-  state.currentGate = 1;
-  state.startedAt = new Date().toISOString();
-  showGate();
-});
+<script>
+(function(){
+"use strict";
+var BANK = [{"id": "g1", "tier": "good", "type": "mc", "q": "What does the chapter call \u201cthe first economy\u201d?", "a": "The deal", "d": ["The coin", "The market", "The bank", "The harvest", "Paper money", "The tribe"]}, {"id": "g2", "tier": "good", "type": "mc", "q": "In the river-settlement scene, one person returns from the water carrying what?", "a": "Fish", "d": ["Grain", "Clay pots", "Salt", "Obsidian", "Berries", "Hides"]}, {"id": "g3", "tier": "good", "type": "mc", "q": "\u201cIn small groups, memory is a kind of ___.\u201d", "a": "Ledger", "d": ["Currency", "Ceremony", "Prison", "Luxury", "Myth", "Curse"]}, {"id": "g4", "tier": "good", "type": "typed", "q": "Complete the book\u2019s promise: \u201cYou are not broke; you are simply un-______.\u201d", "a": ["traded", "un-traded", "untraded"]}, {"id": "g5", "tier": "good", "type": "mc", "q": "The person who knows how to preserve meat by smoking it offers the hunter something specific. What?", "a": "Time", "d": ["Warmth", "Money", "Salt", "Reputation", "Protection", "Luck"]}, {"id": "g6", "tier": "good", "type": "mc", "q": "\u201cSpecialization creates surplus, and surplus creates ___.\u201d", "a": "Trade", "d": ["War", "Kings", "Taxes", "Cities", "Writing", "Religion"]}, {"id": "g7", "tier": "good", "type": "mc", "q": "Money emerged because trade expanded beyond what ___ and reputation alone could efficiently track.", "a": "Memory", "d": ["Armies", "Priests", "Rivers", "Families", "Chiefs", "Laws"]}, {"id": "g8", "tier": "good", "type": "typed", "q": "One word: the chapter names \u201cthe oldest solution any group of humans has ever built.\u201d Type it.", "a": ["exchange"]}, {"id": "g9", "tier": "good", "type": "mc", "q": "The first trades ran on three things: \u201cneed, observation, and ___.\u201d", "a": "Memory", "d": ["Luck", "Violence", "Gold", "Prayer", "Law", "Strength"]}, {"id": "g10", "tier": "good", "type": "mc", "q": "\u201cValue does not disappear when cash disappears. It changes ___.\u201d", "a": "Language", "d": ["Owners", "Price", "Direction", "Size", "Color", "Hands"]}, {"id": "g11", "tier": "good", "type": "mc", "q": "Feasts, shared workdays, and seasonal gatherings were not only cultural. The chapter calls them ___.", "a": "Economic technology", "d": ["Religious duty", "Entertainment", "Early taxation", "Warfare training", "Currency mints", "Idle ritual"]}, {"id": "g12", "tier": "good", "type": "mc", "q": "An apprentice was trading what for what?", "a": "Present effort for future ability", "d": ["Labor for coins", "Freedom for food", "Loyalty for land", "Obedience for shelter", "Youth for status"]}, {"id": "g13", "tier": "good", "type": "typed", "q": "\u201cMoney, in its earliest forms\u2026 was a tool for trust at ___.\u201d Type the missing word.", "a": ["distance", "a distance"]}, {"id": "g14", "tier": "good", "type": "mc", "q": "\u201cA village with one healer and no students was ___.\u201d", "a": "Fragile", "d": ["Wealthy", "Holy", "Efficient", "Feared", "Lucky", "Modern"]}, {"id": "g15", "tier": "good", "type": "multi", "q": "Select ALL that the chapter names as things early people traded or exchanged.", "t": ["Meat and food", "Labor (like helping patch a roof)", "Knowledge and skills", "Clay containers"], "f": ["Stock shares", "Credit scores", "Paper receipts", "Insurance policies"]}, {"id": "g16", "tier": "good", "type": "mc", "q": "\u201cFair does not mean equal. It means ___ to both sides given the need, timing, and risk.\u201d", "a": "Acceptable", "d": ["Identical", "Profitable", "Legal", "Generous", "Sacred", "Equal anyway"]}, {"id": "b1", "tier": "better", "type": "mc", "q": "Why was cheating \u201cexpensive\u201d among neighbors, according to the chapter?", "a": "They would meet again, and reputation traveled faster than they could", "d": ["Chiefs punished all cheating", "The gods were watching", "Barter had official police", "All goods were marked", "Cheaters were exiled by law"]}, {"id": "b2", "tier": "better", "type": "mc", "q": "What does \u201cspecialization with obligation\u201d mean in the chapter?", "a": "The specialist keeps producing and teaching, in exchange for the group\u2019s consistent support", "d": ["Specialists ruled the settlement", "Specialists paid extra taxes", "Specialists were owned by the group", "Specialists hoarded their surplus", "Specialists worked only for chiefs"]}, {"id": "b3", "tier": "better", "type": "mc", "q": "Why was the public witnessing at a roof-patching day economically powerful?", "a": "It turned a private favor into a social fact, making future repayment more reliable", "d": ["It frightened away thieves", "It set official prices", "It entertained the workers", "It let elders count coins", "It made the roof stronger"]}, {"id": "b4", "tier": "better", "type": "mc", "q": "The chapter calls barter a \u201ctranslation economy\u201d because\u2026", "a": "It turns one kind of value into another without money as the middle language", "d": ["It required interpreters between tribes", "It crossed language borders", "It converted foreign currencies", "It used written symbols", "It translated prayers into goods"]}, {"id": "b5", "tier": "better", "type": "typed", "q": "\u201cIn that sense, reputation was not a social extra. It was ___.\u201d Type the missing word.", "a": ["infrastructure"]}, {"id": "b6", "tier": "better", "type": "mc", "q": "What made shared stores (pooled grain, fish, salt, tools) actually work?", "a": "Norms about who could draw, how much, under what conditions \u2014 enforced by reciprocity and reputation", "d": ["Soldiers guarding the granary", "Written contracts", "A king\u2019s decree", "Priests\u2019 blessings", "Secret storage locations"]}, {"id": "b7", "tier": "better", "type": "mc", "q": "Why is knowledge special among traded things, per the chapter?", "a": "It multiplies without being consumed \u2014 after the trade, both people have it", "d": ["It weighs nothing to carry", "It cannot be stolen", "It was considered sacred", "It was extremely rare", "It never changes"]}, {"id": "b8", "tier": "better", "type": "order", "q": "Arrange the chapter\u2019s value-translation loop in order, starting with meat.", "seq": ["Meat becomes labor", "Labor becomes shelter", "Shelter becomes safety", "Safety becomes time", "Time becomes learning"]}, {"id": "b9", "tier": "better", "type": "mc", "q": "Which of these does the chapter list among money\u2019s \u201csuperpowers\u201d?", "a": "It compresses value into a portable symbol and eases trade with strangers", "d": ["It ends wars between groups", "It creates trust automatically", "It replaces the need for skill", "It guarantees fairness", "It prevents famine"]}, {"id": "b10", "tier": "better", "type": "mc", "q": "What is \u201ccash scarcity,\u201d the money blind spot the chapter describes?", "a": "A skilled, useful person can still have an empty wallet \u2014 value abundant, cash tight", "d": ["Banks running out of bills", "Coins wearing down over time", "Government printing too slowly", "Prices rising faster than wages", "People hiding their savings"]}, {"id": "b11", "tier": "better", "type": "typed", "q": "\u201cThere is no approval process for ___.\u201d Type the missing word.", "a": ["usefulness"]}, {"id": "b12", "tier": "better", "type": "multi", "q": "Select ALL the statements this chapter supports.", "t": ["Money added a new language of value but never erased the old one", "Early exchange was often delayed and balanced over time", "Modern families quietly run on the oldest economy"], "f": ["Barter was replaced because it was primitive and bad", "Early societies had no way to store surplus", "Money made reputation irrelevant"]}, {"id": "b13", "tier": "better", "type": "mc", "q": "Why does the chapter reject the picture of barter as \u201ctwo strangers haggling over a direct swap\u201d?", "a": "Most early exchange was among neighbors, blending direct trades with delayed returns, mutual aid, and shared projects", "d": ["Haggling was forbidden", "Direct swaps were taxed", "Strangers never traded at all", "Swaps required a witness by law", "Merchants had not been invented"]}, {"id": "b14", "tier": "better", "type": "typed", "q": "Finish the question that \u201cstill powers every climb\u201d: \u201cWhat do you need, and what do I have that can ___?\u201d", "a": ["help"]}, {"id": "b15", "tier": "better", "type": "mc", "q": "In the first economy, security was ___.", "a": "A network and a reputation", "d": ["A salary and a savings balance", "A granary and a spear", "Land and cattle", "A wall and a gate", "A chief\u2019s protection"]}, {"id": "b16", "tier": "better", "type": "mc", "q": "In the earliest settlements, what was a \u201cjob\u201d?", "a": "A contribution \u2014 and a contribution became a claim", "d": ["A title granted by elders", "A punishment for debt", "A birthright of certain families", "A seasonal ritual", "A form of worship"]}, {"id": "b17", "tier": "better", "type": "mc", "q": "The chapter describes pooled community stores as\u2026", "a": "Insurance built out of relationships", "d": ["Primitive communism", "Organized charity", "Theft prevention", "A religious offering", "An early bank with interest"]}, {"id": "b18", "tier": "better", "type": "mc", "q": "If money \u201cis not the beginning of the deal,\u201d what is it?", "a": "A tool for scaling the deal", "d": ["The end of barter", "The root of all greed", "A replacement for trust", "The invention of banks", "The reward for labor"]}, {"id": "s1", "tier": "best", "type": "mc", "q": "A neighbor fixes your laptop; over months you bring her meals, watch her kids, and connect her to a paying client. Which chapter idea does this BEST illustrate?", "a": "Repayment in the currency of access and support, in an ongoing deal", "d": ["A direct equal swap at one moment", "Cash scarcity", "Money\u2019s portability", "A ceremonial obligation", "A failed negotiation"]}, {"id": "s2", "tier": "best", "type": "mc", "q": "Why would the chapter call a skilled person with an empty wallet \u201cwealthy in the only sense that mattered\u201d?", "a": "They can translate what they can do into what they need, through the deal", "d": ["They can borrow against future wages", "They qualify for assistance", "They can undercut competitors\u2019 prices", "They own their own tools", "They can move to a cheaper town"]}, {"id": "s3", "tier": "best", "type": "mc", "q": "Which modern situation is the closest analogue to the chapter\u2019s seasonal meeting places?", "a": "A trade fair where goods AND news, routes, and techniques circulate together", "d": ["An ATM machine", "A pawn shop", "A stock ticker", "An online-only bank", "A vending machine"]}, {"id": "s4", "tier": "best", "type": "mc", "q": "The chapter implies money\u2019s efficiency can be \u201cblunt\u201d because\u2026", "a": "It flattens the human detail and context that barter forces you to look at", "d": ["Bills physically wear out", "It loses value to inflation", "It is heavy to transport", "It requires a bank\u2019s permission", "It cannot buy knowledge"]}, {"id": "s5", "tier": "best", "type": "mc", "q": "Infer from the chapter: why does barter \u201cshine\u201d inside trusted networks?", "a": "Repeated contact makes the relationship itself part of the exchange\u2019s value", "d": ["Prices are illegal inside communities", "Cash is banned among friends", "Strangers are excluded by law", "Banks refuse small towns", "Trust removes the need for fairness"]}, {"id": "s6", "tier": "best", "type": "multi", "q": "Select ALL the statements that are supported INFERENCES from the chapter (implied, even where not word-for-word).", "t": ["A community that shames non-contributors is running an enforcement system", "Anonymity weakens reputation-based accountability", "Storing food converts surplus into time that can be invested"], "f": ["Coins caused the collapse of human trust", "Modern families should invoice each other", "Reputation could be sold like a good"]}, {"id": "s7", "tier": "best", "type": "mc", "q": "\u201cThe \u2018currency\u2019 was trust, and the interest rate was reputation.\u201d What does that mean?", "a": "The stronger your record of fairness, the more patience and generosity your deals earned over time", "d": ["Debts doubled every year", "Elders set official interest rates", "Reputation could be traded for coins", "Loans required three witnesses", "Trust replaced the need to repay"]}, {"id": "s8", "tier": "best", "type": "order", "q": "Order the chapter\u2019s causal chain for how thriving begins.", "seq": ["Specialization emerges", "Surplus is created", "Food can be stored", "The group rides out lean weeks", "Time is invested in training and improving"]}, {"id": "s9", "tier": "best", "type": "mc", "q": "\u201cSurvival is a team project\u201d is NOT charity, per the chapter, because\u2026", "a": "It is logistics \u2014 coordinating value so everyone makes it through the season", "d": ["Charity was forbidden", "Nobody in early groups was kind", "Teams were forced by chiefs", "Hunters ruled all decisions", "Charity required money"]}, {"id": "s10", "tier": "best", "type": "typed", "q": "One word: the chapter says long-distance trade and traveling information reduce ___. Type it.", "a": ["uncertainty"]}, {"id": "s11", "tier": "best", "type": "mc", "q": "A town\u2019s bank access freezes; within a week residents organize skill-swaps and shared meals. The chapter would say this shows\u2026", "a": "The oldest economy stepping forward, because usefulness needs no permission", "d": ["Pure desperation with no system behind it", "An illegal shadow market", "Proof that money never mattered", "Inflation in disguise", "A temporary fad"]}, {"id": "s12", "tier": "best", "type": "mc", "q": "The apprentice eating at the expert\u2019s fire represents which exchange?", "a": "Current assistance traded for future ability, secured by relationship \u2014 \u201cthat is a ladder\u201d", "d": ["Wages paid in food", "A bribe for secrets", "Charity toward the young", "A tax on students", "A religious offering"]}, {"id": "s13", "tier": "best", "type": "mc", "q": "Why did money arrive \u201clater\u201d in the chapter\u2019s telling?", "a": "The deal outgrew what memory and reputation could hold across distance and time", "d": ["Metal was discovered late", "Kings demanded taxes in coin", "Writing had to be invented first", "Barter failed morally", "Priests invented it for temples"]}, {"id": "s14", "tier": "best", "type": "mc", "q": "The \u201cpublic witness\u201d at the roof-patching day works most like which modern instrument?", "a": "A publicly recorded IOU \u2014 the debt becomes known and therefore enforceable", "d": ["A gift card", "A cash receipt", "An advertisement", "A tax filing", "An insurance claim"]}, {"id": "s15", "tier": "best", "type": "multi", "q": "Which of these would the CHAPTER classify as the oldest economy alive today? Select ALL that apply.", "t": ["Family members covering different household roles with no invoices", "A couch-move repaid with weekend dog-sitting", "A mechanic repaid in meals, childcare, and referrals"], "f": ["Buying coffee with a tap of a card", "Taking out a payday loan", "Receiving a government check"]}, {"id": "s16", "tier": "best", "type": "mc", "q": "The chapter\u2019s one-sentence summary of the first economy:", "a": "Humans noticed each other\u2019s strengths and used exchange to turn those strengths into shared stability", "d": ["Humans invented coins to prevent war", "Humans traded because tradition demanded it", "Humans bartered only until kings arrived", "Humans exchanged goods to please the gods", "Humans traded to escape their villages"]}];
+var GATES = [
+ ["The Gate of First Light","An arch of rough stone where every walk begins.", "arch"],
+ ["The Ledger Stones","Flat stones carved with marks no ink ever touched.", "stones"],
+ ["The Bridge of Neighbors","A footbridge only the remembered may cross.", "bridge"],
+ ["The Smokehouse Door","Where meat became time, and time became warmth.", "door"],
+ ["The Witness Circle","Torches around a roof half-mended. They saw. They remember.", "circle"],
+ ["The Well of Echoes","Ask it a careless answer and hear it come back wrong.", "well"],
+ ["The Mirror of Meaning","It does not show your face. It shows what you understood.", "mirror"],
+ ["The Keeper's Arch","The Keeper asks nothing twice. Ever.", "arch"],
+ ["The Stair of Surplus","Each step was carved in a season someone stored instead of ate.", "stair"],
+ ["The Lantern Toll","Pay in evidence. The lantern does not accept guesses.", "lantern"],
+ ["The Causeway of Strangers","Salt on the wind. Names you don't know. Deals all the same.", "bridge"],
+ ["The Summit Gate","The last gate faces the road you actually walked.", "summit"]
+];
+var TIERS = { good:{label:"THE GOOD ROAD",sub:"Confidence begins here.",cls:"t-good"},
+              better:{label:"THE BETTER ROAD",sub:"Focused energy.",cls:"t-better"},
+              best:{label:"THE BEST ROAD",sub:"Master Comprehension's infinite road.",cls:"t-best"} };
+var KEY='gsu-trif-walk-v3';
+var state = { wp:0, tier:'better', streak:0, correct:0, wrong:0, demotions:0, used:[], began:false };
+try{ var s=JSON.parse(localStorage.getItem(KEY)); if(s && s.began && !s.finished) state=s; }catch(e){}
 
-// ==================== RATING WIDGET ====================
-const starsEl = $("stars"), metaEl = $("rateMeta"), thxEl = $("rateThanks");
-let myStars = 0, avg = 0, count = 0;
+// seeded-ish rng (fresh entropy each load is fine; used pool guarantees non-repetition)
+function rnd(n){ return Math.floor(Math.random()*n); }
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=rnd(i+1), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function norm(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,' ').trim(); }
 
-function paint(hover) {
-  starsEl.innerHTML = '';
-  const fill = hover || myStars || Math.round(avg);
-  for (let i = 1; i <= 5; i++) {
-    const s = document.createElement('span');
-    s.className = 'st' + ((i <= fill) ? ' on' : '');
-    s.textContent = '★';
-    s.setAttribute('role', 'radio');
-    s.addEventListener('mouseenter', () => paint(i));
-    s.addEventListener('mouseleave', () => paint(0));
-    s.addEventListener('click', () => rate(i));
-    starsEl.appendChild(s);
+function draw(tier){
+  var pool = BANK.filter(function(b){ return b.tier===tier && state.used.indexOf(b.id)<0; });
+  if(!pool.length){ // exhausted this tier: forgive oldest used of this tier (infinite play)
+    state.used = state.used.filter(function(id){ var it=BANK.filter(function(b){return b.id===id;})[0]; return !it || it.tier!==tier; });
+    pool = BANK.filter(function(b){ return b.tier===tier; });
+  }
+  return pool[rnd(pool.length)];
+}
+function buildMC(item){
+  var k = 2 + rnd(3); // 2..4 distractors -> 3..5 options
+  var ds = shuffle(item.d).slice(0, Math.min(k, item.d.length));
+  return shuffle([item.a].concat(ds));
+}
+function buildMulti(item){
+  var t = shuffle(item.t).slice(0, 2 + rnd(Math.min(2,item.t.length-1))); // 2..3 true
+  var f = shuffle(item.f).slice(0, 2 + rnd(Math.min(2,item.f.length-1))); // 2..3 false
+  return { opts: shuffle(t.concat(f)), truth: t };
+}
+
+var cur=null, curOpts=null, curTruth=null, ordPick=[];
+var el=function(id){ return document.getElementById(id); };
+
+function paintTrail(){
+  var tr=el('trail'); tr.innerHTML='';
+  for(var i=0;i<12;i++){
+    var d=document.createElement('div'); d.className='stone'+(i<state.wp?' done':(i===state.wp?' here':'')); d.textContent=i+1;
+    tr.appendChild(d);
   }
 }
-function showMeta() {
-  if (count > 0) metaEl.innerHTML = '<b>' + avg.toFixed(1) + '</b> / 5 · ' + count + (count === 1 ? ' rating' : ' ratings');
-  else metaEl.textContent = 'Be the first to rate this page.';
+function paintTier(){
+  document.body.className = TIERS[state.tier].cls;
+  el('tierbanner').textContent = TIERS[state.tier].label;
+  el('tiersub').textContent = TIERS[state.tier].sub;
 }
-function injectLD() {
-  if (count < 1) return;
-  const el = document.getElementById('course-ld');
-  if (!el) return;
-  try {
-    const o = JSON.parse(el.textContent);
-    o.aggregateRating = { "@type": "AggregateRating", "ratingValue": Number(avg.toFixed(2)), "ratingCount": count, "bestRating": 5, "worstRating": 1 };
-    el.textContent = JSON.stringify(o);
-  } catch (e) {}
+function vignetteSVG(kind){
+  var c='var(--tier)';
+  var scenes={
+   arch:'<path d="M60 150 L60 80 Q130 20 200 80 L200 150" fill="none" stroke="C" stroke-width="2"/><line x1="30" y1="150" x2="230" y2="150" stroke="C" stroke-width="2"/><circle cx="130" cy="52" r="3" fill="C"/>',
+   stones:'<rect x="45" y="120" width="50" height="14" rx="3" fill="none" stroke="C" stroke-width="2"/><rect x="105" y="108" width="50" height="14" rx="3" fill="none" stroke="C" stroke-width="2"/><rect x="165" y="120" width="50" height="14" rx="3" fill="none" stroke="C" stroke-width="2"/><line x1="30" y1="150" x2="230" y2="150" stroke="C" stroke-width="2"/><path d="M118 112 h8 M122 108 v8" stroke="C" stroke-width="1.4"/>',
+   bridge:'<path d="M40 140 Q130 90 220 140" fill="none" stroke="C" stroke-width="2"/><line x1="70" y1="128" x2="70" y2="145" stroke="C"/><line x1="130" y1="115" x2="130" y2="142" stroke="C"/><line x1="190" y1="128" x2="190" y2="145" stroke="C"/><line x1="30" y1="150" x2="230" y2="150" stroke="C" stroke-width="2"/>',
+   door:'<rect x="95" y="70" width="70" height="80" rx="4" fill="none" stroke="C" stroke-width="2"/><circle cx="150" cy="112" r="3" fill="C"/><path d="M80 70 Q130 40 180 70" fill="none" stroke="C" stroke-width="1.4"/><path d="M118 58 q4 -10 0 -18 M132 58 q-4 -10 0 -18" stroke="C" fill="none"/><line x1="30" y1="150" x2="230" y2="150" stroke="C" stroke-width="2"/>',
+   circle:'<ellipse cx="130" cy="132" rx="80" ry="16" fill="none" stroke="C" stroke-width="1.6"/><line x1="70" y1="122" x2="70" y2="98" stroke="C" stroke-width="2"/><circle cx="70" cy="93" r="4" fill="C"/><line x1="190" y1="122" x2="190" y2="98" stroke="C" stroke-width="2"/><circle cx="190" cy="93" r="4" fill="C"/><line x1="130" y1="116" x2="130" y2="90" stroke="C" stroke-width="2"/><circle cx="130" cy="85" r="4" fill="C"/>',
+   well:'<ellipse cx="130" cy="90" rx="44" ry="12" fill="none" stroke="C" stroke-width="2"/><path d="M86 90 L86 132 A44 12 0 0 0 174 132 L174 90" fill="none" stroke="C" stroke-width="2"/><path d="M118 60 q12 -14 24 0" fill="none" stroke="C" stroke-width="1.4"/>',
+   mirror:'<rect x="95" y="55" width="70" height="95" rx="34" fill="none" stroke="C" stroke-width="2"/><path d="M110 130 Q130 70 150 130" fill="none" stroke="C" stroke-width="1.2" opacity=".7"/><line x1="30" y1="150" x2="230" y2="150" stroke="C" stroke-width="2"/>',
+   stair:'<path d="M60 150 h30 v-16 h30 v-16 h30 v-16 h30 v-16 h30" fill="none" stroke="C" stroke-width="2"/><line x1="30" y1="150" x2="230" y2="150" stroke="C" stroke-width="2"/>',
+   lantern:'<rect x="115" y="70" width="30" height="42" rx="5" fill="none" stroke="C" stroke-width="2"/><path d="M130 60 v10 M122 70 h16" stroke="C" stroke-width="1.6"/><circle cx="130" cy="91" r="6" fill="C"/><line x1="130" y1="112" x2="130" y2="150" stroke="C" stroke-width="2"/><line x1="30" y1="150" x2="230" y2="150" stroke="C" stroke-width="2"/>',
+   summit:'<path d="M60 150 L110 70 L135 105 L160 55 L210 150" fill="none" stroke="C" stroke-width="2"/><path d="M160 55 l0 -14 l14 4 l-14 5" fill="none" stroke="C" stroke-width="1.6"/><line x1="30" y1="150" x2="230" y2="150" stroke="C" stroke-width="2"/>'
+  };
+  return '<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg">'+ (scenes[kind]||scenes.arch).split('C').join(c) +'</svg>';
 }
-async function loadRating() {
-  try {
-    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
-    if (snap.exists()) { const d = snap.data(); count = d.count || 0; avg = count ? (d.sum || 0) / count : 0; }
-  } catch (e) {}
-  try {
-    const v = await getDoc(doc(db, 'lesson_ratings', GID, 'voters', uid));
-    if (v.exists()) myStars = v.data().stars || 0;
-  } catch (e) {}
-  paint(0); showMeta(); injectLD();
-  if (myStars) thxEl.textContent = 'You rated this ' + myStars + ' ★. Tap to change.';
+function renderGate(){
+  paintTrail(); paintTier();
+  var g = GATES[Math.min(state.wp,11)];
+  el('vignette').innerHTML = vignetteSVG(g[2]);
+  el('wpname').innerHTML = 'Gate '+(state.wp+1)+' of 12 — <b>'+g[0]+'</b><br><span style="color:var(--muted);font-size:.85rem;font-style:italic">'+g[1]+'</span>';
+  el('verdict').className='verdict'; el('verdict').innerHTML='';
+  cur = draw(state.tier); ordPick=[];
+  var qc = el('qcard'), h='';
+  if(cur.type==='mc'){
+    curOpts = buildMC(cur);
+    h = '<div class="qkind">Choose the one true answer · options change every time</div><div class="qtext">'+cur.q+'</div>';
+    curOpts.forEach(function(o,i){ h += '<button class="opt" data-i="'+i+'">'+o+'</button>'; });
+    h += '<div class="qactions"><button class="submitbtn" id="sub" disabled>Answer the gate</button></div>';
+  } else if(cur.type==='typed'){
+    h = '<div class="qkind">Speak in your own words · there are no options to eliminate</div><div class="qtext">'+cur.q+'</div>'+
+        '<div class="typedrow"><input type="text" id="typedin" autocomplete="off" placeholder="Type your answer"><button class="submitbtn" id="sub">Answer the gate</button></div>';
+  } else if(cur.type==='multi'){
+    var bm = buildMulti(cur); curOpts = bm.opts; curTruth = bm.truth;
+    h = '<div class="qkind">Select EVERY true statement — all of them, and only them</div><div class="qtext">'+cur.q+'</div>';
+    curOpts.forEach(function(o,i){ h += '<button class="opt" data-m="'+i+'">'+o+'</button>'; });
+    h += '<div class="qactions"><button class="submitbtn" id="sub">Answer the gate</button></div>';
+  } else if(cur.type==='order'){
+    curOpts = shuffle(cur.seq);
+    h = '<div class="qkind">Place the events in the chapter&#39;s order · tap them first to last</div><div class="qtext">'+cur.q+'</div><div class="ordslot" id="ordslot">Your order: —</div>';
+    curOpts.forEach(function(o,i){ h += '<button class="opt" data-o="'+i+'">'+o+'</button>'; });
+    h += '<div class="qactions"><button class="submitbtn" id="sub" disabled>Answer the gate</button><button class="resetord" id="ordreset">Start the order over</button></div>';
+  }
+  qc.innerHTML = h;
+  wire();
+  window.scrollTo({top: el('walk').offsetTop - 20, behavior:'smooth'});
 }
-async function rate(stars) {
-  if (!db || !uid) { thxEl.textContent = 'Ratings save when online.'; myStars = stars; paint(0); return; }
-  try {
-    await runTransaction(db, async (tx) => {
-      const aggRef = doc(db, 'lesson_ratings', GID), vRef = doc(db, 'lesson_ratings', GID, 'voters', uid);
-      const a = await tx.get(aggRef), v = await tx.get(vRef);
-      let sum = a.exists() ? (a.data().sum || 0) : 0, c = a.exists() ? (a.data().count || 0) : 0;
-      if (v.exists()) sum = sum - (v.data().stars || 0) + stars;
-      else { sum += stars; c += 1; }
-      tx.set(aggRef, { sum, count: c }, { merge: true });
-      tx.set(vRef, { stars, at: Date.now() }, { merge: true });
-    });
-    myStars = stars;
-    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
-    if (snap.exists()) { const d = snap.data(); count = d.count || 0; avg = count ? (d.sum || 0) / count : 0; }
-    paint(0); showMeta(); injectLD();
-    thxEl.textContent = 'Thank you — your rating was saved.';
-  } catch (e) { thxEl.textContent = 'Could not save just now. Please try again.'; }
-}
-
-// ==================== GENO PROMPTS ====================
-document.querySelectorAll('.prompt-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    try { window.dispatchEvent(new CustomEvent('geno:open')); } catch (e) {}
-  });
-});
-
-// ==================== BOOT ====================
-async function bootstrap() {
-  try {
-    const app = getApps().length ? getApp() : initializeApp(cfg);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    paint(0);
-    onAuthStateChanged(auth, async (u) => {
-      if (u) {
-        uid = u.uid;
-        const hadPrior = await loadState();
-        await loadRating();
-        showIntro(hadPrior);
+var mcPick=-1, multiPick=[];
+function wire(){
+  mcPick=-1; multiPick=[];
+  var qc=el('qcard');
+  qc.querySelectorAll('.opt').forEach(function(b){
+    b.addEventListener('click', function(){
+      if(cur.type==='mc'){
+        qc.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel');});
+        b.classList.add('sel'); mcPick=+b.dataset.i; el('sub').disabled=false;
+      } else if(cur.type==='multi'){
+        b.classList.toggle('sel');
+        var i=+b.dataset.m, at=multiPick.indexOf(i);
+        if(at<0) multiPick.push(i); else multiPick.splice(at,1);
+      } else if(cur.type==='order'){
+        if(b.classList.contains('sel')) return;
+        b.classList.add('sel'); ordPick.push(+b.dataset.o);
+        el('ordslot').innerHTML='Your order: <b>'+ordPick.map(function(i){return curOpts[i];}).join('</b> → <b>')+'</b>';
+        if(ordPick.length===curOpts.length) el('sub').disabled=false;
       }
     });
-    signInAnonymously(auth).catch(() => {
-      metaEl.textContent = 'Ratings unavailable offline.';
-      paint(0);
-      showIntro(false);
-    });
-  } catch (e) {
-    metaEl.textContent = 'Ratings unavailable offline.';
-    paint(0);
-    showIntro(false);
-  }
+  });
+  var orst=el('ordreset');
+  if(orst) orst.addEventListener('click', function(){
+    ordPick=[]; el('sub').disabled=true; el('ordslot').textContent='Your order: —';
+    qc.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel');});
+  });
+  var sub=el('sub');
+  if(sub) sub.addEventListener('click', judge);
+  var ti=el('typedin');
+  if(ti){ ti.focus(); ti.addEventListener('keydown',function(e){ if(e.key==='Enter') judge(); }); }
 }
-bootstrap();
-</script>
-
-<!-- GENO WIDGET -->
-<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
-<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-<script>
-window.addEventListener('geno:open', function() {
-  try {
-    var w = document.querySelector('elevenlabs-convai');
-    if (w && w.shadowRoot) {
-      var btn = w.shadowRoot.querySelector('button');
-      if (btn) btn.click();
+function judge(){
+  var ok=false;
+  if(cur.type==='mc') ok = (curOpts[mcPick]===cur.a);
+  else if(cur.type==='typed'){
+    var v=norm(el('typedin').value);
+    ok = cur.a.some(function(a){ return norm(a)===v; });
+  }
+  else if(cur.type==='multi'){
+    var chosen = multiPick.map(function(i){return curOpts[i];}).sort();
+    var truth = curTruth.slice().sort();
+    ok = chosen.length===truth.length && chosen.every(function(x,i){return x===truth[i];});
+  }
+  else if(cur.type==='order'){
+    ok = ordPick.map(function(i){return curOpts[i];}).join('|')===cur.seq.join('|');
+  }
+  state.used.push(cur.id);
+  var v=el('verdict');
+  el('qcard').querySelectorAll('button,input').forEach(function(b){b.disabled=true;});
+  if(ok){
+    state.correct++; state.streak++; state.wp++;
+    var promoted=false;
+    if(state.streak>=3 && state.tier!=='best'){
+      state.tier = state.tier==='good' ? 'better' : 'best'; state.streak=0; promoted=true;
     }
-  } catch (e) {}
+    if(state.wp>=12){ save(); finish(); return; }
+    v.className='verdict ok';
+    v.innerHTML='<p><strong>The gate opens.</strong> '+(promoted?('The '+(state.tier==='best'?'purple':'blue')+' road opens beneath your feet — you have been promoted to the '+state.tier.toUpperCase()+' road.'):'You advance one stone.')+'</p><button class="nextbtn" id="nx">Walk on →</button>';
+  } else {
+    state.wrong++; state.streak=0;
+    var slide = state.tier==='good' ? 2 : 1;
+    var demoted=false;
+    if(state.tier!=='good'){ state.tier = state.tier==='best' ? 'better' : 'good'; state.demotions++; demoted=true; }
+    state.wp = Math.max(0, state.wp - slide);
+    v.className='verdict bad';
+    v.innerHTML='<p><strong>The gate holds.</strong> That question will never be asked of you again — the road does not repeat itself.</p><p>'+(demoted?('You are demoted to the '+state.tier.toUpperCase()+' road and pushed back a stone.'):'The Good road keeps you, but you slide back two stones.')+' Re-read the part of the chapter you felt unsure of. The next gate asks something new.</p><button class="nextbtn" id="nx">Face the next gate →</button>';
+  }
+  save();
+  el('nx').addEventListener('click', renderGate);
+  el('runstats').textContent = 'Gates passed this walk: '+state.correct+' · missed: '+state.wrong+' · demotions: '+state.demotions;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+var ENDINGS = {
+ best:  { key:'master', title:"Master Comprehension's Infinite Road", desc:"You finished on the purple road. Twelve gates, deep questions, no repeats, no mercy — and you read your way through all of it. Your certificate carries the gold Infinite Road seal, and it comes with an invitation the other roads do not: you have earned the right to teach. Take what you now understand to one other person — <a href='https://www.globalsovereignuniversity.org/apostle-track' style='color:var(--tier)'>the Apostle Track</a> — because the deepest way to own knowledge is to give it away." },
+ better:{ key:'sharp',  title:"The Sharp Reader", desc:"You finished on the blue road — focused energy, honest reading, gates passed on their merits. The purple road is still out there. It will be different next time. It always is." },
+ good:  { key:'conf',   title:"Confidence Begins Here", desc:"You finished. The Good road does not let go of anyone who keeps walking — and you kept walking. That is where every reader on Earth begins. Walk again: the road remembers nothing, and neither should your doubts." }
+};
+function finish(){
+  state.finished=true; save();
+  el('walk').style.display='none';
+  var e = ENDINGS[state.tier];
+  el('ending').style.display='block';
+  el('endtitle').textContent = e.title;
+  el('enddesc').innerHTML = e.desc;
+  el('walloptin').style.display = (e.key==='master') ? 'flex' : 'none';
+  window.scrollTo({top: el('ending').offsetTop - 40, behavior:'smooth'});
+  el('claimBtn').addEventListener('click', async function(){
+    var name = (el('certname').value||'').trim();
+    if(!name){ el('certname').focus(); return; }
+    el('claimBtn').disabled=true;
+    var serial='TR-LOCAL-'+Date.now().toString(36).toUpperCase();
+    try{ if(window.gsuIssueSerial) serial = await window.gsuIssueSerial(e.key, {correct:state.correct, wrong:state.wrong, demotions:state.demotions, chapter:'world-climb-ch1', name: (e.key==='master' && document.getElementById('wallcb').checked) ? name.split(' ')[0] : null, wallOptIn: (e.key==='master' && document.getElementById('wallcb').checked)}); }catch(err){}
+    el('cn').textContent=name; el('ct').textContent=e.title; if(e.key==='master') el('cert').classList.add('master'); else el('cert').classList.remove('master'); el('cs').textContent='Serial · '+serial;
+    el('cd').textContent=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    el('nameentry').style.display='none';
+    el('cert').style.display='block';
+    el('endactions').style.display='block';
+  });
+  el('againBtn')&&el('againBtn').addEventListener('click', restart);
+}
+function restart(){
+  state={ wp:0, tier:'better', streak:0, correct:0, wrong:0, demotions:0, used:[], began:true };
+  save();
+  el('ending').style.display='none';
+  el('cert').style.display='none'; el('endactions').style.display='none';
+  el('nameentry').style.display='flex'; el('claimBtn').disabled=false; el('certname').value='';
+  el('walk').style.display='block';
+  renderGate();
+}
+el('beginBtn').addEventListener('click', function(){
+  state.began=true; save();
+  el('readgate').querySelector('.bigbtn').style.display='none';
+  el('walk').style.display='block';
+  renderGate();
 });
+if(state.began && !state.finished){
+  el('walk').style.display='block';
+  el('beginBtn').textContent='Return to the road (your place was saved)';
+  renderGate();
+}
+})();
 </script>
-
 </body>
 </html>
