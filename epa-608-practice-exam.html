@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<!-- ════════════════════════════════════════════════════════════════
+GSU CERTIFICATION · FREE EPA 608 PRACTICE EXAM · July 15, 2026 · STAGING
+GENE'S STEPS (≈3 min):
+  1. Upload to geneconstant36-blip/gsu-assets repo root as
+     epa-608-practice-exam.html
+  2. Live URL: https://read.globalsovereignuniversity.org/epa-608-practice-exam.html
+  3. Optional: add a card for it on /tradification and /certification
+     (say the word and I'll produce the embeds).
+NOTES:
+  · 40 ORIGINAL practice questions (10 per section: Core, Type I, II, III),
+    written to the EPA Section 608 published topic areas — no reproduced
+    exam questions. Every answer verified against standard 608 prep facts.
+  · Readiness threshold mirrors the real exam: 70% per section.
+  · Printable serial-numbered READINESS certificate (client-generated
+    serial GSU-608R-…). FIREBASE UPGRADE PATH: paste the gsu-certification
+    web config into the marked block below and say the word — I'll wire
+    Firestore-backed serials to match the 8-subject system.
+  · Honest framing throughout: preparation only; actual EPA 608
+    certification comes solely from an EPA-approved certifying org.
+  · GENO Widget Law compliant.
+════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free EPA 608 Practice Exam — Core, Type I, II &amp; III with Readiness Certificate | GSU</title>
+<meta name="description" content="Free EPA Section 608 practice exam: 40 original questions across Core, Type I, Type II, and Type III, instant scoring with explanations, and a printable readiness certificate at 70% per section — the real exam's passing bar. No login. From Global Sovereign University.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/epa-608-practice-exam.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "GSU Free EPA 608 Practice Exam",
+  "url": "https://read.globalsovereignuniversity.org/epa-608-practice-exam.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Global Sovereign University", "url": "https://www.globalsovereignuniversity.org" },
+  "description": "Free 40-question EPA Section 608 practice exam covering Core, Type I, Type II, and Type III, with instant scoring, explanations, and a printable readiness certificate."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Tradification", "item": "https://www.globalsovereignuniversity.org/tradification" },
+    { "@type": "ListItem", "position": 2, "name": "GSU Certification", "item": "https://www.globalsovereignuniversity.org/certification" },
+    { "@type": "ListItem", "position": 3, "name": "EPA 608 Practice Exam", "item": "https://read.globalsovereignuniversity.org/epa-608-practice-exam.html" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is this the real EPA 608 exam?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. This is a free practice exam from Global Sovereign University with original questions written to the EPA Section 608 published topic areas. Actual EPA 608 certification is issued only by EPA-approved certifying organizations." } },
+    { "@type": "Question", "name": "What score do I need on the real EPA 608 exam?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The widely used passing standard is 70% per section. This practice exam applies the same 70%-per-section bar to its readiness verdict." } },
+    { "@type": "Question", "name": "What do the certification types cover?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Core covers regulations, ozone science, and safety for everyone. Type I covers small appliances (5 pounds of refrigerant or less). Type II covers high-pressure appliances such as residential split systems. Type III covers low-pressure appliances such as centrifugal chillers. Universal certification means passing Core plus all three types." } },
+    { "@type": "Question", "name": "Is the readiness certificate an EPA credential?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. The GSU readiness certificate documents that you scored at or above 70% in every section of this practice exam. It is a study milestone, not an EPA certification." } }
+  ]
+}
+</script>
+<style>
+  :root{
+    --black:#000000; --gold:#C9A84C; --cream:#F5F1E8;
+    --dim:rgba(245,241,232,.72); --line:rgba(201,168,76,.35);
+    --panel:rgba(201,168,76,.07); --pass:#4CAF7D; --fail:#E05B4B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);color:var(--cream);font-family:Verdana,Geneva,sans-serif;font-size:16px;line-height:1.65}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif;color:var(--gold);line-height:1.25}
+  a{color:var(--gold)}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px}
+  .returnbar{background:#0d0b07;border-bottom:1px solid var(--line);padding:10px 0}
+  .returnbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;max-width:1060px}
+  .returnbar a{text-decoration:none;font-size:.9rem;letter-spacing:.04em}
+  .rb-brand{font-family:Georgia,serif;color:var(--cream);font-size:.9rem}
+  .rb-brand span{color:var(--gold)}
+  .hero{text-align:center;padding:56px 20px 30px;border-bottom:1px solid var(--line)}
+  .hero .eyebrow{color:var(--gold);letter-spacing:.28em;font-size:.75rem;text-transform:uppercase;margin-bottom:14px}
+  .hero h1{font-size:clamp(1.8rem,4.5vw,2.8rem);margin-bottom:14px}
+  .hero p{max-width:46em;margin:0 auto 10px;color:var(--dim)}
+  .honest{max-width:46em;margin:14px auto 0;padding:12px 18px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:.9rem;color:var(--dim)}
+  .honest b{color:var(--gold)}
+  section.block{padding:34px 0 6px}
+  section.block h2{font-size:1.4rem;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:8px}
+  section.block .sechead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .secscore{font-family:Georgia,serif;color:var(--gold);font-size:1.05rem}
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:16px 0}
+  .q p.stem{color:var(--cream);margin-bottom:12px}
+  .q label{display:block;padding:9px 12px;border:1px solid rgba(201,168,76,.2);border-radius:6px;margin-bottom:8px;cursor:pointer;color:var(--dim)}
+  .q label:hover{border-color:var(--gold)}
+  .q input{accent-color:var(--gold);margin-right:10px}
+  .q .expl{display:none;margin-top:10px;padding:10px 14px;border-left:3px solid var(--gold);font-size:.92rem;color:var(--dim)}
+  .q.right{border-color:var(--pass)} .q.wrong{border-color:var(--fail)}
+  .q.right .expl,.q.wrong .expl{display:block}
+  .gradebar{position:sticky;bottom:0;background:#0d0b07;border-top:1px solid var(--gold);padding:14px 20px;text-align:center;z-index:5}
+  .btn{display:inline-block;background:var(--gold);color:#000;text-decoration:none;font-weight:700;padding:13px 30px;border-radius:6px;letter-spacing:.04em;margin:4px 6px;border:none;font-size:1rem;cursor:pointer;font-family:inherit}
+  .btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+  #results{display:none;border:1px solid var(--gold);border-radius:10px;background:var(--panel);padding:28px;text-align:center;margin:30px 0}
+  #results h2{font-size:1.6rem;margin-bottom:14px}
+  .scoregrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+  .scorebox{border:1px solid var(--line);border-radius:8px;padding:14px}
+  .scorebox .n{font-family:Georgia,serif;font-size:1.6rem}
+  .scorebox.ok .n{color:var(--pass)} .scorebox.no .n{color:var(--fail)}
+  .scorebox .l{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  #certgate{display:none;margin-top:18px}
+  #certgate input{background:#0d0b07;border:1px solid var(--line);border-radius:6px;color:var(--cream);font-size:1.05rem;padding:12px 14px;font-family:inherit;width:min(340px,90%);margin-bottom:10px}
+  .cta{border:1px solid var(--gold);border-radius:10px;padding:28px;text-align:center;margin:34px 0 4px;background:var(--panel)}
+  .cta h2{font-size:1.35rem;margin-bottom:10px}
+  .cta p{margin:0 auto 16px;max-width:42em;color:var(--dim)}
+  .faq details{border:1px solid var(--line);border-radius:8px;margin-bottom:12px;background:var(--panel)}
+  .faq summary{cursor:pointer;padding:15px 18px;font-family:Georgia,serif;color:var(--gold);font-size:1.05rem}
+  .faq details p{padding:0 18px 16px;color:var(--dim)}
+  .disclaimer{font-size:.82rem;color:rgba(245,241,232,.5);max-width:52em;margin:26px auto 0;text-align:center}
+  footer{border-top:1px solid var(--line);padding:34px 20px;text-align:center;margin-top:40px}
+  footer p{color:var(--dim);font-size:.9rem;margin-bottom:12px}
+  .geno-open{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--gold);border-radius:30px;color:var(--gold);padding:9px 20px;font-size:.95rem;cursor:pointer;font-family:inherit}
+  .geno-open img{width:34px;height:34px;border-radius:50%}
+  /* Certificate */
+  #cert{display:none}
+  @media print{
+    body *{visibility:hidden}
+    #cert,#cert *{visibility:visible}
+    #cert{display:block;position:absolute;inset:0;background:#fff;color:#000;padding:60px;text-align:center}
+  }
+  #cert .cframe{border:6px double #C9A84C;padding:50px 40px}
+  #cert h2{color:#000;font-size:2rem;margin-bottom:6px}
+  #cert .gold{color:#8a6d2f;font-family:Georgia,serif}
+  #cert p{margin:8px 0;color:#000}
+  #cert .name{font-family:Georgia,serif;font-size:1.9rem;margin:18px 0;border-bottom:2px solid #C9A84C;display:inline-block;padding:0 30px 6px}
+</style>
+</head>
+<body>
+
+<div class="returnbar">
+  <div class="wrap">
+    <a href="https://www.globalsovereignuniversity.org/tradification">← Back to Tradification</a>
+    <div class="rb-brand">GLOBAL SOVEREIGN <span>UNIVERSITY</span> · Certification</div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">GSU Certification · Free Forever · No Login</div>
+  <h1>Free EPA 608 Practice Exam</h1>
+  <p>Forty original questions across the four sections of the EPA Section 608 exam — Core, Type I, Type II, and Type III — with instant scoring, plain-English explanations, and the real exam's bar: <strong style="color:var(--gold)">70% per section</strong>. Clear all four and print your serial-numbered Readiness Certificate.</p>
+  <div class="honest"><b>Straight talk:</b> this is preparation, not certification. These are original practice questions written to the EPA's published topic areas — the actual EPA 608 credential is issued only through an EPA-approved certifying organization. Our certificate says "readiness," and it means exactly that.</div>
+</div>
+
+<div class="wrap">
+  <div id="exam"></div>
+
+  <div id="results">
+    <h2 id="verdict"></h2>
+    <div class="scoregrid" id="scoregrid"></div>
+    <p id="advice" style="color:var(--dim)"></p>
+    <div id="certgate">
+      <p style="color:var(--dim)">Enter your name as it should appear on the certificate:</p>
+      <input id="certname" type="text" placeholder="Your full name" maxlength="60">
+      <div><button class="btn" onclick="printCert()">Print My Readiness Certificate</button></div>
+    </div>
+    <div style="margin-top:14px"><button class="btn ghost" onclick="location.reload()">Retake the Exam</button></div>
+  </div>
+
+  <div class="gradebar" id="gradebar">
+    <button class="btn" onclick="grade()">Grade My Exam</button>
+    <span id="progress" style="color:var(--dim);font-size:.9rem;margin-left:10px"></span>
+  </div>
+
+  <div class="cta">
+    <h2>Studying for the Real Thing?</h2>
+    <p>The <em>GSU EPA 608 Certification Study Guide</em> by Dr. Gene A. Constant covers all four sections in depth — available in Kindle ($3.99), paperback, and hardcover. And GENO, the GSU AI tutor, will quiz you out loud on any section, 24/7, free, in 83 languages.</p>
+    <a class="btn" href="https://www.amazon.com/dp/B0H82CLWCK?tag=gsu2026-20" rel="nofollow sponsored">Get the Study Guide</a>
+    <a class="btn ghost" href="https://read.globalsovereignuniversity.org/hvac-btu-calculator.html">Free HVAC BTU Calculator</a>
+    <a class="btn ghost" href="#" onclick="openGeno();return false;">Ask GENO to Quiz Me</a>
+  </div>
+
+  <section class="block faq">
+    <h2>Frequently Asked Questions</h2>
+    <details><summary>Is this the real EPA 608 exam?</summary><p>No. It is a free practice exam with original questions written to the EPA Section 608 published topic areas. Actual certification is issued only by EPA-approved certifying organizations.</p></details>
+    <details><summary>What score passes the real exam?</summary><p>The widely used standard is 70% per section — the same bar this practice exam applies to its readiness verdict.</p></details>
+    <details><summary>What do the four sections cover?</summary><p>Core: regulations, ozone science, safety, recovery basics — required of everyone. Type I: small appliances (5 lb or less). Type II: high-pressure appliances like residential split systems. Type III: low-pressure appliances like centrifugal chillers. Pass Core plus all three types and you're eligible for Universal.</p></details>
+    <details><summary>Is the readiness certificate an EPA credential?</summary><p>No — it documents that you scored 70% or better in every section of this practice exam. A study milestone, honestly labeled.</p></details>
+  </section>
+
+  <p class="disclaimer">Free educational practice exam from Global Sovereign University, a program of The Foundation for Global Instruction (501(c)(3)). All questions are original works aligned to publicly documented EPA Section 608 topic areas; none are reproduced from any actual certification exam. Regulations and thresholds cited reflect standard Section 608 training content — verify current requirements with the EPA and your certifying organization. This exam and its readiness certificate confer no EPA credential.</p>
+</div>
+
+<footer>
+  <p>GSU Certification · Free forever. Works on any phone. No login.</p>
+  <button class="geno-open" onclick="openGeno()">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO">
+    GENO AI Tutor available 24/7 — a robot you can actually TALK to
+  </button>
+</footer>
+
+<!-- Printable certificate -->
+<div id="cert">
+  <div class="cframe">
+    <p class="gold" style="letter-spacing:.3em;font-size:.85rem">GLOBAL SOVEREIGN UNIVERSITY</p>
+    <h2>Certificate of Readiness</h2>
+    <p class="gold" style="font-style:italic">EPA Section 608 Practice Examination</p>
+    <p style="margin-top:22px">This certifies that</p>
+    <div class="name" id="cname">&nbsp;</div>
+    <p>scored 70% or higher in all four sections — Core, Type I, Type II, and Type III —<br>of the Global Sovereign University EPA 608 Practice Exam.</p>
+    <p style="margin-top:18px">Score: <b id="cscore"></b> &nbsp;·&nbsp; Date: <b id="cdate"></b> &nbsp;·&nbsp; Serial: <b id="cserial"></b></p>
+    <p style="margin-top:26px;font-size:.85rem">This readiness certificate is a study milestone from a 501(c)(3) educational nonprofit.<br>It is not an EPA credential; EPA 608 certification is issued only by EPA-approved certifying organizations.</p>
+    <p class="gold" style="margin-top:22px;font-style:italic">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow."</p>
+    <p style="font-size:.85rem">— Dr. Gene A. Constant, Founding Chancellor</p>
+  </div>
+</div>
+
+<!-- GENO WIDGET LAW — single pipeline -->
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<!-- FIREBASE UPGRADE PATH: paste gsu-certification web config here and tell Claude
+     to wire Firestore-backed serials matching the 8-subject system. -->
+<script>
+  function openGeno(){
+    window.dispatchEvent(new CustomEvent('geno:open'));
+    var w=document.querySelector('elevenlabs-convai');
+    if(w){ try{ (w.shadowRoot&&w.shadowRoot.querySelector('button'))?w.shadowRoot.querySelector('button').click():w.click(); }catch(e){} }
+  }
+
+  /* [stem, [4 options], correctIndex, explanation] — 10 per section */
+  var BANK={
+  "Core — Regulations, Ozone &amp; Safety":[
+    ["Which refrigerant family is fully halogenated, most chemically stable, and carries the highest ozone-depletion potential?",["HFCs","CFCs","HFOs","Natural refrigerants"],1,"CFCs like R-12 are fully halogenated and so stable they survive the trip to the stratosphere, where their chlorine destroys ozone."],
+    ["The international treaty that phases out production of ozone-depleting substances is the:",["Kyoto Protocol","Paris Agreement","Montreal Protocol","Geneva Convention"],2,"The Montreal Protocol (1987) is the treaty behind the CFC and HCFC phaseouts enforced in the U.S. through the Clean Air Act."],
+    ["The element in CFC and HCFC refrigerants chiefly responsible for destroying stratospheric ozone is:",["Fluorine","Carbon","Hydrogen","Chlorine"],3,"Chlorine atoms catalytically destroy ozone — a single chlorine atom can break down tens of thousands of ozone molecules."],
+    ["Under Clean Air Act Section 608, knowingly venting CFC or HCFC refrigerant has been illegal since:",["July 1, 1992","January 1, 1996","November 15, 1995","July 1, 2000"],0,"The Section 608 venting prohibition took effect July 1, 1992; the prohibition was extended to HFC substitutes on November 15, 1995."],
+    ["Which release of refrigerant is legally permitted?",["Topping off a leaking system and letting it leak","De minimis releases during good-faith recovery attempts","Venting HFCs because they don't harm ozone","Releasing charge to speed a repair"],1,"Only de minimis (trace) releases that occur while making a good-faith attempt to recover, recycle, or safely dispose are permitted."],
+    ["Before refrigerant may be sold to a different owner, it must be reclaimed — meaning restored to the purity of:",["The manufacturer's warranty sheet","AHRI Standard 700, verified by chemical analysis","Any recovery cylinder standard","OSHA workplace rules"],1,"Reclamation means restoring refrigerant to AHRI 700 purity, verified by chemical analysis — the bar for changing ownership."],
+    ["The only gas that should ever be used to pressurize a system for leak testing is:",["Oxygen","Compressed shop air","Dry nitrogen","Carbon dioxide"],2,"Dry nitrogen is inert. Oxygen or compressed air mixed with refrigerant oil can explode — this one kills people."],
+    ["Who may legally purchase regulated refrigerants?",["Anyone with a business license","EPA Section 608 certified technicians","Any HVAC apprentice","Property owners"],1,"The sales restriction limits purchase of regulated refrigerants to certified technicians."],
+    ["The primary danger of a large refrigerant release in a confined space, such as an equipment room, is:",["Flammability of all refrigerants","Oxygen displacement causing asphyxiation","Skin irritation","Noise exposure"],1,"Refrigerant vapor is heavier than air and displaces oxygen — the classic equipment-room fatality. Frostbite from liquid contact is the second hazard."],
+    ["Before discarding a disposable refrigerant cylinder, a technician must:",["Leave residual vapor inside for safety","Recover the remaining refrigerant to 0 psig and render the cylinder useless","Refill it for reuse","Bury it with the jobsite waste"],1,"Recover the heel to 0 psig, then mark or puncture the empty disposable cylinder so it cannot be refilled."]
+  ],
+  "Type I — Small Appliances":[
+    ["A 'small appliance' under Section 608 is factory-sealed and contains no more than:",["3 pounds of refrigerant","5 pounds of refrigerant","10 pounds of refrigerant","15 pounds of refrigerant"],1,"Small appliances are hermetically sealed, factory charged with 5 pounds or less — window units, household refrigerators, dehumidifiers."],
+    ["When recovering from a small appliance whose compressor RUNS, you must capture at least:",["70% of the charge","80% of the charge","90% of the charge","99% of the charge"],2,"Operating compressor: 90% recovery (or achieve 4 in. Hg vacuum). Non-operating: 80%."],
+    ["When the small appliance's compressor does NOT run, the recovery requirement drops to:",["50%","60%","80%","90%"],2,"Non-operating compressor: 80% of the charge, or evacuation to 4 inches of mercury vacuum."],
+    ["Recovery equipment for small appliances manufactured after November 15, 1993 must be able to pull:",["4 inches Hg vacuum","10 inches Hg vacuum","25 mm Hg absolute","500 microns"],0,"The certified-equipment standard for small appliances is 4 in. Hg vacuum."],
+    ["Solderless piercing-type access valves should be used on which tubing — and what should be done with them afterward?",["Steel tubing; leave permanently","Copper or aluminum tubing; remove after use because they tend to leak","Any tubing; paint over them","PVC lines; cap them"],1,"Piercing valves belong on copper or aluminum only, and they're notorious leakers — take them off when the job is done."],
+    ["System-dependent (passive) recovery relies on:",["A separate recovery machine's compressor","The appliance's own compressor or internal pressure","Gravity drainage only","A vacuum pump rated to 500 microns"],1,"Passive recovery uses the appliance's own compressor or internal pressure to push refrigerant into a non-pressurized container."],
+    ["Self-contained (active) recovery equipment is defined by:",["Having its own means of moving the refrigerant","Weighing under 25 pounds","Using no electricity","Working only on CFCs"],0,"Active equipment has its own pump or compressor — it doesn't depend on the appliance to move refrigerant."],
+    ["Refrigerant trapped in a non-running compressor's oil can be coaxed out during recovery by:",["Adding more refrigerant","Gently heating and tapping the compressor","Pressurizing with oxygen","Freezing the compressor shell"],1,"Mild heat and a few taps on the compressor shell release refrigerant dissolved in the oil, improving passive recovery."],
+    ["A refillable recovery cylinder must never be filled beyond:",["50% of capacity","80% of capacity","95% of capacity","100% — fill it completely"],1,"The 80% fill limit leaves expansion room; an overfilled (hydrostatically full) cylinder can rupture as it warms."],
+    ["Refrigerant recovered from a customer's appliance may be reused WITHOUT reclamation only in:",["Any customer's equipment","Equipment belonging to the same owner","Automotive systems","Export shipments"],1,"Recovered or recycled refrigerant can go back into the same owner's equipment; changing owners requires reclamation to AHRI 700."]
+  ],
+  "Type II — High-Pressure Appliances":[
+    ["Type II certification covers:",["Small appliances only","High-pressure appliances such as residential split systems","Low-pressure centrifugal chillers","Motor vehicle air conditioning"],1,"Type II is the high-pressure category — R-22 and R-410A split systems, heat pumps, and similar equipment above the small-appliance class."],
+    ["Recovering refrigerant in the LIQUID phase rather than vapor:",["Is slower","Is prohibited","Significantly speeds recovery","Damages the recovery machine every time"],2,"Liquid moves far more mass per minute than vapor — begin with liquid recovery on larger charges, then finish with vapor."],
+    ["Non-condensables (air) trapped in a system show up as:",["Lower-than-normal head pressure","Higher-than-normal head (condensing) pressure","Frost on the evaporator only","Zero superheat"],1,"Air collects in the condenser and can't condense, driving head pressure above what the condensing temperature predicts."],
+    ["After opening a system for a major repair, you should install a new:",["Compressor","Filter-drier","Condenser fan","Sight glass"],1,"Any time the system is opened, moisture and contaminants get in — replace the filter-drier before recharging."],
+    ["Never energize a hermetic compressor while the system is under deep vacuum because:",["It recovers refrigerant too quickly","The motor windings can arc over and burn out","It voids the EPA certificate","The oil becomes acidic instantly"],1,"In a deep vacuum there's no refrigerant vapor to insulate and cool the windings — energizing invites arc-over and a burned motor."],
+    ["Approved refrigerant recovery cylinders are:",["Disposable cylinders painted white","DOT-approved refillable cylinders, gray body with a yellow top","Any clean propane tank","Glass-lined laboratory vessels"],1,"Recovered refrigerant goes only into DOT-approved refillable recovery cylinders — the gray-with-yellow-top standard."],
+    ["Bubbles in the liquid-line sight glass most commonly indicate:",["Overcharge","Low refrigerant charge or a liquid-line restriction","A failed fan motor","Perfect operation"],1,"Flash gas in the sight glass means the liquid line isn't full — undercharge or a restriction ahead of the glass."],
+    ["On a large high-pressure system, connecting the recovery machine to BOTH the high and low sides:",["Is prohibited","Reduces total recovery time","Doubles the required vacuum","Only works on R-12"],1,"Accessing both sides gives refrigerant more paths out and cuts recovery time substantially."],
+    ["Pressurizing a system with oxygen or compressed air for leak testing is forbidden because:",["It's too expensive","Oxygen plus refrigerant oil can detonate","It corrodes copper instantly","It sets off refrigerant monitors"],1,"Compressor oil in an oxygen-rich atmosphere under pressure is an explosion waiting for ignition. Dry nitrogen only."],
+    ["Compared with R-22, the blend R-410A operates at pressures that are:",["About the same","Roughly half","Substantially higher — gauges and equipment must be rated for it","Always below atmospheric"],2,"R-410A runs at much higher pressures than R-22; hoses, gauges, and recovery equipment must be rated accordingly."]
+  ],
+  "Type III — Low-Pressure Appliances":[
+    ["Low-pressure appliances typically use refrigerants such as:",["R-410A and R-32","R-11 and R-123","R-134a and R-404A","Ammonia only"],1,"Type III is the world of centrifugal chillers charged with low-pressure refrigerants like CFC R-11 and its HCFC successor R-123."],
+    ["During normal operation, a low-pressure chiller runs:",["Far above atmospheric pressure","Below atmospheric pressure — in a vacuum","At exactly 0 psig","At the same pressure as R-410A systems"],1,"Low-pressure machines operate in a vacuum, which is why their leaks pull air IN rather than pushing refrigerant out."],
+    ["The purge unit on a low-pressure chiller exists to:",["Add refrigerant automatically","Remove non-condensables (air) from the condenser","Filter the chilled water","Lubricate the compressor"],1,"Because leaks draw air inward, the purge unit continuously removes non-condensables that collect in the condenser."],
+    ["The maximum pressure for leak-testing a low-pressure system is:",["10 psig","30 psig","50 psig","150 psig"],0,"Never exceed 10 psig — the rupture disc on a low-pressure chiller relieves at 15 psig."],
+    ["Recovery equipment made after November 15, 1993 must evacuate a low-pressure appliance to:",["4 inches Hg vacuum","0 psig","25 mm Hg absolute","29.9 inches Hg"],2,"The Type III evacuation standard for certified equipment is 25 mm Hg absolute."],
+    ["During deep evacuation of a chiller, water in the tubes can:",["Boil harmlessly","Freeze and rupture the tubes — keep water circulating","Turn to refrigerant","Raise head pressure"],1,"Evacuation chills the vessel; standing water in the tubes can freeze and split them. Keep water moving through the bundle."],
+    ["The correct recovery sequence for a low-pressure system is:",["Vapor first, then liquid","Liquid first, then remaining vapor","Either order — it makes no difference","Oil first, then liquid"],1,"Pull the liquid charge first, then let the recovery machine finish the remaining vapor."],
+    ["Circulating warm water through the chiller tubes during recovery:",["Slows the process","Vaporizes trapped refrigerant and speeds recovery","Is prohibited by the EPA","Cools the recovery cylinder"],1,"Gentle heat from warm water boils off refrigerant clinging to the cold surfaces, driving vapor to the recovery machine."],
+    ["R-123 is the HCFC commonly used to replace which CFC in retrofitted low-pressure chillers?",["R-12","R-22","R-11","R-502"],2,"R-123 became the transitional replacement for R-11 in centrifugal chillers."],
+    ["Before opening a low-pressure system that sits under vacuum, you should:",["Open it quickly to save time","Break the vacuum with dry nitrogen up to 0 psig","Pressurize with oxygen to 5 psig","Pour water into the purge unit"],1,"Opening under vacuum sucks in moist air. Break the vacuum to atmospheric with dry nitrogen first."]
+  ]};
+
+  /* Build exam */
+  var exam=document.getElementById('exam'),sections=Object.keys(BANK),qid=0;
+  sections.forEach(function(sec,si){
+    var s=document.createElement('section');s.className='block';
+    s.innerHTML='<div class="sechead"><h2>Section '+(si+1)+': '+sec+'</h2><span class="secscore" id="ss'+si+'"></span></div>';
+    BANK[sec].forEach(function(q,qi){
+      var d=document.createElement('div');d.className='q';d.id='q'+qid;d.dataset.sec=si;d.dataset.ans=q[2];
+      var opts=q[1].map(function(o,oi){
+        return '<label><input type="radio" name="q'+qid+'" value="'+oi+'" onchange="tick()">'+o+'</label>';
+      }).join('');
+      d.innerHTML='<p class="stem"><b style="color:var(--gold)">'+(qi+1)+'.</b> '+q[0]+'</p>'+opts+'<div class="expl">'+q[3]+'</div>';
+      s.appendChild(d);qid++;
+    });
+    exam.appendChild(s);
+  });
+  var TOTAL=qid;
+  function tick(){
+    var done=document.querySelectorAll('.q input:checked').length;
+    document.getElementById('progress').textContent=done+' of '+TOTAL+' answered';
+  }
+  tick();
+
+  var serial=null,totalRight=0;
+  function grade(){
+    var per=[0,0,0,0];
+    for(var i=0;i<TOTAL;i++){
+      var q=document.getElementById('q'+i),sel=document.querySelector('input[name="q'+i+'"]:checked');
+      var right=sel&&parseInt(sel.value)===parseInt(q.dataset.ans);
+      q.className='q '+(right?'right':'wrong');
+      if(right)per[q.dataset.sec]++;
+    }
+    totalRight=per.reduce(function(a,b){return a+b;},0);
+    var allPass=true,grid='';
+    sections.forEach(function(sec,si){
+      var pct=per[si]/10*100,ok=pct>=70;if(!ok)allPass=false;
+      document.getElementById('ss'+si).textContent=per[si]+'/10';
+      grid+='<div class="scorebox '+(ok?'ok':'no')+'"><div class="n">'+per[si]+'/10</div><div class="l">'+sec.split(' — ')[0]+'</div></div>';
+    });
+    document.getElementById('scoregrid').innerHTML=grid;
+    var v=document.getElementById('verdict'),a=document.getElementById('advice');
+    if(allPass){
+      v.textContent='READY — '+totalRight+'/'+TOTAL+' with 70%+ in every section';
+      a.textContent='You cleared the real exam\u2019s bar in all four sections. Print your readiness certificate below, then schedule the actual exam with an EPA-approved certifying organization.';
+      document.getElementById('certgate').style.display='block';
+      serial='GSU-608R-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+    }else{
+      v.textContent='Not yet — '+totalRight+'/'+TOTAL;
+      a.textContent='The real exam requires 70% in every section. Review the explanations now shown under each question — the red-bordered ones are your study list — then retake. GENO will drill any section with you out loud.';
+      document.getElementById('certgate').style.display='none';
+    }
+    document.getElementById('results').style.display='block';
+    document.getElementById('gradebar').style.display='none';
+    document.getElementById('results').scrollIntoView({behavior:'smooth'});
+  }
+  function printCert(){
+    var n=(document.getElementById('certname').value||'').trim();
+    if(!n){alert('Enter your name for the certificate.');return;}
+    document.getElementById('cname').textContent=n;
+    document.getElementById('cscore').textContent=totalRight+'/'+TOTAL;
+    document.getElementById('cdate').textContent=new Date().toLocaleDateString();
+    document.getElementById('cserial').textContent=serial;
+    document.getElementById('cert').style.display='block';
+    window.print();
+  }
+</script>
+</body>
+</html>
