@@ -1,0 +1,55 @@
+<!-- ════════════════════════════════════════════════════════════════
+GSU · RETURN-TO-CAMPUS NAV RAIL for the SOVEREIGN EXPLORER
+July 15, 2026 · STAGING · paste-in patch, additive
+GENE'S STEPS (≈2 min):
+  1. Open solar-system-explorer.html in the gsu-assets repo.
+  2. Paste this entire block IMMEDIATELY AFTER the opening <body> tag,
+     ABOVE anything else on the page.
+  3. Commit. It appears above the existing "Drive Around" hero.
+NOTES:
+  · Additive: touches nothing else on the page. No JS. Pure CSS.
+  · Fixes the two honest issues you named:
+      (a) Chapter Mode is marked "Preview" so children aren't
+          promised chapters that don't exist yet.
+      (b) Six real GSU doors on top of every page view, so a visitor
+          who wanders in can always wander further into the campus.
+  · Same pattern belongs on every future Claude-built game.
+  · House style: pure black, gold, Georgia serif.
+════════════════════════════════════════════════════════════════ -->
+<style>
+  :root{--gsu-gold:#C9A84C;--gsu-cream:#F5F1E8;--gsu-line:rgba(201,168,76,.35)}
+  .gsu-rail{background:#000;border-bottom:1px solid var(--gsu-line);padding:14px 20px;position:relative;z-index:50}
+  .gsu-rail-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:space-between}
+  .gsu-home{display:inline-flex;align-items:center;gap:10px;color:var(--gsu-cream);text-decoration:none;font-family:Georgia,'Times New Roman',serif;font-size:1rem;letter-spacing:.04em}
+  .gsu-home b{color:var(--gsu-gold);font-weight:700}
+  .gsu-home:hover{color:var(--gsu-gold)}
+  .gsu-doors{display:flex;flex-wrap:wrap;gap:6px 10px}
+  .gsu-doors a{color:var(--gsu-cream);text-decoration:none;font-family:Verdana,Geneva,sans-serif;font-size:.85rem;letter-spacing:.03em;padding:6px 12px;border:1px solid var(--gsu-line);border-radius:16px;background:rgba(201,168,76,.05);transition:all .18s}
+  .gsu-doors a:hover{color:#000;background:var(--gsu-gold);border-color:var(--gsu-gold)}
+  .gsu-doors a.hot{color:var(--gsu-gold);border-color:var(--gsu-gold)}
+  @media(max-width:640px){.gsu-rail-in{gap:12px}.gsu-home{font-size:.92rem}.gsu-doors a{font-size:.78rem;padding:5px 10px}}
+
+  .gsu-honesty{background:rgba(201,168,76,.07);border-bottom:1px solid var(--gsu-line);padding:10px 20px;text-align:center;font-family:Verdana,Geneva,sans-serif;font-size:.86rem;color:rgba(245,241,232,.78);letter-spacing:.02em}
+  .gsu-honesty b{color:var(--gsu-gold);font-family:Georgia,serif;letter-spacing:.08em;font-size:.78rem;padding:2px 8px;border:1px solid var(--gsu-gold);border-radius:10px;margin-right:8px;text-transform:uppercase}
+</style>
+
+<div class="gsu-rail" role="navigation" aria-label="Return to campus">
+  <div class="gsu-rail-in">
+    <a class="gsu-home" href="https://www.globalsovereignuniversity.org/">
+      <span aria-hidden="true">🏛</span>
+      <span>Global Sovereign <b>University</b></span>
+    </a>
+    <div class="gsu-doors">
+      <a href="https://www.globalsovereignuniversity.org/">Home</a>
+      <a href="https://www.globalsovereignuniversity.org/scientification" class="hot">Science</a>
+      <a href="https://www.globalsovereignuniversity.org/library">Library</a>
+      <a href="https://www.globalsovereignuniversity.org/homeschool">Homeschool</a>
+      <a href="https://www.globalsovereignuniversity.org/learning-center">Learning Center</a>
+      <a href="https://www.globalsovereignuniversity.org/quid-pro-quo">Quid Pro Quo</a>
+    </div>
+  </div>
+</div>
+
+<div class="gsu-honesty">
+  <b>Preview</b> The Sovereign Explorer is in early preview — planets are drivable today; the read-aloud chapters and certificates arrive later this year. Every "click a planet to read its chapter" note is a promise for what's coming next.
+</div>
