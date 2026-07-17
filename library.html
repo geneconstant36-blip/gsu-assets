@@ -3,112 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Library — Global Sovereign University</title>
-<meta name="description" content="The complete GSU library. More than 300 books donated to the Foundation. Read online, hear read aloud, discuss with GENO, or own the Kindle edition.">
+<title>The GSU Library — 300+ Books, Free to Read | Global Sovereign University</title>
+<meta name="description" content="The complete GSU library. More than 300 books donated to the Foundation. Read online free, hear read aloud free, discuss with GENO in 83 languages, or own the Kindle for $3.99. No login. No paywall. Always free.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/library.html">
 
 <style>
-  html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  :root{--black:#000000;--gold:#C9A84C;--cream:#F5F1E8;--dim:#b9b3a6}
+  html,body{margin:0;padding:0;background:var(--black);color:var(--cream);font-family:Georgia,'Times New Roman',serif;line-height:1.6;-webkit-font-smoothing:antialiased}
   *{box-sizing:border-box}
-  a{color:#C9A84C;text-decoration:none}
+  a{color:var(--gold);text-decoration:none}
   a:hover{text-decoration:underline}
+  button{font-family:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
   /* Return bar */
-  .lib-return{background:#000;border-bottom:1px solid rgba(201,168,76,0.2);padding:12px 24px;text-align:center;font-size:12px;letter-spacing:0.14em;text-transform:uppercase}
+  .lib-return{background:var(--black);border-bottom:1px solid rgba(201,168,76,0.2);padding:12px 24px;text-align:center;font-size:12px;letter-spacing:0.14em;text-transform:uppercase}
   .lib-return a{color:rgba(245,241,232,0.7)}
-  .lib-return a:hover{color:#C9A84C;text-decoration:none}
+  .lib-return a:hover{color:var(--gold);text-decoration:none}
 
-  .lib-wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+  .lib-wrap{max-width:1240px;margin:0 auto;padding:0 32px}
 
   /* Hero */
-  .lib-hero{text-align:center;padding:80px 32px 56px 32px}
-  .lib-eyebrow{display:inline-block;border:1px solid #C9A84C;color:#C9A84C;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;padding:8px 20px;border-radius:999px;margin-bottom:20px}
-  .lib-title{font-size:64px;font-weight:400;line-height:1.05;letter-spacing:-0.01em;margin:0 0 10px 0;color:#F5F1E8}
-  .lib-subtitle{font-size:22px;font-style:italic;color:#C9A84C;margin:0 0 32px 0;font-weight:400}
-  .lib-intro{max-width:44em;margin:0 auto;font-size:17px;line-height:1.75;color:#F5F1E8;text-align:left}
+  .lib-hero{text-align:center;padding:72px 32px 48px 32px}
+  .lib-eyebrow{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:0.24em;text-transform:uppercase;padding:8px 20px;border-radius:999px;margin-bottom:20px}
+  .lib-title{font-size:60px;font-weight:400;line-height:1.05;letter-spacing:-0.01em;margin:0 0 10px 0}
+  .lib-subtitle{font-size:21px;font-style:italic;color:var(--gold);margin:0 0 28px 0;font-weight:400}
+  .lib-intro{max-width:44em;margin:0 auto;font-size:17px;line-height:1.75;text-align:left}
   .lib-intro p{margin:0 0 16px 0}
   .lib-intro p:last-child{margin-bottom:0}
-  .lib-intro strong{color:#C9A84C;font-weight:400;font-style:italic}
+  .lib-intro strong{color:var(--gold);font-weight:400;font-style:italic}
+
+  /* Library Card section */
+  .lib-cardsec{max-width:900px;margin:44px auto 0 auto;border:1px solid rgba(201,168,76,0.35);padding:34px 36px 26px 36px;background:rgba(201,168,76,0.03);text-align:left}
+  .lib-cardsec-eyebrow{color:var(--gold);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:12px}
+  .lib-cardsec-title{font-size:26px;font-weight:400;margin:0 0 16px 0;color:var(--cream);line-height:1.25}
+  .lib-cardsec-body p{font-size:15.5px;line-height:1.75;color:rgba(245,241,232,0.85);margin:0 0 14px 0}
+  .lib-cardsec-body strong{color:var(--cream);font-weight:400}
+  .lib-cardsec-body em{color:var(--gold);font-style:italic}
+  .lib-cardsec-fine{font-size:13px !important;color:rgba(245,241,232,0.55) !important;font-style:italic;border-top:1px solid rgba(201,168,76,0.15);padding-top:12px}
+  /* Library Card strip */
+  .lib-card-strip{max-width:900px;margin:36px auto 0 auto;border:1px solid rgba(201,168,76,0.35);padding:20px 28px;display:flex;align-items:center;gap:20px;background:rgba(201,168,76,0.03)}
+  .lib-card-glyph{font-size:28px;color:var(--gold);line-height:1}
+  .lib-card-text{text-align:left;font-size:14px;color:var(--dim);line-height:1.6}
+  .lib-card-text strong{color:var(--cream);font-weight:400}
+  .lib-cardnum{max-width:900px;margin:10px auto 0 auto;border:1px solid rgba(201,168,76,0.2);padding:14px 28px;background:rgba(0,0,0,0.4)}
+  .lib-cardnum-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:6px 0}
+  .lib-cardnum-label{color:rgba(245,241,232,0.55);font-size:12px;letter-spacing:0.1em;text-transform:uppercase}
+  .lib-cardnum-id{color:var(--gold);font-size:16px;letter-spacing:0.14em}
+  .lib-cardnum-copy{background:transparent;border:1px solid rgba(201,168,76,0.5);color:var(--gold);padding:6px 14px;font-family:Georgia,serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;border-radius:3px}
+  .lib-cardnum-copy:hover{background:var(--gold);color:var(--black)}
+  .lib-cardnum-input{background:rgba(0,0,0,0.5);border:1px solid rgba(201,168,76,0.4);color:var(--cream);padding:8px 12px;font-family:Georgia,serif;font-size:14px;letter-spacing:0.12em;width:170px;text-transform:uppercase}
+  .lib-cardnum-input:focus{outline:none;border-color:var(--gold)}
+  .lib-cardnum-msg{color:var(--gold);font-size:12px;font-style:italic;padding-top:4px;min-height:18px}
+
+  /* Continue Reading shelf */
+  .lib-continue{padding:48px 32px 8px 32px;display:none}
+  .lib-continue.active{display:block}
+  .lib-continue-head{text-align:center;margin-bottom:28px}
+  .lib-continue-eyebrow{color:var(--gold);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:6px}
+  .lib-continue-sub{color:rgba(245,241,232,0.5);font-size:12px;letter-spacing:0.1em;font-style:italic}
+  .lib-continue-row{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;max-width:1100px;margin:0 auto}
+  .lib-continue-card{width:150px;text-decoration:none;transition:transform 0.2s}
+  .lib-continue-card:hover{transform:translateY(-4px);text-decoration:none}
+  .lib-continue-cover{aspect-ratio:2/3;border:1px solid var(--gold);background:#0a0a0a;overflow:hidden;margin-bottom:10px;box-shadow:0 6px 20px rgba(0,0,0,0.5)}
+  .lib-continue-cover img{display:block;width:100%;height:100%;object-fit:cover}
+  .lib-continue-title{font-size:13px;color:var(--cream);line-height:1.35;text-align:center}
+  .lib-continue-resume{display:block;text-align:center;color:var(--gold);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;margin-top:6px}
 
   /* Featured */
-  .lib-featured{padding:64px 32px;border-top:1px solid rgba(201,168,76,0.12)}
-  .lib-featured-eyebrow{text-align:center;color:#C9A84C;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:20px}
-  .lib-featured-card{max-width:900px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center;border:1px solid #C9A84C;padding:40px;background:radial-gradient(ellipse at center, rgba(201,168,76,0.08), rgba(0,0,0,0.5))}
-  .lib-featured-cover{aspect-ratio:2/3;border:2px solid #C9A84C;background:#000;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.6),0 0 24px rgba(201,168,76,0.15)}
+  .lib-featured{padding:64px 32px;border-top:1px solid rgba(201,168,76,0.12);margin-top:40px}
+  .lib-featured-eyebrow{text-align:center;color:var(--gold);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:32px}
+  .lib-featured-card{max-width:900px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center;border:1px solid var(--gold);padding:40px;background:radial-gradient(ellipse at center, rgba(201,168,76,0.08), rgba(0,0,0,0.5))}
+  .lib-featured-cover{aspect-ratio:2/3;border:2px solid var(--gold);background:#000;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.6),0 0 24px rgba(201,168,76,0.15)}
   .lib-featured-cover img{display:block;width:100%;height:100%;object-fit:cover}
-  .lib-featured-info h3{font-size:36px;margin:0 0 4px 0;font-weight:400;color:#F5F1E8;line-height:1.15}
-  .lib-featured-info .lib-featured-sub{color:#C9A84C;font-style:italic;font-size:18px;margin:0 0 20px 0}
+  .lib-featured-info h3{font-size:36px;margin:0 0 4px 0;font-weight:400;line-height:1.15}
+  .lib-featured-info .lib-featured-sub{color:var(--gold);font-style:italic;font-size:18px;margin:0 0 20px 0}
   .lib-featured-info p{font-size:16px;line-height:1.65;margin:0 0 20px 0}
   .lib-featured-badges{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
-  .lib-featured-badge{display:inline-block;border:1px solid rgba(201,168,76,0.4);color:#C9A84C;padding:5px 12px;border-radius:999px;font-size:11px;letter-spacing:0.08em}
+  .lib-featured-badge{display:inline-block;border:1px solid rgba(201,168,76,0.4);color:var(--gold);padding:5px 12px;border-radius:999px;font-size:11px;letter-spacing:0.08em}
   .lib-featured-actions{display:flex;gap:12px;flex-wrap:wrap}
 
   /* Section heading */
   .lib-section{padding:64px 32px;border-top:1px solid rgba(201,168,76,0.12)}
-  .lib-h2{font-size:36px;font-weight:400;text-align:center;margin:0 0 8px 0;color:#F5F1E8}
-  .lib-h2-sub{text-align:center;color:#C9A84C;font-style:italic;margin:0 0 40px 0;font-size:17px}
+  .lib-h2{font-size:36px;font-weight:400;text-align:center;margin:0 0 8px 0}
+  .lib-h2-sub{text-align:center;color:var(--gold);font-style:italic;margin:0 0 40px 0;font-size:17px}
 
-  /* Search + filter */
-  .lib-controls{max-width:1000px;margin:0 auto 32px auto;display:grid;grid-template-columns:1fr 260px;gap:16px}
-  .lib-search{background:rgba(0,0,0,0.5);border:1px solid #C9A84C;color:#F5F1E8;padding:14px 20px;font-family:Georgia,serif;font-size:15px;width:100%}
+  /* Controls */
+  .lib-controls{max-width:1000px;margin:0 auto 28px auto;display:grid;grid-template-columns:1fr 260px;gap:16px}
+  .lib-search{background:rgba(0,0,0,0.5);border:1px solid var(--gold);color:var(--cream);padding:14px 20px;font-family:Georgia,serif;font-size:15px;width:100%}
   .lib-search::placeholder{color:rgba(245,241,232,0.4);font-style:italic}
   .lib-search:focus{outline:none;background:#000;box-shadow:0 0 0 2px rgba(201,168,76,0.4)}
-  .lib-filter{background:rgba(0,0,0,0.5);border:1px solid #C9A84C;color:#F5F1E8;padding:14px 16px;font-family:Georgia,serif;font-size:14px;cursor:pointer;appearance:none;background-image:linear-gradient(45deg,transparent 50%,#C9A84C 50%),linear-gradient(135deg,#C9A84C 50%,transparent 50%);background-position:calc(100% - 20px) 22px,calc(100% - 14px) 22px;background-size:6px 6px;background-repeat:no-repeat;padding-right:44px}
-  .lib-filter:focus{outline:none;background-color:#000;box-shadow:0 0 0 2px rgba(201,168,76,0.4),0 0 0 0 transparent;background-image:linear-gradient(45deg,transparent 50%,#C9A84C 50%),linear-gradient(135deg,#C9A84C 50%,transparent 50%);background-position:calc(100% - 20px) 22px,calc(100% - 14px) 22px;background-size:6px 6px;background-repeat:no-repeat}
+  .lib-filter{background:rgba(0,0,0,0.5);border:1px solid var(--gold);color:var(--cream);padding:14px 16px;font-family:Georgia,serif;font-size:14px;cursor:pointer;appearance:none;background-image:linear-gradient(45deg,transparent 50%,#C9A84C 50%),linear-gradient(135deg,#C9A84C 50%,transparent 50%);background-position:calc(100% - 20px) 22px,calc(100% - 14px) 22px;background-size:6px 6px;background-repeat:no-repeat;padding-right:44px}
+  .lib-filter:focus{outline:none;background-color:#000}
 
-  /* Quick filters (chips) */
-  .lib-chips{max-width:1000px;margin:0 auto 32px auto;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .lib-chips{max-width:1000px;margin:0 auto 28px auto;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
   .lib-chip{background:transparent;color:rgba(245,241,232,0.7);border:1px solid rgba(201,168,76,0.3);padding:7px 16px;border-radius:999px;font-family:Georgia,serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
-  .lib-chip:hover{color:#C9A84C;border-color:#C9A84C}
-  .lib-chip.active{background:#C9A84C;color:#000;border-color:#C9A84C}
+  .lib-chip:hover{color:var(--gold);border-color:var(--gold)}
+  .lib-chip.active{background:var(--gold);color:var(--black);border-color:var(--gold)}
 
-  /* Result count */
-  .lib-count{text-align:center;color:rgba(245,241,232,0.5);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:24px}
-  .lib-count strong{color:#C9A84C;font-weight:400}
+  .lib-count{text-align:center;color:rgba(245,241,232,0.5);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:28px}
+  .lib-count strong{color:var(--gold);font-weight:400}
 
-  /* Book list */
-  .lib-books{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:10px}
-  .lib-book{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding:20px 24px;border:1px solid rgba(201,168,76,0.18);background:rgba(201,168,76,0.015);transition:border-color 0.2s,background 0.2s}
-  .lib-book:hover{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.04)}
-  .lib-book.rr{border-color:rgba(201,168,76,0.45)}
-  .lib-book.rr:hover{border-color:#C9A84C;background:rgba(201,168,76,0.07)}
-  .lib-book-meta{min-width:0}
-  .lib-book-series{color:#C9A84C;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:4px}
-  .lib-book-title{font-size:18px;color:#F5F1E8;line-height:1.3;margin:0 0 2px 0;font-weight:400}
-  .lib-book-subtitle{font-size:13px;color:rgba(245,241,232,0.6);font-style:italic;line-height:1.4}
-  .lib-book-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
-  .lib-btn{display:inline-block;padding:8px 14px;font-family:Georgia,serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;border:1px solid #C9A84C;text-decoration:none;transition:all 0.2s;white-space:nowrap;cursor:pointer;background:transparent}
-  .lib-btn-primary{background:#C9A84C;color:#000}
-  .lib-btn-primary:hover{background:#000;color:#C9A84C;text-decoration:none}
-  .lib-btn-outline{background:transparent;color:#C9A84C}
-  .lib-btn-outline:hover{background:#C9A84C;color:#000;text-decoration:none}
-  .lib-btn-ghost{background:transparent;color:rgba(245,241,232,0.6);border-color:rgba(201,168,76,0.3)}
-  .lib-btn-ghost:hover{color:#C9A84C;border-color:#C9A84C;text-decoration:none}
-  .lib-book-coming{color:rgba(245,241,232,0.4);font-size:11px;font-style:italic;letter-spacing:0.06em}
+  /* Cover grid */
+  .lib-grid{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px}
+  .lib-card{border:1px solid rgba(201,168,76,0.18);background:rgba(201,168,76,0.015);display:flex;flex-direction:column;transition:border-color 0.2s,background 0.2s,transform 0.2s;scroll-margin-top:80px}
+  .lib-card:hover{border-color:rgba(201,168,76,0.5);background:rgba(201,168,76,0.04);transform:translateY(-3px)}
+  .lib-card.rr{border-color:rgba(201,168,76,0.4)}
+  .lib-card.rr:hover{border-color:var(--gold)}
+  .lib-cover{aspect-ratio:2/3;background:#0a0a0a;overflow:hidden;position:relative}
+  .lib-cover img{display:block;width:100%;height:100%;object-fit:cover}
+  .lib-cover-text{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px 16px;text-align:center;background:linear-gradient(160deg,#0c0c0c,#161514)}
+  .lib-cover-text .t{font-size:16px;color:var(--cream);line-height:1.3;margin-bottom:12px}
+  .lib-cover-text .d{color:var(--gold);font-size:11px;letter-spacing:0.28em}
+  .lib-cover-text .a{color:rgba(245,241,232,0.6);font-size:9px;letter-spacing:0.1em;margin-top:12px;text-transform:uppercase}
+  .lib-rr-flag{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.85);border:1px solid var(--gold);color:var(--gold);font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 8px;border-radius:3px}
+  .lib-card-body{padding:14px 14px 16px 14px;display:flex;flex-direction:column;flex:1}
+  .lib-card-series{color:var(--gold);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:5px;opacity:0.8}
+  .lib-card-title{font-size:15px;line-height:1.3;margin:0 0 12px 0;font-weight:400;flex:1}
+  .lib-card-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .lib-btn{display:inline-block;padding:7px 12px;font-family:Georgia,serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--gold);text-decoration:none;transition:all 0.2s;white-space:nowrap;background:transparent}
+  .lib-btn-primary{background:var(--gold);color:var(--black)}
+  .lib-btn-primary:hover{background:transparent;color:var(--gold);text-decoration:none}
+  .lib-btn-outline{color:var(--gold)}
+  .lib-btn-outline:hover{background:var(--gold);color:var(--black);text-decoration:none}
+  .lib-btn-ghost{color:rgba(245,241,232,0.6);border-color:rgba(201,168,76,0.3)}
+  .lib-btn-ghost:hover{color:var(--gold);border-color:var(--gold);text-decoration:none}
+  .lib-card-coming{color:rgba(245,241,232,0.4);font-size:10px;font-style:italic;letter-spacing:0.05em;padding-top:2px}
 
-  /* Empty state */
   .lib-empty{max-width:600px;margin:0 auto;text-align:center;padding:60px 20px;color:rgba(245,241,232,0.5);font-style:italic}
 
+  /* GENO Librarian */
+  .lib-geno{padding:64px 32px;border-top:1px solid rgba(201,168,76,0.12)}
+  .lib-geno-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:28px;justify-content:center;flex-wrap:wrap;text-align:left}
+  .lib-geno-inner img{width:92px;height:92px;border-radius:50%;border:1px solid rgba(201,168,76,0.4)}
+  .lib-geno-copy{max-width:32em}
+  .lib-geno-copy h2{font-weight:400;color:var(--gold);font-size:22px;margin:0 0 10px 0}
+  .lib-geno-copy p{color:var(--dim);font-size:15px;margin:0 0 16px 0;line-height:1.7}
+  .lib-geno-copy button{background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:12px 22px;font-size:14px;font-family:Georgia,serif;letter-spacing:0.05em}
+  .lib-geno-copy button:hover{background:var(--gold);color:var(--black)}
+
   /* Footer */
-  .lib-footer{padding:56px 32px 40px 32px;text-align:center;border-top:1px solid rgba(201,168,76,0.12);margin-top:32px}
-  .lib-footer-mission{max-width:44em;margin:0 auto 32px auto;font-style:italic;font-size:15px;color:rgba(245,241,232,0.7);line-height:1.7}
-  .lib-footer-line{color:rgba(245,241,232,0.45);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding-top:24px;border-top:1px solid rgba(201,168,76,0.15)}
+  .lib-footer{padding:56px 32px 40px 32px;text-align:center;border-top:1px solid rgba(201,168,76,0.12)}
+  .lib-footer-mission{max-width:44em;margin:0 auto 28px auto;font-style:italic;font-size:15px;color:rgba(245,241,232,0.7);line-height:1.7}
+  .lib-footer p{color:rgba(245,241,232,0.55);font-size:12px;max-width:44em;margin:0 auto 14px auto}
+  .lib-footer-line{color:rgba(245,241,232,0.45);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding-top:24px;border-top:1px solid rgba(201,168,76,0.15);margin-top:20px}
   .lib-footer-line .lib-dot{color:rgba(201,168,76,0.5);margin:0 8px}
 
   /* Responsive */
   @media (max-width:900px){
-    .lib-hero{padding:48px 20px 40px 20px}
-    .lib-title{font-size:40px}
+    .lib-hero{padding:48px 20px 36px 20px}
+    .lib-title{font-size:38px}
     .lib-subtitle{font-size:18px}
-    .lib-section{padding:48px 20px}
+    .lib-intro{font-size:16px}
+    .lib-section,.lib-featured,.lib-geno{padding:48px 20px}
     .lib-h2{font-size:28px}
     .lib-wrap{padding:0 20px}
     .lib-controls{grid-template-columns:1fr}
-    .lib-featured{padding:48px 20px}
     .lib-featured-card{grid-template-columns:1fr;gap:32px;padding:28px 24px;text-align:center}
     .lib-featured-cover{max-width:220px;margin:0 auto}
     .lib-featured-actions{justify-content:center}
-    .lib-book{grid-template-columns:1fr;padding:18px 20px}
-    .lib-book-actions{justify-content:flex-start}
+    .lib-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+    .lib-card-body{padding:10px 10px 12px 10px}
+    .lib-card-title{font-size:13px}
+    .lib-btn{padding:6px 9px;font-size:9px}
+    .lib-card-strip{flex-direction:column;text-align:center;gap:12px}
+    .lib-card-text{text-align:center}
   }
 </style>
 </head>
@@ -120,42 +180,53 @@
   <div class="lib-wrap">
     <span class="lib-eyebrow">The Library &amp; The Reading Room</span>
     <h1 class="lib-title">The GSU Library</h1>
-    <p class="lib-subtitle">Home of the Reading Room shelf.</p>
+    <p class="lib-subtitle">Every book on one shelf. Every door open.</p>
     <div class="lib-intro">
-      <p>Every book Dr. Gene A Constant has written is donated to The Foundation for Global Instruction. There are more than three hundred titles, and the shelf grows in waves. Every one of them earns a $3.99 Kindle purchase back to the mission &mdash; and a growing number of them can also be <strong>read online free, heard read aloud free, and discussed with GENO free</strong>, right here in the Reading Room.</p>
-      <p>Books already in the Reading Room show four doors: <em>Read</em>, <em>Listen</em>, <em>GENO</em>, and <em>Own the Kindle</em>. Books not yet on the shelf show one door for now &mdash; the Kindle edition &mdash; and are being prepared for the shelf one careful build at a time.</p>
+      <p>Every book Dr. Gene A Constant has written is donated to The Foundation for Global Instruction. More than three hundred titles, and the shelf grows in waves. Every one earns a $3.99 Kindle purchase back to the mission &mdash; and a growing number can also be <strong>read online free, heard read aloud free, and discussed with GENO free</strong>, right here in the Reading Room.</p>
+      <p>Books already in the Reading Room show four doors: <em>Read</em>, <em>Listen</em>, <em>GENO</em>, and <em>Own the Kindle</em>. The rest show one door for now &mdash; the Kindle edition &mdash; and are being prepared for the shelf one careful build at a time.</p>
+    </div>
+    <div class="lib-cardsec" id="your-library-card">
+      <div class="lib-cardsec-eyebrow">Your Library Card</div>
+      <h2 class="lib-cardsec-title">A card that lives in your pocket &mdash; not in our filing cabinet.</h2>
+      <div class="lib-cardsec-body">
+        <p>Walk into any library on Earth and the first thing they hand you is a card. This library is no different &mdash; except ours asks <strong>nothing</strong> of you. No login. No account. No email. No password to forget. The moment you open your first book, the library quietly writes you a card of your own: a simple number, like <em>GSU-7Q4M-K2XR</em>, that belongs to you and no one else. You&rsquo;ll see it in the box below.</p>
+        <p><strong>Your card remembers your shelf.</strong> Every book you open, every chapter you finish, how far you&rsquo;ve read &mdash; the library keeps your place the way a good librarian slides a bookmark in before closing time. Shut the browser, come back next week: your books are waiting exactly where you left them, in the <em>Continue Reading</em> row just below.</p>
+        <p><strong>And your card travels.</strong> Reading on the living-room computer, but want to pick up on your phone? Copy your card number here, type it into this same box on the other device, press <em>Bring my shelf</em> &mdash; and your whole reading life follows you. That is the entire system. A number, a box, a button.</p>
+        <p class="lib-cardsec-fine">Plain honesty: your shelf is stored under your card number and nothing else. We never know your name, your email, or who you are. That also means a lost number is a lost shelf &mdash; so tuck it somewhere safe. A photo of this box works fine.</p>
+      </div>
+    </div>
+    <div class="lib-cardnum" id="lib-cardnum">
+
+      <div class="lib-cardnum-row">
+        <span class="lib-cardnum-label">Your card:</span>
+        <span class="lib-cardnum-id" id="lib-cardnum-id"></span>
+        <button class="lib-cardnum-copy" id="lib-cardnum-copy" type="button">Copy</button>
+      </div>
+      <div class="lib-cardnum-row">
+        <span class="lib-cardnum-label">On another device?</span>
+        <input class="lib-cardnum-input" id="lib-cardnum-input" type="text" placeholder="GSU-XXXX-XXXX" maxlength="13" autocomplete="off" spellcheck="false" aria-label="Enter your library card number">
+        <button class="lib-cardnum-copy" id="lib-cardnum-go" type="button">Bring my shelf</button>
+      </div>
+      <div class="lib-cardnum-msg" id="lib-cardnum-msg"></div>
     </div>
   </div>
 </header>
 
-<section class="lib-featured" aria-labelledby="lib-featured-title">
-  <div class="lib-featured-eyebrow">Now on the Shelf</div>
-  <h2 class="lib-featured-eyebrow" id="lib-featured-title" style="border:none;padding:0;text-align:center;font-size:14px;letter-spacing:0.2em;margin-bottom:32px;color:rgba(245,241,232,0.6)">The first book in the Reading Room</h2>
-  <div class="lib-featured-card">
-    <div class="lib-featured-cover">
-      <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a4e2070bdaa119b0840dd19_THE%20WORLD%20CLIMB_cover.jpeg" alt="The World Climb — cover art. Global Sovereign University. Dr. Gene A Constant, Founding Chancellor." loading="lazy">
-    </div>
-    <div class="lib-featured-info">
-      <h3>The World Climb</h3>
-      <p class="lib-featured-sub">The Oldest Economy on Earth, Reborn</p>
-      <p>You are not broke. You are simply un-traded. A fourteen-chapter guide to building a barter life alongside the money life you already have &mdash; from the skill audit to the art of the deal to the dignity that holds it all together. Includes the complete Barter Dictionary.</p>
-      <div class="lib-featured-badges">
-        <span class="lib-featured-badge">14 chapters</span>
-        <span class="lib-featured-badge">Free listen-aloud</span>
-        <span class="lib-featured-badge">GENO knows every word</span>
-      </div>
-      <div class="lib-featured-actions">
-        <a href="/reading-room.html" class="lib-btn lib-btn-primary">Read it now &mdash; free</a>
-        <a href="https://www.amazon.com/dp/B0H4X84TRJ?tag=gsu2026-20" class="lib-btn lib-btn-outline">Own the Kindle &mdash; $3.99</a>
-      </div>
-    </div>
+<!-- Continue Reading (appears only when the visitor has open books) -->
+<section class="lib-continue" id="lib-continue" aria-labelledby="lib-continue-title">
+  <div class="lib-continue-head">
+    <div class="lib-continue-eyebrow" id="lib-continue-title">Your Shelf &mdash; Continue Reading</div>
+    <div class="lib-continue-sub">Only you can see this. It lives in your browser, not on our servers.</div>
   </div>
+  <div class="lib-continue-row" id="lib-continue-row"></div>
 </section>
+
+
 
 <section class="lib-section" aria-labelledby="lib-shelf-title">
   <div class="lib-wrap">
     <h2 class="lib-h2" id="lib-shelf-title">The whole library</h2>
-    <p class="lib-h2-sub">Search by title, filter by series, or scroll the whole shelf.</p>
+    <p class="lib-h2-sub">Search by title, filter by series, or walk the whole shelf.</p>
 
     <div class="lib-controls">
       <input type="text" id="lib-search" class="lib-search" placeholder="Search by title, series, or keyword..." aria-label="Search books">
@@ -168,37 +239,2868 @@
       <button class="lib-chip active" data-shelf="all">All Books</button>
       <button class="lib-chip" data-shelf="rr">In the Reading Room</button>
       <button class="lib-chip" data-shelf="kindle">Kindle Only</button>
+      <button class="lib-chip" data-shelf="mine" id="lib-chip-mine" style="display:none">My Shelf</button>
     </div>
 
     <div class="lib-count" id="lib-count"></div>
-
-    <div class="lib-books" id="lib-books"></div>
-
+    <div class="lib-grid" id="lib-books"></div>
     <div class="lib-empty" id="lib-empty" style="display:none">No books match that search yet. Try a different keyword or clear the filters.</div>
+  </div>
+</section>
+
+<section class="lib-geno" aria-labelledby="lib-geno-title">
+  <div class="lib-geno-inner">
+    <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor" loading="lazy">
+    <div class="lib-geno-copy">
+      <h2 id="lib-geno-title">GENO is the librarian here.</h2>
+      <p>GENO AI Tutor, available 24/7 &mdash; a robot you can actually TALK to. Ask him what to read next, ask him to explain the chapter you just finished, or ask him anything about any book on this shelf. He speaks 83 languages.</p>
+      <button id="genoBtn">Ask the Librarian</button>
+    </div>
   </div>
 </section>
 
 <footer class="lib-footer">
   <div class="lib-wrap">
-    <p class="lib-footer-mission">Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow. &mdash; Dr. Gene A. Constant</p>
+    <p class="lib-footer-mission">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." &mdash; Dr. Gene A. Constant</p>
+    <p>The GSU Library is a program of <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>, operated by The Foundation for Global Instruction, a 501(c)(3) nonprofit. Every $3.99 Kindle purchase directly funds the mission.</p>
+    <p style="font-size:10px">As an Amazon Associate, Global Sovereign University earns from qualifying purchases.</p>
     <div class="lib-footer-line">
       The Foundation for Global Instruction <span class="lib-dot">&bull;</span> 501(c)(3) <span class="lib-dot">&bull;</span> EIN 39-2716552 <span class="lib-dot">&bull;</span> Eugene, Oregon <span class="lib-dot">&bull;</span> No login. No paywall. Always free.
     </div>
   </div>
 </footer>
 
+<!-- GENO widget — standard GSU pipeline -->
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+<!-- Library Card cloud sync (progressive enhancement) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+window.gsuCard = (function() {
+  var db = null, authed = null;
+  try {
+    firebase.initializeApp({
+      apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+      authDomain: "gsu-handshake.firebaseapp.com",
+      projectId: "gsu-handshake",
+      storageBucket: "gsu-handshake.firebasestorage.app",
+      messagingSenderId: "301089416765",
+      appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+    });
+    db = firebase.firestore();
+    authed = new Promise(function(res) {
+      firebase.auth().onAuthStateChanged(function(u) { if (u) res(u); });
+      firebase.auth().signInAnonymously().catch(function() { res(null); });
+      setTimeout(function() { res(null); }, 4000);
+    });
+  } catch(e) { authed = Promise.resolve(null); }
+
+  function cardId(create) {
+    try {
+      var c = localStorage.getItem('gsu-card');
+      if (c || !create) return c;
+      var A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', s = 'GSU-';
+      for (var i = 0; i < 8; i++) { if (i === 4) s += '-'; s += A[Math.floor(Math.random()*A.length)]; }
+      localStorage.setItem('gsu-card', s);
+      return s;
+    } catch(e) { return null; }
+  }
+
+  function mergeDoc(d) {
+    // Cloud shelf → localStorage (newer timestamp wins per book)
+    var changed = false;
+    try {
+      var opened = JSON.parse(localStorage.getItem('rr-opened') || '[]');
+      (d.opened || []).forEach(function(s) { if (opened.indexOf(s) < 0) { opened.push(s); changed = true; } });
+      localStorage.setItem('rr-opened', JSON.stringify(opened.slice(0, 100)));
+      var books = d.books || {};
+      Object.keys(books).forEach(function(slug) {
+        var cloud = books[slug] || {};
+        var localP = parseInt(localStorage.getItem('rr-pos-' + slug) || '0');
+        if ((cloud.p || 0) > localP) { localStorage.setItem('rr-pos-' + slug, String(cloud.p)); changed = true; }
+      });
+    } catch(e) {}
+    return changed;
+  }
+
+  function pull() {
+    if (!db) return Promise.resolve(false);
+    return authed.then(function(u) {
+      var c = cardId(false);
+      if (!u || !c) return false;
+      return db.collection('cards').doc(c).get().then(function(snap) {
+        return snap.exists ? mergeDoc(snap.data()) : false;
+      }).catch(function() { return false; });
+    });
+  }
+
+  function adopt(newId) {
+    if (!db) return Promise.reject('offline');
+    return authed.then(function(u) {
+      if (!u) throw 'offline';
+      return db.collection('cards').doc(newId).get();
+    }).then(function(snap) {
+      if (!snap.exists) throw 'notfound';
+      try { localStorage.setItem('gsu-card', newId); } catch(e) {}
+      mergeDoc(snap.data());
+      return true;
+    });
+  }
+
+  function pushAll() {
+    if (!db) return;
+    authed.then(function(u) {
+      var c = cardId(true);
+      if (!u || !c) return;
+      var upd = { updated: Date.now() };
+      try {
+        var opened = JSON.parse(localStorage.getItem('rr-opened') || '[]');
+        upd.opened = opened.slice(0, 100);
+        var books = {};
+        opened.forEach(function(slug) {
+          var p = parseInt(localStorage.getItem('rr-pos-' + slug) || '0');
+          if (p > 0) books[slug] = { p: p, t: Date.now() };
+        });
+        upd.books = books;
+      } catch(e) {}
+      db.collection('cards').doc(c).set(upd, { merge: true }).catch(function() {});
+    });
+  }
+
+  return { id: cardId, pull: pull, adopt: adopt, pushAll: pushAll };
+})();
+</script>
+
 <script>
 // ============================================================
-// BOOK DATA — 324 titles, 64 Reading Room ready
+// BOOK DATA — 325 titles, 65 Reading Room ready, 285 covers
 // ============================================================
-const LIB_DATA = {"books":[{"slug":"the-world-climb","title":"The World Climb","subtitle":"The Oldest Economy on Earth, Reborn","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":true},{"slug":"4th-grade-math-textbook","title":"4th Grade Math Textbook","subtitle":"Real-World Problem Solving, Student Edition","series":"GSU Mathification Series","asin":"B0G4HSF3GP","readingRoom":true,"featured":false},{"slug":"asymmetrical-local-marketing","title":"Asymmetrical Local Marketing","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"biology","title":"Biology","subtitle":"How Life Works, Homeschool Edition","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"civic-literacy-for-kids","title":"Civic Literacy for Kids","subtitle":null,"series":"GSU Children's & Young Reader Series","asin":"B0H277Y5D8","readingRoom":true,"featured":false},{"slug":"computer-literacy-unlocked","title":"Computer Literacy Unlocked","subtitle":null,"series":"Standalone Titles","asin":"B0GPMLN32V","readingRoom":true,"featured":false},{"slug":"digitification","title":"Digitification","subtitle":"The Security-First Computer Literacy Curriculum for Grades 4\u20138","series":"Psychology Of Behavior Series","asin":"B0GGXTPFNS","readingRoom":true,"featured":false},{"slug":"educated-into-ignorance","title":"Educated Into Ignorance","subtitle":null,"series":"GSU Core / Foundation Series","asin":"B0GQ28SMQT","readingRoom":true,"featured":false},{"slug":"financial-literacy-for-teens","title":"Financial Literacy for Teens","subtitle":null,"series":"The Financial Literacy Collection","asin":"B0FYP5Y5KQ","readingRoom":true,"featured":false},{"slug":"find-your-voice","title":"Find Your Voice","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"foundations-of-repair","title":"Foundations of Repair","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"from-blank-page-to-finished-work","title":"From Blank Page to Finished Work","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"genetics","title":"Genetics","subtitle":"Homeschool Edition","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"grade-5-mathematics","title":"Grade 5 Mathematics","subtitle":"Student Edition","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"grade-6-mathematics","title":"Grade 6 Mathematics","subtitle":"Student Edition","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"grade-7-mathematics","title":"Grade 7 Mathematics","subtitle":"Expanded Textbook, 2026 Edition","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"grade-8-mathematics","title":"Grade 8 Mathematics","subtitle":"Real-World Problem Solving","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"high-on-ai","title":"High on AI","subtitle":"The Hype, The Risks, and The Real Future","series":"The Sovereign Intelligence Series","asin":"B0GJTZZ56T","readingRoom":true,"featured":false},{"slug":"history-of-america-for-kids","title":"History of America for Kids","subtitle":null,"series":"History of the Americans","asin":"B0FSSR92XP","readingRoom":true,"featured":false},{"slug":"history-you-can-touch","title":"History You Can Touch","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"home-plumbing-basics","title":"Home Plumbing Basics","subtitle":"The DIY Handbook for Lifelong Property Owners","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"how-to-talk-to-geno","title":"How to Talk to GENO","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"living-in-two-languages","title":"Living in Two Languages","subtitle":"Your Home, Your Phone, and Your Day","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"morals-character-values","title":"Morals, Character, Values","subtitle":null,"series":"Faith & Virtue Collection","asin":"B0H6GV7PRX","readingRoom":true,"featured":false},{"slug":"morphones","title":"Morphones","subtitle":"Morphology is the architectural blueprint of human language","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"old-glory","title":"Old Glory","subtitle":"The Story of the American Flag and the Spirit Behind the Stars and Stripes","series":"History of the Americans","asin":"B0H683GBKS","readingRoom":true,"featured":false},{"slug":"raising-a-little-economist","title":"Raising a Little Economist","subtitle":null,"series":"The Financial Literacy Collection","asin":"B0H6NN2NWK","readingRoom":true,"featured":false},{"slug":"reading-at-the-speed-of-thought","title":"Reading at the Speed of Thought","subtitle":"Fluency","series":"The Reading Helix","asin":"B0H5T578YN","readingRoom":true,"featured":false},{"slug":"reading-to-question","title":"Reading to Question","subtitle":"Critical Reading","series":"The Reading Helix","asin":"B0H5CGGHZ7","readingRoom":true,"featured":false},{"slug":"residential-framing","title":"Residential Framing","subtitle":"The Geometry of Shelter","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"say-one-true-thing","title":"Say One True Thing","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"self-reliant-magazine","title":"Self-Reliant Magazine","subtitle":"2026 Q1 Edition","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"solar-photovoltaic-installers","title":"Solar Photovoltaic (PV) Installers","subtitle":null,"series":"The Sovereign Trades Series","asin":"B0GXG1CPL3","readingRoom":true,"featured":false},{"slug":"sound-first","title":"Sound First","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"stonemasons","title":"Stonemasons","subtitle":null,"series":"The Sovereign Trades Series","asin":"B0GZFYK5KQ","readingRoom":true,"featured":false},{"slug":"tactical-vitality","title":"Tactical Vitality","subtitle":"The First Responder Within","series":"Standalone Titles","asin":"B0H69GS8LN","readingRoom":true,"featured":false},{"slug":"teaching-moral-values-to-kids","title":"Teaching Moral Values to Kids","subtitle":null,"series":"Psychology Of Behavior Series","asin":"B0GX32XWTB","readingRoom":true,"featured":false},{"slug":"tell-me-what-happened","title":"Tell Me What Happened","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-14000-hour-apprenticeship","title":"The 14,000-Hour Apprenticeship","subtitle":null,"series":"Standalone Titles","asin":"B0GZ2RT8FC","readingRoom":true,"featured":false},{"slug":"the-ai-apex","title":"The AI Apex","subtitle":"Mastering the Human-Machine Frontier \u2014 Chapter 1","series":"The Sovereign Intelligence Series","asin":"B0GMLS9SQ1","readingRoom":true,"featured":false},{"slug":"the-architecture-of-sovereignty","title":"The Architecture of Sovereignty","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-bystanders-imperative","title":"The Bystander's Imperative","subtitle":"A Comprehensive Guide to Prehospital First Aid","series":"Standalone Titles","asin":"B0H664M9W8","readingRoom":true,"featured":false},{"slug":"the-civic-workshop","title":"The Civic Workshop","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-code-that-unlocks-reading","title":"The Code That Unlocks Reading","subtitle":"Phonics","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-complete-homeschool-starter-guide","title":"The Complete Homeschool Starter Guide","subtitle":null,"series":"Homeschool & Alternative Education Series","asin":"B0GHR9SJ4S","readingRoom":true,"featured":false},{"slug":"the-disruption-engine","title":"The Disruption Engine","subtitle":"Out-Thinking the Competition Through Cross-Disciplinary Innovation","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-great-education-exodus","title":"The Great Education Exodus","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-honest-argument","title":"The Honest Argument","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-kitchen-table-laboratory","title":"The Kitchen Table Laboratory","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-little-economists-handbook","title":"The Little Economists Handbook","subtitle":null,"series":"The Financial Literacy Collection","asin":"B0H6LWMRQ8","readingRoom":true,"featured":false},{"slug":"the-little-economy","title":"The Little Economy","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-living-map","title":"The Living Map","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-polyglot-method","title":"The Polyglot Method","subtitle":"From One New Language to a Lifetime of Them","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-readers-toolkit","title":"The Readers Toolkit","subtitle":"Decoding \u2014 Turning Phonics Knowledge into Real-Time Reading Skill","series":"The Reading Helix","asin":"B0GXGTPB99","readingRoom":true,"featured":false},{"slug":"the-sentence-up","title":"The Sentence Up","subtitle":"Building Masterful Writers from the Ground Up","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-sounds-you-never-made","title":"The Sounds You Never Made","subtitle":"Training Your Ear and Mouth for a New Language","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-sovereign-electrician","title":"The Sovereign Electrician","subtitle":"The Complete Guide to Circuits, Wiring, Safety, and Codes","series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-spelling-code","title":"The Spelling Code","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"the-words-you-know","title":"The Words You Know","subtitle":"Vocabulary","series":"The Reading Helix","asin":"B0H3935FJH","readingRoom":true,"featured":false},{"slug":"trades-geometry","title":"Trades Geometry","subtitle":null,"series":"GSU Mathification Series","asin":"B0GYYKMM4J","readingRoom":true,"featured":false},{"slug":"weigh-it-in-the-balance","title":"Weigh It in the Balance","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"when-spelling-wont-stick","title":"When Spelling Wont Stick","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"word-archaeology","title":"Word Archaeology","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"writing-that-opens-doors","title":"Writing That Opens Doors","subtitle":null,"series":"The Reading Room Shelf","asin":null,"readingRoom":true,"featured":false},{"slug":"a-better-life-awaits","title":"A Better Life Awaits","series":"Better Life Series","asin":"B0FQ3RR3P6","readingRoom":false,"featured":false},{"slug":"a-leader-s-moral-compass","title":"A Leader's Moral Compass","series":"Standalone Titles","asin":"B0D8Z28K77","readingRoom":false,"featured":false},{"slug":"a-purpose-driven-life","title":"A Purpose-Driven Life","series":"GSU Leadership & Character Series","asin":"B0DPRF6YXS","readingRoom":false,"featured":false},{"slug":"a-real-good-life","title":"A Real Good Life","series":"Standalone Titles","asin":"B0G4KRFY9V","readingRoom":false,"featured":false},{"slug":"a-sense-of-thankfulness","title":"A Sense of Thankfulness","series":"Faith & Virtue Collection","asin":"B0GSH3278B","readingRoom":false,"featured":false},{"slug":"a-well-lived-life","title":"A Well-Lived Life","series":"Standalone Titles","asin":"B0G4NKSMGF","readingRoom":false,"featured":false},{"slug":"ai-and-business","title":"AI and Business","series":"Standalone Titles","asin":"B0G4R3C3XG","readingRoom":false,"featured":false},{"slug":"ai-on-the-shop-floor","title":"AI on the Shop Floor","series":"The Sovereign Intelligence Series","asin":"B0GXWNM8W5","readingRoom":false,"featured":false},{"slug":"algebra-1-without-apology","title":"Algebra 1 Without Apology","series":"GSU Mathification Series","asin":"B0GXJWDS6Q","readingRoom":false,"featured":false},{"slug":"alien-invasion","title":"Alien Invasion","series":"GSU Historical Fiction & Creative Series","asin":"B0FP2TB9VW","readingRoom":false,"featured":false},{"slug":"all-in-one-fabric-and-garment-features-dictionary","title":"All-in-One Fabric and Garment Features Dictionary","series":"Custom-Logo Decorating Series","asin":"B0F8ZXK5KM","readingRoom":false,"featured":false},{"slug":"an-iroquois-chief-and-a-british-princess","title":"An Iroquois Chief and a British Princess","series":"GSU Historical Fiction & Creative Series","asin":"B0F61HSKJY","readingRoom":false,"featured":false},{"slug":"anger-management","title":"Anger Management","series":"Psychology Of Behavior Series","asin":"B0D98W9SV9","readingRoom":false,"featured":false},{"slug":"anxiety-and-fear","title":"Anxiety and Fear","series":"Fearless Mind Education","asin":"B0G2KJZXDS","readingRoom":false,"featured":false},{"slug":"apprenticeship-pathways","title":"Apprenticeship Pathways","series":"The Sovereign Trades Series","asin":"B0GZZ734GN","readingRoom":false,"featured":false},{"slug":"are-you-a-baseball-bat-or-a-baseball","title":"Are You a Baseball Bat or a Baseball?","series":"Psychology Of Behavior Series","asin":"B0DWMMLL46","readingRoom":false,"featured":false},{"slug":"are-you-ready","title":"Are You Ready?","series":"Preparedness & Self-Reliance Series","asin":"B0DRZ8NT8Q","readingRoom":false,"featured":false},{"slug":"as-i-stand-you-will-never-walk-alone","title":"As I Stand, You Will Never Walk Alone","series":"GSU Memoir & Personal History","asin":"B0F21PMC47","readingRoom":false,"featured":false},{"slug":"autonomous-maintenance-am-a-key-pillar-of-total-productive-m","title":"Autonomous Maintenance (AM): A Key Pillar of Total Productive Maintenance","series":"TPM & Industrial Excellence Series","asin":"B0F92RDTST","readingRoom":false,"featured":false},{"slug":"autonomous-maintenance-am-empower-your-operators","title":"Autonomous Maintenance (AM): Empower Your Operators","series":"TPM & Industrial Excellence Series","asin":"B0F92C7JV8","readingRoom":false,"featured":false},{"slug":"basic-appliance-repair","title":"Basic Appliance Repair","series":"The Sovereign Trades Series","asin":"B0GTGKGDZF","readingRoom":false,"featured":false},{"slug":"basic-automotive-knowledge","title":"Basic Automotive Knowledge","series":"The Sovereign Trades Series","asin":"B0GSP2R5XC","readingRoom":false,"featured":false},{"slug":"basics-of-home-wiring","title":"Basics of Home Wiring","series":"The Sovereign Trades Series","asin":"B0GT6PH7MW","readingRoom":false,"featured":false},{"slug":"behavior-understanding-the-psychology-of-human-actions","title":"BEHAVIOR: Understanding the Psychology of Human Actions","series":"Psychology Of Behavior Series","asin":"B0D4JS5DCK","readingRoom":false,"featured":false},{"slug":"being-an-individualist-neoliberalism","title":"Being an Individualist: Neoliberalism","series":"GSU Personal Development & Self-Mastery","asin":"B0F1JVM9YD","readingRoom":false,"featured":false},{"slug":"better-life-i-deserve","title":"BETTER LIFE I DESERVE","series":"Better Life Series","asin":"B0G1TNQW1T","readingRoom":false,"featured":false},{"slug":"better-life-i-want","title":"Better Life I Want","series":"Better Life Series","asin":"B0G1M5G38J","readingRoom":false,"featured":false},{"slug":"brave-sprouts","title":"Brave Sprouts","series":"GSU Children's & Young Reader Series","asin":"B0FTV7Q1LT","readingRoom":false,"featured":false},{"slug":"brave-sprouts-parents-edition","title":"Brave Sprouts - Parents Edition","series":"GSU Children's & Young Reader Series","asin":"B0GX2V58J2","readingRoom":false,"featured":false},{"slug":"brave-sprouts-kids-version-issue-2","title":"Brave Sprouts \u2014 Kids Version: Issue 2","series":"GSU Children's & Young Reader Series","asin":"B0GX2ZQJY5","readingRoom":false,"featured":false},{"slug":"brave-sprouts-a-parent-s-guide-to-the-tween-years","title":"BRAVE SPROUTS: A Parent's Guide to the Tween Years","series":"GSU Children's & Young Reader Series","asin":"B0FVB9TZ95","readingRoom":false,"featured":false},{"slug":"brave-sprouts-summer-with-geno-issue-3","title":"Brave Sprouts: Summer with GENO, Issue 3","series":"Standalone Titles","asin":"B0H1CH564G","readingRoom":false,"featured":false},{"slug":"breaking-free-from-perfectionism","title":"Breaking Free from Perfectionism","series":"Fearless Mind Education","asin":"B0G5M7K2WL","readingRoom":false,"featured":false},{"slug":"builders-of-eternity","title":"BUILDERS OF ETERNITY","series":"GSU Leadership & Character Series","asin":"B0G4JJH3P7","readingRoom":false,"featured":false},{"slug":"building-a-bridge-to-freedom","title":"Building a Bridge to Freedom","series":"Standalone Titles","asin":"B0H4X84TRJ","readingRoom":false,"featured":false},{"slug":"building-emotional-capacity","title":"Building Emotional Capacity","series":"GSU Personal Development & Self-Mastery","asin":"B0GGBY5FNK","readingRoom":false,"featured":false},{"slug":"bullying-the-repeated-aggression-to-harm-or-control-others","title":"Bullying: The Repeated Aggression to Harm or Control Others","series":"Psychology Of Behavior Series","asin":"B0DHJ8WRKN","readingRoom":false,"featured":false},{"slug":"capturing-grace-wedding-photography-lens-camera-poses-lighti","title":"Capturing Grace: Wedding Photography Lens, Camera, Poses, Lighting, Gear, and Techniques","series":"Art of Women's Portraiture & Wedding Photography Series","asin":"B0FVHX8Z8S","readingRoom":false,"featured":false},{"slug":"carpentry-without-the-crew","title":"Carpentry Without the Crew","series":"The Sovereign Trades Series","asin":"B0GZBVYXBY","readingRoom":false,"featured":false},{"slug":"catastrophizing-book-a-30-day-workbook","title":"CATASTROPHIZING BOOK - A 30-DAY WORKBOOK","series":"Fearless Mind Education","asin":"B0F7Y8CQND","readingRoom":false,"featured":false},{"slug":"charismatic-personality","title":"Charismatic Personality","series":"Psychology Of Behavior Series","asin":"B0DPVS1ZLR","readingRoom":false,"featured":false},{"slug":"civic-sacrifice-individualism","title":"Civic Sacrifice & Individualism","series":"Healthy Republic Series","asin":"B0G11PL84S","readingRoom":false,"featured":false},{"slug":"civic-virtue","title":"Civic Virtue","series":"Healthy Republic Series","asin":"B0G15PCKFZ","readingRoom":false,"featured":false},{"slug":"coming-to-america-the-untold-history-of-immigration-to-the-u","title":"Coming to America: The Untold History of Immigration to the United States and the Enduring Promise of the American Dream","series":"The American Legacy Series","asin":"B0DHCZF7XQ","readingRoom":false,"featured":false},{"slug":"common-sense-is-not-so-common","title":"Common Sense Is Not So Common","series":"Standalone Titles","asin":"B0GZCVZKYD","readingRoom":false,"featured":false},{"slug":"complete-wedding-guest-photography-guide","title":"Complete Wedding Guest Photography Guide","series":"Art of Women's Portraiture & Wedding Photography Series","asin":"B0FVNGZTLX","readingRoom":false,"featured":false},{"slug":"conflict-behavior","title":"Conflict Behavior","series":"Psychology Of Behavior Series","asin":"B0D9DVRXPL","readingRoom":false,"featured":false},{"slug":"conflict-resolution-for-couples-workbook","title":"Conflict Resolution for Couples Workbook","series":"Conflict Resolution Mastery","asin":"B0FZXSPGQV","readingRoom":false,"featured":false},{"slug":"conformity-the-psychology-of-groupthink","title":"CONFORMITY: The Psychology of Groupthink","series":"Psychology Of Behavior Series","asin":"B0D3JLF8HF","readingRoom":false,"featured":false},{"slug":"couples-conflict-resolution","title":"Couples Conflict Resolution","series":"Conflict Resolution Mastery","asin":"B0FZ23CDPK","readingRoom":false,"featured":false},{"slug":"courage","title":"COURAGE","series":"Faith & Virtue Collection","asin":"B0D3WMC8GJ","readingRoom":false,"featured":false},{"slug":"critical-thinking-for-kids","title":"Critical Thinking for Kids","series":"GSU Children's & Young Reader Series","asin":"B0FSYLC4RP","readingRoom":false,"featured":false},{"slug":"cruel-sadistic-behavior","title":"CRUEL SADISTIC BEHAVIOR","series":"Psychology Of Behavior Series","asin":"B0DNZC4SRZ","readingRoom":false,"featured":false},{"slug":"curiosity-is-the-key","title":"Curiosity is the Key","series":"GSU Personal Development & Self-Mastery","asin":"B0D38QHQN3","readingRoom":false,"featured":false},{"slug":"deception-liar-liar-pants-on-fire","title":"DECEPTION: Liar, liar, pants on fire","series":"Psychology Of Behavior Series","asin":"B0DNJ1YGLV","readingRoom":false,"featured":false},{"slug":"deep-research-reclaiming-cognitive-sovereignty","title":"DEEP RESEARCH: Reclaiming Cognitive Sovereignty","series":"Standalone Titles","asin":"B0GWW41MVH","readingRoom":false,"featured":false},{"slug":"dial-a-teacher","title":"DIAL A TEACHER","series":"Reach Them All","asin":"B0H44V73NJ","readingRoom":false,"featured":false},{"slug":"digital-farm","title":"Digital Farm","series":"Standalone Titles","asin":"B0FNP71PHJ","readingRoom":false,"featured":false},{"slug":"digital-farm-for-kids","title":"Digital Farm for Kids","series":"GSU Children's & Young Reader Series","asin":"B0FS3ZZG4G","readingRoom":false,"featured":false},{"slug":"digital-farm-mandarin","title":"Digital Farm Mandarin \u666e\u901a\u8bdd","series":"Digital Farm Series","asin":"B0FPMG6ZBD","readingRoom":false,"featured":false},{"slug":"digital-farm-portuguese-portugu-s","title":"Digital Farm Portuguese Portugu\u00eas","series":"Digital Farm Series","asin":"B0FPZBJCBK","readingRoom":false,"featured":false},{"slug":"digital-farm-espa-ol-spanish","title":"Digital Farm \u2014 Espa\u00f1ol Spanish","series":"Digital Farm Series","asin":"B0FPNXRZML","readingRoom":false,"featured":false},{"slug":"digital-farm-fran-ais-french","title":"Digital Farm \u2014 Fran\u00e7ais French","series":"Digital Farm Series","asin":"B0FPQL7C2Z","readingRoom":false,"featured":false},{"slug":"digital-farm-arabic","title":"Digital Farm \u2014 \u0627\u0644\u0639\u0631\u0628\u064a\u0629 Arabic","series":"Digital Farm Series","asin":"B0FPR4YC24","readingRoom":false,"featured":false},{"slug":"digital-farm-hindi","title":"Digital Farm \u2014 \u0939\u093f\u0928\u094d\u0926\u0940 Hindi","series":"Digital Farm Series","asin":"B0FPQDNR46","readingRoom":false,"featured":false},{"slug":"digital-farm-japanese","title":"Digital Farm \u2014 \u65e5\u672c\u8a9e Japanese","series":"Digital Farm Series","asin":"B0FQ3JSG3C","readingRoom":false,"featured":false},{"slug":"digital-farm-deutsch-german","title":"Digital Farm\u2014Deutsch German","series":"Digital Farm Series","asin":"B0FQ3W1HF4","readingRoom":false,"featured":false},{"slug":"do-the-math-2-2-5","title":"DO THE MATH. 2+2=5","series":"GSU Mathification Series","asin":"B0D78W7DF9","readingRoom":false,"featured":false},{"slug":"emotional-intelligence-for-leaders","title":"Emotional Intelligence for Leaders","series":"Emotional Intelligence Mastery","asin":"B0FZ56JC8J","readingRoom":false,"featured":false},{"slug":"emotional-intelligence-over-iq","title":"EMOTIONAL INTELLIGENCE OVER IQ","series":"Emotional Intelligence Mastery","asin":"B0FYZ8MSJL","readingRoom":false,"featured":false},{"slug":"extroversion","title":"EXTROVERSION","series":"Psychology Of Behavior Series","asin":"B0CW1892NT","readingRoom":false,"featured":false},{"slug":"faith-family-freedom","title":"Faith, Family, Freedom","series":"Standalone Titles","asin":"B0FQJ6NK69","readingRoom":false,"featured":false},{"slug":"financial-literacy-for-women","title":"Financial Literacy for Women","series":"The Financial Literacy Collection","asin":"B0FNDDQXC5","readingRoom":false,"featured":false},{"slug":"financial-literacy-is-for-everyone","title":"Financial Literacy Is For Everyone","series":"The Financial Literacy Collection","asin":"B0FYRNSF17","readingRoom":false,"featured":false},{"slug":"financial-literacy-without-apology","title":"Financial Literacy Without Apology","series":"The Financial Literacy Collection","asin":"B0H6KRSC5S","readingRoom":false,"featured":false},{"slug":"fixing-drywall-how-to-install-drywall","title":"Fixing Drywall - How to Install Drywall","series":"The Sovereign Trades Series","asin":"B0GL1R2984","readingRoom":false,"featured":false},{"slug":"formality-the-enduring-rules-of-etiquette","title":"Formality: The Enduring Rules of Etiquette","series":"Standalone Titles","asin":"B0D4463VQR","readingRoom":false,"featured":false},{"slug":"foundations-of-repair","title":"Foundations of Repair","series":"The Sovereign Trades Series","asin":"B0GRTHD1GK","readingRoom":false,"featured":false},{"slug":"freedom-of-speech-without-apology","title":"Freedom of Speech Without Apology","series":"Freedom","asin":"B0H5W5X4W3","readingRoom":false,"featured":false},{"slug":"freedom-a-fundamental-human-right","title":"Freedom: A Fundamental Human Right","series":"The American Legacy Series","asin":"B0DC1MMHZ5","readingRoom":false,"featured":false},{"slug":"freedom-the-definitive-guide-to-financial-independence","title":"FREEDOM: The Definitive Guide to Financial Independence","series":"Freedom","asin":"B0FWV8VR2F","readingRoom":false,"featured":false},{"slug":"from-broken-beginnings","title":"From Broken Beginnings","series":"GSU Personal Development & Self-Mastery","asin":"B0D22N5NMT","readingRoom":false,"featured":false},{"slug":"fulfilling-one-s-potential-can-better-your-life","title":"Fulfilling one's potential Can Better Your Life","series":"You Series","asin":"B0CYH4G9TM","readingRoom":false,"featured":false},{"slug":"gambling-behavior","title":"Gambling Behavior","series":"Psychology Of Behavior Series","asin":"B0D9HWR2QP","readingRoom":false,"featured":false},{"slug":"game-on-a-field-report-on-free-unstoppable-gamified-learning","title":"GAME ON!: A Field Report on Free, Unstoppable, Gamified Learning","series":"Reach Them All","asin":"B0GX35XVJH","readingRoom":false,"featured":false},{"slug":"game-on-how-global-sovereign-university-is-gamifying-the-glo","title":"GAME ON!: How Global Sovereign University Is Gamifying the Global Mind","series":"The Voltage Archives","asin":"B0H2LLM6GF","readingRoom":false,"featured":false},{"slug":"gardening-for-girls-8-12","title":"Gardening for Girls 8-12","series":"The Garden Girl Series","asin":"B0GYML2DFS","readingRoom":false,"featured":false},{"slug":"grammar-for-the-real-world","title":"Grammar for the Real World","series":"Homeschool & Alternative Education Series","asin":"B0GSMYTSVL","readingRoom":false,"featured":false},{"slug":"grinning-behavior","title":"Grinning Behavior","series":"Psychology Of Behavior Series","asin":"B0D92DV48Q","readingRoom":false,"featured":false},{"slug":"history-of-the-americans-vol-1-of-5","title":"History of the Americans (Vol. 1 of 5)","series":"History of the Americans","asin":"B0FP3SFQWR","readingRoom":false,"featured":false},{"slug":"history-of-the-americans-ii","title":"History of The Americans II","series":"History of the Americans","asin":"B0DKVJZ5M8","readingRoom":false,"featured":false},{"slug":"history-of-the-americans-iv","title":"History of The Americans IV","series":"History of the Americans","asin":"B0FPDL9KGQ","readingRoom":false,"featured":false},{"slug":"history-of-the-americans-volume-iii","title":"History of the Americans: Volume III","series":"History of the Americans","asin":"B0FPBJZSTK","readingRoom":false,"featured":false},{"slug":"how-children-think","title":"HOW CHILDREN THINK","series":"Human Mind Trilogy","asin":"B0G52NDRFL","readingRoom":false,"featured":false},{"slug":"how-to-preserve-garden-produce","title":"How to Preserve Garden Produce","series":"The Practical Garden Series","asin":"B0GXGPTJ89","readingRoom":false,"featured":false},{"slug":"hunger-and-poverty-in-america","title":"Hunger and Poverty in America","series":"Teach a Man to Fish","asin":"B0DM8JGMN4","readingRoom":false,"featured":false},{"slug":"i-did-not-know-what-tomorrow-might-bring","title":"I did not know what tomorrow might bring","series":"GSU Memoir & Personal History","asin":"B0FRR5J7K5","readingRoom":false,"featured":false},{"slug":"in-the-line-of-fire","title":"In the Line of Fire","series":"GSU Memoir & Personal History","asin":"B0F352VDT9","readingRoom":false,"featured":false},{"slug":"irreality-when-the-soul-cannot-leave-the-shell","title":"IRREALITY: When the Soul Cannot Leave the Shell","series":"The Voltage Archives","asin":"B0GX2XPK2V","readingRoom":false,"featured":false},{"slug":"is-this-glass-half-empty-or-half-full","title":"Is This Glass Half Empty or Half Full?","series":"Faith & Virtue Collection","asin":"B0D8VJP4M6","readingRoom":false,"featured":false},{"slug":"jealous-behavior","title":"Jealous Behavior","series":"Psychology Of Behavior Series","asin":"B0DJG6R49Y","readingRoom":false,"featured":false},{"slug":"judgemental-behavior","title":"Judgemental Behavior","series":"Psychology Of Behavior Series","asin":"B0D94YZWWS","readingRoom":false,"featured":false},{"slug":"just-in-time-jit-learning","title":"JUST-IN-TIME (JIT) LEARNING","series":"Fearless Mind Education","asin":"B0GX31XKML","readingRoom":false,"featured":false},{"slug":"lawification","title":"LAWIFICATION","series":"Standalone Titles","asin":"B0GX2YBNV5","readingRoom":false,"featured":false},{"slug":"lawn-and-garden-tools-and-equipment-maintenance","title":"Lawn and Garden Tools and Equipment Maintenance","series":"The Sovereign Trades Series","asin":"B0GTGHDDM7","readingRoom":false,"featured":false},{"slug":"learnability-behavior","title":"Learnability Behavior","series":"Fearless Mind Education","asin":"B0GYDLQ22G","readingRoom":false,"featured":false},{"slug":"learnability-behavior-for-kids","title":"Learnability Behavior for Kids","series":"GSU Children's & Young Reader Series","asin":"B0GY89ZFSJ","readingRoom":false,"featured":false},{"slug":"let-this-not-be-our-alamo","title":"Let This Not Be Our Alamo","series":"The American Legacy Series","asin":"B0FP2XVFQR","readingRoom":false,"featured":false},{"slug":"life-specs","title":"Life Specs","series":"Homeschool & Alternative Education Series","asin":"B0H1CM6NFM","readingRoom":false,"featured":false},{"slug":"logic-grid-puzzles","title":"Logic Grid Puzzles","series":"Standalone Titles","asin":"B0GBQRBP7F","readingRoom":false,"featured":false},{"slug":"logic-the-classical-art-of-reasoning-well","title":"Logic: The Classical Art of Reasoning Well","series":"The Sovereign Mind Trivium Library","asin":"B0GX2ZTGP5","readingRoom":false,"featured":false},{"slug":"maintaining-mastery-in-a-changing-world","title":"MAINTAINING MASTERY IN A CHANGING WORLD","series":"Fearless Mind Education","asin":"B0GX2VK1PP","readingRoom":false,"featured":false},{"slug":"make-24-game","title":"Make 24 Game","series":"GSU Mathification Series","asin":"B0GBB6J44M","readingRoom":false,"featured":false},{"slug":"mastering-interpersonal-communication","title":"Mastering Interpersonal Communication","series":"Standalone Titles","asin":"B0GSPCH8WJ","readingRoom":false,"featured":false},{"slug":"math-anxiety-for-adults","title":"Math Anxiety for Adults","series":"Fearless Mind Education","asin":"B0G2P4RFHX","readingRoom":false,"featured":false},{"slug":"math-cross-figures-for-grades-4-8","title":"Math Cross-Figures for Grades 4-8","series":"GSU Mathification Series","asin":"B0GB4J8SCN","readingRoom":false,"featured":false},{"slug":"math-trivia-jeopardy-for-grades-4-8","title":"Math Trivia & Jeopardy for Grades 4-8","series":"GSU Mathification Series","asin":"B0G9NXYQGX","readingRoom":false,"featured":false},{"slug":"meritocracy-meritocratic-behavior","title":"Meritocracy: Meritocratic Behavior","series":"Psychology Of Behavior Series","asin":"B0DV5HHWQS","readingRoom":false,"featured":false},{"slug":"modern-slavery","title":"Modern Slavery","series":"Standalone Titles","asin":"B0DHV5HYQB","readingRoom":false,"featured":false},{"slug":"modern-total-productive-maintenance-tpm","title":"Modern Total Productive Maintenance (TPM)","series":"TPM Total Productive Maintenance","asin":"B0GXSNDB6X","readingRoom":false,"featured":false},{"slug":"money-is-a-tool-for-a-free-life","title":"Money Is a Tool for a Free Life","series":"Standalone Titles","asin":"B0H3NSTGBG","readingRoom":false,"featured":false},{"slug":"my-love-my-wife-i-love-this-life","title":"My Love, My Wife, I Love This Life","series":"GSU Memoir & Personal History","asin":"B0F2F6D4DN","readingRoom":false,"featured":false},{"slug":"my-son-who-happened-to-be-a-newfoundland","title":"My Son, Who Happened to be a Newfoundland","series":"Newfoundland Series","asin":"B0F5F1V9F7","readingRoom":false,"featured":false},{"slug":"office-tpm","title":"Office TPM","series":"TPM & Industrial Excellence Series","asin":"B0F8SYMLWJ","readingRoom":false,"featured":false},{"slug":"painting-interior","title":"Painting Interior","series":"The Sovereign Trades Series","asin":"B0GZSFMTNP","readingRoom":false,"featured":false},{"slug":"paranoia-the-psychology-of-fear-suspicion-and-mistrust","title":"Paranoia: The Psychology of Fear, Suspicion, and Mistrust","series":"Psychology Of Behavior Series","asin":"B0D971K6ZX","readingRoom":false,"featured":false},{"slug":"patience","title":"PATIENCE","series":"Psychology Of Behavior Series","asin":"B0D4127ZNH","readingRoom":false,"featured":false},{"slug":"photographing-women-in-oregon-50-locations-and-professional-","title":"Photographing Women in Oregon: 50+ Locations and Professional Techniques","series":"Art of Women's Portraiture & Wedding Photography Series","asin":"B01N2SMY17","readingRoom":false,"featured":false},{"slug":"plumbing-maintenance-basics-guide","title":"Plumbing Maintenance Basics Guide","series":"The Sovereign Trades Series","asin":"B0GTCPTR61","readingRoom":false,"featured":false},{"slug":"poison-ivy-league","title":"Poison Ivy League","series":"Fearless Mind Education","asin":"B0H2G581CR","readingRoom":false,"featured":false},{"slug":"positive-liberty-and-the-european-illusion","title":"Positive Liberty and the European Illusion","series":"Standalone Titles","asin":"B0H49SHF7L","readingRoom":false,"featured":false},{"slug":"poverty-inc","title":"Poverty Inc","series":"Standalone Titles","asin":"B0H2R86351","readingRoom":false,"featured":false},{"slug":"predatory-human-behavior","title":"Predatory Human Behavior","series":"Psychology Of Behavior Series","asin":"B0DHQBLQPV","readingRoom":false,"featured":false},{"slug":"professional-flooring","title":"Professional Flooring","series":"The Sovereign Trades Series","asin":"B0GYWLMTYH","readingRoom":false,"featured":false},{"slug":"project-management-professional-pmp","title":"Project Management Professional (PMP)","series":"Standalone Titles","asin":"B0G6CM21HJ","readingRoom":false,"featured":false},{"slug":"prove-me-wrong","title":"Prove Me Wrong","series":"Standalone Titles","asin":"B0H2VCSPRS","readingRoom":false,"featured":false},{"slug":"puppy-training-newfoundland","title":"Puppy Training Newfoundland","series":"Newfoundland Series","asin":"B0CLYXGR5J","readingRoom":false,"featured":false},{"slug":"reach-them-all","title":"Reach Them All","series":"Reach Them All","asin":"B0H3VBGPZL","readingRoom":false,"featured":false},{"slug":"read-the-room","title":"Read the Room","series":"Standalone Titles","asin":"B0GS6VXDG7","readingRoom":false,"featured":false},{"slug":"relationship-conflict-resolution","title":"Relationship Conflict Resolution","series":"Conflict Resolution Mastery","asin":"B0FZH23GW7","readingRoom":false,"featured":false},{"slug":"residential-framing","title":"Residential Framing","series":"The Sovereign Trades Series","asin":"B0H6C78ZDQ","readingRoom":false,"featured":false},{"slug":"resilience-and-coping-with-failure","title":"Resilience and Coping with Failure","series":"Standalone Titles","asin":"B0GSP9GKWL","readingRoom":false,"featured":false},{"slug":"respect-a-scholarly-guide","title":"Respect: A Scholarly Guide","series":"Faith & Virtue Collection","asin":"B0DGCLKCH1","readingRoom":false,"featured":false},{"slug":"restoring-social-peace","title":"Restoring Social Peace","series":"Healthy Republic Series","asin":"B0G1GM8XBY","readingRoom":false,"featured":false},{"slug":"rhetoric-the-classical-art-of-speaking-truth","title":"Rhetoric: The Classical Art of Speaking Truth","series":"The Sovereign Mind Trivium Library","asin":"B0GXGTZZXV","readingRoom":false,"featured":false},{"slug":"risk-based-thinking-rbt","title":"Risk-Based Thinking (RBT)","series":"TPM & Industrial Excellence Series","asin":"B0F38L8Q5Q","readingRoom":false,"featured":false},{"slug":"robot-proof-teaching-humans-to-thrive-when-machines-think","title":"Robot-Proof: Teaching Humans to Thrive When Machines Think","series":"The Sovereign Intelligence Series","asin":"B0GKGFDQM7","readingRoom":false,"featured":false},{"slug":"rumination-workbook","title":"Rumination Workbook","series":"The Rumination Recovery Series","asin":"B0GX2STD5H","readingRoom":false,"featured":false},{"slug":"safety-health-and-environment-she-tpm","title":"Safety, Health, and Environment (SHE) TPM","series":"TPM & Industrial Excellence Series","asin":"B0F412ZR6F","readingRoom":false,"featured":false},{"slug":"self-reliant-issue-2","title":"SELF-RELIANT Issue 2","series":"Self-Reliant Magazine","asin":"B0FTJMN3RP","readingRoom":false,"featured":false},{"slug":"self-reliant-issue-3","title":"SELF-RELIANT Issue 3","series":"Self-Reliant Magazine","asin":"B0FTT4G269","readingRoom":false,"featured":false},{"slug":"self-reliant-magazine-issue-1","title":"SELF-RELIANT Magazine Issue 1","series":"Self-Reliant Magazine","asin":"B0FTK122R3","readingRoom":false,"featured":false},{"slug":"signal-decryption","title":"Signal Decryption","series":"Standalone Titles","asin":"B0GQSG6MY2","readingRoom":false,"featured":false},{"slug":"stalking","title":"Stalking","series":"Psychology Of Behavior Series","asin":"B0DKFPKZQX","readingRoom":false,"featured":false},{"slug":"stone-and-wood-decor","title":"Stone and Wood Decor","series":"The Sovereign Trades Series","asin":"B0GY2Z3T1S","readingRoom":false,"featured":false},{"slug":"synergetic-governance-a-new-operating-system-for-civilizatio","title":"Synergetic Governance: A New Operating System for Civilization","series":"The American Legacy Series","asin":"B0FP3Y3YW7","readingRoom":false,"featured":false},{"slug":"synthetix-teaching-guide","title":"Synthetix Teaching Guide","series":"The Sovereign Intelligence Series","asin":"B0GMPX73C1","readingRoom":false,"featured":false},{"slug":"synthetix-building-the-sovereign-intellect","title":"Synthetix: Building the Sovereign Intellect","series":"The Sovereign Intelligence Series","asin":"B0GMW7CJ5Y","readingRoom":false,"featured":false},{"slug":"systemic-failure-and-institutional-corruption","title":"Systemic Failure and Institutional Corruption","series":"Homeschool & Alternative Education Series","asin":"B0GT44QZY3","readingRoom":false,"featured":false},{"slug":"taking-a-chance","title":"Taking a Chance","series":"GSU Personal Development & Self-Mastery","asin":"B0DJL8LQNG","readingRoom":false,"featured":false},{"slug":"teach-them-to-fish-before-the-pond-runs-dry","title":"Teach Them to Fish\u2014Before the Pond Runs Dry","series":"The Sovereign Intelligence Series","asin":"B0G8ZMGM13","readingRoom":false,"featured":false},{"slug":"tear-down-these-walls","title":"TEAR DOWN THESE WALLS","series":"Standalone Titles","asin":"B0GNLYBC82","readingRoom":false,"featured":false},{"slug":"that-our-children-may-live-without-fear","title":"That Our Children May Live Without Fear","series":"GSU Leadership & Character Series","asin":"B0FXJC598F","readingRoom":false,"featured":false},{"slug":"the-15-minute-eq-blueprint","title":"The 15-Minute EQ Blueprint","series":"The Sovereign Intelligence Series","asin":"B0GMDSRDXC","readingRoom":false,"featured":false},{"slug":"the-90-day-relationship-transformation","title":"The 90-Day Relationship Transformation","series":"Conflict Resolution Mastery","asin":"B0G2B6R6ZL","readingRoom":false,"featured":false},{"slug":"the-90-day-relationship-transformation-advanced-conflict-res","title":"The 90-Day Relationship Transformation - Advanced Conflict Resolution Strategies","series":"Conflict Resolution Mastery","asin":"B0G2HKVWFK","readingRoom":false,"featured":false},{"slug":"the-absence-of-pain-is-death","title":"The Absence of Pain is Death","series":"GSU Personal Development & Self-Mastery","asin":"B0DVMHQB6R","readingRoom":false,"featured":false},{"slug":"the-american-cowboy","title":"The American Cowboy","series":"History of the Americans","asin":"B0FPLLZC5M","readingRoom":false,"featured":false},{"slug":"the-american-spirit-belongs-to-the-world","title":"The American Spirit Belongs to the World","series":"The Voltage Archives","asin":"B0GXQMNPC5","readingRoom":false,"featured":false},{"slug":"the-amnesty-protocol-reaching-the-forgotten","title":"THE AMNESTY PROTOCOL: Reaching the Forgotten","series":"GSU Core / Foundation Series","asin":"B0GQ3FV3P9","readingRoom":false,"featured":false},{"slug":"the-amnesty-protocol-reaching-the-forgotten-2","title":"The Amnesty Protocol: Reaching the Forgotten","series":"Standalone Titles","asin":"B0GNLQ6N91","readingRoom":false,"featured":false},{"slug":"the-apprentice-s-field-guide-electrical","title":"The Apprentice's Field Guide (Electrical)","series":"The Sovereign Trades Series","asin":"B0H17MK8WM","readingRoom":false,"featured":false},{"slug":"the-architecture-of-autonomy","title":"The Architecture of Autonomy","series":"History of the Americans","asin":"B0GZN1RLYZ","readingRoom":false,"featured":false},{"slug":"the-birth-of-a-nation-reclaimed-600-years-before-columbus","title":"The Birth of a Nation, Reclaimed 600 years before Columbus","series":"History of the Americans","asin":"B0H2RKCPJM","readingRoom":false,"featured":false},{"slug":"the-blasphemy-of-tyranny","title":"THE BLASPHEMY OF TYRANNY","series":"The Sovereign Intelligence Series","asin":"B0G51C5GGM","readingRoom":false,"featured":false},{"slug":"the-burning-library-wisdom-of-age-lost","title":"The Burning Library - Wisdom of Age Lost","series":"GSU Memoir & Personal History","asin":"B0G7X15494","readingRoom":false,"featured":false},{"slug":"the-civilization-engine-proving-2-2-5","title":"The Civilization Engine: Proving 2+2=5","series":"GSU Core / Foundation Series","asin":"B0H4Z6SKY7","readingRoom":false,"featured":false},{"slug":"the-clear-view-window-installation-repair-and-historic-resto","title":"The Clear View: Window Installation, Repair, and Historic Restoration","series":"The Sovereign Trades Series","asin":"B0H1693QMT","readingRoom":false,"featured":false},{"slug":"the-collapse-of-critical-thinking","title":"The Collapse of Critical Thinking","series":"Fearless Mind Education","asin":"B0GMXZ9P5C","readingRoom":false,"featured":false},{"slug":"the-counterfeit-diploma","title":"The Counterfeit Diploma","series":"Standalone Titles","asin":"B0H572MGC7","readingRoom":false,"featured":false},{"slug":"the-courage-to-try","title":"THE COURAGE TO TRY","series":"GSU Children's & Young Reader Series","asin":"B0G6W38PDN","readingRoom":false,"featured":false},{"slug":"the-declaration-of-educational-independence","title":"THE DECLARATION OF EDUCATIONAL INDEPENDENCE","series":"GSU Leadership & Character Series","asin":"B0FWGQ3QQ4","readingRoom":false,"featured":false},{"slug":"the-definitive-blueprint-for-custom-logo-embroidered-clothin","title":"The Definitive Blueprint for Custom Logo Embroidered Clothing","series":"Custom-Logo Decorating Series","asin":"B0FVTTZDNQ","readingRoom":false,"featured":false},{"slug":"the-efficiency-classroom","title":"The Efficiency Classroom","series":"TPM & Industrial Excellence Series","asin":"B0FYDH4T42","readingRoom":false,"featured":false},{"slug":"the-emotional-intelligence-quick-book","title":"The Emotional Intelligence Quick Book","series":"Emotional Intelligence Mastery","asin":"B0FZ2TKFH1","readingRoom":false,"featured":false},{"slug":"the-enduring-spirit","title":"The Enduring Spirit","series":"Preparedness & Self-Reliance Series","asin":"B0DPNMM8XJ","readingRoom":false,"featured":false},{"slug":"the-entropy-killer","title":"The Entropy Killer","series":"The Sovereign Intelligence Series","asin":"B0GX3B67FQ","readingRoom":false,"featured":false},{"slug":"the-escalation-code-putin-s-playbook-and-the-looming-shadow-","title":"The Escalation Code: Putin's Playbook and the Looming Shadow of WWII I","series":"The American Legacy Series","asin":"B0GMBL1DWM","readingRoom":false,"featured":false},{"slug":"the-female-mind","title":"THE FEMALE MIND","series":"Human Mind Trilogy","asin":"B0G4XVH972","readingRoom":false,"featured":false},{"slug":"the-fog-industrial-complex","title":"The Fog-Industrial Complex","series":"The Sovereign Mind Trivium Library","asin":"B0GQSLGQ86","readingRoom":false,"featured":false},{"slug":"the-frankenstein-methodology","title":"The Frankenstein Methodology","series":"The Sovereign Intelligence Series","asin":"B0GG67J1TP","readingRoom":false,"featured":false},{"slug":"the-good-fight-homeschooling-s-rise-and-the-fall-of-the-publ","title":"The Good Fight. Homeschooling's Rise and the Fall of the Public School Monopoly","series":"Fearless Mind Education","asin":"B0H218BPVH","readingRoom":false,"featured":false},{"slug":"the-great-lawgivers","title":"The Great Lawgivers","series":"History of the Americans","asin":"B0FPFHHL36","readingRoom":false,"featured":false},{"slug":"the-great-lawgivers-4th-5th-grade-edition","title":"THE GREAT LAWGIVERS - 4th & 5th Grade Edition","series":"History of the Americans","asin":"B0GPL58BSH","readingRoom":false,"featured":false},{"slug":"the-great-lawgivers-japanese","title":"The Great Lawgivers - Japanese \u5049\u5927\u306a\u7acb\u6cd5\u8005\u305f\u3061","series":"History of the Americans","asin":"B0FQJLL59Q","readingRoom":false,"featured":false},{"slug":"the-home-safety-inspection","title":"The Home Safety Inspection","series":"The Sovereign Trades Series","asin":"B0GTGJHS2R","readingRoom":false,"featured":false},{"slug":"the-hvac-apprentice-s-field-guide","title":"The HVAC Apprentice's Field Guide","series":"The Sovereign Trades Series","asin":"B0H19GXW7S","readingRoom":false,"featured":false},{"slug":"the-last-horizon-a-history-of-the-american-cowboy","title":"The Last Horizon: A History of the American Cowboy","series":"History of the Americans","asin":"B0FQ4ZYXK7","readingRoom":false,"featured":false},{"slug":"the-little-professor-and-the-first-snow","title":"The Little Professor and the First Snow","series":"The Bear Den Stories","asin":"B0CW1CKDWZ","readingRoom":false,"featured":false},{"slug":"the-little-professor-the-narrative-of-a-most-unusual-adoptio","title":"The Little Professor. The Narrative of a Most Unusual Adoption","series":"The Bear Den Stories","asin":"B0F2J656P9","readingRoom":false,"featured":false},{"slug":"the-math-revolution","title":"The Math Revolution","series":"GSU Mathification Series","asin":"B0FW8P1D8B","readingRoom":false,"featured":false},{"slug":"the-math-trap","title":"The Math Trap","series":"GSU Mathification Series","asin":"B0GX2STCYD","readingRoom":false,"featured":false},{"slug":"the-meaning-of-life","title":"THE MEANING OF LIFE","series":"GSU Personal Development & Self-Mastery","asin":"B0GGQ8V9XC","readingRoom":false,"featured":false},{"slug":"the-message-in-the-wind","title":"The Message in the Wind","series":"GSU Historical Fiction & Creative Series","asin":"B0FSCHYF64","readingRoom":false,"featured":false},{"slug":"the-missing-glove","title":"The Missing Glove","series":"GSU Memoir & Personal History","asin":"B0DTC2Z4Z1","readingRoom":false,"featured":false},{"slug":"the-movement-of-multiplication","title":"THE MOVEMENT OF MULTIPLICATION","series":"Teach a Man to Fish","asin":"B0FV2R7W7H","readingRoom":false,"featured":false},{"slug":"the-night-of-the-living-stuffed-animals","title":"The Night of the Living Stuffed Animals","series":"Standalone Titles","asin":"B0F5NXDSVB","readingRoom":false,"featured":false},{"slug":"the-philosophy-of-the-rod","title":"THE PHILOSOPHY OF THE ROD","series":"Teach a Man to Fish","asin":"B0FTWGSX1G","readingRoom":false,"featured":false},{"slug":"the-practice-of-teaching","title":"The Practice of Teaching","series":"Teach a Man to Fish","asin":"B0FTYTH9FM","readingRoom":false,"featured":false},{"slug":"the-pre-apprentice-primer","title":"The Pre-Apprentice Primer","series":"The Sovereign Trades Series","asin":"B0H5X9QJC3","readingRoom":false,"featured":false},{"slug":"the-rational-male-brain","title":"The Rational Male Brain","series":"Human Mind Trilogy","asin":"B0G4SWFGWG","readingRoom":false,"featured":false},{"slug":"the-reading-revolution","title":"The Reading Revolution","series":"Homeschool & Alternative Education Series","asin":"B0GQRJ93N7","readingRoom":false,"featured":false},{"slug":"the-rumination-book","title":"The Rumination Book","series":"GSU Personal Development & Self-Mastery","asin":"B0G3M98JZ2","readingRoom":false,"featured":false},{"slug":"the-second-american-civil-war-2024","title":"The Second American Civil War (2024)","series":"The American Legacy Series","asin":"B0F3LY78KT","readingRoom":false,"featured":false},{"slug":"the-smart-procurement-playbook-for-small-business","title":"The Smart Procurement Playbook for Small Business","series":"The Sovereign Trades Series","asin":"B0H232Y4QJ","readingRoom":false,"featured":false},{"slug":"the-sovereign-architect","title":"The Sovereign Architect","series":"The Sovereign Intelligence Series","asin":"B0GG7Q1NVL","readingRoom":false,"featured":false},{"slug":"the-sovereign-mind-junior","title":"The Sovereign Mind Junior","series":"The Sovereign Mind Trivium Library","asin":"B0GP1TSF7Y","readingRoom":false,"featured":false},{"slug":"the-sovereign-mind-input-process-output","title":"The Sovereign Mind: Input, Process, Output","series":"The Sovereign Mind Trivium Library","asin":"B0GNWGLX2C","readingRoom":false,"featured":false},{"slug":"the-sovereign-spectrum","title":"The Sovereign Spectrum","series":"Standalone Titles","asin":"B0GRNQ9QT8","readingRoom":false,"featured":false},{"slug":"the-spark-the-death-of-hesitation","title":"THE SPARK: The Death of Hesitation","series":"The Sovereign Intelligence Series","asin":"B0GKYJ5FZM","readingRoom":false,"featured":false},{"slug":"the-straw-man-modern-authoritarianism-and-the-history-of-dic","title":"The Straw Man: Modern Authoritarianism and the History of Dictatorship","series":"The American Legacy Series","asin":"B0GQTPTVB7","readingRoom":false,"featured":false},{"slug":"the-talent-of-self-reliance","title":"THE TALENT OF SELF-RELIANCE","series":"History of the Americans","asin":"B0GG5M184T","readingRoom":false,"featured":false},{"slug":"the-three-burrows","title":"The Three Burrows","series":"Preparedness & Self-Reliance Series","asin":"B0DP5XXB2S","readingRoom":false,"featured":false},{"slug":"the-trivium","title":"THE TRIVIUM","series":"The Voltage Archives","asin":"B0GNP46HWL","readingRoom":false,"featured":false},{"slug":"the-tyranny-of-debt","title":"The Tyranny of Debt","series":"The Financial Literacy Collection","asin":"B0GZVT3G3S","readingRoom":false,"featured":false},{"slug":"the-ultimate-guide-to-indoor-apartment-gardening","title":"The Ultimate Guide to Indoor Apartment Gardening","series":"The Practical Garden Series","asin":"B0GYKGBBBL","readingRoom":false,"featured":false},{"slug":"the-uncharted-playbook","title":"THE UNCHARTED PLAYBOOK","series":"The Sovereign Intelligence Series","asin":"B0GMY3P8W1","readingRoom":false,"featured":false},{"slug":"the-undeclared-war-nato-russia-and-the-silent-struggle-shapi","title":"The Undeclared War: NATO, Russia, and the Silent Struggle Shaping Our Future","series":"The American Legacy Series","asin":"B0FK9SQRGS","readingRoom":false,"featured":false},{"slug":"the-united-states-of-america-without-apology","title":"The United States of America: Without Apology","series":"History of the Americans","asin":"B0H4GM1J2P","readingRoom":false,"featured":false},{"slug":"the-unschooling-high-school-handbook","title":"THE UNSCHOOLING HIGH SCHOOL HANDBOOK","series":"Homeschool & Alternative Education Series","asin":"B0G5QFN3XS","readingRoom":false,"featured":false},{"slug":"the-virtues-of-endurance-and-resilience","title":"The Virtues of Endurance and Resilience","series":"Standalone Titles","asin":"B0DW4J6F1G","readingRoom":false,"featured":false},{"slug":"the-wedding-photography-lens-and-gear-guide","title":"The Wedding Photography Lens and Gear Guide","series":"Art of Women's Portraiture & Wedding Photography Series","asin":"B0G76V6FXP","readingRoom":false,"featured":false},{"slug":"the-weight-bearing-life","title":"The Weight-Bearing Life","series":"GSU Personal Development & Self-Mastery","asin":"B0GT5MKRMD","readingRoom":false,"featured":false},{"slug":"the-wisdom-bridge","title":"The Wisdom Bridge","series":"Teach a Man to Fish","asin":"B0FSX1CCZJ","readingRoom":false,"featured":false},{"slug":"the-working-welder-s-path-to-specialized-skill","title":"The Working Welder's Path to Specialized Skill","series":"The Sovereign Trades Series","asin":"B0GX34NTV5","readingRoom":false,"featured":false},{"slug":"things-are-not-always-as-they-seem","title":"Things Are Not Always As They Seem","series":"GSU Personal Development & Self-Mastery","asin":"B0DGH1HB7W","readingRoom":false,"featured":false},{"slug":"total-productive-maintenance-tpm-book-3-planned-maintenance","title":"Total Productive Maintenance (TPM) - Book 3: Planned Maintenance","series":"Standalone Titles","asin":"B0F27Q8TNL","readingRoom":false,"featured":false},{"slug":"total-productive-maintenance-book-6-total-quality-maintenanc","title":"Total Productive Maintenance - Book 6: Total Quality Maintenance (TQM)","series":"TPM & Industrial Excellence Series","asin":"B0F2SLV44H","readingRoom":false,"featured":false},{"slug":"total-productive-maintenance-book-7-iso-9000","title":"Total Productive Maintenance Book 7: ISO 9000","series":"TPM & Industrial Excellence Series","asin":"B0F3NWWX7H","readingRoom":false,"featured":false},{"slug":"total-productive-maintenance-qm-book-5-quality-maintenance","title":"Total Productive Maintenance QM Book 5: Quality Maintenance","series":"Standalone Titles","asin":"B0F2Q618RF","readingRoom":false,"featured":false},{"slug":"tpm-education-and-training","title":"TPM Education and Training","series":"TPM & Industrial Excellence Series","asin":"B0F8KCJJ9T","readingRoom":false,"featured":false},{"slug":"tpm-education-and-training-2026-expanded-edition","title":"TPM Education and Training (2026 Expanded Edition)","series":"TPM Total Productive Maintenance","asin":"B0H1K1YZSY","readingRoom":false,"featured":false},{"slug":"under-the-oregon-sky","title":"Under the Oregon Sky","series":"GSU Historical Fiction & Creative Series","asin":"B0F49H4R6J","readingRoom":false,"featured":false},{"slug":"united-states-of-america-a-one-off","title":"United States of America, A One-Off","series":"The American Legacy Series","asin":"B0DZVL7T1B","readingRoom":false,"featured":false},{"slug":"university-in-a-box","title":"University in a Box","series":"Reach Them All","asin":"B0H42BHQNC","readingRoom":false,"featured":false},{"slug":"vibe-coding","title":"Vibe Coding","series":"The Sovereign Intelligence Series","asin":"B0H1N5KTBN","readingRoom":false,"featured":false},{"slug":"voltage-magazine-cognitive-self-defense","title":"Voltage Magazine \u2014 Cognitive Self-Defense","series":"The Voltage Archives","asin":"B0GNJDRDSX","readingRoom":false,"featured":false},{"slug":"voltage-the-journal-of-applied-asymmetry-issue-no-1","title":"VOLTAGE: The Journal of Applied Asymmetry, Issue No. 1","series":"The Voltage Archives","asin":"B0GN44NGB9","readingRoom":false,"featured":false},{"slug":"voltage-the-wall-must-fall","title":"VOLTAGE: THE WALL MUST FALL","series":"The Voltage Archives","asin":"B0GNMFZ91B","readingRoom":false,"featured":false},{"slug":"western-europe-land-of-the-weak-and-intolerant","title":"Western Europe. Land of the Weak and Intolerant","series":"The American Legacy Series","asin":"B0DZP5FGGH","readingRoom":false,"featured":false},{"slug":"what-s-in-it-for-me","title":"What's in it for me?","series":"Psychology Of Behavior Series","asin":"B0F3VM6T9G","readingRoom":false,"featured":false},{"slug":"whispers-of-the-heart","title":"Whispers of the Heart","series":"GSU Children's & Young Reader Series","asin":"B0F4L2YB2B","readingRoom":false,"featured":false},{"slug":"woodworking-repair-and-restoration","title":"Woodworking \u2014 Repair and Restoration","series":"Standalone Titles","asin":"B0GZ6Z6TCV","readingRoom":false,"featured":false},{"slug":"yet-the-power-of-the-unfinished-life","title":"Yet: The Power of the Unfinished Life","series":"GSU Personal Development & Self-Mastery","asin":"B0GDVVZ2F9","readingRoom":false,"featured":false},{"slug":"you-are-what-you-wear","title":"You are What You Wear","series":"GSU Personal Development & Self-Mastery","asin":"B0D919V372","readingRoom":false,"featured":false},{"slug":"you-dare-to-soar","title":"YOU: Dare to Soar","series":"You Series","asin":"B0CZ9XRZQS","readingRoom":false,"featured":false},{"slug":"you-infinite-possibilities-that-can-better-your-life","title":"YOU: Infinite Possibilities that Can Better Your Life","series":"You Series","asin":"B0CZ4WL3PC","readingRoom":false,"featured":false},{"slug":"your-guide-to-custom-embroidered-patches","title":"Your Guide to Custom Embroidered Patches","series":"Custom-Logo Decorating Series","asin":"B0F8ZDC8ZG","readingRoom":false,"featured":false},{"slug":"your-guide-to-custom-logo-embroidered-clothing","title":"Your Guide to Custom Logo Embroidered Clothing","series":"Custom-Logo Decorating Series","asin":"B0F8XK9L81","readingRoom":false,"featured":false},{"slug":"your-guide-to-custom-logo-screen-printed-t-shirts","title":"Your Guide to Custom Logo Screen-Printed T-Shirts","series":"Custom-Logo Decorating Series","asin":"B0F8VY9BDM","readingRoom":false,"featured":false}],"series":["Art of Women's Portraiture & Wedding Photography Series","Better Life Series","Conflict Resolution Mastery","Custom-Logo Decorating Series","Digital Farm Series","Emotional Intelligence Mastery","Faith & Virtue Collection","Fearless Mind Education","Freedom","GSU Children's & Young Reader Series","GSU Core / Foundation Series","GSU Historical Fiction & Creative Series","GSU Leadership & Character Series","GSU Mathification Series","GSU Memoir & Personal History","GSU Personal Development & Self-Mastery","Healthy Republic Series","History of the Americans","Homeschool & Alternative Education Series","Human Mind Trilogy","Newfoundland Series","Preparedness & Self-Reliance Series","Psychology Of Behavior Series","Reach Them All","Self-Reliant Magazine","Standalone Titles","TPM & Industrial Excellence Series","TPM Total Productive Maintenance","Teach a Man to Fish","The American Legacy Series","The Bear Den Stories","The Financial Literacy Collection","The Garden Girl Series","The Practical Garden Series","The Reading Helix","The Reading Room Shelf","The Rumination Recovery Series","The Sovereign Intelligence Series","The Sovereign Mind Trivium Library","The Sovereign Trades Series","The Voltage Archives","You Series"]};
+const LIB_DATA = {
+  "books": [
+    {
+      "slug": "the-world-climb",
+      "title": "The World Climb",
+      "subtitle": "The Oldest Economy on Earth, Reborn",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": true
+    },
+    {
+      "slug": "4th-grade-math-textbook",
+      "title": "4th Grade Math Textbook",
+      "subtitle": "Real-World Problem Solving, Student Edition",
+      "series": "GSU Mathification Series",
+      "asin": "B0G4HSF3GP",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "asymmetrical-local-marketing",
+      "title": "Asymmetrical Local Marketing",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "biology",
+      "title": "Biology",
+      "subtitle": "How Life Works, Homeschool Edition",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "civic-literacy-for-kids",
+      "title": "Civic Literacy for Kids",
+      "subtitle": null,
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0H277Y5D8",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "computer-literacy-unlocked",
+      "title": "Computer Literacy Unlocked",
+      "subtitle": null,
+      "series": "Standalone Titles",
+      "asin": "B0GPMLN32V",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "digitification",
+      "title": "Digitification",
+      "subtitle": "The Security-First Computer Literacy Curriculum for Grades 4\u20138",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0GGXTPFNS",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "educated-into-ignorance",
+      "title": "Educated Into Ignorance",
+      "subtitle": null,
+      "series": "GSU Core / Foundation Series",
+      "asin": "B0GQ28SMQT",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "financial-literacy-for-teens",
+      "title": "Financial Literacy for Teens",
+      "subtitle": null,
+      "series": "The Financial Literacy Collection",
+      "asin": "B0FYP5Y5KQ",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "find-your-voice",
+      "title": "Find Your Voice",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "foundations-of-repair",
+      "title": "Foundations of Repair",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "from-blank-page-to-finished-work",
+      "title": "From Blank Page to Finished Work",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "genetics",
+      "title": "Genetics",
+      "subtitle": "Homeschool Edition",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "grade-5-mathematics",
+      "title": "Grade 5 Mathematics",
+      "subtitle": "Student Edition",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "grade-6-mathematics",
+      "title": "Grade 6 Mathematics",
+      "subtitle": "Student Edition",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "grade-7-mathematics",
+      "title": "Grade 7 Mathematics",
+      "subtitle": "Expanded Textbook, 2026 Edition",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "grade-8-mathematics",
+      "title": "Grade 8 Mathematics",
+      "subtitle": "Real-World Problem Solving",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "high-on-ai",
+      "title": "High on AI",
+      "subtitle": "The Hype, The Risks, and The Real Future",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GJTZZ56T",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "history-of-america-for-kids",
+      "title": "History of America for Kids",
+      "subtitle": null,
+      "series": "History of the Americans",
+      "asin": "B0FSSR92XP",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "history-you-can-touch",
+      "title": "History You Can Touch",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "home-plumbing-basics",
+      "title": "Home Plumbing Basics",
+      "subtitle": "The DIY Handbook for Lifelong Property Owners",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "how-to-talk-to-geno",
+      "title": "How to Talk to GENO",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "living-in-two-languages",
+      "title": "Living in Two Languages",
+      "subtitle": "Your Home, Your Phone, and Your Day",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "morals-character-values",
+      "title": "Morals, Character, Values",
+      "subtitle": null,
+      "series": "Faith & Virtue Collection",
+      "asin": "B0H6GV7PRX",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "morphones",
+      "title": "Morphones",
+      "subtitle": "Morphology is the architectural blueprint of human language",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "old-glory",
+      "title": "Old Glory",
+      "subtitle": "The Story of the American Flag and the Spirit Behind the Stars and Stripes",
+      "series": "History of the Americans",
+      "asin": "B0H683GBKS",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "raising-a-little-economist",
+      "title": "Raising a Little Economist",
+      "subtitle": null,
+      "series": "The Financial Literacy Collection",
+      "asin": "B0H6NN2NWK",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "reading-at-the-speed-of-thought",
+      "title": "Reading at the Speed of Thought",
+      "subtitle": "Fluency",
+      "series": "The Reading Helix",
+      "asin": "B0H5T578YN",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "reading-to-question",
+      "title": "Reading to Question",
+      "subtitle": "Critical Reading",
+      "series": "The Reading Helix",
+      "asin": "B0H5CGGHZ7",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "residential-framing",
+      "title": "Residential Framing",
+      "subtitle": "The Geometry of Shelter",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "say-one-true-thing",
+      "title": "Say One True Thing",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "self-reliant-magazine",
+      "title": "Self-Reliant Magazine",
+      "subtitle": "2026 Q1 Edition",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "solar-photovoltaic-installers",
+      "title": "Solar Photovoltaic (PV) Installers",
+      "subtitle": null,
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GXG1CPL3",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "sound-first",
+      "title": "Sound First",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "stonemasons",
+      "title": "Stonemasons",
+      "subtitle": null,
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GZFYK5KQ",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "tactical-vitality",
+      "title": "Tactical Vitality",
+      "subtitle": "The First Responder Within",
+      "series": "Standalone Titles",
+      "asin": "B0H69GS8LN",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "teaching-moral-values-to-kids",
+      "title": "Teaching Moral Values to Kids",
+      "subtitle": null,
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0GX32XWTB",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "tell-me-what-happened",
+      "title": "Tell Me What Happened",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-14000-hour-apprenticeship",
+      "title": "The 14,000-Hour Apprenticeship",
+      "subtitle": null,
+      "series": "Standalone Titles",
+      "asin": "B0GZ2RT8FC",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-ai-apex",
+      "title": "The AI Apex",
+      "subtitle": "Mastering the Human-Machine Frontier \u2014 Chapter 1",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GMLS9SQ1",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-architecture-of-sovereignty",
+      "title": "The Architecture of Sovereignty",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-bystanders-imperative",
+      "title": "The Bystander's Imperative",
+      "subtitle": "A Comprehensive Guide to Prehospital First Aid",
+      "series": "Standalone Titles",
+      "asin": "B0H664M9W8",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-civic-workshop",
+      "title": "The Civic Workshop",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-code-that-unlocks-reading",
+      "title": "The Code That Unlocks Reading",
+      "subtitle": "Phonics",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-complete-homeschool-starter-guide",
+      "title": "The Complete Homeschool Starter Guide",
+      "subtitle": null,
+      "series": "Homeschool & Alternative Education Series",
+      "asin": "B0GHR9SJ4S",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-disruption-engine",
+      "title": "The Disruption Engine",
+      "subtitle": "Out-Thinking the Competition Through Cross-Disciplinary Innovation",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-great-education-exodus",
+      "title": "The Great Education Exodus",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-honest-argument",
+      "title": "The Honest Argument",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-kitchen-table-laboratory",
+      "title": "The Kitchen Table Laboratory",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-little-economists-handbook",
+      "title": "The Little Economists Handbook",
+      "subtitle": null,
+      "series": "The Financial Literacy Collection",
+      "asin": "B0H6LWMRQ8",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-little-economy",
+      "title": "The Little Economy",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-living-map",
+      "title": "The Living Map",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-polyglot-method",
+      "title": "The Polyglot Method",
+      "subtitle": "From One New Language to a Lifetime of Them",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-readers-toolkit",
+      "title": "The Readers Toolkit",
+      "subtitle": "Decoding \u2014 Turning Phonics Knowledge into Real-Time Reading Skill",
+      "series": "The Reading Helix",
+      "asin": "B0GXGTPB99",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-sentence-up",
+      "title": "The Sentence Up",
+      "subtitle": "Building Masterful Writers from the Ground Up",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-sounds-you-never-made",
+      "title": "The Sounds You Never Made",
+      "subtitle": "Training Your Ear and Mouth for a New Language",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-sovereign-electrician",
+      "title": "The Sovereign Electrician",
+      "subtitle": "The Complete Guide to Circuits, Wiring, Safety, and Codes",
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-spelling-code",
+      "title": "The Spelling Code",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-suns-family",
+      "title": "The Sun\u2019s Family",
+      "subtitle": "A Curious Child\u2019s First Tour of Our Solar System, from the Sun to the Icy Edge",
+      "series": "GSU K-5 Wonder Series",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "the-words-you-know",
+      "title": "The Words You Know",
+      "subtitle": "Vocabulary",
+      "series": "The Reading Helix",
+      "asin": "B0H3935FJH",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "trades-geometry",
+      "title": "Trades Geometry",
+      "subtitle": null,
+      "series": "GSU Mathification Series",
+      "asin": "B0GYYKMM4J",
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "weigh-it-in-the-balance",
+      "title": "Weigh It in the Balance",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "when-spelling-wont-stick",
+      "title": "When Spelling Wont Stick",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "word-archaeology",
+      "title": "Word Archaeology",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "writing-that-opens-doors",
+      "title": "Writing That Opens Doors",
+      "subtitle": null,
+      "series": "The Reading Room Shelf",
+      "asin": null,
+      "readingRoom": true,
+      "featured": false
+    },
+    {
+      "slug": "a-better-life-awaits",
+      "title": "A Better Life Awaits",
+      "series": "Better Life Series",
+      "asin": "B0FQ3RR3P6",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "a-leader-s-moral-compass",
+      "title": "A Leader's Moral Compass",
+      "series": "Standalone Titles",
+      "asin": "B0D8Z28K77",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "a-purpose-driven-life",
+      "title": "A Purpose-Driven Life",
+      "series": "GSU Leadership & Character Series",
+      "asin": "B0DPRF6YXS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "a-real-good-life",
+      "title": "A Real Good Life",
+      "series": "Standalone Titles",
+      "asin": "B0G4KRFY9V",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "a-sense-of-thankfulness",
+      "title": "A Sense of Thankfulness",
+      "series": "Faith & Virtue Collection",
+      "asin": "B0GSH3278B",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "a-well-lived-life",
+      "title": "A Well-Lived Life",
+      "series": "Standalone Titles",
+      "asin": "B0G4NKSMGF",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "ai-and-business",
+      "title": "AI and Business",
+      "series": "Standalone Titles",
+      "asin": "B0G4R3C3XG",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "ai-on-the-shop-floor",
+      "title": "AI on the Shop Floor",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GXWNM8W5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "algebra-1-without-apology",
+      "title": "Algebra 1 Without Apology",
+      "series": "GSU Mathification Series",
+      "asin": "B0GXJWDS6Q",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "alien-invasion",
+      "title": "Alien Invasion",
+      "series": "GSU Historical Fiction & Creative Series",
+      "asin": "B0FP2TB9VW",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "all-in-one-fabric-and-garment-features-dictionary",
+      "title": "All-in-One Fabric and Garment Features Dictionary",
+      "series": "Custom-Logo Decorating Series",
+      "asin": "B0F8ZXK5KM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "an-iroquois-chief-and-a-british-princess",
+      "title": "An Iroquois Chief and a British Princess",
+      "series": "GSU Historical Fiction & Creative Series",
+      "asin": "B0F61HSKJY",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "anger-management",
+      "title": "Anger Management",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D98W9SV9",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "anxiety-and-fear",
+      "title": "Anxiety and Fear",
+      "series": "Fearless Mind Education",
+      "asin": "B0G2KJZXDS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "apprenticeship-pathways",
+      "title": "Apprenticeship Pathways",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GZZ734GN",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "are-you-a-baseball-bat-or-a-baseball",
+      "title": "Are You a Baseball Bat or a Baseball?",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DWMMLL46",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "are-you-ready",
+      "title": "Are You Ready?",
+      "series": "Preparedness & Self-Reliance Series",
+      "asin": "B0DRZ8NT8Q",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "as-i-stand-you-will-never-walk-alone",
+      "title": "As I Stand, You Will Never Walk Alone",
+      "series": "GSU Memoir & Personal History",
+      "asin": "B0F21PMC47",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "autonomous-maintenance-am-a-key-pillar-of-total-productive-m",
+      "title": "Autonomous Maintenance (AM): A Key Pillar of Total Productive Maintenance",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0F92RDTST",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "autonomous-maintenance-am-empower-your-operators",
+      "title": "Autonomous Maintenance (AM): Empower Your Operators",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0F92C7JV8",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "basic-appliance-repair",
+      "title": "Basic Appliance Repair",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GTGKGDZF",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "basic-automotive-knowledge",
+      "title": "Basic Automotive Knowledge",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GSP2R5XC",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "basics-of-home-wiring",
+      "title": "Basics of Home Wiring",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GT6PH7MW",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "behavior-understanding-the-psychology-of-human-actions",
+      "title": "BEHAVIOR: Understanding the Psychology of Human Actions",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D4JS5DCK",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "being-an-individualist-neoliberalism",
+      "title": "Being an Individualist: Neoliberalism",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0F1JVM9YD",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "better-life-i-deserve",
+      "title": "BETTER LIFE I DESERVE",
+      "series": "Better Life Series",
+      "asin": "B0G1TNQW1T",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "better-life-i-want",
+      "title": "Better Life I Want",
+      "series": "Better Life Series",
+      "asin": "B0G1M5G38J",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "brave-sprouts",
+      "title": "Brave Sprouts",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0FTV7Q1LT",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "brave-sprouts-parents-edition",
+      "title": "Brave Sprouts - Parents Edition",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0GX2V58J2",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "brave-sprouts-kids-version-issue-2",
+      "title": "Brave Sprouts \u2014 Kids Version: Issue 2",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0GX2ZQJY5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "brave-sprouts-a-parent-s-guide-to-the-tween-years",
+      "title": "BRAVE SPROUTS: A Parent's Guide to the Tween Years",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0FVB9TZ95",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "brave-sprouts-summer-with-geno-issue-3",
+      "title": "Brave Sprouts: Summer with GENO, Issue 3",
+      "series": "Standalone Titles",
+      "asin": "B0H1CH564G",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "breaking-free-from-perfectionism",
+      "title": "Breaking Free from Perfectionism",
+      "series": "Fearless Mind Education",
+      "asin": "B0G5M7K2WL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "builders-of-eternity",
+      "title": "BUILDERS OF ETERNITY",
+      "series": "GSU Leadership & Character Series",
+      "asin": "B0G4JJH3P7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "building-a-bridge-to-freedom",
+      "title": "Building a Bridge to Freedom",
+      "series": "Standalone Titles",
+      "asin": "B0H4X84TRJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "building-emotional-capacity",
+      "title": "Building Emotional Capacity",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0GGBY5FNK",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "bullying-the-repeated-aggression-to-harm-or-control-others",
+      "title": "Bullying: The Repeated Aggression to Harm or Control Others",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DHJ8WRKN",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "capturing-grace-wedding-photography-lens-camera-poses-lighti",
+      "title": "Capturing Grace: Wedding Photography Lens, Camera, Poses, Lighting, Gear, and Techniques",
+      "series": "Art of Women's Portraiture & Wedding Photography Series",
+      "asin": "B0FVHX8Z8S",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "carpentry-without-the-crew",
+      "title": "Carpentry Without the Crew",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GZBVYXBY",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "catastrophizing-book-a-30-day-workbook",
+      "title": "CATASTROPHIZING BOOK - A 30-DAY WORKBOOK",
+      "series": "Fearless Mind Education",
+      "asin": "B0F7Y8CQND",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "charismatic-personality",
+      "title": "Charismatic Personality",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DPVS1ZLR",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "civic-sacrifice-individualism",
+      "title": "Civic Sacrifice & Individualism",
+      "series": "Healthy Republic Series",
+      "asin": "B0G11PL84S",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "civic-virtue",
+      "title": "Civic Virtue",
+      "series": "Healthy Republic Series",
+      "asin": "B0G15PCKFZ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "coming-to-america-the-untold-history-of-immigration-to-the-u",
+      "title": "Coming to America: The Untold History of Immigration to the United States and the Enduring Promise of the American Dream",
+      "series": "The American Legacy Series",
+      "asin": "B0DHCZF7XQ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "common-sense-is-not-so-common",
+      "title": "Common Sense Is Not So Common",
+      "series": "Standalone Titles",
+      "asin": "B0GZCVZKYD",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "complete-wedding-guest-photography-guide",
+      "title": "Complete Wedding Guest Photography Guide",
+      "series": "Art of Women's Portraiture & Wedding Photography Series",
+      "asin": "B0FVNGZTLX",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "conflict-behavior",
+      "title": "Conflict Behavior",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D9DVRXPL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "conflict-resolution-for-couples-workbook",
+      "title": "Conflict Resolution for Couples Workbook",
+      "series": "Conflict Resolution Mastery",
+      "asin": "B0FZXSPGQV",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "conformity-the-psychology-of-groupthink",
+      "title": "CONFORMITY: The Psychology of Groupthink",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D3JLF8HF",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "couples-conflict-resolution",
+      "title": "Couples Conflict Resolution",
+      "series": "Conflict Resolution Mastery",
+      "asin": "B0FZ23CDPK",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "courage",
+      "title": "COURAGE",
+      "series": "Faith & Virtue Collection",
+      "asin": "B0D3WMC8GJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "critical-thinking-for-kids",
+      "title": "Critical Thinking for Kids",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0FSYLC4RP",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "cruel-sadistic-behavior",
+      "title": "CRUEL SADISTIC BEHAVIOR",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DNZC4SRZ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "curiosity-is-the-key",
+      "title": "Curiosity is the Key",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0D38QHQN3",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "deception-liar-liar-pants-on-fire",
+      "title": "DECEPTION: Liar, liar, pants on fire",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DNJ1YGLV",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "deep-research-reclaiming-cognitive-sovereignty",
+      "title": "DEEP RESEARCH: Reclaiming Cognitive Sovereignty",
+      "series": "Standalone Titles",
+      "asin": "B0GWW41MVH",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "dial-a-teacher",
+      "title": "DIAL A TEACHER",
+      "series": "Reach Them All",
+      "asin": "B0H44V73NJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm",
+      "title": "Digital Farm",
+      "series": "Standalone Titles",
+      "asin": "B0FNP71PHJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-for-kids",
+      "title": "Digital Farm for Kids",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0FS3ZZG4G",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-mandarin",
+      "title": "Digital Farm Mandarin \u666e\u901a\u8bdd",
+      "series": "Digital Farm Series",
+      "asin": "B0FPMG6ZBD",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-portuguese-portugu-s",
+      "title": "Digital Farm Portuguese Portugu\u00eas",
+      "series": "Digital Farm Series",
+      "asin": "B0FPZBJCBK",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-espa-ol-spanish",
+      "title": "Digital Farm \u2014 Espa\u00f1ol Spanish",
+      "series": "Digital Farm Series",
+      "asin": "B0FPNXRZML",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-fran-ais-french",
+      "title": "Digital Farm \u2014 Fran\u00e7ais French",
+      "series": "Digital Farm Series",
+      "asin": "B0FPQL7C2Z",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-arabic",
+      "title": "Digital Farm \u2014 \u0627\u0644\u0639\u0631\u0628\u064a\u0629 Arabic",
+      "series": "Digital Farm Series",
+      "asin": "B0FPR4YC24",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-hindi",
+      "title": "Digital Farm \u2014 \u0939\u093f\u0928\u094d\u0926\u0940 Hindi",
+      "series": "Digital Farm Series",
+      "asin": "B0FPQDNR46",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-japanese",
+      "title": "Digital Farm \u2014 \u65e5\u672c\u8a9e Japanese",
+      "series": "Digital Farm Series",
+      "asin": "B0FQ3JSG3C",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "digital-farm-deutsch-german",
+      "title": "Digital Farm\u2014Deutsch German",
+      "series": "Digital Farm Series",
+      "asin": "B0FQ3W1HF4",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "do-the-math-2-2-5",
+      "title": "DO THE MATH. 2+2=5",
+      "series": "GSU Mathification Series",
+      "asin": "B0D78W7DF9",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "emotional-intelligence-for-leaders",
+      "title": "Emotional Intelligence for Leaders",
+      "series": "Emotional Intelligence Mastery",
+      "asin": "B0FZ56JC8J",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "emotional-intelligence-over-iq",
+      "title": "EMOTIONAL INTELLIGENCE OVER IQ",
+      "series": "Emotional Intelligence Mastery",
+      "asin": "B0FYZ8MSJL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "extroversion",
+      "title": "EXTROVERSION",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0CW1892NT",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "faith-family-freedom",
+      "title": "Faith, Family, Freedom",
+      "series": "Standalone Titles",
+      "asin": "B0FQJ6NK69",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "financial-literacy-for-women",
+      "title": "Financial Literacy for Women",
+      "series": "The Financial Literacy Collection",
+      "asin": "B0FNDDQXC5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "financial-literacy-is-for-everyone",
+      "title": "Financial Literacy Is For Everyone",
+      "series": "The Financial Literacy Collection",
+      "asin": "B0FYRNSF17",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "financial-literacy-without-apology",
+      "title": "Financial Literacy Without Apology",
+      "series": "The Financial Literacy Collection",
+      "asin": "B0H6KRSC5S",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "fixing-drywall-how-to-install-drywall",
+      "title": "Fixing Drywall - How to Install Drywall",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GL1R2984",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "formality-the-enduring-rules-of-etiquette",
+      "title": "Formality: The Enduring Rules of Etiquette",
+      "series": "Standalone Titles",
+      "asin": "B0D4463VQR",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "foundations-of-repair",
+      "title": "Foundations of Repair",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GRTHD1GK",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "freedom-of-speech-without-apology",
+      "title": "Freedom of Speech Without Apology",
+      "series": "Freedom",
+      "asin": "B0H5W5X4W3",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "freedom-a-fundamental-human-right",
+      "title": "Freedom: A Fundamental Human Right",
+      "series": "The American Legacy Series",
+      "asin": "B0DC1MMHZ5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "freedom-the-definitive-guide-to-financial-independence",
+      "title": "FREEDOM: The Definitive Guide to Financial Independence",
+      "series": "Freedom",
+      "asin": "B0FWV8VR2F",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "from-broken-beginnings",
+      "title": "From Broken Beginnings",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0D22N5NMT",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "fulfilling-one-s-potential-can-better-your-life",
+      "title": "Fulfilling one's potential Can Better Your Life",
+      "series": "You Series",
+      "asin": "B0CYH4G9TM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "gambling-behavior",
+      "title": "Gambling Behavior",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D9HWR2QP",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "game-on-a-field-report-on-free-unstoppable-gamified-learning",
+      "title": "GAME ON!: A Field Report on Free, Unstoppable, Gamified Learning",
+      "series": "Reach Them All",
+      "asin": "B0GX35XVJH",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "game-on-how-global-sovereign-university-is-gamifying-the-glo",
+      "title": "GAME ON!: How Global Sovereign University Is Gamifying the Global Mind",
+      "series": "The Voltage Archives",
+      "asin": "B0H2LLM6GF",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "gardening-for-girls-8-12",
+      "title": "Gardening for Girls 8-12",
+      "series": "The Garden Girl Series",
+      "asin": "B0GYML2DFS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "grammar-for-the-real-world",
+      "title": "Grammar for the Real World",
+      "series": "Homeschool & Alternative Education Series",
+      "asin": "B0GSMYTSVL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "grinning-behavior",
+      "title": "Grinning Behavior",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D92DV48Q",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "history-of-the-americans-vol-1-of-5",
+      "title": "History of the Americans (Vol. 1 of 5)",
+      "series": "History of the Americans",
+      "asin": "B0FP3SFQWR",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "history-of-the-americans-ii",
+      "title": "History of The Americans II",
+      "series": "History of the Americans",
+      "asin": "B0DKVJZ5M8",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "history-of-the-americans-iv",
+      "title": "History of The Americans IV",
+      "series": "History of the Americans",
+      "asin": "B0FPDL9KGQ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "history-of-the-americans-volume-iii",
+      "title": "History of the Americans: Volume III",
+      "series": "History of the Americans",
+      "asin": "B0FPBJZSTK",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "how-children-think",
+      "title": "HOW CHILDREN THINK",
+      "series": "Human Mind Trilogy",
+      "asin": "B0G52NDRFL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "how-to-preserve-garden-produce",
+      "title": "How to Preserve Garden Produce",
+      "series": "The Practical Garden Series",
+      "asin": "B0GXGPTJ89",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "hunger-and-poverty-in-america",
+      "title": "Hunger and Poverty in America",
+      "series": "Teach a Man to Fish",
+      "asin": "B0DM8JGMN4",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "i-did-not-know-what-tomorrow-might-bring",
+      "title": "I did not know what tomorrow might bring",
+      "series": "GSU Memoir & Personal History",
+      "asin": "B0FRR5J7K5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "in-the-line-of-fire",
+      "title": "In the Line of Fire",
+      "series": "GSU Memoir & Personal History",
+      "asin": "B0F352VDT9",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "irreality-when-the-soul-cannot-leave-the-shell",
+      "title": "IRREALITY: When the Soul Cannot Leave the Shell",
+      "series": "The Voltage Archives",
+      "asin": "B0GX2XPK2V",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "is-this-glass-half-empty-or-half-full",
+      "title": "Is This Glass Half Empty or Half Full?",
+      "series": "Faith & Virtue Collection",
+      "asin": "B0D8VJP4M6",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "jealous-behavior",
+      "title": "Jealous Behavior",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DJG6R49Y",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "judgemental-behavior",
+      "title": "Judgemental Behavior",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D94YZWWS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "just-in-time-jit-learning",
+      "title": "JUST-IN-TIME (JIT) LEARNING",
+      "series": "Fearless Mind Education",
+      "asin": "B0GX31XKML",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "lawification",
+      "title": "LAWIFICATION",
+      "series": "Standalone Titles",
+      "asin": "B0GX2YBNV5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "lawn-and-garden-tools-and-equipment-maintenance",
+      "title": "Lawn and Garden Tools and Equipment Maintenance",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GTGHDDM7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "learnability-behavior",
+      "title": "Learnability Behavior",
+      "series": "Fearless Mind Education",
+      "asin": "B0GYDLQ22G",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "learnability-behavior-for-kids",
+      "title": "Learnability Behavior for Kids",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0GY89ZFSJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "let-this-not-be-our-alamo",
+      "title": "Let This Not Be Our Alamo",
+      "series": "The American Legacy Series",
+      "asin": "B0FP2XVFQR",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "life-specs",
+      "title": "Life Specs",
+      "series": "Homeschool & Alternative Education Series",
+      "asin": "B0H1CM6NFM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "logic-grid-puzzles",
+      "title": "Logic Grid Puzzles",
+      "series": "Standalone Titles",
+      "asin": "B0GBQRBP7F",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "logic-the-classical-art-of-reasoning-well",
+      "title": "Logic: The Classical Art of Reasoning Well",
+      "series": "The Sovereign Mind Trivium Library",
+      "asin": "B0GX2ZTGP5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "maintaining-mastery-in-a-changing-world",
+      "title": "MAINTAINING MASTERY IN A CHANGING WORLD",
+      "series": "Fearless Mind Education",
+      "asin": "B0GX2VK1PP",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "make-24-game",
+      "title": "Make 24 Game",
+      "series": "GSU Mathification Series",
+      "asin": "B0GBB6J44M",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "mastering-interpersonal-communication",
+      "title": "Mastering Interpersonal Communication",
+      "series": "Standalone Titles",
+      "asin": "B0GSPCH8WJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "math-anxiety-for-adults",
+      "title": "Math Anxiety for Adults",
+      "series": "Fearless Mind Education",
+      "asin": "B0G2P4RFHX",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "math-cross-figures-for-grades-4-8",
+      "title": "Math Cross-Figures for Grades 4-8",
+      "series": "GSU Mathification Series",
+      "asin": "B0GB4J8SCN",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "math-trivia-jeopardy-for-grades-4-8",
+      "title": "Math Trivia & Jeopardy for Grades 4-8",
+      "series": "GSU Mathification Series",
+      "asin": "B0G9NXYQGX",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "meritocracy-meritocratic-behavior",
+      "title": "Meritocracy: Meritocratic Behavior",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DV5HHWQS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "modern-slavery",
+      "title": "Modern Slavery",
+      "series": "Standalone Titles",
+      "asin": "B0DHV5HYQB",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "modern-total-productive-maintenance-tpm",
+      "title": "Modern Total Productive Maintenance (TPM)",
+      "series": "TPM Total Productive Maintenance",
+      "asin": "B0GXSNDB6X",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "money-is-a-tool-for-a-free-life",
+      "title": "Money Is a Tool for a Free Life",
+      "series": "Standalone Titles",
+      "asin": "B0H3NSTGBG",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "my-love-my-wife-i-love-this-life",
+      "title": "My Love, My Wife, I Love This Life",
+      "series": "GSU Memoir & Personal History",
+      "asin": "B0F2F6D4DN",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "my-son-who-happened-to-be-a-newfoundland",
+      "title": "My Son, Who Happened to be a Newfoundland",
+      "series": "Newfoundland Series",
+      "asin": "B0F5F1V9F7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "office-tpm",
+      "title": "Office TPM",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0F8SYMLWJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "painting-interior",
+      "title": "Painting Interior",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GZSFMTNP",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "paranoia-the-psychology-of-fear-suspicion-and-mistrust",
+      "title": "Paranoia: The Psychology of Fear, Suspicion, and Mistrust",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D971K6ZX",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "patience",
+      "title": "PATIENCE",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0D4127ZNH",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "photographing-women-in-oregon-50-locations-and-professional-",
+      "title": "Photographing Women in Oregon: 50+ Locations and Professional Techniques",
+      "series": "Art of Women's Portraiture & Wedding Photography Series",
+      "asin": "B01N2SMY17",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "plumbing-maintenance-basics-guide",
+      "title": "Plumbing Maintenance Basics Guide",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GTCPTR61",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "poison-ivy-league",
+      "title": "Poison Ivy League",
+      "series": "Fearless Mind Education",
+      "asin": "B0H2G581CR",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "positive-liberty-and-the-european-illusion",
+      "title": "Positive Liberty and the European Illusion",
+      "series": "Standalone Titles",
+      "asin": "B0H49SHF7L",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "poverty-inc",
+      "title": "Poverty Inc",
+      "series": "Standalone Titles",
+      "asin": "B0H2R86351",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "predatory-human-behavior",
+      "title": "Predatory Human Behavior",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DHQBLQPV",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "professional-flooring",
+      "title": "Professional Flooring",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GYWLMTYH",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "project-management-professional-pmp",
+      "title": "Project Management Professional (PMP)",
+      "series": "Standalone Titles",
+      "asin": "B0G6CM21HJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "prove-me-wrong",
+      "title": "Prove Me Wrong",
+      "series": "Standalone Titles",
+      "asin": "B0H2VCSPRS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "puppy-training-newfoundland",
+      "title": "Puppy Training Newfoundland",
+      "series": "Newfoundland Series",
+      "asin": "B0CLYXGR5J",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "reach-them-all",
+      "title": "Reach Them All",
+      "series": "Reach Them All",
+      "asin": "B0H3VBGPZL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "read-the-room",
+      "title": "Read the Room",
+      "series": "Standalone Titles",
+      "asin": "B0GS6VXDG7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "relationship-conflict-resolution",
+      "title": "Relationship Conflict Resolution",
+      "series": "Conflict Resolution Mastery",
+      "asin": "B0FZH23GW7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "residential-framing",
+      "title": "Residential Framing",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0H6C78ZDQ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "resilience-and-coping-with-failure",
+      "title": "Resilience and Coping with Failure",
+      "series": "Standalone Titles",
+      "asin": "B0GSP9GKWL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "respect-a-scholarly-guide",
+      "title": "Respect: A Scholarly Guide",
+      "series": "Faith & Virtue Collection",
+      "asin": "B0DGCLKCH1",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "restoring-social-peace",
+      "title": "Restoring Social Peace",
+      "series": "Healthy Republic Series",
+      "asin": "B0G1GM8XBY",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "rhetoric-the-classical-art-of-speaking-truth",
+      "title": "Rhetoric: The Classical Art of Speaking Truth",
+      "series": "The Sovereign Mind Trivium Library",
+      "asin": "B0GXGTZZXV",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "risk-based-thinking-rbt",
+      "title": "Risk-Based Thinking (RBT)",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0F38L8Q5Q",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "robot-proof-teaching-humans-to-thrive-when-machines-think",
+      "title": "Robot-Proof: Teaching Humans to Thrive When Machines Think",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GKGFDQM7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "rumination-workbook",
+      "title": "Rumination Workbook",
+      "series": "The Rumination Recovery Series",
+      "asin": "B0GX2STD5H",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "safety-health-and-environment-she-tpm",
+      "title": "Safety, Health, and Environment (SHE) TPM",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0F412ZR6F",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "self-reliant-issue-2",
+      "title": "SELF-RELIANT Issue 2",
+      "series": "Self-Reliant Magazine",
+      "asin": "B0FTJMN3RP",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "self-reliant-issue-3",
+      "title": "SELF-RELIANT Issue 3",
+      "series": "Self-Reliant Magazine",
+      "asin": "B0FTT4G269",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "self-reliant-magazine-issue-1",
+      "title": "SELF-RELIANT Magazine Issue 1",
+      "series": "Self-Reliant Magazine",
+      "asin": "B0FTK122R3",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "signal-decryption",
+      "title": "Signal Decryption",
+      "series": "Standalone Titles",
+      "asin": "B0GQSG6MY2",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "stalking",
+      "title": "Stalking",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0DKFPKZQX",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "stone-and-wood-decor",
+      "title": "Stone and Wood Decor",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GY2Z3T1S",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "synergetic-governance-a-new-operating-system-for-civilizatio",
+      "title": "Synergetic Governance: A New Operating System for Civilization",
+      "series": "The American Legacy Series",
+      "asin": "B0FP3Y3YW7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "synthetix-teaching-guide",
+      "title": "Synthetix Teaching Guide",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GMPX73C1",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "synthetix-building-the-sovereign-intellect",
+      "title": "Synthetix: Building the Sovereign Intellect",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GMW7CJ5Y",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "systemic-failure-and-institutional-corruption",
+      "title": "Systemic Failure and Institutional Corruption",
+      "series": "Homeschool & Alternative Education Series",
+      "asin": "B0GT44QZY3",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "taking-a-chance",
+      "title": "Taking a Chance",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0DJL8LQNG",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "teach-them-to-fish-before-the-pond-runs-dry",
+      "title": "Teach Them to Fish\u2014Before the Pond Runs Dry",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0G8ZMGM13",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "tear-down-these-walls",
+      "title": "TEAR DOWN THESE WALLS",
+      "series": "Standalone Titles",
+      "asin": "B0GNLYBC82",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "that-our-children-may-live-without-fear",
+      "title": "That Our Children May Live Without Fear",
+      "series": "GSU Leadership & Character Series",
+      "asin": "B0FXJC598F",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-15-minute-eq-blueprint",
+      "title": "The 15-Minute EQ Blueprint",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GMDSRDXC",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-90-day-relationship-transformation",
+      "title": "The 90-Day Relationship Transformation",
+      "series": "Conflict Resolution Mastery",
+      "asin": "B0G2B6R6ZL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-90-day-relationship-transformation-advanced-conflict-res",
+      "title": "The 90-Day Relationship Transformation - Advanced Conflict Resolution Strategies",
+      "series": "Conflict Resolution Mastery",
+      "asin": "B0G2HKVWFK",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-absence-of-pain-is-death",
+      "title": "The Absence of Pain is Death",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0DVMHQB6R",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-american-cowboy",
+      "title": "The American Cowboy",
+      "series": "History of the Americans",
+      "asin": "B0FPLLZC5M",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-american-spirit-belongs-to-the-world",
+      "title": "The American Spirit Belongs to the World",
+      "series": "The Voltage Archives",
+      "asin": "B0GXQMNPC5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-amnesty-protocol-reaching-the-forgotten",
+      "title": "THE AMNESTY PROTOCOL: Reaching the Forgotten",
+      "series": "GSU Core / Foundation Series",
+      "asin": "B0GQ3FV3P9",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-amnesty-protocol-reaching-the-forgotten-2",
+      "title": "The Amnesty Protocol: Reaching the Forgotten",
+      "series": "Standalone Titles",
+      "asin": "B0GNLQ6N91",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-apprentice-s-field-guide-electrical",
+      "title": "The Apprentice's Field Guide (Electrical)",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0H17MK8WM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-architecture-of-autonomy",
+      "title": "The Architecture of Autonomy",
+      "series": "History of the Americans",
+      "asin": "B0GZN1RLYZ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-birth-of-a-nation-reclaimed-600-years-before-columbus",
+      "title": "The Birth of a Nation, Reclaimed 600 years before Columbus",
+      "series": "History of the Americans",
+      "asin": "B0H2RKCPJM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-blasphemy-of-tyranny",
+      "title": "THE BLASPHEMY OF TYRANNY",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0G51C5GGM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-burning-library-wisdom-of-age-lost",
+      "title": "The Burning Library - Wisdom of Age Lost",
+      "series": "GSU Memoir & Personal History",
+      "asin": "B0G7X15494",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-civilization-engine-proving-2-2-5",
+      "title": "The Civilization Engine: Proving 2+2=5",
+      "series": "GSU Core / Foundation Series",
+      "asin": "B0H4Z6SKY7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-clear-view-window-installation-repair-and-historic-resto",
+      "title": "The Clear View: Window Installation, Repair, and Historic Restoration",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0H1693QMT",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-collapse-of-critical-thinking",
+      "title": "The Collapse of Critical Thinking",
+      "series": "Fearless Mind Education",
+      "asin": "B0GMXZ9P5C",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-counterfeit-diploma",
+      "title": "The Counterfeit Diploma",
+      "series": "Standalone Titles",
+      "asin": "B0H572MGC7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-courage-to-try",
+      "title": "THE COURAGE TO TRY",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0G6W38PDN",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-declaration-of-educational-independence",
+      "title": "THE DECLARATION OF EDUCATIONAL INDEPENDENCE",
+      "series": "GSU Leadership & Character Series",
+      "asin": "B0FWGQ3QQ4",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-definitive-blueprint-for-custom-logo-embroidered-clothin",
+      "title": "The Definitive Blueprint for Custom Logo Embroidered Clothing",
+      "series": "Custom-Logo Decorating Series",
+      "asin": "B0FVTTZDNQ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-efficiency-classroom",
+      "title": "The Efficiency Classroom",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0FYDH4T42",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-emotional-intelligence-quick-book",
+      "title": "The Emotional Intelligence Quick Book",
+      "series": "Emotional Intelligence Mastery",
+      "asin": "B0FZ2TKFH1",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-enduring-spirit",
+      "title": "The Enduring Spirit",
+      "series": "Preparedness & Self-Reliance Series",
+      "asin": "B0DPNMM8XJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-entropy-killer",
+      "title": "The Entropy Killer",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GX3B67FQ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-escalation-code-putin-s-playbook-and-the-looming-shadow-",
+      "title": "The Escalation Code: Putin's Playbook and the Looming Shadow of WWII I",
+      "series": "The American Legacy Series",
+      "asin": "B0GMBL1DWM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-female-mind",
+      "title": "THE FEMALE MIND",
+      "series": "Human Mind Trilogy",
+      "asin": "B0G4XVH972",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-fog-industrial-complex",
+      "title": "The Fog-Industrial Complex",
+      "series": "The Sovereign Mind Trivium Library",
+      "asin": "B0GQSLGQ86",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-frankenstein-methodology",
+      "title": "The Frankenstein Methodology",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GG67J1TP",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-good-fight-homeschooling-s-rise-and-the-fall-of-the-publ",
+      "title": "The Good Fight. Homeschooling's Rise and the Fall of the Public School Monopoly",
+      "series": "Fearless Mind Education",
+      "asin": "B0H218BPVH",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-great-lawgivers",
+      "title": "The Great Lawgivers",
+      "series": "History of the Americans",
+      "asin": "B0FPFHHL36",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-great-lawgivers-4th-5th-grade-edition",
+      "title": "THE GREAT LAWGIVERS - 4th & 5th Grade Edition",
+      "series": "History of the Americans",
+      "asin": "B0GPL58BSH",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-great-lawgivers-japanese",
+      "title": "The Great Lawgivers - Japanese \u5049\u5927\u306a\u7acb\u6cd5\u8005\u305f\u3061",
+      "series": "History of the Americans",
+      "asin": "B0FQJLL59Q",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-home-safety-inspection",
+      "title": "The Home Safety Inspection",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GTGJHS2R",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-hvac-apprentice-s-field-guide",
+      "title": "The HVAC Apprentice's Field Guide",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0H19GXW7S",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-last-horizon-a-history-of-the-american-cowboy",
+      "title": "The Last Horizon: A History of the American Cowboy",
+      "series": "History of the Americans",
+      "asin": "B0FQ4ZYXK7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-little-professor-and-the-first-snow",
+      "title": "The Little Professor and the First Snow",
+      "series": "The Bear Den Stories",
+      "asin": "B0CW1CKDWZ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-little-professor-the-narrative-of-a-most-unusual-adoptio",
+      "title": "The Little Professor. The Narrative of a Most Unusual Adoption",
+      "series": "The Bear Den Stories",
+      "asin": "B0F2J656P9",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-math-revolution",
+      "title": "The Math Revolution",
+      "series": "GSU Mathification Series",
+      "asin": "B0FW8P1D8B",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-math-trap",
+      "title": "The Math Trap",
+      "series": "GSU Mathification Series",
+      "asin": "B0GX2STCYD",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-meaning-of-life",
+      "title": "THE MEANING OF LIFE",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0GGQ8V9XC",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-message-in-the-wind",
+      "title": "The Message in the Wind",
+      "series": "GSU Historical Fiction & Creative Series",
+      "asin": "B0FSCHYF64",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-missing-glove",
+      "title": "The Missing Glove",
+      "series": "GSU Memoir & Personal History",
+      "asin": "B0DTC2Z4Z1",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-movement-of-multiplication",
+      "title": "THE MOVEMENT OF MULTIPLICATION",
+      "series": "Teach a Man to Fish",
+      "asin": "B0FV2R7W7H",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-night-of-the-living-stuffed-animals",
+      "title": "The Night of the Living Stuffed Animals",
+      "series": "Standalone Titles",
+      "asin": "B0F5NXDSVB",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-philosophy-of-the-rod",
+      "title": "THE PHILOSOPHY OF THE ROD",
+      "series": "Teach a Man to Fish",
+      "asin": "B0FTWGSX1G",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-practice-of-teaching",
+      "title": "The Practice of Teaching",
+      "series": "Teach a Man to Fish",
+      "asin": "B0FTYTH9FM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-pre-apprentice-primer",
+      "title": "The Pre-Apprentice Primer",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0H5X9QJC3",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-rational-male-brain",
+      "title": "The Rational Male Brain",
+      "series": "Human Mind Trilogy",
+      "asin": "B0G4SWFGWG",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-reading-revolution",
+      "title": "The Reading Revolution",
+      "series": "Homeschool & Alternative Education Series",
+      "asin": "B0GQRJ93N7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-rumination-book",
+      "title": "The Rumination Book",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0G3M98JZ2",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-second-american-civil-war-2024",
+      "title": "The Second American Civil War (2024)",
+      "series": "The American Legacy Series",
+      "asin": "B0F3LY78KT",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-smart-procurement-playbook-for-small-business",
+      "title": "The Smart Procurement Playbook for Small Business",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0H232Y4QJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-sovereign-architect",
+      "title": "The Sovereign Architect",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GG7Q1NVL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-sovereign-mind-junior",
+      "title": "The Sovereign Mind Junior",
+      "series": "The Sovereign Mind Trivium Library",
+      "asin": "B0GP1TSF7Y",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-sovereign-mind-input-process-output",
+      "title": "The Sovereign Mind: Input, Process, Output",
+      "series": "The Sovereign Mind Trivium Library",
+      "asin": "B0GNWGLX2C",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-sovereign-spectrum",
+      "title": "The Sovereign Spectrum",
+      "series": "Standalone Titles",
+      "asin": "B0GRNQ9QT8",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-spark-the-death-of-hesitation",
+      "title": "THE SPARK: The Death of Hesitation",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GKYJ5FZM",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-straw-man-modern-authoritarianism-and-the-history-of-dic",
+      "title": "The Straw Man: Modern Authoritarianism and the History of Dictatorship",
+      "series": "The American Legacy Series",
+      "asin": "B0GQTPTVB7",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-talent-of-self-reliance",
+      "title": "THE TALENT OF SELF-RELIANCE",
+      "series": "History of the Americans",
+      "asin": "B0GG5M184T",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-three-burrows",
+      "title": "The Three Burrows",
+      "series": "Preparedness & Self-Reliance Series",
+      "asin": "B0DP5XXB2S",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-trivium",
+      "title": "THE TRIVIUM",
+      "series": "The Voltage Archives",
+      "asin": "B0GNP46HWL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-tyranny-of-debt",
+      "title": "The Tyranny of Debt",
+      "series": "The Financial Literacy Collection",
+      "asin": "B0GZVT3G3S",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-ultimate-guide-to-indoor-apartment-gardening",
+      "title": "The Ultimate Guide to Indoor Apartment Gardening",
+      "series": "The Practical Garden Series",
+      "asin": "B0GYKGBBBL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-uncharted-playbook",
+      "title": "THE UNCHARTED PLAYBOOK",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0GMY3P8W1",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-undeclared-war-nato-russia-and-the-silent-struggle-shapi",
+      "title": "The Undeclared War: NATO, Russia, and the Silent Struggle Shaping Our Future",
+      "series": "The American Legacy Series",
+      "asin": "B0FK9SQRGS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-united-states-of-america-without-apology",
+      "title": "The United States of America: Without Apology",
+      "series": "History of the Americans",
+      "asin": "B0H4GM1J2P",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-unschooling-high-school-handbook",
+      "title": "THE UNSCHOOLING HIGH SCHOOL HANDBOOK",
+      "series": "Homeschool & Alternative Education Series",
+      "asin": "B0G5QFN3XS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-virtues-of-endurance-and-resilience",
+      "title": "The Virtues of Endurance and Resilience",
+      "series": "Standalone Titles",
+      "asin": "B0DW4J6F1G",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-wedding-photography-lens-and-gear-guide",
+      "title": "The Wedding Photography Lens and Gear Guide",
+      "series": "Art of Women's Portraiture & Wedding Photography Series",
+      "asin": "B0G76V6FXP",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-weight-bearing-life",
+      "title": "The Weight-Bearing Life",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0GT5MKRMD",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-wisdom-bridge",
+      "title": "The Wisdom Bridge",
+      "series": "Teach a Man to Fish",
+      "asin": "B0FSX1CCZJ",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "the-working-welder-s-path-to-specialized-skill",
+      "title": "The Working Welder's Path to Specialized Skill",
+      "series": "The Sovereign Trades Series",
+      "asin": "B0GX34NTV5",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "things-are-not-always-as-they-seem",
+      "title": "Things Are Not Always As They Seem",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0DGH1HB7W",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "total-productive-maintenance-tpm-book-3-planned-maintenance",
+      "title": "Total Productive Maintenance (TPM) - Book 3: Planned Maintenance",
+      "series": "Standalone Titles",
+      "asin": "B0F27Q8TNL",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "total-productive-maintenance-book-6-total-quality-maintenanc",
+      "title": "Total Productive Maintenance - Book 6: Total Quality Maintenance (TQM)",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0F2SLV44H",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "total-productive-maintenance-book-7-iso-9000",
+      "title": "Total Productive Maintenance Book 7: ISO 9000",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0F3NWWX7H",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "total-productive-maintenance-qm-book-5-quality-maintenance",
+      "title": "Total Productive Maintenance QM Book 5: Quality Maintenance",
+      "series": "Standalone Titles",
+      "asin": "B0F2Q618RF",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "tpm-education-and-training",
+      "title": "TPM Education and Training",
+      "series": "TPM & Industrial Excellence Series",
+      "asin": "B0F8KCJJ9T",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "tpm-education-and-training-2026-expanded-edition",
+      "title": "TPM Education and Training (2026 Expanded Edition)",
+      "series": "TPM Total Productive Maintenance",
+      "asin": "B0H1K1YZSY",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "under-the-oregon-sky",
+      "title": "Under the Oregon Sky",
+      "series": "GSU Historical Fiction & Creative Series",
+      "asin": "B0F49H4R6J",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "united-states-of-america-a-one-off",
+      "title": "United States of America, A One-Off",
+      "series": "The American Legacy Series",
+      "asin": "B0DZVL7T1B",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "university-in-a-box",
+      "title": "University in a Box",
+      "series": "Reach Them All",
+      "asin": "B0H42BHQNC",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "vibe-coding",
+      "title": "Vibe Coding",
+      "series": "The Sovereign Intelligence Series",
+      "asin": "B0H1N5KTBN",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "voltage-magazine-cognitive-self-defense",
+      "title": "Voltage Magazine \u2014 Cognitive Self-Defense",
+      "series": "The Voltage Archives",
+      "asin": "B0GNJDRDSX",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "voltage-the-journal-of-applied-asymmetry-issue-no-1",
+      "title": "VOLTAGE: The Journal of Applied Asymmetry, Issue No. 1",
+      "series": "The Voltage Archives",
+      "asin": "B0GN44NGB9",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "voltage-the-wall-must-fall",
+      "title": "VOLTAGE: THE WALL MUST FALL",
+      "series": "The Voltage Archives",
+      "asin": "B0GNMFZ91B",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "western-europe-land-of-the-weak-and-intolerant",
+      "title": "Western Europe. Land of the Weak and Intolerant",
+      "series": "The American Legacy Series",
+      "asin": "B0DZP5FGGH",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "what-s-in-it-for-me",
+      "title": "What's in it for me?",
+      "series": "Psychology Of Behavior Series",
+      "asin": "B0F3VM6T9G",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "whispers-of-the-heart",
+      "title": "Whispers of the Heart",
+      "series": "GSU Children's & Young Reader Series",
+      "asin": "B0F4L2YB2B",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "woodworking-repair-and-restoration",
+      "title": "Woodworking \u2014 Repair and Restoration",
+      "series": "Standalone Titles",
+      "asin": "B0GZ6Z6TCV",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "yet-the-power-of-the-unfinished-life",
+      "title": "Yet: The Power of the Unfinished Life",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0GDVVZ2F9",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "you-are-what-you-wear",
+      "title": "You are What You Wear",
+      "series": "GSU Personal Development & Self-Mastery",
+      "asin": "B0D919V372",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "you-dare-to-soar",
+      "title": "YOU: Dare to Soar",
+      "series": "You Series",
+      "asin": "B0CZ9XRZQS",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "you-infinite-possibilities-that-can-better-your-life",
+      "title": "YOU: Infinite Possibilities that Can Better Your Life",
+      "series": "You Series",
+      "asin": "B0CZ4WL3PC",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "your-guide-to-custom-embroidered-patches",
+      "title": "Your Guide to Custom Embroidered Patches",
+      "series": "Custom-Logo Decorating Series",
+      "asin": "B0F8ZDC8ZG",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "your-guide-to-custom-logo-embroidered-clothing",
+      "title": "Your Guide to Custom Logo Embroidered Clothing",
+      "series": "Custom-Logo Decorating Series",
+      "asin": "B0F8XK9L81",
+      "readingRoom": false,
+      "featured": false
+    },
+    {
+      "slug": "your-guide-to-custom-logo-screen-printed-t-shirts",
+      "title": "Your Guide to Custom Logo Screen-Printed T-Shirts",
+      "series": "Custom-Logo Decorating Series",
+      "asin": "B0F8VY9BDM",
+      "readingRoom": false,
+      "featured": false
+    }
+  ],
+  "series": [
+    "Art of Women's Portraiture & Wedding Photography Series",
+    "Better Life Series",
+    "Conflict Resolution Mastery",
+    "Custom-Logo Decorating Series",
+    "Digital Farm Series",
+    "Emotional Intelligence Mastery",
+    "Faith & Virtue Collection",
+    "Fearless Mind Education",
+    "Freedom",
+    "GSU Children's & Young Reader Series",
+    "GSU Core / Foundation Series",
+    "GSU Historical Fiction & Creative Series",
+    "GSU K-5 Wonder Series",
+    "GSU Leadership & Character Series",
+    "GSU Mathification Series",
+    "GSU Memoir & Personal History",
+    "GSU Personal Development & Self-Mastery",
+    "Healthy Republic Series",
+    "History of the Americans",
+    "Homeschool & Alternative Education Series",
+    "Human Mind Trilogy",
+    "Newfoundland Series",
+    "Preparedness & Self-Reliance Series",
+    "Psychology Of Behavior Series",
+    "Reach Them All",
+    "Self-Reliant Magazine",
+    "Standalone Titles",
+    "TPM & Industrial Excellence Series",
+    "TPM Total Productive Maintenance",
+    "Teach a Man to Fish",
+    "The American Legacy Series",
+    "The Bear Den Stories",
+    "The Financial Literacy Collection",
+    "The Garden Girl Series",
+    "The Practical Garden Series",
+    "The Reading Helix",
+    "The Reading Room Shelf",
+    "The Rumination Recovery Series",
+    "The Sovereign Intelligence Series",
+    "The Sovereign Mind Trivium Library",
+    "The Sovereign Trades Series",
+    "The Voltage Archives",
+    "You Series"
+  ]
+};
 
 const AMAZON_TAG = "gsu2026-20";
-const READING_ROOM_URL = "/reading-room.html";
-const GENO_URL_TMPL = "/reading-room.html?geno=1&book=";
+const coverUrl = asin => asin ? `https://m.media-amazon.com/images/P/${asin}.jpg` : null;
+// Books whose reader lives at a non-standard URL
+const READER_OVERRIDES = { "the-world-climb": "/worldclimb-reader.html" };
+const readerHref = slug => READER_OVERRIDES[slug] || `/${slug}-reader.html`;
 
 // ============================================================
-// RENDER + FILTER
+// RENDER + FILTER + LIBRARY CARD
 // ============================================================
 (function() {
   const searchEl = document.getElementById('lib-search');
@@ -208,7 +3110,93 @@ const GENO_URL_TMPL = "/reading-room.html?geno=1&book=";
   const emptyEl = document.getElementById('lib-empty');
   const countEl = document.getElementById('lib-count');
 
-  // Populate series filter
+  const bySlug = {};
+  LIB_DATA.books.forEach(b => { bySlug[b.slug] = b; });
+
+  // ---------- Library Card: read the visitor's own browser ----------
+  let openedBooks = [];
+  try { openedBooks = JSON.parse(localStorage.getItem('rr-opened') || '[]'); } catch(e) {}
+  let openedSet = new Set(openedBooks);
+
+  function hasPosition(slug) {
+    try { return parseInt(localStorage.getItem('rr-pos-' + slug) || '0') > 200; } catch(e) { return false; }
+  }
+
+  function renderContinue() {
+    try { openedBooks = JSON.parse(localStorage.getItem('rr-opened') || '[]'); } catch(e) {}
+    openedSet = new Set(openedBooks);
+    const continueBooks = openedBooks.filter(s => bySlug[s]).slice(0, 6);
+    if (continueBooks.length === 0) return;
+    const row = document.getElementById('lib-continue-row');
+    row.innerHTML = continueBooks.map(slug => {
+      const b = bySlug[slug];
+      const cov = coverUrl(b.asin);
+      const coverInner = cov
+        ? `<img src="${cov}" alt="" loading="lazy">`
+        : `<div class="lib-cover-text" style="position:static;height:100%"><div class="t" style="font-size:13px">${esc(b.title)}</div><div class="d">&mdash; &#9670; &mdash;</div></div>`;
+      const label = hasPosition(slug) ? 'Resume where you left off' : 'Open again';
+      return `<a href="${readerHref(slug)}" class="lib-continue-card">
+        <div class="lib-continue-cover">${coverInner}</div>
+        <div class="lib-continue-title">${esc(b.title)}</div>
+        <span class="lib-continue-resume">${label} &rarr;</span>
+      </a>`;
+    }).join('');
+    document.getElementById('lib-continue').classList.add('active');
+    document.getElementById('lib-chip-mine').style.display = '';
+  }
+  renderContinue();
+
+  // ---------- Card panel ----------
+  const cardPanel = document.getElementById('lib-cardnum');
+  const cardMsg = document.getElementById('lib-cardnum-msg');
+  function showCardPanel() {
+    if (!window.gsuCard) return;
+    const id = window.gsuCard.id(openedBooks.length > 0); // only mint a card once they've opened a book
+    if (id) {
+      document.getElementById('lib-cardnum-id').textContent = id;
+      cardPanel.style.display = '';
+    } else if (openedBooks.length > 0) {
+      cardPanel.style.display = '';
+    }
+  }
+  showCardPanel();
+
+  document.getElementById('lib-cardnum-copy').addEventListener('click', function() {
+    const id = document.getElementById('lib-cardnum-id').textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(id).then(() => {
+      cardMsg.textContent = 'Copied. Type it into the Library on your other device.';
+    });
+  });
+
+  document.getElementById('lib-cardnum-go').addEventListener('click', function() {
+    const raw = (document.getElementById('lib-cardnum-input').value || '').toUpperCase().trim();
+    if (!/^GSU-[A-Z2-9]{4}-[A-Z2-9]{4}$/.test(raw)) {
+      cardMsg.textContent = 'A card looks like GSU-XXXX-XXXX. Check the number and try again.';
+      return;
+    }
+    cardMsg.textContent = 'Fetching your shelf\u2026';
+    window.gsuCard.adopt(raw).then(() => {
+      cardMsg.textContent = 'Welcome back. Your shelf is here.';
+      document.getElementById('lib-cardnum-id').textContent = raw;
+      renderContinue();
+      applyFilters();
+    }).catch(err => {
+      cardMsg.textContent = err === 'notfound'
+        ? 'No shelf found under that card yet. Open a book on the other device first.'
+        : 'The card desk is unreachable right now. Your local shelf still works.';
+    });
+  });
+
+  // ---------- Cloud pull on load (then refresh shelf if the cloud knew more) ----------
+  if (window.gsuCard) {
+    window.gsuCard.pull().then(changed => {
+      if (changed) { renderContinue(); applyFilters(); }
+      if (openedBooks.length > 0) window.gsuCard.pushAll(); // backfill this device's shelf to the card
+      showCardPanel();
+    });
+  }
+
+  // ---------- Series dropdown ----------
   LIB_DATA.series.forEach(s => {
     const opt = document.createElement('option');
     opt.value = s;
@@ -220,51 +3208,56 @@ const GENO_URL_TMPL = "/reading-room.html?geno=1&book=";
   let currentSearch = '';
   let currentSeries = '';
 
-  function bookRow(book) {
-    const isRR = book.readingRoom;
-    const subtitle = book.subtitle ? `<div class="lib-book-subtitle">${escapeHtml(book.subtitle)}</div>` : '';
-    const amazonUrl = book.asin ? `https://www.amazon.com/dp/${book.asin}?tag=${AMAZON_TAG}` : null;
-
-    let actions = '';
-    if (isRR) {
-      actions += `<a href="${READING_ROOM_URL}#${book.slug}" class="lib-btn lib-btn-primary">Read</a>`;
-      actions += `<a href="${READING_ROOM_URL}#${book.slug}" class="lib-btn lib-btn-outline">Listen</a>`;
-      actions += `<a href="${GENO_URL_TMPL}${book.slug}" class="lib-btn lib-btn-outline">GENO</a>`;
-      if (amazonUrl) {
-        actions += `<a href="${amazonUrl}" class="lib-btn lib-btn-ghost" target="_blank" rel="noopener">Kindle $3.99</a>`;
-      }
-    } else {
-      if (amazonUrl) {
-        actions += `<a href="${amazonUrl}" class="lib-btn lib-btn-outline" target="_blank" rel="noopener">Kindle $3.99</a>`;
-      }
-      actions += `<span class="lib-book-coming">Coming to the Reading Room</span>`;
-    }
-
-    return `<article class="lib-book ${isRR ? 'rr' : ''}" id="book-${book.slug}">
-      <div class="lib-book-meta">
-        <div class="lib-book-series">${escapeHtml(book.series)}</div>
-        <h3 class="lib-book-title">${escapeHtml(book.title)}</h3>
-        ${subtitle}
-      </div>
-      <div class="lib-book-actions">${actions}</div>
-    </article>`;
-  }
-
-  function escapeHtml(s) {
+  function esc(s) {
     return String(s).replace(/[&<>"']/g, c => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[c]));
   }
 
+  function bookCard(book) {
+    const isRR = book.readingRoom;
+    const cov = coverUrl(book.asin);
+    const amazonUrl = book.asin ? `https://www.amazon.com/dp/${book.asin}?tag=${AMAZON_TAG}` : null;
+    const readerUrl = readerHref(book.slug);
+
+    const coverInner = cov
+      ? `<img src="${cov}" alt="${esc(book.title)} — book cover" loading="lazy">`
+      : `<div class="lib-cover-text"><div class="t">${esc(book.title)}</div><div class="d">&mdash; &#9670; &mdash;</div><div class="a">Dr. Gene A Constant</div></div>`;
+
+    const rrFlag = isRR ? `<div class="lib-rr-flag">Reading Room</div>` : '';
+
+    let actions = '';
+    if (isRR) {
+      actions += `<a href="${readerUrl}" class="lib-btn lib-btn-primary">Read</a>`;
+      actions += `<a href="${readerUrl}#listen" class="lib-btn lib-btn-outline">Listen</a>`;
+      actions += `<a href="${readerUrl}#geno" class="lib-btn lib-btn-outline">GENO</a>`;
+      if (amazonUrl) actions += `<a href="${amazonUrl}" class="lib-btn lib-btn-ghost" target="_blank" rel="noopener">$3.99</a>`;
+    } else {
+      if (amazonUrl) actions += `<a href="${amazonUrl}" class="lib-btn lib-btn-outline" target="_blank" rel="noopener">Kindle $3.99</a>`;
+      actions += `<span class="lib-card-coming">Coming to the Reading Room</span>`;
+    }
+
+    const coverLink = isRR ? readerUrl : (amazonUrl || '#');
+    const coverTarget = isRR ? '' : ' target="_blank" rel="noopener"';
+
+    return `<article class="lib-card ${isRR ? 'rr' : ''}" id="book-${book.slug}">
+      <a href="${coverLink}"${coverTarget} class="lib-cover" aria-hidden="true" tabindex="-1">${coverInner}${rrFlag}</a>
+      <div class="lib-card-body">
+        <div class="lib-card-series">${esc(book.series)}</div>
+        <h3 class="lib-card-title">${esc(book.title)}</h3>
+        <div class="lib-card-actions">${actions}</div>
+      </div>
+    </article>`;
+  }
+
   function applyFilters() {
     const q = currentSearch.toLowerCase().trim();
-    const shelf = currentShelf;
-    const series = currentSeries;
 
     let filtered = LIB_DATA.books.filter(b => {
-      if (shelf === 'rr' && !b.readingRoom) return false;
-      if (shelf === 'kindle' && b.readingRoom) return false;
-      if (series && b.series !== series) return false;
+      if (currentShelf === 'rr' && !b.readingRoom) return false;
+      if (currentShelf === 'kindle' && b.readingRoom) return false;
+      if (currentShelf === 'mine' && !openedSet.has(b.slug)) return false;
+      if (currentSeries && b.series !== currentSeries) return false;
       if (q) {
         const hay = (b.title + ' ' + (b.subtitle || '') + ' ' + b.series).toLowerCase();
         if (!hay.includes(q)) return false;
@@ -272,28 +3265,27 @@ const GENO_URL_TMPL = "/reading-room.html?geno=1&book=";
       return true;
     });
 
+    if (currentShelf === 'mine') {
+      // Order My Shelf by most recently opened
+      filtered.sort((a, b) => openedBooks.indexOf(a.slug) - openedBooks.indexOf(b.slug));
+    }
+
     if (filtered.length === 0) {
       listEl.innerHTML = '';
       emptyEl.style.display = 'block';
       countEl.innerHTML = `<strong>0</strong> books`;
     } else {
       emptyEl.style.display = 'none';
-      listEl.innerHTML = filtered.map(bookRow).join('');
+      listEl.innerHTML = filtered.map(bookCard).join('');
       const rrCount = filtered.filter(b => b.readingRoom).length;
       countEl.innerHTML = `<strong>${filtered.length}</strong> books &nbsp;&middot;&nbsp; <strong>${rrCount}</strong> in the Reading Room`;
     }
   }
 
-  searchEl.addEventListener('input', e => {
-    currentSearch = e.target.value;
-    applyFilters();
-  });
-  filterEl.addEventListener('change', e => {
-    currentSeries = e.target.value;
-    applyFilters();
-  });
+  searchEl.addEventListener('input', e => { currentSearch = e.target.value; applyFilters(); });
+  filterEl.addEventListener('change', e => { currentSeries = e.target.value; applyFilters(); });
   chipsEls.forEach(chip => {
-    chip.addEventListener('click', e => {
+    chip.addEventListener('click', () => {
       chipsEls.forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
       currentShelf = chip.dataset.shelf;
@@ -301,14 +3293,26 @@ const GENO_URL_TMPL = "/reading-room.html?geno=1&book=";
     });
   });
 
-  // Initial render
   applyFilters();
 
-  // Handle deep-link on load: if URL has a hash matching a book slug, scroll to it
+  // Deep-link scroll
   if (window.location.hash) {
     const target = document.getElementById(window.location.hash.substring(1));
-    if (target) target.scrollIntoView({behavior:'smooth', block:'center'});
+    if (target) setTimeout(() => target.scrollIntoView({behavior:'smooth', block:'center'}), 200);
   }
+
+  // ---------- GENO Librarian ----------
+  document.getElementById('genoBtn').addEventListener('click', function() {
+    try {
+      sessionStorage.setItem('geno-book-context', JSON.stringify({
+        role: 'librarian',
+        opener: "Welcome to the GSU Library. Tell me what you want to learn, or how you're feeling about reading today, and I'll recommend the right book from the shelf."
+      }));
+    } catch(e) {}
+    try { window.dispatchEvent(new CustomEvent('geno:open')); } catch(e) {}
+    var w = document.querySelector('elevenlabs-convai');
+    if (w && w.shadowRoot) { var t = w.shadowRoot.querySelector('button'); if (t) t.click(); }
+  });
 })();
 </script>
 
@@ -317,11 +3321,12 @@ const GENO_URL_TMPL = "/reading-room.html?geno=1&book=";
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "name": "The GSU Library",
-  "description": "The complete GSU library. More than 300 books donated to the Foundation for Global Instruction. Read online free, hear read aloud, discuss with GENO, or own the Kindle edition for $3.99.",
+  "description": "The complete GSU library. More than 300 books donated to the Foundation for Global Instruction. Read online free, hear read aloud, discuss with GENO in 83 languages, or own the Kindle edition for $3.99.",
   "url": "https://read.globalsovereignuniversity.org/library.html",
+  "isAccessibleForFree": true,
   "publisher": {
     "@type": "Organization",
-    "name": "Global Sovereign University",
+    "name": "The Foundation for Global Instruction",
     "url": "https://www.globalsovereignuniversity.org/"
   }
 }
