@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Learning Arcade — Every Game GSU Has Ever Built | Global Sovereign University</title>
+<meta name="description" content="Eight aisles of learning games — Math, Reading, Geography, Mindset, Money, Trade Sims, BookGames, and Daily. Every game GSU has ever built, under one roof. Free forever, from a nonprofit.">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://globalsovereignuniversity.org/learning-arcade">
+<style>
+:root {
+  --black: #000000;
+  --gold: #C9A84C;
+  --gold-dim: #8a7434;
+  --gold-bright: #e5c561;
+  --cream: #F5F1E8;
+  --cream-dim: #a8a49b;
+  --line: rgba(201, 168, 76, 0.28);
+  --line-soft: rgba(201, 168, 76, 0.14);
+  --slot-pending: rgba(122, 122, 122, 0.35);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* NAV RAIL */
+.navbar {
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.96);
+  border-bottom: 1px solid var(--line);
+}
+.navbar-brand {
+  color: var(--gold);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.navbar-brand strong { font-weight: normal; color: var(--cream); }
+.navbar-links { display: flex; gap: 1.25rem; flex-wrap: wrap; align-items: center; }
+.navbar-link {
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+  letter-spacing: 0.02em;
+}
+.navbar-link:hover { color: var(--gold); }
+.navbar-link.geno {
+  color: var(--gold);
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.75rem;
+  border-radius: 2px;
+  cursor: pointer;
+  background: transparent;
+  font-family: Georgia, serif;
+}
+.navbar-link.geno:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+
+/* HERO */
+.hero {
+  padding: 3.5rem 1.5rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--line-soft);
+}
+.crest {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 6.5vw, 4.4rem);
+  font-weight: normal;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+.hero h1 em { color: var(--gold); font-style: italic; }
+.hero .subtitle {
+  font-size: clamp(1rem, 2.3vw, 1.35rem);
+  color: var(--gold);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+.hero .intro {
+  max-width: 44em;
+  margin: 0 auto 1.75rem;
+  color: var(--cream);
+  font-size: 1.05rem;
+  padding: 0 0.5rem;
+}
+.hero .intro strong { color: var(--gold); font-weight: normal; font-style: italic; }
+
+/* RATING */
+.rating-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 2rem;
+  background: rgba(201, 168, 76, 0.03);
+}
+.rating-label { color: var(--cream-dim); font-size: 0.85rem; font-style: italic; }
+.stars { display: inline-flex; gap: 0.15rem; }
+.star {
+  background: transparent; border: none; color: var(--gold-dim); cursor: pointer;
+  font-size: 1.35rem; padding: 0 0.1rem; line-height: 1;
+  transition: color 0.15s, transform 0.15s;
+  font-family: Georgia, serif;
+}
+.star:hover, .star.hover { color: var(--gold); transform: scale(1.1); }
+.star.selected { color: var(--gold); }
+.rating-thanks {
+  color: var(--gold); font-size: 0.85rem; font-style: italic;
+  opacity: 0; transition: opacity 0.3s;
+}
+.rating-thanks.show { opacity: 1; }
+
+/* WHY WE PLAY */
+.why-we-play {
+  max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 2rem;
+  text-align: center;
+}
+.why-we-play-badge {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 2rem;
+  margin-bottom: 1.5rem;
+}
+.why-we-play p {
+  max-width: 40em; margin: 0 auto 1rem;
+  color: var(--cream); font-size: 1.05rem; line-height: 1.7;
+}
+.why-we-play p strong { color: var(--gold); font-weight: normal; font-style: italic; }
+.why-we-play p + p { margin-top: 0.75rem; }
+
+/* AISLE DIRECTORY */
+.aisle-directory {
+  max-width: 1120px; margin: 0 auto; padding: 2rem 1.25rem;
+}
+.directory-title {
+  font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--cream-dim); text-align: center; margin-bottom: 1.5rem;
+}
+.directory-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+.directory-chip {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  text-decoration: none;
+  color: var(--cream);
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.directory-chip:hover {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.05);
+  transform: translateY(-2px);
+}
+.directory-chip-num {
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem; color: var(--gold);
+  letter-spacing: 0.1em;
+}
+.directory-chip-name {
+  font-size: 0.95rem;
+}
+
+/* AISLES */
+.aisle {
+  max-width: 1120px; margin: 3rem auto; padding: 0 1.25rem;
+}
+.aisle-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.aisle-header-left {
+  display: flex; align-items: baseline; gap: 1rem;
+}
+.aisle-number {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem; color: var(--gold);
+  letter-spacing: 0.15em;
+}
+.aisle-name {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  color: var(--cream); font-weight: normal;
+  letter-spacing: 0.01em;
+}
+.aisle-name em { color: var(--gold); font-style: italic; }
+.aisle-count {
+  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cream-dim); font-style: italic;
+}
+.aisle-desc {
+  color: var(--cream); font-size: 0.95rem; line-height: 1.65;
+  max-width: 44em; margin-bottom: 1.5rem;
+  font-style: italic;
+}
+.aisle-desc strong { color: var(--gold); font-weight: normal; font-style: normal; }
+
+.game-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+/* GAME CARD (live) */
+.game-card {
+  padding: 1.35rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.4));
+  text-decoration: none;
+  color: var(--cream);
+  display: flex; flex-direction: column;
+  transition: all 0.25s ease;
+  position: relative;
+}
+.game-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -12px rgba(201, 168, 76, 0.3);
+}
+.game-card-topbar {
+  position: absolute; top: 0; left: 1.35rem; right: 1.35rem;
+  height: 2px; border-radius: 0 0 4px 4px;
+  background: var(--gold);
+}
+.game-card-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 0.75rem; margin: 0.5rem 0 0.85rem;
+}
+.game-card-tag {
+  font-family: 'Courier New', monospace;
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cream-dim);
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 1rem;
+}
+.game-card-status {
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 1rem;
+}
+.game-card-status.live {
+  background: rgba(201, 168, 76, 0.15);
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+}
+.game-card-status.pending {
+  background: rgba(122, 122, 122, 0.1);
+  color: var(--cream-dim);
+  border: 1px solid var(--slot-pending);
+}
+.game-card-title {
+  font-size: 1.05rem; color: var(--cream);
+  line-height: 1.25; margin-bottom: 0.6rem;
+}
+.game-card-desc {
+  font-size: 0.85rem; color: var(--cream-dim);
+  line-height: 1.5; margin-bottom: 1rem;
+  flex: 1;
+}
+.game-card-cta {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line-soft);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.85rem;
+}
+.game-card-cta-play { color: var(--gold); }
+.game-card-cta-meta {
+  font-size: 0.72rem; color: var(--cream-dim); font-style: italic;
+}
+
+/* PENDING SLOT — clearly different aesthetic */
+.slot-pending {
+  padding: 1.35rem;
+  border: 1px dashed var(--slot-pending);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.015);
+  display: flex; flex-direction: column;
+  min-height: 200px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.slot-pending-icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px dashed var(--slot-pending);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; color: var(--cream-dim);
+  margin-bottom: 0.85rem;
+}
+.slot-pending-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  margin-bottom: 0.4rem;
+}
+.slot-pending-hint {
+  font-size: 0.78rem;
+  color: var(--cream-dim);
+  font-style: italic;
+  line-height: 1.5;
+  max-width: 20em;
+}
+
+/* INVENTORY CALL-OUT */
+.inventory-callout {
+  max-width: 1120px; margin: 4rem auto; padding: 2rem 1.25rem;
+}
+.inventory-card {
+  padding: clamp(2rem, 4vw, 2.75rem);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.06), rgba(0,0,0,0.5));
+  border: 1px solid var(--line);
+  display: grid; grid-template-columns: auto 1fr; gap: 1.5rem;
+  align-items: start;
+}
+.inventory-card-icon {
+  width: 3rem; height: 3rem;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.inventory-card h3 {
+  font-size: clamp(1.3rem, 2.8vw, 1.6rem);
+  color: var(--cream); font-weight: normal; line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+.inventory-card h3 em { color: var(--gold); font-style: italic; }
+.inventory-card p {
+  color: var(--cream); line-height: 1.65; font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+.inventory-card p strong { color: var(--gold); font-weight: normal; }
+.inventory-card code {
+  background: rgba(0,0,0,0.4);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  border: 1px solid var(--line-soft);
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: var(--gold);
+}
+
+/* DICTIONARY & FAQ (standing rules) */
+.dictionary, .faq {
+  max-width: 1120px; margin: 0 auto; padding: 2.5rem 1.25rem;
+}
+.faq { max-width: 900px; }
+.section-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1.75rem;
+}
+.section-title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: normal;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+.section-title em { color: var(--gold); font-style: italic; }
+.section-lede {
+  max-width: 24em; color: var(--cream-dim);
+  font-size: 0.9rem; font-style: italic; line-height: 1.5;
+}
+.dictionary-list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.85rem;
+}
+.dict-item {
+  padding: 1rem 1.25rem; border-radius: 12px;
+  border: 1px solid var(--line-soft);
+  background: rgba(255,255,255,0.02);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dict-item:hover { border-color: var(--line); background: rgba(255,255,255,0.03); }
+.dict-item-word {
+  color: var(--gold); font-size: 1.05rem;
+  font-weight: normal;
+}
+.dict-item-def {
+  color: var(--cream); font-size: 0.9rem; line-height: 1.55;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, margin-top 0.3s ease;
+}
+.dict-item.open .dict-item-def {
+  max-height: 300px; margin-top: 0.6rem;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--line-soft);
+  padding: 0.35rem 0;
+}
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; padding: 1.15rem 0; cursor: pointer;
+  color: var(--cream); font-size: 1.05rem;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-q-icon {
+  width: 1.5rem; height: 1.5rem; flex-shrink: 0;
+  border: 1px solid var(--line); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold); transition: all 0.25s ease;
+}
+.faq-item.open .faq-q-icon {
+  background: var(--gold); color: var(--black);
+  transform: rotate(45deg);
+}
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.35s ease;
+  color: var(--cream); line-height: 1.7;
+}
+.faq-item.open .faq-a {
+  max-height: 800px; padding: 0 0 1.25rem 0;
+}
+.faq-a strong { color: var(--gold); font-weight: normal; }
+
+/* FOOTER */
+.footer {
+  padding: 3rem 1.5rem; text-align: center; border-top: 1px solid var(--line-soft);
+  color: var(--cream-dim); font-size: 0.9rem; line-height: 1.7;
+}
+.footer .credo {
+  color: var(--gold); font-style: italic; font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+.footer a { color: var(--gold); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .hero { padding: 2.5rem 1rem 1.5rem; }
+  .navbar { padding: 0.7rem 1rem; }
+  .navbar-brand { font-size: 0.8rem; }
+  .inventory-card { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="https://globalsovereignuniversity.org" class="navbar-brand"><strong>GSU</strong> · Learning Arcade</a>
+  <div class="navbar-links">
+    <a href="https://globalsovereignuniversity.org" class="navbar-link">Home</a>
+    <a href="https://globalsovereignuniversity.org/library" class="navbar-link">Library</a>
+    <a href="https://globalsovereignuniversity.org/eight-rabbits" class="navbar-link">The Warren</a>
+    <a href="https://globalsovereignuniversity.org/homeschool" class="navbar-link">Homeschool</a>
+    <button class="navbar-link geno" onclick="askGeno()">Ask GENO</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <span class="crest">Global Sovereign University · Learning Arcade</span>
+  <h1>The <em>Learning Arcade</em></h1>
+  <p class="subtitle">Every Game GSU Has Built · Under One Roof</p>
+  <div class="intro">
+    <p>Eight aisles. Dozens of games. Every one of them free forever, built by teachers who believe children learn faster when the lesson feels like <strong>a game they cannot lose</strong>.</p>
+  </div>
+  <div class="rating-widget">
+    <span class="rating-label">Rate the Arcade</span>
+    <div class="stars" id="stars">
+      <button class="star" data-value="1" aria-label="1 star">★</button>
+      <button class="star" data-value="2" aria-label="2 stars">★</button>
+      <button class="star" data-value="3" aria-label="3 stars">★</button>
+      <button class="star" data-value="4" aria-label="4 stars">★</button>
+      <button class="star" data-value="5" aria-label="5 stars">★</button>
+    </div>
+    <span class="rating-thanks" id="ratingThanks"></span>
+  </div>
+</header>
+
+<!-- WHY WE PLAY (standing rule head-strip) -->
+<section class="why-we-play">
+  <span class="why-we-play-badge">Why We Play</span>
+  <p>The founders of this republic learned by <strong>drilling, playing, arguing, and making things</strong>. Books were second. The workshop, the field, the debate, and the game came first. Play is not the opposite of learning. Play is the shape learning takes when the learner is free.</p>
+  <p>Every game in this arcade was built to that principle. No advertising. No paywall. No stopwatch that punishes you for thinking. Just the game, the lesson, and the door back home when you are ready.</p>
+</section>
+
+<!-- AISLE DIRECTORY -->
+<section class="aisle-directory">
+  <div class="directory-title">Aisle Directory · Jump to a section</div>
+  <div class="directory-grid">
+    <a href="#aisle-math" class="directory-chip"><span class="directory-chip-num">01</span><span class="directory-chip-name">Math</span></a>
+    <a href="#aisle-reading" class="directory-chip"><span class="directory-chip-num">02</span><span class="directory-chip-name">Reading & Words</span></a>
+    <a href="#aisle-geography" class="directory-chip"><span class="directory-chip-num">03</span><span class="directory-chip-name">Geography & Sky</span></a>
+    <a href="#aisle-mindset" class="directory-chip"><span class="directory-chip-num">04</span><span class="directory-chip-name">Mindset</span></a>
+    <a href="#aisle-money" class="directory-chip"><span class="directory-chip-num">05</span><span class="directory-chip-name">Money & Economy</span></a>
+    <a href="#aisle-trade" class="directory-chip"><span class="directory-chip-num">06</span><span class="directory-chip-name">Trade Sims</span></a>
+    <a href="#aisle-book" class="directory-chip"><span class="directory-chip-num">07</span><span class="directory-chip-name">BookGames</span></a>
+    <a href="#aisle-daily" class="directory-chip"><span class="directory-chip-num">08</span><span class="directory-chip-name">Daily Loops</span></a>
+  </div>
+</section>
+
+<!-- ═══════════ AISLE 01 — MATH ═══════════ -->
+<section class="aisle" id="aisle-math">
+  <div class="aisle-header">
+    <div class="aisle-header-left">
+      <span class="aisle-number">Aisle 01</span>
+      <h2 class="aisle-name"><em>Math</em></h2>
+    </div>
+    <span class="aisle-count" id="count-math">— games</span>
+  </div>
+  <p class="aisle-desc">Every math game GSU has ever built — arithmetic, algebra, geometry, procedural drill, and the Math Helix. <strong>The Frankenstein Methodology teaches math the way tradesmen actually use it:</strong> in patterns, on the job, with numbers that mean something.</p>
+  <div class="game-grid">
+    <a href="https://read.globalsovereignuniversity.org/math-helix-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 8+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Math Helix Climb</h3>
+      <p class="game-card-desc">Climb the Math Helix through 8 procedural generators — 40,000 validated problems from arithmetic to algebra. Learn what you need at your pace.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Play →</span>
+        <span class="game-card-cta-meta">Free · Play forever</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/math-jeopardy.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 10+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Math Jeopardy</h3>
+      <p class="game-card-desc">Trivia-style math drill across arithmetic, geometry, and word problems. Fast, fun, and honest — every wrong answer is a lesson.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Play →</span>
+        <span class="game-card-cta-meta">Solo or family</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/fraction-frenzy.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 8+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Fraction Frenzy</h3>
+      <p class="game-card-desc">The fraction unit that breaks most kids — but built as a game they want to play. Add, subtract, multiply, and divide, one visual at a time.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Play →</span>
+        <span class="game-card-cta-meta">Visual-first</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/division-dojo.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 9+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Division Dojo</h3>
+      <p class="game-card-desc">Long division as a martial art. Rank up through five belts, each with its own drill patterns. No shame on the mat — everyone starts white.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Enter the dojo →</span>
+        <span class="game-card-cta-meta">Belt system</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/make24-bookgame.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 8+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Make 24 · BookGame</h3>
+      <p class="game-card-desc">Four numbers. Any operation. Make 24. A century-old family game, now a GSU BookGame — with the book you can take home.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Play →</span>
+        <span class="game-card-cta-meta">BookGame · Library</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ AISLE 02 — READING & WORDS ═══════════ -->
+<section class="aisle" id="aisle-reading">
+  <div class="aisle-header">
+    <div class="aisle-header-left">
+      <span class="aisle-number">Aisle 02</span>
+      <h2 class="aisle-name"><em>Reading</em> & Words</h2>
+    </div>
+    <span class="aisle-count" id="count-reading">— games</span>
+  </div>
+  <p class="aisle-desc">Reading comprehension, phonics, vocabulary, and the Reading Helix. Built on the GSU principle: <strong>No one reads alone.</strong> Every game has a companion — a book, a mentor, or GENO in your pocket.</p>
+  <div class="game-grid">
+    <a href="https://read.globalsovereignuniversity.org/helix-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 6+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">The Reading Helix Climb</h3>
+      <p class="game-card-desc">The original — climb the Reading Helix through 100 rungs of the 8-pillar question bank. Learn what you need at your pace.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Play →</span>
+        <span class="game-card-cta-meta">Free · Play forever</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/adult-literacy-lab.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Adult</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Adult Literacy Lab</h3>
+      <p class="game-card-desc">30-lesson phonics engine with Tap-to-Listen, Word of the Day, and GENO integration. For adults returning to reading — no shame, no timer, no test.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Enter →</span>
+        <span class="game-card-cta-meta">v2.1 · Free</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/trifurcation-road.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 14+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Trifurcation Road</h3>
+      <p class="game-card-desc">Three roads — GOOD, BETTER, BEST — thirty adult-level comprehension passages across three tiers. Demotion mechanic keeps the road at your level.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Choose your road →</span>
+        <span class="game-card-cta-meta">Rabbit territory</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/phoneme-forge.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 5+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Phoneme Forge</h3>
+      <p class="game-card-desc">Every English sound, forged and returned to the ear. The foundation drill for phonemic awareness — the pillar every reader stands on.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Forge sounds →</span>
+        <span class="game-card-cta-meta">Pillar 1</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/spelling-forge.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 7+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Spelling Forge</h3>
+      <p class="game-card-desc">Spelling as pattern discovery, not memorization. Forge the rules of English orthography one hammered word at a time.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Forge words →</span>
+        <span class="game-card-cta-meta">Pattern-based</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/vowel-valley.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 5+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Vowel Valley</h3>
+      <p class="game-card-desc">The vowel unit that traps most early readers — mapped as a valley you walk. Long vowels, short vowels, diphthongs, r-controlled — each has its own bend in the road.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Walk the valley →</span>
+        <span class="game-card-cta-meta">Foundational</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ AISLE 03 — GEOGRAPHY & SKY ═══════════ -->
+<section class="aisle" id="aisle-geography">
+  <div class="aisle-header">
+    <div class="aisle-header-left">
+      <span class="aisle-number">Aisle 03</span>
+      <h2 class="aisle-name"><em>Geography</em> & Sky</h2>
+    </div>
+    <span class="aisle-count" id="count-geography">— games</span>
+  </div>
+  <p class="aisle-desc">Maps, orbits, and the shape of the world. <strong>A citizen who does not know where she is cannot know where she is going.</strong></p>
+  <div class="game-grid">
+    <a href="https://read.globalsovereignuniversity.org/solar-system-explorer.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 10+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Solar System Explorer</h3>
+      <p class="game-card-desc">Rabbit #9 of the Warren. Move through the solar system in scale, learn orbital mechanics, see the planets at the size they actually are.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Launch →</span>
+        <span class="game-card-cta-meta">Rabbit territory</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/world-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 8+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">World Climb</h3>
+      <p class="game-card-desc">Continents, capitals, biomes, and borders — climbed one country at a time. Every rung teaches a place. Every summit is a world you can find on a map.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Start climbing →</span>
+        <span class="game-card-cta-meta">Full world map</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/cell-defender.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 10+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Cell Defender</h3>
+      <p class="game-card-desc">Biology as tactical defense. Guard the cell against pathogens by knowing which organelle does what. Learn the microworld the way a citizen learns the macro one.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Defend the cell →</span>
+        <span class="game-card-cta-meta">Biology drill</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/world-flavors.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">All ages</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">World Flavors</h3>
+      <p class="game-card-desc">Geography through food — which country invented the dish, why the spice was worth crossing an ocean for, how a meal maps a culture.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Taste the world →</span>
+        <span class="game-card-cta-meta">Cross-cultural</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/genos-world-tour.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">All ages</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">GENO's World Tour</h3>
+      <p class="game-card-desc">GENO takes you to 83 countries — each in the country's own language, each with the phrase you would need if you actually stepped off the plane there.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Tour with GENO →</span>
+        <span class="game-card-cta-meta">83 languages</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ AISLE 04 — MINDSET ═══════════ -->
+<section class="aisle" id="aisle-mindset">
+  <div class="aisle-header">
+    <div class="aisle-header-left">
+      <span class="aisle-number">Aisle 04</span>
+      <h2 class="aisle-name"><em>Mindset</em></h2>
+    </div>
+    <span class="aisle-count" id="count-mindset">— games</span>
+  </div>
+  <p class="aisle-desc">Games that build the citizen's inner architecture — logic, patience, self-reliance, and the Wisdom Bridge. <strong>Character is a habit before it is a decision.</strong></p>
+  <div class="game-grid">
+    <a href="https://read.globalsovereignuniversity.org/sovereign-vault-tier-1.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 14+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Sovereign Vault · Tier 1</h3>
+      <p class="game-card-desc">Interactive score-gate. Trade selector, 0–100 dial, tabbed Business-in-a-Box. Prove your sovereignty score and unlock the vault.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Enter the Vault →</span>
+        <span class="game-card-cta-meta">Score-gated</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/iron-mind.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 12+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Iron Mind</h3>
+      <p class="game-card-desc">Build the mental habits the founders considered non-negotiable — attention, patience, deliberate practice, the willingness to be uncomfortable for a good reason.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Train →</span>
+        <span class="game-card-cta-meta">Habit-focused</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/sovereign-mind-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 14+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Sovereign Mind Climb</h3>
+      <p class="game-card-desc">A hundred rungs of scenarios where the citizen faces a small choice about whether to think for herself or hand the decision away. Climb toward the sovereign mind.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Climb →</span>
+        <span class="game-card-cta-meta">Scenario-based</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/eq-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 12+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">EQ Climb</h3>
+      <p class="game-card-desc">Emotional intelligence as a climbable skill. Recognize the feeling, name the feeling, choose the response. Each rung is a small decision better made than last time.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Climb →</span>
+        <span class="game-card-cta-meta">Emotional literacy</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/red-herring-hunter.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 12+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Red Herring Hunter</h3>
+      <p class="game-card-desc">Spot the logical fallacy in real news headlines, real ads, real speeches. Twenty fallacies drilled until you can name them at first glance.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Hunt →</span>
+        <span class="game-card-cta-meta">Logic drill</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/phish-or-legit.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">All ages</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Phish or Legit</h3>
+      <p class="game-card-desc">Real screenshots of real emails and texts. Which are phishing attempts, which are the real thing. The digital-citizenship drill every grandparent needs.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Decide →</span>
+        <span class="game-card-cta-meta">Digital safety</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ AISLE 05 — MONEY & ECONOMY ═══════════ -->
+<section class="aisle" id="aisle-money">
+  <div class="aisle-header">
+    <div class="aisle-header-left">
+      <span class="aisle-number">Aisle 05</span>
+      <h2 class="aisle-name"><em>Money</em> & Economy</h2>
+    </div>
+    <span class="aisle-count" id="count-money">— games</span>
+  </div>
+  <p class="aisle-desc">Financial literacy in play form — budgeting, saving, the Trustline Ledger, and the Frankenstein Exchange. <strong>A citizen who cannot balance a checkbook cannot balance a republic.</strong></p>
+  <div class="game-grid">
+    <a href="https://my-quid-pro-quo.com" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Adult</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">The Trustline Ledger</h3>
+      <p class="game-card-desc">Rabbit #3 of the Warren (under the Frankenstein Exchange). Track promises made, promises kept, and the ledger of trust that builds a small economy.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Open the Ledger →</span>
+        <span class="game-card-cta-meta">Own domain</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/money-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 14+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Money Climb</h3>
+      <p class="game-card-desc">A hundred rungs of financial literacy — from the checking account to the mortgage, the interest rate to the retirement plan. Climb once and you never fall the same way.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Start climbing →</span>
+        <span class="game-card-cta-meta">Full curriculum</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/junior-money-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 8+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Junior Money Climb</h3>
+      <p class="game-card-desc">The same climb, sized for young readers. Allowance, saving, spending, giving — the four buckets every child should know before middle school.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Start climbing →</span>
+        <span class="game-card-cta-meta">Elementary</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/credit-score-simulator.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 16+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Credit Score Simulator</h3>
+      <p class="game-card-desc">Every choice a young adult makes with credit — early card, missed payment, hard inquiry — modeled on a live dial. See tomorrow before you make today's mistake.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Simulate →</span>
+        <span class="game-card-cta-meta">Live dial</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/budget-survivor.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 14+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Budget Survivor</h3>
+      <p class="game-card-desc">A month on a real household budget with real curveballs — the car breaks, the tooth cracks, the paycheck comes short. Survive without borrowing.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Survive the month →</span>
+        <span class="game-card-cta-meta">Household sim</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ AISLE 06 — TRADE SIMS ═══════════ -->
+<section class="aisle" id="aisle-trade">
+  <div class="aisle-header">
+    <div class="aisle-header-left">
+      <span class="aisle-number">Aisle 06</span>
+      <h2 class="aisle-name"><em>Trade</em> Sims</h2>
+    </div>
+    <span class="aisle-count" id="count-trade">— games</span>
+  </div>
+  <p class="aisle-desc">Job-site simulations and trade drills. <strong>The trades built America. This aisle keeps them alive in the next generation.</strong></p>
+  <div class="game-grid">
+    <a href="https://read.globalsovereignuniversity.org/hvac-iq.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">HVAC</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">HVAC IQ</h3>
+      <p class="game-card-desc">Drill your knowledge of refrigeration, heating, and airflow. Companion to the EPA 608 study guide.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Test your IQ →</span>
+        <span class="game-card-cta-meta">Drill to mastery</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/trades-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 14+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Trades Climb</h3>
+      <p class="game-card-desc">A hundred rungs across the sovereign trades — carpentry, electrical, plumbing, HVAC, masonry, welding. Discover the trade the country still needs and you might love.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Start climbing →</span>
+        <span class="game-card-cta-meta">Multi-trade</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/solar-pv-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Solar PV</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Solar PV Climb</h3>
+      <p class="game-card-desc">Photovoltaic installation from panel to inverter. Learn the NEC codes, the string voltage math, the roof geometry — one rung at a time.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Start climbing →</span>
+        <span class="game-card-cta-meta">NEC-aligned</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/stonemasons-climb.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Masonry</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Stonemason's Climb</h3>
+      <p class="game-card-desc">Ancient trade, modern game. Learn the joints, the mortars, the arches, the load paths — the trade that built the walls of every republic worth remembering.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Lay stone →</span>
+        <span class="game-card-cta-meta">Foundational</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/tradesmans-trial.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 16+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Tradesman's Trial</h3>
+      <p class="game-card-desc">A working day on a real job site. Estimate the material, quote the customer, order the truck, meet the inspector. The trade as it actually is.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Punch in →</span>
+        <span class="game-card-cta-meta">Full workday sim</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ AISLE 07 — BOOKGAMES ═══════════ -->
+<section class="aisle" id="aisle-book">
+  <div class="aisle-header">
+    <div class="aisle-header-left">
+      <span class="aisle-number">Aisle 07</span>
+      <h2 class="aisle-name"><em>BookGames</em></h2>
+    </div>
+    <span class="aisle-count" id="count-book">— games</span>
+  </div>
+  <p class="aisle-desc">Play-before-you-buy: each BookGame is a taste of a full GSU book. <strong>Enjoy the game. Meet the book. Take it home if it stayed with you.</strong> Also lives inside the Library hub.</p>
+  <div class="game-grid">
+    <a href="https://read.globalsovereignuniversity.org/BookGame_1_Betrayal_Detector.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 12+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Betrayal Detector · BookGame No. 1</h3>
+      <p class="game-card-desc">A taste of the book that named it. Read a scene, spot the small betrayal, decide what a friend would have done differently. The book is on the shelf if the game stayed with you.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Play →</span>
+        <span class="game-card-cta-meta">BookGame · No. 1</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/BookGame_2_Phonics_Protocol.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 6+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Phonics Protocol · BookGame No. 2</h3>
+      <p class="game-card-desc">The phonics story rebuilt as a spy protocol — every sound is a code that unlocks a door. A taste of the science-of-reading book that carries the argument in full.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Crack the code →</span>
+        <span class="game-card-cta-meta">BookGame · No. 2</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/BookGame_3_Comprehension_Tribunal.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 12+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Comprehension Tribunal · BookGame No. 3</h3>
+      <p class="game-card-desc">Read the passage. Face the tribunal. Prove you understood what the writer actually said — not what you wanted him to say.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Stand trial →</span>
+        <span class="game-card-cta-meta">BookGame · No. 3</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/BookGame_4_Mississippi_Challenge.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 10+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Mississippi Challenge · BookGame No. 4</h3>
+      <p class="game-card-desc">A geography-history mash-up along the great river. Steamboats, Civil War, cotton, jazz, floods, Twain. The book explains it; the game lets you sail it.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Cast off →</span>
+        <span class="game-card-cta-meta">BookGame · No. 4</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/robot-proof-bookgame.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Ages 14+</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Robot Proof · BookGame</h3>
+      <p class="game-card-desc">Every skill a machine cannot replace, tested in one game. If you can finish this, you know why the book exists.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Prove it →</span>
+        <span class="game-card-cta-meta">BookGame</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ AISLE 08 — DAILY LOOPS ═══════════ -->
+<section class="aisle" id="aisle-daily">
+  <div class="aisle-header">
+    <div class="aisle-header-left">
+      <span class="aisle-number">Aisle 08</span>
+      <h2 class="aisle-name"><em>Daily</em> Loops</h2>
+    </div>
+    <span class="aisle-count" id="count-daily">— games</span>
+  </div>
+  <p class="aisle-desc">Games designed to be played once a day — the Today's Summit quiz, Word of the Day, the daily Trustline check-in. <strong>Small, repeatable, habit-forming.</strong></p>
+  <div class="game-grid">
+    <a href="https://globalsovereignuniversity.org/todays-summit" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Daily</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Today's Summit</h3>
+      <p class="game-card-desc">Rabbit #1 of the Warren. A daily quiz — one question, one summit, one small climb toward mastery. New every morning.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Take today's climb →</span>
+        <span class="game-card-cta-meta">Rabbit · Daily</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/summit-champion.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Daily</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Summit Champion</h3>
+      <p class="game-card-desc">The seven-day streak game. Take a summit every day for a week and something small changes in how you show up on the eighth.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Start a streak →</span>
+        <span class="game-card-cta-meta">7-day loop</span>
+      </div>
+    </a>
+    <a href="https://read.globalsovereignuniversity.org/gene-call.html" class="game-card">
+      <div class="game-card-topbar"></div>
+      <div class="game-card-head">
+        <span class="game-card-tag">Daily</span>
+        <span class="game-card-status live">Live</span>
+      </div>
+      <h3 class="game-card-title">Gene's Call</h3>
+      <p class="game-card-desc">A one-minute daily reflection from Dr Constant — a question, a story, or a small challenge. Bring your coffee.</p>
+      <div class="game-card-cta">
+        <span class="game-card-cta-play">Take the call →</span>
+        <span class="game-card-cta-meta">1-minute · Daily</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- INVENTORY CALL-OUT — updated after full repo enumeration -->
+<section class="inventory-callout">
+  <div class="inventory-card">
+    <div class="inventory-card-icon">✓</div>
+    <div>
+      <h3>The <em>Curated Arcade</em> · a note from the builder</h3>
+      <p>The <code>geneconstant36-blip/gsu-assets</code> repo contains <strong>217 game and interactive pages</strong> at last enumeration. This arcade curates approximately <strong>40 flagship titles</strong> across the eight aisles — the ones every citizen should walk through first. The rest live in the repo and remain reachable directly.</p>
+      <p>The Foundation's philosophy on games: <em>every game is free forever</em>. No advertising, no paywall, no data harvesting. Play for the knowledge gained. If a game has stayed with you for a week, you have already received what the game was for.</p>
+      <p><em>To see the full inventory of every interactive page in the repo, ask GENO or visit the <a href="https://globalsovereignuniversity.org/library">Library hub</a>.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- DICTIONARY (standing rule) -->
+<section class="dictionary">
+  <div class="section-head">
+    <h2 class="section-title">Arcade <em>Dictionary</em></h2>
+    <p class="section-lede">Gaming vocabulary the way GSU uses it. Tap to expand.</p>
+  </div>
+  <div class="dictionary-list" id="dictionaryList"></div>
+</section>
+
+<!-- FAQ (standing rule) -->
+<section class="faq">
+  <div class="section-head">
+    <h2 class="section-title">Arcade <em>FAQ</em></h2>
+  </div>
+  <div class="faq-list" id="faqList"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="credo">
+    Every game free. Every certificate real. Every player welcome.
+  </div>
+  <p>
+    A tuition-free artifact from <a href="https://globalsovereignuniversity.org">Global Sovereign University</a>,<br>
+    an educational platform of The Foundation for Global Instruction, 501(c)(3).<br>
+    Learning Arcade · <a href="https://globalsovereignuniversity.org/library">Full Library (318 books)</a> · <a href="https://read.globalsovereignuniversity.org/sovereign-timeline">Sovereign Timeline</a>
+  </p>
+</footer>
+
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+
+<script>
+const DICTIONARY = [
+  { word: "Helix Climb", def: "The GSU family of games in which a learner climbs a helical ladder of questions. Each rung is one question, each summit is one certificate. Reading Helix and Math Helix are the founding two." },
+  { word: "Certificate", def: "A serial-numbered, Firebase-backed record of completion. Printable, permanent, and cross-referenced with the learner's account. Never expires. Never behind a paywall." },
+  { word: "Rabbit", def: "One of the numbered showcase experiences in the GSU Warren — small self-contained artifacts of high craft. Today's Summit is Rabbit #1. Solar System Orbital Explorer is Rabbit #9. Sovereign Timeline is Rabbit #10. Historification Cornerstone is Rabbit #11." },
+  { word: "Score-Gate", def: "A game mechanic that requires the learner to reach a threshold before unlocking the next step. The Sovereign Vault Tier 1 uses a 0–100 sovereignty dial as its score-gate." },
+  { word: "BookGame", def: "A game designed as a taste of a full GSU book. Play-before-you-buy: no purchase required, no email harvested. If the game held you, the book is $3.99 or free as PDF." },
+  { word: "Demotion Mechanic", def: "In Trifurcation Road: if a player answering at the BEST tier gets a comprehension question wrong, she drops to BETTER. This is not punishment — it is calibration. The road matches the reader." },
+  { word: "Wisdom Bridge", def: "The GSU checkpoint framework: at key life-stage or subject-mastery moments, the learner crosses a bridge that requires her to demonstrate what she has learned. Uses Firebase Auth + Firestore from the start (never localStorage-only)." },
+  { word: "Frankenstein Methodology", def: "The GSU curriculum design principle: synthesize unrelated disciplines for asymmetric advantage. A math game in this arcade may teach carpentry. A reading game may teach civics. The learner does not always see the seam." }
+];
+
+const FAQ = [
+  { q: "Are all these games really free?", a: "<p>Every game in the arcade is <strong>free forever</strong>. No paywall. No advertising. No account required to play. Some games issue certificates that live in your GSU account — the account is free too.</p>" },
+  { q: "Do these games give certificates?", a: "<p><strong>No.</strong> The arcade is designed for <strong>learning, not credentialing</strong>. Every game here is free to play for the knowledge gained — no scoreboard, no badge, no certificate. If a game has stayed with you for a week, you have already received what the game was for.</p><p>The GSU Certification Exams — HVAC, Readification, Mathification, and the rest — live at their own hubs and are a separate track. They test what you know for the citizen who wants a serial-numbered record of it. The arcade doesn't sell that. The arcade sells the fun of finally understanding something.</p>" },
+  { q: "Why does GSU care about games?", a: "<p>Because <strong>play is not the opposite of learning</strong>. The founders of this republic learned by drilling, playing, arguing, and making. Books were second. Every game here was built on that principle — the game is the delivery vehicle for a lesson the learner would resist if it came as a lecture.</p>" },
+  { q: "Can I contribute a game to the arcade?", a: "<p>Yes. Send the concept to the Foundation at the Quid Pro Quo page. If it meets GSU standards (free, honest, no data harvesting, no dark patterns), it earns an aisle slot. Contributors are credited by name.</p>" },
+  { q: "Where do I go if a game is broken?", a: "<p>Ask GENO — he is the fastest path to reporting. He will log the issue and route it. Every broken game hurts the mission; we want to know within the hour.</p>" },
+  { q: "Why 'Aisles' instead of 'Categories'?", a: "<p>Because this is <strong>an arcade, not a database</strong>. Aisles have a feel — you walk them, you browse, you notice something you were not looking for. Categories are for filing. The arcade is for the citizen who is here to learn something today and does not know yet what.</p>" }
+];
+
+function renderDictionary() {
+  const el = document.getElementById('dictionaryList');
+  let html = '';
+  DICTIONARY.forEach(d => {
+    html += '<div class="dict-item" onclick="this.classList.toggle(\'open\')">'
+      + '<span class="dict-item-word">' + d.word + '</span>'
+      + '<div class="dict-item-def">' + d.def + '</div>'
+      + '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function renderFAQ() {
+  const el = document.getElementById('faqList');
+  let html = '';
+  FAQ.forEach(f => {
+    html += '<div class="faq-item">'
+      + '<div class="faq-q" onclick="this.parentElement.classList.toggle(\'open\')">'
+      +   '<span>' + f.q + '</span>'
+      +   '<span class="faq-q-icon">+</span>'
+      + '</div>'
+      + '<div class="faq-a">' + f.a + '</div>'
+      + '</div>';
+  });
+  el.innerHTML = html;
+}
+
+// Update aisle counts
+function updateCounts() {
+  ['math','reading','geography','mindset','money','trade','book','daily'].forEach(id => {
+    const section = document.getElementById('aisle-' + id);
+    if (!section) return;
+    const live = section.querySelectorAll('.game-card').length;
+    const pending = section.querySelectorAll('.slot-pending').length;
+    const counter = document.getElementById('count-' + id);
+    if (counter) {
+      counter.textContent = live + ' live · ' + pending + ' slot' + (pending !== 1 ? 's' : '') + ' open';
+    }
+  });
+}
+
+function askGeno(prompt) {
+  const widget = document.querySelector('elevenlabs-convai');
+  if (widget && typeof widget.open === 'function') widget.open();
+  window.dispatchEvent(new CustomEvent('elevenlabs-convai:open'));
+}
+
+// 5-star rating
+(function() {
+  const stars = document.querySelectorAll('#stars .star');
+  const thanks = document.getElementById('ratingThanks');
+  let locked = false;
+  const stored = (window.localStorage && localStorage.getItem('arcade-rating')) || null;
+  if (stored) {
+    const n = parseInt(stored, 10);
+    stars.forEach((s, i) => { if (i < n) s.classList.add('selected'); });
+    locked = true;
+    thanks.textContent = 'You rated ' + n + '★. Thank you.';
+    thanks.classList.add('show');
+  }
+  stars.forEach((star, idx) => {
+    star.addEventListener('mouseenter', () => {
+      if (locked) return;
+      stars.forEach((s, i) => s.classList.toggle('hover', i <= idx));
+    });
+    star.addEventListener('mouseleave', () => {
+      if (locked) return;
+      stars.forEach(s => s.classList.remove('hover'));
+    });
+    star.addEventListener('click', () => {
+      if (locked) return;
+      const n = idx + 1;
+      stars.forEach((s, i) => s.classList.toggle('selected', i < n));
+      thanks.textContent = 'You rated ' + n + '★. Thank you.';
+      thanks.classList.add('show');
+      locked = true;
+      try { localStorage.setItem('arcade-rating', String(n)); } catch(e) {}
+    });
+  });
+})();
+
+renderDictionary();
+renderFAQ();
+updateCounts();
+</script>
+</body>
+</html>
