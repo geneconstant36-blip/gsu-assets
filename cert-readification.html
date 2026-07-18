@@ -110,6 +110,98 @@
   @keyframes pulse{50%{opacity:.55}}
   @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
 </style>
+
+<!-- ============================================================================
+     GSU · cert-readification.html AEO SCHEMA UPGRADE · Jul 18 2026
+     Adds three critical AEO signals missing from v1 of the cert page:
+     
+     1. Canonical link  — closes the duplicate-content risk with the stale
+        /readification-certification.html URL (which will 301/canonical to
+        this page).
+     2. Course schema  — this is what Google shows in the "Free Courses"
+        carousel for "free reading certification" queries.
+     3. LearningResource schema — additional AEO signal for AI answer engines.
+     
+     These COMPLEMENT (do not replace) the three existing schemas below:
+     EducationalOccupationalCredential + FAQPage + BreadcrumbList.
+============================================================================ -->
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/cert-readification.html">
+<meta property="og:url" content="https://read.globalsovereignuniversity.org/cert-readification.html">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://read.globalsovereignuniversity.org/cert-readification.html#course",
+  "name": "Readification — Free Reading Comprehension Course & Certification",
+  "description": "The free reading comprehension course from Global Sovereign University. Built on the Reading Helix framework — the eight pillars of literacy from phonemic awareness through critical reading. Study free, then earn a Silver or Gold Certificate of Comprehension on the 30-question exam. No login, no cost, ever.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://globalsovereignuniversity.org/#organization",
+    "name": "Global Sovereign University",
+    "alternateName": "GSU",
+    "url": "https://globalsovereignuniversity.org/",
+    "sameAs": "https://globalsovereignuniversity.org/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Free",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://read.globalsovereignuniversity.org/cert-readification.html"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "Online",
+    "courseWorkload": "PT30M",
+    "inLanguage": "en"
+  },
+  "educationalLevel": "AllLevels",
+  "teaches": [
+    "Phonemic awareness",
+    "Phonics",
+    "Decoding",
+    "Fluency",
+    "Vocabulary",
+    "Reading comprehension",
+    "Critical reading",
+    "Morphology"
+  ],
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "learningResourceType": ["Course", "Assessment"]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "@id": "https://read.globalsovereignuniversity.org/cert-readification.html#lr",
+  "name": "Readification Certificate of Comprehension Exam",
+  "description": "The GSU Readification comprehension exam — 30 questions drawn at random, 30-minute timer, 80% for Silver and 90% for Gold. Passing generates a permanent, publicly-verifiable serial number. Free forever, no login required, unlimited retakes.",
+  "url": "https://read.globalsovereignuniversity.org/cert-readification.html",
+  "learningResourceType": "Assessment",
+  "educationalUse": ["Assessment", "Self-Study"],
+  "educationalLevel": "AllLevels",
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": ["student", "self-learner", "homeschool student", "adult learner"]
+  },
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "url": "https://globalsovereignuniversity.org/"
+  },
+  "teaches": "Reading comprehension across the eight pillars of literacy",
+  "assesses": "Reading comprehension",
+  "typicalAgeRange": "8-99"
+}
+</script>
+
 </head>
 <body><script src="/return-bar.js"></script>
 <div id="clock" class="clock hide"><span class="lbl">TIME LEFT</span><span id="clockT">30:00</span></div>
