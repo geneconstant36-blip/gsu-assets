@@ -2,1161 +2,1751 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Sovereign Explorer — Global Sovereign University</title>
-<meta name="description" content="Drive the Solar System. Read The Sun's Family in chapter mode. Earn Bronze, Silver, and Gold Explorer certificates. Free. No login. Every planet is a lesson.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Solar System Orbital Explorer — Real Orbits, Five-Act Story | GSU</title>
+<meta name="description" content="Watch all eight planets orbit at their real relative periods. Read the solar system as a five-act story: the Sun's patience, the rocky neighborhood, the gas guardians, the outer dark, the dwarf realm. Earn Bronze, Silver, or Gold Explorer badges by proving what you learned. Free forever from a 501(c)(3).">
 <meta name="theme-color" content="#000000">
 <link rel="canonical" href="https://read.globalsovereignuniversity.org/solar-system-explorer.html">
-
-<script type="application/ld+json" id="course-ld">
-{
-  "@context": "https://schema.org",
-  "@type": "Course",
-  "name": "The Sovereign Explorer",
-  "description": "Interactive Solar System tour for children ages 5-11 and curious adults. Drive around the Solar System, read The Sun's Family in chapter mode, earn Explorer certificates.",
-  "provider": {
-    "@type": "EducationalOrganization",
-    "name": "Global Sovereign University",
-    "sameAs": "https://globalsovereignuniversity.org"
-  },
-  "hasCourseInstance": {
-    "@type": "CourseInstance",
-    "courseMode": "online",
-    "courseWorkload": "PT30M",
-    "instructor": {
-      "@type": "Person",
-      "name": "Dr. Gene A Constant"
-    }
-  },
-  "offers": {
-    "@type": "Offer",
-    "price": "0.00",
-    "priceCurrency": "USD",
-    "category": "Free"
-  }
-}
-</script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<meta property="og:title" content="The Solar System Orbital Explorer — Real Orbits, Five-Act Story">
+<meta property="og:description" content="Rabbit #9 of the GSU Warren. Live orbital canvas + narrative arc + earned badges. Free.">
+<meta property="og:type" content="website">
 
 <style>
-  :root {
-    --bg: #000000;
-    --card: #000000;
-    --card-hi: rgba(201,168,76,0.06);
-    --gold: #C9A84C;
-    --gold-soft: #B08A2A;
-    --cream: #F5F1E8;
-    --cream-soft: #d8d3c8;
-    --muted: #8a8580;
-    --good: #7fce9d;
-    --line: rgba(201,168,76,.22);
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--cream); font-family: Georgia, "Times New Roman", serif; line-height: 1.55; }
-  a { color: var(--gold); text-decoration: none; }
-  a:hover { text-decoration: underline; text-underline-offset: 4px; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 22px; }
-  section { padding: 40px 0; }
+html.in-iframe .navbar { display: none !important; }
+html.in-iframe body { padding-top: 0 !important; }
+</style>
+<script>if (window.self !== window.top) { document.documentElement.classList.add('in-iframe'); }</script>
 
-  /* HERO */
-  .hero { padding: 56px 0 32px; border-bottom: 1px solid var(--line); }
-  .eyebrow { font-family: "Lora", serif; font-size: 0.82rem; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
-  h1 { font-size: 3.2rem; margin: 0 0 12px; line-height: 1.05; color: var(--cream); }
-  .lede { font-size: 1.24rem; color: var(--cream-soft); font-style: italic; max-width: 44em; }
+<style>
+:root {
+  --black: #000000;
+  --deep: #060618;
+  --gold: #C9A84C;
+  --gold-dim: #8a7434;
+  --gold-bright: #e5c561;
+  --cream: #F5F1E8;
+  --cream-dim: #a8a49b;
+  --cream-fade: rgba(245,241,232,.55);
+  --navy: #1B2A4A;
+  --teal: #1A8B7F;
+  --red: #cc4a3a;
+  --green: #4ea86a;
+  --card-bg: rgba(201,168,76,.04);
+  --card-border: rgba(201,168,76,.20);
+  --bronze: #cd7f32;
+  --silver: #C0C0C0;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--black); color: var(--cream);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+h1, h2, h3, h4 { font-family: Georgia, "Times New Roman", serif; color: var(--cream); margin: 0; }
+a { color: var(--gold); text-decoration: none; }
+a:hover { color: var(--gold-bright); text-decoration: underline; }
+.wr { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
 
-  /* RATING WIDGET */
-  .ratebox { margin-top: 28px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; text-align: center; }
-  .ratebox .rt { font-family: "Lora", serif; font-size: 1.06rem; color: var(--cream); margin-bottom: 12px; }
-  .stars { display: inline-flex; gap: 7px; font-size: 1.9rem; line-height: 1; cursor: pointer; user-select: none; }
-  .stars .st { color: #3a3a3a; transition: transform .12s, color .12s; }
-  .stars .st.on { color: var(--gold); }
-  .stars .st:hover { transform: scale(1.12); }
-  .rate-meta { margin-top: 10px; font-size: .92rem; color: var(--muted); }
-  .rate-meta b { color: var(--gold); }
-  .rate-thanks { margin-top: 8px; font-size: .86rem; color: var(--good); min-height: 1.1em; }
+/* ============================================================ NAV RAIL ==== */
+.navbar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(0,0,0,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 10px 20px;
+  font-size: .9rem;
+}
+.nav-inner {
+  max-width: 1180px; margin: 0 auto;
+  display: flex; align-items: center; gap: 8px 22px; flex-wrap: wrap;
+}
+.nav-brand {
+  font-family: Georgia, serif; font-weight: 700; color: var(--gold);
+  margin-right: 6px; font-size: 1rem;
+}
+.nav-inner a {
+  color: var(--cream-dim); font-weight: 600;
+  padding: 5px 10px; border-radius: 4px;
+  transition: color .15s, background .15s;
+}
+.nav-inner a:hover {
+  color: var(--gold); background: rgba(201,168,76,.08);
+  text-decoration: none;
+}
+.nav-cta {
+  color: var(--black) !important; background: var(--gold);
+  padding: 6px 14px !important; margin-left: auto;
+  font-weight: 800; border-radius: 999px;
+}
+.nav-cta:hover { background: var(--gold-bright); color: var(--black) !important; }
 
-  /* SOLAR VIEWPORT */
-  .viewport-wrap { margin-top: 44px; }
-  .viewport-title { color: var(--cream); font-size: 2rem; margin: 0 0 8px; }
-  .viewport-sub { color: var(--muted); font-size: 1rem; margin: 0 0 20px; max-width: 46em; }
-  .viewport { position: relative; width: 100%; aspect-ratio: 16 / 10; background: radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, #000000 70%); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
-  @media (max-width: 720px) { .viewport { aspect-ratio: 4 / 5; } }
-  .viewport svg { width: 100%; height: 100%; display: block; }
-  .stars-bg { position: absolute; inset: 0; pointer-events: none; opacity: 0.55; }
-  .planet-hit { cursor: pointer; }
-  .planet-hit:hover circle { filter: brightness(1.5); }
-  .planet-label { font-family: "Lora", serif; font-size: 12px; fill: var(--cream); text-anchor: middle; pointer-events: none; letter-spacing: 0.06em; }
-  .orbit-line { fill: none; stroke: rgba(201,168,76,0.14); stroke-width: 1; stroke-dasharray: 2 4; }
-  .visited-marker { fill: var(--gold); }
+/* ================================================== WHY WE PLAY STRIP ==== */
+#gsu-why-we-play {
+  background: rgba(201,168,76,.05);
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+  padding: 26px 20px;
+}
+#gsu-why-we-play .wr { max-width: 900px; text-align: center; }
+#gsu-why-we-play h3 {
+  color: var(--gold); font-size: .8rem; font-weight: 800;
+  letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 12px;
+}
+#gsu-why-we-play p {
+  color: var(--cream); font-size: .96rem; line-height: 1.7;
+  margin: 0 auto 10px; max-width: 780px;
+}
+#gsu-why-we-play p:last-child { color: var(--cream-fade); font-size: .88rem; }
 
-  /* CONTROL STRIP */
-  .controls { margin-top: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
-  .ctrl { display: flex; align-items: center; gap: 8px; }
-  .ctrl label { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
-  .ctrl-btn { background: var(--card); color: var(--cream); border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; font-family: Georgia, serif; font-size: 0.95rem; cursor: pointer; transition: background .12s; }
-  .ctrl-btn:hover { background: rgba(201,168,76,0.1); }
-  .ctrl-btn.on { background: rgba(201,168,76,0.18); border-color: var(--gold); color: var(--gold); }
-  .speed-slider { width: 120px; }
-  input[type="range"] { accent-color: var(--gold); }
+/* ============================================================== HERO ==== */
+.hero { padding: 64px 20px 30px; text-align: center; }
+.hero .wr { max-width: 940px; }
+.hero-eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 800;
+  letter-spacing: 2.8px; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: 3.1rem; line-height: 1.1; margin-bottom: 18px;
+  letter-spacing: -.7px; font-weight: 800;
+}
+.hero h1 em { color: var(--gold); font-style: normal; }
+.hero-deck {
+  font-size: 1.1rem; color: rgba(245,241,232,.85);
+  line-height: 1.7; max-width: 780px; margin: 0 auto 22px;
+}
+.hero-deck b { color: var(--cream); }
+.hero-fine {
+  font-size: .85rem; color: var(--cream-fade); margin: 22px 0 0;
+}
+.hero-fine b { color: var(--cream-dim); }
 
-  /* MODAL */
-  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.94); z-index: 1000; padding: 40px 20px; overflow-y: auto; }
-  .modal.open { display: block; }
-  .modal-inner { max-width: 780px; margin: 0 auto; background: var(--card); border: 1px solid var(--gold); border-radius: 20px; padding: 40px; position: relative; }
-  .modal-close { position: absolute; top: 20px; right: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 50%; width: 44px; height: 44px; color: var(--cream); font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-  .modal-eyebrow { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; }
-  .modal-title { color: var(--cream); font-size: 2.4rem; margin: 0 0 8px; }
-  .modal-pos { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; font-style: italic; }
-  .modal-planet-visual { width: 160px; height: 160px; margin: 0 auto 24px; }
-  .modal-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
-  @media (max-width: 640px) { .modal-facts { grid-template-columns: 1fr; } }
-  .fact { background: rgba(201,168,76,0.05); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; }
-  .fact-label { color: var(--gold); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; }
-  .fact-value { color: var(--cream); font-size: 1.05rem; }
-  .chapter-block { margin-top: 24px; padding: 24px; background: rgba(201,168,76,0.04); border-left: 3px solid var(--gold); border-radius: 6px; cursor: pointer; }
-  .chapter-eyebrow { color: var(--gold); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
-  .chapter-text { color: var(--cream); font-size: 1.08rem; line-height: 1.72; font-family: "Lora", serif; }
-  .chapter-text p { margin: 0 0 12px; }
-  .chapter-hint { color: var(--muted); font-size: 0.82rem; margin-top: 12px; font-style: italic; }
-  .modal-actions { margin-top: 24px; display: flex; justify-content: flex-end; }
+/* ================================================= ORBIT CANVAS ============ */
+.orbit-section {
+  padding: 30px 20px 50px;
+  background: radial-gradient(ellipse at center, var(--deep) 0%, var(--black) 70%);
+}
+.orbit-wrap {
+  max-width: 940px; margin: 0 auto;
+  position: relative;
+}
+.orbit-canvas-container {
+  position: relative;
+  width: 100%;
+  height: 620px;
+  background: var(--black);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+#orbit-canvas {
+  display: block;
+  width: 100%; height: 100%;
+  cursor: pointer;
+}
+.orbit-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; padding: 18px 4px 0;
+  flex-wrap: wrap;
+}
+.orbit-hint {
+  color: var(--cream-fade); font-size: .85rem;
+  font-style: italic;
+}
+.orbit-hint b { color: var(--gold); font-style: normal; font-weight: 700; }
+.orbit-speed {
+  display: flex; align-items: center; gap: 12px;
+}
+.orbit-speed label {
+  font-size: .82rem; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--cream-dim); font-weight: 700;
+}
+.orbit-speed input[type=range] {
+  width: 160px; accent-color: var(--gold);
+}
+.orbit-speed .speed-value {
+  color: var(--gold); font-weight: 700; font-size: .9rem;
+  min-width: 42px;
+}
 
-  /* BADGES */
-  .badges { margin-top: 60px; background: radial-gradient(circle at top left, rgba(201,168,76,0.08), #000000 70%); border: 1px solid var(--gold); border-radius: 20px; padding: 32px; }
-  .badges h2 { color: var(--gold); font-size: 1.7rem; margin: 0 0 8px; }
-  .badges p { color: var(--cream-soft); margin: 0 0 22px; }
-  .badge-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  @media (max-width: 720px) { .badge-tiers { grid-template-columns: 1fr; } }
-  .badge-tier { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; text-align: center; }
-  .badge-tier.earned { border-color: var(--gold); background: rgba(201,168,76,0.08); }
-  .badge-icon { font-size: 2.3rem; margin-bottom: 8px; }
-  .badge-name { font-family: Georgia, serif; font-size: 1.2rem; color: var(--cream); margin-bottom: 6px; }
-  .badge-req { color: var(--muted); font-size: 0.9rem; margin-bottom: 12px; }
-  .badge-progress { color: var(--gold); font-weight: bold; }
-  .badge-serial { display: block; margin-top: 6px; font-family: "Courier New", monospace; font-size: 0.82rem; color: var(--cream-soft); }
+@media (max-width: 640px) {
+  .orbit-canvas-container { height: 400px; }
+  .hero h1 { font-size: 2.2rem; }
+}
 
-  /* SCALE SECTION */
-  .scale-section { margin-top: 60px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
-  .scale-section h2 { color: var(--cream); font-size: 1.7rem; margin: 0 0 12px; }
-  .scale-section p { color: var(--cream-soft); margin: 0 0 20px; }
-  .scale-viz { text-align: center; padding: 20px 0; }
-  .scale-viz svg { max-width: 100%; height: auto; }
-  .scale-callout { margin-top: 20px; padding: 16px; background: rgba(201,168,76,0.08); border-radius: 10px; color: var(--gold); font-style: italic; text-align: center; }
+/* ============================================================ ACTS ==== */
+.act {
+  padding: 70px 20px;
+  border-top: 1px solid var(--card-border);
+}
+.act:nth-child(even) { background: rgba(201,168,76,.02); }
+.act .wr { max-width: 940px; }
+.act-eyebrow {
+  display: inline-block; font-size: 11px; font-weight: 800;
+  letter-spacing: 2.8px; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+}
+.act h2 {
+  font-size: 2.3rem; line-height: 1.15; margin-bottom: 20px;
+  letter-spacing: -.4px;
+}
+.act h2 em { color: var(--gold); font-style: normal; }
 
-  /* DAY / SEASON SIMULATOR */
-  .daynight { margin-top: 60px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
-  .daynight h2 { color: var(--cream); font-size: 1.7rem; margin: 0 0 12px; }
-  .daynight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
-  @media (max-width: 720px) { .daynight-grid { grid-template-columns: 1fr; } }
-  .dn-panel { background: rgba(0,0,0,0.4); border: 1px solid var(--line); border-radius: 12px; padding: 20px; text-align: center; }
-  .dn-panel h3 { color: var(--gold); font-size: 1.15rem; margin: 0 0 12px; }
-  .dn-panel p { color: var(--cream-soft); font-size: 0.94rem; margin-top: 12px; }
-  .dn-viz { width: 100%; aspect-ratio: 1 / 1; max-width: 220px; margin: 0 auto; }
+/* Curiosity Card */
+.curiosity-card {
+  background: rgba(201,168,76,.06);
+  border-left: 3px solid var(--gold);
+  padding: 24px 28px;
+  margin: 18px 0 40px;
+  border-radius: 4px;
+}
+.curiosity-card .cc-tag {
+  display: inline-block; font-size: 10px; font-weight: 800;
+  letter-spacing: 2.5px; color: var(--gold);
+  margin-bottom: 10px; text-transform: uppercase;
+}
+.curiosity-card p {
+  font-family: Georgia, serif; font-size: 1.08rem;
+  line-height: 1.7; color: var(--cream); margin: 0;
+  font-style: italic;
+}
+.curiosity-card p b { color: var(--gold); font-style: normal; }
+.curiosity-card p em { color: var(--gold-bright); font-style: italic; }
 
-  /* GENO PANEL */
-  .geno { margin-top: 60px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
-  .geno h2 { color: var(--cream); font-size: 1.7rem; margin: 0 0 10px; }
-  .geno p { color: var(--cream-soft); }
-  .geno-prompts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-  .prompt-chip { background: rgba(201,168,76,0.1); border: 1px solid var(--line); border-radius: 20px; padding: 10px 18px; cursor: pointer; color: var(--cream); font-size: 0.95rem; transition: background .12s; }
-  .prompt-chip:hover { background: rgba(201,168,76,0.2); }
-  .geno-cta { margin-top: 20px; }
-  .btn { background: var(--gold); color: #000; border: none; padding: 14px 28px; border-radius: 10px; font-family: Georgia, serif; font-weight: bold; font-size: 1rem; cursor: pointer; }
-  .btn.ghost { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+/* Planet / body cards */
+.body-card {
+  background: rgba(0,0,0,.5);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 28px 30px;
+  margin-bottom: 22px;
+  transition: border-color .18s, transform .18s;
+}
+.body-card:hover {
+  border-color: rgba(201,168,76,.5);
+  transform: translateY(-2px);
+}
+.body-card.highlight {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201,168,76,.3);
+  transition: border-color .6s, box-shadow .6s;
+}
+.body-head {
+  display: flex; align-items: center; gap: 20px;
+  margin-bottom: 20px; flex-wrap: wrap;
+}
+.body-icon {
+  width: 60px; height: 60px; border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,.1);
+  box-shadow: 0 6px 18px rgba(0,0,0,.6);
+}
+.body-title {
+  font-family: Georgia, serif; font-size: 1.8rem;
+  font-weight: 800; color: var(--cream);
+  margin: 0; letter-spacing: -.3px; line-height: 1;
+}
+.body-subtitle {
+  color: var(--gold); font-size: .82rem;
+  letter-spacing: 1.6px; text-transform: uppercase;
+  font-weight: 700; margin-top: 4px;
+}
+.body-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 20px 0 22px;
+}
+.body-stat {
+  background: rgba(201,168,76,.03);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.body-stat dt {
+  font-size: 10px; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--gold); font-weight: 800; margin-bottom: 5px;
+}
+.body-stat dd {
+  margin: 0; color: var(--cream); font-size: .95rem; font-weight: 700;
+  font-family: Georgia, serif;
+}
+.body-narrative {
+  color: rgba(245,241,232,.9);
+  font-size: 1rem; line-height: 1.75;
+}
+.body-narrative b { color: var(--cream); }
+.body-narrative em { color: var(--gold-bright); font-style: italic; }
+.body-wow {
+  margin-top: 18px; padding: 14px 18px;
+  background: rgba(26,139,127,.06);
+  border-left: 3px solid var(--teal);
+  border-radius: 4px;
+  font-family: Georgia, serif;
+  font-size: 1rem; line-height: 1.65;
+  color: var(--cream);
+}
+.body-wow b { color: var(--teal); }
 
-  /* NINTH BODY / SOVEREIGN REFLECTION */
-  .ninth { margin-top: 80px; padding: 60px 40px; background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, #000000 70%); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
-  .ninth-eyebrow { font-family: "Lora", serif; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-size: 0.85rem; margin-bottom: 20px; }
-  .ninth-body { color: var(--cream); font-family: "Lora", serif; font-style: italic; font-size: 1.5rem; line-height: 1.55; max-width: 30em; margin: 0 auto 24px; }
-  .ninth-attribution { color: var(--muted); font-size: 0.95rem; }
+/* Comprehension check */
+.comprehension {
+  background: rgba(0,0,0,.55);
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+  padding: 28px 30px;
+  margin: 40px 0 22px;
+}
+.comp-tag {
+  display: inline-block; font-size: 11px; font-weight: 800;
+  letter-spacing: 2.5px; color: var(--gold);
+  margin-bottom: 8px; text-transform: uppercase;
+}
+.comp-title {
+  font-family: Georgia, serif; font-size: 1.4rem;
+  font-weight: 700; color: var(--cream);
+  margin: 0 0 14px; letter-spacing: -.2px;
+}
+.comp-intro {
+  color: rgba(245,241,232,.75); font-size: .93rem;
+  line-height: 1.6; margin: 0 0 22px;
+}
+.comp-question {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed rgba(201,168,76,.15);
+}
+.comp-question:last-of-type { border-bottom: 0; padding-bottom: 0; }
+.comp-q-text {
+  font-family: Georgia, serif; font-size: 1.05rem;
+  color: var(--cream); line-height: 1.55; margin-bottom: 12px;
+}
+.comp-q-text b { color: var(--gold); }
+.comp-answer-row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.comp-input {
+  flex: 1; min-width: 180px;
+  background: rgba(245,241,232,.05);
+  border: 2px solid var(--card-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  color: var(--cream);
+  font-family: inherit;
+  outline: none;
+  transition: border-color .12s, background .12s;
+}
+.comp-input:focus {
+  border-color: var(--gold-bright);
+  background: rgba(245,241,232,.1);
+}
+.comp-input.correct {
+  border-color: var(--green);
+  background: rgba(78,168,106,.15);
+  color: var(--green);
+}
+.comp-input.wrong {
+  border-color: var(--red);
+  background: rgba(204,74,58,.15);
+}
+.comp-check-btn {
+  background: var(--gold); color: var(--black);
+  border: 0; border-radius: 6px;
+  padding: 10px 20px;
+  font-size: .95rem; font-weight: 800;
+  cursor: pointer;
+  transition: background .12s;
+}
+.comp-check-btn:hover { background: var(--gold-bright); }
+.comp-check-btn:disabled { opacity: .4; cursor: not-allowed; }
+.comp-feedback {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: .9rem;
+  line-height: 1.5;
+  display: none;
+}
+.comp-feedback.correct {
+  display: block;
+  background: rgba(78,168,106,.08);
+  border: 1px solid rgba(78,168,106,.35);
+  color: #a8e0b8;
+}
+.comp-feedback.wrong {
+  display: block;
+  background: rgba(204,74,58,.08);
+  border: 1px solid rgba(204,74,58,.35);
+  color: #f0b8b0;
+}
+.comp-feedback b { color: var(--cream); }
+.act-status {
+  margin-top: 24px; padding: 16px 20px;
+  background: rgba(201,168,76,.06);
+  border: 1px solid rgba(201,168,76,.25);
+  border-radius: 8px;
+  font-size: .95rem;
+  text-align: center;
+  color: var(--cream-dim);
+}
+.act-status.passed {
+  background: rgba(78,168,106,.08);
+  border-color: rgba(78,168,106,.4);
+  color: #a8e0b8;
+}
+.act-status.perfect {
+  background: rgba(201,168,76,.15);
+  border-color: var(--gold);
+  color: var(--gold);
+  font-weight: 700;
+}
 
-  /* FOUNDATION FOOTER */
-  .foundation { margin-top: 80px; padding: 40px 0; text-align: center; border-top: 1px solid var(--line); }
-  .foundation p { color: var(--muted); margin: 4px 0; font-size: 0.94rem; }
-  .foundation .tagline { color: var(--gold); font-style: italic; font-size: 1.1rem; margin: 12px 0; }
+/* Reveal Card */
+.reveal-card {
+  background: rgba(26,139,127,.06);
+  border-left: 3px solid var(--teal);
+  padding: 24px 28px;
+  margin: 22px 0 0;
+  border-radius: 4px;
+}
+.reveal-card .rc-tag {
+  display: inline-block; font-size: 10px; font-weight: 800;
+  letter-spacing: 2.5px; color: var(--teal);
+  margin-bottom: 10px; text-transform: uppercase;
+}
+.reveal-card p {
+  font-family: Georgia, serif; font-size: 1.08rem;
+  line-height: 1.75; color: var(--cream); margin: 0;
+}
+.reveal-card p b { color: var(--gold); }
+.reveal-card p em { color: var(--teal); font-style: italic; }
+.reveal-card.locked {
+  filter: blur(6px); opacity: .5;
+  pointer-events: none; user-select: none;
+}
+.reveal-locked-msg {
+  display: none;
+  text-align: center; margin: 14px 0;
+  font-family: Georgia, serif;
+  color: var(--cream-dim); font-size: .95rem;
+  font-style: italic;
+}
+.reveal-card.locked + .reveal-locked-msg { display: block; }
 
-  /* TOAST */
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--card); border: 1px solid var(--gold); border-radius: 12px; padding: 16px 28px; color: var(--cream); z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,.6); opacity: 0; pointer-events: none; transition: opacity .3s; max-width: 90vw; }
-  .toast.show { opacity: 1; }
+/* ============================================== EXPLORER BADGES SECTION ==== */
+.badges-section {
+  padding: 70px 20px;
+  background: rgba(0,0,0,.55);
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+}
+.badges-section .wr { max-width: 940px; text-align: center; }
+.badges-section h2 { font-size: 2.1rem; margin-bottom: 12px; }
+.badges-section > .wr > p {
+  color: rgba(245,241,232,.75);
+  max-width: 660px; margin: 0 auto 40px;
+  font-size: .98rem;
+}
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.badge-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: border-color .18s, transform .18s;
+}
+.badge-card.earned {
+  transform: translateY(-4px);
+}
+.badge-card.bronze.earned {
+  border-color: var(--bronze);
+  background: rgba(205,127,50,.06);
+  box-shadow: 0 8px 24px rgba(205,127,50,.15);
+}
+.badge-card.silver.earned {
+  border-color: var(--silver);
+  background: rgba(192,192,192,.06);
+  box-shadow: 0 8px 24px rgba(192,192,192,.15);
+}
+.badge-card.gold.earned {
+  border-color: var(--gold);
+  background: rgba(201,168,76,.10);
+  box-shadow: 0 8px 24px rgba(201,168,76,.25);
+}
+.badge-icon {
+  font-size: 3rem; margin-bottom: 14px;
+  filter: grayscale(1) opacity(.4);
+  transition: filter .3s;
+}
+.badge-card.earned .badge-icon { filter: none; }
+.badge-name {
+  font-family: Georgia, serif;
+  font-size: 1.3rem; font-weight: 800;
+  margin-bottom: 6px;
+  color: var(--cream-dim);
+  letter-spacing: -.2px;
+}
+.badge-card.bronze.earned .badge-name { color: var(--bronze); }
+.badge-card.silver.earned .badge-name { color: var(--silver); }
+.badge-card.gold.earned .badge-name { color: var(--gold); }
+.badge-req {
+  font-size: .87rem; color: rgba(245,241,232,.65);
+  line-height: 1.55; margin: 12px 0 0;
+}
+.badge-status {
+  margin-top: 14px;
+  font-size: .8rem; letter-spacing: 1.5px;
+  text-transform: uppercase; font-weight: 800;
+  color: var(--cream-dim);
+}
+.badge-card.earned .badge-status { color: inherit; }
+.badge-honest {
+  margin-top: 26px; padding: 16px 20px;
+  background: rgba(0,0,0,.4);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  font-size: .88rem;
+  color: rgba(245,241,232,.8);
+  line-height: 1.65;
+  text-align: left;
+  max-width: 720px; margin-left: auto; margin-right: auto;
+}
+.badge-honest b { color: var(--gold); }
 
-  [data-say] { cursor: pointer; }
+@media (max-width: 640px) {
+  .badges-grid { grid-template-columns: 1fr; }
+  .act h2 { font-size: 1.7rem; }
+  .body-title { font-size: 1.5rem; }
+  .comprehension, .body-card { padding: 22px 20px; }
+}
 
-  @media (max-width: 720px) {
-    h1 { font-size: 2.2rem; }
-    .lede { font-size: 1.08rem; }
-    .modal-inner { padding: 24px; }
-    .modal-title { font-size: 1.8rem; }
-    .ninth-body { font-size: 1.15rem; }
-    .controls { gap: 10px; }
-    .ctrl-btn { padding: 6px 10px; font-size: 0.85rem; }
-  }
+/* ============================================================== FAQ ==== */
+.faq-section {
+  padding: 70px 20px;
+  border-top: 1px solid var(--card-border);
+}
+.faq-section .wr { max-width: 860px; }
+.faq-section h2 {
+  text-align: center; font-size: 2rem; margin-bottom: 8px;
+}
+.faq-section > .wr > p {
+  text-align: center; color: rgba(245,241,232,.7);
+  font-size: .95rem; margin: 0 auto 34px; max-width: 620px;
+}
+.faq-item {
+  background: rgba(201,168,76,.04);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.faq-q {
+  padding: 16px 20px;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-weight: 700; font-size: 1.05rem;
+  color: var(--cream);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; user-select: none;
+  transition: background .12s;
+}
+.faq-q:hover { background: rgba(201,168,76,.06); }
+.faq-q::after {
+  content: '+';
+  color: var(--gold); font-size: 1.5rem;
+  font-family: Arial, sans-serif; font-weight: 400;
+  transition: transform .15s;
+}
+.faq-item.open .faq-q::after { content: '\2212'; }
+.faq-a {
+  padding: 0 20px 18px;
+  color: rgba(245,241,232,.85);
+  font-size: .95rem; line-height: 1.7;
+  display: none;
+}
+.faq-item.open .faq-a { display: block; }
+.faq-a b { color: var(--cream); }
+
+/* ============================================================ DICTIONARY - */
+.dict-section {
+  padding: 70px 20px;
+  background: rgba(201,168,76,.02);
+}
+.dict-section .wr { max-width: 980px; }
+.dict-section h2 {
+  text-align: center; font-size: 2rem; margin-bottom: 8px;
+}
+.dict-section > .wr > p {
+  text-align: center; color: rgba(245,241,232,.7);
+  font-size: .95rem; margin: 0 auto 30px; max-width: 620px;
+}
+.dict-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.dict-term {
+  background: rgba(201,168,76,.04);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.dict-term dt {
+  font-family: Georgia, serif; font-size: 1.02rem;
+  font-weight: 700; color: var(--gold); margin-bottom: 5px;
+}
+.dict-term dd {
+  margin: 0; font-size: .88rem; line-height: 1.55;
+  color: rgba(245,241,232,.85);
+}
+
+/* ============================================================ DEEP STRIP - */
+.deep-strip {
+  padding: 60px 20px;
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+}
+.deep-strip .wr { max-width: 980px; text-align: center; }
+.deep-strip h3 {
+  font-size: .8rem; color: var(--gold);
+  font-weight: 800; letter-spacing: 2.5px;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.deep-strip h2 { font-size: 1.6rem; margin-bottom: 22px; }
+.deep-strip p {
+  color: rgba(245,241,232,.75);
+  max-width: 700px; margin: 0 auto 28px;
+  font-size: .95rem; line-height: 1.7;
+}
+.deep-links {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.deep-links a {
+  background: rgba(201,168,76,.06);
+  border: 1px solid var(--card-border);
+  color: var(--cream);
+  padding: 12px 22px; border-radius: 999px;
+  font-size: .88rem; font-weight: 600;
+  transition: background .12s, border-color .12s;
+}
+.deep-links a:hover {
+  background: rgba(201,168,76,.14);
+  border-color: var(--gold); color: var(--gold-bright);
+  text-decoration: none;
+}
+
+/* =============================================================== FOOTER --- */
+.sse-footer {
+  padding: 40px 20px 30px;
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+  color: var(--cream-fade);
+  font-size: .84rem;
+  line-height: 1.6;
+}
+.sse-footer a { color: var(--cream-dim); }
+.sse-footer a:hover { color: var(--gold); }
+.sse-footer b { color: var(--cream); }
+
+/* GENO widget container */
+elevenlabs-convai {
+  position: fixed;
+  right: 20px; bottom: 20px;
+  z-index: 500;
+}
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<!-- ==================================================================== NAV -->
+<nav class="navbar" aria-label="Solar System Orbital Explorer navigation">
+  <div class="nav-inner">
+    <span class="nav-brand">GSU</span>
+    <a href="https://globalsovereignuniversity.org/">Home</a>
+    <a href="https://read.globalsovereignuniversity.org/learning-arcade.html">Learning Arcade</a>
+    <a href="https://globalsovereignuniversity.org/science">Science Hub</a>
+    <a href="https://globalsovereignuniversity.org/geographication">Geography Hub</a>
+    <a href="https://globalsovereignuniversity.org/eight-rabbits">The Warren</a>
+    <a href="https://globalsovereignuniversity.org/quid-pro-quo" class="nav-cta">Support GSU</a>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="eyebrow">Global Sovereign University</div>
-    <h1 data-say="The Sovereign Explorer.">The Sovereign Explorer</h1>
-    <p class="lede" data-say="Drive the Solar System. Read every planet's chapter aloud. Earn Bronze, Silver, and Gold. No login. No email. Just wonder.">Drive the Solar System. Read every planet's chapter aloud. Earn Bronze, Silver, and Gold. No login. No email. Just wonder.</p>
+<!-- ============================================================= WHY WE PLAY -->
+<section id="gsu-why-we-play">
+  <div class="wr">
+    <h3>Why We Play</h3>
+    <p>At GSU we believe repetition without curiosity is drill; curiosity without repetition is daydream. Games weld the two together — one honest attempt, then another, each carrying a question the mind wants to answer. The knowledge stays because it was earned in a real fight, not memorized in a hurry.</p>
+    <p>You are about to travel a solar system as a five-act story. The animation is real physics — every planet you see is orbiting at its actual relative speed. Explorer badges are earned by <b>proving what you learned</b>, not by clicking a button. Come back at 3 a.m. The sky is still open.</p>
+  </div>
+</section>
 
-    <div class="ratebox" id="ratebox">
-      <div class="rt">Rate The Sovereign Explorer. Your stars help other families find it.</div>
-      <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
-      <div class="rate-meta" id="rateMeta">Loading ratings&hellip;</div>
-      <div class="rate-thanks" id="rateThanks"></div>
+<!-- ==================================================================== HERO -->
+<section class="hero">
+  <div class="wr">
+    <span class="hero-eyebrow">The Solar System Orbital Explorer · Rabbit #9 of the GSU Warren</span>
+    <h1>Eight Planets. One Sun. <em>Four Billion Years of Story.</em></h1>
+    <p class="hero-deck">Watch the planets orbit at their <b>real relative periods</b>. Read the solar system as a coherent five-act arc — the Sun's <em>patience</em>, the rocky neighborhood's <em>fingerprints</em>, Jupiter's <em>guardianship</em>, the outer dark's <em>amplification of difference</em>, and the dwarf realm's <em>lesson in proportion</em>. Earn a Bronze, Silver, or Gold Explorer badge by proving what you learned — not by clicking through.</p>
+    <p class="hero-fine"><b>No login. No cost. No hype.</b> Real facts, real physics, real questions. GENO answers in 83 languages if you get stuck.</p>
+  </div>
+</section>
+
+<!-- ================================================== ORBIT CANVAS SECTION -->
+<section class="orbit-section">
+  <div class="orbit-wrap">
+    <div class="orbit-canvas-container">
+      <canvas id="orbit-canvas" aria-label="Live orbital animation of the solar system"></canvas>
     </div>
-  </section>
-
-  <!-- INTERACTIVE SOLAR VIEWPORT -->
-  <section class="viewport-wrap">
-    <h2 class="viewport-title">Drive Around</h2>
-    <p class="viewport-sub">Click any planet to open its chapter. Tap the sun. Try the toggles. Take your time — the Solar System is patient.</p>
-    <div class="viewport" id="viewport">
-      <svg id="solarSvg" viewBox="-500 -350 1000 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#fff4c9"/>
-            <stop offset="30%" stop-color="#ffd75e"/>
-            <stop offset="70%" stop-color="#f0a020"/>
-            <stop offset="100%" stop-color="#c96e0e"/>
-          </radialGradient>
-          <radialGradient id="sunCorona" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#ffd75e" stop-opacity="0.5"/>
-            <stop offset="60%" stop-color="#ffd75e" stop-opacity="0.08"/>
-            <stop offset="100%" stop-color="#ffd75e" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="mercuryGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#c9c1b5"/>
-            <stop offset="100%" stop-color="#5a5148"/>
-          </radialGradient>
-          <radialGradient id="venusGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#f4e0a8"/>
-            <stop offset="100%" stop-color="#a06c1e"/>
-          </radialGradient>
-          <radialGradient id="earthGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#88c8f0"/>
-            <stop offset="60%" stop-color="#2a70b0"/>
-            <stop offset="100%" stop-color="#0d2a58"/>
-          </radialGradient>
-          <radialGradient id="moonGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#e0d8c8"/>
-            <stop offset="100%" stop-color="#787060"/>
-          </radialGradient>
-          <radialGradient id="marsGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#e08050"/>
-            <stop offset="100%" stop-color="#6a2010"/>
-          </radialGradient>
-          <radialGradient id="jupiterGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#e8c898"/>
-            <stop offset="50%" stop-color="#c08858"/>
-            <stop offset="100%" stop-color="#5c3810"/>
-          </radialGradient>
-          <radialGradient id="saturnGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#f5e0a8"/>
-            <stop offset="100%" stop-color="#a07830"/>
-          </radialGradient>
-          <radialGradient id="uranusGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#a8e0e8"/>
-            <stop offset="100%" stop-color="#40808c"/>
-          </radialGradient>
-          <radialGradient id="neptuneGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#6098e8"/>
-            <stop offset="100%" stop-color="#20386c"/>
-          </radialGradient>
-          <radialGradient id="plutoGrad" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#c8b8a0"/>
-            <stop offset="100%" stop-color="#605040"/>
-          </radialGradient>
-        </defs>
-
-        <!-- STARFIELD -->
-        <g id="starsBg"></g>
-
-        <!-- ORBIT LINES -->
-        <g id="orbitLines"></g>
-
-        <!-- ASTEROID BELT -->
-        <g id="asteroidBelt"></g>
-
-        <!-- SUN CORONA + BODY -->
-        <circle cx="0" cy="0" r="90" fill="url(#sunCorona)"/>
-        <circle class="planet-hit" data-body="sun" cx="0" cy="0" r="42" fill="url(#sunGrad)"/>
-        <text class="planet-label" x="0" y="70">The Sun</text>
-
-        <!-- PLANETS (positions set by JS) -->
-        <g id="planetsLayer"></g>
-      </svg>
-
-      <div class="stars-bg" id="starsBgOverlay"></div>
-    </div>
-
-    <!-- CONTROL STRIP -->
-    <div class="controls">
-      <button class="ctrl-btn on" id="playBtn">⏸ Pause</button>
-      <div class="ctrl">
-        <label>Speed</label>
-        <input type="range" min="0" max="10" value="3" class="speed-slider" id="speedSlider">
+    <div class="orbit-controls">
+      <div class="orbit-hint"><b>Click any planet</b> to jump to its story below. Or scroll to travel the whole system in order.</div>
+      <div class="orbit-speed">
+        <label for="speed-slider">Orbit Speed</label>
+        <input type="range" id="speed-slider" min="0.1" max="20" step="0.1" value="2.0">
+        <span class="speed-value" id="speed-value">2.0×</span>
       </div>
-      <button class="ctrl-btn on" id="labelsBtn">Labels</button>
-      <button class="ctrl-btn on" id="orbitsBtn">Orbits</button>
-      <button class="ctrl-btn" id="scaleHonestBtn">Scale Honest</button>
-      <button class="ctrl-btn" id="resetBtn">↺ Reset</button>
-    </div>
-  </section>
-
-  <!-- BADGES -->
-  <section>
-    <div class="badges">
-      <h2>Explorer Certificates</h2>
-      <p>Every planet you visit earns you one step closer. Bronze for visiting all eight planets. Silver for reading all eight chapters. Gold for answering the 24-question Comprehension Check. All real. All verifiable. All free.</p>
-      <div class="badge-tiers">
-        <div class="badge-tier" id="badgeBronze">
-          <div class="badge-icon">🥉</div>
-          <div class="badge-name">Bronze Explorer</div>
-          <div class="badge-req">Visit all 8 planets</div>
-          <div class="badge-progress" id="bronzeProgress">0 / 8</div>
-        </div>
-        <div class="badge-tier" id="badgeSilver">
-          <div class="badge-icon">🥈</div>
-          <div class="badge-name">Silver Explorer</div>
-          <div class="badge-req">Read all 8 chapters</div>
-          <div class="badge-progress" id="silverProgress">0 / 8</div>
-        </div>
-        <div class="badge-tier" id="badgeGold">
-          <div class="badge-icon">🥇</div>
-          <div class="badge-name">Gold Explorer</div>
-          <div class="badge-req">Comprehension Check</div>
-          <div class="badge-progress" id="goldProgress">Coming after Silver</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SCALE SECTION -->
-  <section>
-    <div class="scale-section">
-      <h2>The Sun Is Bigger Than You Think</h2>
-      <p data-say="The Sun holds ninety-nine point eight percent of all the mass in the Solar System. Every planet, every moon, every comet, every asteroid combined is less than one percent. When you drove around above, we cheated the size so you could see everything. Here is what it actually looks like.">The Sun holds 99.8% of all the mass in the Solar System. Every planet, every moon, every comet, every asteroid combined is less than 1%. When you drove around above, we cheated the size so you could see everything. Here is what it actually looks like.</p>
-      <div class="scale-viz">
-        <svg viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="120" cy="120" r="110" fill="url(#sunGrad)"/>
-          <text x="120" y="235" text-anchor="middle" fill="#F5F1E8" font-family="Lora, serif" font-size="14">The Sun</text>
-          <circle cx="300" cy="120" r="1" fill="#c9c1b5"/>
-          <text x="300" y="145" text-anchor="middle" fill="#8a8580" font-size="10">Mercury</text>
-          <circle cx="340" cy="120" r="2.4" fill="#a06c1e"/>
-          <text x="340" y="145" text-anchor="middle" fill="#8a8580" font-size="10">Venus</text>
-          <circle cx="390" cy="120" r="2.5" fill="#2a70b0"/>
-          <text x="390" y="145" text-anchor="middle" fill="#8a8580" font-size="10">Earth</text>
-          <circle cx="440" cy="120" r="1.3" fill="#a04530"/>
-          <text x="440" y="145" text-anchor="middle" fill="#8a8580" font-size="10">Mars</text>
-          <circle cx="530" cy="120" r="28" fill="url(#jupiterGrad)"/>
-          <text x="530" y="170" text-anchor="middle" fill="#8a8580" font-size="10">Jupiter</text>
-          <circle cx="620" cy="120" r="23" fill="url(#saturnGrad)"/>
-          <text x="620" y="170" text-anchor="middle" fill="#8a8580" font-size="10">Saturn</text>
-          <circle cx="700" cy="120" r="10" fill="url(#uranusGrad)"/>
-          <text x="700" y="145" text-anchor="middle" fill="#8a8580" font-size="10">Uranus</text>
-          <circle cx="760" cy="120" r="10" fill="url(#neptuneGrad)"/>
-          <text x="760" y="145" text-anchor="middle" fill="#8a8580" font-size="10">Neptune</text>
-          <circle cx="820" cy="120" r="0.5" fill="#c8b8a0"/>
-          <text x="820" y="145" text-anchor="middle" fill="#8a8580" font-size="10">Pluto</text>
-        </svg>
-      </div>
-      <div class="scale-callout" data-say="If Earth were the size of a marble, the Sun would be the size of a small house.">If Earth were the size of a marble, the Sun would be the size of a small house.</div>
-    </div>
-  </section>
-
-  <!-- DAY / NIGHT AND SEASONS SIMULATOR -->
-  <section>
-    <div class="daynight">
-      <h2>Day, Night, and Seasons — Explained</h2>
-      <p data-say="Two things you probably never learned properly. Why is there day and night? Because Earth spins on its axis, once every twenty-four hours. Why are there seasons? Not because Earth moves closer or farther from the Sun. It is because Earth's axis is tilted twenty-three point five degrees. When the top half tilts toward the Sun, that half has summer. When it tilts away, that half has winter. That is it. That is the whole answer.">Two things you probably never learned properly. Why is there day and night? Because Earth spins on its axis, once every 24 hours. Why are there seasons? Not because Earth moves closer or farther from the Sun. It is because Earth's axis is tilted 23.5°. When the top half tilts toward the Sun, that half has summer. When it tilts away, that half has winter. That is it. That is the whole answer.</p>
-      <div class="daynight-grid">
-        <div class="dn-panel">
-          <h3>Day and Night</h3>
-          <div class="dn-viz">
-            <svg viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg" id="daynightViz">
-              <circle cx="0" cy="0" r="60" fill="url(#earthGrad)"/>
-              <path d="M 0 -60 A 60 60 0 0 1 0 60 L 0 60 Z" fill="#000" opacity="0.7" id="nightShadow"/>
-              <line x1="-4" y1="-72" x2="4" y2="-72" stroke="#C9A84C" stroke-width="2"/>
-              <line x1="0" y1="-80" x2="0" y2="80" stroke="#C9A84C" stroke-width="1" stroke-dasharray="2 3" opacity="0.5" id="rotAxis"/>
-            </svg>
-          </div>
-          <p>Earth rotates on its axis. You see day when your side faces the Sun. You see night when it turns away.</p>
-        </div>
-        <div class="dn-panel">
-          <h3>The Tilt That Makes Seasons</h3>
-          <div class="dn-viz">
-            <svg viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg">
-              <g transform="rotate(23.5)">
-                <circle cx="0" cy="0" r="60" fill="url(#earthGrad)"/>
-                <line x1="0" y1="-85" x2="0" y2="85" stroke="#C9A84C" stroke-width="2"/>
-                <line x1="-6" y1="-85" x2="6" y2="-85" stroke="#C9A84C" stroke-width="2"/>
-                <line x1="-6" y1="85" x2="6" y2="85" stroke="#C9A84C" stroke-width="2"/>
-              </g>
-              <text x="0" y="-92" text-anchor="middle" fill="#C9A84C" font-size="10" font-family="Lora,serif">23.5°</text>
-            </svg>
-          </div>
-          <p>The tilt never changes as Earth orbits. When your half tilts toward the Sun it's summer. When it tilts away, winter.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GENO PANEL -->
-  <section class="geno">
-    <h2>Ask GENO Anything About Space</h2>
-    <p>GENO is the free AI tutor for the Foundation. He speaks 83 languages, is available 24/7, and has memorized <em>The Sun's Family</em> cover to cover. Try one of these questions, or ask your own.</p>
-    <div class="geno-prompts">
-      <div class="prompt-chip" data-prompt="Why is the sky blue?">Why is the sky blue?</div>
-      <div class="prompt-chip" data-prompt="What is a black hole?">What is a black hole?</div>
-      <div class="prompt-chip" data-prompt="How do astronauts eat in space?">How do astronauts eat?</div>
-      <div class="prompt-chip" data-prompt="Are we going back to the Moon?">Are we going back to the Moon?</div>
-      <div class="prompt-chip" data-prompt="What is a light year?">What is a light year?</div>
-      <div class="prompt-chip" data-prompt="How was the Solar System born?">How was the Solar System born?</div>
-    </div>
-    <div class="geno-cta">
-      <a href="#" class="btn" onclick="try{window.dispatchEvent(new CustomEvent('geno:open'));}catch(e){}return false;">Talk with GENO</a>
-    </div>
-  </section>
-
-  <!-- NINTH BODY - SOVEREIGN REFLECTION -->
-  <section class="ninth">
-    <div class="ninth-eyebrow">The Ninth Body</div>
-    <p class="ninth-body" data-say="You are made of the same leftover space stuff. So am I. You are older than every king. You do not have to ask permission to look up. Look up.">"You are made of the same leftover space stuff. So am I. You are older than every king. You do not have to ask permission to look up. Look up."</p>
-    <div class="ninth-attribution">— The Sovereign Explorer, closing beat</div>
-  </section>
-
-  <!-- FOUNDATION FOOTER -->
-  <section class="foundation">
-    <p class="tagline" data-say="A hand up, not a handout.">A hand up, not a handout.</p>
-    <p>The Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
-    <p>Eugene, Oregon · <a href="https://globalsovereignuniversity.org">globalsovereignuniversity.org</a></p>
-  </section>
-
-</div>
-
-<!-- PLANET MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-inner">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-eyebrow" id="modalEyebrow"></div>
-    <h2 class="modal-title" id="modalTitle"></h2>
-    <div class="modal-pos" id="modalPos"></div>
-    <div class="modal-planet-visual" id="modalVisual"></div>
-    <div class="modal-facts" id="modalFacts"></div>
-    <div class="chapter-block" id="chapterBlock">
-      <div class="chapter-eyebrow">FROM THE SUN'S FAMILY — TAP TO HEAR IT READ</div>
-      <div class="chapter-text" id="chapterText"></div>
-      <div class="chapter-hint">Tap the passage to hear it read aloud.</div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn ghost" onclick="closeModal()">Close</button>
     </div>
   </div>
-</div>
+</section>
 
-<div class="toast" id="toast"></div>
+<!-- ============================================================ ACT I — SUN -->
+<section class="act" id="act-1">
+  <div class="wr">
+    <span class="act-eyebrow">Act I · The Center of Everything</span>
+    <h2>The Sun — Not Big. <em>Patient.</em></h2>
 
-<script type="module">
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    <div class="curiosity-card">
+      <span class="cc-tag">🧠 Curiosity Card</span>
+      <p>You could fit <b>1.3 million Earths</b> inside the Sun. But here's the strange part: the Sun is not remotely the largest star in the neighborhood. It's <em>below-average in size</em>. Which raises a question: if we're orbiting a below-average star, why isn't Earth a below-average planet?</p>
+    </div>
 
-const cfg = {
-  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
-  authDomain: "gsu-handshake.firebaseapp.com",
-  projectId: "gsu-handshake",
-  storageBucket: "gsu-handshake.firebasestorage.app",
-  messagingSenderId: "301089416765",
-  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
-};
+    <div class="body-card" data-body="sun">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 35% 35%, #FFEB80, #FF9500 55%, #E24500);"></div>
+        <div>
+          <h3 class="body-title">The Sun</h3>
+          <div class="body-subtitle">G-type main-sequence star</div>
+        </div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Age</dt><dd>4.6 billion years</dd></div>
+        <div class="body-stat"><dt>Total lifetime</dt><dd>~10 billion years</dd></div>
+        <div class="body-stat"><dt>Surface temp</dt><dd>5,500 °C</dd></div>
+        <div class="body-stat"><dt>Core temp</dt><dd>15 million °C</dd></div>
+        <div class="body-stat"><dt>Composition</dt><dd>73% H · 25% He</dd></div>
+        <div class="body-stat"><dt>Volume</dt><dd>1.3 million Earths</dd></div>
+      </dl>
+      <p class="body-narrative">The Sun is a <b>G-type main-sequence star</b> — what astronomers call a "yellow dwarf." It's medium-sized, medium-temperature, medium-brightness. In a random sample of stars in our galaxy, most would be smaller (red dwarfs) and some would be much larger (giants and supergiants). The Sun is not remarkable by any of those measurements. What <em>is</em> remarkable is how <b>steady</b> it burns. Massive stars consume their hydrogen in a fury and die in a few million years. Tiny red dwarfs are too dim to fuel photosynthesis and are prone to violent flares. The Sun burns hot enough to warm liquid water, dim enough not to sterilize, and stable enough to keep doing it for <em>ten billion years total</em> — of which it's about halfway through.</p>
+      <div class="body-wow"><b>The wow:</b> Every atom of oxygen in your body — including the one in the water molecule you drank this morning — was manufactured in the core of a star that died before the Sun was born. The Sun didn't make you. It just gave you four billion years of quiet.</div>
+    </div>
 
-const GID = "solar-system-explorer";
+    <div class="comprehension" data-act="1">
+      <span class="comp-tag">🎯 Prove You Learned It</span>
+      <h3 class="comp-title">Comprehension Check — Act I</h3>
+      <p class="comp-intro">Answer all three to unlock the Reveal Card and earn credit toward your Explorer badge. Numeric answers only — no need to type units.</p>
 
-// =================== PLANET DATA ===================
-// r = display orbital radius (pixels)
-// size = display size (pixels)
-// speed = orbital speed multiplier (Mercury fastest)
-// tSize = true relative scale (for Scale Honest mode)
-// data derived from public NASA data
-const PLANETS = {
-  mercury: {
-    name: "Mercury", pos: "1st planet from the Sun",
-    r: 80, size: 4, speed: 4.15, tSize: 2, color: "url(#mercuryGrad)", solidColor: "#a89880",
-    facts: [
-      ["Distance from Sun", "36 million miles"],
-      ["Year length", "88 Earth days"],
-      ["Day length", "59 Earth days"],
-      ["Temperature", "-290°F to 800°F"],
-      ["Moons", "None"],
-      ["Fun fact", "A year is shorter than its day!"]
-    ],
-    chapter: [
-      "Mercury lives closest to the Sun. That means it moves fastest \u2014 all the way around the Sun in just 88 of our Earth days. Imagine a birthday every three months.",
-      "But Mercury spins very slowly on its own. One day on Mercury takes longer than one year on Mercury. The Sun rises, hangs in the sky for weeks, and finally sets after two Earth months.",
-      "Mercury has no air to hold heat. So when the Sun is up, it burns. When the Sun is down, it freezes. Mercury is a small stone brother, close to the fire, doing the best it can."
-    ]
-  },
-  venus: {
-    name: "Venus", pos: "2nd planet from the Sun",
-    r: 118, size: 7, speed: 1.62, tSize: 5, color: "url(#venusGrad)", solidColor: "#d4a848",
-    facts: [
-      ["Distance from Sun", "67 million miles"],
-      ["Year length", "225 Earth days"],
-      ["Day length", "243 Earth days"],
-      ["Temperature", "863°F (hottest!)"],
-      ["Moons", "None"],
-      ["Fun fact", "Spins backwards from most planets"]
-    ],
-    chapter: [
-      "Venus is Earth's twin sister in size. But she does not feel like a sister. Venus is hotter than any planet in the family \u2014 even hotter than Mercury, which sits closer to the Sun.",
-      "Why? Venus wears a thick blanket of clouds made of poison. The blanket traps the Sun's heat and never lets it go. Under the clouds, the ground could melt lead.",
-      "And Venus spins backwards. If you stood there, the Sun would rise in the west and set in the east. She is the strange sister. But she is family, and she teaches us what happens when a planet holds too much heat."
-    ]
-  },
-  earth: {
-    name: "Earth", pos: "3rd planet from the Sun",
-    r: 160, size: 8, speed: 1.00, tSize: 5.3, color: "url(#earthGrad)", solidColor: "#3a8ac0", hasMoon: true,
-    facts: [
-      ["Distance from Sun", "93 million miles"],
-      ["Year length", "365.25 days"],
-      ["Day length", "24 hours"],
-      ["Temperature range", "-128°F to 134°F"],
-      ["Moons", "1 (the Moon)"],
-      ["Fun fact", "Only planet known to have life"]
-    ],
-    chapter: [
-      "Earth is our home. Earth is the only planet in the family where you can breathe the air, drink the water, and stand in the sunshine without a spacesuit.",
-      "Earth spins once every day. That is why we have day and night. Earth also travels all the way around the Sun once every year. That trip is 584 million miles long, and Earth does it every single year without missing a step.",
-      "You are on Earth right now. You are moving through space at nineteen miles per second. You cannot feel it because everything around you is moving too. That is the magic of home. It is always moving, and it always feels still."
-    ]
-  },
-  mars: {
-    name: "Mars", pos: "4th planet from the Sun",
-    r: 210, size: 5, speed: 0.53, tSize: 2.8, color: "url(#marsGrad)", solidColor: "#c05238",
-    facts: [
-      ["Distance from Sun", "142 million miles"],
-      ["Year length", "687 Earth days"],
-      ["Day length", "24 hours 37 min"],
-      ["Temperature", "-220°F to 70°F"],
-      ["Moons", "2 (Phobos, Deimos)"],
-      ["Fun fact", "Has the tallest volcano in the Solar System"]
-    ],
-    chapter: [
-      "Mars is red because it is rusty. The ground has iron in it, and the iron has rusted over billions of years, just like an old bicycle left out in the rain.",
-      "Mars is smaller than Earth and much colder. But Mars has a day almost the same length as ours, only 37 minutes longer. If you moved to Mars, your bedtime would feel almost the same.",
-      "Long ago, Mars had rivers and lakes and maybe even seas. We know because we can still see the dry riverbeds from space. Something happened. Mars lost its air, and the water dried up or froze. Mars is what a planet looks like after it loses its air."
-    ]
-  },
-  jupiter: {
-    name: "Jupiter", pos: "5th planet from the Sun",
-    r: 285, size: 22, speed: 0.084, tSize: 58, color: "url(#jupiterGrad)", solidColor: "#c89858",
-    facts: [
-      ["Distance from Sun", "484 million miles"],
-      ["Year length", "12 Earth years"],
-      ["Day length", "9 hours 56 min"],
-      ["Composition", "Mostly hydrogen and helium"],
-      ["Moons", "95 known"],
-      ["Fun fact", "The Great Red Spot is a storm bigger than Earth"]
-    ],
-    chapter: [
-      "Jupiter is the king of the planets. Jupiter is so big that all the other planets in the family could fit inside it with room to spare.",
-      "Jupiter is not made of rock like Earth. Jupiter is made of gas. If you tried to land on Jupiter, you would just fall in \u2014 there is no ground.",
-      "Jupiter has a Great Red Spot that has been raging for at least 350 years. It is a storm bigger than the whole planet Earth. Jupiter has 95 moons that we know of. Four of them are so big they were named: Io, Europa, Ganymede, and Callisto. Ganymede is bigger than the planet Mercury."
-    ]
-  },
-  saturn: {
-    name: "Saturn", pos: "6th planet from the Sun",
-    r: 345, size: 19, speed: 0.034, tSize: 48, color: "url(#saturnGrad)", solidColor: "#d4b878", hasRings: true,
-    facts: [
-      ["Distance from Sun", "886 million miles"],
-      ["Year length", "29 Earth years"],
-      ["Day length", "10 hours 42 min"],
-      ["Composition", "Hydrogen and helium"],
-      ["Moons", "146 known"],
-      ["Fun fact", "So light it would float in water"]
-    ],
-    chapter: [
-      "Saturn is the ringed planet. Everybody knows Saturn because of the rings. The rings are real, and they are made of billions and billions of tiny pieces of ice and rock, all orbiting Saturn together in one flat plane.",
-      "Some of the ice pieces are the size of a grain of sand. Some are as big as a house. All of them shine when the sun hits them, and that is the shine you see when you look at Saturn through a telescope.",
-      "Saturn is so light for its size that if you could find a bathtub big enough, Saturn would float in it. That is because Saturn is made mostly of gas, and gas is much lighter than rock or metal. Saturn is a giant, but a fluffy one."
-    ]
-  },
-  uranus: {
-    name: "Uranus", pos: "7th planet from the Sun",
-    r: 400, size: 12, speed: 0.012, tSize: 20, color: "url(#uranusGrad)", solidColor: "#6ec8d0",
-    facts: [
-      ["Distance from Sun", "1.8 billion miles"],
-      ["Year length", "84 Earth years"],
-      ["Day length", "17 hours"],
-      ["Temperature", "-357°F"],
-      ["Moons", "28 known"],
-      ["Fun fact", "Spins on its side"]
-    ],
-    chapter: [
-      "Uranus does something no other planet does. Uranus is tipped over on its side. It rolls around the Sun like a ball rolling across a floor.",
-      "Because Uranus is tipped, one of its poles points directly at the Sun for about 42 Earth years at a time. Then it swings around and the other pole gets the sunlight for another 42 years. Imagine a summer that lasts your whole life.",
-      "Uranus is one of the ice giants \u2014 not made of rock, not made of gas, but of a slushy mix of water and ammonia and methane. The methane is why Uranus looks blue-green. It is a strange and beautiful planet, out at the edge of the family."
-    ]
-  },
-  neptune: {
-    name: "Neptune", pos: "8th planet from the Sun",
-    r: 452, size: 11, speed: 0.006, tSize: 19, color: "url(#neptuneGrad)", solidColor: "#4880d0",
-    facts: [
-      ["Distance from Sun", "2.8 billion miles"],
-      ["Year length", "165 Earth years"],
-      ["Day length", "16 hours"],
-      ["Winds", "1,200 mph (fastest)"],
-      ["Moons", "16 known"],
-      ["Fun fact", "One year hasn't finished since it was discovered in 1846"]
-    ],
-    chapter: [
-      "Neptune is the farthest true planet from the Sun. Neptune is so far away that the Sun looks like a bright star from there \u2014 not a warm glowing ball, just a very bright pinpoint.",
-      "Neptune has the fastest winds in the Solar System. Winds on Neptune blow at 1,200 miles per hour \u2014 faster than the fastest jet, faster than any storm on Earth. Nobody knows exactly why. Neptune keeps some of its secrets.",
-      "Neptune was found by mathematics before anyone actually saw it. Scientists noticed Uranus was being pulled by something, and they calculated where that something must be. They pointed a telescope at that exact spot, and there was Neptune, waiting."
-    ]
-  }
-};
+      <div class="comp-question" data-q="1a" data-correct="1.3" data-tolerance="0.5" data-type="numeric">
+        <div class="comp-q-text"><b>1.</b> Approximately how many Earths could fit inside the Sun? (Answer in millions.)</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="decimal" autocomplete="off" aria-label="Answer 1">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-// Pluto handled separately since it's a dwarf planet
-const PLUTO_DATA = {
-  name: "Pluto", pos: "Dwarf planet, Kuiper Belt",
-  r: 495, size: 3, speed: 0.004, tSize: 1, color: "url(#plutoGrad)", solidColor: "#a89080",
-  facts: [
-    ["Distance from Sun", "3.7 billion miles"],
-    ["Year length", "248 Earth years"],
-    ["Day length", "6.4 Earth days"],
-    ["Temperature", "-375°F"],
-    ["Moons", "5 (including Charon)"],
-    ["Classification", "Dwarf planet since 2006"]
-  ],
-  chapter: [
-    "Pluto used to be counted as the ninth planet. In 2006, scientists changed their minds and called Pluto a dwarf planet instead. Pluto did not shrink. The rules changed.",
-    "Pluto lives out in the Kuiper Belt, a wide ring of icy worlds beyond Neptune. There are lots of little worlds out there, and Pluto is one of the biggest.",
-    "Pluto has a moon called Charon that is almost half its size. They orbit each other like dance partners, with both of them spinning around a point in the space between them. Pluto may not be a planet anymore, but it is still one of the most interesting worlds in the family."
-  ]
-};
+      <div class="comp-question" data-q="1b" data-correct="10" data-tolerance="1.5" data-type="numeric">
+        <div class="comp-q-text"><b>2.</b> The Sun's expected total lifetime is about _____ billion years.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer 2">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-// =================== FIREBASE APP STATE ===================
-let db = null, auth = null, uid = null;
-let progress = { planetsVisited: [], chaptersRead: [], badges: [] };
+      <div class="comp-question" data-q="1c" data-correct="15" data-tolerance="2" data-type="numeric">
+        <div class="comp-q-text"><b>3.</b> The Sun's core temperature is approximately _____ million °C.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer 3">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-// Rating widget state
-const starsEl = document.getElementById('stars');
-const rateMetaEl = document.getElementById('rateMeta');
-const rateThxEl = document.getElementById('rateThanks');
-let myStars = 0, avgRating = 0, ratingCount = 0;
+      <div class="act-status" data-act-status="1">Answer all three questions correctly to earn credit for Act I.</div>
+    </div>
 
-function paintStars(hover) {
-  starsEl.innerHTML = '';
-  const fill = hover || myStars || Math.round(avgRating);
-  for (let i = 1; i <= 5; i++) {
-    const s = document.createElement('span');
-    s.className = 'st' + ((i <= fill) ? ' on' : '');
-    s.textContent = '★';
-    s.setAttribute('role', 'radio');
-    s.addEventListener('mouseenter', () => paintStars(i));
-    s.addEventListener('mouseleave', () => paintStars(0));
-    s.addEventListener('click', () => rateStars(i));
-    starsEl.appendChild(s);
-  }
-}
+    <div class="reveal-card locked" data-reveal="1">
+      <span class="rc-tag">✨ Reveal Card — Locked</span>
+      <p>Because "average" is the wrong word for the Sun. It is a <b>G-type main-sequence star</b> — extremely stable, extremely long-lived (10-billion-year lifetime), and this stability is <em>exactly</em> what let complex life have four billion years to evolve. Bigger stars burn hot and fast — thousands or millions of years. The Sun's "average size" is what made you possible. <b>The most impressive thing about our star isn't its size. It's its patience.</b></p>
+    </div>
+    <p class="reveal-locked-msg">Answer the three comprehension questions above to unlock the Reveal Card.</p>
+  </div>
+</section>
 
-function showRateMeta() {
-  if (ratingCount > 0) {
-    rateMetaEl.innerHTML = '<b>' + avgRating.toFixed(1) + '</b> / 5 · ' + ratingCount + (ratingCount === 1 ? ' rating' : ' ratings');
-  } else {
-    rateMetaEl.textContent = 'Be the first to rate The Sovereign Explorer.';
-  }
-}
+<!-- =================================================== ACT II — ROCKY WORLDS -->
+<section class="act" id="act-2">
+  <div class="wr">
+    <span class="act-eyebrow">Act II · The Rocky Neighborhood</span>
+    <h2>Mercury, Venus, Earth, Mars. <em>Four Fingerprints, Four Histories.</em></h2>
 
-function injectLD() {
-  if (ratingCount < 1) return;
-  const el = document.getElementById('course-ld');
-  if (!el) return;
-  try {
-    const o = JSON.parse(el.textContent);
-    o.aggregateRating = { "@type": "AggregateRating", "ratingValue": Number(avgRating.toFixed(2)), "ratingCount": ratingCount, "bestRating": 5, "worstRating": 1 };
-    el.textContent = JSON.stringify(o);
-  } catch (e) {}
-}
+    <div class="curiosity-card">
+      <span class="cc-tag">🧠 Curiosity Card</span>
+      <p>Mercury and Venus have <b>no moons</b>. Earth has one big one. Mars has two tiny lumpy ones. Why the pattern? If moons form the same way everywhere, they should be evenly distributed. They aren't. <em>Something specific happened here.</em></p>
+    </div>
 
-async function loadRating() {
-  try {
-    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
-    if (snap.exists()) {
-      const d = snap.data();
-      ratingCount = d.count || 0;
-      avgRating = ratingCount ? (d.sum || 0) / ratingCount : 0;
-    }
-  } catch (e) {}
-  try {
-    const v = await getDoc(doc(db, 'lesson_ratings', GID, 'voters', uid));
-    if (v.exists()) myStars = v.data().stars || 0;
-  } catch (e) {}
-  paintStars(0); showRateMeta(); injectLD();
-  if (myStars) rateThxEl.textContent = 'You rated this ' + myStars + ' ★. Tap to change.';
-}
+    <div class="body-card" data-body="mercury">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #B8A38D, #6B5A48);"></div>
+        <div><h3 class="body-title">Mercury</h3><div class="body-subtitle">The scorched runt · 0.39 AU</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun</dt><dd>57.9 million km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>4,879 km</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>88 Earth days</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>176 Earth days</dd></div>
+        <div class="body-stat"><dt>Moons</dt><dd>0</dd></div>
+        <div class="body-stat"><dt>Atmosphere</dt><dd>Essentially none</dd></div>
+      </dl>
+      <p class="body-narrative">Mercury is the smallest planet and the closest to the Sun. Without an atmosphere to hold heat, its surface swings <b>from 430 °C in daylight to −180 °C at night</b> — the widest temperature range of any planet. Its year (one full orbit around the Sun) is only 88 Earth days, but its rotation is so slow that a single day on Mercury (sunrise to sunrise) lasts 176 Earth days — <em>twice as long as its year</em>. Nothing about Mercury is normal.</p>
+      <div class="body-wow"><b>The wow:</b> Because Mercury has no atmosphere and turns so slowly, ice can survive in the permanent shadows of its polar craters — despite being the planet closest to the Sun.</div>
+    </div>
 
-async function rateStars(stars) {
-  if (!db || !uid) { rateThxEl.textContent = 'Ratings save when online.'; myStars = stars; paintStars(0); return; }
-  try {
-    await runTransaction(db, async (tx) => {
-      const aggRef = doc(db, 'lesson_ratings', GID);
-      const vRef = doc(db, 'lesson_ratings', GID, 'voters', uid);
-      const a = await tx.get(aggRef);
-      const v = await tx.get(vRef);
-      let sum = a.exists() ? (a.data().sum || 0) : 0;
-      let c = a.exists() ? (a.data().count || 0) : 0;
-      if (v.exists()) { sum = sum - (v.data().stars || 0) + stars; }
-      else { sum += stars; c += 1; }
-      tx.set(aggRef, { sum, count: c }, { merge: true });
-      tx.set(vRef, { stars, at: Date.now() }, { merge: true });
-    });
-    myStars = stars;
-    const snap = await getDoc(doc(db, 'lesson_ratings', GID));
-    if (snap.exists()) { const d = snap.data(); ratingCount = d.count || 0; avgRating = ratingCount ? (d.sum || 0) / ratingCount : 0; }
-    paintStars(0); showRateMeta(); injectLD();
-    rateThxEl.textContent = 'Thank you — your rating was saved.';
-  } catch (e) { rateThxEl.textContent = 'Could not save just now. Please try again.'; }
-}
+    <div class="body-card" data-body="venus">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #FFDD9A, #C89B4A);"></div>
+        <div><h3 class="body-title">Venus</h3><div class="body-subtitle">Earth's evil twin · 0.72 AU</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun</dt><dd>108.2 million km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>12,104 km (95% of Earth)</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>225 Earth days</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>243 Earth days (retrograde)</dd></div>
+        <div class="body-stat"><dt>Surface temp</dt><dd>465 °C</dd></div>
+        <div class="body-stat"><dt>Atmosphere</dt><dd>96.5% CO₂, 92 atm</dd></div>
+      </dl>
+      <p class="body-narrative">Venus is nearly Earth's size, nearly Earth's distance from the Sun — and completely different in every way that matters. Its atmosphere is <b>92 times denser</b> than ours and made almost entirely of carbon dioxide, which creates a runaway greenhouse effect: Venus is <em>hotter than Mercury</em>, even though it's farther from the Sun. Surface pressure is like being 900 meters underwater on Earth. Rain there is sulfuric acid — but it never reaches the ground; it evaporates back into the sky. And uniquely, Venus rotates <b>backwards</b> — the Sun rises in the west.</p>
+      <div class="body-wow"><b>The wow:</b> A day on Venus (243 Earth days) is <em>longer than its year</em> (225 Earth days). Nothing else in our solar system does that.</div>
+    </div>
 
-// =================== STARFIELD ===================
-function renderStarfield() {
-  const svg = document.getElementById('starsBg');
-  let starsHTML = '';
-  for (let i = 0; i < 250; i++) {
-    const x = Math.random() * 1000 - 500;
-    const y = Math.random() * 700 - 350;
-    const dist = Math.sqrt(x*x + y*y);
-    if (dist < 100) continue;
-    const opacity = 0.3 + Math.random() * 0.5;
-    const r = Math.random() < 0.05 ? 1.5 : 0.5;
-    starsHTML += `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" opacity="${opacity}"/>`;
-  }
-  svg.innerHTML = starsHTML;
-}
+    <div class="body-card" data-body="earth">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #6BAF75, #4B7BEC 65%, #1A4E8A);"></div>
+        <div><h3 class="body-title">Earth</h3><div class="body-subtitle">The blue improbability · 1.00 AU</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun</dt><dd>149.6 million km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>12,742 km</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>365.25 Earth days</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>24 hours</dd></div>
+        <div class="body-stat"><dt>Moons</dt><dd>1 (the Moon)</dd></div>
+        <div class="body-stat"><dt>Atmosphere</dt><dd>78% N₂, 21% O₂</dd></div>
+      </dl>
+      <p class="body-narrative">Earth is, so far, the only place in the known universe with <b>liquid water on its surface</b> and <b>life</b> — those two facts appear to be connected. Our position in the "Goldilocks zone" (not too hot, not too cold) is only part of the story: Earth also has a strong magnetic field that deflects solar wind, plate tectonics that recycle carbon, and a large stabilizing moon. Any one of those missing, and the story of complex life on Earth probably doesn't happen.</p>
+      <div class="body-wow"><b>The wow:</b> Earth's Moon almost certainly formed from a giant impact 4.5 billion years ago — a Mars-sized body called <b>Theia</b> slammed into proto-Earth, and the ejected debris coalesced into the Moon. Without that collision, no tides, no stable seasons, probably no complex life.</div>
+    </div>
 
-// =================== ORBIT LINES ===================
-function renderOrbitLines() {
-  const svg = document.getElementById('orbitLines');
-  const ids = Object.keys(PLANETS).concat(['pluto']);
-  let html = '';
-  ids.forEach(id => {
-    const p = id === 'pluto' ? PLUTO_DATA : PLANETS[id];
-    html += `<circle class="orbit-line" cx="0" cy="0" r="${p.r}"/>`;
-  });
-  svg.innerHTML = html;
-}
+    <div class="body-card" data-body="mars">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #E37B4C, #A03410);"></div>
+        <div><h3 class="body-title">Mars</h3><div class="body-subtitle">The rusted planet · 1.52 AU</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun</dt><dd>227.9 million km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>6,779 km (half of Earth)</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>687 Earth days</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>24 h 37 min</dd></div>
+        <div class="body-stat"><dt>Moons</dt><dd>2 (Phobos, Deimos)</dd></div>
+        <div class="body-stat"><dt>Atmosphere</dt><dd>95% CO₂, 0.006 atm (thin)</dd></div>
+      </dl>
+      <p class="body-narrative">Mars is red because its surface is literally rusted iron oxide. Its two tiny lumpy moons, <b>Phobos and Deimos</b>, are almost certainly captured asteroids from the nearby belt — they don't look like moons that formed in place. Mars has the tallest volcano in the solar system (<b>Olympus Mons</b>, three times the height of Everest) and a canyon system (Valles Marineris) longer than the continental United States. Ancient dry river beds and ocean floors say Mars once had liquid water on the surface — for reasons still debated, that water is gone.</p>
+      <div class="body-wow"><b>The wow:</b> A Mars day is almost identical to an Earth day — 24 hours 37 minutes. If humans lived there, our sleep cycles would barely need to change. This coincidence is one reason Mars is such a compelling target for eventual settlement.</div>
+    </div>
 
-// =================== ASTEROID BELT ===================
-function renderAsteroidBelt() {
-  const svg = document.getElementById('asteroidBelt');
-  let html = '';
-  for (let i = 0; i < 80; i++) {
-    const theta = (i / 80) * 2 * Math.PI + Math.random() * 0.3;
-    const r = 240 + Math.random() * 30;
-    const x = Math.cos(theta) * r;
-    const y = Math.sin(theta) * r;
-    const size = 0.5 + Math.random() * 1;
-    html += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${size.toFixed(1)}" fill="#a08050" opacity="0.6"/>`;
-  }
-  svg.innerHTML = html;
-}
+    <div class="comprehension" data-act="2">
+      <span class="comp-tag">🎯 Prove You Learned It</span>
+      <h3 class="comp-title">Comprehension Check — Act II</h3>
+      <p class="comp-intro">One numeric, one word, one numeric. Type your answers.</p>
 
-// =================== PLANET ANIMATION ===================
-let animState = { time: 0, playing: true, speed: 3, showLabels: true, showOrbits: true, scaleHonest: false };
-const angleOffset = {};
-Object.keys(PLANETS).forEach(id => { angleOffset[id] = Math.random() * Math.PI * 2; });
-angleOffset.pluto = Math.random() * Math.PI * 2;
+      <div class="comp-question" data-q="2a" data-correct="0" data-tolerance="0" data-type="numeric">
+        <div class="comp-q-text"><b>1.</b> How many moons does Mercury have?</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-function renderPlanets() {
-  const layer = document.getElementById('planetsLayer');
-  const all = Object.keys(PLANETS).concat(['pluto']);
-  let html = '';
-  all.forEach(id => {
-    const p = id === 'pluto' ? PLUTO_DATA : PLANETS[id];
-    const angle = angleOffset[id] + animState.time * p.speed * 0.008;
-    const x = Math.cos(angle) * p.r;
-    const y = Math.sin(angle) * p.r;
-    const displaySize = animState.scaleHonest ? Math.max(0.3, p.tSize * 0.3) : p.size;
+      <div class="comp-question" data-q="2b" data-correct="theia" data-type="text">
+        <div class="comp-q-text"><b>2.</b> Earth's Moon most likely formed from a giant impact with a Mars-sized body called _____.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-    // Rings for Saturn
-    let ringSvg = '';
-    if (p.hasRings) {
-      const rRing = displaySize * 1.9;
-      ringSvg = `<ellipse cx="0" cy="0" rx="${rRing}" ry="${rRing * 0.25}" fill="none" stroke="#d4b878" stroke-width="1.5" opacity="0.8"/>
-                 <ellipse cx="0" cy="0" rx="${rRing * 0.75}" ry="${rRing * 0.19}" fill="none" stroke="#e0c088" stroke-width="1" opacity="0.6"/>`;
-    }
-    // Moon for Earth
-    let moonSvg = '';
-    if (p.hasMoon) {
-      const moonAngle = animState.time * 0.05;
-      const mx = Math.cos(moonAngle) * (displaySize + 6);
-      const my = Math.sin(moonAngle) * (displaySize + 6);
-      moonSvg = `<circle class="planet-hit" data-body="moon" cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="1.8" fill="url(#moonGrad)"/>`;
-    }
+      <div class="comp-question" data-q="2c" data-correct="465" data-tolerance="30" data-type="numeric">
+        <div class="comp-q-text"><b>3.</b> Venus's surface temperature is approximately _____ °C.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-    const visited = progress.planetsVisited.includes(id);
-    const visitedRing = visited ? `<circle cx="0" cy="0" r="${displaySize + 3}" fill="none" stroke="#C9A84C" stroke-width="1" opacity="0.6"/>` : '';
+      <div class="act-status" data-act-status="2">Answer all three questions correctly to earn credit for Act II.</div>
+    </div>
 
-    html += `
-      <g transform="translate(${x.toFixed(2)}, ${y.toFixed(2)})">
-        ${visitedRing}
-        ${ringSvg}
-        <circle class="planet-hit" data-body="${id}" cx="0" cy="0" r="${displaySize}" fill="${p.color}"/>
-        ${moonSvg}
-        ${animState.showLabels ? `<text class="planet-label" x="0" y="${displaySize + 14}">${p.name}</text>` : ''}
-      </g>
-    `;
-  });
-  layer.innerHTML = html;
+    <div class="reveal-card locked" data-reveal="2">
+      <span class="rc-tag">✨ Reveal Card — Locked</span>
+      <p>Moons don't "form the same way everywhere." Earth's Moon came from a <b>giant impact</b> — Theia, 4.5 billion years ago. Mars's two tiny moons are almost certainly <b>captured asteroids</b> from the nearby belt. Mercury and Venus were too close to the Sun's gravity to hold anything they might have captured. <b>The pattern isn't random — it's history.</b> Each planet's moons (or lack of them) are the fingerprint of a specific event. <em>The rocky neighborhood is not a class portrait; it's four separate biographies.</em></p>
+    </div>
+    <p class="reveal-locked-msg">Answer the three comprehension questions above to unlock the Reveal Card.</p>
+  </div>
+</section>
 
-  // Orbit lines visibility
-  document.getElementById('orbitLines').style.opacity = animState.showOrbits ? 1 : 0;
+<!-- =============================================== ACT III — THE GUARDIANS -->
+<section class="act" id="act-3">
+  <div class="wr">
+    <span class="act-eyebrow">Act III · The Gas Guardians</span>
+    <h2>Jupiter and Saturn. <em>Why You've Had Time to Read This.</em></h2>
 
-  // Bind clicks
-  layer.querySelectorAll('.planet-hit').forEach(el => {
-    el.addEventListener('click', (ev) => {
-      const b = ev.currentTarget.dataset.body;
-      openPlanet(b);
-    });
-  });
-}
+    <div class="curiosity-card">
+      <span class="cc-tag">🧠 Curiosity Card</span>
+      <p>Jupiter is more massive than <b>all the other planets combined — twice over</b>. If it had been about 80 times more massive, it would have been a second star, and our solar system would be a binary. So here's the question: is Jupiter a <em>failed star</em>, or is it something else entirely?</p>
+    </div>
 
-let rafId = null;
-function animLoop() {
-  if (animState.playing) {
-    animState.time += 0.01 * animState.speed;
-    renderPlanets();
-  }
-  rafId = requestAnimationFrame(animLoop);
-}
+    <div class="body-card" data-body="jupiter">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #E8B76A, #A76C2C 55%, #7A4318);"></div>
+        <div><h3 class="body-title">Jupiter</h3><div class="body-subtitle">The shield · 5.2 AU</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun</dt><dd>778.6 million km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>139,820 km (11× Earth)</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>11.86 Earth years</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>9 h 55 min (fastest spinner)</dd></div>
+        <div class="body-stat"><dt>Moons</dt><dd>95+ known</dd></div>
+        <div class="body-stat"><dt>Atmosphere</dt><dd>90% H, 10% He</dd></div>
+      </dl>
+      <p class="body-narrative">Jupiter is not a failed star — it's a <b>successful shield</b>. Its enormous gravity has been catching and deflecting asteroids and comets for four billion years, many of which would otherwise have hit the inner planets. Comet Shoemaker-Levy 9 famously slammed into Jupiter in 1994 — without Jupiter there, some of those fragments could have hit Earth. Jupiter also has an atmospheric composition much like the Sun's (mostly hydrogen and helium), fastest-known rotation of any planet, and a bruising magnetic field that would kill a human in Jupiter orbit within days.</p>
+      <div class="body-wow"><b>The wow:</b> The Great Red Spot is a storm larger than Earth that has been raging for <b>at least 350 years</b> — visible in telescope records since the 1600s. It has shrunk somewhat recently, but is still bigger than our whole planet.</div>
+    </div>
 
-// =================== CONTROLS ===================
-function bindControls() {
-  document.getElementById('playBtn').addEventListener('click', (e) => {
-    animState.playing = !animState.playing;
-    e.target.textContent = animState.playing ? '⏸ Pause' : '▶ Play';
-    e.target.classList.toggle('on', animState.playing);
-  });
-  document.getElementById('speedSlider').addEventListener('input', (e) => {
-    animState.speed = parseFloat(e.target.value);
-  });
-  document.getElementById('labelsBtn').addEventListener('click', (e) => {
-    animState.showLabels = !animState.showLabels;
-    e.target.classList.toggle('on', animState.showLabels);
-    renderPlanets();
-  });
-  document.getElementById('orbitsBtn').addEventListener('click', (e) => {
-    animState.showOrbits = !animState.showOrbits;
-    e.target.classList.toggle('on', animState.showOrbits);
-  });
-  document.getElementById('scaleHonestBtn').addEventListener('click', (e) => {
-    animState.scaleHonest = !animState.scaleHonest;
-    e.target.classList.toggle('on', animState.scaleHonest);
-    renderPlanets();
-    if (animState.scaleHonest) toast('Scale Honest ON — planets shown at true relative size');
-    else toast('Playful scale — planets easier to see');
-  });
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    animState.time = 0;
-    Object.keys(angleOffset).forEach(k => angleOffset[k] = Math.random() * Math.PI * 2);
-    renderPlanets();
-  });
+    <div class="body-card" data-body="saturn">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #F0DDA6, #C8A85A); box-shadow: 0 0 0 8px rgba(228,200,140,.15), 0 0 0 12px rgba(228,200,140,.08);"></div>
+        <div><h3 class="body-title">Saturn</h3><div class="body-subtitle">The ringed jewel · 9.58 AU</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun</dt><dd>1.43 billion km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>116,460 km (9× Earth)</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>29.46 Earth years</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>10 h 42 min</dd></div>
+        <div class="body-stat"><dt>Moons</dt><dd>146+ known</dd></div>
+        <div class="body-stat"><dt>Ring width</dt><dd>282,000 km (thickness: ~20 m)</dd></div>
+      </dl>
+      <p class="body-narrative">Saturn is famously ringed — with the most visually spectacular ring system in the solar system, made mostly of <b>water ice</b> and rocky debris. The rings are 282,000 km wide but astonishingly thin — an average thickness of only about 20 meters. Saturn also has the second-largest moon in the solar system, <b>Titan</b>, which has a thick nitrogen atmosphere and lakes of <em>liquid methane</em> on its surface. Titan is the only place besides Earth known to have stable bodies of surface liquid.</p>
+      <div class="body-wow"><b>The wow:</b> Saturn is so low in density that if you could find a swimming pool big enough, <b>Saturn would float</b>. Its overall density is less than water.</div>
+    </div>
 
-  // Sun click
-  document.querySelector('[data-body="sun"]').addEventListener('click', () => openSun());
+    <div class="comprehension" data-act="3">
+      <span class="comp-tag">🎯 Prove You Learned It</span>
+      <h3 class="comp-title">Comprehension Check — Act III</h3>
+      <p class="comp-intro">Two numeric, one word answer. Type carefully.</p>
 
-  // GENO prompt chips
-  document.querySelectorAll('.prompt-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      try { window.dispatchEvent(new CustomEvent('geno:open')); } catch (e) {}
-      toast('Opening GENO — ask him: "' + chip.dataset.prompt + '"');
-    });
-  });
-}
+      <div class="comp-question" data-q="3a" data-correct="350" data-tolerance="100" data-type="numeric">
+        <div class="comp-q-text"><b>1.</b> Jupiter's Great Red Spot has been raging for at least _____ years.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-// =================== MODAL: PLANETS ===================
-window.openPlanet = async function(bodyId) {
-  let data = null;
-  if (bodyId === 'sun') return openSun();
-  if (bodyId === 'moon') return openMoon();
-  if (bodyId === 'pluto') data = PLUTO_DATA;
-  else data = PLANETS[bodyId];
-  if (!data) return;
+      <div class="comp-question" data-q="3b" data-correct="titan" data-type="text">
+        <div class="comp-q-text"><b>2.</b> The name of Saturn's largest moon, which has liquid methane lakes, is _____.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-  document.getElementById('modalEyebrow').textContent = data.pos;
-  document.getElementById('modalTitle').textContent = data.name;
-  document.getElementById('modalTitle').setAttribute('data-say', data.name);
-  document.getElementById('modalPos').textContent = data.pos;
+      <div class="comp-question" data-q="3c" data-correct="30" data-tolerance="2" data-type="numeric">
+        <div class="comp-q-text"><b>3.</b> Saturn takes about _____ Earth years to complete one orbit around the Sun.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-  // Planet visual
-  const rings = data.hasRings ? `<ellipse cx="80" cy="80" rx="72" ry="18" fill="none" stroke="#d4b878" stroke-width="2"/><ellipse cx="80" cy="80" rx="55" ry="14" fill="none" stroke="#e0c088" stroke-width="1.5"/>` : '';
-  document.getElementById('modalVisual').innerHTML = `<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><circle cx="80" cy="80" r="60" fill="${data.color}"/>${rings}</svg>`;
+      <div class="act-status" data-act-status="3">Answer all three questions correctly to earn credit for Act III.</div>
+    </div>
 
-  // Facts
-  const facts = data.facts.map(f => `<div class="fact"><div class="fact-label">${f[0]}</div><div class="fact-value">${f[1]}</div></div>`).join('');
-  document.getElementById('modalFacts').innerHTML = facts;
+    <div class="reveal-card locked" data-reveal="3">
+      <span class="rc-tag">✨ Reveal Card — Locked</span>
+      <p>Jupiter is not a failed star. It's a <b>successful shield</b>. Because of its enormous gravity, Jupiter has been catching and deflecting asteroids and comets for four billion years — many of which would otherwise have hit the inner planets. <b>Jupiter is one reason complex life on Earth had time to evolve without being reset every few million years by extinction-level impacts.</b> Saturn helps too. <em>Your ancestors have been alive to reproduce for four billion years partly because of that planet.</em></p>
+    </div>
+    <p class="reveal-locked-msg">Answer the three comprehension questions above to unlock the Reveal Card.</p>
+  </div>
+</section>
 
-  // Chapter
-  const chapterHTML = data.chapter.map(p => '<p>' + p + '</p>').join('');
-  const chapterFullText = data.chapter.join(' ');
-  const chapterBlock = document.getElementById('chapterBlock');
-  chapterBlock.style.display = 'block';
-  document.getElementById('chapterText').innerHTML = chapterHTML;
-  document.getElementById('chapterText').setAttribute('data-say', chapterFullText);
+<!-- ============================================= ACT IV — THE OUTER DARK -->
+<section class="act" id="act-4">
+  <div class="wr">
+    <span class="act-eyebrow">Act IV · The Ice Giants of the Outer Dark</span>
+    <h2>Uranus and Neptune. <em>Distance Amplifies Difference.</em></h2>
 
-  // Mark planet visited
-  if (!progress.planetsVisited.includes(bodyId)) {
-    progress.planetsVisited.push(bodyId);
-    await saveProgress();
-    renderPlanets();
-    updateBadges();
-  }
+    <div class="curiosity-card">
+      <span class="cc-tag">🧠 Curiosity Card</span>
+      <p>Uranus rotates <b>on its side</b> — its axis is tilted 97 degrees, so its poles face the Sun instead of its equator. Neptune has the <em>strongest winds in the solar system</em> — 2,100 km/h, faster than the speed of sound on Earth. Both of these planets are far from the Sun, in a cold, quiet part of space. So why are they so weird?</p>
+    </div>
 
-  // Chapter read tracking — mark on click
-  chapterBlock.onclick = async () => {
-    if (!progress.chaptersRead.includes(bodyId)) {
-      progress.chaptersRead.push(bodyId);
-      await saveProgress();
-      updateBadges();
-      toast('Chapter marked read — ' + data.name);
-    }
-    if ('speechSynthesis' in window) {
-      try {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(chapterFullText);
-        u.rate = 0.9;
-        window.speechSynthesis.speak(u);
-      } catch (e) {}
-    }
-  };
+    <div class="body-card" data-body="uranus">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #B4E7EE, #6FB6C4);"></div>
+        <div><h3 class="body-title">Uranus</h3><div class="body-subtitle">The sideways world · 19.2 AU</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun</dt><dd>2.87 billion km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>50,724 km (4× Earth)</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>84 Earth years</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>17 h 14 min (retrograde)</dd></div>
+        <div class="body-stat"><dt>Axis tilt</dt><dd>97.8° (basically sideways)</dd></div>
+        <div class="body-stat"><dt>Atmosphere</dt><dd>83% H, 15% He, 2% CH₄</dd></div>
+      </dl>
+      <p class="body-narrative">Uranus is the strangest planet by orientation. Instead of its axis being roughly perpendicular to its orbital plane (like all other planets), <b>Uranus is tipped over by 97.8°</b>. This means each of its poles gets 42 Earth-years of continuous sunlight followed by 42 Earth-years of darkness. It's tinted pale blue-green because of <b>methane in its atmosphere</b>, which absorbs red light and reflects blue. Almost certainly, an early giant impact knocked Uranus onto its side — a collision so violent it would have shattered a smaller world.</p>
+      <div class="body-wow"><b>The wow:</b> Because Uranus takes 84 Earth-years to orbit the Sun, no human has ever seen it complete a full circuit. It was discovered in 1781; we're still on its third orbit since discovery.</div>
+    </div>
 
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-};
+    <div class="body-card" data-body="neptune">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #7A9BFF, #2D3F9E);"></div>
+        <div><h3 class="body-title">Neptune</h3><div class="body-subtitle">The windswept blue · 30.1 AU</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun</dt><dd>4.50 billion km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>49,244 km</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>164.79 Earth years</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>16 h 6 min</dd></div>
+        <div class="body-stat"><dt>Wind speed</dt><dd>2,100 km/h (Mach 1.7)</dd></div>
+        <div class="body-stat"><dt>Moons</dt><dd>14 (Triton orbits backwards)</dd></div>
+      </dl>
+      <p class="body-narrative">Neptune is the last "official" planet, dark and deep blue, and it has the <b>fastest winds in the solar system</b> — 2,100 km/h, more than twice as fast as any hurricane wind on Earth and faster than the speed of sound. Neptune's biggest moon, <b>Triton</b>, is unique in that it orbits <em>backwards</em> compared to Neptune's rotation — almost certainly meaning Triton is a captured object from the Kuiper Belt that Neptune grabbed. Neptune was discovered in 1846 based on <em>mathematics</em>: astronomers noticed Uranus's orbit was being pulled off-track by some unseen body, calculated where it must be, pointed telescopes there, and found Neptune within 1° of the predicted position.</p>
+      <div class="body-wow"><b>The wow:</b> One Neptunian year is 165 Earth years. Since its discovery in 1846, Neptune has completed only <em>one</em> full orbit — reaching its "discovery anniversary point" in 2011.</div>
+    </div>
 
-function openSun() {
-  document.getElementById('modalEyebrow').textContent = 'The center of everything';
-  document.getElementById('modalTitle').textContent = 'The Sun';
-  document.getElementById('modalPos').textContent = 'Star \u00b7 99.8% of all mass in the Solar System';
-  document.getElementById('modalVisual').innerHTML = `<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><circle cx="80" cy="80" r="72" fill="url(#sunCorona)"/><circle cx="80" cy="80" r="55" fill="url(#sunGrad)"/></svg>`;
-  const facts = [
-    ["Diameter", "865,000 miles"],
-    ["Mass", "99.8% of Solar System"],
-    ["Age", "4.6 billion years"],
-    ["Surface temp", "10,000°F"],
-    ["Core temp", "27 million °F"],
-    ["Life left", "~5 billion years"]
-  ];
-  document.getElementById('modalFacts').innerHTML = facts.map(f => `<div class="fact"><div class="fact-label">${f[0]}</div><div class="fact-value">${f[1]}</div></div>`).join('');
-  const chapter = [
-    "The Sun is not just a light in the sky. The Sun is a star \u2014 the same kind of thing as every other bright dot you see at night, just much closer.",
-    "The Sun is a giant ball of gas that has been burning for four and a half billion years. It burns by pressing hydrogen atoms together so hard that they fuse and become helium, releasing enormous energy. That energy is what warms the Earth, grows the plants, and lets you and me live.",
-    "Everything in the Solar System \u2014 every planet, every moon, every asteroid \u2014 orbits the Sun because the Sun's gravity holds them. The Sun is the parent of the whole family. This is why the book is called The Sun's Family."
-  ];
-  document.getElementById('chapterText').innerHTML = chapter.map(p => '<p>' + p + '</p>').join('');
-  document.getElementById('chapterText').setAttribute('data-say', chapter.join(' '));
-  const chapterBlock = document.getElementById('chapterBlock');
-  chapterBlock.style.display = 'block';
-  chapterBlock.onclick = () => {
-    if ('speechSynthesis' in window) {
-      try { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(chapter.join(' ')); u.rate = 0.9; window.speechSynthesis.speak(u); } catch(e) {}
-    }
-  };
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+    <div class="comprehension" data-act="4">
+      <span class="comp-tag">🎯 Prove You Learned It</span>
+      <h3 class="comp-title">Comprehension Check — Act IV</h3>
+      <p class="comp-intro">Three numeric answers this time. Careful with orders of magnitude.</p>
 
-function openMoon() {
-  document.getElementById('modalEyebrow').textContent = 'Earth\u2019s companion';
-  document.getElementById('modalTitle').textContent = 'The Moon';
-  document.getElementById('modalPos').textContent = 'Only natural satellite of Earth';
-  document.getElementById('modalVisual').innerHTML = `<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><circle cx="80" cy="80" r="60" fill="url(#moonGrad)"/></svg>`;
-  const facts = [
-    ["Distance from Earth", "239,000 miles"],
-    ["Diameter", "2,159 miles"],
-    ["Orbital period", "27.3 days"],
-    ["Rotation period", "27.3 days (locked)"],
-    ["Gravity", "1/6 of Earth's"],
-    ["Formed", "~4.5 billion years ago"]
-  ];
-  document.getElementById('modalFacts').innerHTML = facts.map(f => `<div class="fact"><div class="fact-label">${f[0]}</div><div class="fact-value">${f[1]}</div></div>`).join('');
-  const chapter = [
-    "The Moon is our closest neighbor. It is the only place beyond Earth where humans have actually walked.",
-    "The Moon is tidally locked \u2014 that means the same side always faces Earth. There is a far side of the Moon that no person on Earth ever sees from home. The Moon takes the same time to spin once as it does to orbit Earth once. Both are about 27 days.",
-    "The Moon was probably born when a Mars-sized planet crashed into young Earth billions of years ago. The debris from that crash formed a ring around Earth, and the ring slowly gathered together into the Moon we know."
-  ];
-  document.getElementById('chapterText').innerHTML = chapter.map(p => '<p>' + p + '</p>').join('');
-  document.getElementById('chapterText').setAttribute('data-say', chapter.join(' '));
-  const chapterBlock = document.getElementById('chapterBlock');
-  chapterBlock.style.display = 'block';
-  chapterBlock.onclick = () => {
-    if ('speechSynthesis' in window) {
-      try { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(chapter.join(' ')); u.rate = 0.9; window.speechSynthesis.speak(u); } catch(e) {}
-    }
-  };
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+      <div class="comp-question" data-q="4a" data-correct="97" data-tolerance="5" data-type="numeric">
+        <div class="comp-q-text"><b>1.</b> Uranus rotates with its axis tilted approximately _____ degrees.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-window.closeModal = function() {
-  document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-};
+      <div class="comp-question" data-q="4b" data-correct="2100" data-tolerance="200" data-type="numeric">
+        <div class="comp-q-text"><b>2.</b> Neptune's fastest winds reach approximately _____ km/h.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-// =================== BADGES ===================
-function updateBadges() {
-  const eightPlanets = ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune'];
-  const visited = eightPlanets.filter(p => progress.planetsVisited.includes(p)).length;
-  const read = eightPlanets.filter(p => progress.chaptersRead.includes(p)).length;
-  document.getElementById('bronzeProgress').textContent = visited + ' / 8';
-  document.getElementById('silverProgress').textContent = read + ' / 8';
+      <div class="comp-question" data-q="4c" data-correct="165" data-tolerance="5" data-type="numeric">
+        <div class="comp-q-text"><b>3.</b> Neptune takes approximately _____ Earth years to orbit the Sun.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-  const bronzeReady = visited === 8;
-  const silverReady = read === 8;
+      <div class="act-status" data-act-status="4">Answer all three questions correctly to earn credit for Act IV.</div>
+    </div>
 
-  if (bronzeReady) {
-    document.getElementById('badgeBronze').classList.add('earned');
-    if (!progress.badges.some(b => b.level === 'Bronze')) issueBadge('Bronze');
-  }
-  if (silverReady) {
-    document.getElementById('badgeSilver').classList.add('earned');
-    if (!progress.badges.some(b => b.level === 'Silver')) issueBadge('Silver');
-  }
+    <div class="reveal-card locked" data-reveal="4">
+      <span class="rc-tag">✨ Reveal Card — Locked</span>
+      <p><b>Distance amplifies difference.</b> Close-in planets are locked into similar behavior by the Sun's gravity and radiation. Far from the Sun, small original perturbations grow into large behaviors. Uranus probably got knocked on its side by a giant impact — one that a planet closer to the Sun would have been shielded from. Neptune's winds are driven by internal heat with almost no solar heating to fight, so nothing damps them. The outer dark isn't just cold and quiet. <em>It's the place where the small original differences in how planets formed got to grow up unopposed.</em></p>
+    </div>
+    <p class="reveal-locked-msg">Answer the three comprehension questions above to unlock the Reveal Card.</p>
+  </div>
+</section>
 
-  // Render earned serials
-  progress.badges.forEach(b => {
-    if (b.level === 'Bronze') {
-      document.getElementById('bronzeProgress').innerHTML = 'EARNED<span class="badge-serial">' + b.serial + '</span>';
-    }
-    if (b.level === 'Silver') {
-      document.getElementById('silverProgress').innerHTML = 'EARNED<span class="badge-serial">' + b.serial + '</span>';
-    }
-    if (b.level === 'Gold') {
-      document.getElementById('goldProgress').innerHTML = 'EARNED<span class="badge-serial">' + b.serial + '</span>';
-      document.getElementById('badgeGold').classList.add('earned');
-    }
-  });
-}
+<!-- ================================================= ACT V — DWARF REALM -->
+<section class="act" id="act-5">
+  <div class="wr">
+    <span class="act-eyebrow">Act V · The Dwarf Realm</span>
+    <h2>Pluto, the Kuiper Belt, and What Discovery Really Teaches. <em>Proportion.</em></h2>
 
-async function issueBadge(level) {
-  const now = new Date();
-  const serial = 'SE-' + now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
-  const badge = { level, serial, issuedAt: Date.now() };
-  progress.badges.push(badge);
-  if (db && uid) {
-    try {
-      await setDoc(doc(db, 'sovereign_explorer_badges', serial), { level, serial, issuedAt: Date.now(), uid }, { merge: true });
-      await saveProgress();
-    } catch (e) {}
-  }
-  toast('★ ' + level + ' Explorer Certificate earned! Serial ' + serial);
-  updateBadges();
-}
+    <div class="curiosity-card">
+      <span class="cc-tag">🧠 Curiosity Card</span>
+      <p>Pluto was demoted from "planet" to "dwarf planet" in 2006. This upset many people. But the reason for the demotion is fascinating: astronomers discovered that Pluto is <em>not alone</em>. There is a <b>whole class</b> of objects like it beyond Neptune — and once that class was known, keeping Pluto in the "planet" club would have forced adding dozens of new planets over the next decade. What did they find out there?</p>
+    </div>
 
-async function saveProgress() {
-  if (!db || !uid) return;
-  try {
-    await setDoc(doc(db, 'sovereign_explorer_progress', uid), progress, { merge: true });
-  } catch (e) {}
-}
+    <div class="body-card" data-body="pluto">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #D8B896, #8A6A50);"></div>
+        <div><h3 class="body-title">Pluto</h3><div class="body-subtitle">The heart of the Kuiper Belt · 39.5 AU (avg)</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Distance from Sun (avg)</dt><dd>5.91 billion km</dd></div>
+        <div class="body-stat"><dt>Diameter</dt><dd>2,376 km (smaller than Earth's Moon)</dd></div>
+        <div class="body-stat"><dt>Year length</dt><dd>247.94 Earth years</dd></div>
+        <div class="body-stat"><dt>Day length</dt><dd>6.4 Earth days</dd></div>
+        <div class="body-stat"><dt>Moons</dt><dd>5 (Charon is huge)</dd></div>
+        <div class="body-stat"><dt>Reclassified</dt><dd>2006 (dwarf planet)</dd></div>
+      </dl>
+      <p class="body-narrative">Pluto and its largest moon Charon are so similar in size that they don't really orbit each other — they orbit a common point <em>outside</em> Pluto. This makes them a "double dwarf-planet system," unique in our solar system. In 2015, NASA's <b>New Horizons</b> spacecraft flew past Pluto after a nine-year journey, revealing a stunning world with a heart-shaped nitrogen ice glacier (Tombaugh Regio), mountain ranges made of frozen water, and even a very thin atmosphere. Pluto is small, but it is not simple.</p>
+      <div class="body-wow"><b>The wow:</b> New Horizons is still going — after passing Pluto in 2015, it flew past a much smaller Kuiper Belt object called <b>Arrokoth</b> in 2019, giving humanity its first close look at a body from the outer frontier.</div>
+    </div>
 
-async function loadProgress() {
-  if (!db || !uid) return;
-  try {
-    const snap = await getDoc(doc(db, 'sovereign_explorer_progress', uid));
-    if (snap.exists()) {
-      const d = snap.data();
-      progress.planetsVisited = d.planetsVisited || [];
-      progress.chaptersRead = d.chaptersRead || [];
-      progress.badges = d.badges || [];
-    }
-  } catch (e) {}
-  updateBadges();
-  renderPlanets();
-}
+    <div class="body-card" data-body="kuiper">
+      <div class="body-head">
+        <div class="body-icon" style="background: radial-gradient(circle at 30% 30%, #565F7A, #232839); border: 2px dashed rgba(255,255,255,.15);"></div>
+        <div><h3 class="body-title">The Kuiper Belt &amp; Beyond</h3><div class="body-subtitle">Where the map fades out · 30–50 AU (Kuiper), 2,000–100,000 AU (Oort)</div></div>
+      </div>
+      <dl class="body-stats">
+        <div class="body-stat"><dt>Kuiper Belt inner edge</dt><dd>~30 AU (Neptune's orbit)</dd></div>
+        <div class="body-stat"><dt>Kuiper Belt outer edge</dt><dd>~50 AU</dd></div>
+        <div class="body-stat"><dt>Known Kuiper members</dt><dd>Pluto, Eris, Makemake, Haumea, thousands more</dd></div>
+        <div class="body-stat"><dt>Oort Cloud (hypothesized)</dt><dd>~2,000 to 100,000 AU</dd></div>
+        <div class="body-stat"><dt>Nearest star (Proxima)</dt><dd>~268,000 AU</dd></div>
+        <div class="body-stat"><dt>Solar system's total reach</dt><dd>~1/4 of way to nearest star</dd></div>
+      </dl>
+      <p class="body-narrative">The <b>Kuiper Belt</b> is a ring of icy bodies extending from Neptune's orbit outward, containing Pluto, <em>Eris</em> (which is slightly larger than Pluto), Makemake, Haumea, and countless others still being discovered. Beyond the Kuiper Belt, astronomers strongly suspect the <b>Oort Cloud</b> — a spherical shell of ice bodies stretching perhaps a quarter of the way to the nearest star. Long-period comets that visit the inner solar system originally come from the Oort Cloud, having been perturbed inward over millions of years.</p>
+      <div class="body-wow"><b>The wow:</b> If you plotted the true scale of our solar system, the inner solar system (Sun through Neptune) would be a small dot in the center. The dwarf realm surrounds it in every direction, and the <em>vast majority</em> of the solar system by volume is far beyond Neptune.</div>
+    </div>
 
-// =================== TAP TO LISTEN ===================
-function bindTapToListen() {
-  document.body.addEventListener('click', (ev) => {
-    const el = ev.target.closest('[data-say]');
-    if (!el) return;
-    if (el.tagName === 'BUTTON' || el.closest('.btn') || el.closest('.ctrl-btn') || el.closest('.prompt-chip')) return;
-    if (el.closest('.chapter-block')) return; // handled by chapter click
-    if (!('speechSynthesis' in window)) return;
-    const text = el.dataset.say || el.textContent;
-    if (!text) return;
-    try {
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.9;
-      window.speechSynthesis.speak(u);
-    } catch (e) {}
-  });
-}
+    <div class="comprehension" data-act="5">
+      <span class="comp-tag">🎯 Prove You Learned It</span>
+      <h3 class="comp-title">Comprehension Check — Act V</h3>
+      <p class="comp-intro">Two numeric years, one word answer.</p>
 
-// =================== TOAST ===================
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
-}
+      <div class="comp-question" data-q="5a" data-correct="2006" data-tolerance="0" data-type="numeric">
+        <div class="comp-q-text"><b>1.</b> In what year was Pluto reclassified as a dwarf planet?</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-// =================== BOOT ===================
-renderStarfield();
-renderOrbitLines();
-renderAsteroidBelt();
-renderPlanets();
-bindControls();
-bindTapToListen();
-animLoop();
+      <div class="comp-question" data-q="5b" data-correct="kuiper" data-type="text">
+        <div class="comp-q-text"><b>2.</b> Pluto lives in a region beyond Neptune called the _____ Belt.</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-try {
-  const app = getApps().length ? getApp() : initializeApp(cfg);
-  auth = getAuth(app);
-  db = getFirestore(app);
-  paintStars(0);
-  onAuthStateChanged(auth, (u) => {
-    if (u) {
-      uid = u.uid;
-      loadRating();
-      loadProgress();
-    }
-  });
-  signInAnonymously(auth).catch(() => {
-    rateMetaEl.textContent = 'Ratings are unavailable offline.';
-    paintStars(0);
-  });
-} catch (e) {
-  rateMetaEl.textContent = 'Ratings are unavailable offline.';
-  paintStars(0);
-}
+      <div class="comp-question" data-q="5c" data-correct="2015" data-tolerance="0" data-type="numeric">
+        <div class="comp-q-text"><b>3.</b> In what year did New Horizons complete its Pluto flyby?</div>
+        <div class="comp-answer-row">
+          <input type="text" class="comp-input" inputmode="numeric" autocomplete="off" aria-label="Answer">
+          <button type="button" class="comp-check-btn" onclick="SSE.checkAnswer(this)">Check</button>
+        </div>
+        <div class="comp-feedback"></div>
+      </div>
 
-</script>
+      <div class="act-status" data-act-status="5">Answer all three questions correctly to earn credit for Act V.</div>
+    </div>
 
-<!-- GENO WIDGET -->
+    <div class="reveal-card locked" data-reveal="5">
+      <span class="rc-tag">✨ Reveal Card — Locked</span>
+      <p>They found the <b>Kuiper Belt</b> — a ring of icy bodies extending from Neptune's orbit outward, containing Pluto, Eris (which is slightly <em>larger</em> than Pluto by mass), Makemake, Haumea, and countless others. Beyond that, they suspect the <b>Oort Cloud</b> — a spherical shell of ice bodies stretching a quarter of the way to the nearest star. <b>The solar system doesn't end at Neptune. It fades out over a distance of nearly a light-year.</b> Pluto wasn't demoted because it got smaller. It was demoted because we realized how much more of everything else there is. <em>Discovery reveals proportion.</em></p>
+    </div>
+    <p class="reveal-locked-msg">Answer the three comprehension questions above to unlock the Reveal Card.</p>
+  </div>
+</section>
+
+<!-- ======================================================== EXPLORER BADGES -->
+<section class="badges-section">
+  <div class="wr">
+    <h2>Your Explorer Status</h2>
+    <p>Explorer badges are earned by proving what you learned — not by clicking through. You may retake any Act's comprehension check at any time. Your progress is saved locally on this device only.</p>
+
+    <div class="badges-grid">
+      <div class="badge-card bronze" id="badge-bronze">
+        <div class="badge-icon">🥉</div>
+        <div class="badge-name">Bronze Explorer</div>
+        <div class="badge-req">Pass the comprehension check on any <b>3 of 5 Acts</b>. You've toured most of the neighborhood.</div>
+        <div class="badge-status" id="badge-bronze-status">Not yet earned</div>
+      </div>
+      <div class="badge-card silver" id="badge-silver">
+        <div class="badge-icon">🥈</div>
+        <div class="badge-name">Silver Explorer</div>
+        <div class="badge-req">Pass the comprehension check on <b>all 5 Acts</b>. You've walked the whole system.</div>
+        <div class="badge-status" id="badge-silver-status">Not yet earned</div>
+      </div>
+      <div class="badge-card gold" id="badge-gold">
+        <div class="badge-icon">🥇</div>
+        <div class="badge-name">Gold Explorer</div>
+        <div class="badge-req">Answer <b>all 15 questions correctly on the first attempt</b> across all 5 Acts. You didn't just tour it — you learned it.</div>
+        <div class="badge-status" id="badge-gold-status">Not yet earned</div>
+      </div>
+    </div>
+
+    <div class="badge-honest">
+      <b>An honest word about badges.</b> These are not certificates. GSU issues no diploma for the Explorer badge, and it will not appear on any transcript. What the Gold badge tells you is that on some morning in your life, you went through the Solar System Orbital Explorer, read carefully, and answered fifteen questions correctly on the first attempt. That fact is the whole reward. If you want it to mean more, teach what you learned to someone else — that is the Apostle Track, and it is where knowledge starts to compound.
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================================== FAQ -->
+<section class="faq-section">
+  <div class="wr">
+    <h2>Questions People Actually Ask</h2>
+    <p>Read the ones you need. Ask GENO anything the FAQ doesn't answer.</p>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="SSE.toggleFAQ(this)">Is the orbital animation accurate?</div>
+      <div class="faq-a">Yes — the <b>relative periods are accurate</b>. Mercury completes an orbit in the visual time it would take Neptune to move a fraction of a degree, at any speed setting. What is <em>not</em> accurate is the spacing of the orbits: real Neptune is 30 astronomical units from the Sun (about 60 times farther than Mercury), and drawing that faithfully would push all inner planets into a single pixel and Neptune into the next room. So the orbit radii are compressed for visualization. Everything about the <b>motion</b> is real; the <b>distances</b> are stylized.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="SSE.toggleFAQ(this)">Why did you remove the certificate ceremony?</div>
+      <div class="faq-a">There was no certificate ceremony to remove — the previous version of this page promised "Bronze, Silver, and Gold Explorer certificates" but never actually connected them to knowledge. This rebuild connects them. <b>You now earn the Bronze badge by passing 3 of 5 comprehension checks, Silver by passing all 5, and Gold by answering all 15 questions correctly on the first attempt.</b> That is a meaningful record of what you actually learned. GSU still does not issue paper certificates for this — that is the honest limit. But the badge is real, tied to a real check, on a real device. If you want a formal, publicly-verifiable credential, GSU offers eight free certifications at <a href="https://globalsovereignuniversity.org/certification">/certification</a> — those are proctored exams.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="SSE.toggleFAQ(this)">Does the orbital canvas work on my phone?</div>
+      <div class="faq-a">Yes. The canvas is fully responsive — on narrow screens it scales down to about 400 pixels tall, and touch-tapping a planet works the same as clicking on desktop. The speed slider is also touch-friendly. If a planet is moving too fast to tap, drag the speed slider left to slow the system down; if you'd rather see the inner planets whip around, drag it right.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="SSE.toggleFAQ(this)">Why is Pluto included as its own Act if it's not a planet?</div>
+      <div class="faq-a">Because the story of Pluto's reclassification <em>is</em> one of the most interesting things about the solar system. Pluto wasn't demoted because astronomers didn't like it — Pluto was reclassified because in the early 2000s astronomers discovered a whole ring of similar objects beyond Neptune (the Kuiper Belt), and once that class was known, keeping Pluto in the "planet" club would have forced adding dozens more. <b>The demotion revealed proportion.</b> Skipping the dwarf realm would skip that lesson.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="SSE.toggleFAQ(this)">Can GENO explain a planet in more depth?</div>
+      <div class="faq-a">Yes — that's exactly what the GENO widget in the corner is for. Try asking something like <em>"Why does Venus rotate backwards?"</em> or <em>"How do we know the composition of Neptune's atmosphere if no probe has landed there?"</em> GENO tutors in 83 languages, has memorized every free PDF book GSU publishes, and can walk you through any planet's details without hurry.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="SSE.toggleFAQ(this)">Where does my badge progress get saved?</div>
+      <div class="faq-a">In your browser's <b>localStorage</b> — meaning it never leaves your device. If you clear your browser data or use a different device, you'll start over. This is intentional: GSU does not have an account for you, and does not have a database entry with your name in it. If you want to remember your Gold status, take a screenshot. That's honest proof.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="SSE.toggleFAQ(this)">The planet cards are quick reads. Is that on purpose?</div>
+      <div class="faq-a">Yes. Each planet's card is about 100-150 words of dense, verifiable fact — enough to give real substance without overwhelming a first read. Deeper detail lives in GSU's Science Hub and via GENO. The design goal here is a <b>single satisfying pass</b> in about 15-20 minutes, with the option to return and go deeper on any planet that grabbed you. This is DR-152 pedagogy — cognitive load theory applied to survey-style learning.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="SSE.toggleFAQ(this)">Why does this page belong in the Warren, and not the Learning Arcade?</div>
+      <div class="faq-a">The Solar System Orbital Explorer is <b>Rabbit #9</b> of the GSU Warren — the collection of GSU's breakthrough delivery mechanisms. It sits alongside Today's Summit, University on a Stick, GENO in a Box, and the others. The Learning Arcade is for pure drill games (Math Helix Climb, Reading Helix Climb, etc.). This page is a <em>narrative learning experience</em>, not a drill. Different tool, different shelf.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ DICTIONARY -->
+<section class="dict-section">
+  <div class="wr">
+    <h2>Space Dictionary</h2>
+    <p>Terms that appear in this Explorer, defined in plain English. Ask GENO for more.</p>
+    <div class="dict-grid">
+      <dl class="dict-term"><dt>Astronomical Unit (AU)</dt><dd>The average distance from Earth to the Sun — 149.6 million km. Handy for measuring the solar system.</dd></dl>
+      <dl class="dict-term"><dt>G-type main-sequence star</dt><dd>A "yellow dwarf" like our Sun. Medium size, medium temperature, extremely long-lived.</dd></dl>
+      <dl class="dict-term"><dt>Retrograde rotation</dt><dd>Spinning backwards compared to most other planets. Venus and Uranus do this.</dd></dl>
+      <dl class="dict-term"><dt>Runaway greenhouse</dt><dd>When a planet's atmosphere traps so much heat that it can't escape — Venus's fate.</dd></dl>
+      <dl class="dict-term"><dt>Theia</dt><dd>The Mars-sized body that (probably) crashed into proto-Earth 4.5 billion years ago and produced the Moon.</dd></dl>
+      <dl class="dict-term"><dt>Great Red Spot</dt><dd>Jupiter's centuries-old hurricane, bigger than Earth. Recently shrinking but still enormous.</dd></dl>
+      <dl class="dict-term"><dt>Titan</dt><dd>Saturn's largest moon. Only body other than Earth known to have stable surface liquid (methane, not water).</dd></dl>
+      <dl class="dict-term"><dt>Axial tilt</dt><dd>The angle a planet's rotation axis makes with the perpendicular to its orbital plane. Earth: 23.5°. Uranus: 97.8° (basically on its side).</dd></dl>
+      <dl class="dict-term"><dt>Kuiper Belt</dt><dd>A ring of icy bodies from Neptune's orbit (30 AU) outward to about 50 AU. Pluto lives here.</dd></dl>
+      <dl class="dict-term"><dt>Oort Cloud</dt><dd>A hypothesized spherical shell of icy bodies far beyond the Kuiper Belt, extending perhaps a quarter of the way to the nearest star.</dd></dl>
+      <dl class="dict-term"><dt>Eris</dt><dd>A dwarf planet slightly larger than Pluto by mass. Its 2005 discovery triggered the Pluto reclassification debate.</dd></dl>
+      <dl class="dict-term"><dt>New Horizons</dt><dd>NASA spacecraft that flew past Pluto in 2015 and Arrokoth (a smaller Kuiper Belt object) in 2019.</dd></dl>
+      <dl class="dict-term"><dt>Charon</dt><dd>Pluto's largest moon — so large relative to Pluto that they orbit a shared point outside Pluto itself.</dd></dl>
+      <dl class="dict-term"><dt>Dwarf planet</dt><dd>A body that orbits the Sun and is round from its own gravity, but has not cleared its orbital neighborhood of other bodies. Pluto, Eris, Makemake, Haumea, Ceres.</dd></dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ DEEP STRIP -->
+<section class="deep-strip">
+  <div class="wr">
+    <h3>Go Deeper</h3>
+    <h2>The Rest of GSU's Space and Science Curriculum</h2>
+    <p>The Explorer is a survey. If a planet grabbed you, chase it. GSU's science library keeps growing.</p>
+    <div class="deep-links">
+      <a href="https://globalsovereignuniversity.org/science">Science Hub</a>
+      <a href="https://globalsovereignuniversity.org/geographication">Geography Hub</a>
+      <a href="https://globalsovereignuniversity.org/eight-rabbits">The Warren of Rabbits</a>
+      <a href="https://read.globalsovereignuniversity.org/learning-arcade.html">Learning Arcade</a>
+      <a href="https://read.globalsovereignuniversity.org/dr-152-inquiry-sandwich.html">DR-152 — The Inquiry Sandwich</a>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== FOOTER -->
+<footer class="sse-footer">
+  <div class="wr">
+    <p><b>Global Sovereign University</b> · The Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
+    <p>Free education for every person on Earth. No login. No cost. No gatekeepers.</p>
+    <p style="margin-top:14px;">
+      <a href="https://globalsovereignuniversity.org/mission">Mission</a> &nbsp;·&nbsp;
+      <a href="https://globalsovereignuniversity.org/quid-pro-quo">Support GSU</a> &nbsp;·&nbsp;
+      <a href="https://globalsovereignuniversity.org/contact">Contact</a> &nbsp;·&nbsp;
+      <a href="https://read.globalsovereignuniversity.org/learning-arcade.html">Learning Arcade</a>
+    </p>
+    <p style="margin-top:14px;font-style:italic;color:rgba(245,241,232,.4);">
+      "Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A Constant
+    </p>
+  </div>
+</footer>
+
+<!-- ============================================================ GENO WIDGET -->
 <elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
 <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<!-- ============================================================= JSON-LD SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "The Solar System Orbital Explorer",
+  "description": "Interactive orbital animation and five-act narrative arc through our solar system. Learners earn Bronze, Silver, or Gold Explorer badges by passing comprehension checks per Act.",
+  "url": "https://read.globalsovereignuniversity.org/solar-system-explorer.html",
+  "educationalLevel": ["Middle school", "High school", "Adult learner"],
+  "learningResourceType": "Interactive science explorer",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "url": "https://globalsovereignuniversity.org"
+  },
+  "inLanguage": "en",
+  "teaches": ["Solar system structure", "Planetary science", "Orbital mechanics", "Comparative planetology", "Astronomy vocabulary"]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Is the orbital animation accurate?", "acceptedAnswer": {"@type": "Answer", "text": "The relative periods are accurate — every planet moves at its real relative speed. Distances are compressed for visualization."}},
+    {"@type": "Question", "name": "How do I earn a Gold Explorer badge?", "acceptedAnswer": {"@type": "Answer", "text": "Answer all 15 comprehension questions correctly on the first attempt across all 5 Acts."}},
+    {"@type": "Question", "name": "Where is my badge progress saved?", "acceptedAnswer": {"@type": "Answer", "text": "In your browser's localStorage — it never leaves your device."}},
+    {"@type": "Question", "name": "Why is Pluto included if it's not a planet?", "acceptedAnswer": {"@type": "Answer", "text": "Because the story of Pluto's reclassification is one of the most interesting things about the solar system — it reveals proportion."}}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "name": "Solar System Orbital Explorer Space Dictionary",
+  "hasDefinedTerm": [
+    {"@type": "DefinedTerm", "name": "Astronomical Unit", "description": "The average distance from Earth to the Sun — 149.6 million km."},
+    {"@type": "DefinedTerm", "name": "G-type main-sequence star", "description": "A yellow dwarf like our Sun. Medium size, extremely long-lived."},
+    {"@type": "DefinedTerm", "name": "Retrograde rotation", "description": "Spinning backwards compared to most other planets."},
+    {"@type": "DefinedTerm", "name": "Kuiper Belt", "description": "A ring of icy bodies from Neptune's orbit outward to about 50 AU."},
+    {"@type": "DefinedTerm", "name": "Dwarf planet", "description": "A round body orbiting the Sun that has not cleared its orbital neighborhood."}
+  ]
+}
+</script>
+
+<!-- ================================================================ ENGINE -->
 <script>
-window.addEventListener('geno:open', function() {
-  try {
-    var w = document.querySelector('elevenlabs-convai');
-    if (w && w.shadowRoot) {
-      var btn = w.shadowRoot.querySelector('button');
-      if (btn) btn.click();
+(function(){
+  'use strict';
+
+  // ============================================================
+  // PLANETARY DATA — orbital periods in Earth days, colors, sizes
+  // ============================================================
+  const BODIES = [
+    {id:'sun', name:'Sun', color:'#FDB813', glow:'#FF9500', size:22, orbit:0, period:0, targetId:'act-1'},
+    {id:'mercury', name:'Mercury', color:'#8C7853', size:3, orbit:1, period:88, targetId:'act-2'},
+    {id:'venus', name:'Venus', color:'#E5D8B8', size:5, orbit:2, period:225, targetId:'act-2'},
+    {id:'earth', name:'Earth', color:'#4B7BEC', size:5.5, orbit:3, period:365, targetId:'act-2'},
+    {id:'mars', name:'Mars', color:'#C1440E', size:4, orbit:4, period:687, targetId:'act-2'},
+    {id:'jupiter', name:'Jupiter', color:'#C88B3A', size:13, orbit:5, period:4333, targetId:'act-3'},
+    {id:'saturn', name:'Saturn', color:'#E4C88C', size:11, orbit:6, period:10759, hasRing:true, targetId:'act-3'},
+    {id:'uranus', name:'Uranus', color:'#8CD1E0', size:8, orbit:7, period:30687, targetId:'act-4'},
+    {id:'neptune', name:'Neptune', color:'#4166F5', size:8, orbit:8, period:60190, targetId:'act-4'}
+  ];
+
+  const canvas = document.getElementById('orbit-canvas');
+  const ctx = canvas.getContext('2d');
+  let cssW = 0, cssH = 0;
+  let speedMultiplier = 2.0;
+  const startTime = Date.now();
+
+  function resizeCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    cssW = rect.width;
+    cssH = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = cssW * dpr;
+    canvas.height = cssH * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function getPlanetPosition(body, tSec) {
+    if (body.period === 0) return { x: cssW/2, y: cssH/2, r: 0 };
+    // Compress orbital periods with sqrt for reasonable visual timing:
+    // Earth (365d) becomes ~19s at speed 1.0
+    const visualPeriod = Math.sqrt(body.period) * 0.5; // seconds at speed=1
+    const angle = ((tSec * speedMultiplier / visualPeriod) * Math.PI * 2) + (body.orbit * 0.7);
+    // Orbit radius: compress the range for visualization
+    const minDim = Math.min(cssW, cssH);
+    const baseRadius = minDim * 0.06; // Sun's orbit space
+    const maxRadius = minDim * 0.46;
+    const step = (maxRadius - baseRadius) / 8;
+    const orbitR = baseRadius + body.orbit * step;
+    return {
+      x: cssW/2 + orbitR * Math.cos(angle),
+      y: cssH/2 + orbitR * Math.sin(angle),
+      r: orbitR
+    };
+  }
+
+  function drawOrbitPaths() {
+    ctx.strokeStyle = 'rgba(201,168,76,0.10)';
+    ctx.lineWidth = 1;
+    for (let i = 1; i < BODIES.length; i++) {
+      const p = getPlanetPosition(BODIES[i], 0);
+      ctx.beginPath();
+      ctx.arc(cssW/2, cssH/2, p.r, 0, Math.PI * 2);
+      ctx.stroke();
     }
-  } catch (e) {}
-});
+  }
+
+  function drawStars() {
+    // Deterministic starfield based on canvas size
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    const count = 90;
+    // Use a deterministic seed based on integer canvas dims
+    const seed = Math.floor(cssW) * 31 + Math.floor(cssH);
+    for (let i = 0; i < count; i++) {
+      // Simple hash-based pseudo-random
+      const h = (seed * (i + 7) * 2654435761) >>> 0;
+      const x = (h % 10000) / 10000 * cssW;
+      const y = ((h >>> 14) % 10000) / 10000 * cssH;
+      const size = ((h >>> 21) % 3) * 0.5 + 0.5;
+      ctx.beginPath();
+      ctx.arc(x, y, size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function drawSun() {
+    const cx = cssW/2, cy = cssH/2;
+    // Corona glow
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 60);
+    grad.addColorStop(0, 'rgba(253,184,19,0.8)');
+    grad.addColorStop(0.35, 'rgba(255,149,0,0.35)');
+    grad.addColorStop(1, 'rgba(255,149,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(cx-60, cy-60, 120, 120);
+    // Sun body
+    ctx.fillStyle = '#FDB813';
+    ctx.beginPath();
+    ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+    ctx.fill();
+    // Bright core
+    ctx.fillStyle = 'rgba(255,255,240,0.5)';
+    ctx.beginPath();
+    ctx.arc(cx - 4, cy - 4, 10, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawPlanet(body, tSec) {
+    const p = getPlanetPosition(body, tSec);
+    if (body.hasRing) {
+      // Saturn's ring
+      ctx.strokeStyle = 'rgba(228,200,140,0.6)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.ellipse(p.x, p.y, body.size + 6, (body.size + 6) * 0.35, Math.PI / 6, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(228,200,140,0.3)';
+      ctx.beginPath();
+      ctx.ellipse(p.x, p.y, body.size + 10, (body.size + 10) * 0.35, Math.PI / 6, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    // Planet body
+    ctx.fillStyle = body.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, body.size, 0, Math.PI * 2);
+    ctx.fill();
+    // Subtle highlight
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.beginPath();
+    ctx.arc(p.x - body.size * 0.3, p.y - body.size * 0.3, body.size * 0.4, 0, Math.PI * 2);
+    ctx.fill();
+    body._lastPos = p;
+  }
+
+  function frame() {
+    const tSec = (Date.now() - startTime) / 1000;
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, cssW, cssH);
+    drawStars();
+    drawOrbitPaths();
+    drawSun();
+    // Draw planets sun-outward for cleaner overlap
+    for (let i = 1; i < BODIES.length; i++) {
+      drawPlanet(BODIES[i], tSec);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Click detection: find nearest planet within hit radius
+  canvas.addEventListener('click', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    // Check sun first
+    const sunDist = Math.hypot(mx - cssW/2, my - cssH/2);
+    if (sunDist < 30) { scrollToTarget('act-1'); return; }
+    // Check planets
+    let closest = null, closestDist = Infinity;
+    for (let i = 1; i < BODIES.length; i++) {
+      const p = BODIES[i]._lastPos;
+      if (!p) continue;
+      const d = Math.hypot(mx - p.x, my - p.y);
+      if (d < BODIES[i].size + 8 && d < closestDist) {
+        closest = BODIES[i]; closestDist = d;
+      }
+    }
+    if (closest) {
+      scrollToTarget(closest.targetId);
+      // Also flash-highlight the planet card
+      const card = document.querySelector('[data-body="' + closest.id + '"]');
+      if (card) {
+        card.classList.add('highlight');
+        setTimeout(function(){ card.classList.remove('highlight'); }, 2400);
+      }
+    }
+  });
+
+  function scrollToTarget(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Speed slider
+  const slider = document.getElementById('speed-slider');
+  const speedLabel = document.getElementById('speed-value');
+  slider.addEventListener('input', function(){
+    speedMultiplier = parseFloat(slider.value);
+    speedLabel.textContent = speedMultiplier.toFixed(1) + '×';
+  });
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  frame();
+
+  // ============================================================
+  // COMPREHENSION CHECK ENGINE
+  // ============================================================
+  const ACT_COUNT = 5;
+
+  function normalizeText(s) {
+    return String(s).trim().toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ');
+  }
+
+  function checkAnswer(btn) {
+    const q = btn.closest('.comp-question');
+    if (!q) return;
+    const type = q.dataset.type;
+    const correct = q.dataset.correct;
+    const tolerance = parseFloat(q.dataset.tolerance || '0');
+    const input = q.querySelector('.comp-input');
+    const fb = q.querySelector('.comp-feedback');
+    const raw = input.value.trim();
+    if (!raw) {
+      fb.className = 'comp-feedback wrong';
+      fb.textContent = 'Please enter an answer.';
+      return;
+    }
+    let isCorrect = false;
+    if (type === 'numeric') {
+      // Strip commas, extract first number
+      const cleaned = raw.replace(/,/g, '').replace(/[^\d.\-]/g, '');
+      const val = parseFloat(cleaned);
+      if (!isNaN(val)) {
+        isCorrect = Math.abs(val - parseFloat(correct)) <= tolerance;
+      }
+    } else if (type === 'text') {
+      isCorrect = normalizeText(raw).includes(normalizeText(correct));
+    }
+
+    // Record whether this question was already correct (for perfect-tracking)
+    const qId = q.dataset.q;
+    const key = 'sse:q:' + qId;
+    const prevState = storageGet(key, null);
+    if (prevState === null) {
+      // First attempt — record whether it was correct on first try
+      storageSet(key, isCorrect ? 'perfect' : 'wrong');
+    } else if (prevState === 'wrong' && isCorrect) {
+      storageSet(key, 'correct'); // eventually correct but not on first attempt
+    }
+
+    input.className = 'comp-input ' + (isCorrect ? 'correct' : 'wrong');
+    if (isCorrect) {
+      fb.className = 'comp-feedback correct';
+      fb.innerHTML = '<b>Correct.</b>' + (prevState === null ? ' First-attempt count toward Gold: ✓' : '');
+      input.disabled = true;
+      btn.disabled = true;
+      // Check if all questions in this Act are now correct
+      updateActStatus(q.closest('.comprehension'));
+    } else {
+      fb.className = 'comp-feedback wrong';
+      fb.innerHTML = '<b>Not quite.</b> Try again — reread the planet card above if you need a hint.';
+    }
+    updateAllBadges();
+  }
+
+  function updateActStatus(compEl) {
+    if (!compEl) return;
+    const act = compEl.dataset.act;
+    const questions = compEl.querySelectorAll('.comp-question');
+    let correctCount = 0;
+    let perfectCount = 0;
+    questions.forEach(function(q) {
+      const state = storageGet('sse:q:' + q.dataset.q, null);
+      if (state === 'correct' || state === 'perfect') correctCount++;
+      if (state === 'perfect') perfectCount++;
+    });
+    const statusEl = compEl.querySelector('[data-act-status]');
+    const passed = correctCount === questions.length;
+    const perfect = perfectCount === questions.length;
+
+    if (passed) {
+      // Unlock reveal
+      const revealEl = document.querySelector('[data-reveal="' + act + '"]');
+      if (revealEl) {
+        revealEl.classList.remove('locked');
+        const tag = revealEl.querySelector('.rc-tag');
+        if (tag) tag.textContent = '✨ Reveal Card';
+      }
+      // Record act pass
+      storageSet('sse:act:' + act + ':passed', true);
+      storageSet('sse:act:' + act + ':perfect', perfect);
+      statusEl.className = 'act-status ' + (perfect ? 'perfect' : 'passed');
+      statusEl.innerHTML = perfect
+        ? '⭐ <b>Act ' + act + ' complete — perfect on first attempt.</b> Reveal Card unlocked below.'
+        : '✓ <b>Act ' + act + ' complete.</b> Reveal Card unlocked below.';
+    } else {
+      statusEl.className = 'act-status';
+      statusEl.innerHTML = correctCount + ' of ' + questions.length + ' correct so far. Answer all three to unlock Act ' + act + '.';
+    }
+  }
+
+  // Compute badge state from storage
+  function updateAllBadges() {
+    let passedActs = 0;
+    let perfectQuestions = 0;
+    let totalPerfectQuestions = 0;
+    for (let a = 1; a <= ACT_COUNT; a++) {
+      if (storageGet('sse:act:' + a + ':passed', false)) passedActs++;
+    }
+    // Count perfect-first-attempt questions
+    const allQIds = ['1a','1b','1c','2a','2b','2c','3a','3b','3c','4a','4b','4c','5a','5b','5c'];
+    allQIds.forEach(function(id){
+      if (storageGet('sse:q:' + id, null) === 'perfect') perfectQuestions++;
+    });
+    totalPerfectQuestions = allQIds.length;
+
+    const bronze = document.getElementById('badge-bronze');
+    const silver = document.getElementById('badge-silver');
+    const gold = document.getElementById('badge-gold');
+    const bronzeStatus = document.getElementById('badge-bronze-status');
+    const silverStatus = document.getElementById('badge-silver-status');
+    const goldStatus = document.getElementById('badge-gold-status');
+
+    if (passedActs >= 3) { bronze.classList.add('earned'); bronzeStatus.textContent = 'Earned'; }
+    else { bronzeStatus.textContent = passedActs + ' of 3 Acts passed'; }
+
+    if (passedActs === ACT_COUNT) { silver.classList.add('earned'); silverStatus.textContent = 'Earned'; }
+    else { silverStatus.textContent = passedActs + ' of 5 Acts passed'; }
+
+    if (perfectQuestions === totalPerfectQuestions) { gold.classList.add('earned'); goldStatus.textContent = 'Earned — Perfect'; }
+    else { goldStatus.textContent = perfectQuestions + ' of ' + totalPerfectQuestions + ' perfect first-attempts'; }
+  }
+
+  // Storage helpers
+  function storageGet(key, fallback) {
+    try { const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); }
+    catch(e) { return fallback; }
+  }
+  function storageSet(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+  }
+
+  // Rehydrate saved state on load
+  function rehydrate() {
+    // Re-run status updates on each Act's comprehension block
+    document.querySelectorAll('.comprehension').forEach(function(comp){
+      const questions = comp.querySelectorAll('.comp-question');
+      questions.forEach(function(q){
+        const state = storageGet('sse:q:' + q.dataset.q, null);
+        if (state === 'correct' || state === 'perfect') {
+          const input = q.querySelector('.comp-input');
+          const btn = q.querySelector('.comp-check-btn');
+          const fb = q.querySelector('.comp-feedback');
+          input.value = q.dataset.correct;
+          input.className = 'comp-input correct';
+          input.disabled = true;
+          btn.disabled = true;
+          fb.className = 'comp-feedback correct';
+          fb.innerHTML = '<b>Previously answered correctly.</b>' + (state === 'perfect' ? ' First-attempt: ✓' : '');
+        }
+      });
+      updateActStatus(comp);
+    });
+    updateAllBadges();
+  }
+
+  function toggleFAQ(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+  }
+
+  // Public API
+  window.SSE = { checkAnswer: checkAnswer, toggleFAQ: toggleFAQ };
+
+  // Bind Enter key to check answers
+  document.querySelectorAll('.comp-input').forEach(function(inp) {
+    inp.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const btn = inp.parentElement.querySelector('.comp-check-btn');
+        if (btn && !btn.disabled) btn.click();
+      }
+    });
+  });
+
+  // Rehydrate saved state
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', rehydrate);
+  } else {
+    rehydrate();
+  }
+})();
 </script>
 
 </body>
