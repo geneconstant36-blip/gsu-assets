@@ -10,6 +10,17 @@
 <meta property="og:title" content="Historification — The Whole American Story">
 <meta property="og:description" content="From Kaianere'kó:wa to today. The cornerstone Rabbit of the GSU Warren.">
 <meta property="og:type" content="website">
+
+<!-- Auto-hide own nav rail when this page is loaded inside an iframe
+     (used by the main-domain /historification page's Path-B embed).
+     The main-domain page provides the site-wide navbar; showing this
+     file's own nav-rail on top of that would be a double-navbar. -->
+<style>
+html.in-iframe .navbar { display: none !important; }
+html.in-iframe body { padding-top: 0 !important; }
+</style>
+<script>if (window.self !== window.top) { document.documentElement.classList.add('in-iframe'); }</script>
+
 <style>
 :root {
   --black: #000000;
