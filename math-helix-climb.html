@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Helix Climb — 8 Procedural Generators with Curiosity Hooks | GSU</title>
+<meta name="description" content="Eight math skill generators — place value, whole ops, fractions, decimals, ratios, geometry, pre-algebra, algebra. Each session opens with a curiosity puzzle and closes with a reveal. Drill to mastery. Free forever, no login, no certificates — just learning for the knowledge gained.">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/math-helix-climb.html">
+<meta property="og:title" content="Math Helix Climb — 8 Generators with Curiosity Cards">
+<meta property="og:description" content="Every drill session is a mini mystery arc. Curiosity in. Drill in the middle. Reveal at the end. Free.">
+<meta property="og:type" content="website">
+
+<!-- Auto-hide own nav rail when this page is loaded inside an iframe
+     (for possible future main-domain Path-B embed). -->
+<style>
+html.in-iframe .navbar { display: none !important; }
+html.in-iframe body { padding-top: 0 !important; }
+</style>
+<script>if (window.self !== window.top) { document.documentElement.classList.add('in-iframe'); }</script>
+
+<style>
+:root {
+  --black: #000000;
+  --gold: #C9A84C;
+  --gold-dim: #8a7434;
+  --gold-bright: #e5c561;
+  --cream: #F5F1E8;
+  --cream-dim: #a8a49b;
+  --cream-fade: rgba(245,241,232,.55);
+  --navy: #1B2A4A;
+  --teal: #1A8B7F;
+  --red: #cc4a3a;
+  --green: #4ea86a;
+  --card-bg: rgba(201,168,76,.04);
+  --card-border: rgba(201,168,76,.20);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--black); color: var(--cream);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+body { padding-top: 40px; }
+h1, h2, h3, h4 { font-family: Georgia, "Times New Roman", serif; color: var(--cream); margin: 0; }
+a { color: var(--gold); text-decoration: none; }
+a:hover { color: var(--gold-bright); text-decoration: underline; }
+.wr { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+/* ============================================================================
+   NAV RAIL
+   ============================================================================ */
+.navbar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(0,0,0,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 10px 20px;
+  font-size: .9rem;
+}
+.nav-inner {
+  max-width: 1180px; margin: 0 auto;
+  display: flex; align-items: center; gap: 8px 22px; flex-wrap: wrap;
+}
+.nav-brand {
+  font-family: Georgia, serif; font-weight: 700; color: var(--gold);
+  margin-right: 6px; font-size: 1rem;
+}
+.nav-inner a {
+  color: var(--cream-dim); font-weight: 600;
+  padding: 5px 10px; border-radius: 4px;
+  transition: color .15s, background .15s;
+}
+.nav-inner a:hover {
+  color: var(--gold); background: rgba(201,168,76,.08);
+  text-decoration: none;
+}
+.nav-cta {
+  color: var(--black) !important; background: var(--gold);
+  padding: 6px 14px !important; margin-left: auto;
+  font-weight: 800; border-radius: 999px;
+}
+.nav-cta:hover { background: var(--gold-bright); color: var(--black) !important; }
+
+/* ============================================================================
+   WHY WE PLAY strip
+   ============================================================================ */
+#gsu-why-we-play {
+  background: rgba(201,168,76,.05);
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+  padding: 26px 20px;
+}
+#gsu-why-we-play .wr { max-width: 900px; text-align: center; }
+#gsu-why-we-play h3 {
+  color: var(--gold); font-size: .8rem; font-weight: 800;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+#gsu-why-we-play p {
+  color: var(--cream); font-size: .96rem; line-height: 1.7;
+  margin: 0 auto 10px; max-width: 780px;
+}
+#gsu-why-we-play p:last-child { color: var(--cream-fade); font-size: .88rem; }
+
+/* ============================================================================
+   HERO
+   ============================================================================ */
+.hero { padding: 64px 20px 30px; text-align: center; }
+.hero .wr { max-width: 920px; }
+.hero-eyebrow {
+  display: inline-block; font-size: 12px; font-weight: 800;
+  letter-spacing: 2.8px; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: 3rem; line-height: 1.1; margin-bottom: 18px;
+  letter-spacing: -.7px; font-weight: 800;
+}
+.hero h1 em { color: var(--gold); font-style: normal; }
+.hero-deck {
+  font-size: 1.1rem; color: rgba(245,241,232,.85);
+  line-height: 1.7; max-width: 760px; margin: 0 auto 22px;
+}
+.hero-deck b { color: var(--cream); }
+.hero-fine {
+  font-size: .85rem; color: var(--cream-fade);
+  margin: 22px 0 0;
+}
+.hero-fine b { color: var(--cream-dim); }
+
+/* ============================================================================
+   SUBJECT GRID (8 generators)
+   ============================================================================ */
+.subjects {
+  padding: 42px 20px 32px;
+}
+.subjects .wr h2 {
+  text-align: center; font-size: 2rem; margin-bottom: 8px;
+}
+.subjects .wr > p.section-deck {
+  text-align: center; color: rgba(245,241,232,.7);
+  font-size: 1rem; max-width: 680px; margin: 0 auto 34px;
+}
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.subject-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 22px 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .15s, border-color .15s, background .15s, box-shadow .15s;
+  color: var(--cream);
+  font-family: inherit;
+}
+.subject-card:hover {
+  border-color: var(--gold);
+  background: rgba(201,168,76,.09);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.subject-card.playing {
+  border-color: var(--gold);
+  background: rgba(201,168,76,.12);
+  box-shadow: 0 0 0 2px rgba(201,168,76,.3);
+}
+.sc-num {
+  display: inline-block;
+  font-size: 10px; font-weight: 800; letter-spacing: 2px;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.sc-title {
+  font-family: Georgia, serif; font-size: 1.15rem;
+  font-weight: 700; color: var(--cream); margin-bottom: 8px;
+  line-height: 1.25;
+}
+.sc-hint {
+  font-size: .82rem; color: rgba(245,241,232,.7);
+  line-height: 1.5; margin-bottom: 14px;
+}
+.sc-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .82rem; font-weight: 700; color: var(--gold);
+  letter-spacing: .5px;
+}
+.subject-card:hover .sc-cta { color: var(--gold-bright); }
+
+@media (max-width: 960px) {
+  .subject-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .subject-grid { grid-template-columns: 1fr; gap: 12px; }
+  .hero h1 { font-size: 2.1rem; }
+  .hero-deck { font-size: 1rem; }
+}
+
+/* ============================================================================
+   DRILL PANEL — appears when a subject is selected
+   ============================================================================ */
+#drill-panel {
+  display: none;
+  margin: 40px auto 0;
+  max-width: 780px;
+  padding: 0 20px;
+}
+#drill-panel.active { display: block; }
+
+.drill-card {
+  background: rgba(0,0,0,.6);
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+  padding: 30px 32px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.65);
+}
+.drill-close {
+  float: right; background: transparent; border: 0;
+  color: var(--cream-dim); font-size: 1.4rem; cursor: pointer;
+  padding: 2px 8px; border-radius: 4px;
+  transition: color .15s, background .15s;
+}
+.drill-close:hover { color: var(--gold); background: rgba(201,168,76,.1); }
+
+.drill-eyebrow {
+  font-size: 11px; font-weight: 800; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--gold); margin: 0 0 6px;
+}
+.drill-title {
+  font-family: Georgia, serif; font-size: 1.7rem;
+  font-weight: 700; margin: 0 0 20px; color: var(--cream);
+  line-height: 1.2;
+}
+
+/* Curiosity Card */
+.curiosity-card {
+  background: rgba(201,168,76,.06);
+  border-left: 3px solid var(--gold);
+  padding: 20px 24px;
+  margin: 0 0 26px;
+  border-radius: 4px;
+}
+.curiosity-card .cc-tag {
+  display: inline-block; font-size: 10px; font-weight: 800;
+  letter-spacing: 2px; color: var(--gold);
+  margin-bottom: 8px; text-transform: uppercase;
+}
+.curiosity-card p {
+  font-family: Georgia, serif; font-size: 1.05rem;
+  line-height: 1.65; color: var(--cream); margin: 0;
+  font-style: italic;
+}
+
+/* Session progress bar */
+.session-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0 18px; font-size: .85rem;
+}
+.session-progress { color: var(--cream-dim); }
+.session-progress b { color: var(--gold); font-weight: 700; }
+.session-tier {
+  padding: 4px 10px; border-radius: 999px;
+  font-size: .78rem; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(245,241,232,.08); color: var(--cream-dim);
+  border: 1px solid rgba(245,241,232,.15);
+}
+.session-tier.bronze { background: rgba(205,127,50,.15); color: #cd7f32; border-color: rgba(205,127,50,.4); }
+.session-tier.silver { background: rgba(192,192,192,.15); color: #C0C0C0; border-color: rgba(192,192,192,.4); }
+.session-tier.gold { background: rgba(201,168,76,.18); color: var(--gold); border-color: var(--gold); }
+.session-tier.platinum { background: rgba(229,239,255,.18); color: #e5efff; border-color: #a4c2f4; }
+
+/* Problem area */
+.problem-box {
+  background: rgba(0,0,0,.5);
+  border: 1px solid rgba(201,168,76,.35);
+  border-radius: 10px;
+  padding: 30px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.problem-text {
+  font-family: Georgia, serif; font-size: 1.5rem;
+  line-height: 1.4; color: var(--cream);
+  margin: 0 0 22px; letter-spacing: .3px;
+}
+.problem-input-row {
+  display: flex; align-items: center; gap: 10px;
+  justify-content: center; flex-wrap: wrap;
+}
+.problem-input-label {
+  font-family: Georgia, serif; font-size: 1.5rem; color: var(--cream);
+}
+.problem-input {
+  background: rgba(245,241,232,.05);
+  border: 2px solid var(--gold);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 1.4rem;
+  color: var(--cream);
+  font-family: "Courier New", Consolas, monospace;
+  text-align: center;
+  width: 140px;
+  font-weight: 700;
+  outline: none;
+  transition: border-color .12s, background .12s;
+}
+.problem-input:focus {
+  border-color: var(--gold-bright);
+  background: rgba(245,241,232,.1);
+}
+.problem-input.correct {
+  border-color: var(--green);
+  background: rgba(78,168,106,.15);
+  color: var(--green);
+}
+.problem-input.wrong {
+  border-color: var(--red);
+  background: rgba(204,74,58,.15);
+  color: var(--red);
+}
+.problem-submit {
+  background: var(--gold); color: var(--black);
+  border: 0; border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 1rem; font-weight: 800;
+  cursor: pointer;
+  transition: background .12s, transform .12s;
+}
+.problem-submit:hover { background: var(--gold-bright); transform: translateY(-1px); }
+.problem-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.problem-feedback {
+  margin-top: 18px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: .95rem;
+  line-height: 1.55;
+  text-align: left;
+  min-height: 40px;
+  display: none;
+}
+.problem-feedback.correct {
+  display: block;
+  background: rgba(78,168,106,.1);
+  border: 1px solid rgba(78,168,106,.4);
+  color: #a8e0b8;
+}
+.problem-feedback.wrong {
+  display: block;
+  background: rgba(204,74,58,.08);
+  border: 1px solid rgba(204,74,58,.4);
+  color: #f0b8b0;
+}
+.problem-feedback b { color: var(--cream); }
+.problem-feedback .next-btn {
+  display: inline-block;
+  margin-top: 12px;
+  background: var(--gold); color: var(--black);
+  padding: 8px 18px; border-radius: 999px;
+  font-weight: 800; font-size: .85rem;
+  cursor: pointer; border: 0;
+}
+.problem-feedback .next-btn:hover { background: var(--gold-bright); }
+
+/* Reveal Card — appears at session end */
+.reveal-panel { display: none; }
+.reveal-panel.active { display: block; }
+.reveal-card {
+  background: rgba(26,139,127,.06);
+  border-left: 3px solid var(--teal);
+  padding: 24px 28px;
+  margin: 0 0 22px;
+  border-radius: 4px;
+}
+.reveal-card .rc-tag {
+  display: inline-block; font-size: 10px; font-weight: 800;
+  letter-spacing: 2px; color: var(--teal);
+  margin-bottom: 10px; text-transform: uppercase;
+}
+.reveal-card p {
+  font-family: Georgia, serif; font-size: 1.05rem;
+  line-height: 1.75; color: var(--cream); margin: 0;
+}
+.reveal-card p b { color: var(--gold); }
+
+.session-summary {
+  background: rgba(0,0,0,.4);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+  text-align: center;
+}
+.session-summary .ss-score {
+  font-family: Georgia, serif; font-size: 2.4rem;
+  font-weight: 800; color: var(--gold);
+  line-height: 1;
+}
+.session-summary .ss-score-of {
+  font-size: 1rem; color: var(--cream-dim); font-weight: 400;
+}
+.session-summary .ss-label {
+  font-size: .82rem; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--cream-dim); margin-top: 6px;
+}
+.session-summary .ss-tier-large {
+  margin: 14px auto 6px; display: inline-block;
+  padding: 6px 20px; border-radius: 999px;
+  font-size: 1rem; font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.session-summary .ss-stats {
+  display: flex; justify-content: center; gap: 22px;
+  margin-top: 14px; font-size: .85rem; color: var(--cream-dim);
+  flex-wrap: wrap;
+}
+.session-summary .ss-stats span b { color: var(--cream); }
+
+.reveal-actions {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.btn-again {
+  background: var(--gold); color: var(--black);
+  border: 0; padding: 12px 28px; border-radius: 999px;
+  font-weight: 800; cursor: pointer;
+  transition: background .12s, transform .12s;
+  font-size: .95rem;
+}
+.btn-again:hover { background: var(--gold-bright); transform: translateY(-1px); }
+.btn-different {
+  background: transparent; color: var(--cream);
+  border: 1px solid var(--card-border);
+  padding: 12px 24px; border-radius: 999px;
+  font-weight: 700; cursor: pointer;
+  font-size: .9rem;
+  transition: border-color .12s, background .12s;
+}
+.btn-different:hover { border-color: var(--gold); background: rgba(201,168,76,.06); }
+
+@media (max-width: 600px) {
+  .drill-card { padding: 22px 20px; }
+  .drill-title { font-size: 1.35rem; }
+  .problem-text { font-size: 1.2rem; }
+  .problem-input { font-size: 1.2rem; width: 120px; }
+}
+
+/* ============================================================================
+   FAQ
+   ============================================================================ */
+.faq-section {
+  padding: 60px 20px; background: rgba(0,0,0,.4);
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+  margin-top: 60px;
+}
+.faq-section .wr { max-width: 860px; }
+.faq-section h2 {
+  text-align: center; font-size: 2rem; margin-bottom: 8px;
+}
+.faq-section > .wr > p {
+  text-align: center; color: rgba(245,241,232,.7);
+  font-size: .95rem; margin: 0 auto 34px; max-width: 620px;
+}
+.faq-item {
+  background: rgba(201,168,76,.04);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.faq-q {
+  padding: 16px 20px;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-weight: 700; font-size: 1.05rem;
+  color: var(--cream);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; user-select: none;
+  transition: background .12s;
+}
+.faq-q:hover { background: rgba(201,168,76,.06); }
+.faq-q::after {
+  content: '+';
+  color: var(--gold); font-size: 1.5rem;
+  font-family: Arial, sans-serif; font-weight: 400;
+  transition: transform .15s;
+}
+.faq-item.open .faq-q::after {
+  content: '\2212'; /* minus */
+}
+.faq-a {
+  padding: 0 20px 18px;
+  color: rgba(245,241,232,.85);
+  font-size: .95rem; line-height: 1.7;
+  display: none;
+}
+.faq-item.open .faq-a { display: block; }
+.faq-a b { color: var(--cream); }
+
+/* ============================================================================
+   MATH DICTIONARY
+   ============================================================================ */
+.dict-section {
+  padding: 60px 20px;
+  background: var(--black);
+}
+.dict-section .wr { max-width: 980px; }
+.dict-section h2 {
+  text-align: center; font-size: 2rem; margin-bottom: 8px;
+}
+.dict-section > .wr > p {
+  text-align: center; color: rgba(245,241,232,.7);
+  font-size: .95rem; margin: 0 auto 30px; max-width: 620px;
+}
+.dict-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.dict-term {
+  background: rgba(201,168,76,.04);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.dict-term dt {
+  font-family: Georgia, serif; font-size: 1.02rem;
+  font-weight: 700; color: var(--gold); margin-bottom: 5px;
+}
+.dict-term dd {
+  margin: 0; font-size: .88rem; line-height: 1.55;
+  color: rgba(245,241,232,.85);
+}
+
+/* ============================================================================
+   DEEP LEARNING STRIP
+   ============================================================================ */
+.deep-strip {
+  padding: 50px 20px;
+  background: rgba(201,168,76,.03);
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+}
+.deep-strip .wr { max-width: 980px; text-align: center; }
+.deep-strip h3 {
+  font-size: .8rem; color: var(--gold);
+  font-weight: 800; letter-spacing: 2.5px;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.deep-strip h2 {
+  font-size: 1.6rem; margin-bottom: 22px;
+}
+.deep-strip p {
+  color: rgba(245,241,232,.75);
+  max-width: 700px; margin: 0 auto 28px;
+  font-size: .95rem; line-height: 1.7;
+}
+.deep-links {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+}
+.deep-links a {
+  background: rgba(201,168,76,.06);
+  border: 1px solid var(--card-border);
+  color: var(--cream);
+  padding: 12px 22px; border-radius: 999px;
+  font-size: .88rem; font-weight: 600;
+  transition: background .12s, border-color .12s;
+}
+.deep-links a:hover {
+  background: rgba(201,168,76,.14);
+  border-color: var(--gold); color: var(--gold-bright);
+  text-decoration: none;
+}
+
+/* ============================================================================
+   FOOTER
+   ============================================================================ */
+.mhc-footer {
+  padding: 40px 20px 30px;
+  background: var(--black);
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+  color: var(--cream-fade);
+  font-size: .84rem;
+  line-height: 1.6;
+}
+.mhc-footer a { color: var(--cream-dim); }
+.mhc-footer a:hover { color: var(--gold); }
+.mhc-footer b { color: var(--cream); }
+
+/* GENO widget container */
+elevenlabs-convai {
+  position: fixed;
+  right: 20px; bottom: 20px;
+  z-index: 500;
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================ NAV RAIL -->
+<nav class="navbar" aria-label="Math Helix Climb navigation">
+  <div class="nav-inner">
+    <span class="nav-brand">GSU</span>
+    <a href="https://globalsovereignuniversity.org/">Home</a>
+    <a href="https://read.globalsovereignuniversity.org/learning-arcade.html">Learning Arcade</a>
+    <a href="https://globalsovereignuniversity.org/mathification">Mathification Hub</a>
+    <a href="https://read.globalsovereignuniversity.org/dr-133_math_helix.html">DR-133 Math Helix</a>
+    <a href="https://read.globalsovereignuniversity.org/dr-152-inquiry-sandwich.html">DR-152 Inquiry Sandwich</a>
+    <a href="https://globalsovereignuniversity.org/quid-pro-quo" class="nav-cta">Support GSU</a>
+  </div>
+</nav>
+
+<!-- ============================================================= WHY WE PLAY -->
+<section id="gsu-why-we-play">
+  <div class="wr">
+    <h3>Why We Play</h3>
+    <p>At GSU we believe repetition without curiosity is drill; curiosity without repetition is daydream. Games weld the two together — one honest attempt, then another, each carrying a question the mind wants to answer. The knowledge stays because it was earned in a real fight, not memorized in a hurry.</p>
+    <p>There are no certificates in the Learning Arcade — no medal, no receipt to file. Just learning for the knowledge gained. Come back tomorrow. Come back at 3 a.m. The game is still free, still open, still waiting.</p>
+  </div>
+</section>
+
+<!-- ==================================================================== HERO -->
+<section class="hero">
+  <div class="wr">
+    <span class="hero-eyebrow">The Math Helix Climb · 8 Generators · DR-152 Curiosity Cards Built In</span>
+    <h1>Every Drill Session Is a<br><em>Mini Mystery Arc.</em></h1>
+    <p class="hero-deck">Pick a subject. A <b>Curiosity Card</b> asks a puzzling question. You drill ten problems. A <b>Reveal Card</b> pays off the puzzle. The math you just practiced becomes the answer to something you actually wanted to know — because dopamine gates memory, and unresolved curiosity keeps that gate open. This is the strong form of what DR-152's cognitive-science research recommended: not "add a hook to a drill," but "turn every drill into a story."</p>
+    <p class="hero-fine"><b>No login. No cost. No certificate.</b> Just eight generators, infinite problems, and GENO in 83 languages if you get stuck.</p>
+  </div>
+</section>
+
+<!-- ======================================================= SUBJECT GRID (8) -->
+<section class="subjects">
+  <div class="wr">
+    <h2>Choose Your Generator</h2>
+    <p class="section-deck">Each generator produces fresh problems every time. Play once, play a hundred times — no two sessions are the same.</p>
+    <div class="subject-grid" id="subject-grid" role="list">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ DRILL PANEL -->
+<div id="drill-panel">
+  <div class="drill-card" aria-live="polite">
+    <button type="button" class="drill-close" onclick="MHC.closeDrill()" aria-label="Close drill panel">&times;</button>
+
+    <!-- SESSION VIEW -->
+    <div id="session-view">
+      <div class="drill-eyebrow" id="drill-eyebrow">Generator</div>
+      <h2 class="drill-title" id="drill-title">—</h2>
+
+      <div class="curiosity-card" id="curiosity-card">
+        <span class="cc-tag">🧠 Curiosity Card</span>
+        <p id="curiosity-text">—</p>
+      </div>
+
+      <div class="session-bar">
+        <div class="session-progress"><b id="prog-current">1</b> of <b id="prog-total">10</b> · <span id="prog-correct">0</span> correct</div>
+        <div class="session-tier" id="session-tier">Not yet ranked</div>
+      </div>
+
+      <div class="problem-box">
+        <div class="problem-text" id="problem-text">Loading…</div>
+        <div class="problem-input-row">
+          <span class="problem-input-label" id="problem-input-prefix"></span>
+          <input type="text" inputmode="numeric" autocomplete="off"
+                 class="problem-input" id="problem-input"
+                 aria-label="Your answer">
+          <span class="problem-input-label" id="problem-input-suffix"></span>
+          <button type="button" class="problem-submit" id="problem-submit" onclick="MHC.submitAnswer()">Check</button>
+        </div>
+        <div class="problem-feedback" id="problem-feedback" role="status"></div>
+      </div>
+    </div>
+
+    <!-- REVEAL VIEW -->
+    <div id="reveal-view" class="reveal-panel">
+      <div class="drill-eyebrow">Session Complete</div>
+      <h2 class="drill-title" id="reveal-title">The Reveal</h2>
+
+      <div class="session-summary">
+        <div class="ss-score"><span id="final-correct">0</span><span class="ss-score-of">/10</span></div>
+        <div class="ss-label">Correct This Session</div>
+        <div class="ss-tier-large session-tier" id="final-tier">—</div>
+        <div class="ss-stats">
+          <span>Best streak: <b id="final-streak">0</b></span>
+          <span>Personal best: <b id="final-pb">—</b></span>
+          <span>Sessions played: <b id="final-sessions">1</b></span>
+        </div>
+      </div>
+
+      <div class="reveal-card">
+        <span class="rc-tag">✨ Reveal Card</span>
+        <p id="reveal-text">—</p>
+      </div>
+
+      <div class="reveal-actions">
+        <button type="button" class="btn-again" onclick="MHC.playAgain()">Play the Same Subject Again →</button>
+        <button type="button" class="btn-different" onclick="MHC.chooseDifferent()">Choose a Different Subject</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================================================== FAQ -->
+<section class="faq-section">
+  <div class="wr">
+    <h2>Questions People Actually Ask</h2>
+    <p>Read the ones you need. Ask GENO anything the FAQ doesn't answer.</p>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="MHC.toggleFAQ(this)">What is a Curiosity Card and why does every drill have one?</div>
+      <div class="faq-a">The Curiosity Card is a short puzzling question you read <b>before</b> the drill starts. It matters because of a specific cognitive fact: when your brain encounters an unresolved question, it opens a retrieval loop that measurably increases how much of the following experience gets stored in memory. This is Willingham's <em>mystery gap</em> — dopamine gates memory consolidation, and unresolved curiosity keeps that gate open. A drill session with a curiosity hook and a reveal at the end is not just "the same drill with garnish." It is a completely different cognitive event. This design comes straight from DR-152 (The Inquiry Sandwich) — the strong form of the recommendation was to build this in from the ground up, not bolt it on.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="MHC.toggleFAQ(this)">Why 10 problems per session? Why not more or fewer?</div>
+      <div class="faq-a">Ten problems is a compromise between two constraints. Fewer than seven and there aren't enough repetitions for the target skill to actually stabilize in working memory. More than fifteen and fatigue starts to erode accuracy and undo the practice benefit. Ten is the sweet spot for a <b>2-to-3-minute mini-arc</b> — long enough to build competence, short enough to complete before your attention drifts, and short enough that you'll cheerfully play a second session immediately. This is not folk wisdom; it's cognitive load theory (Sweller) applied to the specific structure of procedural math drill.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="MHC.toggleFAQ(this)">Are there really no certificates? Not even a Gold one?</div>
+      <div class="faq-a">Correct. The Learning Arcade at Global Sovereign University does not issue certificates. GSU's honest position is that <b>a certificate you couldn't produce yesterday is worth exactly as much as the knowledge behind it and no more</b>. If you drill until you get 10/10 five times in a row on fractions, you own that skill regardless of whether anyone hands you a piece of paper. If you don't drill and someone hands you a paper anyway, the paper is a lie. The tier badges you see (Bronze, Silver, Gold, Platinum) are session-scored — they reset every drill so you can watch your own progress, not so you can collect them. If you want a formal, publicly-verifiable credential, GSU offers eight free Certifications at <a href="https://globalsovereignuniversity.org/certification">globalsovereignuniversity.org/certification</a> — those are proctored exams, not drill games.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="MHC.toggleFAQ(this)">I got a problem wrong. Should I look up the right answer or just guess and move on?</div>
+      <div class="faq-a">Neither. When you get a problem wrong here, the feedback tells you the correct answer <b>and</b> shows the calculation. Read it before moving on. The single strongest predictor of whether drilled knowledge sticks is not raw repetition — it's <em>corrective feedback delivered within seconds of the mistake</em>. That is the design of this page. You'll notice the "Next" button doesn't appear until after you've seen the feedback, which is not an accident.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="MHC.toggleFAQ(this)">Where does my progress get saved? Do you track me?</div>
+      <div class="faq-a">Your session count, personal best, and current best streak per subject are saved in your browser's <b>localStorage</b> — meaning they never leave your device. GSU does not have an account for you. GSU does not have a database entry with your name in it. If you clear your browser data or use a different device, your progress starts over. This is intentional: the game is designed for the person who arrives at 3 a.m. with no account, no email, no explanation, and just wants to learn. Nothing about that person needs to be tracked to be served.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="MHC.toggleFAQ(this)">Can GENO explain a problem I got wrong?</div>
+      <div class="faq-a">Yes — that is exactly what GENO is here for. Click the GENO widget in the lower right, and ask something like <em>"On the pre-algebra generator, why does 3 + 2 × 4 = 11 and not 20?"</em> GENO tutors in 83 languages, has memorized every free PDF book GSU publishes, and can walk you through the reasoning without judgment and without hurry. If GENO can't answer a specific question, that's a signal we need to publish more free curriculum — please tell us via the Contact link so we can fix it.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="MHC.toggleFAQ(this)">Is this suitable for a grade-school student? For an adult? For a math-anxious person?</div>
+      <div class="faq-a">Yes to all three, with a caveat. The <b>Place Value</b> and <b>Whole Number Operations</b> generators start easy enough for a strong 3rd-4th grader. <b>Algebra 1</b> is calibrated for early high school or a returning adult. Everything in between spans grades 5-9. For a math-anxious learner: the Curiosity Cards are the point of this build. Every session starts with something interesting — not "here is a test." That reframing is precisely what the research says helps with math anxiety, and it's why this page exists.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="MHC.toggleFAQ(this)">What about fractions — how do I type "three-quarters"?</div>
+      <div class="faq-a">The fractions generator accepts <b>either</b> format. You can type <code>3/4</code> or <code>0.75</code> and both are counted as correct. For mixed numbers you can type <code>1 1/2</code> (with a space) or <code>1.5</code>. If you write <code>6/8</code> instead of <code>3/4</code>, it will still be marked correct because they're the same number — the game does the reduction for you. This is not sloppiness; it's an honest reflection of the fact that a fraction is a value, and the game tests whether you know the value, not whether you know how to type it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== DICTIONARY -->
+<section class="dict-section">
+  <div class="wr">
+    <h2>Math Dictionary</h2>
+    <p>Terms that appear in this game, defined in plain English. Ask GENO for more.</p>
+    <div class="dict-grid">
+      <dl class="dict-term"><dt>Place value</dt><dd>The value of a digit based on its position. In 507, the "5" means 500 because it sits in the hundreds column.</dd></dl>
+      <dl class="dict-term"><dt>Factor</dt><dd>A number that divides another number evenly. 3 and 4 are factors of 12.</dd></dl>
+      <dl class="dict-term"><dt>Quotient</dt><dd>The answer to a division problem. 12 ÷ 3 = 4, so 4 is the quotient.</dd></dl>
+      <dl class="dict-term"><dt>Numerator</dt><dd>The top number in a fraction — how many parts you have. In 3/4, the numerator is 3.</dd></dl>
+      <dl class="dict-term"><dt>Denominator</dt><dd>The bottom number in a fraction — how many equal parts the whole was cut into. In 3/4, the denominator is 4.</dd></dl>
+      <dl class="dict-term"><dt>Equivalent fractions</dt><dd>Two fractions that describe the same value. 1/2 and 2/4 are equivalent — same amount, different notation.</dd></dl>
+      <dl class="dict-term"><dt>Percent</dt><dd>Literally "per hundred." 40% means 40 out of 100, or 0.40, or 2/5.</dd></dl>
+      <dl class="dict-term"><dt>Ratio</dt><dd>A comparison of two quantities. "2 cups of flour to 12 cookies" is the ratio 2:12, which simplifies to 1:6.</dd></dl>
+      <dl class="dict-term"><dt>Unit rate</dt><dd>How much of one thing per <em>single</em> of another. 60 miles per hour is a unit rate.</dd></dl>
+      <dl class="dict-term"><dt>Perimeter</dt><dd>The total distance around the outside of a shape. Add up all the sides.</dd></dl>
+      <dl class="dict-term"><dt>Area</dt><dd>The amount of surface a shape covers. Measured in square units (square inches, square meters).</dd></dl>
+      <dl class="dict-term"><dt>Volume</dt><dd>The amount of space a 3D object takes up. Measured in cubic units.</dd></dl>
+      <dl class="dict-term"><dt>Order of operations</dt><dd>The agreed-upon sequence for evaluating an expression: <b>Parentheses, Exponents, Multiplication/Division, Addition/Subtraction</b> — PEMDAS.</dd></dl>
+      <dl class="dict-term"><dt>Integer</dt><dd>Any whole number, including negative numbers and zero: ..., -3, -2, -1, 0, 1, 2, 3, ...</dd></dl>
+      <dl class="dict-term"><dt>Variable</dt><dd>A letter (usually x or y) that stands for an unknown number. The whole job of algebra is to find what number the variable equals.</dd></dl>
+      <dl class="dict-term"><dt>Equality Property</dt><dd>If two things are equal, and you do the same operation to both, they stay equal. This is the single most important rule in algebra.</dd></dl>
+      <dl class="dict-term"><dt>Slope</dt><dd>How steep a line is. "Rise over run" — how much y changes per unit change in x.</dd></dl>
+      <dl class="dict-term"><dt>Coefficient</dt><dd>The number multiplying a variable. In 3x + 5, the coefficient of x is 3.</dd></dl>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================== DEEP STRIP -->
+<section class="deep-strip">
+  <div class="wr">
+    <h3>Go Deeper</h3>
+    <h2>The Research and the Rest of the Math Curriculum</h2>
+    <p>This game exists because of specific cognitive research on how math confidence gets built. If you want the research itself, or the rest of GSU's math offerings, the links below are the door.</p>
+    <div class="deep-links">
+      <a href="https://read.globalsovereignuniversity.org/dr-152-inquiry-sandwich.html">DR-152 — The Inquiry Sandwich</a>
+      <a href="https://read.globalsovereignuniversity.org/dr-133_math_helix.html">DR-133 — The Math Helix</a>
+      <a href="https://globalsovereignuniversity.org/mathification">Mathification Hub</a>
+      <a href="https://globalsovereignuniversity.org/language-of-mathematics">The Language of Mathematics</a>
+      <a href="https://read.globalsovereignuniversity.org/learning-arcade.html">The Full Learning Arcade</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= FOOTER -->
+<footer class="mhc-footer">
+  <div class="wr">
+    <p><b>Global Sovereign University</b> · The Foundation for Global Instruction · 501(c)(3) · EIN 39-2716552</p>
+    <p>Free education for every person on Earth. No login. No cost. No gatekeepers.</p>
+    <p style="margin-top:14px;">
+      <a href="https://globalsovereignuniversity.org/mission">Mission</a> &nbsp;·&nbsp;
+      <a href="https://globalsovereignuniversity.org/quid-pro-quo">Support GSU</a> &nbsp;·&nbsp;
+      <a href="https://globalsovereignuniversity.org/contact">Contact</a> &nbsp;·&nbsp;
+      <a href="https://read.globalsovereignuniversity.org/learning-arcade.html">Learning Arcade</a>
+    </p>
+    <p style="margin-top:14px;font-style:italic;color:rgba(245,241,232,.4);">
+      "Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A Constant
+    </p>
+  </div>
+</footer>
+
+<!-- ============================================================= GENO WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<!-- ============================================================== JSON-LD SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Math Helix Climb",
+  "description": "Eight procedural math skill generators — place value, whole number operations, fractions, decimals & percents, ratios & proportions, geometry, pre-algebra, algebra 1. Each session opens with a Curiosity Card and closes with a Reveal Card, following DR-152 research on cognitive priming.",
+  "url": "https://read.globalsovereignuniversity.org/math-helix-climb.html",
+  "educationalLevel": ["Elementary school", "Middle school", "Early high school", "Adult learner"],
+  "learningResourceType": "Interactive drill game",
+  "isAccessibleForFree": true,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "url": "https://globalsovereignuniversity.org",
+    "sameAs": "https://globalsovereignuniversity.org"
+  },
+  "inLanguage": "en",
+  "teaches": ["Place value", "Whole number arithmetic", "Fractions", "Decimals and percents", "Ratios and proportional reasoning", "Geometry (perimeter, area, volume)", "Pre-algebra (order of operations, integers)", "Algebra 1 (linear equations, slope)"]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is a Curiosity Card?", "acceptedAnswer": {"@type": "Answer", "text": "A short puzzling question read before the drill starts. It opens a cognitive retrieval loop that improves how much of the following experience gets stored in memory. From DR-152 research."}},
+    {"@type": "Question", "name": "Why 10 problems per session?", "acceptedAnswer": {"@type": "Answer", "text": "Ten problems is the sweet spot for a 2-3 minute mini-arc: enough repetitions to stabilize the skill in working memory, few enough to avoid fatigue."}},
+    {"@type": "Question", "name": "Are there certificates?", "acceptedAnswer": {"@type": "Answer", "text": "No. The Learning Arcade issues no certificates. Bronze/Silver/Gold/Platinum tier badges are session-scored progress indicators, not credentials."}},
+    {"@type": "Question", "name": "Where does my progress get saved?", "acceptedAnswer": {"@type": "Answer", "text": "In your browser's localStorage. Nothing leaves your device. GSU does not track you."}},
+    {"@type": "Question", "name": "Can GENO explain wrong answers?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Click the GENO widget in the lower right. GENO tutors in 83 languages and has memorized every free PDF book GSU publishes."}}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "name": "Math Helix Climb Dictionary",
+  "description": "Mathematical terms defined in plain English for the Math Helix Climb learners.",
+  "hasDefinedTerm": [
+    {"@type": "DefinedTerm", "name": "Place value", "description": "The value of a digit based on its position."},
+    {"@type": "DefinedTerm", "name": "Numerator", "description": "The top number of a fraction; how many parts you have."},
+    {"@type": "DefinedTerm", "name": "Denominator", "description": "The bottom number of a fraction; how many equal parts the whole was cut into."},
+    {"@type": "DefinedTerm", "name": "Percent", "description": "Literally per hundred. 40% means 40 out of 100."},
+    {"@type": "DefinedTerm", "name": "Ratio", "description": "A comparison of two quantities, like 2:12."},
+    {"@type": "DefinedTerm", "name": "Unit rate", "description": "How much of one thing per single of another; e.g., miles per hour."},
+    {"@type": "DefinedTerm", "name": "Order of operations", "description": "PEMDAS. Parentheses, exponents, multiplication/division, addition/subtraction."},
+    {"@type": "DefinedTerm", "name": "Variable", "description": "A letter that stands for an unknown number."},
+    {"@type": "DefinedTerm", "name": "Equality Property", "description": "If two things are equal, and you do the same operation to both, they stay equal."}
+  ]
+}
+</script>
+
+<!-- ================================================================== ENGINE -->
+<script>
+/* =========================================================================
+   MATH HELIX CLIMB · Engine
+   Eight procedural generators + Curiosity/Reveal system per DR-152.
+   Progress tracked in localStorage (never leaves the device).
+   ========================================================================= */
+(function(){
+  'use strict';
+
+  // ---------- Utility ----------
+  function rand(lo, hi) { return Math.floor(Math.random() * (hi - lo + 1)) + lo; }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a; }
+  function reduceFrac(n, d) { const g = gcd(n, d); return [n / g, d / g]; }
+  function toFracString(n, d) { const [rn, rd] = reduceFrac(n, d); return rd === 1 ? String(rn) : `${rn}/${rd}`; }
+
+  // ---------- Answer parser: accepts decimals, fractions, mixed numbers ----------
+  function parseAnswer(input) {
+    const s = String(input).trim().replace(/\s+/g, ' ');
+    if (!s) return null;
+    // Mixed number: "1 3/4"
+    const mixed = /^(-?)(\d+)\s+(\d+)\/(\d+)$/.exec(s);
+    if (mixed) {
+      const sign = mixed[1] === '-' ? -1 : 1;
+      const whole = parseInt(mixed[2], 10);
+      const num = parseInt(mixed[3], 10);
+      const den = parseInt(mixed[4], 10);
+      if (den === 0) return null;
+      return sign * (whole + num / den);
+    }
+    // Simple fraction: "3/4" or "-3/4"
+    const frac = /^(-?\d+)\/(\d+)$/.exec(s);
+    if (frac) {
+      const den = parseInt(frac[2], 10);
+      if (den === 0) return null;
+      return parseInt(frac[1], 10) / den;
+    }
+    // Number (integer or decimal)
+    const n = Number(s);
+    return isNaN(n) ? null : n;
+  }
+
+  function approxEqual(a, b, tol) {
+    tol = tol || 0.001;
+    return Math.abs(a - b) < tol;
+  }
+
+  // ---------- The Eight Subjects ----------
+  // Each subject: {id, num, title, hint, curiosity, reveal, gen()}
+  // gen() returns {q: HTML, ans: number, prefix: '', suffix: '', explain: HTML}
+  const SUBJECTS = [
+    {
+      id: 'pv', num: '01', title: 'Place Value',
+      hint: 'What each digit really means. From ones to millions to decimals.',
+      curiosity: 'The number 1,000,000,000 has ten digits — but only one <b>1</b>. The other nine digits do nothing except make the <b>1</b> bigger. In what way? Let\'s see if we can name it exactly.',
+      reveal: 'Every zero in <b>1,000,000,000</b> is a placeholder — it says "nothing lives here, but keep counting." <b>Place value is the invisible scaffolding that makes big numbers possible.</b> Without it you\'d need a new symbol for every quantity above 9 — like Roman numerals, which is exactly why the Romans couldn\'t do modern engineering. Every problem you just solved was reading that scaffolding one digit at a time.',
+      gen: function() {
+        const type = rand(1, 3);
+        if (type === 1) {
+          // Value of a digit
+          const digits = rand(4, 7);
+          let n = '';
+          for (let i = 0; i < digits; i++) n += String(rand(i === 0 ? 1 : 0, 9));
+          const num = parseInt(n, 10);
+          const pos = rand(0, digits - 1);
+          const digit = parseInt(n[digits - 1 - pos], 10);
+          const place = Math.pow(10, pos);
+          const placeName = ['ones','tens','hundreds','thousands','ten-thousands','hundred-thousands','millions'][pos];
+          return {
+            q: `In the number <b>${num.toLocaleString()}</b>, what is the value of the <b>${placeName}</b> digit?`,
+            ans: digit * place,
+            prefix: '',
+            suffix: '',
+            explain: `The ${placeName} digit is <b>${digit}</b>. Its value is ${digit} × ${place.toLocaleString()} = <b>${(digit*place).toLocaleString()}</b>.`
+          };
+        } else if (type === 2) {
+          // Rounding
+          const digits = rand(3, 6);
+          let n = '';
+          for (let i = 0; i < digits; i++) n += String(rand(i === 0 ? 1 : 0, 9));
+          const num = parseInt(n, 10);
+          const roundPos = rand(1, digits - 2);
+          const place = Math.pow(10, roundPos);
+          const placeName = ['','ten','hundred','thousand','ten-thousand','hundred-thousand'][roundPos];
+          const rounded = Math.round(num / place) * place;
+          return {
+            q: `Round <b>${num.toLocaleString()}</b> to the nearest <b>${placeName}</b>.`,
+            ans: rounded,
+            prefix: '',
+            suffix: '',
+            explain: `The digit to the right of the ${placeName}s place tells us to round up or down. Result: <b>${rounded.toLocaleString()}</b>.`
+          };
+        } else {
+          // Compare
+          const a = rand(1000, 999999);
+          const b = a + rand(-500, 500) * rand(1, 100);
+          const larger = Math.max(a, b);
+          return {
+            q: `Which is larger: <b>${a.toLocaleString()}</b> or <b>${b.toLocaleString()}</b>?<br><span style="font-size:.85em;color:rgba(245,241,232,.6);">Type the larger number.</span>`,
+            ans: larger,
+            prefix: '',
+            suffix: '',
+            explain: `<b>${larger.toLocaleString()}</b> is larger. Compare digit by digit, from left to right, at the same place value.`
+          };
+        }
+      }
+    },
+    {
+      id: 'wn', num: '02', title: 'Whole Number Ops',
+      hint: 'Add, subtract, multiply, divide. Arithmetic fluency for the toolkit.',
+      curiosity: 'You probably learned multiplication as "a shortcut for addition." <em>3 × 4 = 4 + 4 + 4.</em> Fine. But then how is division a shortcut for subtraction? Show me. Fifteen minus something, five times… it doesn\'t quite work. Something else is going on.',
+      reveal: 'Division isn\'t "repeated subtraction" the way multiplication is "repeated addition" — it\'s the <b>inverse question</b>: "how many groups fit?" You just answered dozens of those questions. Every ÷ problem you solved was really the question <em>"how many of THIS live inside THAT?"</em> Different operation, different question — same beautiful symmetry.',
+      gen: function() {
+        const op = pick(['+', '-', '×', '÷']);
+        let a, b, ans, explain;
+        if (op === '+') {
+          a = rand(23, 999); b = rand(23, 999); ans = a + b;
+          explain = `${a} + ${b} = <b>${ans}</b>. Line up the ones column, carry as needed.`;
+        } else if (op === '-') {
+          a = rand(200, 999); b = rand(23, a - 1); ans = a - b;
+          explain = `${a} − ${b} = <b>${ans}</b>. Borrow from the next column when the top digit is smaller.`;
+        } else if (op === '×') {
+          a = rand(3, 25); b = rand(3, 25); ans = a * b;
+          explain = `${a} × ${b} = <b>${ans}</b>. Distribute if it helps: ${a} × ${b} = ${a} × ${Math.floor(b/10)*10} + ${a} × ${b - Math.floor(b/10)*10} = ${a*Math.floor(b/10)*10} + ${a*(b - Math.floor(b/10)*10)}.`;
+        } else {
+          // Division with clean whole-number quotient
+          b = rand(2, 12); ans = rand(2, 25); a = b * ans;
+          explain = `${a} ÷ ${b} = <b>${ans}</b> (because ${b} × ${ans} = ${a}). Division asks: how many ${b}s fit inside ${a}?`;
+        }
+        return {
+          q: `<b>${a} ${op} ${b}</b> = ?`,
+          ans: ans,
+          prefix: '=',
+          suffix: '',
+          explain: explain
+        };
+      }
+    },
+    {
+      id: 'fr', num: '03', title: 'Fractions',
+      hint: 'Halves, thirds, quarters. Add, subtract, simplify, and see through the disguise.',
+      curiosity: 'A pizza cut into 8 slices has more edges than a pizza cut into 4. But is it more pizza? Same dough, same cheese. So what changed? The answer will emerge in the drill.',
+      reveal: 'You just added, multiplied, and simplified halves, thirds, and quarters. Each "slice" was smaller — but the total was the same. That\'s the secret of fractions: they aren\'t just numbers, they\'re <b>geometry in disguise</b>. The pizza has the same area whether you cut it 4 or 8 times — but the crust length (the boundary) grows with more slices. Fractions describe the parts. Geometry describes the shape. Same pizza, different question.',
+      gen: function() {
+        const type = rand(1, 3);
+        if (type === 1) {
+          // Simplify
+          const d = pick([4, 6, 8, 9, 10, 12, 15, 16]);
+          const n = rand(1, d - 1);
+          const [rn, rd] = reduceFrac(n, d);
+          return {
+            q: `Simplify: <b>${n}/${d}</b>`,
+            ans: rn / rd,
+            prefix: '=',
+            suffix: '',
+            explain: `Divide top and bottom by GCD(${n},${d}) = ${gcd(n,d)}. Result: <b>${toFracString(n, d)}</b> (which equals ${(n/d).toFixed(3).replace(/0+$/,'').replace(/\.$/,'')} as a decimal).`
+          };
+        } else if (type === 2) {
+          // Add fractions with common denominator
+          const d = pick([4, 6, 8, 10, 12]);
+          const n1 = rand(1, d - 2);
+          const n2 = rand(1, d - n1);
+          const sumN = n1 + n2;
+          return {
+            q: `Add: <b>${n1}/${d} + ${n2}/${d}</b>`,
+            ans: sumN / d,
+            prefix: '=',
+            suffix: '',
+            explain: `Same denominator: just add the tops. ${n1}/${d} + ${n2}/${d} = ${sumN}/${d} = <b>${toFracString(sumN, d)}</b>.`
+          };
+        } else {
+          // Multiply fractions
+          const d1 = pick([2, 3, 4, 5]);
+          const d2 = pick([2, 3, 4, 5]);
+          const n1 = rand(1, d1 - 1);
+          const n2 = rand(1, d2 - 1);
+          return {
+            q: `Multiply: <b>${n1}/${d1} × ${n2}/${d2}</b>`,
+            ans: (n1 * n2) / (d1 * d2),
+            prefix: '=',
+            suffix: '',
+            explain: `Multiply straight across: ${n1}×${n2}/${d1}×${d2} = ${n1*n2}/${d1*d2} = <b>${toFracString(n1*n2, d1*d2)}</b>.`
+          };
+        }
+      }
+    },
+    {
+      id: 'dp', num: '04', title: 'Decimals & Percents',
+      hint: 'Convert, calculate, and beat the sticker at checkout.',
+      curiosity: 'A store marks something <b>40% off</b>. Then adds <b>8% sales tax</b>. Did you pay less than 60% of the original? More? Exactly 60%? People argue about this at checkout every day. Let\'s arm you.',
+      reveal: '40% off means you pay 60%. 8% tax means you pay 108% of <em>that</em>. So: <b>0.60 × 1.08 = 0.648</b>, or <b>64.8%</b> of the original. Not 60%, not 68% (that\'s the "take one, add the other" mistake) — 64.8%. Every problem you just solved was training your brain to run these percentage chains without a calculator. Retailers count on people getting this wrong. You don\'t have to anymore.',
+      gen: function() {
+        const type = rand(1, 3);
+        if (type === 1) {
+          // Percent of number
+          const p = pick([10, 15, 20, 25, 30, 40, 50, 60, 75]);
+          const n = pick([20, 40, 50, 60, 80, 100, 120, 200, 400]);
+          const ans = (p / 100) * n;
+          return {
+            q: `What is <b>${p}%</b> of <b>${n}</b>?`,
+            ans: ans,
+            prefix: '=',
+            suffix: '',
+            explain: `${p}% = ${p/100}. ${p/100} × ${n} = <b>${ans}</b>.`
+          };
+        } else if (type === 2) {
+          // Decimal to percent
+          const d = pick([0.05, 0.1, 0.15, 0.2, 0.25, 0.4, 0.5, 0.6, 0.75, 0.8, 0.9, 1.25, 1.5]);
+          return {
+            q: `Convert <b>${d}</b> to a percent.<br><span style="font-size:.85em;color:rgba(245,241,232,.6);">Type just the number (no % sign).</span>`,
+            ans: d * 100,
+            prefix: '=',
+            suffix: '%',
+            explain: `To convert decimal to percent, multiply by 100 (shift decimal 2 places right). ${d} × 100 = <b>${d*100}%</b>.`
+          };
+        } else {
+          // Simple decimal add/subtract
+          const op = pick(['+', '-']);
+          const a = (rand(20, 200) / 10);
+          const b = (rand(20, 200) / 10);
+          let ans;
+          if (op === '+') { ans = +(a + b).toFixed(1); }
+          else {
+            const larger = Math.max(a, b), smaller = Math.min(a, b);
+            ans = +(larger - smaller).toFixed(1);
+            return {
+              q: `<b>${larger.toFixed(1)} − ${smaller.toFixed(1)}</b> = ?`,
+              ans: ans,
+              prefix: '=',
+              suffix: '',
+              explain: `Line up the decimal points. ${larger} − ${smaller} = <b>${ans}</b>.`
+            };
+          }
+          return {
+            q: `<b>${a.toFixed(1)} + ${b.toFixed(1)}</b> = ?`,
+            ans: ans,
+            prefix: '=',
+            suffix: '',
+            explain: `Line up the decimal points and add. ${a} + ${b} = <b>${ans}</b>.`
+          };
+        }
+      }
+    },
+    {
+      id: 'rp', num: '05', title: 'Ratios & Proportions',
+      hint: 'Unit rates and scale-ups. The most useful math you\'ll ever own.',
+      curiosity: 'A recipe says "2 cups of flour makes 12 cookies." Simple. Now: you have 3 cups of flour. But your friend calls, asking how much flour they need for 30 cookies. Can you answer <b>both</b> questions with one mental tool? Yes. And you already own it.',
+      reveal: 'The tool is the <b>unit rate</b>: 2 cups ÷ 12 cookies = 1/6 cup per cookie. Now everything is a multiplication. 3 cups × 6 cookies/cup = 18 cookies. 30 cookies × 1/6 cup/cookie = 5 cups. <b>One rate, every question, no more setup.</b> That\'s the entire hidden power of ratios. Every problem you drilled was building that pattern.',
+      gen: function() {
+        const type = rand(1, 3);
+        if (type === 1) {
+          // Unit rate: total for count
+          const perUnit = rand(2, 8);
+          const total = perUnit * rand(3, 12);
+          const count = total / perUnit;
+          return {
+            q: `If <b>${count}</b> items cost <b>$${total}</b> total, what is the cost per item?`,
+            ans: perUnit,
+            prefix: '$',
+            suffix: 'each',
+            explain: `Unit rate: $${total} ÷ ${count} items = <b>$${perUnit}</b> per item.`
+          };
+        } else if (type === 2) {
+          // Scale up
+          const perUnit = rand(2, 6);
+          const a1 = rand(2, 5);
+          const a2 = rand(a1 + 1, 12);
+          const b1 = a1 * perUnit;
+          const b2 = a2 * perUnit;
+          return {
+            q: `If <b>${a1}</b> workers earn <b>$${b1}</b> per hour combined, how much do <b>${a2}</b> workers earn per hour at the same rate?`,
+            ans: b2,
+            prefix: '$',
+            suffix: '/hr',
+            explain: `Rate per worker = $${b1}/${a1} = $${perUnit}/hr. Then ${a2} workers × $${perUnit}/hr = <b>$${b2}/hr</b>.`
+          };
+        } else {
+          // Simple proportion
+          const k = rand(2, 6);
+          const a = rand(2, 8);
+          const b = a * k;
+          const c = rand(3, 10);
+          const x = c * k;
+          return {
+            q: `Solve the proportion: <b>${a}/${b} = ${c}/x</b>. Find <b>x</b>.`,
+            ans: x,
+            prefix: 'x =',
+            suffix: '',
+            explain: `Cross-multiply: ${a} × x = ${b} × ${c}, so x = ${b*c}/${a} = <b>${x}</b>.`
+          };
+        }
+      }
+    },
+    {
+      id: 'geo', num: '06', title: 'Geometry',
+      hint: 'Perimeter, area, volume. The physics of shape.',
+      curiosity: 'You have a fixed length of fence — say, <b>40 feet</b>. You want to pen in the biggest area you can. What shape gets you the most square footage? Rectangle, square, triangle? Circle? There is a right answer, and it isn\'t obvious.',
+      reveal: 'For a fixed perimeter, <b>the circle wins — always</b>. Every step down in symmetry (circle → square → rectangle → thin rectangle) <em>loses area</em>. That\'s why bubbles are round, why cells are round, why planets are round. <b>Geometry isn\'t just formulas — it\'s the physics of packing.</b> The problems you just solved were computing this trade-off, one shape at a time.',
+      gen: function() {
+        const type = rand(1, 4);
+        if (type === 1) {
+          // Rectangle area
+          const w = rand(3, 20), h = rand(3, 20);
+          return {
+            q: `Area of a rectangle with sides <b>${w}</b> and <b>${h}</b>?`,
+            ans: w * h,
+            prefix: '=',
+            suffix: 'sq units',
+            explain: `Area = length × width = ${w} × ${h} = <b>${w*h}</b> square units.`
+          };
+        } else if (type === 2) {
+          // Rectangle perimeter
+          const w = rand(3, 20), h = rand(3, 20);
+          return {
+            q: `Perimeter of a rectangle with sides <b>${w}</b> and <b>${h}</b>?`,
+            ans: 2 * (w + h),
+            prefix: '=',
+            suffix: 'units',
+            explain: `Perimeter = 2(length + width) = 2(${w} + ${h}) = <b>${2*(w+h)}</b> units.`
+          };
+        } else if (type === 3) {
+          // Triangle area
+          const b = rand(4, 20), h = rand(3, 15);
+          const ans = (b * h) / 2;
+          return {
+            q: `Area of a triangle with base <b>${b}</b> and height <b>${h}</b>?`,
+            ans: ans,
+            prefix: '=',
+            suffix: 'sq units',
+            explain: `Area = ½ × base × height = ½ × ${b} × ${h} = <b>${ans}</b> square units.`
+          };
+        } else {
+          // Cube volume
+          const s = rand(2, 12);
+          return {
+            q: `Volume of a cube with side length <b>${s}</b>?`,
+            ans: s ** 3,
+            prefix: '=',
+            suffix: 'cubic units',
+            explain: `Volume of a cube = side³ = ${s}³ = ${s} × ${s} × ${s} = <b>${s**3}</b> cubic units.`
+          };
+        }
+      }
+    },
+    {
+      id: 'pa', num: '07', title: 'Pre-Algebra',
+      hint: 'Order of operations, integers, one-step equations.',
+      curiosity: '<b>PEMDAS.</b> Parentheses, exponents, multiplication, division, addition, subtraction. Everyone learns it. But <em>why</em> that order? Why not just left to right? There is a specific reason mathematicians chose this — and it has nothing to do with tradition.',
+      reveal: 'The order isn\'t arbitrary — it\'s the order of <b>operational power</b>. Exponents are "super-multiplication" (repeated multiplying). Multiplication is "super-addition" (repeated adding). The strongest operation runs first because it consumes the most, and everything else adjusts around it. If you did addition before multiplication, results would depend on how you wrote them down. <b>PEMDAS makes math unambiguous</b> — every expression has one answer, everywhere, forever. That\'s the whole point.',
+      gen: function() {
+        const type = rand(1, 4);
+        if (type === 1) {
+          // Order of operations
+          const a = rand(2, 9), b = rand(2, 9), c = rand(2, 9);
+          const forms = [
+            {q: `${a} + ${b} × ${c}`, ans: a + b * c, explain: `Multiplication before addition: ${b}×${c}=${b*c}, then ${a}+${b*c}=<b>${a+b*c}</b>.`},
+            {q: `${a} × ${b} − ${c}`, ans: a * b - c, explain: `Multiplication before subtraction: ${a}×${b}=${a*b}, then ${a*b}−${c}=<b>${a*b-c}</b>.`},
+            {q: `(${a} + ${b}) × ${c}`, ans: (a + b) * c, explain: `Parentheses first: ${a}+${b}=${a+b}, then ×${c} = <b>${(a+b)*c}</b>.`}
+          ];
+          const f = pick(forms);
+          return {q: `<b>${f.q}</b> = ?`, ans: f.ans, prefix: '=', suffix: '', explain: f.explain};
+        } else if (type === 2) {
+          // Integer add
+          const a = rand(-15, -1), b = rand(1, 15);
+          return {
+            q: `<b>${a} + ${b}</b> = ?`,
+            ans: a + b,
+            prefix: '=',
+            suffix: '',
+            explain: `Adding a positive to a negative moves right on the number line. ${a} + ${b} = <b>${a+b}</b>.`
+          };
+        } else if (type === 3) {
+          // Integer multiply
+          const a = pick([-1, -2, -3, -4, -5, -6, -7, -8]);
+          const b = pick([-2, -3, -4, -5, 2, 3, 4, 5, 6, 7]);
+          return {
+            q: `<b>${a} × ${b}</b> = ?`,
+            ans: a * b,
+            prefix: '=',
+            suffix: '',
+            explain: `Signs: neg × pos = neg; neg × neg = pos. ${a} × ${b} = <b>${a*b}</b>.`
+          };
+        } else {
+          // One-step equation
+          const solution = rand(2, 20);
+          const add = rand(3, 15);
+          return {
+            q: `Solve: <b>x + ${add} = ${solution + add}</b>. What is <b>x</b>?`,
+            ans: solution,
+            prefix: 'x =',
+            suffix: '',
+            explain: `Subtract ${add} from both sides (Equality Property): x = ${solution + add} − ${add} = <b>${solution}</b>.`
+          };
+        }
+      }
+    },
+    {
+      id: 'a1', num: '08', title: 'Algebra 1',
+      hint: 'Two-step equations, slope, the Equality Property in action.',
+      curiosity: 'You know how to solve <em>x + 5 = 12</em> — subtract 5 from both sides, get x = 7. But <b>WHY</b> does "both sides" work? Why not just one side? What law of the universe says this is legal? There is one. Name it, and you understand all of algebra.',
+      reveal: 'It\'s called the <b>Equality Property</b>: if two things are equal, and you do the same thing to both, they stay equal. Sounds obvious. But this ONE property — <em>do the same thing to both sides</em> — is literally the entire engine of algebra. Every equation you just solved was one application of that single rule, applied over and over. <b>Understand equality, and you understand every equation you\'ll ever meet.</b>',
+      gen: function() {
+        const type = rand(1, 3);
+        if (type === 1) {
+          // Two-step linear
+          const x = rand(2, 15);
+          const a = rand(2, 8);
+          const b = rand(1, 20);
+          const c = a * x + b;
+          return {
+            q: `Solve: <b>${a}x + ${b} = ${c}</b>. Find <b>x</b>.`,
+            ans: x,
+            prefix: 'x =',
+            suffix: '',
+            explain: `Subtract ${b}: ${a}x = ${c - b}. Divide by ${a}: x = <b>${x}</b>. (Both steps use the Equality Property.)`
+          };
+        } else if (type === 2) {
+          // Slope
+          const x1 = rand(0, 5), y1 = rand(0, 10);
+          const dx = rand(1, 6), dy = rand(-8, 8);
+          const x2 = x1 + dx, y2 = y1 + dy;
+          const slope = dy / dx;
+          const isInt = Number.isInteger(slope);
+          return {
+            q: `Find the slope of the line through <b>(${x1}, ${y1})</b> and <b>(${x2}, ${y2})</b>.`,
+            ans: slope,
+            prefix: 'm =',
+            suffix: '',
+            explain: `Slope = (y₂ − y₁)/(x₂ − x₁) = (${y2} − ${y1})/(${x2} − ${x1}) = ${dy}/${dx} = <b>${isInt ? slope : slope.toFixed(2).replace(/0+$/,'').replace(/\.$/,'')}</b>. ${!isInt ? '(Fraction form '+dy+'/'+dx+' is also correct.)' : ''}`
+          };
+        } else {
+          // Solve subtracted linear
+          const x = rand(2, 15);
+          const a = rand(2, 8);
+          const b = rand(1, 20);
+          const c = a * x - b;
+          return {
+            q: `Solve: <b>${a}x − ${b} = ${c}</b>. Find <b>x</b>.`,
+            ans: x,
+            prefix: 'x =',
+            suffix: '',
+            explain: `Add ${b}: ${a}x = ${c + b}. Divide by ${a}: x = <b>${x}</b>. (Both steps use the Equality Property.)`
+          };
+        }
+      }
+    }
+  ];
+
+  // ---------- Tier scoring ----------
+  function tierFor(correct, total) {
+    if (correct === total) return { name: 'Platinum', cls: 'platinum' };
+    if (correct >= total * 0.9) return { name: 'Gold', cls: 'gold' };
+    if (correct >= total * 0.75) return { name: 'Silver', cls: 'silver' };
+    if (correct >= total * 0.6) return { name: 'Bronze', cls: 'bronze' };
+    return { name: 'Not yet ranked', cls: '' };
+  }
+
+  // ---------- Storage ----------
+  function storageGet(key, fallback) {
+    try { const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); }
+    catch(e) { return fallback; }
+  }
+  function storageSet(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+  }
+
+  // ---------- Session state ----------
+  const state = {
+    subject: null,
+    problems: [],
+    idx: 0,
+    correct: 0,
+    streak: 0,
+    bestStreak: 0,
+    answered: false,
+    currentProblem: null,
+    TOTAL: 10
+  };
+
+  // ---------- Render subject grid ----------
+  function renderGrid() {
+    const grid = document.getElementById('subject-grid');
+    grid.innerHTML = '';
+    SUBJECTS.forEach(function(s) {
+      const pb = storageGet('mhc:pb:' + s.id, null);
+      const sess = storageGet('mhc:sessions:' + s.id, 0);
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'subject-card';
+      card.setAttribute('role', 'listitem');
+      card.innerHTML =
+        '<span class="sc-num">Generator ' + s.num + '</span>' +
+        '<div class="sc-title">' + s.title + '</div>' +
+        '<div class="sc-hint">' + s.hint + '</div>' +
+        '<span class="sc-cta">' +
+          (pb !== null ? 'Personal best ' + pb + '/10 · ' + sess + ' plays →' : 'Play →') +
+        '</span>';
+      card.addEventListener('click', function() {
+        startSession(s);
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  // ---------- Start / advance session ----------
+  function startSession(subject) {
+    state.subject = subject;
+    state.problems = [];
+    for (let i = 0; i < state.TOTAL; i++) state.problems.push(subject.gen());
+    state.idx = 0;
+    state.correct = 0;
+    state.streak = 0;
+    state.bestStreak = 0;
+    state.answered = false;
+
+    // UI setup
+    document.getElementById('drill-eyebrow').textContent = 'Generator ' + subject.num;
+    document.getElementById('drill-title').textContent = subject.title;
+    document.getElementById('curiosity-text').innerHTML = subject.curiosity;
+
+    document.getElementById('session-view').style.display = 'block';
+    document.getElementById('reveal-view').classList.remove('active');
+
+    document.getElementById('prog-total').textContent = state.TOTAL;
+    updateProgress();
+    renderProblem();
+
+    const panel = document.getElementById('drill-panel');
+    panel.classList.add('active');
+    // Scroll to it
+    setTimeout(function() {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('problem-input').focus();
+    }, 100);
+  }
+
+  function updateProgress() {
+    document.getElementById('prog-current').textContent = Math.min(state.idx + 1, state.TOTAL);
+    document.getElementById('prog-correct').textContent = state.correct;
+    const t = tierFor(state.correct, state.idx || 1);
+    const tierEl = document.getElementById('session-tier');
+    tierEl.className = 'session-tier ' + (t.cls || '');
+    tierEl.textContent = state.idx === 0 ? 'Not yet ranked' : t.name;
+  }
+
+  function renderProblem() {
+    if (state.idx >= state.TOTAL) { finishSession(); return; }
+    state.currentProblem = state.problems[state.idx];
+    state.answered = false;
+    document.getElementById('problem-text').innerHTML = state.currentProblem.q;
+    document.getElementById('problem-input-prefix').textContent = state.currentProblem.prefix || '';
+    document.getElementById('problem-input-suffix').textContent = state.currentProblem.suffix || '';
+    const input = document.getElementById('problem-input');
+    input.value = '';
+    input.className = 'problem-input';
+    input.disabled = false;
+    document.getElementById('problem-submit').disabled = false;
+    document.getElementById('problem-submit').textContent = 'Check';
+    const fb = document.getElementById('problem-feedback');
+    fb.className = 'problem-feedback';
+    fb.innerHTML = '';
+    input.focus();
+  }
+
+  function submitAnswer() {
+    if (state.answered) { nextProblem(); return; }
+    const raw = document.getElementById('problem-input').value;
+    const parsed = parseAnswer(raw);
+    if (parsed === null) {
+      const fb = document.getElementById('problem-feedback');
+      fb.className = 'problem-feedback wrong';
+      fb.innerHTML = 'Please enter a number (like <code>7</code>, <code>3.5</code>, or <code>3/4</code>).';
+      return;
+    }
+    const correct = approxEqual(parsed, state.currentProblem.ans);
+    state.answered = true;
+    const input = document.getElementById('problem-input');
+    input.disabled = true;
+    const fb = document.getElementById('problem-feedback');
+    if (correct) {
+      state.correct += 1;
+      state.streak += 1;
+      if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+      input.classList.add('correct');
+      fb.className = 'problem-feedback correct';
+      const streakNote = state.streak >= 3 ? ' 🔥 Streak: ' + state.streak : '';
+      fb.innerHTML = '<b>Correct.</b>' + streakNote + '<br>' + state.currentProblem.explain + '<br><button type="button" class="next-btn" onclick="MHC.nextProblem()">Next Problem →</button>';
+    } else {
+      state.streak = 0;
+      input.classList.add('wrong');
+      fb.className = 'problem-feedback wrong';
+      fb.innerHTML = '<b>Not quite.</b> You typed <code>' + raw + '</code>. The answer is <b>' + formatAnswer(state.currentProblem.ans) + '</b>.<br>' + state.currentProblem.explain + '<br><button type="button" class="next-btn" onclick="MHC.nextProblem()">Next Problem →</button>';
+    }
+    document.getElementById('problem-submit').textContent = 'Next →';
+    updateProgress();
+  }
+
+  function formatAnswer(a) {
+    if (Number.isInteger(a)) return String(a);
+    // Try to express as a clean fraction if it's a simple ratio
+    for (let d = 2; d <= 20; d++) {
+      const n = a * d;
+      if (Math.abs(n - Math.round(n)) < 0.001) {
+        const rn = Math.round(n);
+        const [sn, sd] = reduceFrac(rn, d);
+        if (sd !== 1) return sn + '/' + sd + ' (or ' + a.toFixed(3).replace(/0+$/,'').replace(/\.$/,'') + ')';
+      }
+    }
+    return a.toFixed(3).replace(/0+$/,'').replace(/\.$/,'');
+  }
+
+  function nextProblem() {
+    state.idx += 1;
+    if (state.idx >= state.TOTAL) { finishSession(); return; }
+    renderProblem();
+  }
+
+  function finishSession() {
+    document.getElementById('session-view').style.display = 'none';
+    document.getElementById('reveal-view').classList.add('active');
+    document.getElementById('reveal-title').textContent = state.subject.title + ' — The Reveal';
+    document.getElementById('reveal-text').innerHTML = state.subject.reveal;
+    document.getElementById('final-correct').textContent = state.correct;
+    const t = tierFor(state.correct, state.TOTAL);
+    const tierEl = document.getElementById('final-tier');
+    tierEl.className = 'ss-tier-large session-tier ' + (t.cls || '');
+    tierEl.textContent = t.name;
+
+    // Update storage
+    const pbKey = 'mhc:pb:' + state.subject.id;
+    const sessKey = 'mhc:sessions:' + state.subject.id;
+    const prevPB = storageGet(pbKey, 0);
+    const newPB = Math.max(prevPB, state.correct);
+    storageSet(pbKey, newPB);
+    const sess = storageGet(sessKey, 0) + 1;
+    storageSet(sessKey, sess);
+
+    document.getElementById('final-streak').textContent = state.bestStreak;
+    document.getElementById('final-pb').textContent = newPB + '/10';
+    document.getElementById('final-sessions').textContent = sess;
+
+    // Scroll reveal into view
+    setTimeout(function() {
+      document.getElementById('reveal-view').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+
+    // Refresh grid to show updated PB
+    renderGrid();
+  }
+
+  function playAgain() { startSession(state.subject); }
+  function chooseDifferent() {
+    closeDrill();
+    document.querySelector('.subjects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function closeDrill() {
+    document.getElementById('drill-panel').classList.remove('active');
+    state.subject = null;
+  }
+
+  // ---------- FAQ toggle ----------
+  function toggleFAQ(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+  }
+
+  // ---------- Input Enter key ----------
+  function bindInput() {
+    const input = document.getElementById('problem-input');
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (state.answered) nextProblem();
+        else submitAnswer();
+      }
+    });
+  }
+
+  // ---------- Public API ----------
+  window.MHC = {
+    submitAnswer: submitAnswer,
+    nextProblem: nextProblem,
+    playAgain: playAgain,
+    chooseDifferent: chooseDifferent,
+    closeDrill: closeDrill,
+    toggleFAQ: toggleFAQ
+  };
+
+  // ---------- Boot ----------
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { renderGrid(); bindInput(); });
+  } else {
+    renderGrid(); bindInput();
+  }
+})();
+</script>
+
+</body>
+</html>
