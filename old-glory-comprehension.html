@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+     GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
+     ROUTING: Standalone app -> commit to gsu-assets, served at
+              read.globalsovereignuniversity.org/cert-civics.html
+              Then on /civics, the shelf's hidden Comprehension Test button reveals itself automatically once this file is live to "Live".
+
+     THIS FILE IS ALSO THE MASTER TEMPLATE. To create the next subject's
+     certification (e.g. Writification), copy this file and edit ONLY:
+       ZONE B  — the CONFIG block (subject name, serialPrefix, prepHref).
+       ZONE C  — the QUESTIONS pool (author a real, checked bank for the subject).
+     Everything else (scoring, serials, Firebase recording, public verify,
+     the certificate, GENO, brand) is shared and never needs editing.
+
+     SPEC (matches the /certification page promise):
+       · 30 questions drawn at random from the pool, options shuffled
+       · a 30:00 countdown runs in the upper-right; time-out auto-submits
+       · the learner's score is saved on their own device (localStorage)
+       · 80% to pass for Silver, 90% for Gold (below 80% = keep studying)
+       · a unique serial number issued and recorded the moment you pass
+       · free, anonymous, no account, publicly verifiable by anyone
+     FIREBASE NOTE: certificates live in the "gsu-certification" project,
+       collection "certifications" (doc id = serial), governed by the rules
+       Gene set: public read; create requires anon auth + subject(string) +
+       score(number) + revoked==false; update/delete blocked (permanent;
+       admin-only revocation honored by the verify box via a "revoked:true"
+       field). This engine writes revoked:false and creates the record ONCE,
+       when the learner clicks "Issue My Certificate" — so the chosen name is
+       baked into the single immutable record and no client update is needed.
+     >>> SET CONFIG.firebase BELOW to the gsu-certification Web config. <<
+============================================================================ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Old Glory — Book Comprehension Test — Free & Verifiable Certificate | GSU</title>
+<meta name="description" content="Earn the free Old Glory Book Comprehension Certificate from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
+<meta property="og:title" content="Old Glory — Book Comprehension Test — Free & Verifiable | GSU">
+<meta property="og:description" content="30 questions. 80% Silver, 90% Gold. A unique, publicly verifiable serial number. Free, anonymous, no login — from a 501(c)(3).">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Old Glory Book Comprehension Certificate","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of American civics: the founding documents, the three branches and separation of powers, the Bill of Rights, federalism, elections, and the duties of citizenship."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is the Old Glory comprehension test free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every GSU Certificate of Comprehension is free forever, requires no account, and is run by The Foundation for Global Instruction, a 501(c)(3) nonprofit."}},
+{"@type":"Question","name":"How is the certificate verified?","acceptedAnswer":{"@type":"Answer","text":"When you pass, a unique serial number is issued and recorded. Anyone can confirm it is genuine using the Verify a Certificate box, with no login required."}},
+{"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Thirty questions are drawn at random. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.globalsovereignuniversity.org/"},{"@type":"ListItem","position":2,"name":"Certification","item":"https://www.globalsovereignuniversity.org/certification"},{"@type":"ListItem","position":3,"name":"Old Glory Book Comprehension Test","item":"https://read.globalsovereignuniversity.org/old-glory-comprehension.html"}]}
+</script>
+<style>
+  :root{--bg:#000000;--panel:#13110b;--gold:#C9A84C;--cream:#F5F1E8;--line:rgba(201,168,76,.28)}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 18px 56px}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--cream);line-height:1.18;margin:0 0 .4em}
+  .gold{color:var(--gold)}
+  .kick{letter-spacing:.18em;text-transform:uppercase;font-size:.74rem;font-weight:700;color:var(--gold);margin-bottom:8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .center{text-align:center}
+  .btn{display:inline-block;background:var(--gold);color:#000000;font-weight:800;border:0;padding:13px 26px;border-radius:8px;font-size:1rem;cursor:pointer;text-decoration:none}
+  .btn:hover{background:var(--cream)}
+  .btn.ghost{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+  .btn.ghost:hover{background:var(--gold);color:#000000}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .muted{color:rgba(245,241,232,.7);font-size:.92rem}
+  .rules{list-style:none;padding:0;margin:18px 0 24px;display:grid;gap:10px;text-align:left}
+  .rules li{background:rgba(10,9,7,.5);border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-size:.95rem}
+  .rules b{color:var(--gold)}
+  .bar{height:8px;background:rgba(245,241,232,.12);border-radius:99px;overflow:hidden;margin:0 0 6px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .25s}
+  .qmeta{display:flex;justify-content:space-between;font-size:.8rem;color:rgba(245,241,232,.65);margin-bottom:14px;letter-spacing:.04em}
+  .q{font-family:Georgia,serif;font-size:1.25rem;margin:0 0 18px}
+  .opts{display:grid;gap:10px}
+  .opt{background:rgba(10,9,7,.5);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:left;color:var(--cream);font-size:1rem;cursor:pointer;transition:border-color .15s,background .15s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{border-color:#7CB342;background:rgba(124,179,66,.12)}
+  .opt.wrong{border-color:#C0552F;background:rgba(192,85,47,.12)}
+  .opt[disabled]{cursor:default}
+  .why{margin-top:14px;border-left:3px solid var(--gold);padding:10px 14px;background:rgba(10,9,7,.5);border-radius:0 8px 8px 0;font-size:.95rem}
+  .why .geno{display:flex;gap:10px;align-items:flex-start}
+  .why img{width:34px;height:34px;border-radius:50%;border:2px solid var(--gold);flex:0 0 auto}
+  .next{margin-top:18px;text-align:right}
+  .scorebig{font-family:Georgia,serif;font-size:3rem;color:var(--gold);line-height:1}
+  .tierbadge{display:inline-block;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;padding:6px 14px;border-radius:99px;margin:10px 0}
+  .tier-gold{background:var(--gold);color:#000000}
+  .tier-silver{background:#cdd2da;color:#000000}
+  .tier-none{background:transparent;color:rgba(245,241,232,.7);border:1px solid var(--line)}
+  .field{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+  .field input{background:#000000;border:1px solid var(--line);color:var(--cream);border-radius:8px;padding:11px 13px;font-size:1rem;min-width:200px}
+  .serial{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--gold);font-size:1.15rem;letter-spacing:.06em;word-break:break-all}
+  canvas{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin-top:8px}
+  .hr{height:1px;background:var(--line);margin:30px 0}
+  .verify-result{margin-top:14px;font-size:.95rem}
+  .ok{color:#7CB342}.bad{color:#e0856f}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+  summary{font-family:Georgia,serif;font-weight:700;cursor:pointer;color:var(--cream)}
+  details p{margin:10px 0 0;color:rgba(245,241,232,.85);font-size:.93rem}
+  .foot{margin-top:30px;font-size:.82rem;color:rgba(245,241,232,.55);text-align:center}
+  .foot a{color:var(--gold)}
+  .hide{display:none}
+  .clock{position:fixed;top:14px;right:14px;z-index:60;background:#13110b;border:1px solid var(--line);border-radius:10px;padding:9px 14px 8px;text-align:center;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;font-size:1.1rem;color:var(--gold);letter-spacing:.06em;box-shadow:0 6px 22px rgba(0,0,0,.55)}
+  .clock .lbl{display:block;font-size:.5rem;letter-spacing:.2em;color:rgba(245,241,232,.55);font-weight:700;margin-bottom:2px}
+  .clock.warn{color:#e6b94f;border-color:#e6b94f}
+  .clock.danger{color:#e0856f;border-color:#e0856f;animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.55}}
+  @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
+
+.remedial{background:#0d0d0d;border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:20px 22px;margin:22px auto 4px;text-align:left;max-width:640px}
+.remedial h3{color:#C9A84C;font-family:Georgia,serif;font-size:1.15rem;margin:0 0 6px}
+.remedial .intro{color:#ccc;font-size:.88rem;line-height:1.55;margin:0 0 4px}
+.remedial h4{color:#F5F1E8;font-size:.92rem;margin:18px 0 8px;padding-bottom:6px;border-bottom:1px solid rgba(201,168,76,.15);font-family:Georgia,serif}
+.remedial .missq{background:#151515;border-left:3px solid #e0856f;padding:10px 12px;margin:10px 0;border-radius:4px;font-size:.85rem}
+.remedial .missq .qtxt{color:#f5f1e8;margin-bottom:6px;line-height:1.4}
+.remedial .missq .picks{color:#888;font-size:.78rem;margin:4px 0;line-height:1.5}
+.remedial .missq .picks b{color:#aaa;font-weight:600}
+.remedial .missq .picks .right{color:#7cbf7c;font-weight:600}
+.remedial .missq .picks .wrong{color:#e0856f;font-weight:600}
+.remedial .missq .whytxt{color:#DDBE62;font-style:italic;margin-top:6px;font-size:.82rem;line-height:1.5}
+.remedial ul.path{list-style:none;padding:0;margin:6px 0 4px}
+.remedial ul.path li{padding:9px 12px;margin:5px 0;background:#151515;border-radius:4px;font-size:.85rem;line-height:1.4;border-left:3px solid rgba(201,168,76,.35)}
+.remedial ul.path li a{color:#C9A84C;text-decoration:none;font-weight:700}
+.remedial ul.path li a:hover{color:#DDBE62;text-decoration:underline}
+.remedial ul.path li .plabel{color:#888;font-size:.78rem;display:block;margin-top:3px;line-height:1.4}
+.remedial .geno-invite{background:linear-gradient(135deg,#1a1608 0%,#0d0a04 100%);border:1px solid rgba(201,168,76,.4);border-radius:8px;padding:14px;margin-top:16px;font-size:.85rem;line-height:1.5;color:#ccc}
+.remedial .geno-invite b{color:#C9A84C}
+.remedial .geno-invite .quote{background:#000;border-left:3px solid #C9A84C;padding:8px 12px;margin:8px 0 4px;color:#F5F1E8;font-style:italic;font-size:.83rem;border-radius:3px}
+.remedial .hub-link{display:inline-block;margin-top:14px;color:#C9A84C;text-decoration:none;border:1px solid rgba(201,168,76,.5);padding:8px 18px;border-radius:6px;font-size:.85rem;font-weight:700}
+.remedial .hub-link:hover{background:rgba(201,168,76,.1);color:#DDBE62}
+</style>
+
+<!-- ============================================================================
+     GSU · cert-civics.html AEO SCHEMA UPGRADE · Jul 18 2026
+     Adds Course + LearningResource + canonical + og:url.
+     Complements the existing EducationalOccupationalCredential + FAQPage +
+     BreadcrumbList schemas already on this page.
+============================================================================ -->
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/old-glory-comprehension.html">
+<meta property="og:url" content="https://read.globalsovereignuniversity.org/old-glory-comprehension.html">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://read.globalsovereignuniversity.org/old-glory-comprehension.html#course",
+  "name": "Old Glory — Free Book Comprehension Course & Certificate",
+  "description": "The free civics course from Global Sovereign University. The Constitution, three branches of government, jury process, bill-making, founding documents in plain English, and the Civic Action Cycle. Study free, then earn a Silver or Gold Certificate of Comprehension on the 30-question exam. No login, no cost, ever.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://globalsovereignuniversity.org/#organization",
+    "name": "Global Sovereign University",
+    "alternateName": "GSU",
+    "url": "https://globalsovereignuniversity.org/",
+    "sameAs": "https://globalsovereignuniversity.org/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Free",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://read.globalsovereignuniversity.org/old-glory-comprehension.html"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "Online",
+    "courseWorkload": "PT30M",
+    "inLanguage": "en"
+  },
+  "educationalLevel": "AllLevels",
+  "teaches": [
+    "The U.S. Constitution",
+    "Bill of Rights",
+    "Three branches of government",
+    "Jury process",
+    "Bill-making and lawmaking",
+    "Federalism",
+    "The Civic Action Cycle",
+    "Founding documents"
+  ],
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "learningResourceType": [
+    "Course",
+    "Assessment"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "@id": "https://read.globalsovereignuniversity.org/old-glory-comprehension.html#lr",
+  "name": "Old Glory Book Comprehension Certificate Exam",
+  "description": "The GSU Old Glory Book Comprehension Certificate Exam — 30 questions drawn at random, 30-minute timer, 80% for Silver and 90% for Gold. Passing generates a permanent, publicly-verifiable serial number. Free forever, no login required, unlimited retakes.",
+  "url": "https://read.globalsovereignuniversity.org/old-glory-comprehension.html",
+  "learningResourceType": "Assessment",
+  "educationalUse": [
+    "Assessment",
+    "Self-Study"
+  ],
+  "educationalLevel": "AllLevels",
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": [
+      "student",
+      "self-learner",
+      "homeschool student",
+      "adult learner"
+    ]
+  },
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "url": "https://globalsovereignuniversity.org/"
+  },
+  "assesses": "U.S. civic literacy and constitutional comprehension",
+  "typicalAgeRange": "12-99"
+}
+</script>
+
+</head>
+<body><script src="/return-bar.js"></script>
+<div id="clock" class="clock hide"><span class="lbl">TIME LEFT</span><span id="clockT">30:00</span></div>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section id="intro" class="card center">
+    <div class="kick" id="k-subject">Old Glory · Book Comprehension Certificate</div>
+    <h1>Prove You <span class="gold">Comprehend It.</span></h1>
+    <p class="muted">Free, anonymous, no account — and when you pass, a unique serial number anyone on Earth can verify. This is competence on the record, not a participation ribbon.</p>
+    <ul class="rules">
+      <li><b>30 questions</b>, drawn at random — a fresh set every attempt.</li>
+      <li>A <b>30:00 timer</b> runs in the corner — when it reaches zero, the test submits automatically.</li>
+      <li><b>Silver</b> at 80% &nbsp;·&nbsp; <b>Gold</b> at 90%. Below 80%, keep studying and retake free.</li>
+      <li>Pass and you get a <b>serial-numbered certificate</b>, recorded for public verification.</li>
+      <li>GENO explains every answer as you go, in 83 languages.</li>
+    </ul>
+    <button class="btn" id="startBtn">Begin the Certification →</button>
+    <p class="muted" id="deviceNote" style="margin-top:12px"></p>
+    <p class="muted" style="margin-top:16px">Want to study first? <a class="gold" id="prepLink" href="/civics">Prepare free — read Old Glory, cover to cover, in the Sovereign Reading Room →</a></p>
+  </section>
+
+  <!-- EXAM -->
+  <section id="exam" class="card hide">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="qmeta"><span id="qcount">Question 1 of 30</span><span id="scorerun">Score 0</span></div>
+    <p class="q" id="qtext">—</p>
+    <div class="opts" id="opts"></div>
+    <div id="whyBox" class="why hide"></div>
+    <div class="next"><button class="btn hide" id="nextBtn">Next →</button></div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" class="card center hide">
+    <div class="kick">Result</div>
+    <div class="scorebig" id="r-score">0/30</div>
+    <div id="r-tier"></div>
+    <h2 id="r-head">—</h2>
+    <p class="muted" id="r-msg"></p>
+
+    <div id="remedialBlock" class="remedial hide"></div>
+
+    <div id="passBlock" class="hide">
+      <div class="field">
+        <input id="aliasInput" maxlength="36" placeholder="Name for the certificate (optional)">
+        <button class="btn" id="issueBtn">Issue My Certificate →</button>
+      </div>
+      <p class="muted">Your serial number</p>
+      <p class="serial" id="r-serial">—</p>
+      <p class="muted" id="recordNote">Add your name if you like, then issue your certificate to record it for public verification.</p>
+      <canvas id="certCanvas" width="1200" height="800"></canvas>
+      <div style="margin-top:16px"><button class="btn ghost" id="dlBtn">Download Certificate (PNG)</button></div>
+    </div>
+
+    <div class="next center" style="margin-top:20px">
+      <button class="btn ghost" id="retakeBtn">Take It Again →</button>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- VERIFY -->
+  <section class="card">
+    <div class="kick">Public Verification</div>
+    <h3>Verify a Certificate</h3>
+    <p class="muted">Anyone can confirm a GSU certificate is genuine. Enter a serial number — no account, nothing to install.</p>
+    <div class="field" style="justify-content:flex-start">
+      <input id="verifyInput" placeholder="e.g. GSU-CIV-LXK3F9Q2">
+      <button class="btn" id="verifyBtn">Verify →</button>
+    </div>
+    <div class="verify-result muted" id="verifyResult"></div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- FAQ -->
+  <section>
+    <details><summary>Is this really free, with no account?</summary><p>Yes — free forever, anonymous, no login. The Foundation for Global Instruction is a 501(c)(3) nonprofit. The optional name on the certificate is the only thing you type, and it is your choice.</p></details>
+    <details><summary>How does the verification work?</summary><p>When you pass, a unique serial number is generated and recorded. Anyone can paste that serial into the box above to confirm the subject, the tier (Silver or Gold), and the date — proving the certificate is real without revealing any personal information.</p></details>
+    <details><summary>Can I retake it?</summary><p>As many times as you like, free. A new random set of 30 questions is drawn each attempt, so it rewards real comprehension, not memorizing one form.</p></details>
+  </section>
+
+  <div style="height:1px;background:rgba(201,168,76,.25);max-width:760px;margin:40px auto 0"></div>
+<section style="max-width:760px;margin:28px auto 0;border:1px solid rgba(201,168,76,.28);border-radius:14px;background:#000000;padding:26px 28px;text-align:center;font-family:Georgia,serif">
+  <div style="color:#C9A84C;letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:700;font-family:Arial,sans-serif">More Free Certifications</div>
+  <p style="color:#cdbf90;margin:10px 0 16px;font-size:15px;line-height:1.6">Every GSU Certificate of Comprehension is free, anonymous, and publicly verifiable. Prove what you know across the campus:</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center"><a href="cert-readification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Readification</a><a href="cert-writification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Writification</a><a href="cert-spellification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Spellification</a><a href="cert-mathification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Mathification</a><a href="cert-financification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Financification</a><a href="cert-tradification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Tradification</a><a href="cert-thinkification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Thinkification</a><a href="cert-civics.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Civics</a><a href="cert-american-history.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">American History</a><a href="cert-geography.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Geography</a><a href="cert-science.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Science</a><a href="cert-lawification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Lawification</a><a href="cert-first-aid.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">First Aid</a><a href="cert-linguification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Linguification</a><a href="cert-digitification.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Digitification</a><a href="cert-homeschool.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Homeschool</a><a href="cert-economics.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Economics</a><a href="cert-entrepreneurship.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Entrepreneurship</a><a href="cert-computer-literacy.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Computer Literacy</a><a href="cert-health-vitality.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Health &amp; Vitality</a><a href="cert-humanics.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Humanics</a><a href="cert-leadership-influence.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Leadership &amp; Influence</a><a href="cert-wealthification-junior.html" style="display:inline-block;padding:9px 16px;border:1px solid rgba(201,168,76,.5);border-radius:999px;color:#C9A84C;text-decoration:none;font-size:14px;font-weight:600">Wealthification Junior</a></div>
+</section>
+<p class="foot">A free certification of Global Sovereign University · The Foundation for Global Instruction, a 501(c)(3) public benefit nonprofit, Eugene, Oregon · <a href="/quid-pro-quo">Support the mission</a></p>
+</div>
+
+<!-- Firebase (compat) — guarded; the exam runs even if these fail to load -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+/* ====================== ZONE B — CONFIG (edit per subject) ================= */
+const CONFIG = {
+  subject: "Old Glory — Book Comprehension",
+  serialPrefix: "GSU-OGL",
+  subjectLine: "Old Glory · Book Comprehension Certificate",
+  prepHref: "https://read.globalsovereignuniversity.org/old-glory-reader.html",
+  drawCount: 30,
+  timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
+  silverPct: 0.80,
+  goldPct: 0.90,
+  // CERTIFICATES LIVE IN THE "gsu-certification" PROJECT (not gsu-handshake).
+  // Paste that project's Web config below — get it from:
+  // Firebase Console -> gsu-certification -> Project settings -> "Your apps"
+  // -> Web app -> SDK setup and configuration. Only the 3 ALL-CAPS values
+  // need filling; the rest follow gsu-certification's standard naming.
+  firebase: {
+    apiKey: "AIzaSyAmFycf1iMeISLzjWgbxnuSB1BJ3BuWB_U",
+    authDomain: "gsu-certification.firebaseapp.com",
+    projectId: "gsu-certification",
+    storageBucket: "gsu-certification.firebasestorage.app",
+    messagingSenderId: "124413390849",
+    appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
+  }
+};
+
+/* ====================== ZONE B — REMEDIAL STUDY PATH (author per subject) ==
+   When a Learner does not clear the Silver bar, we owe them SPECIFIC guidance
+   (Rule 30: Pupils before Profits). Each pillar is a real GSU tool, book, or
+   hub the Learner can open right now — free forever, no login. This is what
+   makes the exam a bar rather than a gate.
+=========================================================================== */
+const PREPPATH = {
+  intro: "The flag has a story, and this test asks whether you truly read it. Below is exactly what to shore up before you retake \u2014 every link is free forever.",
+  pillars: [
+    {name:"The book itself", href:"https://read.globalsovereignuniversity.org/old-glory-reader.html", label:"Old Glory — free reader", note:"The Civic Action Cycle, founding documents in plain English, civil discourse training."},
+    {name:"Plain-language legal literacy", href:"/lawification", label:"The Lawification Hub", note:"The Constitution, Bill of Rights, and rights every citizen should know."},
+    {name:"Debate as civic practice", href:"/debate", label:"Prove Me Wrong", note:"The Debate Helix teaches the discipline of civil disagreement \u2014 the foundation of a functioning republic."},
+    {name:"Amnesty Protocol \u2014 GSU's civic declaration", href:"/amnesty-protocol", label:"The Amnesty Protocol", note:"Education is amnesty from ignorance, poverty, and dependency."},
+    {name:"Daily practice", href:"/todays-summit", label:"Today's Summit", note:"One short quiz a day, often on civic knowledge."}
+  ],
+  genoStarter: "GENO, I did not pass the Book comprehension exam. I struggled most with [name the topic \u2014 the Constitution, branches of government, jury process, etc.]. Can you explain it in plain English with a real example?",
+  hubHref: "/civics",
+  hubLabel: "The Civics Hub"
+};
+
+/* ====================== ZONE C — QUESTION POOL (author per subject) ========
+   Each item: { q, opts:[4 strings], a: index of correct option, why }
+   Keep answers objectively correct and the "why" short and plain. The engine
+   draws CONFIG.drawCount at random and shuffles each question's options.
+=========================================================================== */
+const POOL = [
+  {q:"The Flag Resolution of June 14, 1777 settled the stripes and the star count — but it deliberately left one design decision open. Which one?", opts:["How the thirteen stars should be arranged", "How many stripes the flag should have", "Which two colors the stripes should be", "Whether the flag could fly at sea"], a:0, why:"Chapter 1: the Resolution required thirteen stars but never said rows, circle, or scatter — which is exactly why early flags differ. Revisit Chapter 1 in the free reader."},
+  {q:"Why does the book treat the phrase “a new constellation” as a meaningful choice instead of decoration?", opts:["Congress wanted the flag to double as a navigation chart", "A constellation is separate lights forming one pattern — thirteen states joined in one design, not melted into one blob", "Constellations were the royal symbol of France, America's ally", "Stars were the cheapest shape for seamstresses to cut"], a:1, why:"Chapters 1–2: separate lights, one pattern — union without erasing the states. Revisit Chapter 1."},
+  {q:"What does the book say the historical record actually shows about Betsy Ross and the first flag?", opts:["A signed 1777 receipt proves she sewed the first Stars and Stripes", "Congress named her in the Flag Resolution itself", "Historians proved the story false in the 1870s", "She was a real Philadelphia craftswoman who made flags, but no document from 1776–77 proves she made the very first one"], a:3, why:"Chapter 2: the best-known account came from her grandson in the 1870s; tradition and truth can both be respected. Revisit Chapter 2."},
+  {q:"In the Betsy Ross tradition, what change did she suggest to the proposed design — and why?", opts:["Fifteen stripes, to leave room for new states", "Five-pointed stars instead of six-pointed, because they were easier to make", "Red stripes instead of blue, because dye was scarce", "A circle of stars, because circles have no end"], a:1, why:"Chapter 2: a working seamstress's practical eye — with practice, a folded cloth and one snip yields a five-pointed star. Revisit Chapter 2."},
+  {q:"The book says stripes “fit the kind of people America was trying to be.” What does it mean by that?", opts:["Stripes were required by the British Board of Trade", "Stripes are a simple, bold pattern ordinary citizens could make and recognize — ordinary people capable of something extraordinary", "Stripes were the traditional mark of European nobility", "Stripes hid battle damage better than solid colors"], a:1, why:"Chapter 3: no fancy tools needed — the design matches the republic's idea of itself. Revisit Chapter 3."},
+  {q:"None of the thirteen stripes is bigger than the others. What message does the book draw from that?", opts:["Equality applies to stripes but not to stars", "The printer simply lacked wider cloth", "The states stand together as equals — and the pattern quietly challenges them to act like it", "The largest states secretly control the smallest"], a:2, why:"Chapter 3: equal stripes say “These states stand together” — and whisper “Now act like it.” Revisit Chapter 3."},
+  {q:"Today's flag always has exactly thirteen stripes while the stars keep changing. Which decision locked that in, and what do the stripes honor?", opts:["The Flag Resolution of 1777, which forbade any change at all", "The Betsy Ross agreement of 1776", "The Pledge of Allegiance of 1892", "The law of 1818 — thirteen stripes forever, honoring the original colonies, with stars carrying the growth"], a:3, why:"Chapter 4: 1818 split the flag's jobs — stripes remember the beginning, stars count the present. Revisit Chapter 4."},
+  {q:"For a time the flag carried fifteen stripes as well as fifteen stars. Why did the nation abandon adding a stripe for every state?", opts:["As more states joined, ever more stripes would have crowded and ruined the design — so 1818 returned to thirteen and let the stars grow instead", "Fifteen-stripe flags were too expensive to sew", "The British demanded the change after 1814", "Sailors could not count stripes at sea"], a:0, why:"Chapter 4: the fifteen-stripe experiment taught a lesson in design and growth. Revisit Chapter 4."},
+  {q:"Under the tradition set after 1818, when does a new state's star actually join the flag?", opts:["At the exact moment the state's papers are signed", "Only when a new census is taken", "On the next Flag Day, June 14", "Not the day the state joins — the star is added on the following Fourth of July"], a:3, why:"Chapter 4: the flag changes on a schedule, not in a scramble — a rule Americans still follow. Revisit Chapter 4."},
+  {q:"Why did Fort McHenry matter in September 1814 beyond its walls and cannons?", opts:["It was the only fort flying a fifteen-star flag", "It guarded Baltimore's harbor — if it fell, an important port fell, so the fort stood as a symbol as well as a defense", "It held the original Flag Resolution in its vault", "It was the new nation's capital city"], a:1, why:"Chapter 5: the star-shaped fort protected a city and an idea at once. Revisit Chapter 5."},
+  {q:"Why was Francis Scott Key — a lawyer, not a soldier — watching the bombardment of Fort McHenry from the water?", opts:["He was delivering the fort's new flag", "He had gone out to negotiate an American prisoner's release, succeeded, and was then held with the British fleet through the attack", "He commanded a gunboat in Baltimore's harbor", "He was a British officer who later defected"], a:1, why:"Chapter 5: helpless offshore, he watched through the night — the question “is the flag still there?” became the anthem. Revisit Chapter 5."},
+  {q:"Which sequence puts the flag's early story in the correct order?", opts:["Flag Resolution (1777) → fifteen stars and stripes → the Fort McHenry night (1814) → the thirteen-stripes law (1818)", "Fort McHenry (1814) → Flag Resolution (1777) → fifteen stripes → 1818 law", "Flag Resolution (1777) → 1818 law → fifteen stripes → Fort McHenry (1814)", "Fifteen stripes → Flag Resolution (1777) → 1818 law → Fort McHenry (1814)"], a:0, why:"Chapters 1–5 in one line: design, growth, trial by fire, and the settled rule. Revisit Chapters 4 and 5."},
+  {q:"What kind of name does the book say “Old Glory” is?", opts:["A printing error that stuck", "Affection and respect wrapped together — like a family's name for a treasured object that has been with them through hard years and happy ones", "A formal title assigned by an act of Congress", "A British insult Americans adopted in defiance"], a:1, why:"The nickname chapter: not silly, not careless — a family name for the flag. Revisit that chapter in the free reader."},
+  {q:"How does the book tell you to think about the U.S. Flag Code?", opts:["As criminal law with fines for every mistake", "As advice that only applies to the military", "As rules invented by flag manufacturers", "As good manners for a national symbol — the way you learn manners for treating guests in your home — not a list to make families nervous rule-checkers"], a:3, why:"Chapter 6: respect taught as habit, not fear. Revisit Chapter 6."},
+  {q:"The flag is displayed from sunrise to sunset — unless one condition is met at night. Per the book, what does “properly illuminated” actually require?", opts:["A light of any kind, as long as it is electric", "Lighting meant to keep the flag visible and honored in the darkness — a porch light that barely reaches the pole doesn't qualify", "Any light source within one hundred feet", "Moonlight on a clear night"], a:1, why:"Chapter 6: the word “properly” is doing real work. Revisit Chapter 6."},
+  {q:"The book calls habits like never letting the flag touch the ground “training.” Training for what?", opts:["Avoiding fines under state law", "They teach your hands and your heart to be steady — small habits of respect that shape character", "Military enlistment requirements", "Flag-folding competitions"], a:1, why:"Chapter 6 and Chapter 10: the habits are not the whole point — they are practice for steadiness. Revisit Chapter 6."},
+  {q:"According to the flag manners taught in the book, which of these is NOT proper treatment of the flag?", opts:["Illuminating it if it flies at night", "Flying it from a ship's stern", "Wearing the flag as a costume", "Folding it carefully into a triangle"], a:2, why:"Chapter 6: you don't let it touch the ground, you don't wear it as a costume, you fly it correctly, you fold it carefully. Revisit Chapter 6."},
+  {q:"What does a flag at half-staff quietly say, in the book's words?", opts:["“A new state has joined the Union.”", "“We are grieving. We remember.” — a nation communicating a feeling without a long explanation", "“The fort has fallen.”", "“Congress is in session.”"], a:1, why:"Chapter 6: half-staff is the flag's language of mourning. Revisit Chapter 6."},
+  {q:"A flag folded into a tight triangle and handed to a family at a funeral tells you something specific. What?", opts:["That someone served — and that the service will be remembered", "That the family must display it within thirty days", "That the flag is retired and must be destroyed", "That the deceased held elected office"], a:0, why:"The opening pages and Chapter 6: the triangle fold is honor in a moment of grief. Revisit Chapter 6."},
+  {q:"The book draws a careful line around Memorial Day. Whom exactly does it honor?", opts:["All Americans who died in any year", "Americans who died while serving in the military — not everyone who served, but those who did not come home", "Everyone who ever wore a uniform", "Only veterans of the World Wars"], a:1, why:"Chapter 7: that distinction matters — Veterans Day honors service; Memorial Day honors the fallen. Revisit Chapter 7."},
+  {q:"Per the book, how do Memorial Day and Patriot Day differ?", opts:["They are two names for the same observance", "Patriot Day honors the Founders; Memorial Day honors the flag", "Memorial Day is for fireworks; Patriot Day is for parades", "Memorial Day honors those who died serving the country; Patriot Day marks a specific day of attacks on America"], a:3, why:"Chapter 7: not the same kind of day, and you should not treat them the same. Revisit Chapter 7."},
+  {q:"Flag Day and Independence Day sit close together in summer. What different lessons does the book say they teach?", opts:["Flag Day marks the Constitution; Independence Day marks the Pledge", "Flag Day is about the symbol and the decision to create it; Independence Day is about the nation's birth and the brave, complicated promise behind it", "Flag Day is solemn; Independence Day is for silence", "Both honor the military above all"], a:1, why:"Chapter 7: understand the two days and you understand the difference between a symbol and a nation. Revisit Chapter 7."},
+  {q:"Who wrote the Pledge of Allegiance, when, and for what occasion?", opts:["Betsy Ross, in 1777, for the Continental Congress", "Congress itself, in 1818, alongside the stripes law", "Francis Bellamy, in 1892, for a national celebration of the 400th anniversary of Columbus's voyage", "Francis Scott Key, in 1814, after Fort McHenry"], a:2, why:"The Pledge chapter: a Baptist minister and writer, and a schools-centered national event. Revisit that chapter."},
+  {q:"Bellamy's original Pledge began with allegiance to what?", opts:["“the Constitution of the United States”", "“the Republic and its fifty states”", "“my Flag” — the words “of the United States of America” came later", "“the flag of the United States of America”"], a:2, why:"The Pledge chapter: “I pledge allegiance to my Flag and to the Republic for which it stands…” — the words changed over time. Revisit that chapter."},
+  {q:"Why does the book say the Pledge's 1892 date “matters”?", opts:["It reveals the America the Pledge was born into — no longer the young nation Key watched in 1814, but a much larger country with many more states", "Because 1892 was the flag's one-hundredth birthday", "Because the Civil War began that year", "Because Congress required a pledge in every legal contract"], a:0, why:"The Pledge chapter: dates carry context. Revisit that chapter in the free reader."},
+  {q:"Why did the small Pacific island of Iwo Jima matter in February 1945?", opts:["It held the Pacific fleet's fuel reserves", "It was the site of the war's peace treaty", "It was the largest island in the Pacific", "Because of where it sat and what it could be used for — and because the fighting to take it was fierce"], a:3, why:"Chapter 8: steep, smoky, dangerous — and strategically vital. Revisit Chapter 8."},
+  {q:"The book pairs Iwo Jima and the Moon landing. What contrast is it drawing?", opts:["One involved the Navy and the other the Army", "One flag had 48 stars and the other 13", "One is about surviving and holding ground; the other is about exploring and stepping into the unknown — and the flag appears in both stories", "One was a victory and the other a defeat"], a:2, why:"Chapter 8: the hardest human struggle and the farthest human reach, under the same flag. Revisit Chapter 8."},
+  {q:"When American astronauts planted the flag on the Moon, which mission and year was it?", opts:["Apollo 13, in 1970", "Gemini 4, in 1965", "Mercury 7, in 1962", "Apollo 11, in 1969"], a:3, why:"Chapter 8: the flag's farthest journey. Revisit Chapter 8."},
+  {q:"Americans say the flag's red stands for valor. Per the book's veteran voice, what does that courage actually mean?", opts:["The absence of fear in all circumstances", "Loyalty to whichever party holds power", "Strength that only soldiers can possess", "Brave action in the face of fear — courage does not mean you are never scared"], a:3, why:"Chapter 9: a veteran's definition of valor. Revisit Chapter 9."},
+  {q:"Why does the book call stars a good symbol for a republic in particular?", opts:["Stars represent the nine Supreme Court justices", "Stars were cheaper to print than eagles", "Stars are not crowns or coats of arms that belong to kings — they suit a country whose power comes from the people", "Stars appear on most royal flags of Europe"], a:2, why:"Chapters 1 and 3: the symbolism runs against monarchy, on purpose. Revisit Chapter 3."},
+  {q:"The blue section holding the stars has two names in the book. What are they, and why is the first one fitting?", opts:["The constellation and the crown", "The union — because it showed the states united — and later, the canton", "The banner and the field", "The crest and the badge"], a:1, why:"Chapters 1 and 3: vocabulary of the flag's anatomy. Revisit Chapter 3."},
+  {q:"The book calls today's fifty stars “a living list.” A list of what — and what makes it living?", opts:["A list of the states — living because it grew as the nation grew, star by star", "A list of the Founders — living because their families remain", "A list of wars — living because history continues", "A list of Presidents — living because elections continue"], a:0, why:"Chapters 3 and 4: look at the flag and you are reading the roster of the Union. Revisit Chapter 4."},
+  {q:"Which statement matches the book's approach to America's past?", opts:["It treats patriotism and honesty as opposites", "It will never ask you to pretend the past was perfect — honest love of country faces hard chapters and keeps the promise anyway", "It skips every painful chapter to protect young readers", "It argues the past was flawless and critics are mistaken"], a:1, why:"The introduction and Chapter 9: respect the story and respect the facts — both at once. Revisit Chapter 9."},
+  {q:"Why did flags at sea matter to the young nation's 1777 decision, according to the book?", opts:["Ships were legally required to carry three flags", "Sea flags were the only ones Congress could afford", "Flags at sea signaled surrender terms", "A flag at the stern says “This is who we are” — the new nation was announcing itself to the world, and to itself"], a:3, why:"Chapter 1: identity flown in the open, at home and abroad. Revisit Chapter 1."}
+];
+
+/* ====================== SHARED ENGINE (do not edit per subject) =========== */
+(function(){
+  // expose pure logic for testing (no answer key leaked)
+  window.GSUCERT = {
+    tier: function(correct,total){
+      const p = correct/total;
+      if(p >= CONFIG.goldPct) return "Gold";
+      if(p >= CONFIG.silverPct) return "Silver";
+      return null;
+    },
+    makeSerial: function(){
+      const t = Date.now().toString(36).toUpperCase();
+      const r = Math.random().toString(36).slice(2,6).toUpperCase();
+      return CONFIG.serialPrefix + "-" + t.slice(-5) + r.slice(0,2);
+    }
+  };
+
+  // ---- Firebase (guarded) ----
+  let db=null, authReady=false;
+  try{
+    if(window.firebase && firebase.initializeApp){
+      firebase.initializeApp(CONFIG.firebase);
+      db = firebase.firestore();
+      firebase.auth().signInAnonymously().then(()=>authReady=true).catch(()=>{});
+    }
+  }catch(e){ db=null; }
+
+  const $ = id => document.getElementById(id);
+  const shuffle = arr => { const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+  // apply config to copy
+  $("k-subject").textContent = CONFIG.subjectLine;
+  $("prepLink").href = CONFIG.prepHref;
+
+  let quiz=[], idx=0, correct=0, answered=false, lastTier=null, lastSerial="", alias="", issued=false, missed=[];
+  let timerId=null, timeLeft=CONFIG.timeLimitSec;
+
+  // ---- on-device score (localStorage) ----
+  const LS_KEY = "gsu_cert_"+CONFIG.serialPrefix;
+  function saveLocal(extra){
+    try{
+      const tot=(quiz.length||CONFIG.drawCount);
+      const r=Object.assign({subject:CONFIG.subject,score:correct,total:tot,pct:Math.round(correct/tot*100),tier:lastTier,dateISO:new Date().toISOString()},extra||{});
+      localStorage.setItem(LS_KEY, JSON.stringify(r));
+    }catch(e){}
+  }
+  function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||"null"); }catch(e){ return null; } }
+  (function(){
+    const p=loadLocal(), el=$("deviceNote"); if(!el) return;
+    if(p && p.tier){ el.innerHTML='<b style="color:var(--gold)">On this device:</b> you earned <b>'+p.tier+'</b> ('+p.pct+'%)'+(p.serial?' \u00b7 <span style="font-family:monospace">'+p.serial+'</span>':'')+'. Your score is saved here \u2014 retake anytime to improve it.'; }
+    else if(p){ el.innerHTML='<b style="color:var(--gold)">On this device:</b> last score '+p.pct+'%, saved here \u2014 keep climbing.'; }
+  })();
+
+  // ---- countdown clock (counts down from CONFIG.timeLimitSec) ----
+  function fmtClock(s){ const m=Math.floor(s/60), ss=s%60; return m+":"+(ss<10?"0":"")+ss; }
+  function paintClock(){
+    const c=$("clock"); if(!c) return;
+    $("clockT").textContent=fmtClock(Math.max(0,timeLeft));
+    c.classList.toggle("warn", timeLeft<=300 && timeLeft>60);
+    c.classList.toggle("danger", timeLeft<=60);
+  }
+  function startClock(){
+    timeLeft=CONFIG.timeLimitSec;
+    const c=$("clock"); if(c) c.className="clock";
+    paintClock();
+    clearInterval(timerId);
+    timerId=setInterval(function(){ timeLeft--; paintClock(); if(timeLeft<=0){ stopClock(); finish(true); } },1000);
+  }
+  function stopClock(){ clearInterval(timerId); timerId=null; const c=$("clock"); if(c) c.className="clock hide"; }
+
+  function buildQuiz(){
+    const picked = shuffle(POOL).slice(0, Math.min(CONFIG.drawCount, POOL.length));
+    quiz = picked.map(item=>{
+      const order = shuffle([0,1,2,3]);
+      return {
+        q: item.q,
+        opts: order.map(i=>item.opts[i]),
+        a: order.indexOf(item.a),
+        why: item.why
+      };
+    });
+  }
+
+  function renderQ(){
+    answered=false;
+    const item = quiz[idx];
+    $("qcount").textContent = "Question "+(idx+1)+" of "+quiz.length;
+    $("scorerun").textContent = "Score "+correct;
+    $("barFill").style.width = ((idx)/quiz.length*100)+"%";
+    $("qtext").textContent = item.q;
+    const wrap = $("opts"); wrap.innerHTML="";
+    item.opts.forEach((txt,i)=>{
+      const b=document.createElement("button");
+      b.className="opt"; b.textContent=txt;
+      if(location.hash==="#test" && i===item.a) b.dataset.c="1";
+      b.onclick=()=>choose(i,b);
+      wrap.appendChild(b);
+    });
+    $("whyBox").className="why hide";
+    $("nextBtn").className="btn hide";
+    resize();
+  }
+
+  function choose(i, btn){
+    if(answered) return;
+    answered=true;
+    const item=quiz[idx];
+    const buttons=[...document.querySelectorAll(".opt")];
+    buttons.forEach(b=>b.disabled=true);
+    buttons[item.a].classList.add("correct");
+    if(i===item.a){ correct++; }
+    else { btn.classList.add("wrong"); missed.push({q:item.q, opts:item.opts, picked:i, a:item.a, why:item.why}); }
+    $("scorerun").textContent="Score "+correct;
+    $("whyBox").className="why";
+    $("whyBox").innerHTML='<div class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"><div><b style="color:var(--gold)">GENO:</b> '+item.why+'</div></div>';
+    $("nextBtn").className="btn";
+    $("nextBtn").textContent = (idx+1<quiz.length) ? "Next →" : "See My Result →";
+    resize();
+  }
+
+  $("nextBtn").onclick=()=>{
+    if(idx+1<quiz.length){ idx++; renderQ(); }
+    else finish();
+  };
+
+  function finish(auto){
+    stopClock();
+    $("exam").className="card hide";
+    $("results").className="card center";
+    const total=quiz.length;
+    $("r-score").textContent = correct+"/"+total;
+    lastTier = window.GSUCERT.tier(correct,total);
+    const tb=$("r-tier");
+    if(lastTier==="Gold"){ tb.innerHTML='<span class="tierbadge tier-gold">Gold · Verified</span>'; }
+    else if(lastTier==="Silver"){ tb.innerHTML='<span class="tierbadge tier-silver">Silver · Verified</span>'; }
+    else { tb.innerHTML='<span class="tierbadge tier-none">Not yet — keep climbing</span>'; }
+
+    if(lastTier){
+      $("r-head").textContent = "You earned the "+CONFIG.subject+" Certificate.";
+      $("r-msg").textContent = "Add a name if you like, then issue your certificate to record it for public verification.";
+      $("passBlock").className="";
+      lastSerial = window.GSUCERT.makeSerial();
+      $("r-serial").textContent = lastSerial;
+      alias=""; issued=false;
+      $("aliasInput").value=""; $("aliasInput").disabled=false;
+      $("issueBtn").disabled=false; $("issueBtn").textContent="Issue My Certificate →";
+      $("recordNote").textContent="Add your name if you like, then issue your certificate to record it for public verification.";
+      drawCert();
+    } else {
+      const need = Math.ceil(CONFIG.silverPct*total);
+      $("r-head").textContent = "Not yet — "+correct+"/"+total+" scored, "+need+" needed for Silver.";
+      $("r-msg").textContent = "You have not cleared the bar. That means you are not yet ready to be certified in "+CONFIG.subject+" — and that is honest information you can act on. Below is exactly what to study before you retake. The exam is free forever, a fresh set is drawn every time, and there is no limit on retakes.";
+      $("passBlock").className="hide";
+      renderRemedial();
+    }
+    saveLocal(lastTier?{serial:lastSerial}:undefined);
+    $("barFill").style.width="100%";
+    resize();
+  }
+
+  function renderRemedial(){
+    const box = $("remedialBlock");
+    if(!box) return;
+    let html = '<h3>Your study path before the retake</h3>';
+    html += '<p class="intro">'+PREPPATH.intro+'</p>';
+
+    if(missed && missed.length){
+      html += '<h4>The '+missed.length+' question'+(missed.length===1?'':'s')+' you missed — with the answer explained:</h4>';
+      missed.forEach(m=>{
+        const pickedTxt = (m.picked>=0 && m.picked<m.opts.length) ? m.opts[m.picked] : "(no answer)";
+        const rightTxt  = m.opts[m.a];
+        html += '<div class="missq">';
+        html += '<div class="qtxt">'+escapeHTML(m.q)+'</div>';
+        html += '<div class="picks"><b>You picked:</b> <span class="wrong">'+escapeHTML(pickedTxt)+'</span></div>';
+        html += '<div class="picks"><b>Correct:</b> <span class="right">'+escapeHTML(rightTxt)+'</span></div>';
+        html += '<div class="whytxt">Why: '+escapeHTML(m.why)+'</div>';
+        html += '</div>';
+      });
+    }
+
+    html += '<h4>Shore up each pillar before you come back:</h4>';
+    html += '<ul class="path">';
+    PREPPATH.pillars.forEach(p=>{
+      html += '<li><a href="'+p.href+'">'+p.label+' →</a><span class="plabel">'+escapeHTML(p.name)+' · '+escapeHTML(p.note)+'</span></li>';
+    });
+    html += '</ul>';
+
+    html += '<div class="geno-invite">';
+    html += '<b>Talk to GENO before you retake.</b> GENO is available 24/7 in 83 languages and has read every GSU book in full. Try this conversation starter:';
+    html += '<div class="quote">"'+escapeHTML(PREPPATH.genoStarter)+'"</div>';
+    html += 'Scroll to the bottom of any GSU page to open the GENO widget, then paste the line above.';
+    html += '</div>';
+
+    html += '<a class="hub-link" href="'+PREPPATH.hubHref+'">Return to '+PREPPATH.hubLabel+' →</a>';
+
+    box.innerHTML = html;
+    box.className = "remedial";
+  }
+
+  function escapeHTML(s){
+    if(s==null) return "";
+    return String(s).replace(/[&<>"']/g, function(ch){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch];
+    });
+  }
+
+  function recordSerial(){
+    if(!db){ $("recordNote").textContent="(Offline — your certificate and serial are valid; public registry will sync when online.)"; return; }
+    const doc={ serial:lastSerial, subject:CONFIG.subject, tier:lastTier, score:correct, total:quiz.length,
+      pct:Math.round(correct/quiz.length*100), alias:alias||"Anonymous", revoked:false, dateISO:new Date().toISOString() };
+    db.collection("certifications").doc(lastSerial).set(doc)
+      .then(()=>{ $("recordNote").textContent="Recorded to the public registry — verifiable by serial."; })
+      .catch(()=>{ $("recordNote").textContent="(Certificate valid; registry write pending.)"; });
+  }
+
+  $("aliasInput").addEventListener("input",()=>{
+    if(issued) return;
+    alias = ($("aliasInput").value||"").trim().slice(0,36);
+    drawCert();
+  });
+  $("issueBtn").onclick=()=>{
+    if(issued) return;
+    alias = ($("aliasInput").value||"").trim().slice(0,36);
+    drawCert();
+    issued=true;
+    $("issueBtn").disabled=true; $("aliasInput").disabled=true;
+    $("issueBtn").textContent="Certificate Issued ✓";
+    recordSerial();
+    saveLocal({serial:lastSerial, alias:alias});
+  };
+
+  function drawCert(){
+    const c=$("certCanvas"), x=c.getContext("2d");
+    x.fillStyle="#000000"; x.fillRect(0,0,1200,800);
+    x.strokeStyle="#C9A84C"; x.lineWidth=6; x.strokeRect(26,26,1148,748);
+    x.strokeStyle="rgba(201,168,76,.5)"; x.lineWidth=2; x.strokeRect(44,44,1112,712);
+    x.textAlign="center";
+    x.fillStyle="#C9A84C"; x.font="700 26px Georgia"; x.fillText("GLOBAL SOVEREIGN UNIVERSITY", 600, 130);
+    x.fillStyle="rgba(245,241,232,.8)"; x.font="18px Arial"; x.fillText("The Foundation for Global Instruction · 501(c)(3)", 600, 162);
+    x.fillStyle="#F5F1E8"; x.font="italic 30px Georgia"; x.fillText("Certificate of Comprehension", 600, 250);
+    x.fillStyle="#C9A84C"; x.font="700 64px Georgia"; x.fillText(CONFIG.subject, 600, 332);
+    x.fillStyle="#F5F1E8"; x.font="24px Arial"; x.fillText("awarded to", 600, 400);
+    x.fillStyle="#F5F1E8"; x.font="700 44px Georgia"; x.fillText(alias||"Anonymous Learner", 600, 456);
+    x.fillStyle = lastTier==="Gold" ? "#C9A84C" : "#cdd2da";
+    x.font="700 30px Arial"; x.fillText((lastTier||"").toUpperCase()+"  ·  "+Math.round(correct/quiz.length*100)+"%", 600, 520);
+    x.fillStyle="rgba(245,241,232,.85)"; x.font="20px Arial";
+    x.fillText(new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}), 600, 600);
+    x.fillStyle="#C9A84C"; x.font="600 24px monospace"; x.fillText(lastSerial, 600, 660);
+    x.fillStyle="rgba(245,241,232,.6)"; x.font="16px Arial"; x.fillText("Verify this serial at globalsovereignuniversity.org/certification", 600, 712);
+  }
+
+  $("dlBtn").onclick=()=>{
+    const a=document.createElement("a");
+    a.download = CONFIG.serialPrefix+"-certificate.png";
+    a.href=$("certCanvas").toDataURL("image/png");
+    a.click();
+  };
+
+  $("startBtn").onclick=()=>{
+    buildQuiz(); idx=0; correct=0; missed=[];
+    $("intro").className="card center hide";
+    $("results").className="card center hide";
+    $("exam").className="card";
+    renderQ();
+    startClock();
+  };
+  $("retakeBtn").onclick=()=>{ $("startBtn").click(); };
+
+  // ---- Public verify ----
+  $("verifyBtn").onclick=()=>{
+    const s=($("verifyInput").value||"").trim().toUpperCase();
+    const out=$("verifyResult");
+    if(!s){ out.innerHTML='<span class="bad">Enter a serial number.</span>'; return; }
+    if(!db){ out.innerHTML='<span class="muted">Verification is offline right now — try again when connected.</span>'; return; }
+    out.textContent="Checking…";
+    db.collection("certifications").doc(s).get().then(d=>{
+      if(d.exists){
+        const v=d.data();
+        if(v.revoked===true){
+          out.innerHTML='<span class="bad">✗ This certificate has been revoked and is no longer valid.</span>';
+        } else {
+          out.innerHTML='<span class="ok">✓ Valid.</span> '+v.subject+' · '+v.tier+' · '+v.pct+'% · '+(v.alias||"Anonymous")+' · '+new Date(v.dateISO).toLocaleDateString();
+        }
+      } else {
+        out.innerHTML='<span class="bad">✗ No certificate found with that serial.</span>';
+      }
+    }).catch(()=>{ out.innerHTML='<span class="bad">Could not reach the registry. Try again shortly.</span>'; });
+  };
+
+  // ---- iframe auto-resize (if embedded) ----
+  function resize(){
+    try{ parent.postMessage({gsuCert:true, h:document.body.scrollHeight}, "*"); }catch(e){}
+  }
+  window.addEventListener("load", resize);
+  window.addEventListener("resize", resize);
+})();
+</script>
+</body>
+</html>
