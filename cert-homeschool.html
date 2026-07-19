@@ -109,6 +109,28 @@
   .clock.danger{color:#e0856f;border-color:#e0856f;animation:pulse 1s infinite}
   @keyframes pulse{50%{opacity:.55}}
   @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
+
+.remedial{background:#0d0d0d;border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:20px 22px;margin:22px auto 4px;text-align:left;max-width:640px}
+.remedial h3{color:#C9A84C;font-family:Georgia,serif;font-size:1.15rem;margin:0 0 6px}
+.remedial .intro{color:#ccc;font-size:.88rem;line-height:1.55;margin:0 0 4px}
+.remedial h4{color:#F5F1E8;font-size:.92rem;margin:18px 0 8px;padding-bottom:6px;border-bottom:1px solid rgba(201,168,76,.15);font-family:Georgia,serif}
+.remedial .missq{background:#151515;border-left:3px solid #e0856f;padding:10px 12px;margin:10px 0;border-radius:4px;font-size:.85rem}
+.remedial .missq .qtxt{color:#f5f1e8;margin-bottom:6px;line-height:1.4}
+.remedial .missq .picks{color:#888;font-size:.78rem;margin:4px 0;line-height:1.5}
+.remedial .missq .picks b{color:#aaa;font-weight:600}
+.remedial .missq .picks .right{color:#7cbf7c;font-weight:600}
+.remedial .missq .picks .wrong{color:#e0856f;font-weight:600}
+.remedial .missq .whytxt{color:#DDBE62;font-style:italic;margin-top:6px;font-size:.82rem;line-height:1.5}
+.remedial ul.path{list-style:none;padding:0;margin:6px 0 4px}
+.remedial ul.path li{padding:9px 12px;margin:5px 0;background:#151515;border-radius:4px;font-size:.85rem;line-height:1.4;border-left:3px solid rgba(201,168,76,.35)}
+.remedial ul.path li a{color:#C9A84C;text-decoration:none;font-weight:700}
+.remedial ul.path li a:hover{color:#DDBE62;text-decoration:underline}
+.remedial ul.path li .plabel{color:#888;font-size:.78rem;display:block;margin-top:3px;line-height:1.4}
+.remedial .geno-invite{background:linear-gradient(135deg,#1a1608 0%,#0d0a04 100%);border:1px solid rgba(201,168,76,.4);border-radius:8px;padding:14px;margin-top:16px;font-size:.85rem;line-height:1.5;color:#ccc}
+.remedial .geno-invite b{color:#C9A84C}
+.remedial .geno-invite .quote{background:#000;border-left:3px solid #C9A84C;padding:8px 12px;margin:8px 0 4px;color:#F5F1E8;font-style:italic;font-size:.83rem;border-radius:3px}
+.remedial .hub-link{display:inline-block;margin-top:14px;color:#C9A84C;text-decoration:none;border:1px solid rgba(201,168,76,.5);padding:8px 18px;border-radius:6px;font-size:.85rem;font-weight:700}
+.remedial .hub-link:hover{background:rgba(201,168,76,.1);color:#DDBE62}
 </style>
 
 <!-- ============================================================================
@@ -244,6 +266,8 @@
     <h2 id="r-head">—</h2>
     <p class="muted" id="r-msg"></p>
 
+    <div id="remedialBlock" class="remedial hide"></div>
+
     <div id="passBlock" class="hide">
       <div class="field">
         <input id="aliasInput" maxlength="36" placeholder="Name for the certificate (optional)">
@@ -321,6 +345,27 @@ const CONFIG = {
     messagingSenderId: "124413390849",
     appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
   }
+};
+
+/* ====================== ZONE B — REMEDIAL STUDY PATH (author per subject) ==
+   When a Learner does not clear the Silver bar, we owe them SPECIFIC guidance
+   (Rule 30: Pupils before Profits). Each pillar is a real GSU tool, book, or
+   hub the Learner can open right now — free forever, no login. This is what
+   makes the exam a bar rather than a gate.
+=========================================================================== */
+const PREPPATH = {
+  intro: "Homeschool readiness rests on K-6 curriculum across reading, math, writing, science, history, and civics \u2014 plus the practical craft of instruction. Below is exactly what to shore up before you retake \u2014 every link is free forever.",
+  pillars: [
+    {name:"The GSU Library \u2014 all K-6 books", href:"/library", label:"The GSU Library", note:"300+ free books covering the whole K-6 curriculum."},
+    {name:"Ready-to-use lesson kits", href:"/class-in-a-box", label:"Class in a Box", note:"Seventeen free one-page lesson kits \u2014 one screen, thirty minutes, zero prep."},
+    {name:"Homeschool biology curriculum", href:"/biology", label:"Biology \u2014 Homeschool Curriculum", note:"Complete free high school biology year: ten units, full lessons, gamified."},
+    {name:"Offline learning packs", href:"/learning-packs", label:"Learning Packs", note:"Free offline learning packs \u2014 download once, copy for many."},
+    {name:"The starting-point path finder", href:"/begin", label:"Begin", note:"Five quick questions and you get one personalized path \u2014 the right campus, book, and free certificate."},
+    {name:"Free 24/7 AI tutor for kids", href:"/free-tutor", label:"Free Tutor", note:"GENO is a free, patient 24/7 AI tutor for reading, math, and writing."}
+  ],
+  genoStarter: "GENO, I did not pass the Homeschool exam. As a parent-educator I struggled most with [name the topic \u2014 teaching reading, teaching math, science curriculum, etc.]. Can you show me how to teach that to a young learner?",
+  hubHref: "/homeschool",
+  hubLabel: "The Homeschool Hub"
 };
 
 /* ====================== ZONE C — QUESTION POOL (author per subject) ========
@@ -425,7 +470,7 @@ const POOL = [
   $("k-subject").textContent = CONFIG.subjectLine;
   $("prepLink").href = CONFIG.prepHref;
 
-  let quiz=[], idx=0, correct=0, answered=false, lastTier=null, lastSerial="", alias="", issued=false, lastQuizIdx=[];
+  let quiz=[], idx=0, correct=0, answered=false, lastTier=null, lastSerial="", alias="", issued=false, lastQuizIdx=[], missed=[];
   let timerId=null, timeLeft=CONFIG.timeLimitSec;
 
   // ---- on-device score (localStorage) ----
@@ -559,7 +604,7 @@ const POOL = [
     buttons.forEach(b=>b.disabled=true);
     buttons[item.a].classList.add("correct");
     if(i===item.a){ correct++; }
-    else { btn.classList.add("wrong"); }
+    else { btn.classList.add("wrong"); missed.push({q:item.q, opts:item.opts, picked:i, a:item.a, why:item.why}); }
     $("scorerun").textContent="Score "+correct;
     $("whyBox").className="why";
     $("whyBox").innerHTML='<div class="geno"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO"><div><b style="color:var(--gold)">GENO:</b> '+item.why+'</div></div>';
@@ -598,13 +643,60 @@ const POOL = [
       drawCert();
     } else {
       const need = Math.ceil(CONFIG.silverPct*total);
-      $("r-head").textContent = "So close — "+need+"/"+total+" earns Silver.";
-      $("r-msg").textContent = "You missed "+(total-correct)+". Review with GENO or the campus, then retake free — a fresh set is drawn every time.";
+      $("r-head").textContent = "Not yet — "+correct+"/"+total+" scored, "+need+" needed for Silver.";
+      $("r-msg").textContent = "You have not cleared the bar. That means you are not yet ready to be certified in "+CONFIG.subject+" — and that is honest information you can act on. Below is exactly what to study before you retake. The exam is free forever, a fresh set is drawn every time, and there is no limit on retakes.";
       $("passBlock").className="hide";
+      renderRemedial();
     }
     saveLocal(lastTier?{serial:lastSerial}:undefined);
     $("barFill").style.width="100%";
     resize();
+  }
+
+  function renderRemedial(){
+    const box = $("remedialBlock");
+    if(!box) return;
+    let html = '<h3>Your study path before the retake</h3>';
+    html += '<p class="intro">'+PREPPATH.intro+'</p>';
+
+    if(missed && missed.length){
+      html += '<h4>The '+missed.length+' question'+(missed.length===1?'':'s')+' you missed — with the answer explained:</h4>';
+      missed.forEach(m=>{
+        const pickedTxt = (m.picked>=0 && m.picked<m.opts.length) ? m.opts[m.picked] : "(no answer)";
+        const rightTxt  = m.opts[m.a];
+        html += '<div class="missq">';
+        html += '<div class="qtxt">'+escapeHTML(m.q)+'</div>';
+        html += '<div class="picks"><b>You picked:</b> <span class="wrong">'+escapeHTML(pickedTxt)+'</span></div>';
+        html += '<div class="picks"><b>Correct:</b> <span class="right">'+escapeHTML(rightTxt)+'</span></div>';
+        html += '<div class="whytxt">Why: '+escapeHTML(m.why)+'</div>';
+        html += '</div>';
+      });
+    }
+
+    html += '<h4>Shore up each pillar before you come back:</h4>';
+    html += '<ul class="path">';
+    PREPPATH.pillars.forEach(p=>{
+      html += '<li><a href="'+p.href+'">'+p.label+' →</a><span class="plabel">'+escapeHTML(p.name)+' · '+escapeHTML(p.note)+'</span></li>';
+    });
+    html += '</ul>';
+
+    html += '<div class="geno-invite">';
+    html += '<b>Talk to GENO before you retake.</b> GENO is available 24/7 in 83 languages and has read every GSU book in full. Try this conversation starter:';
+    html += '<div class="quote">"'+escapeHTML(PREPPATH.genoStarter)+'"</div>';
+    html += 'Scroll to the bottom of any GSU page to open the GENO widget, then paste the line above.';
+    html += '</div>';
+
+    html += '<a class="hub-link" href="'+PREPPATH.hubHref+'">Return to '+PREPPATH.hubLabel+' →</a>';
+
+    box.innerHTML = html;
+    box.className = "remedial";
+  }
+
+  function escapeHTML(s){
+    if(s==null) return "";
+    return String(s).replace(/[&<>"']/g, function(ch){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch];
+    });
   }
 
   function recordSerial(){
@@ -660,7 +752,7 @@ const POOL = [
   };
 
   $("startBtn").onclick=()=>{
-    buildQuiz(); idx=0; correct=0;
+    buildQuiz(); idx=0; correct=0; missed=[];
     $("intro").className="card center hide";
     $("results").className="card center hide";
     $("exam").className="card";
