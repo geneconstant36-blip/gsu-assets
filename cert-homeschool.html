@@ -110,6 +110,100 @@
   @keyframes pulse{50%{opacity:.55}}
   @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
 </style>
+
+<!-- ============================================================================
+     GSU · cert-homeschool.html AEO SCHEMA UPGRADE · Jul 18 2026
+     Adds Course + LearningResource + canonical + og:url.
+     Complements the existing EducationalOccupationalCredential + FAQPage +
+     BreadcrumbList schemas already on this page.
+============================================================================ -->
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/cert-homeschool.html">
+<meta property="og:url" content="https://read.globalsovereignuniversity.org/cert-homeschool.html">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://read.globalsovereignuniversity.org/cert-homeschool.html#course",
+  "name": "Homeschool — Free K-6 Homeschool Curriculum Course & Certification",
+  "description": "The free homeschool certification from Global Sovereign University — built for the parent-educator. K-6 homeschool curriculum covering reading, math, writing, science, history, civics, life skills, and effective use of the GENO AI tutor. Study free, then earn a Silver or Gold Certificate of Comprehension on the 30-question exam. No login, no cost, ever.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://globalsovereignuniversity.org/#organization",
+    "name": "Global Sovereign University",
+    "alternateName": "GSU",
+    "url": "https://globalsovereignuniversity.org/",
+    "sameAs": "https://globalsovereignuniversity.org/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Free",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://read.globalsovereignuniversity.org/cert-homeschool.html"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "Online",
+    "courseWorkload": "PT30M",
+    "inLanguage": "en"
+  },
+  "educationalLevel": "AllLevels",
+  "teaches": [
+    "K-6 reading pedagogy",
+    "K-6 mathematics",
+    "Writing instruction fundamentals",
+    "Elementary science",
+    "History and civics for children",
+    "Life skills curriculum",
+    "Effective GENO AI tutor use",
+    "Homeschool record-keeping"
+  ],
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "learningResourceType": [
+    "Course",
+    "Assessment"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "@id": "https://read.globalsovereignuniversity.org/cert-homeschool.html#lr",
+  "name": "Homeschool Certificate of Comprehension Exam",
+  "description": "The GSU Homeschool Certificate of Comprehension Exam — 30 questions drawn at random, 30-minute timer, 80% for Silver and 90% for Gold. Passing generates a permanent, publicly-verifiable serial number. Free forever, no login required, unlimited retakes.",
+  "url": "https://read.globalsovereignuniversity.org/cert-homeschool.html",
+  "learningResourceType": "Assessment",
+  "educationalUse": [
+    "Assessment",
+    "Self-Study"
+  ],
+  "educationalLevel": "AllLevels",
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": [
+      "student",
+      "self-learner",
+      "homeschool student",
+      "adult learner"
+    ]
+  },
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "url": "https://globalsovereignuniversity.org/"
+  },
+  "assesses": "Homeschool parent-educator readiness across the K-6 curriculum",
+  "typicalAgeRange": "18-99"
+}
+</script>
+
 </head>
 <body><script src="/return-bar.js"></script>
 <div id="clock" class="clock hide"><span class="lbl">TIME LEFT</span><span id="clockT">30:00</span></div>
@@ -295,7 +389,6 @@ const POOL = [
   {q:"According to The Civic Workshop, what is the book's simplified, kid-usable summary of what each of the three branches of government does?", opts:["Congress runs the work, the President makes the rules, courts have no role", "Congress makes the rules, the President runs the work, the courts referee the arguments", "All three branches do the exact same job for redundancy", "The book provides no summary of the branches at all"], a:1, why:"The book offers this working handle for families: 'Congress makes the rules. The President runs the work. The courts referee the arguments' -- a simplified but useful starting summary."},
   {q:"In The Civic Workshop, what analogy does the book use to describe how the three branches of government interact in real life, as opposed to a tidy diagram?", opts:["Three strangers who never interact with one another", "Three people trying to carry a couch up a staircase together -- each has a grip and a job, and the couch moves slowly on purpose", "A single person operating all three branches alone for efficiency", "A race where one branch tries to finish before the others"], a:1, why:"The book compares the branches to three people carrying a couch up a staircase -- each has a grip and a role, sometimes blocking each other, with the deliberate slowness preventing any one branch from dropping the couch alone."},
 {q:"According to History You Can Touch, what new problem does the book say appears once an ancient community grows past a certain size?", opts:["A problem with finding enough food, which never improves with population growth", "A coordination problem -- the need to move information faster than feet can carry it, constrained by distance and line of sight", "A problem that has no relation to communication at all", "The book says larger communities have no new problems to solve"], a:1, why:"The book frames civilization as 'the ability to move information faster than feet can carry it,' explaining that ancient communication was constrained by the stubborn facts of distance and line of sight."}
-];
 ];
 
 /* ====================== SHARED ENGINE (do not edit per subject) =========== */

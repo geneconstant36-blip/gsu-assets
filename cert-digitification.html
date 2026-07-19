@@ -110,6 +110,100 @@
   @keyframes pulse{50%{opacity:.55}}
   @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
 </style>
+
+<!-- ============================================================================
+     GSU · cert-digitification.html AEO SCHEMA UPGRADE · Jul 18 2026
+     Adds Course + LearningResource + canonical + og:url.
+     Complements the existing EducationalOccupationalCredential + FAQPage +
+     BreadcrumbList schemas already on this page.
+============================================================================ -->
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/cert-digitification.html">
+<meta property="og:url" content="https://read.globalsovereignuniversity.org/cert-digitification.html">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": "https://read.globalsovereignuniversity.org/cert-digitification.html#course",
+  "name": "Digitification — Free Digital Literacy & Cybersecurity Course & Certification",
+  "description": "The free digital literacy course from Global Sovereign University. Nineteen modules pairing computer skills with cybersecurity woven into every lesson — practical digital sovereignty in the AI age. Study free, then earn a Silver or Gold Certificate of Comprehension on the 30-question exam. No login, no cost, ever.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "https://globalsovereignuniversity.org/#organization",
+    "name": "Global Sovereign University",
+    "alternateName": "GSU",
+    "url": "https://globalsovereignuniversity.org/",
+    "sameAs": "https://globalsovereignuniversity.org/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "category": "Free",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://read.globalsovereignuniversity.org/cert-digitification.html"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "Online",
+    "courseWorkload": "PT30M",
+    "inLanguage": "en"
+  },
+  "educationalLevel": "AllLevels",
+  "teaches": [
+    "Computer fundamentals",
+    "Cybersecurity basics",
+    "Phishing recognition",
+    "Personal threat modeling",
+    "Password hygiene",
+    "AI literacy",
+    "Digital privacy",
+    "Safe browsing habits"
+  ],
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "learningResourceType": [
+    "Course",
+    "Assessment"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "@id": "https://read.globalsovereignuniversity.org/cert-digitification.html#lr",
+  "name": "Digitification Certificate of Comprehension Exam",
+  "description": "The GSU Digitification Certificate of Comprehension Exam — 30 questions drawn at random, 30-minute timer, 80% for Silver and 90% for Gold. Passing generates a permanent, publicly-verifiable serial number. Free forever, no login required, unlimited retakes.",
+  "url": "https://read.globalsovereignuniversity.org/cert-digitification.html",
+  "learningResourceType": "Assessment",
+  "educationalUse": [
+    "Assessment",
+    "Self-Study"
+  ],
+  "educationalLevel": "AllLevels",
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": [
+      "student",
+      "self-learner",
+      "homeschool student",
+      "adult learner"
+    ]
+  },
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "url": "https://globalsovereignuniversity.org/"
+  },
+  "assesses": "Digital literacy and personal cybersecurity comprehension",
+  "typicalAgeRange": "10-99"
+}
+</script>
+
 </head>
 <body><script src="/return-bar.js"></script>
 <div id="clock" class="clock hide"><span class="lbl">TIME LEFT</span><span id="clockT">30:00</span></div>
@@ -305,7 +399,6 @@ const POOL = [
   {q:"According to Digitification, who should make the decision to allow remote access to a device for tech support?", opts:["Any student can decide this alone, instantly", "It is an adult decision, not a student decision — a witness must be involved", "Remote access should always be granted to be polite", "Remote access decisions do not matter"], a:1, why:"The book states plainly: 'Remote access is an adult decision, not a student decision.' Students should stop and involve their witness immediately."},
   {q:"What does Digitification say real tech support never needs from you?", opts:["Your name", "Your password or your one-time code", "Your grade level", "A description of the problem"], a:1, why:"This rule, repeated throughout the book, states: real support does not need your password and does not need your one-time code."},
   {q:"According to Digitification, what is a warning sign that a 'virus detected' pop-up is likely fake?", opts:["It appears inside system settings, not a web browser", "It appears inside a web page (not system settings) and demands you call a number immediately", "It uses no urgency language at all", "It comes from your school's official portal"], a:1, why:"The book teaches that messages appearing inside a browser tab (rather than actual system settings) combined with urgency and a phone number are classic signs of a fake scam page."}
-];
 ];
 
 /* ====================== SHARED ENGINE (do not edit per subject) =========== */
