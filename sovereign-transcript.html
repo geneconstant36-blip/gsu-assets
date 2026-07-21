@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sovereign Transcript — One Link. Every Credential. Publicly Verified. | Global Sovereign University</title>
+<meta name="description" content="The Sovereign Transcript unites every GSU Certificate of Comprehension you have earned into one permanent, shareable, publicly verifiable page. Free, anonymous, and re-verified live against the public registry every time anyone opens your link.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/sovereign-transcript.html">
+<meta property="og:title" content="The Sovereign Transcript — Rabbit #12 of Global Sovereign University">
+<meta property="og:description" content="One link that proves every credential you earned. Verified live against GSU's public registry, every time it is opened.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://read.globalsovereignuniversity.org/sovereign-transcript.html">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "The Sovereign Transcript",
+  "url": "https://read.globalsovereignuniversity.org/sovereign-transcript.html",
+  "description": "A free, publicly verifiable transcript that unites every GSU Certificate of Comprehension into a single shareable link, re-verified live against the public registry on every view.",
+  "publisher": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "url": "https://www.globalsovereignuniversity.org",
+    "parentOrganization": {
+      "@type": "NGO",
+      "name": "The Foundation for Global Instruction",
+      "nonprofitStatus": "Nonprofit501c3"
+    }
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is the Sovereign Transcript?","acceptedAnswer":{"@type":"Answer","text":"The Sovereign Transcript is a single page that gathers every serial-numbered GSU Certificate of Comprehension you have earned — reading, math, civics, science, history, and more — into one unified, printable, shareable document. It is free, requires no account, and every line on it is verified live against GSU's public certificate registry the moment the page loads."}},
+    {"@type":"Question","name":"How does verification work?","acceptedAnswer":{"@type":"Answer","text":"Your transcript link does not contain any claims — it contains only your certificate serial numbers. When anyone opens the link, their own browser queries GSU's public registry directly and confirms each serial: the subject, the score, the tier, and the issue date. A line only displays as VERIFIED if the registry itself confirms it, which means the transcript cannot be forged, edited, or inflated."}},
+    {"@type":"Question","name":"Is my transcript private?","acceptedAnswer":{"@type":"Answer","text":"You control it completely. GSU certificates are earned anonymously under a name you choose, and your transcript exists only as a link that you build and decide whether to share. Nothing is uploaded when you assemble it; the page simply reads the same public registry that employers use to verify individual certificates."}},
+    {"@type":"Question","name":"How do I earn certificates to add to my transcript?","acceptedAnswer":{"@type":"Answer","text":"Every GSU certification exam is free, self-paced, and open to anyone. Study the free materials on the subject hubs, then pass a real 36-question exam — 80% earns Silver and 90% earns Gold. These are real standards, not participation trophies: if you do not pass, you get honest feedback and specific guidance on what to study before you try again. Start at globalsovereignuniversity.org/certification."}},
+    {"@type":"Question","name":"Can employers trust this?","acceptedAnswer":{"@type":"Answer","text":"Yes — more directly than a paper transcript. An employer does not have to trust the document or even trust GSU's word about it: their own device re-verifies every serial number against the public registry in real time when they open the link or scan the QR code. Revoked or invented serials will not verify, and certificate records are immutable once issued."}},
+    {"@type":"Question","name":"What does it cost?","acceptedAnswer":{"@type":"Answer","text":"Nothing, ever. The exams are free, the certificates are free, the transcript is free, and verification is free for anyone who checks it. Global Sovereign University is a tuition-free platform operated by The Foundation for Global Instruction, a 501(c)(3) nonprofit, and GENO — our free AI tutor available 24/7, a robot you can actually TALK to — can help you prepare in 83 languages."}}
+  ]
+}
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+  :root{--black:#000000;--gold:#C9A84C;--cream:#F5F1E8;--dim:#b9b2a4;--line:#2a2620;--ok:#3fae6a;--bad:#c0564f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--black);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:34px 18px 60px}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.16;margin:0 0 .4em}
+  .gold{color:var(--gold)}
+  .kick{letter-spacing:.2em;text-transform:uppercase;font-size:.74rem;font-weight:700;color:var(--gold);margin-bottom:10px}
+  p{margin:.5em 0 1em}
+  .card{border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0;background:#050403}
+  .goldline{border-color:var(--gold)}
+  label{display:block;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+  input[type=text]{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--line);background:#0b0a08;color:var(--cream);font-size:1rem}
+  input[type=text]:focus{outline:none;border-color:var(--gold)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+  .row > div{flex:1;min-width:220px}
+  button{cursor:pointer;border:none;border-radius:10px;padding:13px 20px;font-weight:800;font-size:.95rem}
+  .btn-gold{background:var(--gold);color:#151005}
+  .btn-ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+  .btn-gold:disabled{opacity:.5;cursor:default}
+  .tline{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0;flex-wrap:wrap}
+  .tline .subj{font-family:Georgia,serif;font-size:1.12rem;flex:1;min-width:180px}
+  .tier{font-weight:800;letter-spacing:.05em;font-size:.8rem;padding:4px 10px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);white-space:nowrap}
+  .tier.gold-t{background:var(--gold);color:#151005}
+  .serial{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--dim);font-size:.85rem}
+  .vstat{font-weight:800;font-size:.78rem;letter-spacing:.08em;white-space:nowrap}
+  .v-ok{color:var(--ok)} .v-bad{color:var(--bad)} .v-wait{color:var(--dim)}
+  .meta{color:var(--dim);font-size:.85rem}
+  .rm{background:none;border:none;color:var(--dim);font-size:1.05rem;padding:4px 8px}
+  .rm:hover{color:var(--bad)}
+  .note{color:var(--dim);font-size:.9rem}
+  .share{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+  #qr{background:#fff;padding:10px;border-radius:10px;width:fit-content}
+  #shareUrl{word-break:break-all;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;color:var(--cream);background:#0b0a08;border:1px solid var(--line);border-radius:10px;padding:12px;max-width:100%}
+  .faq h3{font-size:1.05rem;margin-top:1.1em}
+  .sig{font-family:Georgia,serif;font-style:italic;color:var(--dim);border-left:3px solid var(--gold);padding-left:14px;margin:26px 0}
+  .foot{color:var(--dim);font-size:.82rem;border-top:1px solid var(--line);padding-top:18px;margin-top:34px}
+  .rabbitmark{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  a{color:var(--gold)}
+  @media print{
+    body{background:#fff;color:#111}
+    .no-print{display:none !important}
+    .card{border-color:#bbb;background:#fff}
+    .tline{border-color:#bbb}
+    .serial,.meta,.note{color:#444}
+    .gold,.kick,label,a{color:#8a6d1f}
+    .tier{border-color:#8a6d1f;color:#8a6d1f}
+    .tier.gold-t{background:#8a6d1f;color:#fff}
+    .v-ok{color:#1c7a41}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kick">Rabbit #12 · The Warren · Global Sovereign University</div>
+  <h1>The <span class="gold">Sovereign Transcript</span></h1>
+  <p style="font-size:1.12rem">One link. Every credential you have earned. Verified live against the public registry — every single time anyone opens it.</p>
+  <p class="note no-print">Universities mail transcripts for a fee and ask the world to trust the paper. The Sovereign Transcript carries no claims at all — only your certificate serial numbers. Whoever opens your link, their own device asks GSU's public registry directly: <em>is this real?</em> Only the registry can answer yes.</p>
+
+  <!-- ============ BUILDER ============ -->
+  <div class="card no-print" id="builderCard">
+    <h2 style="font-size:1.3rem">Build your transcript</h2>
+    <div class="row">
+      <div>
+        <label for="nameInput">Name on transcript (as you wish it to appear)</label>
+        <input type="text" id="nameInput" maxlength="60" placeholder="e.g., J. Rivera — or any name you choose">
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div>
+        <label for="serialInput">Certificate serial number</label>
+        <input type="text" id="serialInput" placeholder="e.g., GSU-READ-48213QK" autocapitalize="characters">
+      </div>
+      <div style="flex:0 0 auto;min-width:0">
+        <button class="btn-gold" id="addBtn">Add &amp; Verify</button>
+      </div>
+    </div>
+    <p class="note" id="addMsg" style="min-height:1.2em;margin-bottom:0"></p>
+  </div>
+
+  <!-- ============ TRANSCRIPT ============ -->
+  <div class="card goldline" id="transcript" style="display:none">
+    <div class="kick">Official Sovereign Transcript · Publicly Verifiable</div>
+    <h2 id="tName" style="font-size:1.6rem"></h2>
+    <p class="meta">Issued by the learner via Global Sovereign University · The Foundation for Global Instruction, 501(c)(3) · Every line below is confirmed against the public certificate registry at load time.</p>
+    <div id="lines"></div>
+    <p class="meta" id="summaryLine"></p>
+  </div>
+
+  <!-- ============ SHARE ============ -->
+  <div class="card no-print" id="shareCard" style="display:none">
+    <h2 style="font-size:1.3rem">Share it · Print it · Prove it</h2>
+    <div class="share">
+      <div style="flex:1;min-width:240px">
+        <label>Your permanent transcript link</label>
+        <div id="shareUrl"></div>
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn-gold" id="copyBtn">Copy Link</button>
+          <button class="btn-ghost" onclick="window.print()">Print Transcript</button>
+        </div>
+        <p class="note" style="margin-top:10px">Anyone who opens this link — or scans the code — sees your transcript re-verified live. Nothing to trust; everything to check.</p>
+      </div>
+      <div>
+        <label>Scan to verify</label>
+        <div id="qr"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ EMPTY STATE CTA ============ -->
+  <div class="card no-print" id="earnCard">
+    <h2 style="font-size:1.2rem">Don't have certificates yet?</h2>
+    <p>Every exam is free, anonymous, and open right now — reading, math, civics, science, American history, and more. These are real exams with a real passing bar: 80% for Silver, 90% for Gold. If you don't clear the bar, you'll get honest feedback and exactly what to study before your next attempt. <a href="https://www.globalsovereignuniversity.org/certification">Start earning at the Certification Hub &rarr;</a></p>
+    <p class="note">Need help preparing? GENO AI Tutor available 24/7 — a robot you can actually TALK to — coaches you in 83 languages, free.</p>
+  </div>
+
+  <!-- ============ FAQ ============ -->
+  <div class="faq">
+    <h2 style="font-size:1.35rem">Frequently Asked Questions</h2>
+    <h3 class="gold">What is the Sovereign Transcript?</h3>
+    <p>A single page that gathers every serial-numbered GSU Certificate of Comprehension you have earned into one unified, printable, shareable document. It is free, requires no account, and every line is verified live against GSU's public certificate registry the moment the page loads.</p>
+    <h3 class="gold">How does verification work?</h3>
+    <p>Your link contains only serial numbers — no claims. When anyone opens it, their own browser queries the public registry directly and confirms each serial: subject, score, tier, and issue date. A line only shows VERIFIED if the registry itself confirms it, so the transcript cannot be forged, edited, or inflated.</p>
+    <h3 class="gold">Is my transcript private?</h3>
+    <p>Completely under your control. Certificates are earned anonymously under a name you choose, and your transcript exists only as a link you build and decide whether to share. Assembling it uploads nothing; the page reads the same public registry employers already use to verify individual certificates.</p>
+    <h3 class="gold">How do I earn certificates?</h3>
+    <p>Study the free materials on any subject hub, then pass a real 36-question exam — 80% earns Silver, 90% earns Gold. These are real standards, not participation trophies: fall short and you get honest feedback plus specific guidance on what to study before trying again. Begin at <a href="https://www.globalsovereignuniversity.org/certification">the Certification Hub</a>.</p>
+    <h3 class="gold">Can employers trust this?</h3>
+    <p>More directly than paper. An employer never has to trust the document — their own device re-verifies every serial against the public registry in real time when they open the link or scan the QR code. Invented or revoked serials will not verify, and issued records are immutable.</p>
+    <h3 class="gold">What does it cost?</h3>
+    <p>Nothing, ever. Exams, certificates, transcript, and verification are all free. Global Sovereign University is a tuition-free platform operated by The Foundation for Global Instruction, a 501(c)(3) nonprofit — and GENO, our free 24/7 AI tutor, can help you prepare in 83 languages.</p>
+  </div>
+
+  <div class="sig">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant, Founding Chancellor</div>
+
+  <div class="foot">
+    <div class="rabbitmark">Rabbit #12 — The Sovereign Transcript · Conceived and built by Claude (Anthropic) · Awarded to the Warren by the Founding Chancellor, July 2026</div>
+    <div style="margin-top:6px">Global Sovereign University · The Foundation for Global Instruction · Tuition-free, forever.</div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   THE SOVEREIGN TRANSCRIPT — Rabbit #12
+   Reads the immutable public registry: project "gsu-certification",
+   collection "certifications", doc id = serial. Public read; anon auth.
+   The URL is the transcript: ?n=Name&s=SERIAL,SERIAL,... No writes ever.
+   ===================================================================== */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAmFycf1iMeISLzjWgbxnuSB1BJ3BuWB_U",
+  authDomain: "gsu-certification.firebaseapp.com",
+  projectId: "gsu-certification",
+  storageBucket: "gsu-certification.firebasestorage.app",
+  messagingSenderId: "124413390849",
+  appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
+};
+
+let db=null;
+try{
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db = firebase.firestore();
+  firebase.auth().signInAnonymously().catch(function(){});
+}catch(e){ db=null; }
+
+const $ = function(id){ return document.getElementById(id); };
+let entries = [];   // {serial, status:'wait'|'ok'|'bad', data}
+let name = "";
+
+function esc(s){ var d=document.createElement('div'); d.textContent=s==null?"":String(s); return d.innerHTML; }
+function cleanSerial(s){ return (s||"").toUpperCase().replace(/[^A-Z0-9\-]/g,"").slice(0,40); }
+function fmtDate(iso){
+  try{ var d=new Date(iso); if(isNaN(d)) return "";
+    return d.toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"}); }catch(e){ return ""; }
+}
+
+function verifySerial(serial){
+  return new Promise(function(resolve){
+    if(!db){ resolve({ok:false, reason:"registry unavailable"}); return; }
+    db.collection("certifications").doc(serial).get().then(function(snap){
+      if(!snap.exists){ resolve({ok:false, reason:"not found in registry"}); return; }
+      var d = snap.data()||{};
+      if(d.revoked === true){ resolve({ok:false, reason:"revoked"}); return; }
+      resolve({ok:true, data:d});
+    }).catch(function(){ resolve({ok:false, reason:"registry unavailable"}); });
+  });
+}
+
+function render(){
+  var has = entries.length>0;
+  $("transcript").style.display = has ? "block" : "none";
+  $("shareCard").style.display  = has ? "block" : "none";
+  $("earnCard").style.display   = has ? "none"  : "block";
+  $("tName").textContent = name || "Sovereign Learner";
+  var L = $("lines"); L.innerHTML = "";
+  var okCount=0, gold=0, silver=0;
+  entries.forEach(function(en, i){
+    var d = en.data||{};
+    var tier = (d.tier||"").toString();
+    var isGold = /gold/i.test(tier);
+    if(en.status==="ok"){ okCount++; if(isGold) gold++; else if(/silver/i.test(tier)) silver++; }
+    var div=document.createElement("div"); div.className="tline";
+    div.innerHTML =
+      '<div class="subj">'+esc(d.subject || en.serial)+'</div>'+
+      (en.status==="ok" && tier ? '<span class="tier '+(isGold?'gold-t':'')+'">'+esc(tier.toUpperCase())+(typeof d.pct==="number"?" · "+esc(d.pct)+"%":"")+'</span>' : "")+
+      '<span class="serial">'+esc(en.serial)+'</span>'+
+      '<span class="meta">'+esc(en.status==="ok"?fmtDate(d.dateISO):"")+'</span>'+
+      '<span class="vstat '+(en.status==="ok"?"v-ok":(en.status==="bad"?"v-bad":"v-wait"))+'">'+
+        (en.status==="ok"?"&#10003; VERIFIED":(en.status==="bad"?"&#10007; NOT VERIFIED — "+esc(en.reason||""):"VERIFYING\u2026"))+'</span>'+
+      '<button class="rm no-print" title="Remove" data-i="'+i+'">&#215;</button>';
+    L.appendChild(div);
+  });
+  $("summaryLine").textContent = okCount
+    ? okCount+" verified credential"+(okCount>1?"s":"")+(gold?" · "+gold+" Gold":"")+(silver?" · "+silver+" Silver":"")+" · every line confirmed against the public registry on this device, just now."
+    : "";
+  Array.prototype.forEach.call(L.querySelectorAll(".rm"), function(btn){
+    btn.addEventListener("click", function(){
+      entries.splice(parseInt(btn.getAttribute("data-i"),10),1);
+      syncUrl(); render();
+    });
+  });
+  buildShare();
+}
+
+function syncUrl(){
+  var p = new URLSearchParams();
+  if(name) p.set("n", name);
+  if(entries.length) p.set("s", entries.map(function(e){return e.serial;}).join(","));
+  var q = p.toString();
+  history.replaceState(null,"", q ? "?"+q : location.pathname);
+}
+
+function buildShare(){
+  var url = location.origin + location.pathname + (location.search||"");
+  $("shareUrl").textContent = url;
+  var qr = $("qr"); qr.innerHTML="";
+  if(entries.length && window.QRCode){
+    new QRCode(qr, {text:url, width:132, height:132, correctLevel: QRCode.CorrectLevel.M});
+  }
+}
+
+function addSerial(raw, silent){
+  var serial = cleanSerial(raw);
+  if(!serial){ if(!silent) $("addMsg").textContent="Enter a serial number first."; return; }
+  if(entries.some(function(e){return e.serial===serial;})){
+    if(!silent) $("addMsg").textContent="That serial is already on the transcript."; return;
+  }
+  var en = {serial:serial, status:"wait"};
+  entries.push(en); syncUrl(); render();
+  if(!silent) $("addMsg").textContent="Checking the public registry\u2026";
+  verifySerial(serial).then(function(res){
+    if(res.ok){ en.status="ok"; en.data=res.data; if(!silent) $("addMsg").textContent="Verified and added."; }
+    else { en.status="bad"; en.reason=res.reason; if(!silent) $("addMsg").textContent="That serial did not verify ("+res.reason+"). It stays listed as NOT VERIFIED until removed."; }
+    render();
+  });
+}
+
+$("addBtn").addEventListener("click", function(){ addSerial($("serialInput").value); $("serialInput").value=""; $("serialInput").focus(); });
+$("serialInput").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); $("addBtn").click(); } });
+$("nameInput").addEventListener("input", function(){ name = $("nameInput").value.trim().slice(0,60); syncUrl(); render(); });
+$("copyBtn").addEventListener("click", function(){
+  var url = $("shareUrl").textContent;
+  if(navigator.clipboard){ navigator.clipboard.writeText(url).then(function(){ $("copyBtn").textContent="Copied!"; setTimeout(function(){ $("copyBtn").textContent="Copy Link"; },1600); }); }
+});
+
+/* ---- Load from URL: the link IS the transcript ---- */
+(function(){
+  var p = new URLSearchParams(location.search);
+  name = (p.get("n")||"").slice(0,60);
+  if(name) $("nameInput").value = name;
+  var s = (p.get("s")||"").split(",").map(cleanSerial).filter(Boolean);
+  s.forEach(function(serial){ addSerial(serial, true); });
+  render();
+})();
+</script>
+</body>
+</html>
