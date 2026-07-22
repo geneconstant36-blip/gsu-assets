@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSU Non-Monetary Barter & Trade Calculator</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --gold-accent: #d4af37;
+            --gold-hover: #f1c40f;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+            --success-color: #2ea043;
+            --warning-color: #e3b341;
+            --danger-color: #f85149;
+            --input-bg: #0d1117;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .calculator-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: var(--gold-accent);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .trade-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 768px) {
+            .trade-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .party-card {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .party-card h2 {
+            font-size: 18px;
+            color: var(--gold-accent);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--gold-accent);
+        }
+
+        .party-total {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .party-total span {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .party-total .amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--gold-accent);
+        }
+
+        .balance-section {
+            background-color: #090d13;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .balance-section h3 {
+            font-size: 16px;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .meter-container {
+            width: 100%;
+            height: 16px;
+            background-color: var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            margin: 16px 0;
+        }
+
+        .meter-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3fb950, #d4af37, #f85149);
+            width: 50%;
+            transition: width 0.3s ease, margin-left 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .result-box {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 6px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--text-main);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .btn-action {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--gold-accent);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+
+        .btn-action:hover {
+            background-color: var(--gold-hover);
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-container">
+    <div class="header">
+        <h1>Barter & Trade Valuation Calculator</h1>
+        <p>Global Sovereign University Press — Non-Monetary Trade Mechanics</p>
+    </div>
+
+    <div class="trade-grid">
+        <!-- PARTY A -->
+        <div class="party-card">
+            <h2>Party A Offer</h2>
+            <div class="form-group">
+                <label>Item / Service Description</label>
+                <input type="text" id="partyA_desc" value="Carpentry & Framing Work">
+            </div>
+            <div class="form-group">
+                <label>Quantity / Hours</label>
+                <input type="number" id="partyA_qty" value="6" step="0.5" min="0">
+            </div>
+            <div class="form-group">
+                <label>Base Value Rate ($ / Unit or Hr)</label>
+                <input type="number" id="partyA_rate" value="40" step="1" min="0">
+            </div>
+            <div class="form-group">
+                <label>Skill / Tool Multiplier</label>
+                <select id="partyA_skill">
+                    <option value="1.0">1.0x — Standard Labor / General Help</option>
+                    <option value="1.25" selected>1.25x — Skilled Trade (Tools Provided)</option>
+                    <option value="1.5">1.5x — Master Craft / Specialized Rig</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Urgency / Scarcity Factor</label>
+                <select id="partyA_urgency">
+                    <option value="0.9">0.9x — Flexible / Low Urgency</option>
+                    <option value="1.0" selected>1.0x — Standard Availability</option>
+                    <option value="1.2">1.2x — High Priority / Emergency</option>
+                </select>
+            </div>
+            <div class="party-total">
+                <span>Effective Trade Value:</span>
+                <span class="amount" id="partyA_total">$300.00</span>
+            </div>
+        </div>
+
+        <!-- PARTY B -->
+        <div class="party-card">
+            <h2>Party B Offer</h2>
+            <div class="form-group">
+                <label>Item / Service Description</label>
+                <input type="text" id="partyB_desc" value="Seasoned Firewood (Cords)">
+            </div>
+            <div class="form-group">
+                <label>Quantity / Units</label>
+                <input type="number" id="partyB_qty" value="2" step="0.5" min="0">
+            </div>
+            <div class="form-group">
+                <label>Base Value Rate ($ / Unit or Hr)</label>
+                <input type="number" id="partyB_rate" value="120" step="1" min="0">
+            </div>
+            <div class="form-group">
+                <label>Skill / Effort Multiplier</label>
+                <select id="partyB_skill">
+                    <option value="1.0" selected>1.0x — Standard Materials / Physical Supply</option>
+                    <option value="1.2">1.2x — Processed / Delivered Goods</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Urgency / Scarcity Factor</label>
+                <select id="partyB_urgency">
+                    <option value="1.0">1.0x — Normal Season</option>
+                    <option value="1.15" selected>1.15x — Peak Winter Need</option>
+                </select>
+            </div>
+            <div class="party-total">
+                <span>Effective Trade Value:</span>
+                <span class="amount" id="partyB_total">$276.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="balance-section">
+        <h3>Trade Equilibrium Status</h3>
+        <div class="meter-container">
+            <div class="meter-bar" id="meter_bar"></div>
+        </div>
+        <div class="result-box" id="result_summary">
+            Calculated Trade Balance...
+        </div>
+        <button class="btn-action" onclick="window.print()">Print / Save Trade Agreement Summary</button>
+    </div>
+</div>
+
+<script>
+    function calculateTrade() {
+        const a_qty = parseFloat(document.getElementById('partyA_qty').value) || 0;
+        const a_rate = parseFloat(document.getElementById('partyA_rate').value) || 0;
+        const a_skill = parseFloat(document.getElementById('partyA_skill').value) || 1;
+        const a_urgency = parseFloat(document.getElementById('partyA_urgency').value) || 1;
+
+        const b_qty = parseFloat(document.getElementById('partyB_qty').value) || 0;
+        const b_rate = parseFloat(document.getElementById('partyB_rate').value) || 0;
+        const b_skill = parseFloat(document.getElementById('partyB_skill').value) || 1;
+        const b_urgency = parseFloat(document.getElementById('partyB_urgency').value) || 1;
+
+        const valA = a_qty * a_rate * a_skill * a_urgency;
+        const valB = b_qty * b_rate * b_skill * b_urgency;
+
+        document.getElementById('partyA_total').innerText = '$' + valA.toFixed(2);
+        document.getElementById('partyB_total').innerText = '$' + valB.toFixed(2);
+
+        const totalVal = valA + valB;
+        let pctA = 50;
+        if (totalVal > 0) {
+            pctA = (valA / totalVal) * 100;
+        }
+
+        const meterBar = document.getElementById('meter_bar');
+        meterBar.style.width = Math.max(10, Math.min(90, pctA)) + '%';
+
+        const diff = Math.abs(valA - valB);
+        const resultBox = document.getElementById('result_summary');
+
+        if (diff < 5.0) {
+            resultBox.innerHTML = `<strong>Trade Equilibrium Achieved!</strong><br>Both offers align within an acceptable 1:1 barter tolerance threshold ($${valA.toFixed(2)} vs $${valB.toFixed(2)}).`;
+        } else if (valA > valB) {
+            const timeCredit = (diff / (a_rate * a_skill)).toFixed(1);
+            resultBox.innerHTML = `<strong>Party A holds a surplus of $${diff.toFixed(2)}.</strong><br>To balance this exchange, Party B can issue a <strong>$${diff.toFixed(2)} Time-Bank Credit</strong> (equivalent to approx. <strong>${timeCredit} hours</strong> of future trade labor) or supply auxiliary materials.`;
+        } else {
+            const timeCredit = (diff / (b_rate * b_skill)).toFixed(1);
+            resultBox.innerHTML = `<strong>Party B holds a surplus of $${diff.toFixed(2)}.</strong><br>To balance this exchange, Party A can issue a <strong>$${diff.toFixed(2)} Time-Bank Credit</strong> (equivalent to approx. <strong>${timeCredit} hours</strong> of future trade labor) or supply auxiliary materials.`;
+        }
+    }
+
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => input.addEventListener('input', calculateTrade));
+    calculateTrade();
+</script>
+
+</body>
+</html>
