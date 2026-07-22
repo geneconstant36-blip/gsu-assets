@@ -148,10 +148,10 @@
         <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:700;">Trade School Poster &bull; Free Download</span>
       </div>
       <h2 style="color:#fff;font-weight:900;letter-spacing:-.02em;font-size:clamp(24px,4vw,38px);line-height:1;margin:0 0 10px;">THE BLUEPRINT POSTER<span style="color:#ff8c00;"> &mdash; YOURS TO KEEP</span></h2>
-      <p style="color:rgba(255,255,255,.6);font-size:14px;max-width:620px;line-height:1.6;margin:0 0 26px;">The same 9-step worksheet as the live calculator above, in one printable blueprint poster &mdash; hang it in the shop, hand it to an apprentice, teach a class with it. Educational guide only &mdash; consult a licensed CPA.</p>
+      <p style="color:rgba(255,255,255,.6);font-size:14px;max-width:620px;line-height:1.6;margin:0 0 26px;">The 7-step write-on worksheet in one printable blueprint poster — same steps as the worksheet above, with the electrician example filled in &mdash; hang it in the shop, hand it to an apprentice, teach a class with it. Educational guide only &mdash; consult a licensed CPA.</p>
       <div style="display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;">
-        <a href="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a610af04e6a1bb561bad30e_quarterly-estimated-tax-calculator-trades-poster.png" target="_blank" rel="noopener" style="flex:1 1 340px;max-width:620px;display:block;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.04);">
-          <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a610af04e6a1bb561bad30e_quarterly-estimated-tax-calculator-trades-poster.png" alt="Quarterly Estimated Tax Calculator blueprint poster — 9-step worksheet, example calculation, and quarterly due dates" loading="lazy" style="display:block;width:100%;height:auto;">
+        <a href="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a6117a7a7ef9a46d28dac89_quarterly-estimated-tax-calculator-trades-poster-v2.jpg" target="_blank" rel="noopener" style="flex:1 1 340px;max-width:620px;display:block;border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.04);">
+          <img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a6117a7a7ef9a46d28dac89_quarterly-estimated-tax-calculator-trades-poster-v2.jpg" alt="Quarterly Estimated Tax Calculator blueprint poster — 7 fill-in steps, self-employed electrician example, and 2024-2025 quarterly due dates" loading="lazy" style="display:block;width:100%;height:auto;">
         </a>
         <div style="flex:1 1 260px;max-width:420px;">
           <button id="gsu-poster-dl" style="display:inline-flex;align-items:center;gap:10px;background:#ff8c00;color:#0a2342;font-weight:800;font-size:15px;padding:15px 26px;border:none;border-radius:10px;cursor:pointer;box-shadow:0 8px 24px rgba(255,140,0,.35);">
@@ -171,12 +171,12 @@
   <script>
   (function(){
     var btn=document.getElementById('gsu-poster-dl'),st=document.getElementById('gsu-poster-status');
-    var URLP="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a610af04e6a1bb561bad30e_quarterly-estimated-tax-calculator-trades-poster.png";
+    var URLP="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6a6117a7a7ef9a46d28dac89_quarterly-estimated-tax-calculator-trades-poster-v2.jpg";
     btn.addEventListener('click',function(){
       st.textContent='Preparing your download\u2026';btn.disabled=true;btn.style.opacity='.7';
       fetch(URLP).then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(b){
         var u=URL.createObjectURL(b),a=document.createElement('a');
-        a.href=u;a.download='GSU-Quarterly-Tax-Calculator-Trades-Poster.png';
+        a.href=u;a.download='GSU-Quarterly-Tax-Calculator-Trades-Poster.jpg';
         document.body.appendChild(a);a.click();a.remove();
         setTimeout(function(){URL.revokeObjectURL(u);},1500);
         st.textContent='Downloaded \u2713 \u2014 check your Downloads folder.';
