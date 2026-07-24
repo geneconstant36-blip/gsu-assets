@@ -163,6 +163,217 @@
 </style>
 </head>
 <body>
+<!-- GSU · WHY WE PLAY · canonical strip — required at the head of every page carrying a GSU game -->
+<section id="gsu-why-we-play" aria-label="Why we play">
+  <div class="wwp-in">
+    <p class="wwp-k">Why We Play · The GSU Advantage</p>
+    <p class="wwp-p">At GSU, play is not a break from learning — it is the engine of it. Every game on this page was built on one conviction: <b>a learner who is smiling is a learner who is staying.</b> Where others sell lectures, we hand you the same knowledge as a game you can win — free, unlimited, in your pocket, forever.</p>
+    <p class="wwp-p">Play until the skill becomes reflex. Then prove it to the world with a free, publicly verifiable <a href="https://www.globalsovereignuniversity.org/certification">Certificate of Comprehension</a> — no account, no cost, ever.</p>
+  </div>
+</section>
+
+<!-- GSU FLYWHEEL LIVE · stats + certificate ticker · real Firestore data, no fabrication.
+     Reads: gsu-handshake climb collections (count) + gsu-certification certifications (count + list).
+     All numbers are live truth; counters grow as the wheel turns. Chancellor-approved Jul 24 2026. -->
+<section id="gsu-fw-live" aria-label="The wheel is turning — live numbers">
+<style>
+#gsu-fw-live{background:#000;color:#F5F1E8;font-family:Georgia,serif;padding:40px 20px 30px;border-bottom:1px solid rgba(201,168,76,.28)}
+#gsu-fw-live *{box-sizing:border-box}
+.fwl-w{max-width:1000px;margin:0 auto;text-align:center}
+.fwl-k{color:#6DBFA9;letter-spacing:.22em;text-transform:uppercase;font-size:.8rem;margin:0 0 4px;font-family:Arial,sans-serif}
+.fwl-t{color:#C9A84C;font-size:1.6rem;margin:0 0 18px}
+.fwl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px}
+.fwl-card{border:1px solid rgba(201,168,76,.35);border-radius:14px;background:#0b0b0b;padding:20px 14px}
+.fwl-num{color:#C9A84C;font-size:2.3rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.fwl-lbl{color:#bdb7a8;font-size:.85rem;margin-top:8px;font-family:Arial,sans-serif;letter-spacing:.04em}
+.fwl-tick-wrap{border-top:1px solid rgba(201,168,76,.2);border-bottom:1px solid rgba(201,168,76,.2);overflow:hidden;padding:10px 0;position:relative}
+.fwl-tick-label{color:#6DBFA9;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-family:Arial,sans-serif;margin-bottom:8px}
+.fwl-tick{display:inline-flex;gap:44px;white-space:nowrap;animation:fwlScroll 40s linear infinite;will-change:transform}
+.fwl-tick:hover{animation-play-state:paused}
+.fwl-tick span{color:#E8E4D8;font-size:.95rem}
+.fwl-tick b{color:#C9A84C;font-weight:700}
+.fwl-tick i{color:#6DBFA9;font-style:normal}
+@keyframes fwlScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.fwl-tick{animation:none;flex-wrap:wrap;white-space:normal}}
+</style>
+<div class="fwl-w">
+ <p class="fwl-k">Live From the Databases · Updated Every Visit</p>
+ <h2 class="fwl-t">The Wheel Is Turning</h2>
+ <div class="fwl-grid">
+  <div class="fwl-card"><div class="fwl-num" id="fwl-certs">—</div><div class="fwl-lbl">Certificates minted, serial-numbered &amp; verifiable</div></div>
+  <div class="fwl-card"><div class="fwl-num" id="fwl-climbs">—</div><div class="fwl-lbl">Climbs recorded on GSU instruments</div></div>
+  <div class="fwl-card"><div class="fwl-num">17</div><div class="fwl-lbl">Instruments live across the campus</div></div>
+  <div class="fwl-card"><div class="fwl-num">50+</div><div class="fwl-lbl">Free games in the Learning Arcade</div></div>
+ </div>
+ <div class="fwl-tick-wrap">
+  <div class="fwl-tick-label">Freshly Minted — Real Serials, Publicly Verifiable</div>
+  <div class="fwl-tick" id="fwl-ticker"><span>Loading the mint&hellip;</span></div>
+ </div>
+</div>
+<script>
+(function(){
+ var CERT='https://firestore.googleapis.com/v1/projects/gsu-certification/databases/(default)/documents';
+ var HAND='https://firestore.googleapis.com/v1/projects/gsu-handshake/databases/(default)/documents';
+ var CLIMBS=['readsprint_climb','moneytrap_climb','scimethod_climb','sentsurgery_climb','timeline_climb','rightsgauntlet_climb','compass_climb','tradeoff_climb','owners_climb','scamgauntlet_climb','fallacy_climb','decoding_climb','humannature_climb','flywheel_spin'];
+ function agg(base,col){return fetch(base+':runAggregationQuery',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({structuredAggregationQuery:{structuredQuery:{from:[{collectionId:col}]},aggregations:[{count:{},alias:'n'}]}})}).then(function(r){return r.json()}).then(function(j){try{return parseInt(j[0].result.aggregateFields.n.integerValue,10)||0}catch(e){return 0}}).catch(function(){return 0});}
+ function countUp(el,target){var t0=null,dur=1200;function step(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/dur);el.textContent=Math.round(target*(0.5-0.5*Math.cos(Math.PI*p))).toLocaleString();if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+ agg(CERT,'certifications').then(function(n){countUp(document.getElementById('fwl-certs'),n);});
+ Promise.all(CLIMBS.map(function(c){return agg(HAND,c)})).then(function(a){var s=a.reduce(function(x,y){return x+y},0);countUp(document.getElementById('fwl-climbs'),s);});
+ function get(u){return fetch(u).then(function(r){return r.json()}).catch(function(){return {}});}
+ function val(f){if(!f)return null;return f.stringValue||f.integerValue||(f.booleanValue===true)||null;}
+ Promise.all([
+   get(CERT+'/certifications?pageSize=25&orderBy=dateISO%20desc'),
+   get(CERT+'/certifications?pageSize=25&orderBy=issued%20desc')
+ ]).then(function(res){
+   var seen={},items=[];
+   res.forEach(function(j){(j.documents||[]).forEach(function(d){
+     var f=d.fields||{},serial=val(f.serial)||d.name.split('/').pop();
+     if(seen[serial])return;seen[serial]=1;
+     if(f.revoked&&f.revoked.booleanValue===true)return;
+     var when=val(f.dateISO)||val(f.issued)||'';
+     items.push({serial:serial,subject:(val(f.subject)||'').replace(/^\w/,function(c){return c.toUpperCase()}),tier:val(f.tier)||'',when:when});
+   });});
+   items.sort(function(a,b){return (b.when||'').localeCompare(a.when||'')});
+   items=items.slice(0,12);
+   var el=document.getElementById('fwl-ticker');
+   if(!items.length){el.innerHTML='<span>The mint is open — the next certificate could be <b>yours</b>.</span>';return;}
+   function rel(iso){if(!iso)return'';var d=new Date(iso),ms=Date.now()-d.getTime(),day=Math.floor(ms/864e5);if(day<1)return'today';if(day===1)return'yesterday';if(day<31)return day+' days ago';return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});}
+   var h=items.map(function(it){return '<span><b>'+it.serial+'</b> &middot; '+it.subject+(it.tier?' &middot; '+it.tier:'')+' &middot; <i>'+rel(it.when)+'</i></span>'}).join('');
+   el.innerHTML=h+h; /* doubled for seamless loop */
+ });
+})();
+</script>
+</section>
+
+<!-- GSU · SPIN THE WHEEL YOURSELF · the 60-second flywheel loop: play → proof → wall card → certificate path.
+     Honest bar: 3/3 to earn the card, misses get specific remediation. Options equal-format per doctrine.
+     Records to gsu-handshake/flywheel_spin (anon auth). Chancellor-approved Jul 24 2026. -->
+<section id="gsu-fw-spin" aria-label="Spin the wheel yourself">
+<style>
+#gsu-fw-spin{background:#000;color:#F5F1E8;font-family:Georgia,serif;padding:48px 20px;border-bottom:1px solid rgba(201,168,76,.28)}
+#gsu-fw-spin *{box-sizing:border-box}
+.fws-w{max-width:760px;margin:0 auto}
+.fws-k{color:#6DBFA9;letter-spacing:.22em;text-transform:uppercase;font-size:.8rem;margin:0 0 4px;text-align:center;font-family:Arial,sans-serif}
+.fws-t{color:#C9A84C;font-size:1.9rem;margin:0 0 8px;text-align:center}
+.fws-sub{color:#E8E4D8;text-align:center;max-width:38em;margin:0 auto 20px;line-height:1.6}
+.fws-sub b{color:#C9A84C}
+.fws-box{border:1px solid rgba(201,168,76,.4);border-radius:16px;background:#0b0b0b;padding:26px 22px}
+.fws-meta{display:flex;justify-content:space-between;color:#bdb7a8;font-family:Arial,sans-serif;font-size:.85rem;margin-bottom:14px}
+.fws-meta b{color:#C9A84C}
+.fws-q{font-size:1.12rem;line-height:1.6;margin:0 0 16px}
+.fws-opts{display:grid;gap:10px}
+.fws-opts button{text-align:left;background:#000;border:1px solid rgba(201,168,76,.35);border-radius:10px;color:#F5F1E8;font-family:Georgia,serif;font-size:1rem;padding:13px 16px;cursor:pointer}
+.fws-opts button:hover{border-color:#C9A84C;background:rgba(201,168,76,.07)}
+.fws-verdict{margin-top:14px;border-left:3px solid #C9A84C;background:rgba(201,168,76,.06);padding:12px 14px;line-height:1.6;display:none}
+.fws-verdict b{color:#C9A84C}
+.fws-next{display:none;margin-top:14px;text-align:center}
+.fws-btn{display:inline-block;background:#C9A84C;color:#000;font-weight:700;font-family:Arial,sans-serif;border:none;border-radius:10px;padding:13px 26px;font-size:1rem;cursor:pointer;text-decoration:none}
+.fws-btn.ghost{background:transparent;color:#C9A84C;border:1px solid #C9A84C}
+.fws-start{text-align:center}
+.fws-result{display:none;text-align:center}
+.fws-notyet{color:#E8E4D8;line-height:1.7}
+.fws-notyet b{color:#C9A84C}
+.fws-rem{text-align:left;margin:14px auto 0;max-width:34em;line-height:1.7}
+.fws-rem a{color:#C9A84C}
+#gsu-spin-card{display:none;margin:18px auto 0;max-width:430px;border:3px solid #C9A84C;border-radius:14px;background:#000;padding:26px 22px;text-align:center}
+#gsu-spin-card .sc-k{color:#6DBFA9;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;font-family:Arial,sans-serif}
+#gsu-spin-card h3{color:#C9A84C;font-size:1.5rem;margin:8px 0 2px}
+#gsu-spin-card .sc-sub{color:#F5F1E8;font-style:italic;margin:0 0 12px}
+#gsu-spin-card .sc-line{color:#E8E4D8;font-size:.95rem;margin:4px 0}
+#gsu-spin-card .sc-line b{color:#C9A84C}
+#gsu-spin-card .sc-foot{color:#bdb7a8;font-size:.75rem;margin-top:12px;font-family:Arial,sans-serif}
+.fws-tag{background:#000;border:1px solid rgba(201,168,76,.4);border-radius:8px;color:#C9A84C;font-family:Arial,sans-serif;font-size:1.05rem;letter-spacing:.3em;text-transform:uppercase;text-align:center;width:110px;padding:9px 6px}
+@media print{ body *{visibility:hidden !important} #gsu-spin-card, #gsu-spin-card *{visibility:visible !important} #gsu-spin-card{display:block;position:fixed;left:0;right:0;top:20px;margin:auto;border-color:#000;color:#000;background:#fff} #gsu-spin-card h3,#gsu-spin-card .sc-line b{color:#000} #gsu-spin-card .sc-k,#gsu-spin-card .sc-sub,#gsu-spin-card .sc-line,#gsu-spin-card .sc-foot{color:#000} }
+</style>
+<div class="fws-w">
+ <p class="fws-k">Do the Whole Loop Right Now · Free · No Login</p>
+ <h2 class="fws-t">Spin the Wheel Yourself</h2>
+ <p class="fws-sub">The flywheel above is not a diagram — it is a machine, and you can run one full revolution in about <b>sixty seconds</b>: answer three real questions (Stage 1), let the proof speak (Stage 2), print your Spin Card for the wall (Stage 3), and see the road to a serial-numbered certificate (Stage 4). Three out of three earns the card. <b>The bar does not move, and the door does not close.</b></p>
+ <div class="fws-box">
+  <div class="fws-start" id="fws-start">
+   <p style="margin:0 0 16px;line-height:1.6">Three questions — one reading, one numbers, one clear thinking. Fresh questions every spin.</p>
+   <button class="fws-btn" id="fws-go">Start the Spin &rarr;</button>
+  </div>
+  <div id="fws-play" style="display:none">
+   <div class="fws-meta"><span>Question <b id="fws-i">1</b> / 3</span><span>Clock: <b id="fws-clock">0s</b></span></div>
+   <p class="fws-q" id="fws-q"></p>
+   <div class="fws-opts" id="fws-opts"></div>
+   <div class="fws-verdict" id="fws-verdict"></div>
+   <div class="fws-next"><button class="fws-btn" id="fws-nextbtn">Next &rarr;</button></div>
+  </div>
+  <div class="fws-result" id="fws-result"></div>
+ </div>
+</div>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,signInAnonymously}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,collection,addDoc}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const app=initializeApp({apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",storageBucket:"gsu-handshake.firebasestorage.app",messagingSenderId:"301089416765",appId:"1:301089416765:web:dff926a7aa52191e9a6c54"});
+const db=getFirestore(app);const auth=getAuth(app);
+const POOLS={
+ read:[
+  {q:"Marta locked the shop at nine, but the register tape shows a sale at nine-forty. The back door log shows no entries all night. What must be true?",o:["Someone with a key returned through the front","The register clock ran forty minutes fast","A customer hid inside until closing time","The back door log erased its own entries"],a:0,why:"The sale happened after lockup, and the back door saw no one — so entry came through the front, which takes a key."},
+  {q:"The bridge closes whenever the river gauge reads above four meters. Tuesday the school bus used the bridge at noon. What must be true?",o:["The gauge read four meters or less at noon","The river was completely dry on Tuesday","The bus driver ignored the posted closure","The gauge was broken the entire morning"],a:0,why:"If the bridge was open enough for the bus, the closure rule tells us the gauge could not have been above four meters."},
+  {q:"Every crate stamped before June carries a blue seal. This crate has no blue seal. What must be true?",o:["This crate was not stamped before June","This crate was never stamped at all","Blue seals wear off after a few months","The stamping machine skipped this crate"],a:0,why:"All before-June crates have the seal; no seal means it cannot belong to that group. That is the contrapositive — reasoning backward without breaking the chain."},
+  {q:"The recipe doubles every ingredient except salt, which stays fixed. The doubled batch tastes saltier per bite than the original. What must be true?",o:["Nothing here is possible — less salt per bite is certain","The cook accidentally doubled the salt as well","Doubling flour concentrates the salt flavor","Bigger batches always taste saltier somehow"],a:1,why:"Fixed salt spread across double the batch means LESS salt per bite — so if it tastes saltier, the recipe was not followed. Catching the impossible is Stage-1 reading."}
+ ],
+ math:[
+  {q:"A drill sells for $40 after a 20% discount. What was the original price?",o:["$50","$48","$44","$32"],a:0,why:"$40 is 80% of the original. $40 ÷ 0.8 = $50. Working backward from a percentage is the move most shoppers never learn."},
+  {q:"A crew lays 12 blocks an hour. The wall needs 90 blocks. How long until it is done?",o:["7.5 hours","8.5 hours","6.5 hours","9.0 hours"],a:0,why:"90 ÷ 12 = 7.5. Rate problems run every jobsite in America."},
+  {q:"You earn $18 an hour and work 7.5 hours. What is the day's pay?",o:["$135","$126","$144","$128"],a:0,why:"18 × 7.5 = 18 × 7 + 18 × 0.5 = 126 + 9 = $135. Split the multiplication and it does itself."},
+  {q:"A $60 tool is marked up 25%, then that price is cut 20%. Final price?",o:["$60","$63","$57","$66"],a:0,why:"Up 25%: $75. Down 20% of $75: −$15 → $60. Percentages of DIFFERENT bases can cancel — a trap on every clearance rack."}
+ ],
+ think:[
+  {q:"“My opponent wants smaller budgets — clearly he wants to fire every teacher in town.” Which trick is this?",o:["Strawman","Bandwagon","False Dilemma","Ad Hominem"],a:0,why:"The speaker rebuilt the claim into a monstrous version nobody made, then attacked the fake. That is the Strawman."},
+  {q:"“Everyone on this street already signed the petition — you should too.” Which trick is this?",o:["Bandwagon","Strawman","Red Herring","Ad Hominem"],a:0,why:"Popularity is offered as the entire argument. Crowds can be wrong; that is the Bandwagon."},
+  {q:"“Either we build the stadium or this town dies. Choose.” Which trick is this?",o:["False Dilemma","Bandwagon","Strawman","Red Herring"],a:0,why:"Two options are presented as the only options while a dozen quieter ones exist. That is the False Dilemma."},
+  {q:"“Why trust her budget numbers? She drives a rusty old truck.” Which trick is this?",o:["Ad Hominem","False Dilemma","Bandwagon","Strawman"],a:0,why:"The truck says nothing about the arithmetic. Attacking the person instead of the argument is Ad Hominem."}
+ ]};
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function shuffle(q){const idx=q.o.map((_,i)=>i);for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}return{q:q.q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a),why:q.why}}
+let quiz=[],i=0,hits=[],t0=0,tick=null;
+const $=id=>document.getElementById(id);
+const CATNAMES=["Reading","Numbers","Clear Thinking"];
+const REM=[["reading","https://www.globalsovereignuniversity.org/readification","Readification — the Reading Sprint waits at the top of the page"],["numbers","https://www.globalsovereignuniversity.org/mathification","Mathification — the Math Helix Climb rebuilds this exact muscle"],["clear thinking","https://www.globalsovereignuniversity.org/critical-thinking","Critical Thinking — the Fallacy Gauntlet drills every trick by name"]];
+$("fws-go").onclick=()=>{quiz=[shuffle(pick(POOLS.read)),shuffle(pick(POOLS.math)),shuffle(pick(POOLS.think))];i=0;hits=[];t0=Date.now();$("fws-start").style.display="none";$("fws-play").style.display="block";tick=setInterval(()=>{$("fws-clock").textContent=Math.floor((Date.now()-t0)/1000)+"s"},250);ask()};
+function ask(){$("fws-i").textContent=i+1;$("fws-q").textContent=quiz[i].q;$("fws-verdict").style.display="none";document.querySelector(".fws-next").style.display="none";const box=$("fws-opts");box.innerHTML="";quiz[i].o.forEach((t,k)=>{const b=document.createElement("button");b.textContent=t;b.onclick=()=>answer(k);box.appendChild(b)})}
+function answer(k){const ok=k===quiz[i].a;hits.push(ok);const v=$("fws-verdict");v.innerHTML=(ok?"<b>Correct.</b> ":"<b>Not this time.</b> The answer was “"+quiz[i].o[quiz[i].a]+".” ")+quiz[i].why;v.style.display="block";document.querySelectorAll("#fws-opts button").forEach(b=>b.disabled=true);document.querySelector(".fws-next").style.display="block";$("fws-nextbtn").textContent=(i<2?"Next →":"See the Verdict →");$("fws-nextbtn").onclick=()=>{i++;i<3?ask():finish()}}
+function finish(){clearInterval(tick);const sec=Math.floor((Date.now()-t0)/1000);const n=hits.filter(Boolean).length;const pass=n===3;$("fws-play").style.display="none";const r=$("fws-result");r.style.display="block";
+ if(pass){const code="SPIN-"+Math.random().toString(36).slice(2,7).toUpperCase();
+  r.innerHTML='<p class="fws-notyet"><b>FULL REVOLUTION.</b> Three for three'+(sec<=60?' — inside the minute':'')+'. You just ran the entire flywheel: you played, the proof spoke, and your wall card is minted below. Stage 4 is one click away.</p>'
+  +'<p style="margin:14px 0 6px;color:#bdb7a8;font-family:Arial,sans-serif;font-size:.85rem">Initials for your card (optional):</p><input class="fws-tag" id="fws-tag" maxlength="3" placeholder="ABC">'
+  +'<div id="gsu-spin-card"><div class="sc-k">Global Sovereign University · Gamification Flywheel</div><h3>Spin Card — Bronze</h3><p class="sc-sub">One full revolution, earned — not given.</p>'
+  +'<p class="sc-line">Reading · Numbers · Clear Thinking: <b>3 / 3</b></p>'
+  +'<p class="sc-line">Time on the wheel: <b>'+sec+' seconds</b></p>'
+  +'<p class="sc-line">Holder: <b id="sc-holder">Sovereign Learner</b></p>'
+  +'<p class="sc-line">Spin code: <b>'+code+'</b> · '+new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"})+'</p>'
+  +'<p class="sc-foot">A wall card is Stage 3 of the flywheel — the certificate is Stage 4. Pin this one; go earn the serial number. globalsovereignuniversity.org</p></div>'
+  +'<div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="fws-btn ghost" onclick="document.getElementById(\'gsu-spin-card\').style.display=\'block\';window.print()">Print Your Wall Card</button><a class="fws-btn" href="https://www.globalsovereignuniversity.org/certification">Stage 4: The Certificates &rarr;</a><button class="fws-btn ghost" id="fws-again">Spin Again</button></div>';
+  document.getElementById("gsu-spin-card").style.display="block";
+  const tag=document.getElementById("fws-tag");tag.addEventListener("input",()=>{document.getElementById("sc-holder").textContent=tag.value.toUpperCase()||"Sovereign Learner"});
+  try{signInAnonymously(auth).then(()=>addDoc(collection(db,"flywheel_spin"),{tag:"SPN",score:300+Math.max(0,60-sec),dateISO:new Date().toISOString()})).catch(()=>{})}catch(e){}
+ }else{
+  const missed=hits.map((h,k)=>h?null:k).filter(k=>k!==null);
+  r.innerHTML='<p class="fws-notyet"><b>NOT YET — and that is honest data.</b> You landed '+n+' of 3. GSU does not hand out cards for showing up, because a card you did not earn teaches you nothing. Here is exactly where to sharpen:</p>'
+  +'<div class="fws-rem">'+missed.map(k=>'<p>&#8226; <b>'+CATNAMES[k]+':</b> <a href="'+REM[k][1]+'">'+REM[k][2]+'</a></p>').join("")+'</div>'
+  +'<p class="fws-notyet" style="margin-top:12px">Fresh questions are already loaded. <b>The bar does not move, and the door does not close.</b></p>'
+  +'<div style="margin-top:16px"><button class="fws-btn" id="fws-again">Spin Again &rarr;</button></div>';
+ }
+ document.getElementById("fws-again").onclick=()=>{r.style.display="none";$("fws-start").style.display="block"};
+}
+</script>
+</section>
+
+<style>
+#gsu-why-we-play{background:#000;border-top:1px solid rgba(201,168,76,.28);border-bottom:1px solid rgba(201,168,76,.28);padding:26px 22px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif}
+#gsu-why-we-play .wwp-in{max-width:900px;margin:0 auto;border-left:3px solid #C9A84C;padding-left:20px}
+#gsu-why-we-play .wwp-k{color:#C9A84C;font-size:.72rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;margin:0 0 10px}
+#gsu-why-we-play .wwp-p{color:#F5F1E8;font-family:Georgia,serif;font-size:1rem;line-height:1.65;margin:0 0 10px}
+#gsu-why-we-play .wwp-p:last-child{margin-bottom:0}
+#gsu-why-we-play .wwp-p b{color:#C9A84C;font-weight:700}
+#gsu-why-we-play .wwp-p a{color:#C9A84C;text-decoration:underline}
+</style>
+
 
 <!-- HERO -->
 <section class="gf-hero">
