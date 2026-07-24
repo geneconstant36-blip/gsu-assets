@@ -55,6 +55,10 @@ button{cursor:pointer;border:none;border-radius:10px;padding:13px 22px;font-weig
 .tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;border-radius:999px;padding:3px 10px;margin-left:8px;vertical-align:middle}
 .tag-perfect{background:var(--gold);color:#151005}
 .tag-half{border:1px solid var(--gold);color:var(--gold)}
+.tag-gift{border:1px solid var(--ok);color:var(--ok)}
+.credchip{display:inline-block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;border:1px solid var(--line);border-radius:8px;padding:2px 8px;margin:2px 4px 2px 0;color:var(--dim)}
+.cred-ok{border-color:var(--ok);color:var(--ok)}
+.cred-bad{border-color:var(--warn);color:var(--warn)}
 .pair{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 4px}
 .pair div{flex:1;min-width:220px}
 .pair b{color:var(--gold);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;display:block}
@@ -89,7 +93,7 @@ a{color:var(--gold)}
   <p class="note">Twelve laws, written plainly so every trader on Earth can understand them. Posting is agreeing. Breaking them gets an offer removed — and where the law was broken too, reported.</p>
   <ol>
     <li><b>Consenting adults only.</b> Every trader must be at least 18 — or older, if adulthood begins later where you live — and every trade freely agreed by both. Never post for, about, or seeking contact with anyone under 18. Offers that appear to involve a minor are removed first and questioned second.</li>
-    <li><b>Anything lawful, and only what is lawful.</b> Goods, services, skills, and hours are all welcome on the floor — a repair for a remedy, eggs for firewood, lessons for a ladder — so long as the trade is legal where BOTH traders live and the thing offered is lawfully yours to trade.</li>
+    <li><b>Anything lawful, and only what is lawful.</b> Goods, services, skills, and hours are all welcome on the floor — a repair for a remedy, eggs for firewood, lessons for a ladder — so long as the trade is legal where BOTH traders live and the thing offered is lawfully yours to trade. A pure gift — offered freely with nothing sought — is always welcome on the floor.</li>
     <li><b>Barter only — money never touches the floor.</b> The moment cash, cards, crypto, gift cards, or "fees" enter a deal, it is a sale, not a barter, and it does not belong here. Any trader who asks you for money in any form — including "shipping fees" — is running a scam. Walk away and flag it.</li>
     <li><b>Ten stalls are forbidden, everywhere, always:</b> weapons and ammunition · drugs and prescription medicines · alcohol and tobacco · stolen, counterfeit, or recalled goods · hazardous materials · wildlife and endangered-species products · anything sexual or intimate · gambling · financial instruments · human beings or their exploitation in any form. No local law makes these welcome here.</li>
     <li><b>Licensed work stays licensed.</b> Many places require a license for electrical, plumbing, medical, legal, childcare, and other regulated work. A barter does not waive that requirement. You may teach ABOUT any field; you may perform regulated work only where the law lets you.</li>
@@ -116,6 +120,10 @@ a{color:var(--gold)}
   <textarea id="fDetails" maxlength="280" placeholder="Retired electrician. I fix things and keep bees. Honest trades, honest hours. Evenings, UTC-8."></textarea>
   <label for="fRegion">Country or region &amp; time zone</label>
   <input type="text" id="fRegion" maxlength="60" placeholder="e.g., Kenya — UTC+3 · or · Oregon, USA — UTC-8">
+  <label for="fCreds">Verified GSU credentials (optional) — certificate serials, comma-separated</label>
+  <input type="text" id="fCreds" maxlength="120" placeholder="e.g., GSU-READ-48213QK, GSU-MATH-91027LB">
+  <p class="note" style="margin:4px 0 0">Each serial is checked live against GSU's public registry and displayed on your offer with a VERIFIED badge — proof of capability no trader can fake. Earn credentials free at the <a href="https://www.globalsovereignuniversity.org/certification">Certification Hub</a>; assemble them at the <a href="sovereign-transcript.html">Sovereign Transcript</a>.</p>
+  <div class="attest" style="margin-top:14px"><input type="checkbox" id="fGift"><span><strong>This is a gift.</strong> I offer this freely and seek nothing in return — keeping usable goods and willing skills circulating in the community instead of the landfill.</span></div>
   <label for="fContact">Public contact channel — THIS WILL BE VISIBLE TO EVERYONE ON EARTH</label>
   <input type="text" id="fContact" maxlength="120" placeholder="An email or handle you accept being public, e.g., marta.trades@example.com">
   <div class="attest"><input type="checkbox" id="fAdult"><span>I attest that I am <strong>18 years of age or older</strong> (and of the age of majority where I live), that I have read and agree to the <a href="#rules">Rules of the Floor</a>, that my contact channel above may be displayed publicly worldwide, that everything I offer is lawful where I live and lawfully mine to trade, and that I am bartering value for value — never for money in any form.</span></div>
@@ -162,6 +170,8 @@ a{color:var(--gold)}
   <p>Twelve plain laws printed above the posting form: consenting adults only; anything lawful and only what is lawful; barter only, never money; ten forbidden stalls including weapons, drugs, and anything intimate; licensed work stays licensed; taxes are real and yours; local laws travel with you; respect every trader; meet and ship wisely; no hunting; tell the truth; and report what is wrong — GSU is the board, never the deal. Posting is agreeing; breaking them removes the offer.</p>
   <h3 class="gold">Is it safe? Does GSU verify anyone?</h3>
   <p>Be clear-eyed: GSU does not verify identities, vet participants, or supervise exchanges — you deal with people you meet here at your own judgment. Use an alias, share only contact channels you accept being public, meet in public when goods change hands, and never send money — a money request is the universal mark of a scam. Every offer carries a report link; flagged offers are reviewed and removed.</p>
+  <h3 class="gold">Can I prove my skills to trade partners?</h3>
+  <p>Yes — attach your GSU certificate serial numbers when you post, and each one is verified live against the public registry and displayed on your offer with a VERIFIED badge showing the subject and tier. No trader can fake it, because the badge only appears if the registry itself confirms the serial. Every credential is earned free through real exams at the <a href="https://www.globalsovereignuniversity.org/certification">Certification Hub</a>, and your full record assembles at the <a href="sovereign-transcript.html">Sovereign Transcript</a>.</p>
   <h3 class="gold">How do we keep score?</h3>
   <p>The <a href="https://www.my-quid-pro-quo.com">Trustline Ledger</a> exists exactly for this: record the hours you trade so both sides always see the balance. An hour taught is an hour earned.</p>
 </div>
@@ -175,7 +185,7 @@ a{color:var(--gold)}
 
 <script>
 /* =====================================================================
-   THE SOVEREIGN BARTER EXCHANGE — v2.0 GLOBAL BARTER — anything lawful between consenting adults
+   THE SOVEREIGN BARTER EXCHANGE — v2.1 — verified credentials on the floor + gift mode
    Firestore project: gsu-handshake · collection: barter_offers
    Client-side matching: token overlap between TEACH and SEEK fields.
    Create-only writes; flags to barter_flags. Adults 18+ only.
@@ -190,10 +200,19 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "301089416765",
   appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
 };
-let db=null, uid=null, offers=[], mine=null;
+const CERT_CONFIG = {
+  apiKey: "AIzaSyAmFycf1iMeISLzjWgbxnuSB1BJ3BuWB_U",
+  authDomain: "gsu-certification.firebaseapp.com",
+  projectId: "gsu-certification",
+  storageBucket: "gsu-certification.firebasestorage.app",
+  messagingSenderId: "124413390849",
+  appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
+};
+let db=null, certDb=null, uid=null, offers=[], mine=null;
 try{
   firebase.initializeApp(FIREBASE_CONFIG);
   db=firebase.firestore();
+  try{ certDb = firebase.initializeApp(CERT_CONFIG,"certReg").firestore(); }catch(e2){ certDb=null; }
   firebase.auth().signInAnonymously().then(function(c){ uid=c.user&&c.user.uid; }).catch(function(){});
 }catch(e){ db=null; }
 
@@ -225,14 +244,41 @@ function screened(text){
 }
 
 function offerHtml(o, tag){
+  var credHtml="";
+  if(o.creds && o.creds.length){
+    credHtml='<div class="meta">Credentials: '+o.creds.map(function(c){
+      return '<span class="credchip" data-serial="'+esc(c)+'" data-oid="'+esc(o.id)+'">'+esc(c)+' · checking…</span>';
+    }).join(" ")+'</div>';
+  }
   return '<div class="offer">'
     +'<span class="who">'+esc(o.name||"Anonymous")+'</span>'
+    +(o.gift?'<span class="tag tag-gift">GIFT — NOTHING SOUGHT</span>':"")
     +(tag==="perfect"?'<span class="tag tag-perfect">PERFECT TRADE</span>':tag==="half"?'<span class="tag tag-half">OFFERS WHAT YOU SEEK</span>':"")
     +'<div class="pair"><div><b>Teaches</b>'+esc(o.teach)+'</div><div><b>Seeks</b>'+esc(o.seek)+'</div></div>'
     +(o.details?'<div class="note">'+esc(o.details)+'</div>':"")
+    +credHtml
     +'<div class="meta">'+esc(o.region||"Region not given")+' · Contact: '+esc(o.contact||"—")
     +' · <button class="flag" data-id="'+esc(o.id)+'">report this offer</button></div>'
     +'</div>';
+}
+
+var credCache={};
+function verifyCreds(root){
+  if(!certDb) return;
+  Array.prototype.forEach.call(root.querySelectorAll(".credchip"),function(chip){
+    var serial=chip.getAttribute("data-serial");
+    function paint(r){
+      if(r && r.ok){ chip.className="credchip cred-ok"; chip.innerHTML=esc(serial)+" &#10003; VERIFIED — "+esc(r.subject)+(r.tier?" · "+esc(r.tier):""); }
+      else { chip.className="credchip cred-bad"; chip.innerHTML=esc(serial)+" &#10007; not in registry"; }
+    }
+    if(credCache[serial]){ paint(credCache[serial]); return; }
+    certDb.collection("certifications").doc(serial).get().then(function(snap){
+      var r;
+      if(snap.exists && snap.data().revoked!==true){ var d=snap.data(); r={ok:true,subject:d.subject||"",tier:(d.tier||"").toString().toUpperCase()}; }
+      else r={ok:false};
+      credCache[serial]=r; paint(r);
+    }).catch(function(){ chip.textContent=serial+" · registry unavailable"; });
+  });
 }
 
 function renderFloor(){
@@ -244,7 +290,7 @@ function renderFloor(){
   $("floorCount").textContent = offers.length===0 ? "The floor is open and waiting for its first trader — post above and history starts with you."
     : list.length+" open offer"+(list.length===1?"":"s")+(q?" matching \""+q+"\"":"")+" · newest first";
   $("floorList").innerHTML = list.map(function(o){return offerHtml(o,null);}).join("");
-  wireFlags($("floorList"));
+  wireFlags($("floorList")); verifyCreds($("floorList"));
 }
 
 function renderMatches(){
@@ -269,7 +315,7 @@ function renderMatches(){
     +(half.length?half.length+" trader"+(half.length>1?"s":"")+" offering what you seek.":"");
   $("matchList").innerHTML = perfect.map(function(o){return offerHtml(o,"perfect");}).join("")
     + half.map(function(o){return offerHtml(o,"half");}).join("");
-  wireFlags($("matchList"));
+  wireFlags($("matchList")); verifyCreds($("matchList"));
 }
 
 function wireFlags(root){
@@ -301,8 +347,11 @@ $("postBtn").addEventListener("click", function(){
       seek=($("fSeek").value||"").trim(), details=($("fDetails").value||"").trim(),
       region=($("fRegion").value||"").trim(), contact=($("fContact").value||"").trim();
   var st=$("status");
+  var isGift=$("fGift").checked;
+  if(isGift && !seek) seek="a gift — nothing sought in return";
+  var creds=($("fCreds").value||"").toUpperCase().replace(/[^A-Z0-9,\-\s]/g,"").split(",").map(function(c){return c.trim();}).filter(Boolean).slice(0,4);
   if(!$("fAdult").checked){st.textContent="The 18+ attestation and agreement to the Rules of the Floor are required.";st.style.color="#c0564f";return;}
-  if(!name||!teach||!seek||!contact){st.textContent="Alias, teach, seek, and contact are all required.";st.style.color="#c0564f";return;}
+  if(!name||!teach||!seek||!contact){st.textContent="Alias, offer, seek, and contact are all required.";st.style.color="#c0564f";return;}
   if(screened(name+" "+teach+" "+seek+" "+details)){
     st.style.color="#c0564f";
     st.textContent="This offer cannot be posted — it appears to violate the Rules of the Floor. The Exchange trades lawful teaching hours only.";
@@ -312,7 +361,7 @@ $("postBtn").addEventListener("click", function(){
   $("postBtn").disabled=true; st.style.color="#b9b2a4"; st.textContent="Posting to the floor…";
   var doc={name:name.slice(0,40),teach:teach.slice(0,120),seek:seek.slice(0,120),
            details:details.slice(0,280),region:region.slice(0,60),contact:contact.slice(0,120),
-           adult:true,uid:uid||null,created:firebase.firestore.FieldValue.serverTimestamp()};
+           adult:true,gift:isGift||false,creds:creds,uid:uid||null,created:firebase.firestore.FieldValue.serverTimestamp()};
   db.collection("barter_offers").add(doc).then(function(){
     mine=doc; st.style.color="#3fae6a";
     st.textContent="Posted. Your offer is live on the floor below — and your matches, if any exist yet, are shown above it.";
