@@ -163,25 +163,92 @@
 </style>
 </head>
 <body>
-<!-- GSU READ-SUBDOMAIN NAVBAR v1.0 · Jul 24 2026 · Chancellor-ordered head navigation -->
+<!-- GSU READ-SUBDOMAIN NAVBAR v1.1 · Jul 24 2026 · grid mega-dropdowns per the Chancellor:
+     "Spread the links out like the other drop-down menus — walk away from the vertical-style
+     drop-downs." Every link verified live. Hover on desktop, tap-toggle on touch. -->
 <nav id="gsu-fwnav" aria-label="GSU navigation">
 <style>
 #gsu-fwnav{position:sticky;top:0;z-index:200;background:#000000;border-bottom:1px solid rgba(201,168,76,.35);font-family:Arial,sans-serif}
-#gsu-fwnav .fn-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:10px 18px;flex-wrap:wrap}
+#gsu-fwnav .fn-in{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:10px 18px;flex-wrap:wrap}
 #gsu-fwnav .fn-brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
 #gsu-fwnav .fn-brand img{width:34px;height:34px;border-radius:6px}
 #gsu-fwnav .fn-brand span{color:#C9A84C;font-family:Georgia,serif;font-weight:700;font-size:15px;letter-spacing:.3px}
-#gsu-fwnav a.fn-l{color:#F5F1E8;text-decoration:none;font-size:13px;letter-spacing:.04em;padding:6px 2px;border-bottom:2px solid transparent}
-#gsu-fwnav a.fn-l:hover{color:#FFE9A8;border-bottom-color:#C9A84C}
-@media(max-width:640px){#gsu-fwnav .fn-in{gap:12px;padding:9px 12px}#gsu-fwnav a.fn-l{font-size:12px}}
+#gsu-fwnav a.fn-l,#gsu-fwnav button.fn-l{background:none;border:none;color:#F5F1E8;text-decoration:none;font-size:13px;letter-spacing:.04em;padding:8px 10px;border-bottom:2px solid transparent;cursor:pointer;font-family:Arial,sans-serif}
+#gsu-fwnav a.fn-l:hover,#gsu-fwnav button.fn-l:hover,#gsu-fwnav .fn-dd.open>button.fn-l{color:#FFE9A8;border-bottom-color:#C9A84C}
+#gsu-fwnav .fn-dd{position:relative}
+#gsu-fwnav .fn-panel{position:absolute;top:calc(100% + 10px);right:0;background:#050505;border:1px solid rgba(201,168,76,.4);border-top:2px solid #C9A84C;border-radius:8px;box-shadow:0 16px 44px rgba(0,0,0,.9);padding:18px 22px;display:none;grid-auto-flow:column;gap:26px;white-space:nowrap}
+#gsu-fwnav .fn-dd.open .fn-panel{display:grid}
+@media(hover:hover){#gsu-fwnav .fn-dd:hover .fn-panel{display:grid}}
+#gsu-fwnav .fn-col p{color:#6DBFA9;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 9px;font-weight:700}
+#gsu-fwnav .fn-col a{display:block;color:#F5F1E8;text-decoration:none;font-size:13px;padding:4px 0}
+#gsu-fwnav .fn-col a:hover{color:#FFE9A8}
+@media(max-width:860px){
+#gsu-fwnav .fn-in{gap:2px;padding:9px 10px}
+#gsu-fwnav a.fn-l,#gsu-fwnav button.fn-l{font-size:12px;padding:7px 7px}
+#gsu-fwnav .fn-panel{position:fixed;left:8px;right:8px;top:56px;grid-auto-flow:row;grid-template-columns:1fr 1fr;white-space:normal;max-height:70vh;overflow:auto}
+}
 </style>
 <div class="fn-in">
 <a class="fn-brand" href="https://www.globalsovereignuniversity.org/"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/695f9e3d929f6b2f0206ce82_gsu%20logo%20square%20256x256.png" alt="GSU logo"><span>Global Sovereign University</span></a>
 <a class="fn-l" href="https://www.globalsovereignuniversity.org/">Home</a>
-<a class="fn-l" href="https://www.globalsovereignuniversity.org/library">Library</a>
+<div class="fn-dd"><button class="fn-l" type="button" aria-haspopup="true" aria-expanded="false">Subjects &#9662;</button><div class="fn-panel"><div class="fn-col"><p>Words &amp; Ideas</p>
+<a href="https://www.globalsovereignuniversity.org/readification">Reading</a>
+<a href="https://www.globalsovereignuniversity.org/writification">Writing</a>
+<a href="https://www.globalsovereignuniversity.org/spellification">Spelling</a>
+<a href="https://www.globalsovereignuniversity.org/phonics">Phonics &amp; Adult Literacy</a>
+</div><div class="fn-col"><p>Numbers &amp; Nature</p>
+<a href="https://www.globalsovereignuniversity.org/mathification">Math</a>
+<a href="https://www.globalsovereignuniversity.org/science">Science</a>
+<a href="https://www.globalsovereignuniversity.org/geographication">Geography</a>
+<a href="https://www.globalsovereignuniversity.org/digitification">Computer Literacy</a>
+</div><div class="fn-col"><p>Money &amp; Work</p>
+<a href="https://www.globalsovereignuniversity.org/financification">Financial Literacy</a>
+<a href="https://www.globalsovereignuniversity.org/economics">Economics</a>
+<a href="https://www.globalsovereignuniversity.org/entrepreneurship">Entrepreneurship</a>
+<a href="https://www.globalsovereignuniversity.org/tradification">Trades</a>
+</div><div class="fn-col"><p>Citizen &amp; Mind</p>
+<a href="https://www.globalsovereignuniversity.org/civics">Civics</a>
+<a href="https://www.globalsovereignuniversity.org/historification">The American Story</a>
+<a href="https://www.globalsovereignuniversity.org/lawification">Law</a>
+<a href="https://www.globalsovereignuniversity.org/critical-thinking">Critical Thinking</a>
+<a href="https://www.globalsovereignuniversity.org/humanics">Humanics</a>
+</div></div></div>
+<div class="fn-dd"><button class="fn-l" type="button" aria-haspopup="true" aria-expanded="false">Learning Arcade &#9662;</button><div class="fn-panel"><div class="fn-col"><p>Play &amp; Win</p>
+<a href="https://read.globalsovereignuniversity.org/gamification-flywheel-hub.html">Gamification Flywheel</a>
+<a href="https://www.globalsovereignuniversity.org/phish-or-legit">Phish or Legit</a>
+<a href="https://www.globalsovereignuniversity.org/zombie-bookgame">Zombie BookGame</a>
+<a href="https://www.globalsovereignuniversity.org/teach-them-to-fish-bookgame">Teach Them to Fish</a>
+</div><div class="fn-col"><p>Leadership Suite I</p>
+<a href="https://www.globalsovereignuniversity.org/iron-mind">Iron Mind</a>
+<a href="https://www.globalsovereignuniversity.org/dealmaker">The Dealmaker</a>
+<a href="https://www.globalsovereignuniversity.org/crew-commander">Crew Commander</a>
+<a href="https://www.globalsovereignuniversity.org/the-mirror">The Mirror</a>
+<a href="https://www.globalsovereignuniversity.org/the-shield">The Shield</a>
+</div><div class="fn-col"><p>Leadership Suite II</p>
+<a href="https://www.globalsovereignuniversity.org/puppet-master">Puppet Master</a>
+<a href="https://www.globalsovereignuniversity.org/crowd-control">Crowd Control</a>
+<a href="https://www.globalsovereignuniversity.org/emotional-fortress">Emotional Fortress</a>
+<a href="https://www.globalsovereignuniversity.org/eq-climb">EQ Climb</a>
+</div></div></div>
+<div class="fn-dd"><button class="fn-l" type="button" aria-haspopup="true" aria-expanded="false">Library &#9662;</button><div class="fn-panel"><div class="fn-col"><p>Read</p>
+<a href="https://www.globalsovereignuniversity.org/library">Browse the Full Library</a>
+<a href="https://www.globalsovereignuniversity.org/disruption-series">The Disruption Trilogy</a>
+<a href="https://www.globalsovereignuniversity.org/deep-research">Deep Research</a>
+</div><div class="fn-col"><p>Listen</p>
+<a href="https://www.globalsovereignuniversity.org/listen">Listen Hub</a>
+<a href="https://www.globalsovereignuniversity.org/podcast">Voice of Sovereignty Podcast</a>
+</div></div></div>
 <a class="fn-l" href="https://www.globalsovereignuniversity.org/certification">Certification</a>
-<a class="fn-l" href="https://www.globalsovereignuniversity.org/sovereign-handshake">Learner / Tutor Sign-Up</a>
+<a class="fn-l" href="https://www.globalsovereignuniversity.org/sovereign-handshake">Sign-Up</a>
 </div>
+<script>
+(function(){
+var dds=[].slice.call(document.querySelectorAll('#gsu-fwnav .fn-dd'));
+dds.forEach(function(dd){var b=dd.querySelector('button');b.addEventListener('click',function(e){e.stopPropagation();var was=dd.classList.contains('open');dds.forEach(function(d){d.classList.remove('open');d.querySelector('button').setAttribute('aria-expanded','false')});if(!was){dd.classList.add('open');b.setAttribute('aria-expanded','true');}});});
+document.addEventListener('click',function(){dds.forEach(function(d){d.classList.remove('open');d.querySelector('button').setAttribute('aria-expanded','false')})});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')dds.forEach(function(d){d.classList.remove('open')})});
+})();
+</script>
 </nav>
 <!-- GSU · WHY WE PLAY · canonical strip — required at the head of every page carrying a GSU game -->
 <section id="gsu-why-we-play" aria-label="Why we play">
