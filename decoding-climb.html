@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Decoding Climb — Reading Helix | Global Sovereign University</title>
-<meta name="description" content="Climb the Decoding ladder — 52 questions, four tiers, Bronze to Platinum. Learn to read any unfamiliar word by working it in parts. Free, no login. Part of the Reading Helix at Global Sovereign University.">
+<meta name="description" content="Climb the Decoding ladder — 60 questions, four tiers, Bronze to Platinum. Learn to read any unfamiliar word by working it in parts. Free, no login. Part of the Reading Helix at Global Sovereign University.">
 <link rel="canonical" href="https://read.globalsovereignuniversity.org/decoding-climb.html">
 <meta name="theme-color" content="#0B0E14">
 <meta name="robots" content="index, follow">
@@ -84,6 +84,9 @@
   .ratebox .rate-meta { margin-top: 10px; font-size: .92rem; color: #8a8580; }
   .ratebox .rate-meta b { color: #C9A84C; }
   .ratebox .rate-thanks { margin-top: 8px; font-size: .86rem; color: #7fce9d; min-height: 1.1em; }
+.remed{display:inline-block;margin-top:8px;color:var(--gold);text-decoration:underline;font-weight:600;font-size:.92rem}
+.studylist{margin:20px auto 0;max-width:46ch;text-align:left;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:16px 18px}
+.studylist p{color:var(--muted);font-size:.9rem;margin:6px 0 10px}
 </style>
 
 <script type="application/ld+json" id="course-ld">
@@ -91,7 +94,7 @@
   "@context": "https://schema.org",
   "@type": "Course",
   "name": "The Decoding Climb",
-  "description": "Free decoding assessment and reading fluency ladder — 52 questions across four tiers.",
+  "description": "Free decoding assessment and reading fluency ladder — 60 questions across four tiers.",
   "provider": {
     "@type": "EducationalOrganization",
     "name": "Global Sovereign University",
@@ -108,7 +111,7 @@
 </head>
 <body><script src="/return-bar.js"></script>
 <div class="wrap">
-  <div class="geno-banner"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, your AI reading tutor"><div class="gb-txt"><b>Ask GENO if you have any questions about this chapter.</b> Ask him to tutor you any time — he’s free, 24/7, and speaks 32 languages. He’s waiting in the lower-right corner.</div></div>
+  <div class="geno-banner"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, your AI reading tutor"><div class="gb-txt"><b>Ask GENO if you have any questions about this chapter.</b> Ask him to tutor you any time — he’s free, 24/7, and speaks 83 languages. He’s waiting in the lower-right corner.</div></div>
   <div class="head">
     <div class="eyebrow">Reading Helix · Element 03 · Free</div>
     <h1>The Decoding Climb</h1>
@@ -140,11 +143,11 @@
 </div>
 <div class="climb-divider">
       <div class="eyebrow">Now Climb It</div>
-      <p>You've read the chapter. Lock it in by climbing — fifty-two questions, four tiers, each answer explained.</p>
+      <p>You've read the chapter. Lock it in by climbing — sixty questions, four tiers, each answer explained.</p>
     </div>
   <div id="app" class="panel"></div>
   <p class="status" id="status">Connecting…</p>
-  <p class="geno-hint">Stuck on one? <b>Ask GENO</b> — your free AI tutor, lower-right. He explains any answer in 32 languages.</p>
+  <p class="geno-hint">Stuck on one? <b>Ask GENO</b> — your free AI tutor, lower-right. He explains any answer in 83 languages.</p>
 </div>
 
 <!-- GENO LIVE WIDGET -->
@@ -195,60 +198,70 @@ async function saveScore(score,tier){
   }catch(e){}
 }
 
-/* ===== 52 QUESTIONS · grounded in "The Reader's Toolkit: Decoding" ===== */
+const CH_TITLES={1: "From Rules to Reading", 2: "Orthographic Mapping", 3: "The Six Syllable Types", 4: "Chunking Multisyllabic Words", 5: "Prefixes, Suffixes, and Root Words", 6: "Context as Confirmation, Not Substitution", 7: "Where Decoding Stalls — Vocabulary Gaps", 8: "Where Decoding Stalls — Fluency Gaps", 9: "When Decoding Instruction Fails", 10: "A Self-Directed Program for Adults", 11: "A Decoding Curriculum for Children", 12: "The Bridge to Fluency"};
+let missedCh=new Set();
+/* ===== 60 QUESTIONS · grounded in "The Reader's Toolkit: Decoding" ===== */
 const QUESTIONS=[
- {t:'Bronze',q:'Decoding is the skill of reading an unfamiliar word by…',o:["working it out in parts", "guessing from the picture", "skipping it"],a:0,why:'Decoding means <b>working a word out in parts</b> — not guessing, skipping, or memorizing it.'},
- {t:'Bronze',q:'Knowing phonics is being able to SAY what letters can do. Decoding is…',o:["making the letters do it in real time", "reciting the alphabet", "memorizing words"],a:0,why:'Decoding is <b>making the letters do it in real time</b>, in a real sentence, while meaning keeps moving.'},
- {t:'Bronze',q:'When you meet a word you\'ve never seen, the reader\'s move is to…',o:["guess from the first letter", "sound it out in parts", "wait for someone to say it"],a:1,why:'<b>Sound it out in parts.</b> Decoding is what lets you read words you were never taught.'},
- {t:'Bronze',q:'Guessing a word from the picture or first letter is a habit that…',o:["builds strong readers", "breaks down on hard text", "is the same as decoding"],a:1,why:'Guessing <b>breaks down</b> the moment text gets hard and there\'s no picture to lean on.'},
- {t:'Bronze',q:'To decode "flag," you blend the sounds…',o:["/f/ /l/ /a/ /g/", "f-l-a-g letter names", "the whole word at once"],a:0,why:'Blend the <b>sounds</b> /f/ /l/ /a/ /g/ — not the letter names.'},
- {t:'Bronze',q:'Decoding turns phonics knowledge into…',o:["reading you can trust", "spelling tests", "handwriting"],a:0,why:'Decoding turns what you know about letters into <b>reading you can trust</b> on new words.'},
- {t:'Bronze',q:'A reader who decodes well no longer needs to…',o:["memorize every word as a picture", "know any sounds", "read slowly forever"],a:0,why:'Decoding frees you from <b>memorizing every word as a picture</b> — the code does the work.'},
- {t:'Bronze',q:'The word "sunset" is easier to decode if you read it as…',o:["one long blur", "sun + set", "s-u-n-s-e-t one letter at a time"],a:1,why:'Break it into chunks: <b>sun + set</b>. Parts are manageable; the blur is not.'},
- {t:'Bronze',q:'Decoding is a bridge from knowing the code to…',o:["reading fluently", "forgetting phonics", "writing essays"],a:0,why:'Decoding bridges phonics knowledge to <b>fluent reading</b>.'},
- {t:'Bronze',q:'When decoding, your eyes move through a word…',o:["left to right, in order", "randomly", "right to left"],a:0,why:'<b>Left to right, in order</b> — decoding follows the word\'s actual sound sequence.'},
- {t:'Bronze',q:'"Sounding out" works best when you blend the sounds…',o:["smoothly together", "one at a time with long pauses", "backwards"],a:0,why:'Blend <b>smoothly together</b> so the parts become a word, not separate noises.'},
- {t:'Bronze',q:'A learner who can decode "map" can also decode…',o:["nap, tap, lap", "only map", "nothing new"],a:0,why:'The skill <b>transfers</b>: map → nap, tap, lap. Decoding scales.'},
- {t:'Bronze',q:'The goal of decoding practice is for it to eventually feel…',o:["automatic", "impossible", "slower"],a:0,why:'With practice, decoding becomes <b>automatic</b> — the reader stops noticing they\'re doing it.'},
- {t:'Silver',q:'Every syllable in English contains exactly one…',o:["vowel sound", "consonant", "silent letter"],a:0,why:'Each syllable has exactly one <b>vowel sound</b>. Counting vowel sounds counts syllables.'},
- {t:'Silver',q:'To decode a long word, the first strategic move is to…',o:["break it into syllables", "read every letter separately", "guess the ending"],a:0,why:'<b>Break it into syllables.</b> Long words are just short chunks in a row.'},
- {t:'Silver',q:'In "napkin," the natural split is…',o:["nap · kin", "na · pkin", "napk · in"],a:0,why:'<b>nap · kin</b> — split between the two consonants (VC/CV).'},
- {t:'Silver',q:'A prefix like "re-" is best decoded as…',o:["a single known chunk", "three separate letters", "skipped"],a:0,why:'Decode "re-" as <b>one known chunk</b>. Affixes repeat across thousands of words.'},
- {t:'Silver',q:'The suffix "-ing" in "jumping" should be read as…',o:["one chunk", "i-n-g letters", "ignored"],a:0,why:'<b>-ing</b> is one reliable chunk. Pulling it off leaves the base word "jump" easy to read.'},
- {t:'Silver',q:'In a blend like "st" in "stop," you hear…',o:["both sounds, /s/ and /t/", "one new sound", "no sound"],a:0,why:'In a blend you hear <b>both sounds</b> — unlike a digraph, where two letters make one.'},
- {t:'Silver',q:'The digraph "ch" in "chip" stands for…',o:["one sound /ch/", "two sounds", "the letter c then h"],a:0,why:'A digraph = two letters, <b>one sound</b> /ch/. Decode it as a single unit.'},
- {t:'Silver',q:'A "closed" syllable ends in a consonant and its vowel is usually…',o:["short", "long", "silent"],a:0,why:'Closed syllable (cap, nap, hot) → <b>short</b> vowel. Knowing the type predicts the sound.'},
- {t:'Silver',q:'Decoding "rabbit," the double letters tell you to split…',o:["rab · bit", "ra · bbit", "rabb · it"],a:0,why:'Split between doubles: <b>rab · bit</b>. Each part is a clean closed syllable.'},
- {t:'Silver',q:'Reading "unhelpful" is easiest when you see…',o:["un + help + ful", "u-n-h-e-l-p...", "one long word"],a:0,why:'<b>un + help + ful</b> — prefix, base, suffix. Meaning parts are decoding parts.'},
- {t:'Silver',q:'When a chunk strategy and a guess disagree, the trained reader trusts…',o:["the chunks", "the guess", "whichever is faster"],a:0,why:'Trust the <b>chunks</b> — they\'re built on the code; guesses are built on hope.'},
- {t:'Silver',q:'Vowel teams like "ea" in "team" are decoded as…',o:["one vowel sound", "two separate vowels", "a consonant"],a:0,why:'A vowel team makes <b>one</b> vowel sound. "ea" → /ē/.'},
- {t:'Silver',q:'Breaking words into syllables matters most for…',o:["longer, unfamiliar words", "three-letter words", "words you've memorized"],a:0,why:'Chunking pays off most on <b>longer, unfamiliar words</b> — exactly where guessing fails.'},
- {t:'Gold',q:'An "open" syllable ends in a vowel, which then usually says…',o:["its long name", "a short sound", "nothing"],a:0,why:'Open syllable (me, go, hi) → vowel says its <b>long name</b>.'},
- {t:'Gold',q:'The silent-e (VCe) syllable in "cape" makes the vowel…',o:["long", "short", "an /uh/"],a:0,why:'Silent-e makes the vowel <b>long</b>: cap → cape. One of the six syllable types.'},
- {t:'Gold',q:'An r-controlled syllable ("car," "her") has a vowel that is…',o:["bent by the r", "silent", "long"],a:0,why:'The r <b>bends</b> the vowel — neither clearly long nor short. A distinct syllable type.'},
- {t:'Gold',q:'The consonant-le syllable appears at the END of words like…',o:["table, little, purple", "apple alone", "start words"],a:0,why:'Consonant-le (ta-<b>ble</b>, lit-<b>tle</b>) is the sixth syllable type, always final.'},
- {t:'Gold',q:'In an unstressed syllable, a vowel often relaxes into the schwa sound…',o:["/uh/", "/ee/", "/oh/"],a:0,why:'The schwa <b>/uh/</b> appears in unstressed syllables: the \'a\' in \'about,\' the \'o\' in \'lemon.\''},
- {t:'Gold',q:'"Set for variability" means when a decoded word sounds off, you…',o:["flex the vowel and try again", "abandon the word", "read it the wrong way anyway"],a:0,why:'<b>Flex the vowel</b> (try long, then short, then schwa) until it matches a real word you know.'},
- {t:'Gold',q:'In the VCCV word "basket," you divide between…',o:["the two middle consonants: bas · ket", "before both: ba · sket", "after both: bask · et"],a:0,why:'VCCV → split between the consonants: <b>bas · ket</b>.'},
- {t:'Gold',q:'In a VCV word like "begin," trying the OPEN split first gives…',o:["be · gin (correct)", "beg · in", "b · egin"],a:0,why:'Try open first: <b>be · gin</b>. If that\'s not a word, shift the split and re-flex.'},
- {t:'Gold',q:'A morpheme is the smallest unit of…',o:["meaning", "sound", "print"],a:0,why:'A morpheme is the smallest unit of <b>meaning</b> — and meaningful chunks are decoding gold.'},
- {t:'Gold',q:'Reading "replayed" by morphemes gives…',o:["re + play + ed", "rep + lay + ed", "re + pla + yed"],a:0,why:'<b>re + play + ed.</b> Morpheme boundaries are reliable decoding boundaries.'},
- {t:'Gold',q:'Knowing syllable types matters because it lets you predict the…',o:["vowel sound before you say it", "word's meaning", "author's intent"],a:0,why:'The syllable type predicts the <b>vowel sound</b> — turning guesswork into a decision.'},
- {t:'Gold',q:'The reason "flexing" works is that English vowels are…',o:["the most variable part of the code", "always long", "always short"],a:0,why:'Vowels are the <b>most variable</b> graphemes, so a skilled decoder expects to flex them.'},
- {t:'Gold',q:'When two strategies are needed, decode by syllable type AND by…',o:["meaningful morphemes", "picture clues", "sentence length"],a:0,why:'Combine <b>syllable types and morphemes</b> — sound chunks and meaning chunks together unlock long words.'},
- {t:'Platinum',q:'Each time you successfully decode a word, you move it toward becoming…',o:["an instantly recognized word", "a guessed word", "a forgotten word"],a:0,why:'Successful decoding feeds <b>orthographic mapping</b> — the word becomes instantly recognized.'},
- {t:'Platinum',q:'David Share\'s "self-teaching hypothesis" says decoding lets a reader…',o:["teach themselves new words independently", "need a teacher for every word", "memorize lists"],a:0,why:'Decoding is a <b>self-teaching</b> mechanism — each word decoded is a word learned for life.'},
- {t:'Platinum',q:'A word becomes a "sight word" not by photographing its shape but by…',o:["being mapped through decoding", "being guessed often", "being colorful"],a:0,why:'Sight words are built by <b>decoding and mapping</b>, not by memorizing shapes.'},
- {t:'Platinum',q:'The decoding "bottleneck" hurts comprehension because slow word reading…',o:["uses up attention meaning needs", "improves memory", "helps focus"],a:0,why:'Effortful decoding <b>consumes the attention</b> that comprehension requires. Automaticity frees it.'},
- {t:'Platinum',q:'Fluency is the bridge between decoding and…',o:["comprehension", "spelling", "handwriting"],a:0,why:'Fluency — fast, accurate decoding — is the bridge to <b>comprehension</b>.'},
- {t:'Platinum',q:'To decode "photosynthesis," the expert reads it as…',o:["pho · to · syn · the · sis", "one impossible word", "by guessing 'plant'"],a:0,why:'Chunk even the giants: <b>pho · to · syn · the · sis</b>. No word is too long for the strategy.'},
- {t:'Platinum',q:'Guessing-based reading fails advanced readers because hard text has…',o:["few context clues and no pictures", "too many pictures", "short words"],a:0,why:'Advanced text strips away the crutches, leaving only the reader\'s <b>decoding</b>.'},
- {t:'Platinum',q:'Automatic decoding is the difference between reading the words and…',o:["reading the meaning", "reading aloud", "reading fast only"],a:0,why:'When decoding is automatic, attention shifts from the words to the <b>meaning</b>.'},
- {t:'Platinum',q:'The Greek root "graph" (write) helps decode AND understand…',o:["autograph, paragraph, graphic", "random words", "short words"],a:0,why:'A known root unlocks a family: <b>autograph, paragraph, graphic</b> — decoding meets vocabulary.'},
- {t:'Platinum',q:'A strong decoder meeting an unknown word feels…',o:["equipped, not stuck", "panicked", "the urge to skip"],a:0,why:'Decoding replaces the panic of the unknown word with the calm of being <b>equipped</b>.'},
- {t:'Platinum',q:'Repeated successful decoding of a word eventually makes sounding it out…',o:["unnecessary", "permanent", "louder"],a:0,why:'The aim is to make sounding out <b>unnecessary</b> — the word is now mapped and instant.'},
- {t:'Platinum',q:'Decoding is ultimately a tool whose success is measured by how often it becomes…',o:["invisible", "slower", "spoken"],a:0,why:'The best decoding becomes <b>invisible</b> — the mark of a reader who has truly arrived.'},
- {t:'Platinum',q:'The reader who can decode anything has gained a kind of…',o:["independence", "luck", "memory trick"],a:0,why:'Decoding is <b>independence</b>: no word, no text, and no gatekeeper can shut them out.'}
+ {t:'Bronze',ch:1,q:'Decoding is the skill of reading an unfamiliar word by…',o:["working it out in parts", "guessing from the picture", "skipping it"],a:0,why:'Decoding means <b>working a word out in parts</b> — not guessing, skipping, or memorizing it.'},
+ {t:'Bronze',ch:1,q:'Knowing phonics is being able to SAY what letters can do. Decoding is…',o:["making the letters do it in real time", "reciting the alphabet", "memorizing words"],a:0,why:'Decoding is <b>making the letters do it in real time</b>, in a real sentence, while meaning keeps moving.'},
+ {t:'Bronze',ch:1,q:'When you meet a word you\'ve never seen, the reader\'s move is to…',o:["guess from the first letter", "sound it out in parts", "wait for someone to say it"],a:1,why:'<b>Sound it out in parts.</b> Decoding is what lets you read words you were never taught.'},
+ {t:'Bronze',ch:6,q:'Guessing a word from the picture or first letter is a habit that…',o:["builds strong readers", "breaks down on hard text", "is the same as decoding"],a:1,why:'Guessing <b>breaks down</b> the moment text gets hard and there\'s no picture to lean on.'},
+ {t:'Bronze',ch:1,q:'To decode "flag," you blend the sounds…',o:["/f/ /l/ /a/ /g/", "f-l-a-g letter names", "the whole word at once"],a:0,why:'Blend the <b>sounds</b> /f/ /l/ /a/ /g/ — not the letter names.'},
+ {t:'Bronze',ch:1,q:'Decoding turns phonics knowledge into…',o:["reading you can trust", "spelling tests", "handwriting"],a:0,why:'Decoding turns what you know about letters into <b>reading you can trust</b> on new words.'},
+ {t:'Bronze',ch:1,q:'A reader who decodes well no longer needs to…',o:["memorize every word as a picture", "know any sounds", "read slowly forever"],a:0,why:'Decoding frees you from <b>memorizing every word as a picture</b> — the code does the work.'},
+ {t:'Bronze',ch:4,q:'The word "sunset" is easier to decode if you read it as…',o:["one long blur", "sun + set", "s-u-n-s-e-t one letter at a time"],a:1,why:'Break it into chunks: <b>sun + set</b>. Parts are manageable; the blur is not.'},
+ {t:'Bronze',ch:1,q:'Decoding is a bridge from knowing the code to…',o:["reading fluently", "forgetting phonics", "writing essays"],a:0,why:'Decoding bridges phonics knowledge to <b>fluent reading</b>.'},
+ {t:'Bronze',ch:1,q:'When decoding, your eyes move through a word…',o:["left to right, in order", "randomly", "right to left"],a:0,why:'<b>Left to right, in order</b> — decoding follows the word\'s actual sound sequence.'},
+ {t:'Bronze',ch:1,q:'"Sounding out" works best when you blend the sounds…',o:["smoothly together", "one at a time with long pauses", "backwards"],a:0,why:'Blend <b>smoothly together</b> so the parts become a word, not separate noises.'},
+ {t:'Bronze',ch:3,q:'A learner who can decode "map" can also decode…',o:["nap, tap, lap", "only map", "nothing new"],a:0,why:'The skill <b>transfers</b>: map → nap, tap, lap. Decoding scales.'},
+ {t:'Bronze',ch:2,q:'The goal of decoding practice is for it to eventually feel…',o:["automatic", "impossible", "slower"],a:0,why:'With practice, decoding becomes <b>automatic</b> — the reader stops noticing they\'re doing it.'},
+ {t:'Bronze',ch:7,q:'You decode a word perfectly but still don\u2019t know what it means. That is\u2026',o:["a vocabulary gap, not a decoding failure", "proof that decoding doesn\u2019t work", "a reason to go back to guessing"],a:0,why:'\u201cI can say it but I don\u2019t know it\u201d is a <b>vocabulary gap</b>. The decoding worked \u2014 now the word needs a meaning.'},
+ {t:'Bronze',ch:11,q:'For a child in grades 2\u20135, long words should be treated as\u2026',o:["puzzles with handles", "monsters to avoid", "words to memorize whole"],a:0,why:'Long words are <b>puzzles with handles</b> \u2014 vowel landmarks, workable chunks, and syllable types the child already owns.'},
+ {t:'Silver',ch:3,q:'Every syllable in English contains exactly one…',o:["vowel sound", "consonant", "silent letter"],a:0,why:'Each syllable has exactly one <b>vowel sound</b>. Counting vowel sounds counts syllables.'},
+ {t:'Silver',ch:4,q:'To decode a long word, the first strategic move is to…',o:["break it into syllables", "read every letter separately", "guess the ending"],a:0,why:'<b>Break it into syllables.</b> Long words are just short chunks in a row.'},
+ {t:'Silver',ch:4,q:'In "napkin," the natural split is…',o:["nap · kin", "na · pkin", "napk · in"],a:0,why:'<b>nap · kin</b> — split between the two consonants (VC/CV).'},
+ {t:'Silver',ch:5,q:'A prefix like "re-" is best decoded as…',o:["a single known chunk", "three separate letters", "skipped"],a:0,why:'Decode "re-" as <b>one known chunk</b>. Affixes repeat across thousands of words.'},
+ {t:'Silver',ch:5,q:'The suffix "-ing" in "jumping" should be read as…',o:["one chunk", "i-n-g letters", "ignored"],a:0,why:'<b>-ing</b> is one reliable chunk. Pulling it off leaves the base word "jump" easy to read.'},
+ {t:'Silver',ch:3,q:'In a blend like "st" in "stop," you hear…',o:["both sounds, /s/ and /t/", "one new sound", "no sound"],a:0,why:'In a blend you hear <b>both sounds</b> — unlike a digraph, where two letters make one.'},
+ {t:'Silver',ch:3,q:'The digraph "ch" in "chip" stands for…',o:["one sound /ch/", "two sounds", "the letter c then h"],a:0,why:'A digraph = two letters, <b>one sound</b> /ch/. Decode it as a single unit.'},
+ {t:'Silver',ch:3,q:'A "closed" syllable ends in a consonant and its vowel is usually…',o:["short", "long", "silent"],a:0,why:'Closed syllable (cap, nap, hot) → <b>short</b> vowel. Knowing the type predicts the sound.'},
+ {t:'Silver',ch:4,q:'Decoding "rabbit," the double letters tell you to split…',o:["rab · bit", "ra · bbit", "rabb · it"],a:0,why:'Split between doubles: <b>rab · bit</b>. Each part is a clean closed syllable.'},
+ {t:'Silver',ch:5,q:'Reading "unhelpful" is easiest when you see…',o:["un + help + ful", "u-n-h-e-l-p...", "one long word"],a:0,why:'<b>un + help + ful</b> — prefix, base, suffix. Meaning parts are decoding parts.'},
+ {t:'Silver',ch:6,q:'When a chunk strategy and a guess disagree, the trained reader trusts…',o:["the chunks", "the guess", "whichever is faster"],a:0,why:'Trust the <b>chunks</b> — they\'re built on the code; guesses are built on hope.'},
+ {t:'Silver',ch:3,q:'Vowel teams like "ea" in "team" are decoded as…',o:["one vowel sound", "two separate vowels", "a consonant"],a:0,why:'A vowel team makes <b>one</b> vowel sound. "ea" → /ē/.'},
+ {t:'Silver',ch:4,q:'Breaking words into syllables matters most for…',o:["longer, unfamiliar words", "three-letter words", "words you've memorized"],a:0,why:'Chunking pays off most on <b>longer, unfamiliar words</b> — exactly where guessing fails.'},
+ {t:'Silver',ch:10,q:'The 60-day adult decoding plan is built as\u2026',o:["training, not a test", "a daily exam", "a race for speed"],a:0,why:'It is <b>training, not a test</b> \u2014 about 20 minutes a day: decode and deposit, read a short real passage, log the win.'},
+ {t:'Silver',ch:7,q:'The words worth decoding first are the ones that\u2026',o:["\u201cpay rent\u201d \u2014 repeat across the texts you actually read", "look the longest", "appear in only one book"],a:0,why:'Prioritize <b>rent-paying words</b> \u2014 the ones that keep showing up in real texts, so every deposit earns interest.'},
+ {t:'Gold',ch:3,q:'An "open" syllable ends in a vowel, which then usually says…',o:["its long name", "a short sound", "nothing"],a:0,why:'Open syllable (me, go, hi) → vowel says its <b>long name</b>.'},
+ {t:'Gold',ch:3,q:'The silent-e (VCe) syllable in "cape" makes the vowel…',o:["long", "short", "an /uh/"],a:0,why:'Silent-e makes the vowel <b>long</b>: cap → cape. One of the six syllable types.'},
+ {t:'Gold',ch:3,q:'An r-controlled syllable ("car," "her") has a vowel that is…',o:["bent by the r", "silent", "long"],a:0,why:'The r <b>bends</b> the vowel — neither clearly long nor short. A distinct syllable type.'},
+ {t:'Gold',ch:3,q:'The consonant-le syllable appears at the END of words like…',o:["table, little, purple", "apple alone", "start words"],a:0,why:'Consonant-le (ta-<b>ble</b>, lit-<b>tle</b>) is the sixth syllable type, always final.'},
+ {t:'Gold',ch:4,q:'In an unstressed syllable, a vowel often relaxes into the schwa sound…',o:["/uh/", "/ee/", "/oh/"],a:0,why:'The schwa <b>/uh/</b> appears in unstressed syllables: the \'a\' in \'about,\' the \'o\' in \'lemon.\''},
+ {t:'Gold',ch:4,q:'"Set for variability" means when a decoded word sounds off, you…',o:["flex the vowel and try again", "abandon the word", "read it the wrong way anyway"],a:0,why:'<b>Flex the vowel</b> (try long, then short, then schwa) until it matches a real word you know.'},
+ {t:'Gold',ch:4,q:'In the VCCV word "basket," you divide between…',o:["the two middle consonants: bas · ket", "before both: ba · sket", "after both: bask · et"],a:0,why:'VCCV → split between the consonants: <b>bas · ket</b>.'},
+ {t:'Gold',ch:4,q:'In a VCV word like "begin," trying the OPEN split first gives…',o:["be · gin (correct)", "beg · in", "b · egin"],a:0,why:'Try open first: <b>be · gin</b>. If that\'s not a word, shift the split and re-flex.'},
+ {t:'Gold',ch:5,q:'A morpheme is the smallest unit of…',o:["meaning", "sound", "print"],a:0,why:'A morpheme is the smallest unit of <b>meaning</b> — and meaningful chunks are decoding gold.'},
+ {t:'Gold',ch:5,q:'Reading "replayed" by morphemes gives…',o:["re + play + ed", "rep + lay + ed", "re + pla + yed"],a:0,why:'<b>re + play + ed.</b> Morpheme boundaries are reliable decoding boundaries.'},
+ {t:'Gold',ch:3,q:'Knowing syllable types matters because it lets you predict the…',o:["vowel sound before you say it", "word's meaning", "author's intent"],a:0,why:'The syllable type predicts the <b>vowel sound</b> — turning guesswork into a decision.'},
+ {t:'Gold',ch:4,q:'The reason "flexing" works is that English vowels are…',o:["the most variable part of the code", "always long", "always short"],a:0,why:'Vowels are the <b>most variable</b> graphemes, so a skilled decoder expects to flex them.'},
+ {t:'Gold',ch:5,q:'When two strategies are needed, decode by syllable type AND by…',o:["meaningful morphemes", "picture clues", "sentence length"],a:0,why:'Combine <b>syllable types and morphemes</b> — sound chunks and meaning chunks together unlock long words.'},
+ {t:'Gold',ch:9,q:'A common instruction failure is teaching a rule in isolation and assuming\u2026',o:["transfer to real reading will happen automatically", "students need more worksheets", "the rule itself was wrong"],a:0,why:'Rules practiced only in isolation build a <b>rule museum</b>. Decoding is a real-time skill \u2014 transfer must be trained.'},
+ {t:'Gold',ch:11,q:'The primary decoding goal in second grade is\u2026',o:["syllable awareness and the six types as a usable framework", "silent reading speed", "weekly word-list memorization"],a:0,why:'Second grade is where the <b>six syllable types become a usable framework</b> \u2014 not a poster on the wall.'},
+ {t:'Platinum',ch:2,q:'Each time you successfully decode a word, you move it toward becoming…',o:["an instantly recognized word", "a guessed word", "a forgotten word"],a:0,why:'Successful decoding feeds <b>orthographic mapping</b> — the word becomes instantly recognized.'},
+ {t:'Platinum',ch:2,q:'David Share\'s "self-teaching hypothesis" says decoding lets a reader…',o:["teach themselves new words independently", "need a teacher for every word", "memorize lists"],a:0,why:'Decoding is a <b>self-teaching</b> mechanism — each word decoded is a word learned for life.'},
+ {t:'Platinum',ch:2,q:'A word becomes a "sight word" not by photographing its shape but by…',o:["being mapped through decoding", "being guessed often", "being colorful"],a:0,why:'Sight words are built by <b>decoding and mapping</b>, not by memorizing shapes.'},
+ {t:'Platinum',ch:8,q:'The decoding "bottleneck" hurts comprehension because slow word reading…',o:["uses up attention meaning needs", "improves memory", "helps focus"],a:0,why:'Effortful decoding <b>consumes the attention</b> that comprehension requires. Automaticity frees it.'},
+ {t:'Platinum',ch:12,q:'Fluency is the bridge between decoding and…',o:["comprehension", "spelling", "handwriting"],a:0,why:'Fluency — fast, accurate decoding — is the bridge to <b>comprehension</b>.'},
+ {t:'Platinum',ch:5,q:'To decode "photosynthesis," the expert reads it as…',o:["pho · to · syn · the · sis", "one impossible word", "by guessing 'plant'"],a:0,why:'Chunk even the giants: <b>pho · to · syn · the · sis</b>. No word is too long for the strategy.'},
+ {t:'Platinum',ch:6,q:'Guessing-based reading fails advanced readers because hard text has…',o:["few context clues and no pictures", "too many pictures", "short words"],a:0,why:'Advanced text strips away the crutches, leaving only the reader\'s <b>decoding</b>.'},
+ {t:'Platinum',ch:12,q:'Automatic decoding is the difference between reading the words and…',o:["reading the meaning", "reading aloud", "reading fast only"],a:0,why:'When decoding is automatic, attention shifts from the words to the <b>meaning</b>.'},
+ {t:'Platinum',ch:5,q:'The Greek root "graph" (write) helps decode AND understand…',o:["autograph, paragraph, graphic", "random words", "short words"],a:0,why:'A known root unlocks a family: <b>autograph, paragraph, graphic</b> — decoding meets vocabulary.'},
+ {t:'Platinum',ch:1,q:'A strong decoder meeting an unknown word feels…',o:["equipped, not stuck", "panicked", "the urge to skip"],a:0,why:'Decoding replaces the panic of the unknown word with the calm of being <b>equipped</b>.'},
+ {t:'Platinum',ch:2,q:'Repeated successful decoding of a word eventually makes sounding it out…',o:["unnecessary", "permanent", "louder"],a:0,why:'The aim is to make sounding out <b>unnecessary</b> — the word is now mapped and instant.'},
+ {t:'Platinum',ch:2,q:'Decoding is ultimately a tool whose success is measured by how often it becomes…',o:["invisible", "slower", "spoken"],a:0,why:'The best decoding becomes <b>invisible</b> — the mark of a reader who has truly arrived.'},
+ {t:'Platinum',ch:12,q:'The reader who can decode anything has gained a kind of…',o:["independence", "luck", "memory trick"],a:0,why:'Decoding is <b>independence</b>: no word, no text, and no gatekeeper can shut them out.'},
+ {t:'Platinum',ch:9,q:'Weekly word lists fail when the unit of instruction is\u2026',o:["words instead of patterns", "sounds instead of letters", "books instead of pages"],a:0,why:'Memorize the list, pass Friday, forget it all. Teach <b>patterns</b> \u2014 syllable types, affixes, roots \u2014 and the handles pay rent for life.'},
+ {t:'Platinum',ch:10,q:'The daily \u201cdeposit\u201d in the adult program is\u2026',o:["one clean, accurate decoding encounter your brain can map", "writing the word twenty times", "reading as fast as possible"],a:0,why:'One accurate, intended encounter is a <b>deposit</b> \u2014 the raw material orthographic mapping turns into an instantly known word.'}
 ];
 
 const app=document.getElementById('app');
@@ -276,7 +289,7 @@ function renderStart(){
     </div>`;
   document.getElementById('startBtn').addEventListener('click',start);
 }
-function start(){ order=buildOrder(); idx=0; score=0; renderQ(); }
+function start(){ missedCh=new Set(); order=buildOrder(); idx=0; score=0; renderQ(); }
 function renderQ(){
   const item=order[idx];
   const pct=Math.round((idx/order.length)*100);
@@ -306,16 +319,17 @@ function choose(i){
   const fb=document.getElementById('fb');
   fb.className='fb show '+(correct?'ok':'no');
   fb.innerHTML=(correct?'✓ Correct. ':'✗ Not quite. ')+item.why;
+  if(!correct&&item.ch){ missedCh.add(item.ch); fb.innerHTML+='<br><a class="remed" href="https://read.globalsovereignuniversity.org/the-readers-toolkit-reader.html#ch-'+item.ch+'" target="_blank" rel="noopener">Reread Chapter '+item.ch+' \u2014 '+CH_TITLES[item.ch]+' \u2192</a>'; }
   const nb=document.getElementById('nextBtn');
   nb.className='next show';
   nb.textContent = idx+1<order.length ? 'Next →' : 'See your result →';
   nb.addEventListener('click',()=>{ idx++; idx<order.length?renderQ():finish(); });
 }
 function tierFor(s){
-  if(s>=47) return {name:'Platinum',cls:'platinum',icon:'💎',msg:'A near-perfect climb. No word can lock you out now.'};
-  if(s>=39) return {name:'Gold',cls:'gold',icon:'🥇',msg:'Strong command of decoding. Long words hold no fear.'};
-  if(s>=27) return {name:'Silver',cls:'silver',icon:'🥈',msg:'Solid. You're working words in parts, not guessing.'};
-  if(s>=13) return {name:'Bronze',cls:'bronze',icon:'🥉',msg:'You got through — the decoding habit is taking root.'};
+  if(s>=54) return {name:'Platinum',cls:'platinum',icon:'💎',msg:'A near-perfect climb. No word can lock you out now.'};
+  if(s>=45) return {name:'Gold',cls:'gold',icon:'🥇',msg:'Strong command of decoding. Long words hold no fear.'};
+  if(s>=31) return {name:'Silver',cls:'silver',icon:'🥈',msg:'Solid. You\'re working words in parts, not guessing.'};
+  if(s>=15) return {name:'Bronze',cls:'bronze',icon:'🥉',msg:'You got through — the decoding habit is taking root.'};
   return {name:'Keep Climbing',cls:'bronze',icon:'⛰️',msg:'Run it again — every climb builds the skill deeper.'};
 }
 function finish(){
@@ -325,14 +339,15 @@ function finish(){
     <div class="center">
       <div style="font-size:2.6rem">${tr.icon}</div>
       <div class="tierbadge tier ${tr.cls}">${tr.name}</div>
-      <div class="scorebig">${score}<span style="font-size:1.4rem;color:var(--muted)"> / 52</span></div>
+      <div class="scorebig">${score}<span style="font-size:1.4rem;color:var(--muted)"> / 60</span></div>
       <p style="color:var(--muted);margin:14px auto 0;max-width:42ch;">${tr.msg}</p>
       <div class="medals" style="margin-top:22px;">
-        <span class="medal ${score>=13?'on':''}">🥉 Bronze</span>
-        <span class="medal ${score>=27?'on':''}">🥈 Silver</span>
-        <span class="medal ${score>=39?'on':''}">🥇 Gold</span>
-        <span class="medal ${score>=47?'on':''}">💎 Platinum</span>
+        <span class="medal ${score>=15?'on':''}">🥉 Bronze</span>
+        <span class="medal ${score>=31?'on':''}">🥈 Silver</span>
+        <span class="medal ${score>=45?'on':''}">🥇 Gold</span>
+        <span class="medal ${score>=54?'on':''}">💎 Platinum</span>
       </div>
+      ${missedCh.size?`<div class="studylist"><div class="eyebrow">Strengthen the climb</div><p>You missed questions from these chapters \u2014 each link opens the free book at the exact spot:</p>${[...missedCh].sort((a,b)=>a-b).map(c=>`<a class="remed" href="https://read.globalsovereignuniversity.org/the-readers-toolkit-reader.html#ch-${c}" target="_blank" rel="noopener">Ch. ${c} \u2014 ${CH_TITLES[c]} \u2192</a>`).join("<br>")}</div>`:`<p style="color:var(--good);margin-top:14px;">Every chapter held. Nothing to reread \u2014 this climb was clean.</p>`}
       <p style="margin-top:18px;"><button class="btn" id="again">Climb Again →</button></p>
       <p style="margin-top:14px;"><a href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a></p>
     </div>`;
