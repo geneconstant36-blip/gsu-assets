@@ -105,6 +105,30 @@ a{color:var(--gold)}
   .rr-book{font-size:.8rem}
   .rr-listen-bar{left:16px;right:16px;transform:none;width:auto}
 }
+
+/* ── The Confidence Climb (game) ────────────────────────────── */
+  .gsu-game-card{display:flex;gap:18px;align-items:center;background:#000;border:1px solid rgba(201,168,76,.5);border-left:4px solid #C9A84C;border-radius:12px;padding:20px 22px;margin:26px 0 34px;font-family:Georgia,serif}
+  .gsu-game-card svg{flex:0 0 auto}
+  .gsu-game-card .gg-body{flex:1;min-width:0}
+  .gsu-game-card h4{margin:0 0 6px;color:#C9A84C;font-size:1.12rem;font-weight:normal;font-family:Georgia,serif}
+  .gsu-game-card p{margin:0 0 12px;color:#F5F1E8;font-size:1rem;line-height:1.6}
+  .gsu-game-card .gg-cta{display:inline-block;background:#C9A84C;color:#000;text-decoration:none;border-radius:4px;padding:9px 18px;font-size:.88rem;letter-spacing:.04em;font-family:Georgia,serif}
+  .gsu-game-card .gg-cta:hover{opacity:.87}
+  .gsu-game-card .gg-free{display:block;margin-top:9px;color:#b9b3a6;font-size:.83rem}
+  @media(max-width:640px){.gsu-game-card{flex-direction:column;align-items:flex-start;gap:12px}}
+</style>
+<style id="gsu-rtq-additions">/* v1.1 · canon parity Jul 29 2026: 5-star + GENO tutor notice (Chancellor's order) */
+.gsu-stars{display:flex;gap:6px;align-items:center;justify-content:center;margin:0 0 14px}
+.gsu-stars button{background:none;border:none;font-size:1.9rem;line-height:1;color:#5a4d28;cursor:pointer;padding:2px;transition:transform .12s,color .15s}
+.gsu-stars button.on,.gsu-stars button:hover,.gsu-stars button:hover~button.pre{color:#C9A84C}
+.gsu-stars button:hover{transform:scale(1.15)}
+.gsu-stars .gsu-stars-meta{color:#bdb7a8;font-family:Georgia,serif;font-size:.85rem;margin-left:10px}
+.gsu-geno-note{display:flex;gap:16px;align-items:center;background:#000;border:1px solid rgba(201,168,76,.5);border-left:4px solid #C9A84C;border-radius:12px;padding:18px 20px;margin:26px 0 34px;font-family:Georgia,serif}
+.gsu-geno-note img{width:64px;height:64px;border-radius:50%;border:2px solid #C9A84C;flex:0 0 auto}
+.gsu-geno-note p{margin:0;color:#F5F1E8;font-size:1.02rem;line-height:1.65}
+.gsu-geno-note b{color:#FFE9A8}
+.gsu-geno-note .gg-83{color:#7CB342;font-weight:700}
+@media(max-width:560px){.gsu-geno-note{flex-direction:column;text-align:center}}
 </style>
 </head>
 <body>
@@ -141,6 +165,12 @@ a{color:var(--gold)}
   <article class="rr-reader">
     <header class="rr-header">
       <div class="rr-kicker">The Sovereign Reading Room</div>
+      <!-- GSU 5-star module · lesson_ratings/reading-to-question -->
+<div id="gsuStars" class="gsu-stars" aria-label="Rate this book">
+<button data-v="1" aria-label="1 star">&#9733;</button><button data-v="2" aria-label="2 stars">&#9733;</button><button data-v="3" aria-label="3 stars">&#9733;</button><button data-v="4" aria-label="4 stars">&#9733;</button><button data-v="5" aria-label="5 stars">&#9733;</button>
+<span class="gsu-stars-meta" id="gsuStarsMeta">Rate this book</span>
+</div>
+
       <h1>Reading to Question</h1>
       <p class="rr-sub">Critical Reading</p>
       <p class="rr-byline">By Dr. Gene A. Constant · Founding Chancellor, Global Sovereign University</p>
@@ -150,6 +180,23 @@ a{color:var(--gold)}
         <a href="https://www.amazon.com/dp/B0H5CGGHZ7?tag=gsu2026-20" target="_blank" rel="noopener" class="rr-door"><span class="rr-icon">◈</span> Own the Kindle — $3.99</a>
       </div>
     </header>
+
+<aside class="gsu-geno-note">
+<img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor" loading="lazy">
+<p><b>Talk to GENO about this book &mdash; any time.</b> Click the <b>Need Help</b> chat box in the right corner to speak with GENO. He has memorized this entire book and can tutor you on any chapter to improve your understanding. <span class="gg-83">GENO speaks and listens in 83 languages.</span></p>
+</aside>
+
+<!-- The Critical Reading Climb — companion game -->
+<aside class="gsu-game-card">
+<svg width="74" height="74" viewBox="0 0 74 74" role="img" aria-label="The Critical Reading Climb"><title>The Critical Reading Climb</title><rect x="1" y="1" width="72" height="72" rx="10" fill="none" stroke="#C9A84C" stroke-opacity=".45"/><rect x="13" y="49" width="9" height="13" rx="2" fill="#C9A84C" fill-opacity=".45"/><rect x="26" y="41" width="9" height="21" rx="2" fill="#C9A84C" fill-opacity=".62"/><rect x="39" y="32" width="9" height="30" rx="2" fill="#C9A84C" fill-opacity=".8"/><rect x="52" y="23" width="9" height="39" rx="2" fill="#C9A84C"/><circle cx="56.5" cy="14" r="7.5" fill="none" stroke="#C9A84C" stroke-width="1.6"/><path d="M53.2 14.1l2.4 2.4 4.4-4.6" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div class="gg-body">
+<h4>Read it here &mdash; then play it: <em>The Critical Reading Climb</em></h4>
+<p>Sixty questions across four tiers, Bronze to Platinum, every one grounded in these twelve chapters and every answer explained. Miss one and you are linked back to the exact chapter that teaches it.</p>
+<a class="gg-cta" href="critical-reading-climb.html">Play The Critical Reading Climb</a>
+<span class="gg-free">Free forever &middot; no account &middot; your best score saves automatically.</span>
+</div>
+</aside>
+
 
   <section class="rr-chapter" id="ch-0" data-ch="0">
 
@@ -1757,6 +1804,17 @@ a{color:var(--gold)}
       <p>Not by dragging them upward with your conclusions, but by laying down the same footholds that held you: the question that slows the rush to verdict, the habit of narrowing claims to evidence, the courage to name missingness without weaponizing it, the humility to admit the edge of the page, and the steady, adult promise contained in two simple words: “for now.”</p>
   </section>
   </article>
+
+<!-- End-of-book: prove it -->
+  <aside class="gsu-game-card" style="max-width:1200px;margin:34px auto 44px">
+<svg width="74" height="74" viewBox="0 0 74 74" role="img" aria-label="The Critical Reading Climb"><title>The Critical Reading Climb</title><rect x="1" y="1" width="72" height="72" rx="10" fill="none" stroke="#C9A84C" stroke-opacity=".45"/><rect x="13" y="49" width="9" height="13" rx="2" fill="#C9A84C" fill-opacity=".45"/><rect x="26" y="41" width="9" height="21" rx="2" fill="#C9A84C" fill-opacity=".62"/><rect x="39" y="32" width="9" height="30" rx="2" fill="#C9A84C" fill-opacity=".8"/><rect x="52" y="23" width="9" height="39" rx="2" fill="#C9A84C"/><circle cx="56.5" cy="14" r="7.5" fill="none" stroke="#C9A84C" stroke-width="1.6"/><path d="M53.2 14.1l2.4 2.4 4.4-4.6" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div class="gg-body">
+<h4>You have read the whole book. Now prove it.</h4>
+<p>Everything on <em>The Critical Reading Climb</em> is taught in the chapters above &mdash; we never test what we have not first given you. Sixty questions, four tiers, and a study list at the end naming every chapter you should revisit.</p>
+<a class="gg-cta" href="critical-reading-climb.html">Take the Climb</a>
+<span class="gg-free">Free forever &middot; no account &middot; miss a question and you are told exactly which chapter to reread.</span>
+</div>
+</aside>
 </main>
 
 <div class="rr-listen-bar" id="rr-listen-bar" aria-live="polite">
@@ -1990,6 +2048,40 @@ a{color:var(--gold)}
   }
 })();
 </script>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+  try{
+    if(!firebase.apps.length){firebase.initializeApp({apiKey:'AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc',authDomain:'gsu-handshake.firebaseapp.com',projectId:'gsu-handshake'});}
+    var db=firebase.firestore(),LID='reading-to-question',uid=null;
+    var wrap=document.getElementById('gsuStars'),meta=document.getElementById('gsuStarsMeta');
+    if(!wrap)return;
+    var btns=[].slice.call(wrap.querySelectorAll('button'));
+    function paint(n){btns.forEach(function(b,i){b.classList.toggle('on',i<n);});}
+    function showAvg(){db.collection('lesson_ratings').doc(LID).get().then(function(d){
+      if(d.exists){var x=d.data();if(x.count>0){meta.textContent=(x.sum/x.count).toFixed(1)+' \u2605 \u00b7 '+x.count+' rating'+(x.count===1?'':'s');}}
+    }).catch(function(){});}
+    firebase.auth().signInAnonymously().then(function(c){
+      uid=c.user.uid;showAvg();
+      db.collection('lesson_ratings').doc(LID).collection('votes').doc(uid).get().then(function(v){if(v.exists)paint(v.data().v);}).catch(function(){});
+    }).catch(function(){meta.textContent='Rate this book';});
+    btns.forEach(function(b){b.addEventListener('click',function(){
+      var v=parseInt(b.getAttribute('data-v'),10);paint(v);
+      if(!uid){return;}
+      var ref=db.collection('lesson_ratings').doc(LID),vref=ref.collection('votes').doc(uid);
+      db.runTransaction(function(t){return t.get(ref).then(function(d){return t.get(vref).then(function(pv){
+        var s=d.exists?(d.data().sum||0):0,c=d.exists?(d.data().count||0):0;
+        if(pv.exists){s=s-(pv.data().v||0)+v;}else{s+=v;c+=1;}
+        t.set(ref,{sum:s,count:c},{merge:true});t.set(vref,{v:v,t:firebase.firestore.FieldValue.serverTimestamp()});
+      });});}).then(function(){meta.textContent='Thank you! Your rating is saved.';setTimeout(showAvg,900);}).catch(function(){});
+    });});
+  }catch(e){}
+})();
+</script>
+
 
 </body>
 </html>

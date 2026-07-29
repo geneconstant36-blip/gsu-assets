@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Critical Reading Climb — Reading Helix | Global Sovereign University</title>
+<meta name="description" content="Climb the Critical Reading ladder — 60 questions, four tiers, Bronze to Platinum. Learn to hold a claim open while you test it: inference, argument, perspective, and the honest limits of reading. Free, no login. Part of the Reading Helix at Global Sovereign University.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/critical-reading-climb.html">
+<meta name="theme-color" content="#0B0E14">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--navy:#1B2A4A;--gold:#C9A84C;--teal:#1A8B7F;--cream:#F5F1E8;--bg:#0B0E14;--card:#141a26;--muted:#9aa6b8;--good:#39b88b;--bad:#d9596b;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{background:var(--bg);color:var(--cream);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.6;min-height:100vh;}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 20px 80px;}
+  .head{text-align:center;margin-bottom:22px;}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+  h1{font-family:'Lora',serif;font-weight:700;font-size:clamp(1.9rem,5vw,2.6rem);color:var(--cream);line-height:1.1;}
+  .sub{color:var(--muted);font-size:.98rem;margin-top:10px;max-width:46ch;margin-left:auto;margin-right:auto;}
+  .panel{background:var(--card);border:1px solid rgba(201,168,76,.18);border-radius:16px;padding:26px;box-shadow:0 18px 50px -28px #000;}
+  .barwrap{height:8px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;margin:0 0 6px;}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .35s ease;}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);letter-spacing:.04em;margin-bottom:20px;}
+  .tier{font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+  .tier.bronze{color:#cd7f4d;} .tier.silver{color:#c7d0db;} .tier.gold{color:var(--gold);} .tier.platinum{color:#7fe9d6;}
+  .q{font-family:'Lora',serif;font-size:1.35rem;font-weight:600;line-height:1.4;color:#fff;margin-bottom:22px;}
+  .opts{display:flex;flex-direction:column;gap:12px;}
+  .opt{text-align:left;background:#1b2433;border:1.5px solid rgba(255,255,255,.1);color:var(--cream);font-family:inherit;font-size:1rem;font-weight:400;padding:15px 18px;border-radius:12px;cursor:pointer;transition:.15s;}
+  .opt:hover:not(:disabled){border-color:var(--gold);background:#212b3d;}
+  .opt:disabled{cursor:default;}
+  .opt.correct{border-color:var(--good);background:rgba(57,184,139,.14);color:#bff3df;}
+  .opt.wrong{border-color:var(--bad);background:rgba(217,89,107,.14);color:#f6c9d1;}
+  .fb{margin-top:18px;padding:15px 18px;border-radius:12px;font-size:.95rem;line-height:1.55;display:none;}
+  .fb.show{display:block;}
+  .fb.ok{background:rgba(57,184,139,.1);border:1px solid rgba(57,184,139,.35);}
+  .fb.no{background:rgba(217,89,107,.1);border:1px solid rgba(217,89,107,.35);}
+  .fb b{color:var(--gold);}
+  .next{margin-top:18px;display:none;width:100%;background:var(--gold);color:#0A0907;font-family:inherit;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;}
+  .next.show{display:block;} .next:hover{transform:translateY(-1px);}
+  .btn{display:inline-block;background:var(--gold);color:#0A0907;font-weight:800;font-size:1rem;letter-spacing:.3px;padding:15px 32px;border:none;border-radius:999px;cursor:pointer;transition:transform .15s;font-family:inherit;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold);}
+  .center{text-align:center;}
+  .best{margin-top:16px;font-size:13px;color:var(--muted);}
+  .best b{color:var(--gold);}
+  .medals{display:flex;justify-content:center;gap:10px;margin:18px 0;flex-wrap:wrap;}
+  .medal{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(201,168,76,.3);border-radius:999px;padding:7px 13px;color:var(--muted);}
+  .medal.on{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.1);}
+  .scorebig{font-family:'Lora',serif;font-size:3.4rem;font-weight:700;color:var(--gold);line-height:1;}
+  .tierbadge{font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:8px 0 4px;}
+  .geno-hint{margin-top:22px;text-align:center;font-size:13px;color:var(--muted);}
+  .geno-hint b{color:var(--teal);}
+  .status{text-align:center;font-size:11px;color:#5b6678;margin-top:18px;letter-spacing:.04em;}
+  a{color:var(--teal);} a:hover{color:var(--gold);}
+
+  /* ---- Chapter reading + GENO banner (added) ---- */
+  .geno-banner{display:flex;align-items:center;gap:16px;background:linear-gradient(180deg,#15202e,#10161f);border:1px solid var(--gold);border-radius:16px;padding:16px 20px;margin:0 0 26px;}
+  .geno-banner img{width:54px;height:54px;border-radius:50%;border:2px solid var(--gold);flex:0 0 auto;background:#000;}
+  .geno-banner .gb-txt{font-size:.95rem;line-height:1.5;color:var(--cream);}
+  .geno-banner .gb-txt b{color:var(--gold);}
+  .reader{margin:0 0 30px;}
+  .reader .eyebrow{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+  .reader h2{font-family:'Lora',serif;font-weight:700;font-size:clamp(1.5rem,4vw,2rem);color:var(--gold);line-height:1.2;margin-bottom:6px;}
+  .reader .booktag{font-size:.9rem;color:var(--muted);font-style:italic;margin-bottom:20px;}
+  .reader h3{font-family:'Lora',serif;font-weight:700;font-size:1.18rem;color:#fff;margin:26px 0 10px;}
+  .reader p{font-size:1.02rem;line-height:1.72;color:#e8e3d6;margin-bottom:16px;}
+  .reader p:first-of-type::first-letter{font-family:'Lora',serif;font-size:3.1rem;line-height:.8;float:left;color:var(--gold);padding:6px 10px 0 0;}
+  .climb-divider{text-align:center;border-top:1px solid rgba(201,168,76,.3);margin:34px 0 26px;padding-top:26px;}
+  .climb-divider .eyebrow{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .climb-divider p{color:var(--muted);font-size:.98rem;max-width:46ch;margin:0 auto;}
+
+
+  /* ============ 5-STAR RATING WIDGET (site-wide) ============ */
+  .ratebox { margin: 24px 0; background: #000000; border: 1px solid rgba(201,168,76,.22); border-radius: 16px; padding: 22px; text-align: center; }
+  .ratebox .rt { font-family: 'Lora', Georgia, serif; font-size: 1.06rem; color: #F5F1E8; margin-bottom: 12px; }
+  .ratebox .stars { display: inline-flex; gap: 7px; font-size: 1.9rem; line-height: 1; cursor: pointer; user-select: none; }
+  .ratebox .stars .st { color: #3a3a3a; transition: transform .12s, color .12s; }
+  .ratebox .stars .st.on { color: #C9A84C; }
+  .ratebox .stars .st:hover { transform: scale(1.12); }
+  .ratebox .rate-meta { margin-top: 10px; font-size: .92rem; color: #8a8580; }
+  .ratebox .rate-meta b { color: #C9A84C; }
+  .ratebox .rate-thanks { margin-top: 8px; font-size: .86rem; color: #7fce9d; min-height: 1.1em; }
+.remed{display:inline-block;margin-top:8px;color:var(--gold);text-decoration:underline;font-weight:600;font-size:.92rem}
+.studylist{margin:20px auto 0;max-width:46ch;text-align:left;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:16px 18px}
+.studylist p{color:var(--muted);font-size:.9rem;margin:6px 0 10px}
+</style>
+
+<script type="application/ld+json" id="course-ld">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "The Critical Reading Climb",
+  "description": "Free critical reading assessment — 60 questions across four tiers: inference, argument analysis, perspective, and the honest limits of reading.",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Global Sovereign University",
+    "sameAs": "https://globalsovereignuniversity.org"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0.00",
+    "priceCurrency": "USD",
+    "category": "Free"
+  }
+}
+</script>
+</head>
+<body><script src="/return-bar.js"></script>
+<div class="wrap">
+  <div class="geno-banner"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, your AI reading tutor"><div class="gb-txt"><b>Ask GENO if you have any questions about this chapter.</b> Ask him to tutor you any time — he’s free, 24/7, and speaks 83 languages. He’s waiting in the lower-right corner.</div></div>
+  <div class="head">
+    <div class="eyebrow">Reading Helix · Element 03 · Free</div>
+    <h1>The Critical Reading Climb</h1>
+    <p class="sub">Fifty-two questions. Four tiers — Bronze, Silver, Gold, Platinum. Climb as far as you can; your best is saved.</p>
+  </div>
+  
+
+<!-- 5-STAR RATING WIDGET — top of page per Chancellor directive -->
+<div class="ratebox" id="ratebox">
+  <div class="rt">Was this lesson helpful?</div>
+  <div class="stars" id="stars" role="radiogroup" aria-label="5 star rating"></div>
+  <div class="rate-meta" id="rateMeta">Loading ratings…</div>
+  <div class="rate-thanks" id="rateThanks"></div>
+</div>
+<div class="reader">
+<div class="eyebrow">Reading Helix · Volume 3 · Chapter One · Read First</div>
+<h2>From Rules to Reading</h2>
+<div class="booktag">From <i>Reading to Question: Critical Reading</i> &mdash; free to keep, by Dr. Gene A. Constant</div>
+<p>Before you can judge what a text implies, and long before you can judge whether it is true, you have to be able to say, plainly and accurately, what it says.</p>
+<p>That sounds almost too simple to be worth a whole section. Many readers, especially adults, assume they have already mastered it. They can pronounce the words. They can finish the paragraph. They can tell you the topic. Yet when you ask them to restate the author’s point in a single clean sentence, their answer slides sideways. It adds something the author never said. It leaves out a key condition. It smuggles in an opinion. Or it replaces the author’s claim with a vague summary like “It’s about how society is changing.”</p>
+<p>Literal comprehension is the discipline of staying inside the boundaries of the text. It is not the whole of reading, but it is the floor. If the floor is uneven, every higher skill wobbles.</p>
+<p>Think of critical reading as a courtroom skill, not a mood. In a courtroom, you cannot cross-examine a witness based on what you wish they had said. You have to quote them accurately. You have to separate testimony from interpretation. Literal comprehension is that skill applied to print: you can point to the sentence, show what it asserts, and distinguish it from what you inferred, assumed, or felt.</p>
+<p>This is why many arguments, online and in person, go nowhere. Two people think they disagree about the truth, but they have not even agreed on what the text claims. One person is arguing with a sentence that is not on the page. The other is defending a position the author never took. The result is heat without light.</p>
+<p>Literal comprehension has a few core tasks. None of them are glamorous, and all of them matter.</p>
+<p>First, identify what the text is literally about, and do it with the author’s categories, not yours. If an article is about “inflation expectations,” and you keep calling it “prices going up,” you may be close enough for casual conversation, but you may miss the point. Inflation expectations are not the same thing as inflation itself. A skilled reader notices that difference because the author chose those words for a reason.</p>
+<p>Second, track who did what to whom. This is the grammar of meaning. Many comprehension failures are not about vocabulary at all; they are about relationships in a sentence. Consider the difference between “The committee recommended the policy” and “The committee recommended that the policy be reviewed.” In the first, the committee is endorsing. In the second, the committee is not endorsing; it is suggesting scrutiny. A reader who compresses both into “The committee supported the policy” has not done literal comprehension. They have done a sloppy paraphrase that changes the claim.</p>
+<p>Third, distinguish the main claim from supporting details. Authors often wrap their central point in examples, anecdotes, side-notes, and clarifications. If you cannot tell what is central, you cannot evaluate it later. One of the simplest ways to test this is to ask: If I had to summarize the text in one sentence to someone who will never read it, what sentence would do the least damage? If your sentence is a detail, you have not found the spine.</p>
+<p>Fourth, notice qualifiers, conditions, and scope. These are the small words that control the size of a claim: some, many, often, may, in this context, for most people, under these conditions. Weak readers ignore them. Strong readers treat them like the load-bearing beams of the argument. “Exercise improves mood” is not the same claim as “Exercise may improve mood for some people in the short term.” If you drop the may and the for some people, you have turned a cautious statement into a universal one, and you will later criticize the author for overclaiming even though the author did not.</p>
+</div>
+<div class="climb-divider">
+      <div class="eyebrow">Now Climb It</div>
+      <p>You've read the chapter. Lock it in by climbing — sixty questions, four tiers, each answer explained.</p>
+    </div>
+  <div id="app" class="panel"></div>
+  <p class="status" id="status">Connecting…</p>
+  <p class="geno-hint">Stuck on one? <b>Ask GENO</b> — your free AI tutor, lower-right. He explains any answer in 83 languages.</p>
+</div>
+
+<!-- GENO LIVE WIDGET -->
+<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
+  authDomain: "gsu-handshake.firebaseapp.com",
+  projectId: "gsu-handshake",
+  storageBucket: "gsu-handshake.firebasestorage.app",
+  messagingSenderId: "301089416765",
+  appId: "1:301089416765:web:dff926a7aa52191e9a6c54"
+};
+
+let db=null, uid=null, best=null;
+const statusEl=document.getElementById('status');
+try{
+  const app=initializeApp(firebaseConfig);
+  const auth=getAuth(app); db=getFirestore(app);
+  onAuthStateChanged(auth, async (user)=>{
+    if(user){
+      uid=user.uid;
+      try{
+        const snap=await getDoc(doc(db,'critical_reading_climb',uid));
+        if(snap.exists()){ best=snap.data(); }
+      }catch(e){}
+      statusEl.textContent='Scores save automatically. Start on a phone, finish on a laptop.';
+      renderStart();
+    }
+  });
+  signInAnonymously(auth).catch(()=>{ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); });
+}catch(e){ statusEl.textContent='Playing offline — scores won\u2019t sync this session.'; renderStart(); }
+
+async function saveScore(score,tier){
+  if(!db||!uid) return;
+  try{
+    const prevBest = best && best.bestScore ? best.bestScore : 0;
+    if(score>=prevBest){
+      best={bestScore:score,bestTier:tier,updatedAt:Date.now()};
+      await setDoc(doc(db,'critical_reading_climb',uid), best, {merge:true});
+    }
+  }catch(e){}
+}
+
+const CH_TITLES={1: "The Three Layers of Comprehension", 2: "The Construction-Integration Model", 3: "The Limits of Generic Critical Thinking", 4: "Inference — Reading Between the Lines", 5: "Evaluating Argument — Claim, Evidence, Warrant", 6: "Recognizing Perspective and What Is Missing", 7: "Where Critical Reading Becomes Cynicism", 8: "Where Critical Reading Becomes Tribalism", 9: "The Honest Limits of Critical Reading", 10: "A Self-Directed Program for Adults", 11: "A Critical Reading Curriculum for Children", 12: "The Reading Helix Completed"};
+let missedCh=new Set();
+/* ===== 60 QUESTIONS · grounded in "Reading to Question: Critical Reading" ===== */
+const QUESTIONS=[
+ {t:'Bronze',ch:1,q:'The three layers of comprehension are…',o:["literal, inferential, and critical", "fast, slow, and medium", "fiction, nonfiction, and poetry"],a:0,why:'The ladder has three rungs: <b>literal</b> (what it says), <b>inferential</b> (what it implies), and <b>critical</b> (whether it holds).'},
+ {t:'Bronze',ch:1,q:'Critical reading is the discipline of…',o:["rejecting every claim on sight", "holding a claim open while you test it", "agreeing with whoever is an expert"],a:1,why:'<b>Hold the claim open while you test it.</b> Not instant belief, not instant rejection — disciplined suspension.'},
+ {t:'Bronze',ch:1,q:'The “one-sentence anchor” habit means writing…',o:["a summary of the whole book first", "your opinion of the author", "one sentence naming what each paragraph is doing"],a:2,why:'After each paragraph: one sentence naming its <b>function</b> — claim, evidence, definition, counterargument. That trains global coherence.'},
+ {t:'Bronze',ch:1,q:'Labeling “Text / My words / My thoughts” keeps…',o:["what is on the page separate from what you added", "your notes shorter", "quotations legal"],a:0,why:'Three columns, three categories: <b>what the page says, what you think it means, what you feel about it.</b> Mixing them is where distortion starts.'},
+ {t:'Bronze',ch:1,q:'In the courtroom metaphor, the critical reader is…',o:["the prosecutor pressing charges", "an honest juror weighing evidence", "the defendant on trial"],a:1,why:'You are the <b>honest juror</b> — qualified to weigh evidence only as far as your knowledge reaches, and honest about that edge.'},
+ {t:'Bronze',ch:2,q:'Comprehension is built in two phases: construction and…',o:["decoration", "narration", "integration"],a:2,why:'Kintsch’s model: the mind <b>constructs</b> candidate meanings, then <b>integrates</b> them into a stable whole. Weak integration leaves a blur you mistake for understanding.'},
+ {t:'Bronze',ch:2,q:'The “situation model” is…',o:["your mental model of the world the text describes", "the book’s table of contents", "the author’s biography"],a:0,why:'The <b>situation model</b> is the living picture the text builds in your mind — and background knowledge decides how sturdy it is.'},
+ {t:'Bronze',ch:4,q:'Most implied meaning is…',o:["hidden messages for insiders", "ordinary instructions for building the model, not secret code", "cynical mind-reading"],a:1,why:'“Reading between the lines” is not decoding secrets. Most implied meaning is <b>ordinary, cooperative instruction</b> for building the model the author intends.'},
+ {t:'Bronze',ch:4,q:'Signal words like “however” and “therefore” are…',o:["decoration", "interchangeable filler", "instructions for connecting ideas"],a:2,why:'Signal words are <b>the text’s wiring diagram</b> — explicit instructions for how one idea connects to the next.'},
+ {t:'Bronze',ch:1,q:'Scope words like “may” and “often”…',o:["change what claim you are actually evaluating", "can be skipped safely", "matter only in poetry"],a:0,why:'Drop “may” or “under these conditions” and you build a <b>different claim</b> than the author made — then evaluate the wrong thing.'},
+ {t:'Bronze',ch:3,q:'Generic critical thinking fails without…',o:["a longer vocabulary list", "background knowledge of the subject", "faster reading speed"],a:1,why:'Critique runs on <b>knowledge</b>. You cannot ask sharp questions about mechanisms you cannot represent.'},
+ {t:'Bronze',ch:5,q:'The three parts of an argument’s spine are claim, evidence, and…',o:["verdict", "vocabulary", "warrant"],a:2,why:'<b>Claim, evidence, warrant</b> — what the author wants you to accept, what supports it, and the link that says why the support counts.'},
+ {t:'Bronze',ch:5,q:'The claim is…',o:["what the author wants you to believe, accept, or do", "always the first sentence", "the same thing as evidence"],a:0,why:'The <b>claim</b> is the destination — sometimes stated as a conclusion, sometimes implied, but always what you are being asked to accept.'},
+ {t:'Bronze',ch:6,q:'The “centered viewpoint” is…',o:["the middle paragraph", "the position the text invites you to occupy", "the font the designer chose"],a:1,why:'Every text is written from somewhere. The <b>centered viewpoint</b> is the seat the text pulls out for you — “As taxpayers, we…”'},
+ {t:'Bronze',ch:12,q:'The Reading Helix is designed as…',o:["a set of unrelated tips", "a speed-reading course", "volumes that spiral upward, each depending on the earlier ones"],a:2,why:'Seven volumes, one spiral: each returns to the core problems of reading <b>at a higher level</b>, and the later rungs stand on the earlier ones.'},
+ {t:'Silver',ch:2,q:'The “textbase” is…',o:["the who-did-what-to-whom propositions of the text", "the paper the book is printed on", "the index at the back"],a:0,why:'The <b>textbase</b> is the proposition structure — relationships, qualifiers, definitions — the spine your evaluation stands on.'},
+ {t:'Silver',ch:2,q:'Local coherence links sentence to sentence; global coherence links…',o:["the book to the shelf", "each paragraph to the overall argument", "the reader to the author"],a:1,why:'<b>Global coherence</b> is how a paragraph serves the whole argument — exactly what the one-sentence anchor trains.'},
+ {t:'Silver',ch:2,q:'A “cardboard” situation model produces…',o:["sharper critique", "faster honest inference", "misplaced confidence — certainty with no moving parts"],a:2,why:'A shallow model feels certain <b>because it is simple</b>. Real situations have moving parts; cardboard ones just feel finished.'},
+ {t:'Silver',ch:4,q:'Inference is called the hinge between…',o:["understanding and evaluation", "phonics and fluency", "fiction and fact"],a:0,why:'Inference is <b>the hinge</b>: literal comprehension promises not to distort the text; inference promises not to distort what it implies.'},
+ {t:'Silver',ch:4,q:'The danger of inference is adding meaning…',o:["too slowly", "and forgetting you added it", "only in fiction"],a:1,why:'You infer constantly. The danger is <b>forgetting which parts you supplied</b> — then defending your additions as if the author wrote them.'},
+ {t:'Silver',ch:5,q:'In Toulmin’s terms, evidence is also called…',o:["the verdict", "the warrant", "data or grounds"],a:2,why:'Toulmin called evidence <b>data or grounds</b>: statistics, examples, studies, anecdotes, expert statements — whatever is offered as support.'},
+ {t:'Silver',ch:5,q:'The warrant is…',o:["the often-unstated link showing why the evidence supports the claim", "a legal document", "the conclusion restated"],a:0,why:'The <b>warrant</b> is the bridge — usually unstated — that says why this evidence should move you toward this claim.'},
+ {t:'Silver',ch:6,q:'Implicit centering shows up in…',o:["the page numbers", "whose problems count as the problem and whose voice gets quoted", "the paragraph lengths"],a:1,why:'The invitation is usually implicit: <b>whose outcomes are measured, whose experience is treated as normal, who gets quoted as credible.</b>'},
+ {t:'Silver',ch:6,q:'Naming what is missing should widen the frame…',o:["and end the discussion", "and prove the author’s bad faith", "without becoming a weapon"],a:2,why:'“What is missing” is a <b>widening tool, not a gotcha</b>. Missingness alone proves neither error nor bad faith.'},
+ {t:'Silver',ch:7,q:'Cynicism is…',o:["a strategy for avoiding the discomfort of uncertainty", "the same thing as intelligence", "a requirement of adulthood"],a:0,why:'Cynicism <b>sounds</b> sharp — it spots framing and omissions — but it is a way to stop holding claims open and escape uncertainty.'},
+ {t:'Silver',ch:1,q:'Literal comprehension is the promise…',o:["to agree with the text", "not to distort what the text says", "to memorize the text"],a:1,why:'The first promise of the honest reader: <b>represent the text accurately</b> before you judge it.'},
+ {t:'Silver',ch:3,q:'You cannot critique a claim you cannot…',o:["pronounce", "underline", "correctly represent"],a:2,why:'Evaluation begins at representation: <b>state the claim the author actually made</b>, at its actual scope, or your critique hits a straw man.'},
+ {t:'Silver',ch:10,q:'The 90-day program treats critical reading as…',o:["a procedure with repeatable moves", "a mood you wait for", "a personality type"],a:0,why:'Critical reading is <b>not a mood — it is a procedure</b>: repeatable moves you run whether or not you feel sharp today.'},
+ {t:'Silver',ch:11,q:'The fifth-grade goal is to make students…',o:["suspicious of everything", "evidential, not suspicious", "quiet during reading"],a:1,why:'The aim is <b>evidential children</b> — “what does the author say, and what supports it?” — not small cynics.'},
+ {t:'Silver',ch:9,q:'“I don’t know yet” is…',o:["an admission of failure", "a way to stop thinking", "the most adult sentence a reader can learn"],a:2,why:'Said honestly, <b>“I don’t know yet”</b> is not a shrug — it is the mark of a reader who respects the difference between reading and knowing.'},
+ {t:'Gold',ch:2,q:'Two readers pass the same quiz yet take different meanings because…',o:["their situation models differ with background knowledge", "one reads faster", "the fonts differ"],a:0,why:'Same textbase, different <b>situation models</b>. The reader who knows school budgeting builds precision the other cannot — and asks sharper questions.'},
+ {t:'Gold',ch:4,q:'“The city raised parking fees. Businesses reported fewer walk-ins.” The text…',o:["proves the fees caused the losses", "invites a causal inference it never states", "denies any connection"],a:1,why:'Two facts side by side <b>invite</b> causation without asserting it. The critical reader says: possible connection — <b>for now</b> — and asks for baselines.'},
+ {t:'Gold',ch:5,q:'“Timid or trigger-happy” describes readers who think evaluation is…',o:["boring", "illegal", "reserved for experts, or a verdict to fire instantly"],a:2,why:'Two failure modes: <b>timidity</b> (“who am I to judge?”) and the <b>instant verdict</b>. Toulmin’s clean questions cure both.'},
+ {t:'Gold',ch:6,q:'You can be exactly right about claim-evidence-warrant and still miss…',o:["what the text is doing from its viewpoint", "spelling errors", "the title"],a:0,why:'Arguments do not float in space. Perfect spine analysis can still miss <b>whose frame the argument leans on</b>.'},
+ {t:'Gold',ch:7,q:'The cynical reader sounds sharp because they…',o:["read more slowly", "spot framing and omissions — then stop holding claims open", "quote philosophers"],a:1,why:'Cynicism borrows the tools and skips the discipline: it <b>notices</b> like a critical reader but <b>concludes</b> like a machine — always the same verdict.'},
+ {t:'Gold',ch:8,q:'Selective skepticism means applying…',o:["equal rigor to every claim", "no tools at all", "your sharpest tools only to claims that threaten your beliefs"],a:2,why:'<b>Selective skepticism</b>: methodologist for the claims you dislike, poet for the claims you like. Same tools, corrupted aim.'},
+ {t:'Gold',ch:8,q:'When a liked source makes a weak claim, the tribal reader becomes…',o:["a poet instead of a methodologist", "a statistician", "silent"],a:0,why:'The tribal tell: the disliked source gets sample-size questions; the liked source gets applause. <b>Rigor that switches off is loyalty, not rigor.</b>'},
+ {t:'Gold',ch:9,q:'Some disputes cannot be resolved by argument analysis because the limiting factor is…',o:["grammar", "the world — missing data, not faulty logic", "vocabulary"],a:1,why:'Sometimes the argument is fine and <b>the data does not exist yet</b>. No amount of rereading manufactures a baseline.'},
+ {t:'Gold',ch:9,q:'Critical reading is the highest tier of literacy, but it is still…',o:["a superpower", "optional for adults", "a way of interacting with representations, not a substitute for evidence-gathering"],a:2,why:'Texts are <b>representations of reality</b>. Reading them well is not the same as measuring the world.'},
+ {t:'Gold',ch:10,q:'The program must thicken…',o:["background knowledge, because thin knowledge pushes skepticism toward slogans", "your notebook", "your bookshelf"],a:0,why:'Chapter 7’s blunt truth carried forward: <b>thin knowledge turns skepticism into slogans</b>. The plan builds knowledge on purpose.'},
+ {t:'Gold',ch:11,q:'The spoken three-question routine trains students to separate…',o:["reading from writing", "assertion from support", "fact from fiction forever"],a:1,why:'Three questions aloud, every text — the doorway into Toulmin without naming him: <b>what is claimed, and what supports it?</b>'},
+ {t:'Gold',ch:12,q:'Each Helix volume solves…',o:["the same problem again", "a different genre", "a specific bottleneck the later volumes depend on"],a:2,why:'Decoding, fluency, vocabulary, sentences — each volume clears <b>the bottleneck the next one stands on</b>. Critical reading is the top of that ladder.'},
+ {t:'Gold',ch:1,q:'Holding a claim open means…',o:["delaying the verdict until you have tested the claim you actually read", "never deciding anything", "agreeing provisionally with everything"],a:0,why:'Not indecision — <b>disciplined delay</b>: represent the claim precisely, test it fairly, then conclude.'},
+ {t:'Gold',ch:3,q:'When you are out of your depth, the solution is…',o:["trust all experts", "learn enough to ask meaningful questions and recognize your limits", "trust no experts"],a:1,why:'Neither blanket trust nor blanket suspicion: <b>learn enough to ask real questions</b>, and be honest about where your competence ends.'},
+ {t:'Gold',ch:6,q:'The perspective questions to ask are…',o:["how long is it, and when was it printed", "is it famous, and did it sell", "who is speaking, and whose outcomes are measured"],a:2,why:'Perspective work starts simply: <b>someone is speaking. Whose priorities are treated as normal? Whose outcomes count?</b>'},
+ {t:'Platinum',ch:2,q:'Keeping more than one candidate representation active long enough to compare is what makes…',o:["later evaluation possible", "reading slower forever", "memory worse"],a:0,why:'The Text / My words / My thoughts practice does this mechanically: it <b>keeps candidate meanings alive</b> so judgment has something to compare.'},
+ {t:'Platinum',ch:4,q:'Baseline data matters for the parking-fee line because…',o:["numbers are decoration", "without a comparison you cannot test the causal inference", "cities never publish data"],a:1,why:'“Fewer walk-ins” than <b>what</b>? Last month? Last year? Nearby districts? Without a baseline the inference stays untestable.'},
+ {t:'Platinum',ch:5,q:'When a claim is implied rather than stated, the evaluator must first…',o:["skip straight to the evidence", "assume the worst version", "state the claim precisely before judging it"],a:2,why:'You cannot weigh a claim you have not stated. <b>Precision before verdict</b> — name the claim, at its real scope, then test it.'},
+ {t:'Platinum',ch:7,q:'The critical reader says “for now, I infer a possible connection.” The cynic says…',o:["“nothing is trustworthy”", "“show me the baselines”", "“I will wait for more data”"],a:0,why:'Same sentence, two readers. The critical reader holds it open with <b>“for now.”</b> The cynic closes it forever with <b>“nothing is trustworthy.”</b>'},
+ {t:'Platinum',ch:8,q:'Tribalism usually dresses itself in…',o:["obvious slogans", "the language of evidence, bias, and missingness", "silence"],a:1,why:'The sneakiest failure mode speaks fluent critical-reading: <b>“evidence,” “bias,” “what’s missing”</b> — aimed only at the other side.'},
+ {t:'Platinum',ch:8,q:'The cure for selective skepticism is…',o:["softer standards everywhere", "avoiding sources you dislike", "equal rigor — the same tools on claims you like"],a:2,why:'One standard: <b>run your sharpest tools on the claims you want to be true.</b> That is where the discipline is proven.'},
+ {t:'Platinum',ch:9,q:'Overconfidence in texts is the belief that…',o:["disputes can be resolved by reading alone", "reading is useless", "experts settle everything"],a:0,why:'The respectable disguise: not cynicism but its opposite — <b>faith that analysis alone can settle what only evidence can.</b>'},
+ {t:'Platinum',ch:9,q:'“For now” is the reader’s promise to…',o:["never conclude anything", "hold conclusions open to revision as evidence arrives", "conclude quickly and move on"],a:1,why:'Two words carry the whole discipline: <b>a conclusion held honestly, revisable when the world speaks again.</b>'},
+ {t:'Platinum',ch:10,q:'The plan respects limited time, attention, and certainty because…',o:["reading is easy", "certainty is guaranteed by effort", "a sustainable routine beats ninety days of heroic effort"],a:2,why:'Ninety heroic days collapse. <b>Sustainable, repeatable moves</b> — under real constraints — are what change a reading life.'},
+ {t:'Platinum',ch:10,q:'The program’s goal is a reader who can…',o:["keep a claim open long enough to test it well", "hold an opinion on everything", "win every argument"],a:0,why:'Not omniscience, not combat: <b>the capacity to suspend judgment long enough to judge well.</b>'},
+ {t:'Platinum',ch:11,q:'A grades 2–5 critical reading curriculum builds on…',o:["nothing — it stands alone", "decoding, fluency, and vocabulary from the earlier volumes", "handwriting"],a:1,why:'The Helix in miniature: children <b>must decode, read fluently, and know the words</b> before evidence questions can carry weight.'},
+ {t:'Platinum',ch:12,q:'The Helix completes when the reader…',o:["owns all seven books", "stops needing to read", "lays down footholds for someone else’s climb"],a:2,why:'The last move is generosity: <b>not dragging others up with your conclusions, but laying the same footholds that held you.</b>'},
+ {t:'Platinum',ch:12,q:'The final discipline the book names is…',o:["the humility to admit the edge of the page", "maximum reading speed", "total certainty"],a:0,why:'The closing inventory ends on <b>humility</b>: knowing where the text ends and the world begins.'},
+ {t:'Platinum',ch:2,q:'Familiar words like “fairness” and “risk” are dangerous because…',o:["they are too long", "they carry specialized meanings in professional and civic writing", "they are foreign"],a:1,why:'Smooth, general words feel like they belong to everyone — but in professional writing they are <b>doorways into whole networks of specialized meaning.</b>'},
+ {t:'Platinum',ch:1,q:'You accept a definition provisionally in order to…',o:["agree with it forever", "be polite", "understand what the author is doing before judging it"],a:2,why:'Provisional acceptance is a <b>reading tool, not a surrender</b>: you cannot evaluate a move you refused to watch.'}
+];
+
+const app=document.getElementById('app');
+let order=[], idx=0, score=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildOrder(){
+  const tiers=['Bronze','Silver','Gold','Platinum']; let o=[];
+  tiers.forEach(t=>{ o=o.concat(shuffle(QUESTIONS.filter(q=>q.t===t))); });
+  return o;
+}
+function renderStart(){
+  const bestLine = best && best.bestScore!=null
+    ? `<p class="best">Your best climb: <b>${best.bestScore}/52</b> — ${best.bestTier||''}</p>` : '';
+  app.innerHTML=`
+    <div class="center">
+      <div class="medals">
+        <span class="medal">🥉 Bronze</span><span class="medal">🥈 Silver</span>
+        <span class="medal">🥇 Gold</span><span class="medal">💎 Platinum</span>
+      </div>
+      <p style="color:var(--muted);margin-bottom:22px;max-width:44ch;margin-left:auto;margin-right:auto;">
+        Fifteen questions per tier, drawn from <i>Reading to Question: Critical Reading</i>. Fresh order every climb. Answer to see why.
+      </p>
+      <button class="btn" id="startBtn">Start the Climb →</button>
+      ${bestLine}
+    </div>`;
+  document.getElementById('startBtn').addEventListener('click',start);
+}
+function start(){ missedCh=new Set(); order=buildOrder(); idx=0; score=0; renderQ(); }
+function renderQ(){
+  const item=order[idx];
+  const pct=Math.round((idx/order.length)*100);
+  app.innerHTML=`
+    <div class="barwrap"><div class="bar" style="width:${pct}%"></div></div>
+    <div class="meta"><span class="tier ${item.t.toLowerCase()}">${item.t} Tier</span><span>Question ${idx+1} / ${order.length} · Score ${score}</span></div>
+    <div class="q">${item.q}</div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <button class="next" id="nextBtn"></button>`;
+  const opts=document.getElementById('opts');
+  item.o.forEach((text,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=text;
+    b.addEventListener('click',()=>choose(i));
+    opts.appendChild(b);
+  });
+}
+function choose(i){
+  const item=order[idx];
+  const buttons=[...document.querySelectorAll('.opt')];
+  buttons.forEach(b=>b.disabled=true);
+  const correct = i===item.a;
+  if(correct) score++;
+  buttons[item.a].classList.add('correct');
+  if(!correct) buttons[i].classList.add('wrong');
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(correct?'ok':'no');
+  fb.innerHTML=(correct?'✓ Correct. ':'✗ Not quite. ')+item.why;
+  if(!correct&&item.ch){ missedCh.add(item.ch); fb.innerHTML+='<br><a class="remed" href="https://read.globalsovereignuniversity.org/reading-to-question-reader.html#ch-'+item.ch+'" target="_blank" rel="noopener">Reread Chapter '+item.ch+' \u2014 '+CH_TITLES[item.ch]+' \u2192</a>'; }
+  const nb=document.getElementById('nextBtn');
+  nb.className='next show';
+  nb.textContent = idx+1<order.length ? 'Next →' : 'See your result →';
+  nb.addEventListener('click',()=>{ idx++; idx<order.length?renderQ():finish(); });
+}
+function tierFor(s){
+  if(s>=54) return {name:'Platinum',cls:'platinum',icon:'💎',msg:'A near-perfect climb. No text can rush you to a verdict now.'};
+  if(s>=45) return {name:'Gold',cls:'gold',icon:'🥇',msg:'Strong command of the discipline. You hold claims open and test them fairly.'};
+  if(s>=31) return {name:'Silver',cls:'silver',icon:'🥈',msg:'Solid. You\'re weighing claims against evidence, not vibes.'};
+  if(s>=15) return {name:'Bronze',cls:'bronze',icon:'🥉',msg:'You got through — the questioning habit is taking root.'};
+  return {name:'Keep Climbing',cls:'bronze',icon:'⛰️',msg:'Run it again — every climb builds the skill deeper.'};
+}
+function finish(){
+  const tr=tierFor(score);
+  saveScore(score,tr.name);
+  app.innerHTML=`
+    <div class="center">
+      <div style="font-size:2.6rem">${tr.icon}</div>
+      <div class="tierbadge tier ${tr.cls}">${tr.name}</div>
+      <div class="scorebig">${score}<span style="font-size:1.4rem;color:var(--muted)"> / 60</span></div>
+      <p style="color:var(--muted);margin:14px auto 0;max-width:42ch;">${tr.msg}</p>
+      <div class="medals" style="margin-top:22px;">
+        <span class="medal ${score>=15?'on':''}">🥉 Bronze</span>
+        <span class="medal ${score>=31?'on':''}">🥈 Silver</span>
+        <span class="medal ${score>=45?'on':''}">🥇 Gold</span>
+        <span class="medal ${score>=54?'on':''}">💎 Platinum</span>
+      </div>
+      ${missedCh.size?`<div class="studylist"><div class="eyebrow">Strengthen the climb</div><p>You missed questions from these chapters \u2014 each link opens the free book at the exact spot:</p>${[...missedCh].sort((a,b)=>a-b).map(c=>`<a class="remed" href="https://read.globalsovereignuniversity.org/reading-to-question-reader.html#ch-${c}" target="_blank" rel="noopener">Ch. ${c} \u2014 ${CH_TITLES[c]} \u2192</a>`).join("<br>")}</div>`:`<p style="color:var(--good);margin-top:14px;">Every chapter held. Nothing to reread \u2014 this climb was clean.</p>`}
+      <p style="margin-top:18px;"><button class="btn" id="again">Climb Again →</button></p>
+      <p style="margin-top:14px;"><a href="https://www.globalsovereignuniversity.org/readification">← Back to Readification</a></p>
+    </div>`;
+  document.getElementById('again').addEventListener('click',start);
+}
+</script>
+
+<!-- GSU star-rating widget (auto-keyed, voters subcollection) -->
+<!-- ===== GSU 5-STAR RATING WIDGET · paste-anywhere · auto-keyed by page filename ===== -->
+<div id="gsu-rate" style="max-width:640px;margin:30px auto;padding:22px 24px;background:#000;border:1px solid #C9A84C;border-radius:14px;font-family:Inter,system-ui,Arial,sans-serif;color:#F5F1E8;text-align:center;box-shadow:0 6px 22px rgba(201,168,76,.12);">
+  <div style="font-family:Georgia,serif;color:#C9A84C;font-size:1.1rem;letter-spacing:.3px;margin-bottom:6px;">Rate this game</div>
+  <div id="gsu-rate-avg" style="font-size:.95rem;color:#B0A06E;margin-bottom:12px;">Loading ratings&hellip;</div>
+  <div id="gsu-rate-stars" role="radiogroup" aria-label="Rate this game" style="font-size:2.1rem;line-height:1;letter-spacing:8px;cursor:pointer;user-select:none;">
+    <span data-v="1" role="radio" aria-label="1 star">&#9734;</span><span data-v="2" role="radio" aria-label="2 stars">&#9734;</span><span data-v="3" role="radio" aria-label="3 stars">&#9734;</span><span data-v="4" role="radio" aria-label="4 stars">&#9734;</span><span data-v="5" role="radio" aria-label="5 stars">&#9734;</span>
+  </div>
+  <div id="gsu-rate-msg" style="font-size:.84rem;color:#8A8460;margin-top:12px;min-height:1.1em;">Tap a star to rate</div>
+</div>
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",appId:"1:301089416765:web:dff926a7aa52191e9a6c54"};
+const app = getApps().length ? getApp() : initializeApp(cfg);
+const auth = getAuth(app), db = getFirestore(app);
+const GAME_ID = (location.pathname.split("/").pop()||"game").replace(/\.html?$/i,"") || "game";
+const aRef = doc(db,"lesson_ratings",GAME_ID);
+const stars=[...document.querySelectorAll("#gsu-rate-stars span")];
+const avgEl=document.getElementById("gsu-rate-avg"), msgEl=document.getElementById("gsu-rate-msg");
+let uid=null, myVote=0, hover=0;
+function paint(n){stars.forEach(s=>{const on=(+s.dataset.v)<=n;s.innerHTML=on?"&#9733;":"&#9734;";s.style.color=on?"#C9A84C":"#5b5430";});}
+function injectSchema(avg,count){if(!count)return;let el=document.getElementById("gsu-rate-schema");if(!el){el=document.createElement("script");el.type="application/ld+json";el.id="gsu-rate-schema";document.head.appendChild(el);}const nm=(document.title||GAME_ID).replace(/\s*[|\u2013\u2014-].*$/,"").trim()||GAME_ID;el.textContent=JSON.stringify({"@context":"https://schema.org","@type":"Game","@id":location.href,"name":nm,"url":location.href,"aggregateRating":{"@type":"AggregateRating","ratingValue":avg.toFixed(1),"ratingCount":count,"bestRating":"5","worstRating":"1"}});}
+function showAvg(sum,count){if(!count){avgEl.textContent="Be the first to rate this game";paint(hover||myVote);return;}const a=sum/count;paint(hover||myVote||Math.round(a));avgEl.innerHTML='<span style="color:#C9A84C;font-weight:600;">'+a.toFixed(1)+' &#9733;</span> &middot; '+count+' rating'+(count==1?"":"s");injectSchema(a,count);}
+stars.forEach(s=>{s.addEventListener("mouseenter",()=>{hover=+s.dataset.v;paint(hover);});s.addEventListener("mouseleave",()=>{hover=0;paint(myVote);});s.addEventListener("click",()=>vote(+s.dataset.v));});
+async function load(){try{const snap=await getDoc(aRef);const d=snap.exists()?snap.data():{sum:0,count:0};showAvg(d.sum||0,d.count||0);}catch(e){avgEl.textContent="Ratings unavailable right now";}}
+async function vote(n){if(!uid){msgEl.textContent="Connecting&hellip; tap again in a moment";return;}msgEl.textContent="Saving&hellip;";try{await runTransaction(db,async(tx)=>{const vRef=doc(db,"lesson_ratings",GAME_ID,"voters",uid);const aS=await tx.get(aRef);const vS=await tx.get(vRef);let sum=(aS.exists()&&aS.data().sum)||0,count=(aS.exists()&&aS.data().count)||0;const prev=vS.exists()?(vS.data().stars||0):0;if(prev){sum=sum-prev+n;}else{sum+=n;count+=1;}tx.set(aRef,{sum,count},{merge:true});tx.set(vRef,{stars:n});});myVote=n;msgEl.textContent="Thank you &mdash; your rating is saved!";await load();}catch(e){msgEl.textContent="Could not save your rating";}}
+onAuthStateChanged(auth,(u)=>{if(u){uid=u.uid;getDoc(doc(db,"lesson_ratings",GAME_ID,"voters",u.uid)).then(s=>{if(s.exists()){myVote=s.data().stars||0;paint(myVote);msgEl.textContent="You rated this game &mdash; tap a star to change it";}}).catch(()=>{});}else{signInAnonymously(auth).catch(()=>{msgEl.textContent="Sign-in unavailable";});}});
+load();
+</script>
+<!-- ===== /GSU 5-STAR RATING WIDGET ===== -->
+
+
+<!-- 5-STAR RATING WIDGET — Firebase (gsu-handshake) + aggregateRating injection -->
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",storageBucket:"gsu-handshake.firebasestorage.app",messagingSenderId:"301089416765",appId:"1:301089416765:web:dff926a7aa52191e9a6c54"};
+const GID="critical-reading-climb";
+const starsEl=document.getElementById('stars'),metaEl=document.getElementById('rateMeta'),thxEl=document.getElementById('rateThanks');
+let rdb=null,ruid=null,myStars=0,avg=0,count=0;
+function paint(hover){starsEl.innerHTML='';const fill=hover||myStars||Math.round(avg);for(let i=1;i<=5;i++){const s=document.createElement('span');s.className='st'+((i<=fill)?' on':'');s.textContent='\u2605';s.setAttribute('role','radio');s.addEventListener('mouseenter',()=>paint(i));s.addEventListener('mouseleave',()=>paint(0));s.addEventListener('click',()=>rate(i));starsEl.appendChild(s);}}
+function showMeta(){if(count>0){metaEl.innerHTML='<b>'+avg.toFixed(1)+'</b> / 5 \u00b7 '+count+(count===1?' rating':' ratings');}else{metaEl.textContent='Be the first to rate this page.';}}
+function injectLD(){if(count<1)return;const el=document.getElementById('course-ld');if(!el)return;try{const o=JSON.parse(el.textContent);o.aggregateRating={"@type":"AggregateRating","ratingValue":Number(avg.toFixed(2)),"ratingCount":count,"bestRating":5,"worstRating":1};el.textContent=JSON.stringify(o);}catch(e){}}
+async function load(){try{const snap=await getDoc(doc(rdb,'lesson_ratings',GID));if(snap.exists()){const d=snap.data();count=d.count||0;avg=count?(d.sum||0)/count:0;}}catch(e){}
+  try{const v=await getDoc(doc(rdb,'lesson_ratings',GID,'voters',ruid));if(v.exists())myStars=v.data().stars||0;}catch(e){}
+  paint(0);showMeta();injectLD();if(myStars)thxEl.textContent='You rated this '+myStars+' \u2605. Tap to change.';}
+async function rate(stars){if(!rdb||!ruid){thxEl.textContent='Ratings save when online.';myStars=stars;paint(0);return;}
+  try{await runTransaction(rdb,async(tx)=>{const aggRef=doc(rdb,'lesson_ratings',GID),vRef=doc(rdb,'lesson_ratings',GID,'voters',ruid);const a=await tx.get(aggRef),v=await tx.get(vRef);let sum=a.exists()?(a.data().sum||0):0,c=a.exists()?(a.data().count||0):0;if(v.exists()){sum=sum-(v.data().stars||0)+stars;}else{sum+=stars;c+=1;}tx.set(aggRef,{sum,count:c},{merge:true});tx.set(vRef,{stars,at:Date.now()},{merge:true});});
+    myStars=stars;const snap=await getDoc(doc(rdb,'lesson_ratings',GID));if(snap.exists()){const d=snap.data();count=d.count||0;avg=count?(d.sum||0)/count:0;}
+    paint(0);showMeta();injectLD();thxEl.textContent='Thank you \u2014 your rating was saved.';}catch(e){thxEl.textContent='Could not save just now. Please try again.';}}
+try{const app=getApps().length?getApp():initializeApp(cfg);const auth=getAuth(app);rdb=getFirestore(app);paint(0);
+  onAuthStateChanged(auth,(u)=>{if(u){ruid=u.uid;load();}});
+  signInAnonymously(auth).catch(()=>{metaEl.textContent='Ratings are unavailable offline.';paint(0);});
+}catch(e){metaEl.textContent='Ratings are unavailable offline.';paint(0);}
+</script>
+</body>
+</html>
