@@ -105,6 +105,30 @@ a{color:var(--gold)}
   .rr-book{font-size:.8rem}
   .rr-listen-bar{left:16px;right:16px;transform:none;width:auto}
 }
+
+/* ── The Confidence Climb (game) ────────────────────────────── */
+  .gsu-game-card{display:flex;gap:18px;align-items:center;background:#000;border:1px solid rgba(201,168,76,.5);border-left:4px solid #C9A84C;border-radius:12px;padding:20px 22px;margin:26px 0 34px;font-family:Georgia,serif}
+  .gsu-game-card svg{flex:0 0 auto}
+  .gsu-game-card .gg-body{flex:1;min-width:0}
+  .gsu-game-card h4{margin:0 0 6px;color:#C9A84C;font-size:1.12rem;font-weight:normal;font-family:Georgia,serif}
+  .gsu-game-card p{margin:0 0 12px;color:#F5F1E8;font-size:1rem;line-height:1.6}
+  .gsu-game-card .gg-cta{display:inline-block;background:#C9A84C;color:#000;text-decoration:none;border-radius:4px;padding:9px 18px;font-size:.88rem;letter-spacing:.04em;font-family:Georgia,serif}
+  .gsu-game-card .gg-cta:hover{opacity:.87}
+  .gsu-game-card .gg-free{display:block;margin-top:9px;color:#b9b3a6;font-size:.83rem}
+  @media(max-width:640px){.gsu-game-card{flex-direction:column;align-items:flex-start;gap:12px}}
+</style>
+<style id="gsu-rtk-additions">/* v1.1 · canon parity Jul 29 2026: 5-star + GENO tutor notice (Chancellor's order) */
+.gsu-stars{display:flex;gap:6px;align-items:center;justify-content:center;margin:0 0 14px}
+.gsu-stars button{background:none;border:none;font-size:1.9rem;line-height:1;color:#5a4d28;cursor:pointer;padding:2px;transition:transform .12s,color .15s}
+.gsu-stars button.on,.gsu-stars button:hover,.gsu-stars button:hover~button.pre{color:#C9A84C}
+.gsu-stars button:hover{transform:scale(1.15)}
+.gsu-stars .gsu-stars-meta{color:#bdb7a8;font-family:Georgia,serif;font-size:.85rem;margin-left:10px}
+.gsu-geno-note{display:flex;gap:16px;align-items:center;background:#000;border:1px solid rgba(201,168,76,.5);border-left:4px solid #C9A84C;border-radius:12px;padding:18px 20px;margin:26px 0 34px;font-family:Georgia,serif}
+.gsu-geno-note img{width:64px;height:64px;border-radius:50%;border:2px solid #C9A84C;flex:0 0 auto}
+.gsu-geno-note p{margin:0;color:#F5F1E8;font-size:1.02rem;line-height:1.65}
+.gsu-geno-note b{color:#FFE9A8}
+.gsu-geno-note .gg-83{color:#7CB342;font-weight:700}
+@media(max-width:560px){.gsu-geno-note{flex-direction:column;text-align:center}}
 </style>
 </head>
 <body>
@@ -140,6 +164,12 @@ a{color:var(--gold)}
   <article class="rr-reader">
     <header class="rr-header">
       <div class="rr-kicker">The Sovereign Reading Room</div>
+      <!-- GSU 5-star module · lesson_ratings/the-readers-toolkit -->
+<div id="gsuStars" class="gsu-stars" aria-label="Rate this book">
+<button data-v="1" aria-label="1 star">&#9733;</button><button data-v="2" aria-label="2 stars">&#9733;</button><button data-v="3" aria-label="3 stars">&#9733;</button><button data-v="4" aria-label="4 stars">&#9733;</button><button data-v="5" aria-label="5 stars">&#9733;</button>
+<span class="gsu-stars-meta" id="gsuStarsMeta">Rate this book</span>
+</div>
+
       <h1>The Reader&#x27;s Toolkit</h1>
       <p class="rr-sub">Decoding — Turning Phonics Knowledge into Real-Time Reading Skill</p>
       <p class="rr-byline">By Dr. Gene A. Constant · Founding Chancellor, Global Sovereign University</p>
@@ -149,6 +179,23 @@ a{color:var(--gold)}
         <a href="https://www.amazon.com/dp/B0GXGTPB99?tag=gsu2026-20" target="_blank" rel="noopener" class="rr-door"><span class="rr-icon">◈</span> Own the Kindle — $3.99</a>
       </div>
     </header>
+
+<aside class="gsu-geno-note">
+<img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/69768f7aaae58ca85c3ce25e_Geno%20head-round.png" alt="GENO, the GSU AI tutor" loading="lazy">
+<p><b>Talk to GENO about this book &mdash; any time.</b> Click the <b>Need Help</b> chat box in the right corner to speak with GENO. He has memorized this entire book and can tutor you on any chapter to improve your understanding. <span class="gg-83">GENO speaks and listens in 83 languages.</span></p>
+</aside>
+
+<!-- The Decoding Climb — companion game -->
+<aside class="gsu-game-card">
+<svg width="74" height="74" viewBox="0 0 74 74" role="img" aria-label="The Decoding Climb"><title>The Decoding Climb</title><rect x="1" y="1" width="72" height="72" rx="10" fill="none" stroke="#C9A84C" stroke-opacity=".45"/><rect x="13" y="49" width="9" height="13" rx="2" fill="#C9A84C" fill-opacity=".45"/><rect x="26" y="41" width="9" height="21" rx="2" fill="#C9A84C" fill-opacity=".62"/><rect x="39" y="32" width="9" height="30" rx="2" fill="#C9A84C" fill-opacity=".8"/><rect x="52" y="23" width="9" height="39" rx="2" fill="#C9A84C"/><circle cx="56.5" cy="14" r="7.5" fill="none" stroke="#C9A84C" stroke-width="1.6"/><path d="M53.2 14.1l2.4 2.4 4.4-4.6" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div class="gg-body">
+<h4>Read it here &mdash; then play it: <em>The Decoding Climb</em></h4>
+<p>Sixty questions across four tiers, Bronze to Platinum, every one grounded in these twelve chapters and every answer explained. Miss one and you are linked back to the exact chapter that teaches it.</p>
+<a class="gg-cta" href="decoding-climb.html">Play The Decoding Climb</a>
+<span class="gg-free">Free forever &middot; no account &middot; your best score saves automatically.</span>
+</div>
+</aside>
+
 
     <section class="rr-chapter" id="ch-1" data-ch="1">
     <h2 class="rr-chapter-h">Chapter 1<span class="rr-chapter-sep">·</span><span class="rr-chapter-t">From Rules to Reading</span></h2>
@@ -2015,6 +2062,17 @@ a{color:var(--gold)}
       <p>That is what comes next.</p>
   </section>
   </article>
+
+<!-- End-of-book: prove it -->
+  <aside class="gsu-game-card" style="max-width:1200px;margin:34px auto 44px">
+<svg width="74" height="74" viewBox="0 0 74 74" role="img" aria-label="The Decoding Climb"><title>The Decoding Climb</title><rect x="1" y="1" width="72" height="72" rx="10" fill="none" stroke="#C9A84C" stroke-opacity=".45"/><rect x="13" y="49" width="9" height="13" rx="2" fill="#C9A84C" fill-opacity=".45"/><rect x="26" y="41" width="9" height="21" rx="2" fill="#C9A84C" fill-opacity=".62"/><rect x="39" y="32" width="9" height="30" rx="2" fill="#C9A84C" fill-opacity=".8"/><rect x="52" y="23" width="9" height="39" rx="2" fill="#C9A84C"/><circle cx="56.5" cy="14" r="7.5" fill="none" stroke="#C9A84C" stroke-width="1.6"/><path d="M53.2 14.1l2.4 2.4 4.4-4.6" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div class="gg-body">
+<h4>You have read the whole book. Now prove it.</h4>
+<p>Everything on <em>The Decoding Climb</em> is taught in the chapters above &mdash; we never test what we have not first given you. Sixty questions, four tiers, and a study list at the end naming every chapter you should revisit.</p>
+<a class="gg-cta" href="decoding-climb.html">Take the Climb</a>
+<span class="gg-free">Free forever &middot; no account &middot; miss a question and you are told exactly which chapter to reread.</span>
+</div>
+</aside>
 </main>
 
 <div class="rr-listen-bar" id="rr-listen-bar" aria-live="polite">
@@ -2025,37 +2083,7 @@ a{color:var(--gold)}
   </div>
 </div>
 
-<!-- GSU star-rating widget (auto-keyed, voters subcollection) -->
-<!-- ===== GSU 5-STAR RATING WIDGET · paste-anywhere · auto-keyed by page filename ===== -->
-<div id="gsu-rate" style="max-width:640px;margin:30px auto;padding:22px 24px;background:#000;border:1px solid #C9A84C;border-radius:14px;font-family:Inter,system-ui,Arial,sans-serif;color:#F5F1E8;text-align:center;box-shadow:0 6px 22px rgba(201,168,76,.12);">
-  <div style="font-family:Georgia,serif;color:#C9A84C;font-size:1.1rem;letter-spacing:.3px;margin-bottom:6px;">Rate this book</div>
-  <div id="gsu-rate-avg" style="font-size:.95rem;color:#B0A06E;margin-bottom:12px;">Loading ratings&hellip;</div>
-  <div id="gsu-rate-stars" role="radiogroup" aria-label="Rate this book" style="font-size:2.1rem;line-height:1;letter-spacing:8px;cursor:pointer;user-select:none;">
-    <span data-v="1" role="radio" aria-label="1 star">&#9734;</span><span data-v="2" role="radio" aria-label="2 stars">&#9734;</span><span data-v="3" role="radio" aria-label="3 stars">&#9734;</span><span data-v="4" role="radio" aria-label="4 stars">&#9734;</span><span data-v="5" role="radio" aria-label="5 stars">&#9734;</span>
-  </div>
-  <div id="gsu-rate-msg" style="font-size:.84rem;color:#8A8460;margin-top:12px;min-height:1.1em;">Tap a star to rate</div>
-</div>
-<script type="module">
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-const cfg={apiKey:"AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",authDomain:"gsu-handshake.firebaseapp.com",projectId:"gsu-handshake",appId:"1:301089416765:web:dff926a7aa52191e9a6c54"};
-const app = getApps().length ? getApp() : initializeApp(cfg);
-const auth = getAuth(app), db = getFirestore(app);
-const GAME_ID = (location.pathname.split("/").pop()||"game").replace(/\.html?$/i,"") || "game";
-const aRef = doc(db,"lesson_ratings",GAME_ID);
-const stars=[...document.querySelectorAll("#gsu-rate-stars span")];
-const avgEl=document.getElementById("gsu-rate-avg"), msgEl=document.getElementById("gsu-rate-msg");
-let uid=null, myVote=0, hover=0;
-function paint(n){stars.forEach(s=>{const on=(+s.dataset.v)<=n;s.innerHTML=on?"&#9733;":"&#9734;";s.style.color=on?"#C9A84C":"#5b5430";});}
-function injectSchema(avg,count){if(!count)return;let el=document.getElementById("gsu-rate-schema");if(!el){el=document.createElement("script");el.type="application/ld+json";el.id="gsu-rate-schema";document.head.appendChild(el);}const nm=(document.title||GAME_ID).replace(/\s*[|\u2013\u2014-].*$/,"").trim()||GAME_ID;el.textContent=JSON.stringify({"@context":"https://schema.org","@type":"Game","@id":location.href,"name":nm,"url":location.href,"aggregateRating":{"@type":"AggregateRating","ratingValue":avg.toFixed(1),"ratingCount":count,"bestRating":"5","worstRating":"1"}});}
-function showAvg(sum,count){if(!count){avgEl.textContent="Be the first to rate this game";paint(hover||myVote);return;}const a=sum/count;paint(hover||myVote||Math.round(a));avgEl.innerHTML='<span style="color:#C9A84C;font-weight:600;">'+a.toFixed(1)+' &#9733;</span> &middot; '+count+' rating'+(count==1?"":"s");injectSchema(a,count);}
-stars.forEach(s=>{s.addEventListener("mouseenter",()=>{hover=+s.dataset.v;paint(hover);});s.addEventListener("mouseleave",()=>{hover=0;paint(myVote);});s.addEventListener("click",()=>vote(+s.dataset.v));});
-async function load(){try{const snap=await getDoc(aRef);const d=snap.exists()?snap.data():{sum:0,count:0};showAvg(d.sum||0,d.count||0);}catch(e){avgEl.textContent="Ratings unavailable right now";}}
-async function vote(n){if(!uid){msgEl.textContent="Connecting&hellip; tap again in a moment";return;}msgEl.textContent="Saving&hellip;";try{await runTransaction(db,async(tx)=>{const vRef=doc(db,"lesson_ratings",GAME_ID,"voters",uid);const aS=await tx.get(aRef);const vS=await tx.get(vRef);let sum=(aS.exists()&&aS.data().sum)||0,count=(aS.exists()&&aS.data().count)||0;const prev=vS.exists()?(vS.data().stars||0):0;if(prev){sum=sum-prev+n;}else{sum+=n;count+=1;}tx.set(aRef,{sum,count},{merge:true});tx.set(vRef,{stars:n});});myVote=n;msgEl.textContent="Thank you &mdash; your rating is saved!";await load();}catch(e){msgEl.textContent="Could not save your rating";}}
-onAuthStateChanged(auth,(u)=>{if(u){uid=u.uid;getDoc(doc(db,"lesson_ratings",GAME_ID,"voters",u.uid)).then(s=>{if(s.exists()){myVote=s.data().stars||0;paint(myVote);msgEl.textContent="You rated this game &mdash; tap a star to change it";}}).catch(()=>{});}else{signInAnonymously(auth).catch(()=>{msgEl.textContent="Sign-in unavailable";});}});
-load();
-</script>
+
 
 <footer class="rr-footer">
   <p class="rr-mission">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." — Dr. Gene A. Constant</p>
@@ -2281,5 +2309,37 @@ load();
 })();
 </script>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+  try{
+    if(!firebase.apps.length){firebase.initializeApp({apiKey:'AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc',authDomain:'gsu-handshake.firebaseapp.com',projectId:'gsu-handshake'});}
+    var db=firebase.firestore(),LID='the-readers-toolkit',uid=null;
+    var wrap=document.getElementById('gsuStars'),meta=document.getElementById('gsuStarsMeta');
+    if(!wrap)return;
+    var btns=[].slice.call(wrap.querySelectorAll('button'));
+    function paint(n){btns.forEach(function(b,i){b.classList.toggle('on',i<n);});}
+    function showAvg(){db.collection('lesson_ratings').doc(LID).get().then(function(d){
+      if(d.exists){var x=d.data();if(x.count>0){meta.textContent=(x.sum/x.count).toFixed(1)+' \u2605 \u00b7 '+x.count+' rating'+(x.count===1?'':'s');}}
+    }).catch(function(){});}
+    firebase.auth().signInAnonymously().then(function(c){
+      uid=c.user.uid;showAvg();
+      db.collection('lesson_ratings').doc(LID).collection('votes').doc(uid).get().then(function(v){if(v.exists)paint(v.data().v);}).catch(function(){});
+    }).catch(function(){meta.textContent='Rate this book';});
+    btns.forEach(function(b){b.addEventListener('click',function(){
+      var v=parseInt(b.getAttribute('data-v'),10);paint(v);
+      if(!uid){return;}
+      var ref=db.collection('lesson_ratings').doc(LID),vref=ref.collection('votes').doc(uid);
+      db.runTransaction(function(t){return t.get(ref).then(function(d){return t.get(vref).then(function(pv){
+        var s=d.exists?(d.data().sum||0):0,c=d.exists?(d.data().count||0):0;
+        if(pv.exists){s=s-(pv.data().v||0)+v;}else{s+=v;c+=1;}
+        t.set(ref,{sum:s,count:c},{merge:true});t.set(vref,{v:v,t:firebase.firestore.FieldValue.serverTimestamp()});
+      });});}).then(function(){meta.textContent='Thank you! Your rating is saved.';setTimeout(showAvg,900);}).catch(function(){});
+    });});
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
