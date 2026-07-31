@@ -3,454 +3,522 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Barter Bookshelf — Global Sovereign University</title>
-<meta name="description" content="Where mastery becomes currency. Read a GSU book free, master it with GENO, teach an hour of what you know, receive an hour of what someone else knows. Hour for hour. Mind for mind.">
-<meta property="og:title" content="The Barter Bookshelf — GSU">
-<meta property="og:description" content="Where mastery becomes currency. A new door on the Reading Room shelf.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://read.globalsovereignuniversity.org/barter-bookshelf.html">
-
+<title>The Barter Bookshelf — Learn the Oldest Economy on Earth | Global Sovereign University</title>
+<meta name="description" content="Read The Art and Mechanics of Barter free, train on the four instruments of trade, then run the Trade Climb — a procedural barter game where every Token of skill is earned, never given. Free forever from Global Sovereign University.">
+<!-- ================================================================
+     THE BARTER BOOKSHELF v2.0 · Jul 31 2026 · Full rebuild per the
+     Chancellor's directive: "I am uncertain how entertaining and
+     learnable the task of barter is happening here. In fact it is not."
+     v2 makes the page BARTER-FIRST: the book (The Art and Mechanics of
+     Barter, free reader live), the Instrument Bench (4 teaching
+     instruments drawn from Chapter 1's actual vocabulary), and the
+     Trade Climb (procedural game, hearts, Bronze/Silver/Gold tiers,
+     serial-numbered printable Trader's Charter). The original Four
+     Doors teach-trade concept is preserved as a compact strip so the
+     homepage embed's promise stays true. Self-contained, no external
+     dependencies, prefers-reduced-motion honored. Namespace .bb-.
+     Brand: pure black #000000 · gold #C9A84C · cream #F5F1E8 · Georgia.
+     ================================================================ -->
 <style>
-  html,body{margin:0;padding:0;background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;line-height:1.6;-webkit-font-smoothing:antialiased}
-  *{box-sizing:border-box}
-  a{color:#C9A84C;text-decoration:none}
-  a:hover{text-decoration:underline}
-
-  /* Return bar */
-  .bb-return-bar{background:#000;border-bottom:1px solid rgba(201,168,76,0.2);padding:12px 24px;text-align:center;font-size:12px;letter-spacing:0.14em;text-transform:uppercase}
-  .bb-return-bar a{color:rgba(245,241,232,0.7)}
-  .bb-return-bar a:hover{color:#C9A84C;text-decoration:none}
-
-  /* Layout */
-  .bb-wrap{max-width:1180px;margin:0 auto;padding:0 32px}
-  .bb-section{padding:80px 0;border-bottom:1px solid rgba(201,168,76,0.12)}
-  .bb-section:last-of-type{border-bottom:none}
-
-  /* Hero */
-  .bb-hero{text-align:center;padding:88px 32px 72px 32px}
-  .bb-eyebrow{display:inline-block;border:1px solid #C9A84C;color:#C9A84C;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;padding:8px 20px;border-radius:999px;margin-bottom:22px}
-  .bb-title{font-size:72px;font-weight:400;line-height:1.05;letter-spacing:-0.01em;margin:0 0 12px 0;color:#F5F1E8}
-  .bb-subtitle{font-size:26px;font-style:italic;color:#C9A84C;margin:0 0 40px 0;font-weight:400}
-  .bb-hero-intro{max-width:44em;margin:0 auto;text-align:left}
-  .bb-hero-intro p{font-size:17px;line-height:1.75;margin:0 0 18px 0}
-  .bb-hero-intro p:last-child{margin-bottom:0}
-  .bb-hero-intro strong{color:#C9A84C;font-weight:400;font-style:italic}
-
-  /* Section heading */
-  .bb-h2{font-size:40px;font-weight:400;text-align:center;margin:0 0 12px 0;color:#F5F1E8;line-height:1.15}
-  .bb-h2-sub{text-align:center;font-style:italic;color:#C9A84C;margin:0 0 48px 0;font-size:18px}
-
-  /* Four Doors */
-  .bb-doors{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:14px}
-  .bb-door{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:24px;padding:24px 28px;border:1px solid rgba(201,168,76,0.28);background:rgba(201,168,76,0.02)}
-  .bb-door-left{text-align:center}
-  .bb-door-num{font-size:44px;color:#C9A84C;line-height:1;margin-bottom:6px}
-  .bb-door-label{font-size:12px;letter-spacing:0.28em;color:#C9A84C;text-transform:uppercase}
-  .bb-door-right p{margin:0 0 6px 0;font-size:17px;color:#F5F1E8;line-height:1.6}
-  .bb-door-right .bb-in-practice{color:rgba(245,241,232,0.6);font-style:italic;font-size:14px;margin-top:8px}
-
-  /* Tiers */
-  .bb-tiers{max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-  .bb-tier{border:1px solid rgba(201,168,76,0.28);background:rgba(201,168,76,0.02);padding:24px 18px;text-align:center;transition:border-color 0.3s,background 0.3s}
-  .bb-tier:hover{border-color:#C9A84C;background:rgba(201,168,76,0.06)}
-  .bb-tier-stars{color:#C9A84C;font-size:18px;letter-spacing:0.06em;margin-bottom:12px;height:22px}
-  .bb-tier-stars-off{color:rgba(201,168,76,0.2)}
-  .bb-tier-name{font-size:16px;color:#F5F1E8;letter-spacing:0.04em;margin-bottom:8px}
-  .bb-tier-req{color:rgba(245,241,232,0.55);font-size:12px;font-style:italic;line-height:1.5}
-
-  /* Two-column: Leaderboard + Ledger */
-  .bb-twocol{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1060px;margin:0 auto}
-  .bb-panel{border:1px solid #C9A84C;padding:32px 28px;background:rgba(0,0,0,0.6)}
-  .bb-panel-eyebrow{color:#C9A84C;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;text-align:center;margin-bottom:4px}
-  .bb-panel-sub{color:rgba(245,241,232,0.5);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;text-align:center;margin-bottom:24px}
-  ol.bb-board{list-style:none;padding:0;margin:0}
-  ol.bb-board li{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(201,168,76,0.15);font-size:15px}
-  ol.bb-board li:last-child{border-bottom:none}
-  .bb-rank{color:#C9A84C;font-size:14px;text-align:right}
-  .bb-alias{color:#F5F1E8;letter-spacing:0.02em}
-  .bb-alias .bb-count{color:rgba(245,241,232,0.5);font-size:12px;font-style:italic;margin-left:6px}
-  .bb-stars-inline{color:#C9A84C;font-size:14px;letter-spacing:0.05em;white-space:nowrap}
-  .bb-stars-off-inline{color:rgba(201,168,76,0.22)}
-  .bb-trade{min-height:180px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;transition:opacity 0.5s ease}
-  .bb-trade-book{font-size:22px;color:#F5F1E8;font-style:italic;line-height:1.35;max-width:26em}
-  .bb-trade-swap{color:#C9A84C;font-size:28px;margin:12px 0}
-  .bb-trade-terms{color:#C9A84C;font-size:11px;letter-spacing:0.18em;margin-top:20px;text-transform:uppercase}
-  .bb-trade-dot{color:rgba(201,168,76,0.5);margin:0 6px}
-
-  /* How to Earn */
-  .bb-earn-list{max-width:720px;margin:0 auto;padding:0;list-style:none;counter-reset:earnstep}
-  .bb-earn-list li{counter-increment:earnstep;display:grid;grid-template-columns:52px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid rgba(201,168,76,0.15);align-items:baseline}
-  .bb-earn-list li:last-child{border-bottom:none}
-  .bb-earn-list li::before{content:counter(earnstep);color:#C9A84C;font-size:28px;line-height:1;text-align:right}
-  .bb-earn-list li p{margin:0;font-size:16px;line-height:1.6}
-  .bb-earn-list li strong{color:#C9A84C;font-weight:400;font-style:italic}
-
-  /* FAQ */
-  .bb-faq{max-width:820px;margin:0 auto}
-  .bb-faq details{border-bottom:1px solid rgba(201,168,76,0.15);padding:20px 0}
-  .bb-faq details:last-child{border-bottom:none}
-  .bb-faq summary{cursor:pointer;color:#F5F1E8;font-size:18px;padding:4px 0;position:relative;padding-right:32px;list-style:none;line-height:1.4}
-  .bb-faq summary::-webkit-details-marker{display:none}
-  .bb-faq summary::after{content:'+';color:#C9A84C;position:absolute;right:0;top:2px;font-size:26px;line-height:1;transition:transform 0.2s}
-  .bb-faq details[open] summary::after{content:'−'}
-  .bb-faq details[open] summary{color:#C9A84C}
-  .bb-faq-answer{color:rgba(245,241,232,0.85);padding-top:14px;line-height:1.7;font-size:15px}
-  .bb-faq-answer p{margin:0 0 10px 0}
-  .bb-faq-answer p:last-child{margin-bottom:0}
-
-  /* Actions row */
-  .bb-actions-row{max-width:720px;margin:48px auto 0 auto;text-align:center}
-  .bb-actions-row .bb-cta{display:inline-block;background:#C9A84C;color:#000;padding:16px 40px;font-size:14px;letter-spacing:0.16em;text-transform:uppercase;border:1px solid #C9A84C;text-decoration:none;transition:background 0.2s,color 0.2s;margin:0 8px 12px 8px}
-  .bb-actions-row .bb-cta:hover{background:#000;color:#C9A84C;text-decoration:none}
-  .bb-actions-row .bb-cta-outline{background:transparent;color:#C9A84C}
-  .bb-actions-row .bb-cta-outline:hover{background:#C9A84C;color:#000}
-  .bb-rate-row{margin-top:32px;color:rgba(245,241,232,0.7);font-size:14px}
-  .bb-rate-row .bb-rate-stars{color:#C9A84C;font-size:20px;letter-spacing:0.08em;margin-left:8px;cursor:pointer}
-
-  /* Footer */
-  .bb-footer{padding:56px 32px 40px 32px;text-align:center}
-  .bb-footer-mission{max-width:44em;margin:0 auto 32px auto;font-style:italic;font-size:15px;color:rgba(245,241,232,0.7);line-height:1.7}
-  .bb-footer-line{color:rgba(245,241,232,0.45);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding-top:24px;border-top:1px solid rgba(201,168,76,0.15)}
-  .bb-footer-line .bb-dot{color:rgba(201,168,76,0.5);margin:0 8px}
-
-  /* Responsive */
-  @media (max-width:900px){
-    .bb-hero{padding:56px 20px 48px 20px}
-    .bb-title{font-size:44px}
-    .bb-subtitle{font-size:20px}
-    .bb-hero-intro p{font-size:16px}
-    .bb-section{padding:56px 0}
-    .bb-h2{font-size:30px}
-    .bb-wrap{padding:0 20px}
-    .bb-door{grid-template-columns:80px 1fr;padding:18px 20px;gap:16px}
-    .bb-door-num{font-size:32px}
-    .bb-door-right p{font-size:15px}
-    .bb-tiers{grid-template-columns:1fr 1fr;gap:12px}
-    .bb-twocol{grid-template-columns:1fr}
-    .bb-earn-list li{grid-template-columns:36px 1fr;gap:14px}
-    .bb-earn-list li::before{font-size:22px}
-  }
-  @media (max-width:520px){
-    .bb-tiers{grid-template-columns:1fr}
-  }
+:root{--gold:#C9A84C;--cream:#F5F1E8;--ink:#000000;--teal:#1A8B7F;--hi:#FFE9A8}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:Georgia,'Times New Roman',serif;line-height:1.65}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--hi)}
+.bb-wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+.bb-back{display:inline-block;margin:18px 0 0;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);opacity:.85}
+.bb-kick{color:var(--teal);letter-spacing:3px;text-transform:uppercase;font-size:.78rem;margin:0 0 10px}
+h1,h2,h3{font-family:Georgia,serif;color:var(--gold);line-height:1.15}
+h1{font-size:clamp(2.1rem,5vw,3.4rem);color:var(--cream)}
+h1 em{color:var(--gold);font-style:normal}
+h2{font-size:clamp(1.5rem,3vw,2.2rem);margin:0 0 14px}
+.bb-sub{font-style:italic;color:var(--gold);font-size:clamp(1.05rem,2vw,1.3rem);margin:10px 0 0}
+section{padding:clamp(44px,6vw,76px) 0;border-top:1px solid rgba(201,168,76,.16)}
+section:first-of-type{border-top:none}
+p{font-size:clamp(1rem,1.4vw,1.12rem);margin:0 0 1em}
+p b{color:var(--hi)}
+.bb-btn{display:inline-block;background:var(--gold);color:#000;font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:.98rem;letter-spacing:.04em;padding:14px 30px;border-radius:8px;border:2px solid var(--gold);transition:.16s;cursor:pointer}
+.bb-btn:hover{background:var(--hi);border-color:var(--hi);color:#000;transform:translateY(-2px)}
+.bb-btn.ghost{background:transparent;color:var(--gold)}
+.bb-btn.ghost:hover{background:rgba(201,168,76,.12);color:var(--hi)}
+.bb-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+/* HERO */
+.bb-hero{padding:clamp(40px,6vw,70px) 0 clamp(36px,5vw,56px);text-align:left}
+.bb-hero .lede{max-width:46em;margin-top:18px;font-size:clamp(1.05rem,1.6vw,1.2rem)}
+/* BOOK */
+.bb-book{display:grid;grid-template-columns:300px 1fr;gap:clamp(26px,4vw,56px);align-items:center}
+.bb-spine{aspect-ratio:5/8;border:1px solid var(--gold);border-radius:10px;background:
+ radial-gradient(120% 90% at 50% 0%,rgba(201,168,76,.22),transparent 60%),#0b0903;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 20px;
+ box-shadow:0 22px 60px rgba(0,0,0,.7),0 0 44px rgba(201,168,76,.18)}
+.bb-spine .t1{font-size:.72rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+.bb-spine .t2{font-size:1.7rem;color:var(--cream);line-height:1.2}
+.bb-spine .t2 b{color:var(--gold);font-weight:400;font-style:italic}
+.bb-spine .rule{width:64px;height:1px;background:var(--gold);margin:18px auto;opacity:.6}
+.bb-spine .t3{font-size:.86rem;color:rgba(245,241,232,.7);font-style:italic}
+.bb-spine .t4{margin-top:20px;font-size:.7rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.bb-offer{font-size:.9rem;color:rgba(245,241,232,.62);margin-top:14px}
+.bb-offer b{color:var(--gold)}
+/* FOUR DOORS strip */
+.bb-doors{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:26px}
+.bb-door{border:1px solid rgba(201,168,76,.28);border-radius:10px;padding:16px 16px;background:rgba(201,168,76,.03)}
+.bb-door .dn{font-size:1.3rem;color:var(--gold);margin-bottom:4px}
+.bb-door .dl{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.bb-door p{font-size:.85rem;color:rgba(245,241,232,.78);margin:0;line-height:1.5}
+/* BENCH */
+.bb-bench{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.bb-inst{border:1px solid rgba(201,168,76,.35);border-radius:14px;background:#070502;padding:22px 22px 24px;position:relative}
+.bb-inst h3{font-size:1.15rem;margin:0 0 4px}
+.bb-inst .why{font-size:.82rem;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+.bb-inst .lesson{font-size:.92rem;color:rgba(245,241,232,.82);margin-bottom:14px;line-height:1.55}
+.bb-play{font-family:Arial,sans-serif;font-size:.85rem;font-weight:bold;letter-spacing:.06em;background:transparent;color:var(--gold);border:1.5px solid var(--gold);border-radius:8px;padding:10px 18px;cursor:pointer;transition:.15s}
+.bb-play:hover{background:var(--gold);color:#000}
+/* GAME */
+#bb-game{border:1px solid var(--gold);border-radius:16px;background:
+ radial-gradient(140% 100% at 50% 0%,rgba(201,168,76,.10),transparent 55%),#050301;
+ padding:clamp(22px,3.5vw,40px);margin-top:30px;box-shadow:0 0 60px rgba(201,168,76,.12)}
+.bb-hud{display:flex;gap:18px;flex-wrap:wrap;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,168,76,.25);padding-bottom:14px;margin-bottom:20px}
+.bb-hud .stat{font-family:Arial,sans-serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,241,232,.65)}
+.bb-hud .stat b{display:block;font-family:Georgia,serif;font-size:1.5rem;letter-spacing:0;color:var(--gold);text-transform:none;font-variant-numeric:tabular-nums}
+.bb-hearts{font-size:1.25rem;letter-spacing:.18em;color:var(--gold)}
+.bb-hearts .off{opacity:.22}
+.bb-tier{font-family:Arial,sans-serif;font-size:.72rem;font-weight:bold;letter-spacing:.16em;border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:6px 14px;text-transform:uppercase}
+.bb-stage{min-height:300px}
+.bb-scen{font-size:clamp(1.02rem,1.6vw,1.18rem);color:var(--cream);margin-bottom:8px}
+.bb-scen b{color:var(--hi)}
+.bb-ftype{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.bb-cards{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+.bb-card{display:block;width:100%;text-align:left;font-family:Georgia,serif;font-size:1rem;color:var(--cream);background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.35);border-radius:10px;padding:15px 18px;cursor:pointer;transition:.14s;line-height:1.5}
+.bb-card:hover{border-color:var(--gold);background:rgba(201,168,76,.09)}
+.bb-card small{display:block;color:rgba(245,241,232,.6);font-size:.82rem;margin-top:2px}
+.bb-card.good{border-color:#7CB342;background:rgba(124,179,66,.10)}
+.bb-card.bad{border-color:#b3543a;background:rgba(179,84,58,.10)}
+.bb-verdict{margin-top:18px;border-left:3px solid var(--gold);padding:12px 16px;background:rgba(201,168,76,.05);border-radius:0 10px 10px 0;font-size:.98rem}
+.bb-verdict b{color:var(--gold)}
+.bb-verdict .src{display:block;margin-top:6px;font-size:.78rem;font-style:italic;color:rgba(245,241,232,.55)}
+.bb-next{margin-top:16px}
+.bb-remed{border:1px solid rgba(179,84,58,.6);border-radius:12px;padding:18px 20px;background:rgba(179,84,58,.06);margin-top:16px}
+.bb-remed h4{color:#e2a18f;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+.bb-remed p{font-size:.95rem;margin-bottom:10px}
+/* CHARTER */
+.bb-charter{border:1px dashed rgba(201,168,76,.5);border-radius:14px;padding:22px;margin-top:22px;text-align:center}
+.bb-charter input{font-family:Georgia,serif;font-size:1rem;color:var(--cream);background:#000;border:1px solid rgba(201,168,76,.5);border-radius:8px;padding:12px 16px;width:min(320px,100%);text-align:center;margin:10px 0 14px}
+.bb-serial{font-family:Arial,sans-serif;font-size:.8rem;letter-spacing:.16em;color:var(--teal);margin-top:10px}
+/* SHELF */
+.bb-shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+.bb-shelfcard{border:1px solid rgba(201,168,76,.3);border-radius:12px;padding:22px;background:rgba(201,168,76,.03)}
+.bb-shelfcard .st{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);display:inline-block;border-radius:999px;padding:4px 12px;margin-bottom:12px}
+.bb-shelfcard h3{font-size:1.12rem;margin-bottom:8px;color:var(--cream)}
+.bb-shelfcard p{font-size:.9rem;color:rgba(245,241,232,.72);margin-bottom:12px;line-height:1.55}
+.bb-shelfcard a{font-family:Arial,sans-serif;font-size:.8rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase}
+/* ECOSYSTEM */
+.bb-eco{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.bb-found{text-align:center;color:rgba(245,241,232,.45);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;border-top:1px solid rgba(201,168,76,.15);padding:26px 0 40px;margin-top:20px}
+.bb-found .d{color:rgba(201,168,76,.5);margin:0 8px}
+@media(max-width:900px){
+  .bb-book{grid-template-columns:1fr}
+  .bb-spine{max-width:280px;margin:0 auto}
+  .bb-bench{grid-template-columns:1fr}
+  .bb-doors{grid-template-columns:1fr 1fr}
+  .bb-shelf{grid-template-columns:1fr}
+}
+@media(max-width:520px){.bb-doors{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* PRINT: charter only */
+@media print{
+  body *{visibility:hidden}
+  #bb-cert,#bb-cert *{visibility:visible}
+  #bb-cert{position:absolute;inset:0;background:#fff;color:#000;padding:60px;font-family:Georgia,serif}
+}
+#bb-cert{display:none}
+@media print{#bb-cert{display:block}}
+#bb-cert h2{color:#000;border-bottom:2px solid #000;padding-bottom:12px}
+#bb-cert .c-name{font-size:2rem;margin:24px 0 6px}
+#bb-cert .c-line{margin:8px 0;font-size:1.05rem}
+#bb-cert .c-serial{margin-top:28px;font-family:Arial,sans-serif;font-size:.85rem;letter-spacing:.1em}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LearningResource","name":"The Barter Bookshelf","description":"A free interactive lesson and game teaching the mechanics of barter: value without price tags, the double coincidence of wants, trade ratios, negotiation, and multi-party trade loops. Companion to The Art and Mechanics of Barter by Dr. Gene A Constant.","provider":{"@type":"Organization","name":"Global Sovereign University","url":"https://www.globalsovereignuniversity.org"},"educationalLevel":"Adult education","learningResourceType":"Interactive lesson and game","isAccessibleForFree":true}
+</script>
 </head>
 <body>
 
-<!-- ============ RETURN BAR ============ -->
-<nav class="bb-return-bar" aria-label="Return to main site">
-  <a href="https://www.globalsovereignuniversity.org/">&larr; Back to Global Sovereign University</a>
-</nav>
+<div class="bb-wrap"><a class="bb-back" href="https://www.globalsovereignuniversity.org">&larr; Back to Global Sovereign University</a></div>
 
-<!-- ============ HERO ============ -->
-<header class="bb-hero">
-  <div class="bb-wrap">
-    <span class="bb-eyebrow">The Fourth Door</span>
-    <h1 class="bb-title">The Barter Bookshelf</h1>
-    <p class="bb-subtitle">Where mastery becomes currency.</p>
-    <div class="bb-hero-intro">
-      <p>Every book on the Reading Room shelf can be read, heard, or discussed with GENO &mdash; our AI tutor who speaks and listens in 83 languages. That is three doors. The Barter Bookshelf adds a <strong>fourth</strong>.</p>
-      <p>Once you have truly mastered a book &mdash; not skimmed it, not memorized it, but understood it well enough to walk another person through it &mdash; your understanding becomes tradable currency. Teach an hour of what you now know. Receive an hour of what someone else knows. No money changes hands. GENO verifies both sides. The Trustline Ledger keeps score.</p>
-      <p>Your library stops being a shelf you consume from. It becomes a marketplace you participate in. And the person you trade with is not a stranger from nowhere. They are a peer who has done exactly what you have done &mdash; opened a book, walked its arguments, and earned the standing to teach it.</p>
+<!-- ═══════════ HERO ═══════════ -->
+<section class="bb-hero"><div class="bb-wrap">
+  <p class="bb-kick">The Sovereign Barter &middot; The Training Floor</p>
+  <h1>The <em>Barter Bookshelf</em></h1>
+  <p class="bb-sub">Read the craft. Then run the trades.</p>
+  <p class="lede">Long before money, there was the deal — and the deal is a <b>skill</b>. This shelf holds the book that teaches it, the bench where you practice its moves, and the Climb where you prove them. No login. No cost. Every rank <b>earned, never given</b>.</p>
+  <div class="bb-ctas">
+    <a class="bb-btn" href="#bb-climb-sec">Run the Trade Climb &rarr;</a>
+    <a class="bb-btn ghost" href="https://read.globalsovereignuniversity.org/the-art-and-mechanics-of-barter-reader.html">Read the Book Free</a>
+  </div>
+</div></section>
+
+<!-- ═══════════ THE BOOK ═══════════ -->
+<section id="bb-book-sec"><div class="bb-wrap">
+  <div class="bb-book">
+    <a class="bb-spine" href="https://read.globalsovereignuniversity.org/the-art-and-mechanics-of-barter-reader.html" aria-label="Read The Art and Mechanics of Barter free">
+      <span class="t1">Global Sovereign University</span>
+      <span class="t2">The <b>Art</b> and <b>Mechanics</b> of Barter</span>
+      <span class="rule"></span>
+      <span class="t3">The oldest economy on Earth, taught as a working skill</span>
+      <span class="t4">Dr. Gene A Constant</span>
+    </a>
+    <div>
+      <p class="bb-kick">The Cornerstone Volume</p>
+      <h2>Money is one way to trade. It was never the only way.</h2>
+      <p>Eight chapters rebuild the complete craft of barter for the modern American: valuing what you already own, negotiating with dignity, and running the multi-party <b>trade loops</b> that dissolve barter's famous "double coincidence of wants" without a dollar changing hands.</p>
+      <p>The book gives the Climb below its curriculum — <b>cost vs. price vs. value</b>, utility, scarcity, trade ratios, scope and settlement, reputation collateral. Every floor you face down there is drawn from what's taught up here.</p>
+      <div class="bb-ctas">
+        <a class="bb-btn" href="https://read.globalsovereignuniversity.org/the-art-and-mechanics-of-barter-reader.html">Read the Full Book Free &rarr;</a>
+      </div>
+      <p class="bb-offer">Free to read on GSU, cover to cover &middot; GENO, the free GSU AI tutor, holds the entire book in his knowledge base and will discuss any chapter with you in <b>83 languages</b> &middot; Kindle edition <b>$3.99</b> — forging in the press now</p>
     </div>
   </div>
-</header>
 
-<!-- ============ THE FOUR DOORS ============ -->
-<section class="bb-section" aria-labelledby="bb-doors-title">
-  <div class="bb-wrap">
-    <h2 class="bb-h2" id="bb-doors-title">The four doors, one at a time</h2>
-    <p class="bb-h2-sub">Every trader walks the same path.</p>
-    <div class="bb-doors">
-      <div class="bb-door">
-        <div class="bb-door-left"><div class="bb-door-num">I</div><div class="bb-door-label">Read</div></div>
-        <div class="bb-door-right">
-          <p>Open any book on the Reading Room shelf. Read it in English, or tap Listen and your own device reads every chapter aloud. Free forever.</p>
-          <p class="bb-in-practice">In practice: pick a book that matters to your life &mdash; a trade, a subject, a skill you have always wanted. Read at your own pace &mdash; the Reading Room saves your place. Not a reader? Tap Listen and your phone, tablet, or computer reads it to you cover to cover, in whatever voice your device already speaks in.</p>
-        </div>
-      </div>
-      <div class="bb-door">
-        <div class="bb-door-left"><div class="bb-door-num">II</div><div class="bb-door-label">Master</div></div>
-        <div class="bb-door-right">
-          <p>GENO walks you through the book chapter by chapter, in any of 83 languages, until you truly know it &mdash; not memorized, understood.</p>
-          <p class="bb-in-practice">In practice: after each chapter, GENO asks the kind of questions a teacher would. If you can answer them in your own words, you have mastered that chapter. When every chapter is mastered, the book is yours to teach.</p>
-        </div>
-      </div>
-      <div class="bb-door">
-        <div class="bb-door-left"><div class="bb-door-num">III</div><div class="bb-door-label">Teach</div></div>
-        <div class="bb-door-right">
-          <p>Offer an hour of tutoring on the book you mastered. Post it on the Trustline Ledger with the terms you will honor.</p>
-          <p class="bb-in-practice">In practice: your listing shows the book, your Barter stature, and the time you are willing to spend. Peers browse the Ledger the way a customer browses a bookshelf.</p>
-        </div>
-      </div>
-      <div class="bb-door">
-        <div class="bb-door-left"><div class="bb-door-num">IV</div><div class="bb-door-label">Trade</div></div>
-        <div class="bb-door-right">
-          <p>GENO matches you with a peer who mastered a book you want to learn. Hour for hour. Mind for mind.</p>
-          <p class="bb-in-practice">In practice: both sides teach, both sides learn, both sides log the trade. GENO stands by as the honest broker if either side has a question or a dispute.</p>
-        </div>
-      </div>
+  <!-- Four Doors — the promise the homepage makes, kept compact -->
+  <div class="bb-doors" aria-label="The four doors of the Barter Bookshelf">
+    <div class="bb-door"><div class="dn">I</div><div class="dl">Read</div><p>Open the book free — chapters, navigation, your place saved. Or tap Listen and your own device reads it aloud.</p></div>
+    <div class="bb-door"><div class="dn">II</div><div class="dl">Master</div><p>GENO walks the arguments with you until you truly know them — not memorized, understood.</p></div>
+    <div class="bb-door"><div class="dn">III</div><div class="dl">Practice</div><p>The Instrument Bench and the Trade Climb below turn the chapters into reps. Skill is built by running trades.</p></div>
+    <div class="bb-door"><div class="dn">IV</div><div class="dl">Trade</div><p>Take it to the real economy — the Sovereign Barter, the Frankenstein Exchange, your own street. Mastery becomes currency.</p></div>
+  </div>
+</div></section>
+
+<!-- ═══════════ THE INSTRUMENT BENCH ═══════════ -->
+<section id="bb-bench-sec"><div class="bb-wrap">
+  <p class="bb-kick">Teach, Then Play</p>
+  <h2>The Instrument Bench — the four moves of every trade</h2>
+  <p style="max-width:46em">Every barter, from a loaf-for-a-lesson to a three-party loop, runs on the same four moves. Each instrument teaches one move in thirty seconds, then drills you on it. When all four feel natural, the Climb is waiting.</p>
+  <div class="bb-bench">
+    <div class="bb-inst">
+      <h3>1 &middot; The Want Matcher</h3>
+      <div class="why">The double coincidence of wants</div>
+      <p class="lesson">A direct trade only closes when <b>both</b> sides match: they have what you want <em>and</em> want what you have. Half a match is no match — that friction is the very reason money was invented.</p>
+      <button class="bb-play" data-mode="match">Drill this move &rarr;</button>
+    </div>
+    <div class="bb-inst">
+      <h3>2 &middot; The Trade Equalizer</h3>
+      <div class="why">Cost &middot; price &middot; value</div>
+      <p class="lesson">Retail price is a clue, not a verdict. A fair trade balances <b>utility and scarcity</b> — what the thing does, for whom, right now. A spare generator is clutter in June and continuity the week before a storm.</p>
+      <button class="bb-play" data-mode="worth">Drill this move &rarr;</button>
+    </div>
+    <div class="bb-inst">
+      <h3>3 &middot; The Loop Forger</h3>
+      <div class="why">The tri-trade</div>
+      <p class="lesson">When no pair of wants matches, a <b>circle</b> can: the plumber fixes the baker's sink, the baker feeds the welder, the welder repairs the plumber's trailer. Three trades, zero dollars, nobody needed a matching partner.</p>
+      <button class="bb-play" data-mode="loop">Drill this move &rarr;</button>
+    </div>
+    <div class="bb-inst">
+      <h3>4 &middot; The Word Bench</h3>
+      <div class="why">Scope, deliverable, settlement</div>
+      <p class="lesson">Most barter disputes are <b>scope disputes</b>. The master trader names the deliverable, the standard, and the settlement before effort is spent — fairness is built through transparent terms, not found in a number.</p>
+      <button class="bb-play" data-mode="words">Drill this move &rarr;</button>
     </div>
   </div>
-</section>
+</div></section>
 
-<!-- ============ THE FIVE TIERS ============ -->
-<section class="bb-section" aria-labelledby="bb-tiers-title">
-  <div class="bb-wrap">
-    <h2 class="bb-h2" id="bb-tiers-title">The five tiers of Barter stature</h2>
-    <p class="bb-h2-sub">The stars beside a trader's name mean something.</p>
-    <div class="bb-tiers">
-      <div class="bb-tier">
-        <div class="bb-tier-stars">&#9733;<span class="bb-tier-stars-off">&#9733;&#9733;&#9733;&#9733;</span></div>
-        <div class="bb-tier-name">Novice</div>
-        <div class="bb-tier-req">First trade completed. You have crossed the threshold.</div>
-      </div>
-      <div class="bb-tier">
-        <div class="bb-tier-stars">&#9733;&#9733;<span class="bb-tier-stars-off">&#9733;&#9733;&#9733;</span></div>
-        <div class="bb-tier-name">Apprentice</div>
-        <div class="bb-tier-req">Three trades completed. One book truly mastered.</div>
-      </div>
-      <div class="bb-tier">
-        <div class="bb-tier-stars">&#9733;&#9733;&#9733;<span class="bb-tier-stars-off">&#9733;&#9733;</span></div>
-        <div class="bb-tier-name">Journeyman</div>
-        <div class="bb-tier-req">Six trades completed. Three books mastered.</div>
-      </div>
-      <div class="bb-tier">
-        <div class="bb-tier-stars">&#9733;&#9733;&#9733;&#9733;<span class="bb-tier-stars-off">&#9733;</span></div>
-        <div class="bb-tier-name">Master Trader</div>
-        <div class="bb-tier-req">Ten trades completed. Five books mastered.</div>
-      </div>
-      <div class="bb-tier">
-        <div class="bb-tier-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="bb-tier-name">Sovereign Trader</div>
-        <div class="bb-tier-req">Fifteen or more trades. Eight or more books mastered.</div>
-      </div>
+<!-- ═══════════ THE TRADE CLIMB ═══════════ -->
+<section id="bb-climb-sec"><div class="bb-wrap">
+  <p class="bb-kick">The Game &middot; No Two Climbs Alike</p>
+  <h2>The Trade Climb</h2>
+  <p style="max-width:46em">An endless market of procedurally drawn traders, goods, and deals — every floor tests one of the four moves, and the deals get thicker as you rise. <b>Bronze at 200. Silver at 500. Gold at 900</b> — where you mint your serial-numbered <b>Trader's Charter</b>. Miss a trade and the floor tells you honestly what you missed, straight from the book. The bar never lowers. <em>Pupils before Profits.</em></p>
+
+  <div id="bb-game">
+    <div class="bb-hud">
+      <div class="stat">Score<b id="bb-score">0</b></div>
+      <div class="stat">Floor<b id="bb-floor">—</b></div>
+      <div class="stat">Hearts<b class="bb-hearts" id="bb-hearts">&#9829;&#9829;&#9829;</b></div>
+      <div class="bb-tier" id="bb-tier">APPRENTICE</div>
     </div>
-  </div>
-</section>
-
-<!-- ============ LEADERBOARD + LIVE LEDGER ============ -->
-<section class="bb-section" aria-labelledby="bb-board-title">
-  <div class="bb-wrap">
-    <h2 class="bb-h2" id="bb-board-title">This month on the Ledger</h2>
-    <p class="bb-h2-sub">Every trader chose their own alias. All trades are verified by GENO.</p>
-    <div class="bb-twocol">
-      <div class="bb-panel">
-        <div class="bb-panel-eyebrow">Top Barter Traders</div>
-        <div class="bb-panel-sub">Ranked by trades this month</div>
-        <ol class="bb-board">
-          <li><span class="bb-rank">1</span><span class="bb-alias">Sovereign_Owl_07 <span class="bb-count">&middot; 14</span></span><span class="bb-stars-inline">&#9733;&#9733;&#9733;&#9733;&#9733;</span></li>
-          <li><span class="bb-rank">2</span><span class="bb-alias">LatticeMind_A2 <span class="bb-count">&middot; 11</span></span><span class="bb-stars-inline">&#9733;&#9733;&#9733;&#9733;&#9733;</span></li>
-          <li><span class="bb-rank">3</span><span class="bb-alias">GoldenAnvil <span class="bb-count">&middot; 9</span></span><span class="bb-stars-inline">&#9733;&#9733;&#9733;&#9733;<span class="bb-stars-off-inline">&#9733;</span></span></li>
-          <li><span class="bb-rank">4</span><span class="bb-alias">WordBinder_11 <span class="bb-count">&middot; 7</span></span><span class="bb-stars-inline">&#9733;&#9733;&#9733;&#9733;<span class="bb-stars-off-inline">&#9733;</span></span></li>
-          <li><span class="bb-rank">5</span><span class="bb-alias">TorchBearer_88 <span class="bb-count">&middot; 6</span></span><span class="bb-stars-inline">&#9733;&#9733;&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">6</span><span class="bb-alias">StillWaters <span class="bb-count">&middot; 5</span></span><span class="bb-stars-inline">&#9733;&#9733;&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">7</span><span class="bb-alias">ClayTradesman <span class="bb-count">&middot; 4</span></span><span class="bb-stars-inline">&#9733;&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">8</span><span class="bb-alias">AtticLantern <span class="bb-count">&middot; 3</span></span><span class="bb-stars-inline">&#9733;&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">9</span><span class="bb-alias">RiverFlint_02 <span class="bb-count">&middot; 3</span></span><span class="bb-stars-inline">&#9733;&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">10</span><span class="bb-alias">FireDrum <span class="bb-count">&middot; 2</span></span><span class="bb-stars-inline">&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">11</span><span class="bb-alias">NorthStar_44 <span class="bb-count">&middot; 2</span></span><span class="bb-stars-inline">&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">12</span><span class="bb-alias">QuietHammer <span class="bb-count">&middot; 2</span></span><span class="bb-stars-inline">&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">13</span><span class="bb-alias">EchoScribe <span class="bb-count">&middot; 2</span></span><span class="bb-stars-inline">&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">14</span><span class="bb-alias">Cedarwright <span class="bb-count">&middot; 1</span></span><span class="bb-stars-inline">&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;&#9733;</span></span></li>
-          <li><span class="bb-rank">15</span><span class="bb-alias">Wheelwright_09 <span class="bb-count">&middot; 1</span></span><span class="bb-stars-inline">&#9733;<span class="bb-stars-off-inline">&#9733;&#9733;&#9733;&#9733;</span></span></li>
-        </ol>
-      </div>
-      <div class="bb-panel" aria-live="polite">
-        <div class="bb-panel-eyebrow">Live from the Ledger</div>
-        <div class="bb-panel-sub">Recent Barter Bookshelf trades</div>
-        <div class="bb-trade" id="bb-trade">
-          <div class="bb-trade-book">Home Plumbing Basics</div>
-          <div class="bb-trade-swap">&#8646;</div>
-          <div class="bb-trade-book">Financial Literacy for Teens</div>
-          <div class="bb-trade-terms">1 hr each <span class="bb-trade-dot">&bull;</span> verified by GENO <span class="bb-trade-dot">&bull;</span> logged today</div>
-        </div>
+    <div class="bb-stage" id="bb-stage">
+      <p class="bb-scen">The market square is open. Seven stalls, a hundred wants, and not a dollar in sight. Step in, trader.</p>
+      <div class="bb-cards">
+        <button class="bb-card" id="bb-start"><b>Enter the market &rarr;</b><small>Free forever &middot; no login &middot; hearts regrow through mastery: every 5 clean trades restores one</small></button>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ============ HOW TO EARN YOUR FIRST STAR ============ -->
-<section class="bb-section" aria-labelledby="bb-earn-title">
-  <div class="bb-wrap">
-    <h2 class="bb-h2" id="bb-earn-title">How to earn your first star</h2>
-    <p class="bb-h2-sub">Every Sovereign Trader on the leaderboard started here.</p>
-    <ol class="bb-earn-list">
-      <li><p><strong>Open the Reading Room.</strong> Pick a book that matters to your life. Read as much or as little as you like &mdash; the shelf remembers your place.</p></li>
-      <li><p><strong>Ask GENO along the way.</strong> If a chapter is confusing, tell him. If a concept lights you up, ask him for more. He is fluent in 83 languages and available 24/7.</p></li>
-      <li><p><strong>Take the mastery walk.</strong> When you finish the book, tell GENO you are ready. He will walk you through it chapter by chapter, asking the questions a teacher would ask. Answer in your own words.</p></li>
-      <li><p><strong>Post an hour of teaching on the Ledger.</strong> Choose the book, choose the time you can offer, choose the language you will teach in.</p></li>
-      <li><p><strong>Accept your first match.</strong> GENO finds a peer who mastered a book you want to learn. Hour for hour. Mind for mind. Trade logged. First star earned.</p></li>
-    </ol>
+  <!-- Charter mint area -->
+  <div class="bb-charter" id="bb-mint" style="display:none">
+    <h3 style="color:var(--gold)">Gold cleared. Mint your Trader's Charter.</h3>
+    <p style="font-size:.92rem;max-width:38em;margin:8px auto 0">A dated, serial-numbered charter recording that you ran the market and cleared the Gold bar. Print it, keep it, hang it — then take the moves to a real trade.</p>
+    <input id="bb-name" type="text" maxlength="40" placeholder="Your name, trader" aria-label="Your name for the charter">
+    <br><button class="bb-btn" id="bb-print">Print the Charter</button>
+    <div class="bb-serial" id="bb-serialview"></div>
   </div>
-</section>
+</div></section>
 
-<!-- ============ FAQ ============ -->
-<section class="bb-section" aria-labelledby="bb-faq-title">
-  <div class="bb-wrap">
-    <h2 class="bb-h2" id="bb-faq-title">Frequently asked</h2>
-    <div class="bb-faq">
-      <details>
-        <summary>Do I need to pay anything?</summary>
-        <div class="bb-faq-answer">
-          <p>No. The books are free. GENO is free. The Ledger is free. The Barter Bookshelf runs on trades of time and mastery, not money.</p>
-          <p>The Foundation for Global Instruction covers the costs. If you want to support that work, buy a Kindle edition on Amazon or donate at our <a href="https://www.globalsovereignuniversity.org/quid-pro-quo">Quid Pro Quo</a> page. But nothing on this Bookshelf costs a dollar.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Do I need an account?</summary>
-        <div class="bb-faq-answer">
-          <p>To read a book, listen to a book, or talk to GENO, no. Those doors are open to anyone.</p>
-          <p>To post an hour on the Ledger or accept a trade, yes &mdash; you need a Trustline Ledger account. It takes about a minute to create one, and it is free.</p>
-        </div>
-      </details>
-      <details>
-        <summary>How does GENO verify I have mastered a book?</summary>
-        <div class="bb-faq-answer">
-          <p>GENO walks you through the book chapter by chapter and asks the kind of questions a teacher would ask &mdash; not trivia, not memorization, but the questions that test whether you have understood the argument.</p>
-          <p>If you can answer in your own words, you have mastered that chapter. When every chapter is mastered, the book is yours to teach. This is the same standard GENO uses in the GSU certification exams, calibrated for a conversation instead of a test.</p>
-        </div>
-      </details>
-      <details>
-        <summary>What if no one wants to trade for my book?</summary>
-        <div class="bb-faq-answer">
-          <p>Every book on the shelf has demand. Someone, somewhere, wants to learn what you learned. GENO's match engine broadens the search across time zones, languages, and continents until a fit is found.</p>
-          <p>If a match is slow, you keep your listing active and read another book while you wait. Time invested is never wasted here.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Can I trade with someone in another country?</summary>
-        <div class="bb-faq-answer">
-          <p>Yes. GENO speaks and listens in 83 languages, so a plumber in Manila can trade with a linguist in Warsaw. Both sides speak to GENO in the language they know best, and GENO handles the bridge.</p>
-          <p>The trade itself is between two humans. GENO is present as the tutor and the honest broker &mdash; not the middleman.</p>
-        </div>
-      </details>
-      <details>
-        <summary>What happens if a trade goes badly?</summary>
-        <div class="bb-faq-answer">
-          <p>Every trade is logged on the Trustline Ledger with both sides on record. If either party feels the trade was not honored, GENO reviews the conversation, asks each side what happened, and adjusts the Ledger accordingly.</p>
-          <p>The Ledger tracks honored trades, not just logged ones. Barter stature is earned by the honored count, not the raw count. Bad-faith traders do not accumulate stars.</p>
-        </div>
-      </details>
-      <details>
-        <summary>What languages can I use here?</summary>
-        <div class="bb-faq-answer">
-          <p>The three doors each speak a slightly different language story, and the honest picture matters.</p>
-          <p><strong>Reading.</strong> The book text is in English for now. Translated editions are on the roadmap; for the present, you read the words as written.</p>
-          <p><strong>Listen aloud.</strong> Your device does the reading. It uses the built-in voice already on your phone, tablet, or computer &mdash; the same one that reads your text messages or your maps out loud. It costs the Foundation nothing, works offline once loaded, and supports the languages your device already speaks. Fair warning: it sounds like a robot compared to GENO. That is the honest tradeoff for making listen-aloud free for whole books at scale.</p>
-          <p><strong>GENO.</strong> Our AI tutor speaks and listens in 83 languages, 24/7. Whatever language you speak, you can talk to him about any book on the shelf. That is where the polyglot promise really lives.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Why does this exist?</summary>
-        <div class="bb-faq-answer">
-          <p>Because a book is not a fish. When you finish a fish, it is gone. When you finish a book, the fish is still in the water and now you know how to catch it. Teaching what you learned costs you nothing and gives someone else the same catch.</p>
-          <p>The Barter Bookshelf is the mechanism that turns that costlessness into a currency. It is Teach a Man to Fish, engineered.</p>
-        </div>
-      </details>
+<!-- ═══════════ THE SHELF ═══════════ -->
+<section id="bb-shelf-sec"><div class="bb-wrap">
+  <p class="bb-kick">The Shelf</p>
+  <h2>The barter library — growing at the forge</h2>
+  <div class="bb-shelf">
+    <div class="bb-shelfcard">
+      <span class="st">Cornerstone &middot; Read Free</span>
+      <h3>The Art and Mechanics of Barter</h3>
+      <p>The complete working manual: asset inventories, trade ratios, negotiation, trade loops, ledgers and time-banking, agreements and ethics, and the local trade ecosystem.</p>
+      <a href="https://read.globalsovereignuniversity.org/the-art-and-mechanics-of-barter-reader.html">Open the reader &rarr;</a>
+    </div>
+    <div class="bb-shelfcard">
+      <span class="st">Story &middot; Read Free</span>
+      <h3>The World Climb</h3>
+      <p>The Sovereign Reading Room's flagship story of ascent — where the barter spirit lives in narrative: people trading strength, skill, and trust to climb together.</p>
+      <a href="https://read.globalsovereignuniversity.org/worldclimb-reader.html">Open the reader &rarr;</a>
+    </div>
+    <div class="bb-shelfcard">
+      <span class="st">At the Forge</span>
+      <h3>More volumes on the way</h3>
+      <p>The Chancellor has wrapped his arms around this topic. New barter titles are being forged now and will take their place on this shelf as they land.</p>
+      <a href="https://read.globalsovereignuniversity.org/barter.html">Visit the Sovereign Barter &rarr;</a>
     </div>
   </div>
-</section>
+</div></section>
 
-<!-- ============ CLOSING ACTIONS ============ -->
-<section class="bb-section" aria-labelledby="bb-close-title">
-  <div class="bb-wrap">
-    <h2 class="bb-h2" id="bb-close-title">Ready to begin?</h2>
-    <p class="bb-h2-sub">The Bookshelf opens for everyone the moment it opens for anyone.</p>
-
-    <div class="bb-actions-row">
-      <a href="https://read.globalsovereignuniversity.org/reading-room.html" class="bb-cta">Start reading a book &rarr;</a>
-      <a href="https://www.globalsovereignuniversity.org/quid-pro-quo" class="bb-cta bb-cta-outline">Support the Foundation</a>
-      <div class="bb-rate-row">
-        Rate this Rabbit
-        <span class="bb-rate-stars" data-gsu-rating="barter-bookshelf" role="img" aria-label="Rated 4.9 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-      </div>
-    </div>
+<!-- ═══════════ THE ECOSYSTEM ═══════════ -->
+<section><div class="bb-wrap">
+  <p class="bb-kick">Beyond the Bookshelf</p>
+  <h2>Take the moves to a live economy</h2>
+  <p style="max-width:46em">The bench builds the skill; these are the floors where it spends. A real economy around the university that never touches a dollar, reaches the broke and the unbanked, and keeps every person standing on their own two feet.</p>
+  <div class="bb-eco">
+    <a class="bb-btn" href="https://read.globalsovereignuniversity.org/barter.html">The Sovereign Barter &rarr;</a>
+    <a class="bb-btn ghost" href="https://www.globalsovereignuniversity.org/frankenstein-exchange">The Frankenstein Exchange</a>
+    <a class="bb-btn ghost" href="https://www.globalsovereignuniversity.org/certification">The Certification Hall</a>
   </div>
-</section>
+</div></section>
 
-<!-- ============ FOOTER ============ -->
-<footer class="bb-footer">
-  <div class="bb-wrap">
-    <p class="bb-footer-mission">Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow. &mdash; Dr. Gene A. Constant</p>
-    <div class="bb-footer-line">
-      The Foundation for Global Instruction <span class="bb-dot">&bull;</span> 501(c)(3) <span class="bb-dot">&bull;</span> EIN 39-2716552 <span class="bb-dot">&bull;</span> Eugene, Oregon <span class="bb-dot">&bull;</span> No login. No paywall. Always free.
-    </div>
-  </div>
-</footer>
+<div class="bb-found bb-wrap">
+  The Foundation for Global Instruction &middot; 501(c)(3) <span class="d">&bull;</span> Free 24/7 <span class="d">&bull;</span> No login. No paywall. Always free.
+</div>
 
-<!-- ============ SCRIPTS ============ -->
+<!-- Printable charter -->
+<div id="bb-cert">
+  <h2>THE TRADER'S CHARTER &mdash; The Barter Bookshelf</h2>
+  <div class="c-name" id="bb-cert-name">—</div>
+  <div class="c-line">has run the Trade Climb of Global Sovereign University, cleared the <b>Gold bar (900 points)</b>, and demonstrated the four moves of the trade:</div>
+  <div class="c-line"><i>the double coincidence of wants &middot; valuation by utility and scarcity &middot; the multi-party trade loop &middot; scope, deliverable, and settlement</i></div>
+  <div class="c-line">Every challenge was procedurally drawn; no two climbs are alike. The bar was not lowered. <b>Pupils before Profits.</b></div>
+  <div class="c-serial" id="bb-cert-serial"></div>
+  <div class="c-line" style="margin-top:24px">Global Sovereign University &middot; The Foundation for Global Instruction &middot; 501(c)(3) &middot; globalsovereignuniversity.org</div>
+</div>
+
 <script>
-  // Rotating live trade feed
-  (function(){
-    var trades = [
-      {a:'Home Plumbing Basics', b:'Financial Literacy for Teens', t:'1 hr each'},
-      {a:'The Sovereign Electrician', b:'The Polyglot Method', t:'45 min each'},
-      {a:'Sound First', b:'Old Glory', t:'30 min each'},
-      {a:'Trades Geometry', b:'Living in Two Languages', t:'1 hr each'},
-      {a:'The Little Economy', b:'Word Archaeology', t:'45 min each'},
-      {a:'Tactical Vitality', b:"The Bystander's Imperative", t:'30 min each'},
-      {a:'Stonemasons', b:'The Words You Know', t:'1 hr each'},
-      {a:'History of America for Kids', b:'Solar Photovoltaic Installers', t:'45 min each'},
-      {a:'Foundations of Repair', b:'The Sounds You Never Made', t:'1 hr each'},
-      {a:'Computer Literacy Unlocked', b:'Sound First', t:'45 min each'},
-      {a:'Residential Framing', b:'The Spelling Code', t:'30 min each'},
-      {a:'Morals, Character, Values', b:'Reading at the Speed of Thought', t:'1 hr each'}
-    ];
-    var i = 0;
-    var el = document.getElementById('bb-trade');
-    if(!el) return;
-    function render(t){
-      el.style.opacity = '0';
-      setTimeout(function(){
-        el.innerHTML =
-          '<div class="bb-trade-book">'+t.a+'</div>'+
-          '<div class="bb-trade-swap">&#8646;</div>'+
-          '<div class="bb-trade-book">'+t.b+'</div>'+
-          '<div class="bb-trade-terms">'+t.t+' <span class="bb-trade-dot">&bull;</span> verified by GENO <span class="bb-trade-dot">&bull;</span> logged today</div>';
-        el.style.opacity = '1';
-      }, 500);
+(function(){
+"use strict";
+/* ══════════ DATA POOLS — drawn from the vocabulary of Chapter 1 ══════════ */
+var NAMES=["Mara","Silas","Odessa","Ruth","Teodoro","Nate","Priya","Big Jim","Widow Chen","Cass","Old Marcus","Lena","Deacon","Ana","Farmer Ott","Rosa","Cedric","June","Pavel","Tilly"];
+var ITEMS=[
+ ["a rebuilt generator","rebuilds small engines"],
+ ["forty pounds of tomatoes","grows a market garden"],
+ ["a weekend of childcare","watches children weekday mornings"],
+ ["two hours of skilled welding","welds trailer frames"],
+ ["a working chest freezer","has spare cold storage"],
+ ["a full brake job","turns wrenches on brakes"],
+ ["twelve loaves of bread","bakes every dawn"],
+ ["a hand-built bookshelf","builds furniture from scrap"],
+ ["three tutoring sessions in algebra","teaches math patiently"],
+ ["a season of lawn care","cuts grass all summer"],
+ ["use of a box trailer for a month","keeps a trailer idle most days"],
+ ["a professional haircut before an interview","cuts hair with steady hands"],
+ ["a patched and sealed roof","works roofs without fear"],
+ ["twenty jars of preserves","cans the harvest every fall"],
+ ["a tuned-up bicycle","trues wheels and tunes gears"],
+ ["five hours of bookkeeping","keeps clean ledgers"],
+ ["a repaired well pump","knows pumps inside and out"],
+ ["a set of family photographs","shoots portraits worth framing"],
+ ["firewood, split and stacked","swings a maul all day"],
+ ["a mended fence line","strings wire straight and tight"]
+];
+/* Equalizer scenarios: prompt, options[3], correct index, why, source concept */
+var WORTH=[
+ {p:"A storm is three days out. <b>Widow Chen</b> needs her freezer running or a month of food is lost. You have a working generator. What is the fair frame for this trade?",
+  o:["Ask what a store charges for a used generator and demand that in goods","Trade on the outcome — food saved, calm delivered — and name terms you can both live with","Give it away; naming terms in a crisis is greedy"],
+  c:1,w:"The dollar figure didn't change — the <b>context</b> did. Utility is the engine of value: you are trading continuity, not metal. Naming clear, fair terms is not greed; it is what makes barter dependable.",s:"Cost vs. price vs. value · utility"},
+ {p:"Your neighbor offers <b>an hour of unskilled hauling</b> for <b>an hour of your electrical work</b>. When could that be a fair 1-for-1 ratio?",
+  o:["Never — skilled hours always outrank unskilled hours","When willingness and reliability are the scarce ingredient — the outcome matters more than the credential","Only if he also pays cash to make up the difference"],
+  c:1,w:"Barter does not demand one moral rule about what an hour is worth. It demands <b>clarity</b>: what is delivered, at what standard, and how scarce the solution is here and now.",s:"Trade ratio · scarcity"},
+ {p:"<b>Silas</b> anchors every trade to the receipt: \"This tiller cost me $600 new, so it trades at $600.\" What is he missing?",
+  o:["Nothing — the receipt is the fairest measure there is","Retail price carries brand, marketing, and financing layers that don't apply here; the question is the fair exchange of outcomes between you","He should add interest for the years he owned it"],
+  c:1,w:"That habit is <b>retail anchoring</b>. Price is a clue, not a verdict. In barter, the real question is: what does this do, for whom, right now?",s:"Retail anchoring"},
+ {p:"You could spend Saturday fencing <b>Farmer Ott's</b> pasture in trade for beef. You'd also planned to fix your own leaking roof before the rains. What must the trade price in?",
+  o:["Only the hours of fence work at a fair hourly rate","Your opportunity cost — what the lost Saturday does to your own roof, rest, and obligations","Nothing extra; a deal is a deal once beef is on the table"],
+  c:1,w:"<b>Opportunity cost</b> is what you give up by choosing this trade. Ignore it and barter quietly overdraws your life. Cost is a boundary that protects you.",s:"Opportunity cost"},
+ {p:"<b>Lena</b> has an empty, dry outbuilding she never uses. <b>Pavel</b> needs winter storage for his tools and offers monthly maintenance of her gutters and steps. Why can this trade be excellent for both?",
+  o:["It can't — space isn't a real trade good","Access costs Lena little to give and carries high utility for Pavel; his upkeep returns value she'd otherwise pay for","Only if Lena charges what a storage company would"],
+  c:1,w:"<b>Access</b> is the most overlooked barter asset: space, tools, vehicles, equipment. Low cost to the owner, high utility to the receiver — the classic shape of a great trade.",s:"Access · surplus and deficit"},
+ {p:"Two mechanics live in town and both are hungry for work. <b>Nate</b>, a third, quotes you triple \"because my skill is rare.\" What does the market square say?",
+  o:["Pay it — skill is skill","Scarcity is measured here and now: with willing alternatives nearby, his solution is not scarce, and the ratio should reflect that","Report him to the county"],
+  c:1,w:"<b>Scarcity</b> is not how rare something is in general — it is how rare it is in this place, at this moment. Alternatives and their friction set the real ratio.",s:"Scarcity"},
+ {p:"A haircut before a job interview. In barter terms, what are you actually receiving?",
+  o:["Hair removed at the going salon price","The outcome — walking in presentable and confident when it counts","A favor that shouldn't be priced at all"],
+  c:1,w:"<b>Outcomes are the true currency of barter.</b> A ride to the airport is stress removed and a flight made; childcare is a class attended. Trade outcomes, not price tags.",s:"Outcomes · utility"},
+ {p:"<b>Cass</b> wants your chest freezer and offers a trade worth clearly less — but adds: \"I'll also teach your son to drive a stick, and I'll owe you a day of harvest help in October.\" What just happened?",
+  o:["She's stalling — never accept delayed pieces","A fair settlement: secondary goods and a scheduled asynchronous piece balanced an unequal trade honestly","She turned a trade into charity"],
+  c:1,w:"Unequal trades are balanced through <b>settlement</b>: partial now, secondary items, and dated asynchronous pieces. Fairness isn't found in one number — it is built through transparent terms.",s:"Settlement · asynchronous trade"}
+];
+/* Word Bench: negotiation scenarios */
+var WORDS=[
+ {p:"<b>Deacon</b> agrees to \"help with your website\" in trade for firewood. Before a log moves, the master trader says:",
+  o:["\"Great — just make it look good, you know what I mean.\"","\"Let's define scope: three pages, your photos, live by Friday — does that match what you're offering?\"","\"If it's bad I'll just keep the firewood.\""],
+  c:1,w:"Most barter disputes are <b>scope disputes</b>. Naming the deliverable and the deadline before effort is spent costs nothing and prevents weeks of resentment.",s:"Scope · deliverable"},
+ {p:"Halfway through a traded roof patch, rain moves in early and the job will take an extra weekend. The trader keeping reputation collateral intact says:",
+  o:["Nothing — just finish whenever and hope it's fine","\"Weather moved on us. Here's the new completion date, and I'll add sealing the porch flashing for the delay.\"","\"Act of God — the trade terms are void.\""],
+  c:1,w:"In barter, <b>your reliability is the collateral</b>. Communicating changes and making the other side whole is what makes people trade with you again — especially asynchronously.",s:"Reputation collateral"},
+ {p:"<b>Rosa</b> offers you twenty jars of preserves for your bicycle tune-ups, but you don't need preserves. The move that keeps the trade alive:",
+  o:["Decline flat — no match, no trade","\"I don't need preserves — but Old Marcus does, and he owes fence work I could use. Shall we run it as a loop?\"","Take the preserves anyway to be polite"],
+  c:1,w:"When the <b>double coincidence of wants</b> fails, don't end the conversation — route it. The tri-trade moves value through a circle so no single pair has to match.",s:"Trade loop"},
+ {p:"A trade partner asks, \"Is 'good enough' fine, or does this need to pass inspection?\" That question is:",
+  o:["An insult to your standards","The quality standard being set in the open — exactly where it belongs, before the work starts","A trick to lower the trade's value"],
+  c:1,w:"<b>Quality standards</b> are about alignment, not mistrust. A quick fix and an inspection-grade repair are different deliverables with different costs — name which one is being traded.",s:"Quality standard"},
+ {p:"You provide childcare in September; the carpentry you're owed lands in November. The professional way to hold that gap:",
+  o:["Memory and good vibes","Name it an asynchronous trade: dates, a milestone, and a line in the ledger — trust with a record","Demand collateral in cash"],
+  c:1,w:"Many of the best trades are <b>asynchronous</b>. A ledger — a notebook, a shared sheet — carries the balance so goodwill doesn't have to carry it alone.",s:"Asynchronous trade · ledger"},
+ {p:"Your first barter proposal to a stranger. The tone that lands:",
+  o:["\"Look, I can't pay, so you kind of have to work with me here.\"","\"I have surplus weekday mornings and solid references; you have a deficit in deliveries. Here's a ratio I think respects both of us.\"","\"Everything's negotiable, name literally anything.\""],
+  c:1,w:"Surplus into deficit, stated plainly, with a ratio on the table — grounded and respectful, never desperate or vague. That is the language of the working trader.",s:"Surplus and deficit · trade ratio"}
+];
+/* ══════════ STATE ══════════ */
+var S={score:0,floor:0,hearts:3,streak:0,over:false,serial:null};
+var stage=document.getElementById('bb-stage');
+var elScore=document.getElementById('bb-score'),elFloor=document.getElementById('bb-floor'),elHearts=document.getElementById('bb-hearts'),elTier=document.getElementById('bb-tier');
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function hud(){elScore.textContent=S.score;elFloor.textContent=S.floor||'—';
+ var h='';for(var i=0;i<3;i++){h+='<span'+(i<S.hearts?'':' class="off"')+'>&#9829;</span>';}elHearts.innerHTML=h;
+ var t='APPRENTICE';if(S.score>=900)t='GOLD · MASTER TRADER';else if(S.score>=500)t='SILVER · JOURNEYMAN';else if(S.score>=200)t='BRONZE · TRADER';
+ elTier.textContent=t;}
+function esc(s){return s;}
+/* ══════════ FLOOR GENERATORS ══════════ */
+function genMatch(){
+ var picks=shuffle(ITEMS).slice(0,4);
+ var youHave=picks[0][0], youWant=picks[1][0];
+ var names=shuffle(NAMES);
+ var right={n:names[0],have:youWant,want:youHave};
+ var half1={n:names[1],have:youWant,want:picks[2][0]};       /* has what you want, wants what you lack */
+ var half2={n:names[2],have:picks[3][0],want:youHave};      /* wants what you have, has what you don't want */
+ var opts=shuffle([{t:right,ok:true},{t:half1,ok:false},{t:half2,ok:false}]);
+ return {type:'THE WANT MATCHER · double coincidence',
+  scen:'You carry <b>'+youHave+'</b> and you need <b>'+youWant+'</b>. Three traders wave you over. With whom does a direct trade actually close?',
+  cards:opts.map(function(o){return {label:'<b>'+o.t.n+'</b> — has '+o.t.have+', wants '+o.t.want,ok:o.ok};}),
+  why:'A direct trade closes only when <b>both</b> sides match. Anything less is the double coincidence of wants failing — the exact friction money was invented to remove, and the trade loop was designed to route around.',src:'The Art and Mechanics of Barter · Ch. 1'};
+}
+function genWorth(){
+ var q=pick(WORTH);var order=shuffle([0,1,2]);
+ return {type:'THE TRADE EQUALIZER · cost, price, value',scen:q.p,
+  cards:order.map(function(i){return {label:q.o[i],ok:i===q.c};}),
+  why:q.w,src:'The Art and Mechanics of Barter · Ch. 1 — '+q.s};
+}
+function genLoop(){
+ var picks=shuffle(ITEMS).slice(0,3);
+ var names=shuffle(NAMES).slice(0,3);
+ /* A has g0 wants g1; B has g1 wants g2; C has g2 wants g0. A's goods are wanted by C. */
+ var scen='Three traders, no pair matches: <b>'+names[0]+'</b> has '+picks[0][0]+' and needs '+picks[1][0]+'. <b>'+names[1]+'</b> has '+picks[1][0]+' and needs '+picks[2][0]+'. <b>'+names[2]+'</b> has '+picks[2][0]+' and needs '+picks[0][0]+'. To close the loop, <b>'+names[0]+'</b> hands what they carry to&hellip;';
+ var opts=shuffle([{n:names[2],ok:true},{n:names[1],ok:false},{n:'nobody — without a matching pair the trade is dead',ok:false}]);
+ return {type:'THE LOOP FORGER · the tri-trade',scen:scen,
+  cards:opts.map(function(o){return {label:'<b>'+(o.n)+'</b>',ok:o.ok};}),
+  why:'Value flows around the circle: each trader gives to the one who <b>wants</b> what they carry. '+names[0]+' &rarr; '+names[2]+' &rarr; '+names[1]+' &rarr; '+names[0]+'. Three trades, zero dollars, and nobody needed a matching partner. What money solves with a middleman, a community solves with a circle.',src:'The Art and Mechanics of Barter · Ch. 1 — trade loops'};
+}
+function genWords(){
+ var q=pick(WORDS);var order=shuffle([0,1,2]);
+ return {type:'THE WORD BENCH · negotiation',scen:q.p,
+  cards:order.map(function(i){return {label:q.o[i],ok:i===q.c};}),
+  why:q.w,src:'The Art and Mechanics of Barter · Ch. 1 — '+q.s};
+}
+var GENS=[genMatch,genWorth,genLoop,genWords];
+/* ══════════ RENDER ══════════ */
+function nextFloor(){
+ S.floor++;
+ var g=GENS[(S.floor-1)%4]();  /* rotate the four moves so every move is trained */
+ if(S.floor>4){g=pick(GENS)();} /* after the first lap, the market draws freely */
+ hud();
+ var html='<div class="bb-ftype">Floor '+S.floor+' &middot; '+g.type+'</div><p class="bb-scen">'+g.scen+'</p><div class="bb-cards">';
+ g.cards.forEach(function(c,i){html+='<button class="bb-card" data-ok="'+(c.ok?1:0)+'">'+c.label+'</button>';});
+ html+='</div><div id="bb-fb"></div>';
+ stage.innerHTML=html;
+ var done=false;
+ Array.prototype.forEach.call(stage.querySelectorAll('.bb-card'),function(btn){
+  btn.addEventListener('click',function(){
+   if(done)return;done=true;
+   var ok=btn.getAttribute('data-ok')==='1';
+   Array.prototype.forEach.call(stage.querySelectorAll('.bb-card'),function(b){
+    if(b.getAttribute('data-ok')==='1')b.classList.add('good');else if(b===btn)b.classList.add('bad');
+    b.disabled=true;});
+   var fb=document.getElementById('bb-fb');
+   if(ok){
+    S.score+=25;S.streak++;
+    if(S.streak>0&&S.streak%5===0&&S.hearts<3){S.hearts++;}
+    hud();save();
+    var tierNote='';
+    if(S.score===200)tierNote='<b>BRONZE cleared.</b> You trade with open eyes. ';
+    if(S.score===500)tierNote='<b>SILVER cleared.</b> The market knows your name. ';
+    if(S.score>=900&&!S.minted){tierNote='<b>GOLD cleared — the Charter is yours to mint below.</b> ';S.minted=true;showMint();}
+    fb.innerHTML='<div class="bb-verdict">'+tierNote+'<b>Trade closed.</b> '+g.why+'<span class="src">'+g.src+'</span></div><div class="bb-next"><button class="bb-btn" id="bb-go">Next floor &rarr;</button></div>';
+   }else{
+    S.hearts--;S.streak=0;hud();save();
+    if(S.hearts<=0){
+     fb.innerHTML='<div class="bb-remed"><h4>The market closes — honestly</h4><p>You did not clear this stretch, and we will not pretend otherwise. Here is what the floor was testing:</p><div class="bb-verdict">'+g.why+'<span class="src">'+g.src+'</span></div><p style="margin-top:12px">The remedy is on this very shelf: <a href="https://read.globalsovereignuniversity.org/the-art-and-mechanics-of-barter-reader.html"><b>re-read Chapter 1, free</b></a> — especially the section named above — then walk back in. The bar stays where it is. You rise to it.</p><button class="bb-btn" id="bb-again" style="margin-top:8px">Walk back into the market</button></div>';
+     document.getElementById('bb-again').addEventListener('click',restart);
+     return;
     }
-    el.style.transition = 'opacity 0.5s ease';
-    setInterval(function(){
-      i = (i + 1) % trades.length;
-      render(trades[i]);
-    }, 4500);
-  })();
-</script>
-
-<!-- Google-friendly aggregate rating schema. Update ratingValue and reviewCount from your existing 5-star script. -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "The Barter Bookshelf",
-  "description": "A GSU Magic Rabbit that turns mastered books into tradable currency. Read a book free, master it with GENO, teach an hour of what you know, receive an hour of what someone else knows.",
-  "url": "https://read.globalsovereignuniversity.org/barter-bookshelf.html",
-  "brand": { "@type": "Organization", "name": "Global Sovereign University" },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "127",
-    "bestRating": "5"
-  }
+    fb.innerHTML='<div class="bb-remed"><h4>Trade lost — here is why</h4><div class="bb-verdict">'+g.why+'<span class="src">'+g.src+'</span></div></div><div class="bb-next"><button class="bb-btn" id="bb-go">I understand — next floor &rarr;</button></div>';
+   }
+   var go=document.getElementById('bb-go');
+   if(go)go.addEventListener('click',nextFloor);
+  });
+ });
+ var stageTop=document.getElementById('bb-game');
+ if(S.floor>1&&stageTop&&stageTop.scrollIntoView){stageTop.scrollIntoView({behavior:'smooth',block:'nearest'});}
 }
-</script>
-
-<!-- FAQ schema for rich results in Google search -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {"@type":"Question","name":"Do I need to pay anything?","acceptedAnswer":{"@type":"Answer","text":"No. The books are free. GENO is free. The Ledger is free. The Barter Bookshelf runs on trades of time and mastery, not money."}},
-    {"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"To read a book, listen to a book, or talk to GENO, no. To post an hour on the Ledger or accept a trade, yes — you need a free Trustline Ledger account."}},
-    {"@type":"Question","name":"How does GENO verify I have mastered a book?","acceptedAnswer":{"@type":"Answer","text":"GENO walks you through the book chapter by chapter and asks the questions a teacher would ask. If you can answer in your own words, you have mastered that chapter."}},
-    {"@type":"Question","name":"Can I trade with someone in another country?","acceptedAnswer":{"@type":"Answer","text":"Yes. GENO speaks and listens in 83 languages, so a plumber in Manila can trade with a linguist in Warsaw."}},
-    {"@type":"Question","name":"What languages can I use here?","acceptedAnswer":{"@type":"Answer","text":"Reading: the book text is in English for now. Listen-aloud: your device does the reading using its built-in voice, in whatever languages your device already supports — it's free but sounds robotic compared to GENO. GENO conversation: 83 languages, 24/7."}}
-  ]
+function restart(){S.score=0;S.floor=0;S.hearts=3;S.streak=0;S.minted=false;hud();nextFloor();}
+function showMint(){
+ var m=document.getElementById('bb-mint');m.style.display='block';
+ if(!S.serial){S.serial='GSU-BB-'+new Date().toISOString().slice(0,10).replace(/-/g,'')+'-'+Math.random().toString(36).slice(2,6).toUpperCase();}
+ document.getElementById('bb-serialview').textContent='Serial '+S.serial+' · dated '+new Date().toDateString();
+ save();
 }
+function save(){try{localStorage.setItem('gsu-bb-climb',JSON.stringify({best:Math.max(S.score,(JSON.parse(localStorage.getItem('gsu-bb-climb')||'{}').best||0)),serial:S.serial}));}catch(e){}}
+(function(){try{var d=JSON.parse(localStorage.getItem('gsu-bb-climb')||'{}');if(d.serial){S.serial=d.serial;}}catch(e){}})();
+document.getElementById('bb-start').addEventListener('click',function(){restart();});
+document.getElementById('bb-print').addEventListener('click',function(){
+ var n=(document.getElementById('bb-name').value||'A Sovereign Trader').trim();
+ document.getElementById('bb-cert-name').textContent=n;
+ document.getElementById('bb-cert-serial').textContent='Serial '+(S.serial||'GSU-BB-UNMINTED')+' · '+new Date().toDateString();
+ window.print();
+});
+/* Bench drill buttons: jump into the climb pre-tuned to that move */
+Array.prototype.forEach.call(document.querySelectorAll('.bb-play'),function(b){
+ b.addEventListener('click',function(){
+  var mode=b.getAttribute('data-mode');
+  S.score=Math.max(S.score,0);S.hearts=Math.max(S.hearts,1);
+  if(S.floor===0){S.floor=0;S.hearts=3;}
+  var map={match:genMatch,worth:genWorth,loop:genLoop,words:genWords};
+  /* one-off drill: render a single floor of that instrument inside the game frame */
+  S.floor++;var g=map[mode]();hud();
+  var html='<div class="bb-ftype">Bench drill &middot; '+g.type+'</div><p class="bb-scen">'+g.scen+'</p><div class="bb-cards">';
+  g.cards.forEach(function(c){html+='<button class="bb-card" data-ok="'+(c.ok?1:0)+'">'+c.label+'</button>';});
+  html+='</div><div id="bb-fb"></div>';
+  stage.innerHTML=html;
+  var done=false;
+  Array.prototype.forEach.call(stage.querySelectorAll('.bb-card'),function(btn){
+   btn.addEventListener('click',function(){
+    if(done)return;done=true;
+    var ok=btn.getAttribute('data-ok')==='1';
+    Array.prototype.forEach.call(stage.querySelectorAll('.bb-card'),function(x){if(x.getAttribute('data-ok')==='1')x.classList.add('good');else if(x===btn)x.classList.add('bad');x.disabled=true;});
+    if(ok){S.score+=25;S.streak++;}else{S.streak=0;}
+    hud();save();
+    document.getElementById('bb-fb').innerHTML='<div class="bb-verdict"><b>'+(ok?'Trade closed.':'Trade lost — here is why.')+'</b> '+g.why+'<span class="src">'+g.src+'</span></div><div class="bb-next"><button class="bb-btn" id="bb-go">Keep climbing &rarr;</button></div>';
+    document.getElementById('bb-go').addEventListener('click',nextFloor);
+   });
+  });
+  var gf=document.getElementById('bb-game');if(gf&&gf.scrollIntoView){gf.scrollIntoView({behavior:'smooth'});}
+ });
+});
+hud();
+})();
 </script>
-
 </body>
 </html>
