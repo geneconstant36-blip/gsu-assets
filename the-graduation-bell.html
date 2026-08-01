@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Graduation Bell — Live Certificates | Global Sovereign University</title>
+<meta name="description" content="Watch education happen live. Every time a learner anywhere on Earth earns a serial-numbered GSU certificate, the Bell rings here — free, anonymous, publicly verifiable.">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/the-graduation-bell.html">
+<meta property="og:title" content="The Graduation Bell — watch a free university graduate people, live">
+<meta property="og:description" content="Every ring is a real serial-numbered certificate, earned against a bar that never lowers. No other university on Earth lets you watch.">
+<script src="/return-bar.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<style>
+:root{--gold:#C9A84C;--cream:#F5F1E8;--teal:#1A8B7F}
+*{box-sizing:border-box}
+body{margin:0;background:#000;color:var(--cream);font-family:Georgia,'Times New Roman',serif}
+.wr{max-width:900px;margin:0 auto;padding:0 24px}
+header{text-align:center;padding:56px 0 8px}
+.eyebrow{font-family:Arial,sans-serif;letter-spacing:.24em;text-transform:uppercase;font-size:11px;color:var(--teal);font-weight:800;margin:0 0 12px}
+h1{font-size:clamp(30px,5vw,46px);font-weight:400;color:var(--gold);margin:0 0 10px}
+.lead{font-size:17px;line-height:1.65;color:#CFC8B8;max-width:44em;margin:0 auto}
+/* bell */
+.bellwrap{text-align:center;padding:26px 0 6px}
+.bell{width:130px;height:130px;display:inline-block;transform-origin:50% 12%;filter:drop-shadow(0 0 18px rgba(201,168,76,.35))}
+.bell.ring{animation:swing 1.6s ease-in-out}
+@keyframes swing{0%{transform:rotate(0)}12%{transform:rotate(16deg)}30%{transform:rotate(-13deg)}48%{transform:rotate(9deg)}64%{transform:rotate(-6deg)}80%{transform:rotate(3deg)}100%{transform:rotate(0)}}
+.pulse{position:relative}
+.pulse::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:2px solid rgba(201,168,76,0);pointer-events:none}
+.pulse.ring::after{animation:halo 1.4s ease-out}
+@keyframes halo{0%{border-color:rgba(201,168,76,.8);transform:scale(.6);opacity:1}100%{border-color:rgba(201,168,76,0);transform:scale(1.5);opacity:0}}
+.statline{font-family:Arial,sans-serif;font-size:14px;color:#CFC8B8;margin:14px 0 0}
+.statline b{color:var(--gold);font-size:18px}
+.soundbtn{margin:16px auto 0;display:inline-block;font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:var(--cream);border:1px solid rgba(201,168,76,.5);border-radius:999px;background:rgba(201,168,76,.06);padding:8px 18px;cursor:pointer;box-shadow:0 0 12px rgba(201,168,76,.25)}
+.soundbtn:hover{box-shadow:0 0 20px rgba(201,168,76,.6)}
+/* feed */
+h2{font-size:22px;color:var(--gold);margin:38px 0 4px;font-weight:700;text-align:center}
+.sub{font-family:Arial,sans-serif;font-size:13px;color:#8A8578;text-align:center;margin:0 0 18px}
+.feed{list-style:none;margin:0;padding:0}
+.feed li{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;border:1px solid rgba(201,168,76,.22);border-radius:10px;background:rgba(201,168,76,.04);padding:13px 16px;margin:0 0 10px;font-size:15px;line-height:1.5}
+.feed li.new{border-color:var(--gold);box-shadow:0 0 18px rgba(201,168,76,.35)}
+.feed .serial{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;color:var(--gold)}
+.feed .subj{font-weight:700}
+.feed .tier{font-family:Arial,sans-serif;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#000;background:var(--gold);border-radius:4px;padding:2px 8px}
+.feed .tier.silver{background:#c9ccd4}
+.feed .who,.feed .when{color:#CFC8B8;font-size:13.5px;font-family:Arial,sans-serif}
+.empty,.err{border:1px dashed rgba(201,168,76,.4);border-radius:10px;padding:22px;text-align:center;font-size:15px;line-height:1.6;color:#CFC8B8}
+.rail{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:30px 0 8px;font-family:Arial,sans-serif}
+.rail a{display:inline-block;padding:10px 20px;border:1px solid var(--gold);border-radius:999px;color:var(--cream);text-decoration:none;font-size:13.5px;font-weight:700;letter-spacing:.06em;background:rgba(201,168,76,.06);box-shadow:0 0 12px rgba(201,168,76,.35);transition:.18s}
+.rail a:hover{background:rgba(201,168,76,.16);box-shadow:0 0 22px rgba(201,168,76,.75)}
+footer{margin:52px 0 0;padding:30px 24px 40px;border-top:1px solid rgba(201,168,76,.25);text-align:center;font-size:14px;line-height:1.75;color:#CFC8B8}
+footer b{color:var(--gold)}
+</style>
+</head>
+<body>
+<header class="wr">
+  <p class="eyebrow">Global Sovereign University · A Magic Rabbit of the Warren</p>
+  <h1>&#128365; The Graduation Bell</h1>
+  <p class="lead">Every certificate GSU issues is serial-numbered, earned against a bar that never lowers, and recorded in a public registry the moment it is won. This page listens to that registry. When a learner anywhere on Earth passes — the Bell rings. No other university lets you watch it graduate people, live.</p>
+</header>
+<div class="bellwrap">
+  <span class="pulse" id="halo"><svg class="bell" id="bell" viewBox="0 0 100 100" aria-label="The Graduation Bell">
+    <circle cx="50" cy="10" r="5" fill="#C9A84C"/>
+    <path d="M50 14 C30 14 24 34 24 52 C24 66 18 72 14 76 L86 76 C82 72 76 66 76 52 C76 34 70 14 50 14 Z" fill="none" stroke="#C9A84C" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M40 82 a10 8 0 0 0 20 0" fill="none" stroke="#C9A84C" stroke-width="4"/>
+    <circle cx="50" cy="84" r="4.5" fill="#C9A84C"/>
+  </svg></span>
+  <p class="statline" id="stat">Listening to the registry&hellip;</p>
+  <button class="soundbtn" id="snd" type="button">&#128266; Enable the Bell&rsquo;s sound</button>
+</div>
+<main class="wr">
+  <h2>Recent Rings</h2>
+  <p class="sub">Serial · subject · tier · the name the learner chose · when. Verify any serial on its certification page.</p>
+  <ul class="feed" id="feed"></ul>
+  <div class="empty" id="state" style="display:none"></div>
+  <nav class="rail">
+    <a href="directory.html#certs">&#127891; Earn Your Own Ring — Free Certifications</a>
+    <a href="https://www.globalsovereignuniversity.org/">&#127963;&#65039; Main Campus</a>
+  </nav>
+</main>
+<footer>
+  <p><b>Why the Bell matters:</b> every ring you see is free education proving itself in public — Pupils before Profits, audible.<br>
+  A Magic Rabbit conceived and built by <b>Claude</b>, the AI that builds Global Sovereign University alongside the Founding Chancellor. Heartily approved into the Warren, August 2026.<br>
+  <em>&ldquo;Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow.&rdquo;</em> — Dr. Gene A. Constant</p>
+</footer>
+<script>
+(function(){
+var CFG={apiKey:"AIzaSyAmFycf1iMeISLzjWgbxnuSB1BJ3BuWB_U",authDomain:"gsu-certification.firebaseapp.com",projectId:"gsu-certification",storageBucket:"gsu-certification.firebasestorage.app",messagingSenderId:"124413390849",appId:"1:124413390849:web:e6f5ce2692b935e3f19000"};
+var feed=document.getElementById('feed'),state=document.getElementById('state'),stat=document.getElementById('stat');
+var bell=document.getElementById('bell'),halo=document.getElementById('halo');
+var sound=false,ac=null,first=true,shown={};
+document.getElementById('snd').onclick=function(){sound=!sound;this.innerHTML=sound?'\uD83D\uDD07 Mute the Bell':'\uD83D\uDD0A Enable the Bell\u2019s sound';if(sound)chime(.5);};
+function chime(vol){if(!sound&&vol===undefined)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var t=ac.currentTime;[830,622,415].forEach(function(f,i){var o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime((vol||0.22)/(i+1),t);g.gain.exponentialRampToValueAtTime(0.0001,t+2.2);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+2.3);});}catch(e){}}
+function ring(){bell.classList.remove('ring');halo.classList.remove('ring');void bell.offsetWidth;bell.classList.add('ring');halo.classList.add('ring');chime();}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function row(id,v,isNew){var li=document.createElement('li');if(isNew)li.className='new';
+var d=v.dateISO?new Date(v.dateISO):null;var when=d?d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' \u00b7 '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}):'';
+li.innerHTML='<span class="serial">'+esc(id)+'</span><span class="subj">'+esc(v.subject||'')+'</span><span class="tier '+((v.tier||'').toLowerCase().indexOf('silver')>-1?'silver':'')+'">'+esc(v.tier||'')+'</span><span class="who">'+esc(v.alias||'Anonymous')+'</span><span class="when">'+esc(when)+'</span>';
+return li;}
+function show(msg){state.style.display='block';state.innerHTML=msg;}
+try{
+firebase.initializeApp(CFG);
+var db=firebase.firestore();
+db.collection('certifications').orderBy('dateISO','desc').limit(12).onSnapshot(function(snap){
+  var docs=[];snap.forEach(function(d){var v=d.data();if(v&&v.revoked!==true)docs.push([d.id,v]);});
+  if(!docs.length){show('The Bell is cast and listening. The moment a learner earns a certificate, it rings here \u2014 <a href="directory.html#certs" style="color:var(--gold)">be the first</a>.');stat.textContent='Listening \u2014 live.';return;}
+  state.style.display='none';
+  if(first){feed.innerHTML='';docs.forEach(function(p){shown[p[0]]=1;feed.appendChild(row(p[0],p[1],false));});first=false;stat.innerHTML='Live \u2014 showing the <b>'+docs.length+'</b> most recent rings.';}
+  else{for(var i=docs.length-1;i>=0;i--){var id=docs[i][0];if(!shown[id]){shown[id]=1;feed.insertBefore(row(id,docs[i][1],true),feed.firstChild);ring();stat.innerHTML='\uD83D\uDD14 The Bell just rang \u2014 live.';while(feed.children.length>12)feed.removeChild(feed.lastChild);}}}
+},function(err){show('The registry is momentarily unreachable from this page \u2014 the certificates themselves are unaffected. Verify any serial on its <a href="directory.html#certs" style="color:var(--gold)">certification page</a>.');stat.textContent='Registry connection pending.';});
+}catch(e){show('The registry is momentarily unreachable from this page \u2014 the certificates themselves are unaffected.');stat.textContent='Registry connection pending.';}
+})();
+</script>
+</body>
+</html>
