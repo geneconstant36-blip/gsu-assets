@@ -1,1319 +1,195 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Learning Arcade — Every Game GSU Has Ever Built | Global Sovereign University</title>
-<meta name="description" content="Eight aisles of learning games — Math, Reading, Geography, Mindset, Money, Trade Sims, BookGames, and Daily. Every game GSU has ever built, under one roof. Free forever, from a nonprofit.">
-<meta name="theme-color" content="#000000">
-<link rel="canonical" href="https://globalsovereignuniversity.org/learning-arcade">
-<style>
-:root {
-  --black: #000000;
-  --gold: #C9A84C;
-  --gold-dim: #8a7434;
-  --gold-bright: #e5c561;
-  --cream: #F5F1E8;
-  --cream-dim: #a8a49b;
-  --line: rgba(201, 168, 76, 0.28);
-  --line-soft: rgba(201, 168, 76, 0.14);
-  --slot-pending: rgba(122, 122, 122, 0.35);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--black);
-  color: var(--cream);
-  font-family: Georgia, 'Times New Roman', serif;
-  line-height: 1.6;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-/* NAV RAIL */
-.navbar {
-  padding: 0.85rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: rgba(0,0,0,0.96);
-  border-bottom: 1px solid var(--line);
-}
-.navbar-brand {
-  color: var(--gold);
-  font-size: 0.9rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.navbar-brand strong { font-weight: normal; color: var(--cream); }
-.navbar-links { display: flex; gap: 1.25rem; flex-wrap: wrap; align-items: center; }
-.navbar-link {
-  color: var(--cream);
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: color 0.2s;
-  letter-spacing: 0.02em;
-}
-.navbar-link:hover { color: var(--gold); }
-.navbar-link.geno {
-  color: var(--gold);
-  border: 1px solid var(--line);
-  padding: 0.35rem 0.75rem;
-  border-radius: 2px;
-  cursor: pointer;
-  background: transparent;
-  font-family: Georgia, serif;
-}
-.navbar-link.geno:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
-
-/* HERO */
-.hero {
-  padding: 3.5rem 1.5rem 2rem;
-  text-align: center;
-  border-bottom: 1px solid var(--line-soft);
-}
-.crest {
-  display: inline-block;
-  color: var(--gold);
-  font-size: 0.75rem;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  margin-bottom: 1.4rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-}
-.hero h1 {
-  font-size: clamp(2.2rem, 6.5vw, 4.4rem);
-  font-weight: normal;
-  color: var(--cream);
-  letter-spacing: 0.02em;
-  line-height: 1.1;
-  margin-bottom: 0.5rem;
-}
-.hero h1 em { color: var(--gold); font-style: italic; }
-.hero .subtitle {
-  font-size: clamp(1rem, 2.3vw, 1.35rem);
-  color: var(--gold);
-  font-style: italic;
-  margin-bottom: 1.5rem;
-}
-.hero .intro {
-  max-width: 44em;
-  margin: 0 auto 1.75rem;
-  color: var(--cream);
-  font-size: 1.05rem;
-  padding: 0 0.5rem;
-}
-.hero .intro strong { color: var(--gold); font-weight: normal; font-style: italic; }
-
-/* RATING */
-.rating-widget {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.55rem 1.1rem;
-  border: 1px solid var(--line);
-  border-radius: 2rem;
-  background: rgba(201, 168, 76, 0.03);
-}
-.rating-label { color: var(--cream-dim); font-size: 0.85rem; font-style: italic; }
-.stars { display: inline-flex; gap: 0.15rem; }
-.star {
-  background: transparent; border: none; color: var(--gold-dim); cursor: pointer;
-  font-size: 1.35rem; padding: 0 0.1rem; line-height: 1;
-  transition: color 0.15s, transform 0.15s;
-  font-family: Georgia, serif;
-}
-.star:hover, .star.hover { color: var(--gold); transform: scale(1.1); }
-.star.selected { color: var(--gold); }
-.rating-thanks {
-  color: var(--gold); font-size: 0.85rem; font-style: italic;
-  opacity: 0; transition: opacity 0.3s;
-}
-.rating-thanks.show { opacity: 1; }
-
-/* WHY WE PLAY */
-.why-we-play {
-  max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 2rem;
-  text-align: center;
-}
-.why-we-play-badge {
-  display: inline-block;
-  color: var(--gold);
-  font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--line-soft);
-  border-radius: 2rem;
-  margin-bottom: 1.5rem;
-}
-.why-we-play p {
-  max-width: 40em; margin: 0 auto 1rem;
-  color: var(--cream); font-size: 1.05rem; line-height: 1.7;
-}
-.why-we-play p strong { color: var(--gold); font-weight: normal; font-style: italic; }
-.why-we-play p + p { margin-top: 0.75rem; }
-
-/* AISLE DIRECTORY */
-.aisle-directory {
-  max-width: 1120px; margin: 0 auto; padding: 2rem 1.25rem;
-}
-.directory-title {
-  font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--cream-dim); text-align: center; margin-bottom: 1.5rem;
-}
-.directory-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 0.75rem;
-}
-.directory-chip {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--line-soft);
-  border-radius: 10px;
-  background: rgba(255,255,255,0.02);
-  text-decoration: none;
-  color: var(--cream);
-  transition: all 0.2s;
-  display: flex; align-items: center; gap: 0.75rem;
-}
-.directory-chip:hover {
-  border-color: var(--gold);
-  background: rgba(201, 168, 76, 0.05);
-  transform: translateY(-2px);
-}
-.directory-chip-num {
-  font-family: 'Courier New', monospace;
-  font-size: 0.7rem; color: var(--gold);
-  letter-spacing: 0.1em;
-}
-.directory-chip-name {
-  font-size: 0.95rem;
-}
-
-/* AISLES */
-.aisle {
-  max-width: 1120px; margin: 3rem auto; padding: 0 1.25rem;
-}
-.aisle-header {
-  display: flex; align-items: baseline; justify-content: space-between;
-  gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.75rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--line-soft);
-}
-.aisle-header-left {
-  display: flex; align-items: baseline; gap: 1rem;
-}
-.aisle-number {
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem; color: var(--gold);
-  letter-spacing: 0.15em;
-}
-.aisle-name {
-  font-size: clamp(1.5rem, 3.5vw, 2rem);
-  color: var(--cream); font-weight: normal;
-  letter-spacing: 0.01em;
-}
-.aisle-name em { color: var(--gold); font-style: italic; }
-.aisle-count {
-  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--cream-dim); font-style: italic;
-}
-.aisle-desc {
-  color: var(--cream); font-size: 0.95rem; line-height: 1.65;
-  max-width: 44em; margin-bottom: 1.5rem;
-  font-style: italic;
-}
-.aisle-desc strong { color: var(--gold); font-weight: normal; font-style: normal; }
-
-.game-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
-}
-
-/* GAME CARD (live) */
-.game-card {
-  padding: 1.35rem;
-  border: 1px solid var(--line-soft);
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(0,0,0,0.4));
-  text-decoration: none;
-  color: var(--cream);
-  display: flex; flex-direction: column;
-  transition: all 0.25s ease;
-  position: relative;
-}
-.game-card:hover {
-  border-color: var(--gold);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px -12px rgba(201, 168, 76, 0.3);
-}
-.game-card-topbar {
-  position: absolute; top: 0; left: 1.35rem; right: 1.35rem;
-  height: 2px; border-radius: 0 0 4px 4px;
-  background: var(--gold);
-}
-.game-card-head {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: 0.75rem; margin: 0.5rem 0 0.85rem;
-}
-.game-card-tag {
-  font-family: 'Courier New', monospace;
-  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--cream-dim);
-  padding: 0.2rem 0.5rem;
-  border: 1px solid var(--line-soft);
-  border-radius: 1rem;
-}
-.game-card-status {
-  font-size: 0.62rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.55rem;
-  border-radius: 1rem;
-}
-.game-card-status.live {
-  background: rgba(201, 168, 76, 0.15);
-  color: var(--gold);
-  border: 1px solid var(--gold-dim);
-}
-.game-card-status.pending {
-  background: rgba(122, 122, 122, 0.1);
-  color: var(--cream-dim);
-  border: 1px solid var(--slot-pending);
-}
-.game-card-title {
-  font-size: 1.05rem; color: var(--cream);
-  line-height: 1.25; margin-bottom: 0.6rem;
-}
-.game-card-desc {
-  font-size: 0.85rem; color: var(--cream-dim);
-  line-height: 1.5; margin-bottom: 1rem;
-  flex: 1;
-}
-.game-card-cta {
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--line-soft);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.85rem;
-}
-.game-card-cta-play { color: var(--gold); }
-.game-card-cta-meta {
-  font-size: 0.72rem; color: var(--cream-dim); font-style: italic;
-}
-
-/* PENDING SLOT — clearly different aesthetic */
-.slot-pending {
-  padding: 1.35rem;
-  border: 1px dashed var(--slot-pending);
-  border-radius: 14px;
-  background: rgba(255,255,255,0.015);
-  display: flex; flex-direction: column;
-  min-height: 200px;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.slot-pending-icon {
-  width: 40px; height: 40px; border-radius: 50%;
-  border: 1px dashed var(--slot-pending);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem; color: var(--cream-dim);
-  margin-bottom: 0.85rem;
-}
-.slot-pending-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--cream-dim);
-  margin-bottom: 0.4rem;
-}
-.slot-pending-hint {
-  font-size: 0.78rem;
-  color: var(--cream-dim);
-  font-style: italic;
-  line-height: 1.5;
-  max-width: 20em;
-}
-
-/* INVENTORY CALL-OUT */
-.inventory-callout {
-  max-width: 1120px; margin: 4rem auto; padding: 2rem 1.25rem;
-}
-.inventory-card {
-  padding: clamp(2rem, 4vw, 2.75rem);
-  border-radius: 22px;
-  background: linear-gradient(135deg, rgba(201, 168, 76, 0.06), rgba(0,0,0,0.5));
-  border: 1px solid var(--line);
-  display: grid; grid-template-columns: auto 1fr; gap: 1.5rem;
-  align-items: start;
-}
-.inventory-card-icon {
-  width: 3rem; height: 3rem;
-  border-radius: 50%;
-  background: var(--gold);
-  color: var(--black);
-  display: flex; align-items: center; justify-content: center;
-  font-family: Georgia, serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-.inventory-card h3 {
-  font-size: clamp(1.3rem, 2.8vw, 1.6rem);
-  color: var(--cream); font-weight: normal; line-height: 1.25;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.75rem;
-}
-.inventory-card h3 em { color: var(--gold); font-style: italic; }
-.inventory-card p {
-  color: var(--cream); line-height: 1.65; font-size: 0.95rem;
-  margin-bottom: 0.75rem;
-}
-.inventory-card p strong { color: var(--gold); font-weight: normal; }
-.inventory-card code {
-  background: rgba(0,0,0,0.4);
-  padding: 0.15rem 0.4rem;
-  border-radius: 3px;
-  border: 1px solid var(--line-soft);
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
-  color: var(--gold);
-}
-
-/* DICTIONARY & FAQ (standing rules) */
-.dictionary, .faq {
-  max-width: 1120px; margin: 0 auto; padding: 2.5rem 1.25rem;
-}
-.faq { max-width: 900px; }
-.section-head {
-  display: flex; align-items: baseline; justify-content: space-between;
-  gap: 1.25rem; flex-wrap: wrap; margin-bottom: 1.75rem;
-}
-.section-title {
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
-  font-weight: normal;
-  color: var(--cream);
-  letter-spacing: -0.01em;
-}
-.section-title em { color: var(--gold); font-style: italic; }
-.section-lede {
-  max-width: 24em; color: var(--cream-dim);
-  font-size: 0.9rem; font-style: italic; line-height: 1.5;
-}
-.dictionary-list {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 0.85rem;
-}
-.dict-item {
-  padding: 1rem 1.25rem; border-radius: 12px;
-  border: 1px solid var(--line-soft);
-  background: rgba(255,255,255,0.02);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.dict-item:hover { border-color: var(--line); background: rgba(255,255,255,0.03); }
-.dict-item-word {
-  color: var(--gold); font-size: 1.05rem;
-  font-weight: normal;
-}
-.dict-item-def {
-  color: var(--cream); font-size: 0.9rem; line-height: 1.55;
-  max-height: 0; overflow: hidden;
-  transition: max-height 0.3s ease, margin-top 0.3s ease;
-}
-.dict-item.open .dict-item-def {
-  max-height: 300px; margin-top: 0.6rem;
-}
-
-.faq-item {
-  border-bottom: 1px solid var(--line-soft);
-  padding: 0.35rem 0;
-}
-.faq-q {
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 1rem; padding: 1.15rem 0; cursor: pointer;
-  color: var(--cream); font-size: 1.05rem;
-}
-.faq-q:hover { color: var(--gold); }
-.faq-q-icon {
-  width: 1.5rem; height: 1.5rem; flex-shrink: 0;
-  border: 1px solid var(--line); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gold); transition: all 0.25s ease;
-}
-.faq-item.open .faq-q-icon {
-  background: var(--gold); color: var(--black);
-  transform: rotate(45deg);
-}
-.faq-a {
-  max-height: 0; overflow: hidden;
-  transition: max-height 0.35s ease;
-  color: var(--cream); line-height: 1.7;
-}
-.faq-item.open .faq-a {
-  max-height: 800px; padding: 0 0 1.25rem 0;
-}
-.faq-a strong { color: var(--gold); font-weight: normal; }
-
-/* FOOTER */
-.footer {
-  padding: 3rem 1.5rem; text-align: center; border-top: 1px solid var(--line-soft);
-  color: var(--cream-dim); font-size: 0.9rem; line-height: 1.7;
-}
-.footer .credo {
-  color: var(--gold); font-style: italic; font-size: 1.05rem;
-  margin-bottom: 1rem;
-}
-.footer a { color: var(--gold); text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
-
-/* RESPONSIVE */
-@media (max-width: 640px) {
-  .hero { padding: 2.5rem 1rem 1.5rem; }
-  .navbar { padding: 0.7rem 1rem; }
-  .navbar-brand { font-size: 0.8rem; }
-  .inventory-card { grid-template-columns: 1fr; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { transition: none !important; }
-}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Sovereign Arcade — 107 Free Educational Games | Global Sovereign University</title>
+<meta name="description" content="Play 107 free educational browser games from Global Sovereign University — reading, math, science, trades, civics, money, and the mind. No sign-up, no cost, ever.">
+<meta property="og:title" content="The Sovereign Arcade — 107 Free Educational Games | GSU">
+<meta property="og:description" content="One hundred and seven free educational games. Learn on the screen when it helps.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://read.globalsovereignuniversity.org/learning-arcade.html">
+<link rel="canonical" href="https://read.globalsovereignuniversity.org/learning-arcade.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "The GSU Arcade — 107 Free Educational Games", "description": "A free library of 107 educational browser games from Global Sovereign University, spanning reading, math, science, trades, civics, and more. Every game is free to play.", "numberOfItems": 107, "itemListElement": [{"@type": "ListItem", "position": 1, "item": {"@type": "VideoGame", "name": "Adult Literacy Lab", "url": "https://read.globalsovereignuniversity.org/adult-literacy-lab.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 2, "item": {"@type": "VideoGame", "name": "Class In A Box Spelling Forge", "url": "https://read.globalsovereignuniversity.org/class-in-a-box-spelling-forge.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 3, "item": {"@type": "VideoGame", "name": "Comprehension Climb", "url": "https://read.globalsovereignuniversity.org/comprehension-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 4, "item": {"@type": "VideoGame", "name": "Comprehension Game", "url": "https://read.globalsovereignuniversity.org/comprehension-game-v2.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 5, "item": {"@type": "VideoGame", "name": "Comprehension Game", "url": "https://read.globalsovereignuniversity.org/comprehension-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 6, "item": {"@type": "VideoGame", "name": "Comprehension Tribunal", "url": "https://read.globalsovereignuniversity.org/BookGame_3_Comprehension_Tribunal.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 7, "item": {"@type": "VideoGame", "name": "Critical Reading Climb", "url": "https://read.globalsovereignuniversity.org/critical-reading-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 8, "item": {"@type": "VideoGame", "name": "Critical Reading Game", "url": "https://read.globalsovereignuniversity.org/critical-reading-game-v2.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 9, "item": {"@type": "VideoGame", "name": "Critical Reading Game", "url": "https://read.globalsovereignuniversity.org/critical-reading-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 10, "item": {"@type": "VideoGame", "name": "Decoding Climb", "url": "https://read.globalsovereignuniversity.org/decoding-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 11, "item": {"@type": "VideoGame", "name": "Decoding Game", "url": "https://read.globalsovereignuniversity.org/decoding-game-v2.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 12, "item": {"@type": "VideoGame", "name": "Decoding Game", "url": "https://read.globalsovereignuniversity.org/decoding-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 13, "item": {"@type": "VideoGame", "name": "Fluency Game", "url": "https://read.globalsovereignuniversity.org/fluency-game-v2.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 14, "item": {"@type": "VideoGame", "name": "Fluency Game", "url": "https://read.globalsovereignuniversity.org/fluency-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 15, "item": {"@type": "VideoGame", "name": "Language Lab Hole Fix", "url": "https://read.globalsovereignuniversity.org/language-lab-hole-fix.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 16, "item": {"@type": "VideoGame", "name": "Minimal Pairs Lab", "url": "https://read.globalsovereignuniversity.org/minimal-pairs-lab.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 17, "item": {"@type": "VideoGame", "name": "Morphology Game", "url": "https://read.globalsovereignuniversity.org/morphology-game-v2.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 18, "item": {"@type": "VideoGame", "name": "Morphology Game", "url": "https://read.globalsovereignuniversity.org/morphology-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 19, "item": {"@type": "VideoGame", "name": "Phoneme Forge", "url": "https://read.globalsovereignuniversity.org/phoneme-forge.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 20, "item": {"@type": "VideoGame", "name": "Phonemic Awareness Game", "url": "https://read.globalsovereignuniversity.org/phonemic-awareness-game-v2.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 21, "item": {"@type": "VideoGame", "name": "Phonemic Awareness Game", "url": "https://read.globalsovereignuniversity.org/phonemic-awareness-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 22, "item": {"@type": "VideoGame", "name": "Phonics Climb", "url": "https://read.globalsovereignuniversity.org/phonics-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 23, "item": {"@type": "VideoGame", "name": "Phonics Game", "url": "https://read.globalsovereignuniversity.org/phonics-game-v2.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 24, "item": {"@type": "VideoGame", "name": "Phonics Game", "url": "https://read.globalsovereignuniversity.org/phonics-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 25, "item": {"@type": "VideoGame", "name": "Phonics Protocol", "url": "https://read.globalsovereignuniversity.org/BookGame_2_Phonics_Protocol.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 26, "item": {"@type": "VideoGame", "name": "Phonics Protocol", "url": "https://read.globalsovereignuniversity.org/phonics-protocol.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 27, "item": {"@type": "VideoGame", "name": "Reading Helix Climb", "url": "https://read.globalsovereignuniversity.org/reading-helix-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 28, "item": {"@type": "VideoGame", "name": "Rosetta Protocol", "url": "https://read.globalsovereignuniversity.org/rosetta-protocol.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 29, "item": {"@type": "VideoGame", "name": "Spelling Climb", "url": "https://read.globalsovereignuniversity.org/spelling-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 30, "item": {"@type": "VideoGame", "name": "Spelling Forge", "url": "https://read.globalsovereignuniversity.org/spelling-forge.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 31, "item": {"@type": "VideoGame", "name": "The Code That Unlocks Reading Game", "url": "https://read.globalsovereignuniversity.org/the-code-that-unlocks-reading-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 32, "item": {"@type": "VideoGame", "name": "Vocabulary Climb", "url": "https://read.globalsovereignuniversity.org/vocabulary-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 33, "item": {"@type": "VideoGame", "name": "Vocabulary Game", "url": "https://read.globalsovereignuniversity.org/vocabulary-game-v2.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 34, "item": {"@type": "VideoGame", "name": "Vocabulary Game", "url": "https://read.globalsovereignuniversity.org/vocabulary-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 35, "item": {"@type": "VideoGame", "name": "Vowel Valley", "url": "https://read.globalsovereignuniversity.org/vowel-valley.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 36, "item": {"@type": "VideoGame", "name": "Cross Figures Game", "url": "https://read.globalsovereignuniversity.org/cross-figures-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 37, "item": {"@type": "VideoGame", "name": "Division Dojo", "url": "https://read.globalsovereignuniversity.org/division-dojo.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 38, "item": {"@type": "VideoGame", "name": "Fraction Frenzy", "url": "https://read.globalsovereignuniversity.org/fraction-frenzy.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 39, "item": {"@type": "VideoGame", "name": "Make 24", "url": "https://read.globalsovereignuniversity.org/make24-bookgame.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 40, "item": {"@type": "VideoGame", "name": "Math Helix Climb", "url": "https://read.globalsovereignuniversity.org/math-helix-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 41, "item": {"@type": "VideoGame", "name": "Math Jeopardy", "url": "https://read.globalsovereignuniversity.org/math-jeopardy.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 42, "item": {"@type": "VideoGame", "name": "Shortcut Sprint", "url": "https://read.globalsovereignuniversity.org/shortcut-sprint.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 43, "item": {"@type": "VideoGame", "name": "Trade Math Challenge", "url": "https://read.globalsovereignuniversity.org/trade-math-challenge.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 44, "item": {"@type": "VideoGame", "name": "Trade Math Sim", "url": "https://read.globalsovereignuniversity.org/trade-math-sim.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 45, "item": {"@type": "VideoGame", "name": "Biology/lab Skills", "url": "https://read.globalsovereignuniversity.org/biology/lab-skills.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 46, "item": {"@type": "VideoGame", "name": "Cell Defender", "url": "https://read.globalsovereignuniversity.org/cell-defender.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 47, "item": {"@type": "VideoGame", "name": "Fog Detection", "url": "https://read.globalsovereignuniversity.org/Fog_Detection.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 48, "item": {"@type": "VideoGame", "name": "Fog Industrial Complex Chapter 1", "url": "https://read.globalsovereignuniversity.org/fog-industrial-complex-chapter-1.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 49, "item": {"@type": "VideoGame", "name": "Four Sciences Climb", "url": "https://read.globalsovereignuniversity.org/four-sciences-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 50, "item": {"@type": "VideoGame", "name": "Lab Skills", "url": "https://read.globalsovereignuniversity.org/lab-skills.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 51, "item": {"@type": "VideoGame", "name": "Posture Player", "url": "https://read.globalsovereignuniversity.org/06-posture-player.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 52, "item": {"@type": "VideoGame", "name": "Posture Player", "url": "https://read.globalsovereignuniversity.org/posture-player.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 53, "item": {"@type": "VideoGame", "name": "Simple Machines", "url": "https://read.globalsovereignuniversity.org/04-simple-machines.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 54, "item": {"@type": "VideoGame", "name": "Simple Machines", "url": "https://read.globalsovereignuniversity.org/simple-machines.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 55, "item": {"@type": "VideoGame", "name": "Solar System Explorer", "url": "https://read.globalsovereignuniversity.org/solar-system-explorer.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 56, "item": {"@type": "VideoGame", "name": "The Fog Industrial Complex", "url": "https://read.globalsovereignuniversity.org/the-fog-industrial-complex.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 57, "item": {"@type": "VideoGame", "name": "HVAC IQ", "url": "https://read.globalsovereignuniversity.org/hvac-iq.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 58, "item": {"@type": "VideoGame", "name": "Solar PV Climb", "url": "https://read.globalsovereignuniversity.org/solar-pv-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 59, "item": {"@type": "VideoGame", "name": "Stonemasons Climb", "url": "https://read.globalsovereignuniversity.org/stonemasons-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 60, "item": {"@type": "VideoGame", "name": "Trades Climb", "url": "https://read.globalsovereignuniversity.org/trades-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 61, "item": {"@type": "VideoGame", "name": "Trades Geometry Climb", "url": "https://read.globalsovereignuniversity.org/trades-geometry-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 62, "item": {"@type": "VideoGame", "name": "Trades Lab (ARC-345)", "url": "https://read.globalsovereignuniversity.org/arc-345-trades-lab.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 63, "item": {"@type": "VideoGame", "name": "Tradesmans Trial", "url": "https://read.globalsovereignuniversity.org/tradesmans-trial.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 64, "item": {"@type": "VideoGame", "name": "Budget Survivor", "url": "https://read.globalsovereignuniversity.org/budget-survivor.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 65, "item": {"@type": "VideoGame", "name": "Credit Score Simulator", "url": "https://read.globalsovereignuniversity.org/credit-score-simulator.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 66, "item": {"@type": "VideoGame", "name": "Junior Money Climb", "url": "https://read.globalsovereignuniversity.org/junior-money-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 67, "item": {"@type": "VideoGame", "name": "Money Climb", "url": "https://read.globalsovereignuniversity.org/money-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 68, "item": {"@type": "VideoGame", "name": "Civic Virtue Climb", "url": "https://read.globalsovereignuniversity.org/civic-virtue-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 69, "item": {"@type": "VideoGame", "name": "Founders Climb", "url": "https://read.globalsovereignuniversity.org/founders-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 70, "item": {"@type": "VideoGame", "name": "Lawgivers Climb", "url": "https://read.globalsovereignuniversity.org/lawgivers-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 71, "item": {"@type": "VideoGame", "name": "Plain Law Climb", "url": "https://read.globalsovereignuniversity.org/plain-law-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 72, "item": {"@type": "VideoGame", "name": "Amnesty Protocol", "url": "https://read.globalsovereignuniversity.org/amnesty-protocol-bookgame.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 73, "item": {"@type": "VideoGame", "name": "Betrayal Detector", "url": "https://read.globalsovereignuniversity.org/BookGame_1_Betrayal_Detector.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 74, "item": {"@type": "VideoGame", "name": "Congruence Code Game", "url": "https://read.globalsovereignuniversity.org/congruence_code_game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 75, "item": {"@type": "VideoGame", "name": "Manipulation Gauntlet", "url": "https://read.globalsovereignuniversity.org/manipulation-gauntlet.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 76, "item": {"@type": "VideoGame", "name": "Phish Or Legit", "url": "https://read.globalsovereignuniversity.org/phish-or-legit.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 77, "item": {"@type": "VideoGame", "name": "Red Herring Hunter", "url": "https://read.globalsovereignuniversity.org/red-herring-hunter.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 78, "item": {"@type": "VideoGame", "name": "Robot Proof", "url": "https://read.globalsovereignuniversity.org/robot-proof-bookgame.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 79, "item": {"@type": "VideoGame", "name": "Robot Proof", "url": "https://read.globalsovereignuniversity.org/robot-proof.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 80, "item": {"@type": "VideoGame", "name": "Rumination", "url": "https://read.globalsovereignuniversity.org/rumination-bookgame.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 81, "item": {"@type": "VideoGame", "name": "Systemic Failure Game", "url": "https://read.globalsovereignuniversity.org/systemic_failure_game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 82, "item": {"@type": "VideoGame", "name": "The Amnesty Protocol", "url": "https://read.globalsovereignuniversity.org/the-amnesty-protocol.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 83, "item": {"@type": "VideoGame", "name": "TPM", "url": "https://read.globalsovereignuniversity.org/tpm-bookgame.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 84, "item": {"@type": "VideoGame", "name": "Uncharted Playbook", "url": "https://read.globalsovereignuniversity.org/uncharted-playbook.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 85, "item": {"@type": "VideoGame", "name": "GENO's World Tour", "url": "https://read.globalsovereignuniversity.org/genos-world-tour.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 86, "item": {"@type": "VideoGame", "name": "World Climb", "url": "https://read.globalsovereignuniversity.org/world-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 87, "item": {"@type": "VideoGame", "name": "World Flavors", "url": "https://read.globalsovereignuniversity.org/world-flavors.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 88, "item": {"@type": "VideoGame", "name": "EQ Climb", "url": "https://read.globalsovereignuniversity.org/eq-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 89, "item": {"@type": "VideoGame", "name": "Gene Call", "url": "https://read.globalsovereignuniversity.org/gene-call.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 90, "item": {"@type": "VideoGame", "name": "Homeschool Climb", "url": "https://read.globalsovereignuniversity.org/homeschool-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 91, "item": {"@type": "VideoGame", "name": "Iron Mind", "url": "https://read.globalsovereignuniversity.org/iron-mind.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 92, "item": {"@type": "VideoGame", "name": "Leadership Climb", "url": "https://read.globalsovereignuniversity.org/leadership-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 93, "item": {"@type": "VideoGame", "name": "Sovereign Mind Climb", "url": "https://read.globalsovereignuniversity.org/sovereign-mind-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 94, "item": {"@type": "VideoGame", "name": "Summit Champion", "url": "https://read.globalsovereignuniversity.org/summit-champion.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 95, "item": {"@type": "VideoGame", "name": "Tactical Vitality Climb", "url": "https://read.globalsovereignuniversity.org/tactical-vitality-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 96, "item": {"@type": "VideoGame", "name": "Thinkification Climb", "url": "https://read.globalsovereignuniversity.org/thinkification-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 97, "item": {"@type": "VideoGame", "name": "Vitality Climb", "url": "https://read.globalsovereignuniversity.org/vitality-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 98, "item": {"@type": "VideoGame", "name": "Mississippi Challenge", "url": "https://read.globalsovereignuniversity.org/BookGame_4_Mississippi_Challenge.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 99, "item": {"@type": "VideoGame", "name": "Computer Literacy Unlocked Game", "url": "https://read.globalsovereignuniversity.org/computer-literacy-unlocked-game.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 100, "item": {"@type": "VideoGame", "name": "Domestic Laboratory", "url": "https://read.globalsovereignuniversity.org/domestic-laboratory.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 101, "item": {"@type": "VideoGame", "name": "Gameon Flagship Block", "url": "https://read.globalsovereignuniversity.org/gameon-flagship-block.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 102, "item": {"@type": "VideoGame", "name": "GENO Language Lab", "url": "https://read.globalsovereignuniversity.org/GENO_Language_Lab.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 103, "item": {"@type": "VideoGame", "name": "Learning Arcade", "url": "https://read.globalsovereignuniversity.org/learning-arcade.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 104, "item": {"@type": "VideoGame", "name": "Sovereign Explorer Nav Rail", "url": "https://read.globalsovereignuniversity.org/sovereign-explorer-nav-rail.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 105, "item": {"@type": "VideoGame", "name": "Trifurcation Road", "url": "https://read.globalsovereignuniversity.org/trifurcation-road.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 106, "item": {"@type": "VideoGame", "name": "Trifurcation Road Climb", "url": "https://read.globalsovereignuniversity.org/trifurcation-road-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}, {"@type": "ListItem", "position": 107, "item": {"@type": "VideoGame", "name": "Writification Climb", "url": "https://read.globalsovereignuniversity.org/writification-climb.html", "genre": "Educational", "gamePlatform": "Web browser", "applicationCategory": "EducationalApplication", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Global Sovereign University"}}}]}</script>
 </head>
-<body>
+<body style="margin:0;background:#000;">
+<!-- GSU ARCADE HUB v1 · canonical index of all 107 free games · Aug 2026 -->
+<style>#gsu-arcade{background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;padding:56px 20px 72px}#gsu-arcade *{box-sizing:border-box}#gsu-arcade .gx-wrap{max-width:1200px;margin:0 auto}#gsu-arcade .gx-kick{color:#6DBFA9;font-family:Arial,sans-serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;text-align:center;margin:0 0 12px}#gsu-arcade h2.gx-h{font-size:2.7rem;line-height:1.08;color:#C9A84C;text-align:center;margin:0 0 10px;font-weight:700}#gsu-arcade .gx-sub{text-align:center;color:#d8d2c4;font-size:1.08rem;max-width:760px;margin:0 auto 6px;line-height:1.5}#gsu-arcade .gx-free{text-align:center;color:#C9A84C;font-style:italic;margin:0 0 26px;font-size:1rem}#gsu-arcade .gx-tools{max-width:900px;margin:0 auto 22px}#gsu-arcade .gx-search{width:100%;padding:14px 18px;background:#0c0c0c;border:1px solid rgba(201,168,76,.4);border-radius:10px;color:#F5F1E8;font-family:Arial,sans-serif;font-size:1rem;outline:none}#gsu-arcade .gx-search:focus{border-color:#C9A84C}#gsu-arcade .gx-search::placeholder{color:#7a756a}#gsu-arcade .gx-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 6px}#gsu-arcade .gx-chip{background:#0c0c0c;border:1px solid rgba(201,168,76,.35);color:#d8d2c4;font-family:Arial,sans-serif;font-size:.82rem;padding:7px 14px;border-radius:999px;cursor:pointer;transition:.15s}#gsu-arcade .gx-chip em{font-style:normal;color:#C9A84C;font-weight:700;margin-left:4px}#gsu-arcade .gx-chip:hover{border-color:#C9A84C;color:#fff}#gsu-arcade .gx-chip.is-on{background:#C9A84C;color:#000;border-color:#C9A84C}#gsu-arcade .gx-chip.is-on em{color:#000}#gsu-arcade .gx-count{text-align:center;color:#7a756a;font-family:Arial,sans-serif;font-size:.8rem;margin:4px 0 20px;letter-spacing:.05em}#gsu-arcade .gx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}#gsu-arcade .gx-card{display:flex;flex-direction:column;background:linear-gradient(180deg,#0e0e0e,#080808);border:1px solid rgba(201,168,76,.22);border-radius:12px;padding:18px 18px 16px;text-decoration:none;transition:.16s;min-height:150px}#gsu-arcade .gx-card:hover{border-color:#C9A84C;transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.6)}#gsu-arcade .gx-badge{font-family:Arial,sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#6DBFA9;margin-bottom:8px}#gsu-arcade .gx-name{font-size:1.18rem;color:#C9A84C;font-weight:700;line-height:1.2;margin-bottom:7px}#gsu-arcade .gx-hook{font-size:.92rem;color:#cfc9bb;line-height:1.42;flex:1}#gsu-arcade .gx-play{margin-top:12px;font-family:Arial,sans-serif;font-size:.8rem;letter-spacing:.05em;color:#F5F1E8;font-weight:600}#gsu-arcade .gx-card:hover .gx-play{color:#C9A84C}#gsu-arcade .gx-none{text-align:center;color:#7a756a;padding:40px;font-family:Arial,sans-serif;display:none}#gsu-arcade .gx-foot{text-align:center;color:#8a8474;font-size:.9rem;margin-top:34px;line-height:1.6;font-style:italic}@media(max-width:600px){#gsu-arcade h2.gx-h{font-size:2rem}#gsu-arcade .gx-grid{grid-template-columns:1fr}}</style>
 
-<nav class="navbar">
-  <a href="https://globalsovereignuniversity.org" class="navbar-brand"><strong>GSU</strong> · Learning Arcade</a>
-  <div class="navbar-links">
-    <a href="https://globalsovereignuniversity.org" class="navbar-link">Home</a>
-    <a href="https://globalsovereignuniversity.org/library" class="navbar-link">Library</a>
-    <a href="https://globalsovereignuniversity.org/eight-rabbits" class="navbar-link">The Warren</a>
-    <a href="https://globalsovereignuniversity.org/homeschool" class="navbar-link">Homeschool</a>
-    <button class="navbar-link geno" onclick="askGeno()">Ask GENO</button>
-  </div>
-</nav>
+<section id="gsu-arcade">
+  <div class="gx-wrap">
+    <p class="gx-kick">Global Sovereign University</p>
+    <h2 class="gx-h">The Sovereign Arcade</h2>
+    <p class="gx-sub">One hundred and seven free educational games — reading, math, science, the trades, civics, money, and the mind. No sign-up, no cost, no catch.</p>
+    <p class="gx-free">Every game is free to play. Learn on the screen when it helps.</p>
 
-<header class="hero">
-  <span class="crest">Global Sovereign University · Learning Arcade</span>
-  <h1>The <em>Learning Arcade</em></h1>
-  <p class="subtitle">Every Game GSU Has Built · Under One Roof</p>
-  <div class="intro">
-    <p>Eight aisles. Dozens of games. Every one of them free forever, built by teachers who believe children learn faster when the lesson feels like <strong>a game they cannot lose</strong>.</p>
-  </div>
-  <div class="rating-widget">
-    <span class="rating-label">Rate the Arcade</span>
-    <div class="stars" id="stars">
-      <button class="star" data-value="1" aria-label="1 star">★</button>
-      <button class="star" data-value="2" aria-label="2 stars">★</button>
-      <button class="star" data-value="3" aria-label="3 stars">★</button>
-      <button class="star" data-value="4" aria-label="4 stars">★</button>
-      <button class="star" data-value="5" aria-label="5 stars">★</button>
+    <div class="gx-tools">
+      <input id="gx-search" class="gx-search" type="text" placeholder="Search 107 games… (try &quot;phonics&quot;, &quot;money&quot;, &quot;climb&quot;)" aria-label="Search games">
+      <div class="gx-chips" id="gx-chips">
+        <button class="gx-chip is-on" data-f="all">All <em>107</em></button>
+<button class="gx-chip" data-f="Reading &amp; Literacy">Reading &amp; Literacy <em>35</em></button>
+<button class="gx-chip" data-f="Math">Math <em>9</em></button>
+<button class="gx-chip" data-f="Science">Science <em>12</em></button>
+<button class="gx-chip" data-f="Trades &amp; Technical">Trades &amp; Technical <em>7</em></button>
+<button class="gx-chip" data-f="Money &amp; Financial Literacy">Money &amp; Financial Literacy <em>4</em></button>
+<button class="gx-chip" data-f="Civics, History &amp; Law">Civics, History &amp; Law <em>4</em></button>
+<button class="gx-chip" data-f="Critical Thinking &amp; Media">Critical Thinking &amp; Media <em>13</em></button>
+<button class="gx-chip" data-f="World &amp; Geography">World &amp; Geography <em>3</em></button>
+<button class="gx-chip" data-f="Mind, Character &amp; Life">Mind, Character &amp; Life <em>10</em></button>
+<button class="gx-chip" data-f="Book Companions">Book Companions <em>1</em></button>
+<button class="gx-chip" data-f="More Games">More Games <em>9</em></button>
+      </div>
+      <p class="gx-count" id="gx-count"></p>
     </div>
-    <span class="rating-thanks" id="ratingThanks"></span>
-  </div>
-</header>
 
-<!-- WHY WE PLAY (standing rule head-strip) -->
-<section class="why-we-play">
-  <span class="why-we-play-badge">Why We Play</span>
-  <p>The founders of this republic learned by <strong>drilling, playing, arguing, and making things</strong>. Books were second. The workshop, the field, the debate, and the game came first. Play is not the opposite of learning. Play is the shape learning takes when the learner is free.</p>
-  <p>Every game in this arcade was built to that principle. No advertising. No paywall. No stopwatch that punishes you for thinking. Just the game, the lesson, and the door back home when you are ready.</p>
-</section>
-
-<!-- AISLE DIRECTORY -->
-<section class="aisle-directory">
-  <div class="directory-title">Aisle Directory · Jump to a section</div>
-  <div class="directory-grid">
-    <a href="#aisle-math" class="directory-chip"><span class="directory-chip-num">01</span><span class="directory-chip-name">Math</span></a>
-    <a href="#aisle-reading" class="directory-chip"><span class="directory-chip-num">02</span><span class="directory-chip-name">Reading & Words</span></a>
-    <a href="#aisle-geography" class="directory-chip"><span class="directory-chip-num">03</span><span class="directory-chip-name">Geography & Sky</span></a>
-    <a href="#aisle-mindset" class="directory-chip"><span class="directory-chip-num">04</span><span class="directory-chip-name">Mindset</span></a>
-    <a href="#aisle-money" class="directory-chip"><span class="directory-chip-num">05</span><span class="directory-chip-name">Money & Economy</span></a>
-    <a href="#aisle-trade" class="directory-chip"><span class="directory-chip-num">06</span><span class="directory-chip-name">Trade Sims</span></a>
-    <a href="#aisle-book" class="directory-chip"><span class="directory-chip-num">07</span><span class="directory-chip-name">BookGames</span></a>
-    <a href="#aisle-daily" class="directory-chip"><span class="directory-chip-num">08</span><span class="directory-chip-name">Daily Loops</span></a>
-  </div>
-</section>
-
-<!-- ═══════════ AISLE 01 — MATH ═══════════ -->
-<section class="aisle" id="aisle-math">
-  <div class="aisle-header">
-    <div class="aisle-header-left">
-      <span class="aisle-number">Aisle 01</span>
-      <h2 class="aisle-name"><em>Math</em></h2>
+    <div class="gx-grid" id="gx-grid">
+      <a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/adult-literacy-lab.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Adult Literacy Lab</span><span class="gx-hook">A patient, private place for adults to learn to read.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/class-in-a-box-spelling-forge.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Class In A Box Spelling Forge</span><span class="gx-hook">A speaking instrument — forge the skill by ear and by voice.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/comprehension-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Comprehension Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/comprehension-game-v2.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Comprehension Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/comprehension-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Comprehension Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/BookGame_3_Comprehension_Tribunal.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Comprehension Tribunal</span><span class="gx-hook">Play the book — a game built on its ideas.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/critical-reading-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Critical Reading Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/critical-reading-game-v2.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Critical Reading Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/critical-reading-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Critical Reading Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/decoding-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Decoding Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/decoding-game-v2.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Decoding Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/decoding-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Decoding Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/fluency-game-v2.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Fluency Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/fluency-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Fluency Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/language-lab-hole-fix.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Language Lab Hole Fix</span><span class="gx-hook">A hands-on lab — learn by doing, not just reading.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/minimal-pairs-lab.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Minimal Pairs Lab</span><span class="gx-hook">A hands-on lab — learn by doing, not just reading.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/morphology-game-v2.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Morphology Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/morphology-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Morphology Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/phoneme-forge.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Phoneme Forge</span><span class="gx-hook">Forge a reader’s ear — build words from their sounds.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/phonemic-awareness-game-v2.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Phonemic Awareness Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/phonemic-awareness-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Phonemic Awareness Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/phonics-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Phonics Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/phonics-game-v2.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Phonics Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/phonics-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Phonics Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/BookGame_2_Phonics_Protocol.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Phonics Protocol</span><span class="gx-hook">Play the book — a game built on its ideas.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/phonics-protocol.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Phonics Protocol</span><span class="gx-hook">Play the book — a game built on its ideas.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/reading-helix-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Reading Helix Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/rosetta-protocol.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Rosetta Protocol</span><span class="gx-hook">Crack a new language like a code.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/spelling-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Spelling Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/spelling-forge.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Spelling Forge</span><span class="gx-hook">Hammer out spelling patterns until they stick.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/the-code-that-unlocks-reading-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">The Code That Unlocks Reading Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/vocabulary-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Vocabulary Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/vocabulary-game-v2.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Vocabulary Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/vocabulary-game.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Vocabulary Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Reading &amp; Literacy" href="https://read.globalsovereignuniversity.org/vowel-valley.html" target="_blank" rel="noopener"><span class="gx-badge">Reading &amp; Literacy</span><span class="gx-name">Vowel Valley</span><span class="gx-hook">Journey through the vowels and hear every sound land.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/cross-figures-game.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Cross Figures Game</span><span class="gx-hook">A crossword built from numbers — logic in every square.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/division-dojo.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Division Dojo</span><span class="gx-hook">Master division by belt, from white to black.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/fraction-frenzy.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Fraction Frenzy</span><span class="gx-hook">Race the clock to tame fractions before they pile up.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/make24-bookgame.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Make 24</span><span class="gx-hook">Four numbers, one target: make 24 any way you can.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/math-helix-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Math Helix Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/math-jeopardy.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Math Jeopardy</span><span class="gx-hook">Answer-first trivia across every corner of mathematics.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/shortcut-sprint.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Shortcut Sprint</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/trade-math-challenge.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Trade Math Challenge</span><span class="gx-hook">Real jobsite math against the clock.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Math" href="https://read.globalsovereignuniversity.org/trade-math-sim.html" target="_blank" rel="noopener"><span class="gx-badge">Math</span><span class="gx-name">Trade Math Sim</span><span class="gx-hook">Do the math a working tradesman actually uses on the job.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/biology/lab-skills.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Biology/lab Skills</span><span class="gx-hook">A hands-on lab — learn by doing, not just reading.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/cell-defender.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Cell Defender</span><span class="gx-hook">Defend the living cell — biology as a tower defense.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/Fog_Detection.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Fog Detection</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/fog-industrial-complex-chapter-1.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Fog Industrial Complex Chapter 1</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/four-sciences-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Four Sciences Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/lab-skills.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Lab Skills</span><span class="gx-hook">A hands-on lab — learn by doing, not just reading.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/06-posture-player.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Posture Player</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/posture-player.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Posture Player</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/04-simple-machines.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Simple Machines</span><span class="gx-hook">A living simulation — your choices drive the outcome.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/simple-machines.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Simple Machines</span><span class="gx-hook">Levers, pulleys, and wedges — see how the world lifts itself.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/solar-system-explorer.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">Solar System Explorer</span><span class="gx-hook">Fly the planets and learn the neighborhood we live in.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Science" href="https://read.globalsovereignuniversity.org/the-fog-industrial-complex.html" target="_blank" rel="noopener"><span class="gx-badge">Science</span><span class="gx-name">The Fog Industrial Complex</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Trades &amp; Technical" href="https://read.globalsovereignuniversity.org/hvac-iq.html" target="_blank" rel="noopener"><span class="gx-badge">Trades &amp; Technical</span><span class="gx-name">HVAC IQ</span><span class="gx-hook">Test your heating-and-cooling know-how, one system at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Trades &amp; Technical" href="https://read.globalsovereignuniversity.org/solar-pv-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Trades &amp; Technical</span><span class="gx-name">Solar PV Climb</span><span class="gx-hook">Climb the solar trade — panels, arrays, and power.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Trades &amp; Technical" href="https://read.globalsovereignuniversity.org/stonemasons-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Trades &amp; Technical</span><span class="gx-name">Stonemasons Climb</span><span class="gx-hook">Rise through the mason’s craft, course by course.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Trades &amp; Technical" href="https://read.globalsovereignuniversity.org/trades-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Trades &amp; Technical</span><span class="gx-name">Trades Climb</span><span class="gx-hook">One ladder, every trade — how high can you go?</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Trades &amp; Technical" href="https://read.globalsovereignuniversity.org/trades-geometry-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Trades &amp; Technical</span><span class="gx-name">Trades Geometry Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Trades &amp; Technical" href="https://read.globalsovereignuniversity.org/arc-345-trades-lab.html" target="_blank" rel="noopener"><span class="gx-badge">Trades &amp; Technical</span><span class="gx-name">Trades Lab (ARC-345)</span><span class="gx-hook">A hands-on lab — learn by doing, not just reading.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Trades &amp; Technical" href="https://read.globalsovereignuniversity.org/tradesmans-trial.html" target="_blank" rel="noopener"><span class="gx-badge">Trades &amp; Technical</span><span class="gx-name">Tradesmans Trial</span><span class="gx-hook">Prove your skills across the building trades.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Money &amp; Financial Literacy" href="https://read.globalsovereignuniversity.org/budget-survivor.html" target="_blank" rel="noopener"><span class="gx-badge">Money &amp; Financial Literacy</span><span class="gx-name">Budget Survivor</span><span class="gx-hook">Survive the month on a real budget — one hard trade-off at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Money &amp; Financial Literacy" href="https://read.globalsovereignuniversity.org/credit-score-simulator.html" target="_blank" rel="noopener"><span class="gx-badge">Money &amp; Financial Literacy</span><span class="gx-name">Credit Score Simulator</span><span class="gx-hook">Watch a real credit score rise and fall with every choice you make.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Money &amp; Financial Literacy" href="https://read.globalsovereignuniversity.org/junior-money-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Money &amp; Financial Literacy</span><span class="gx-name">Junior Money Climb</span><span class="gx-hook">Money smarts for young learners, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Money &amp; Financial Literacy" href="https://read.globalsovereignuniversity.org/money-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Money &amp; Financial Literacy</span><span class="gx-name">Money Climb</span><span class="gx-hook">Climb toward financial sovereignty, question by question.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Civics, History &amp; Law" href="https://read.globalsovereignuniversity.org/civic-virtue-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Civics, History &amp; Law</span><span class="gx-name">Civic Virtue Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Civics, History &amp; Law" href="https://read.globalsovereignuniversity.org/founders-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Civics, History &amp; Law</span><span class="gx-name">Founders Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Civics, History &amp; Law" href="https://read.globalsovereignuniversity.org/lawgivers-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Civics, History &amp; Law</span><span class="gx-name">Lawgivers Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Civics, History &amp; Law" href="https://read.globalsovereignuniversity.org/plain-law-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Civics, History &amp; Law</span><span class="gx-name">Plain Law Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/amnesty-protocol-bookgame.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Amnesty Protocol</span><span class="gx-hook">Play the book — a game built on its ideas.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/BookGame_1_Betrayal_Detector.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Betrayal Detector</span><span class="gx-hook">Read the tell — a game of spotting the double-cross.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/congruence_code_game.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Congruence Code Game</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/manipulation-gauntlet.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Manipulation Gauntlet</span><span class="gx-hook">Run the gauntlet of persuasion tricks and learn to see them coming.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/phish-or-legit.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Phish Or Legit</span><span class="gx-hook">Real inbox, real bait — can you spot the scam before you click?</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/red-herring-hunter.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Red Herring Hunter</span><span class="gx-hook">Hunt the false clue and learn to spot a distraction in any argument.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/robot-proof-bookgame.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Robot Proof</span><span class="gx-hook">Build the human skills no machine can copy.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/robot-proof.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Robot Proof</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/rumination-bookgame.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Rumination</span><span class="gx-hook">Play the book — a game built on its ideas.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/systemic_failure_game.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Systemic Failure Game</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/the-amnesty-protocol.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">The Amnesty Protocol</span><span class="gx-hook">Play the book — a game built on its ideas.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/tpm-bookgame.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">TPM</span><span class="gx-hook">Play the book — a game built on its ideas.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Critical Thinking &amp; Media" href="https://read.globalsovereignuniversity.org/uncharted-playbook.html" target="_blank" rel="noopener"><span class="gx-badge">Critical Thinking &amp; Media</span><span class="gx-name">Uncharted Playbook</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="World &amp; Geography" href="https://read.globalsovereignuniversity.org/genos-world-tour.html" target="_blank" rel="noopener"><span class="gx-badge">World &amp; Geography</span><span class="gx-name">GENO&#x27;s World Tour</span><span class="gx-hook">Travel the globe with GENO as your guide.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="World &amp; Geography" href="https://read.globalsovereignuniversity.org/world-climb.html" target="_blank" rel="noopener"><span class="gx-badge">World &amp; Geography</span><span class="gx-name">World Climb</span><span class="gx-hook">Climb the whole world — geography, question by question.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="World &amp; Geography" href="https://read.globalsovereignuniversity.org/world-flavors.html" target="_blank" rel="noopener"><span class="gx-badge">World &amp; Geography</span><span class="gx-name">World Flavors</span><span class="gx-hook">Taste the planet — food, culture, and place.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/eq-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">EQ Climb</span><span class="gx-hook">Climb the ladder of emotional intelligence.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/gene-call.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Gene Call</span><span class="gx-hook">A face-to-face call with the Chancellor’s own tutor.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/homeschool-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Homeschool Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/iron-mind.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Iron Mind</span><span class="gx-hook">Build mental toughness like a muscle.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/leadership-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Leadership Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/sovereign-mind-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Sovereign Mind Climb</span><span class="gx-hook">Ascend toward a mind that thinks for itself.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/summit-champion.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Summit Champion</span><span class="gx-hook">Reach the summit and defend your title.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/tactical-vitality-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Tactical Vitality Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/thinkification-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Thinkification Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Mind, Character &amp; Life" href="https://read.globalsovereignuniversity.org/vitality-climb.html" target="_blank" rel="noopener"><span class="gx-badge">Mind, Character &amp; Life</span><span class="gx-name">Vitality Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="Book Companions" href="https://read.globalsovereignuniversity.org/BookGame_4_Mississippi_Challenge.html" target="_blank" rel="noopener"><span class="gx-badge">Book Companions</span><span class="gx-name">Mississippi Challenge</span><span class="gx-hook">Play the book — a game built on its ideas.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/computer-literacy-unlocked-game.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">Computer Literacy Unlocked Game</span><span class="gx-hook">A skill challenge with honest scoring — no easy passes.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/domestic-laboratory.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">Domestic Laboratory</span><span class="gx-hook">A hands-on lab — learn by doing, not just reading.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/gameon-flagship-block.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">Gameon Flagship Block</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/GENO_Language_Lab.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">GENO Language Lab</span><span class="gx-hook">Practice 83 languages with a tutor who never sleeps.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/learning-arcade.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">Learning Arcade</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/sovereign-explorer-nav-rail.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">Sovereign Explorer Nav Rail</span><span class="gx-hook">A free learning game from the GSU Arcade.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/trifurcation-road.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">Trifurcation Road</span><span class="gx-hook">Choose your path at every fork — the anti-grade-inflation road.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/trifurcation-road-climb.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">Trifurcation Road Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
+<a class="gx-card" data-cat="More Games" href="https://read.globalsovereignuniversity.org/writification-climb.html" target="_blank" rel="noopener"><span class="gx-badge">More Games</span><span class="gx-name">Writification Climb</span><span class="gx-hook">An endless climb — answer correctly to ascend, one rung at a time.</span><span class="gx-play">Play free &rarr;</span></a>
     </div>
-    <span class="aisle-count" id="count-math">— games</span>
-  </div>
-  <p class="aisle-desc">Every math game GSU has ever built — arithmetic, algebra, geometry, procedural drill, and the Math Helix. <strong>The Frankenstein Methodology teaches math the way tradesmen actually use it:</strong> in patterns, on the job, with numbers that mean something.</p>
-  <div class="game-grid">
-    <a href="https://read.globalsovereignuniversity.org/math-helix-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 8+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Math Helix Climb</h3>
-      <p class="game-card-desc">Climb the Math Helix through 8 procedural generators — 40,000 validated problems from arithmetic to algebra. Learn what you need at your pace.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Play →</span>
-        <span class="game-card-cta-meta">Free · Play forever</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/math-jeopardy.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 10+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Math Jeopardy</h3>
-      <p class="game-card-desc">Trivia-style math drill across arithmetic, geometry, and word problems. Fast, fun, and honest — every wrong answer is a lesson.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Play →</span>
-        <span class="game-card-cta-meta">Solo or family</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/fraction-frenzy.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 8+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Fraction Frenzy</h3>
-      <p class="game-card-desc">The fraction unit that breaks most kids — but built as a game they want to play. Add, subtract, multiply, and divide, one visual at a time.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Play →</span>
-        <span class="game-card-cta-meta">Visual-first</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/division-dojo.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 9+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Division Dojo</h3>
-      <p class="game-card-desc">Long division as a martial art. Rank up through five belts, each with its own drill patterns. No shame on the mat — everyone starts white.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Enter the dojo →</span>
-        <span class="game-card-cta-meta">Belt system</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/make24-bookgame.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 8+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Make 24 · BookGame</h3>
-      <p class="game-card-desc">Four numbers. Any operation. Make 24. A century-old family game, now a GSU BookGame — with the book you can take home.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Play →</span>
-        <span class="game-card-cta-meta">BookGame · Library</span>
-      </div>
-    </a>
+    <p class="gx-none" id="gx-none">No games match that search. Try another word.</p>
+
+    <p class="gx-foot">107 games, every one free — because pupils come before profits.<br>Need a game that isn’t here yet? Global Sovereign University builds them.</p>
   </div>
 </section>
-
-<!-- ═══════════ AISLE 02 — READING & WORDS ═══════════ -->
-<section class="aisle" id="aisle-reading">
-  <div class="aisle-header">
-    <div class="aisle-header-left">
-      <span class="aisle-number">Aisle 02</span>
-      <h2 class="aisle-name"><em>Reading</em> & Words</h2>
-    </div>
-    <span class="aisle-count" id="count-reading">— games</span>
-  </div>
-  <p class="aisle-desc">Reading comprehension, phonics, vocabulary, and the Reading Helix. Built on the GSU principle: <strong>No one reads alone.</strong> Every game has a companion — a book, a mentor, or GENO in your pocket.</p>
-  <div class="game-grid">
-    <a href="https://www.globalsovereignuniversity.org/readification" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 6+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">The Reading Helix Climb</h3>
-      <p class="game-card-desc">The original — climb the Reading Helix through 100 rungs of the 8-pillar question bank. Learn what you need at your pace.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Play →</span>
-        <span class="game-card-cta-meta">Free · Play forever</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/adult-literacy-lab.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Adult</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Adult Literacy Lab</h3>
-      <p class="game-card-desc">30-lesson phonics engine with Tap-to-Listen, Word of the Day, and GENO integration. For adults returning to reading — no shame, no timer, no test.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Enter →</span>
-        <span class="game-card-cta-meta">v2.1 · Free</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/trifurcation-road.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 14+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Trifurcation Road</h3>
-      <p class="game-card-desc">Three roads — GOOD, BETTER, BEST — thirty adult-level comprehension passages across three tiers. Demotion mechanic keeps the road at your level.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Choose your road →</span>
-        <span class="game-card-cta-meta">Rabbit territory</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/phoneme-forge.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 5+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Phoneme Forge</h3>
-      <p class="game-card-desc">Every English sound, forged and returned to the ear. The foundation drill for phonemic awareness — the pillar every reader stands on.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Forge sounds →</span>
-        <span class="game-card-cta-meta">Pillar 1</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/spelling-forge.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 7+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Spelling Forge</h3>
-      <p class="game-card-desc">Spelling as pattern discovery, not memorization. Forge the rules of English orthography one hammered word at a time.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Forge words →</span>
-        <span class="game-card-cta-meta">Pattern-based</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/vowel-valley.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 5+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Vowel Valley</h3>
-      <p class="game-card-desc">The vowel unit that traps most early readers — mapped as a valley you walk. Long vowels, short vowels, diphthongs, r-controlled — each has its own bend in the road.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Walk the valley →</span>
-        <span class="game-card-cta-meta">Foundational</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════ AISLE 03 — GEOGRAPHY & SKY ═══════════ -->
-<section class="aisle" id="aisle-geography">
-  <div class="aisle-header">
-    <div class="aisle-header-left">
-      <span class="aisle-number">Aisle 03</span>
-      <h2 class="aisle-name"><em>Geography</em> & Sky</h2>
-    </div>
-    <span class="aisle-count" id="count-geography">— games</span>
-  </div>
-  <p class="aisle-desc">Maps, orbits, and the shape of the world. <strong>A citizen who does not know where she is cannot know where she is going.</strong></p>
-  <div class="game-grid">
-    <a href="https://read.globalsovereignuniversity.org/solar-system-explorer.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 10+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Solar System Explorer</h3>
-      <p class="game-card-desc">Rabbit #9 of the Warren. Move through the solar system in scale, learn orbital mechanics, see the planets at the size they actually are.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Launch →</span>
-        <span class="game-card-cta-meta">Rabbit territory</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/world-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 8+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">World Climb</h3>
-      <p class="game-card-desc">Continents, capitals, biomes, and borders — climbed one country at a time. Every rung teaches a place. Every summit is a world you can find on a map.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Start climbing →</span>
-        <span class="game-card-cta-meta">Full world map</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/cell-defender.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 10+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Cell Defender</h3>
-      <p class="game-card-desc">Biology as tactical defense. Guard the cell against pathogens by knowing which organelle does what. Learn the microworld the way a citizen learns the macro one.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Defend the cell →</span>
-        <span class="game-card-cta-meta">Biology drill</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/world-flavors.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">All ages</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">World Flavors</h3>
-      <p class="game-card-desc">Geography through food — which country invented the dish, why the spice was worth crossing an ocean for, how a meal maps a culture.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Taste the world →</span>
-        <span class="game-card-cta-meta">Cross-cultural</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/genos-world-tour.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">All ages</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">GENO's World Tour</h3>
-      <p class="game-card-desc">GENO takes you to 83 countries — each in the country's own language, each with the phrase you would need if you actually stepped off the plane there.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Tour with GENO →</span>
-        <span class="game-card-cta-meta">83 languages</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════ AISLE 04 — MINDSET ═══════════ -->
-<section class="aisle" id="aisle-mindset">
-  <div class="aisle-header">
-    <div class="aisle-header-left">
-      <span class="aisle-number">Aisle 04</span>
-      <h2 class="aisle-name"><em>Mindset</em></h2>
-    </div>
-    <span class="aisle-count" id="count-mindset">— games</span>
-  </div>
-  <p class="aisle-desc">Games that build the citizen's inner architecture — logic, patience, self-reliance, and the Wisdom Bridge. <strong>Character is a habit before it is a decision.</strong></p>
-  <div class="game-grid">
-    
-    <a href="https://read.globalsovereignuniversity.org/iron-mind.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 12+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Iron Mind</h3>
-      <p class="game-card-desc">Build the mental habits the founders considered non-negotiable — attention, patience, deliberate practice, the willingness to be uncomfortable for a good reason.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Train →</span>
-        <span class="game-card-cta-meta">Habit-focused</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/sovereign-mind-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 14+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Sovereign Mind Climb</h3>
-      <p class="game-card-desc">A hundred rungs of scenarios where the citizen faces a small choice about whether to think for herself or hand the decision away. Climb toward the sovereign mind.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Climb →</span>
-        <span class="game-card-cta-meta">Scenario-based</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/eq-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 12+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">EQ Climb</h3>
-      <p class="game-card-desc">Emotional intelligence as a climbable skill. Recognize the feeling, name the feeling, choose the response. Each rung is a small decision better made than last time.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Climb →</span>
-        <span class="game-card-cta-meta">Emotional literacy</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/red-herring-hunter.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 12+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Red Herring Hunter</h3>
-      <p class="game-card-desc">Spot the logical fallacy in real news headlines, real ads, real speeches. Twenty fallacies drilled until you can name them at first glance.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Hunt →</span>
-        <span class="game-card-cta-meta">Logic drill</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/phish-or-legit.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">All ages</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Phish or Legit</h3>
-      <p class="game-card-desc">Real screenshots of real emails and texts. Which are phishing attempts, which are the real thing. The digital-citizenship drill every grandparent needs.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Decide →</span>
-        <span class="game-card-cta-meta">Digital safety</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════ AISLE 05 — MONEY & ECONOMY ═══════════ -->
-<section class="aisle" id="aisle-money">
-  <div class="aisle-header">
-    <div class="aisle-header-left">
-      <span class="aisle-number">Aisle 05</span>
-      <h2 class="aisle-name"><em>Money</em> & Economy</h2>
-    </div>
-    <span class="aisle-count" id="count-money">— games</span>
-  </div>
-  <p class="aisle-desc">Financial literacy in play form — budgeting, saving, the Trustline Ledger, and the Frankenstein Exchange. <strong>A citizen who cannot balance a checkbook cannot balance a republic.</strong></p>
-  <div class="game-grid">
-    <a href="https://my-quid-pro-quo.com" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Adult</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">The Trustline Ledger</h3>
-      <p class="game-card-desc">Rabbit #3 of the Warren (under the Frankenstein Exchange). Track promises made, promises kept, and the ledger of trust that builds a small economy.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Open the Ledger →</span>
-        <span class="game-card-cta-meta">Own domain</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/money-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 14+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Money Climb</h3>
-      <p class="game-card-desc">A hundred rungs of financial literacy — from the checking account to the mortgage, the interest rate to the retirement plan. Climb once and you never fall the same way.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Start climbing →</span>
-        <span class="game-card-cta-meta">Full curriculum</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/junior-money-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 8+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Junior Money Climb</h3>
-      <p class="game-card-desc">The same climb, sized for young readers. Allowance, saving, spending, giving — the four buckets every child should know before middle school.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Start climbing →</span>
-        <span class="game-card-cta-meta">Elementary</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/credit-score-simulator.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 16+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Credit Score Simulator</h3>
-      <p class="game-card-desc">Every choice a young adult makes with credit — early card, missed payment, hard inquiry — modeled on a live dial. See tomorrow before you make today's mistake.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Simulate →</span>
-        <span class="game-card-cta-meta">Live dial</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/budget-survivor.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 14+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Budget Survivor</h3>
-      <p class="game-card-desc">A month on a real household budget with real curveballs — the car breaks, the tooth cracks, the paycheck comes short. Survive without borrowing.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Survive the month →</span>
-        <span class="game-card-cta-meta">Household sim</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════ AISLE 06 — TRADE SIMS ═══════════ -->
-<section class="aisle" id="aisle-trade">
-  <div class="aisle-header">
-    <div class="aisle-header-left">
-      <span class="aisle-number">Aisle 06</span>
-      <h2 class="aisle-name"><em>Trade</em> Sims</h2>
-    </div>
-    <span class="aisle-count" id="count-trade">— games</span>
-  </div>
-  <p class="aisle-desc">Job-site simulations and trade drills. <strong>The trades built America. This aisle keeps them alive in the next generation.</strong></p>
-  <div class="game-grid">
-    <a href="https://read.globalsovereignuniversity.org/hvac-iq.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">HVAC</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">HVAC IQ</h3>
-      <p class="game-card-desc">Drill your knowledge of refrigeration, heating, and airflow. Companion to the EPA 608 study guide.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Test your IQ →</span>
-        <span class="game-card-cta-meta">Drill to mastery</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/trades-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 14+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Trades Climb</h3>
-      <p class="game-card-desc">A hundred rungs across the sovereign trades — carpentry, electrical, plumbing, HVAC, masonry, welding. Discover the trade the country still needs and you might love.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Start climbing →</span>
-        <span class="game-card-cta-meta">Multi-trade</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/solar-pv-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Solar PV</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Solar PV Climb</h3>
-      <p class="game-card-desc">Photovoltaic installation from panel to inverter. Learn the NEC codes, the string voltage math, the roof geometry — one rung at a time.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Start climbing →</span>
-        <span class="game-card-cta-meta">NEC-aligned</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/stonemasons-climb.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Masonry</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Stonemason's Climb</h3>
-      <p class="game-card-desc">Ancient trade, modern game. Learn the joints, the mortars, the arches, the load paths — the trade that built the walls of every republic worth remembering.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Lay stone →</span>
-        <span class="game-card-cta-meta">Foundational</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/tradesmans-trial.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 16+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Tradesman's Trial</h3>
-      <p class="game-card-desc">A working day on a real job site. Estimate the material, quote the customer, order the truck, meet the inspector. The trade as it actually is.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Punch in →</span>
-        <span class="game-card-cta-meta">Full workday sim</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════ AISLE 07 — BOOKGAMES ═══════════ -->
-<section class="aisle" id="aisle-book">
-  <div class="aisle-header">
-    <div class="aisle-header-left">
-      <span class="aisle-number">Aisle 07</span>
-      <h2 class="aisle-name"><em>BookGames</em></h2>
-    </div>
-    <span class="aisle-count" id="count-book">— games</span>
-  </div>
-  <p class="aisle-desc">Play-before-you-buy: each BookGame is a taste of a full GSU book. <strong>Enjoy the game. Meet the book. Take it home if it stayed with you.</strong> Also lives inside the Library hub.</p>
-  <div class="game-grid">
-    <a href="https://read.globalsovereignuniversity.org/BookGame_1_Betrayal_Detector.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 12+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Betrayal Detector · BookGame No. 1</h3>
-      <p class="game-card-desc">A taste of the book that named it. Read a scene, spot the small betrayal, decide what a friend would have done differently. The book is on the shelf if the game stayed with you.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Play →</span>
-        <span class="game-card-cta-meta">BookGame · No. 1</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/BookGame_2_Phonics_Protocol.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 6+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Phonics Protocol · BookGame No. 2</h3>
-      <p class="game-card-desc">The phonics story rebuilt as a spy protocol — every sound is a code that unlocks a door. A taste of the science-of-reading book that carries the argument in full.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Crack the code →</span>
-        <span class="game-card-cta-meta">BookGame · No. 2</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/BookGame_3_Comprehension_Tribunal.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 12+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Comprehension Tribunal · BookGame No. 3</h3>
-      <p class="game-card-desc">Read the passage. Face the tribunal. Prove you understood what the writer actually said — not what you wanted him to say.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Stand trial →</span>
-        <span class="game-card-cta-meta">BookGame · No. 3</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/BookGame_4_Mississippi_Challenge.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 10+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Mississippi Challenge · BookGame No. 4</h3>
-      <p class="game-card-desc">A geography-history mash-up along the great river. Steamboats, Civil War, cotton, jazz, floods, Twain. The book explains it; the game lets you sail it.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Cast off →</span>
-        <span class="game-card-cta-meta">BookGame · No. 4</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/robot-proof-bookgame.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Ages 14+</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Robot Proof · BookGame</h3>
-      <p class="game-card-desc">Every skill a machine cannot replace, tested in one game. If you can finish this, you know why the book exists.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Prove it →</span>
-        <span class="game-card-cta-meta">BookGame</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ═══════════ AISLE 08 — DAILY LOOPS ═══════════ -->
-<section class="aisle" id="aisle-daily">
-  <div class="aisle-header">
-    <div class="aisle-header-left">
-      <span class="aisle-number">Aisle 08</span>
-      <h2 class="aisle-name"><em>Daily</em> Loops</h2>
-    </div>
-    <span class="aisle-count" id="count-daily">— games</span>
-  </div>
-  <p class="aisle-desc">Games designed to be played once a day — the Today's Summit quiz, Word of the Day, the daily Trustline check-in. <strong>Small, repeatable, habit-forming.</strong></p>
-  <div class="game-grid">
-    <a href="https://globalsovereignuniversity.org/todays-summit" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Daily</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Today's Summit</h3>
-      <p class="game-card-desc">Rabbit #1 of the Warren. A daily quiz — one question, one summit, one small climb toward mastery. New every morning.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Take today's climb →</span>
-        <span class="game-card-cta-meta">Rabbit · Daily</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/summit-champion.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Daily</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Summit Champion</h3>
-      <p class="game-card-desc">The seven-day streak game. Take a summit every day for a week and something small changes in how you show up on the eighth.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Start a streak →</span>
-        <span class="game-card-cta-meta">7-day loop</span>
-      </div>
-    </a>
-    <a href="https://read.globalsovereignuniversity.org/gene-call.html" class="game-card">
-      <div class="game-card-topbar"></div>
-      <div class="game-card-head">
-        <span class="game-card-tag">Daily</span>
-        <span class="game-card-status live">Live</span>
-      </div>
-      <h3 class="game-card-title">Gene's Call</h3>
-      <p class="game-card-desc">A one-minute daily reflection from Dr Constant — a question, a story, or a small challenge. Bring your coffee.</p>
-      <div class="game-card-cta">
-        <span class="game-card-cta-play">Take the call →</span>
-        <span class="game-card-cta-meta">1-minute · Daily</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- INVENTORY CALL-OUT — updated after full repo enumeration -->
-<section class="inventory-callout">
-  <div class="inventory-card">
-    <div class="inventory-card-icon">✓</div>
-    <div>
-      <h3>The <em>Curated Arcade</em> · a note from the builder</h3>
-      <p>The <code>geneconstant36-blip/gsu-assets</code> repo contains <strong>217 game and interactive pages</strong> at last enumeration. This arcade curates approximately <strong>40 flagship titles</strong> across the eight aisles — the ones every citizen should walk through first. The rest live in the repo and remain reachable directly.</p>
-      <p>The Foundation's philosophy on games: <em>every game is free forever</em>. No advertising, no paywall, no data harvesting. Play for the knowledge gained. If a game has stayed with you for a week, you have already received what the game was for.</p>
-      <p><em>To see the full inventory of every interactive page in the repo, ask GENO or visit the <a href="https://globalsovereignuniversity.org/library">Library hub</a>.</em></p>
-    </div>
-  </div>
-</section>
-
-<!-- DICTIONARY (standing rule) -->
-<section class="dictionary">
-  <div class="section-head">
-    <h2 class="section-title">Arcade <em>Dictionary</em></h2>
-    <p class="section-lede">Gaming vocabulary the way GSU uses it. Tap to expand.</p>
-  </div>
-  <div class="dictionary-list" id="dictionaryList"></div>
-</section>
-
-<!-- FAQ (standing rule) -->
-<section class="faq">
-  <div class="section-head">
-    <h2 class="section-title">Arcade <em>FAQ</em></h2>
-  </div>
-  <div class="faq-list" id="faqList"></div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="credo">
-    Every game free. Every certificate real. Every player welcome.
-  </div>
-  <p>
-    A tuition-free artifact from <a href="https://globalsovereignuniversity.org">Global Sovereign University</a>,<br>
-    an educational platform of The Foundation for Global Instruction, 501(c)(3).<br>
-    Learning Arcade · <a href="https://globalsovereignuniversity.org/library">Full Library (318 books)</a> · <a href="https://read.globalsovereignuniversity.org/sovereign-timeline">Sovereign Timeline</a>
-  </p>
-</footer>
-
-<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-<elevenlabs-convai agent-id="agent_8401kgp60tkbf9q82n9cxaa31c5g"></elevenlabs-convai>
 
 <script>
-const DICTIONARY = [
-  { word: "Helix Climb", def: "The GSU family of games in which a learner climbs a helical ladder of questions. Each rung is one question, each summit is one certificate. Reading Helix and Math Helix are the founding two." },
-  { word: "Certificate", def: "A serial-numbered, Firebase-backed record of completion. Printable, permanent, and cross-referenced with the learner's account. Never expires. Never behind a paywall." },
-  { word: "Rabbit", def: "One of the numbered showcase experiences in the GSU Warren — small self-contained artifacts of high craft. Today's Summit is Rabbit #1. Solar System Orbital Explorer is Rabbit #9. Sovereign Timeline is Rabbit #10. Historification Cornerstone is Rabbit #11." },
-  { word: "Score-Gate", def: "A game mechanic that requires the learner to reach a threshold before unlocking the next step. The Sovereign Vault Tier 1 uses a 0–100 sovereignty dial as its score-gate." },
-  { word: "BookGame", def: "A game designed as a taste of a full GSU book. Play-before-you-buy: no purchase required, no email harvested. If the game held you, the book is $3.99 or free as PDF." },
-  { word: "Demotion Mechanic", def: "In Trifurcation Road: if a player answering at the BEST tier gets a comprehension question wrong, she drops to BETTER. This is not punishment — it is calibration. The road matches the reader." },
-  { word: "Wisdom Bridge", def: "The GSU checkpoint framework: at key life-stage or subject-mastery moments, the learner crosses a bridge that requires her to demonstrate what she has learned. Uses Firebase Auth + Firestore from the start (never localStorage-only)." },
-  { word: "Frankenstein Methodology", def: "The GSU curriculum design principle: synthesize unrelated disciplines for asymmetric advantage. A math game in this arcade may teach carpentry. A reading game may teach civics. The learner does not always see the seam." }
-];
-
-const FAQ = [
-  { q: "Are all these games really free?", a: "<p>Every game in the arcade is <strong>free forever</strong>. No paywall. No advertising. No account required to play. Some games issue certificates that live in your GSU account — the account is free too.</p>" },
-  { q: "Do these games give certificates?", a: "<p><strong>No.</strong> The arcade is designed for <strong>learning, not credentialing</strong>. Every game here is free to play for the knowledge gained — no scoreboard, no badge, no certificate. If a game has stayed with you for a week, you have already received what the game was for.</p><p>The GSU Certification Exams — HVAC, Readification, Mathification, and the rest — live at their own hubs and are a separate track. They test what you know for the citizen who wants a serial-numbered record of it. The arcade doesn't sell that. The arcade sells the fun of finally understanding something.</p>" },
-  { q: "Why does GSU care about games?", a: "<p>Because <strong>play is not the opposite of learning</strong>. The founders of this republic learned by drilling, playing, arguing, and making. Books were second. Every game here was built on that principle — the game is the delivery vehicle for a lesson the learner would resist if it came as a lecture.</p>" },
-  { q: "Can I contribute a game to the arcade?", a: "<p>Yes. Send the concept to the Foundation at the Quid Pro Quo page. If it meets GSU standards (free, honest, no data harvesting, no dark patterns), it earns an aisle slot. Contributors are credited by name.</p>" },
-  { q: "Where do I go if a game is broken?", a: "<p>Ask GENO — he is the fastest path to reporting. He will log the issue and route it. Every broken game hurts the mission; we want to know within the hour.</p>" },
-  { q: "Why 'Aisles' instead of 'Categories'?", a: "<p>Because this is <strong>an arcade, not a database</strong>. Aisles have a feel — you walk them, you browse, you notice something you were not looking for. Categories are for filing. The arcade is for the citizen who is here to learn something today and does not know yet what.</p>" }
-];
-
-function renderDictionary() {
-  const el = document.getElementById('dictionaryList');
-  let html = '';
-  DICTIONARY.forEach(d => {
-    html += '<div class="dict-item" onclick="this.classList.toggle(\'open\')">'
-      + '<span class="dict-item-word">' + d.word + '</span>'
-      + '<div class="dict-item-def">' + d.def + '</div>'
-      + '</div>';
-  });
-  el.innerHTML = html;
-}
-
-function renderFAQ() {
-  const el = document.getElementById('faqList');
-  let html = '';
-  FAQ.forEach(f => {
-    html += '<div class="faq-item">'
-      + '<div class="faq-q" onclick="this.parentElement.classList.toggle(\'open\')">'
-      +   '<span>' + f.q + '</span>'
-      +   '<span class="faq-q-icon">+</span>'
-      + '</div>'
-      + '<div class="faq-a">' + f.a + '</div>'
-      + '</div>';
-  });
-  el.innerHTML = html;
-}
-
-// Update aisle counts
-function updateCounts() {
-  ['math','reading','geography','mindset','money','trade','book','daily'].forEach(id => {
-    const section = document.getElementById('aisle-' + id);
-    if (!section) return;
-    const live = section.querySelectorAll('.game-card').length;
-    const pending = section.querySelectorAll('.slot-pending').length;
-    const counter = document.getElementById('count-' + id);
-    if (counter) {
-      counter.textContent = live + ' live · ' + pending + ' slot' + (pending !== 1 ? 's' : '') + ' open';
-    }
-  });
-}
-
-function askGeno(prompt) {
-  const widget = document.querySelector('elevenlabs-convai');
-  if (widget && typeof widget.open === 'function') widget.open();
-  window.dispatchEvent(new CustomEvent('elevenlabs-convai:open'));
-}
-
-// 5-star rating
-(function() {
-  const stars = document.querySelectorAll('#stars .star');
-  const thanks = document.getElementById('ratingThanks');
-  let locked = false;
-  const stored = (window.localStorage && localStorage.getItem('arcade-rating')) || null;
-  if (stored) {
-    const n = parseInt(stored, 10);
-    stars.forEach((s, i) => { if (i < n) s.classList.add('selected'); });
-    locked = true;
-    thanks.textContent = 'You rated ' + n + '★. Thank you.';
-    thanks.classList.add('show');
+(function(){
+  var grid=document.getElementById('gx-grid');
+  var cards=[].slice.call(grid.querySelectorAll('.gx-card'));
+  var search=document.getElementById('gx-search');
+  var chips=[].slice.call(document.querySelectorAll('#gx-chips .gx-chip'));
+  var none=document.getElementById('gx-none');
+  var count=document.getElementById('gx-count');
+  var curCat='all', curQ='';
+  cards.forEach(function(c){c._t=(c.textContent||'').toLowerCase();});
+  function apply(){
+    var shown=0;
+    cards.forEach(function(c){
+      var okCat = curCat==='all' || c.getAttribute('data-cat')===curCat;
+      var okQ = !curQ || c._t.indexOf(curQ)>-1;
+      var vis = okCat && okQ;
+      c.style.display = vis ? '' : 'none';
+      if(vis) shown++;
+    });
+    none.style.display = shown ? 'none':'block';
+    count.textContent = shown + (shown===1?' game':' games') + ' shown';
   }
-  stars.forEach((star, idx) => {
-    star.addEventListener('mouseenter', () => {
-      if (locked) return;
-      stars.forEach((s, i) => s.classList.toggle('hover', i <= idx));
-    });
-    star.addEventListener('mouseleave', () => {
-      if (locked) return;
-      stars.forEach(s => s.classList.remove('hover'));
-    });
-    star.addEventListener('click', () => {
-      if (locked) return;
-      const n = idx + 1;
-      stars.forEach((s, i) => s.classList.toggle('selected', i < n));
-      thanks.textContent = 'You rated ' + n + '★. Thank you.';
-      thanks.classList.add('show');
-      locked = true;
-      try { localStorage.setItem('arcade-rating', String(n)); } catch(e) {}
+  search.addEventListener('input',function(){curQ=this.value.trim().toLowerCase();apply();});
+  chips.forEach(function(ch){
+    ch.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.remove('is-on');});
+      ch.classList.add('is-on');
+      curCat=ch.getAttribute('data-f');
+      apply();
     });
   });
+  apply();
 })();
-
-renderDictionary();
-renderFAQ();
-updateCounts();
 </script>
 </body>
 </html>
