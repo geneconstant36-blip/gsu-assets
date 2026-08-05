@@ -35,6 +35,8 @@
   #grant{background:linear-gradient(180deg,#e6c86a,#C9A84C);color:#1a1408;border:none;padding:14px 22px;border-radius:9px;font-weight:bold;cursor:pointer;font-family:Georgia,serif;font-size:1rem;white-space:nowrap}
   #grant:disabled{opacity:.5;cursor:default}
   .counter{text-align:center;color:#8a7a4a;font-size:.82rem;margin-top:10px}
+  .micnote{max-width:640px;margin:16px auto 0;text-align:center;color:#e6cf92;font-size:.93rem;line-height:1.55;border:1px solid rgba(201,168,76,.32);border-radius:10px;padding:11px 16px;background:rgba(201,168,76,.06)}
+  .micnote b{color:var(--gold)}
   .closing{max-width:680px;margin:44px auto 0;text-align:center;padding-top:30px;border-top:1px solid var(--gold)}
   .closing .big{font-size:clamp(1.3rem,4.5vw,1.7rem);color:var(--gold);font-weight:bold;line-height:1.4;margin-bottom:14px}
   .closing p{line-height:1.7;color:#e8dfca}.closing .keep{font-style:italic;color:#b9a86f;font-size:.95rem;margin-top:16px}
@@ -73,6 +75,7 @@
       <input id="wish" placeholder="Type your wish in your own words&hellip;" autocomplete="off">
       <button id="grant">&#10022; Rub the Lamp</button>
     </div>
+    <div class="micnote">&#127908; <b>Turn your microphone on before you rub the lamp</b> &mdash; the Genie listens and answers <b>aloud</b>. No microphone? You can simply <b>type</b> your wish to him in the chat window that opens.</div>
     <div class="counter" id="counter">Speak your wish, and the Genie answers</div>
   </div>
   <div class="closing" id="closing" hidden>
@@ -105,13 +108,13 @@ async function grant(){
   const wish=inp.value.trim(); if(!wish||busy) return;
   if(!PREVIEW){
     saysEl.classList.remove('think');
-    saysEl.innerHTML='Your wish is heard! Now let the Genie answer aloud &mdash; tap the <b>Genie</b> in the corner (the glowing button, lower corner) (<i>&ldquo;Need help? &middot; Start a call&rdquo;</i>) and tell him:<br><br><b>&ldquo;'+wish.replace(/[<>]/g,'')+'&rdquo;</b>';
+    saysEl.innerHTML='Your wish is heard! The Genie is rising in the corner &mdash; <b>allow your microphone</b> when he asks, then say it aloud:<br><br><b>&ldquo;'+wish.replace(/[<>]/g,'')+'&rdquo;</b><br><br><span style="font-size:.88em;opacity:.75">No microphone? Just <b>type</b> your wish into his chat window.</span>';
     openGeno(); inp.value=''; return;
   }
   busy=true; btn.disabled=true; saysEl.classList.add('think');
   saysEl.textContent="The smoke swirls, and the Genie considers your wish\u2026";
   try{ const reply=await callGenie(wish); saysEl.classList.remove('think'); saysEl.textContent=reply; inp.value=''; }
-  catch(e){ saysEl.classList.remove('think'); saysEl.innerHTML='Let the Genie answer aloud &mdash; tap the <b>Genie</b> in the corner (the glowing button, lower corner) and speak your wish.'; openGeno(); }
+  catch(e){ saysEl.classList.remove('think'); saysEl.innerHTML='The Genie waits in the corner &mdash; <b>allow your microphone</b> and speak your wish, or simply <b>type</b> it into his chat window.'; openGeno(); }
   busy=false; btn.disabled=false;
 }
 btn.addEventListener('click',grant);
