@@ -2,7 +2,7 @@
 <!-- ============================================================================
      GSU CERTIFICATION ENGINE  ·  v1  ·  built fresh Jun 9, 2026
      ROUTING: Standalone app -> commit to gsu-assets, served at
-              read.globalsovereignuniversity.org/cert-hvac.html
+              read.globalsovereignuniversity.org/cert-causal.html
               Then on /certification, set the HVAC card's button href
               to that URL and flip its status to "Live".
 
@@ -34,13 +34,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HVAC Comprehension Certification — Free & Verifiable | GSU</title>
-<meta name="description" content="Earn the free HVAC Certificate of Comprehension from Global Sovereign University. 30 questions, 80% for Silver, 90% for Gold. Anonymous, no account, with a unique publicly verifiable serial number.">
+<title>Causal Reasoning Certification — Free Verifiable Certificate | GSU</title>
+<meta name="description" content="Prove you can follow a consequence past the obvious one. 36 questions on second- and third-order effects, correlation versus causation, feedback loops, and base rates. 80% Silver, 90% Gold, serial-numbered and publicly verifiable. Free, no account.">
 <meta property="og:title" content="HVAC Comprehension Certification — Free & Verifiable | GSU">
 <meta property="og:description" content="30 questions. 80% Silver, 90% Gold. A unique, publicly verifiable serial number. Free, anonymous, no login — from a 501(c)(3).">
 <meta property="og:type" content="website">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"HVAC Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of foundational HVAC knowledge: the refrigeration cycle, EPA Section 608 safety, airflow and static pressure, basic electrical, heating, heat pumps, and diagnostics."}
+{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","name":"Causal Reasoning Certificate of Comprehension","credentialCategory":"Certificate of Comprehension","educationalLevel":"Foundational","recognizedBy":{"@type":"EducationalOrganization","name":"Global Sovereign University","alternateName":"The Foundation for Global Instruction"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A free, anonymous, publicly verifiable certificate proving comprehension of causal reasoning: first-, second-, and third-order consequences, correlation versus causation, feedback loops, base rates, selection effects, and the discipline of naming what would prove you wrong."}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -49,7 +49,7 @@
 {"@type":"Question","name":"What score do I need?","acceptedAnswer":{"@type":"Answer","text":"Thirty questions are drawn at random. Eighty percent earns Silver; ninety percent earns Gold. Below eighty percent, keep studying and try again — retakes are free and unlimited."}}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.globalsovereignuniversity.org/"},{"@type":"ListItem","position":2,"name":"Certification","item":"https://www.globalsovereignuniversity.org/certification"},{"@type":"ListItem","position":3,"name":"HVAC Certification Exam","item":"https://read.globalsovereignuniversity.org/cert-hvac.html"}]}
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.globalsovereignuniversity.org/"},{"@type":"ListItem","position":2,"name":"Certification","item":"https://www.globalsovereignuniversity.org/certification"},{"@type":"ListItem","position":3,"name":"Causal Reasoning Certification Exam","item":"https://read.globalsovereignuniversity.org/cert-causal.html"}]}
 </script>
 <style>
   :root{--bg:#000000;--panel:#13110b;--gold:#C9A84C;--cream:#F5F1E8;--line:rgba(201,168,76,.28)}
@@ -109,14 +109,6 @@
   .clock.danger{color:#e0856f;border-color:#e0856f;animation:pulse 1s infinite}
   @keyframes pulse{50%{opacity:.55}}
   @media(max-width:520px){.clock{top:8px;right:8px;padding:7px 11px 6px;font-size:.98rem}}
-</style>
-
-<!-- RETURN-BAR COEXISTENCE · Aug 8 2026
-     .clock is fixed at top:14px and sits underneath the 40px
-     return bar. Shifted clear. -->
-<style>
-  .clock{top:54px}
-  @media (max-width:560px){.clock{top:48px}}
 </style>
 </head>
 <body><script src="/return-bar.js"></script>
@@ -214,10 +206,10 @@
 <script>
 /* ====================== ZONE B — CONFIG (edit per subject) ================= */
 const CONFIG = {
-  subject: "HVAC",
-  serialPrefix: "GSU-HVAC",
-  subjectLine: "HVAC · Certificate of Comprehension",
-  prepHref: "/hvac-trade",
+  subject: "Causal Reasoning",
+  serialPrefix: "GSU-CAUSE",
+  subjectLine: "Causal Reasoning · Certificate of Comprehension",
+  prepHref: "/what-if",
   drawCount: 30,
   timeLimitSec: 1800,   // 30:00 countdown; time-out auto-submits
   silverPct: 0.80,
@@ -243,42 +235,402 @@ const CONFIG = {
    draws CONFIG.drawCount at random and shuffles each question's options.
 =========================================================================== */
 const POOL = [
-  {"q": "In HVAC, 'sensible heat' refers to heat that:", "opts": ["Changes a substance's temperature without changing its state", "Changes a substance's state without changing its temperature", "Is lost only through radiation", "Is measured only in a vacuum"], "a": 0, "why": "Sensible heat changes temperature; latent heat changes state. Ch.1."},
-  {"q": "Heat always flows naturally from:", "opts": ["Cold to hot", "Hot to cold", "High pressure to low pressure only", "Areas of low humidity to high humidity"], "a": 1, "why": "Second law of thermodynamics — heat moves hot to cold. Ch.1."},
-  {"q": "The three methods of heat transfer are:", "opts": ["Conduction, convection, radiation", "Compression, condensation, evaporation", "Sensible, latent, total", "Ohm, volt, ampere"], "a": 0, "why": "Conduction, convection, radiation. Ch.1."},
-  {"q": "Which component raises the pressure and temperature of the refrigerant vapor?", "opts": ["Evaporator", "Metering device", "Compressor", "Condenser"], "a": 2, "why": "The compressor is the pump/heart of the cycle. Ch.2."},
-  {"q": "In the refrigeration cycle, the evaporator's job is to:", "opts": ["Reject heat to the outdoors", "Absorb heat from the indoor air", "Compress the refrigerant", "Drop refrigerant pressure"], "a": 1, "why": "The evaporator absorbs heat (cooling the space). Ch.2."},
-  {"q": "'Superheat' is the temperature of the refrigerant vapor:", "opts": ["Below its condensing temperature", "Above its saturation (boiling) temperature", "At the exact boiling point", "Inside the compressor only"], "a": 1, "why": "Superheat = vapor temp above saturation; protects the compressor from liquid. Ch.2."},
-  {"q": "'Subcooling' is measured at the:", "opts": ["Evaporator outlet", "Suction line", "Liquid line / condenser outlet", "Compressor discharge"], "a": 2, "why": "Subcooling is liquid below condensing temp, read at the liquid line. Ch.2."},
-  {"q": "An EPA Section 608 certification is legally required to:", "opts": ["Wire a thermostat", "Purchase and handle regulated refrigerants", "Install ductwork", "Read a wiring diagram"], "a": 1, "why": "608 is federally required to handle refrigerants. Ch.3."},
-  {"q": "Intentionally venting refrigerant to the atmosphere during service is:", "opts": ["Allowed for small charges", "Prohibited under the Clean Air Act", "Required before recovery", "Only allowed outdoors"], "a": 1, "why": "Venting is prohibited; recover instead. Ch.3."},
-  {"q": "An EPA 608 Type II certification covers appliances that are:", "opts": ["Small (5 lb or less)", "High-pressure or very high-pressure", "Low-pressure only", "Motor vehicle A/C"], "a": 1, "why": "Type II = high-pressure appliances. Ch.3."},
-  {"q": "An 'A2L' classification under ASHRAE Standard 34 indicates a refrigerant that is:", "opts": ["Non-flammable and highly toxic", "Lower-toxicity and mildly (lower) flammable", "Highly flammable and toxic", "Inert in all conditions"], "a": 1, "why": "A = lower toxicity; 2L = lower/mild flammability. A2L transition. Ch.12 / research."},
-  {"q": "A key jobsite safety requirement when working with A2L refrigerants is:", "opts": ["Using only copper tools", "Using spark-resistant tools and ensuring adequate ventilation", "Working only in sealed rooms", "Removing all detection devices"], "a": 1, "why": "A2Ls are mildly flammable — spark-resistant tools, ventilation, and Refrigerant Detection Systems. Research."},
-  {"q": "A common single-component A2L refrigerant replacing R-410A in new equipment is:", "opts": ["R-22", "R-32", "R-134a", "R-404A"], "a": 1, "why": "R-32 is a leading A2L. Research."},
-  {"q": "One ton of cooling capacity equals:", "opts": ["6,000 BTU/hr", "12,000 BTU/hr", "24,000 BTU/hr", "1,000 BTU/hr"], "a": 1, "why": "1 ton = 12,000 BTU/hr. Ch.4."},
-  {"q": "A load calculation for residential sizing is most correctly based on:", "opts": ["The square footage rule of thumb alone", "A Manual J heat-loss/heat-gain calculation", "The size of the old unit", "The homeowner's preference"], "a": 1, "why": "Manual J is the industry-standard load calc. Ch.4."},
-  {"q": "Oversizing an air conditioner typically causes:", "opts": ["Better dehumidification", "Short-cycling and poor humidity control", "Lower energy bills always", "Longer run times"], "a": 1, "why": "Oversized units short-cycle and don't dehumidify. Ch.4."},
-  {"q": "Total External Static Pressure (TESP) is best described as:", "opts": ["The refrigerant pressure in the liquid line", "The total resistance the blower works against in the duct system", "The outdoor barometric pressure", "The pressure inside the compressor"], "a": 1, "why": "TESP measures duct-system resistance; high TESP starves airflow. Research."},
-  {"q": "A system with very high static pressure but 'normal-looking' gauges most likely has:", "opts": ["An airflow/duct restriction", "A refrigerant overcharge only", "A bad thermostat", "A tripped breaker"], "a": 0, "why": "High static = airflow restriction choking the system. Research."},
-  {"q": "A dirty air filter most directly causes:", "opts": ["Increased airflow", "Reduced airflow and possible evaporator icing", "Higher refrigerant subcooling", "A refrigerant leak"], "a": 1, "why": "Restricted airflow can freeze the evaporator coil. Ch.6/8."},
-  {"q": "The standard control-circuit voltage for most residential HVAC systems is:", "opts": ["120 VAC", "240 VAC", "24 VAC", "480 VAC"], "a": 2, "why": "24 VAC low-voltage control circuit. Ch.5."},
-  {"q": "In common thermostat wiring, the 'C' terminal provides the:", "opts": ["Cooling call", "Common (return path) for 24V power", "Compressor stage 2", "Fan-only signal"], "a": 1, "why": "C = common, the 24V return. Ch.5 / research."},
-  {"q": "The 'half-splitting' method is used to:", "opts": ["Cut refrigerant charge in half", "Efficiently isolate a fault by testing the midpoint of a circuit", "Split airflow between two zones", "Divide a load calculation"], "a": 1, "why": "Half-splitting narrows down a short/open quickly. Research."},
-  {"q": "A capacitor's job in an HVAC motor circuit is to:", "opts": ["Store refrigerant", "Provide a phase shift to start/run the motor", "Measure temperature", "Filter the air"], "a": 1, "why": "Run/start capacitors phase-shift current for single-phase motors. Ch.5."},
-  {"q": "Proper ventilation in IAQ terms means:", "opts": ["Sealing the home completely", "Introducing and distributing outdoor air to dilute indoor pollutants", "Running the compressor continuously", "Raising indoor humidity above 70%"], "a": 1, "why": "Ventilation dilutes indoor contaminants. Ch.6."},
-  {"q": "Recommended indoor relative humidity for comfort and health is generally:", "opts": ["10-20%", "30-50%", "60-80%", "Above 80%"], "a": 1, "why": "~30-50% RH balances comfort, mold, and health. Ch.6."},
-  {"q": "In a gas furnace, the component that separates combustion gases from the indoor air is the:", "opts": ["Blower motor", "Heat exchanger", "Gas valve", "Flame sensor"], "a": 1, "why": "The heat exchanger transfers heat while keeping flue gases separate. Ch.7."},
-  {"q": "A cracked heat exchanger is dangerous primarily because it can:", "opts": ["Leak refrigerant", "Allow carbon monoxide into the living space", "Increase airflow", "Trip the low-voltage fuse"], "a": 1, "why": "CO leakage is a life-safety hazard. Ch.7."},
-  {"q": "The flame sensor in a furnace primarily provides:", "opts": ["Ignition spark", "Proof of flame (a safety shutoff if no flame is sensed)", "Gas pressure regulation", "Blower speed control"], "a": 1, "why": "Flame sensing shuts the gas valve if no flame is detected. Ch.7."},
-  {"q": "The component that reverses refrigerant flow so a heat pump can both heat and cool is the:", "opts": ["Reversing valve", "Accumulator", "Filter drier", "Expansion tank"], "a": 0, "why": "The reversing valve switches heating/cooling modes. Ch.8."},
-  {"q": "In heating mode, a heat pump's outdoor coil acts as the:", "opts": ["Condenser", "Evaporator", "Metering device", "Compressor"], "a": 1, "why": "Roles swap in heating: outdoor coil becomes the evaporator. Ch.8."},
-  {"q": "Before servicing an inverter/VRF control board, a critical safety step is to:", "opts": ["Add refrigerant", "Safely discharge the DC bus capacitors and verify voltage has bled down", "Increase the fan speed", "Bypass the flame sensor"], "a": 1, "why": "Stored DC bus voltage can injure; verify bleed-down first. Research."},
-  {"q": "An 'EEV' in modern systems is a(n):", "opts": ["Electronic Expansion Valve that precisely meters refrigerant", "Emergency Exhaust Vent", "Electric Evaporator Vacuum", "External Energy Valve"], "a": 0, "why": "EEV = electronic expansion valve, precise metering. Research."},
-  {"q": "In a hydronic heating system, heat is distributed primarily by:", "opts": ["Forced refrigerant", "Circulating hot water", "Compressed air", "Electric arc"], "a": 1, "why": "Hydronics uses circulating water. Ch.9."},
-  {"q": "The 'EAR' diagnostic framework stands for:", "opts": ["Evaporator, Airflow, Refrigerant", "Electrical, Airflow, Refrigerant", "Energy, Air, Return", "Exhaust, Airflow, Recovery"], "a": 1, "why": "EAR = Electrical, Airflow, Refrigerant — the diagnostic order. Research."},
-  {"q": "A technician says 'it's not always the refrigerant.' The best first diagnostic discipline is to:", "opts": ["Add refrigerant until pressures look right", "Verify electrical and airflow before condemning the refrigerant circuit", "Replace the compressor", "Recover the whole charge immediately"], "a": 1, "why": "Check E and A before R — many 'refrigerant' faults are airflow/electrical. Ch.10 / research."},
-  {"q": "A Building Automation System (BAS) using DDC controls is most associated with:", "opts": ["Small residential window units", "Commercial buildings coordinating equipment via networked controllers", "Refrigerant recovery machines", "Portable space heaters"], "a": 1, "why": "BAS/DDC coordinate commercial HVAC over a network. Ch.12 / research."}
+ {
+  "q": "A town opens a new library. Reading scores rise the same year. The safest conclusion is:",
+  "opts": [
+   "The library caused the rise",
+   "Something may connect them, but one year cannot show which",
+   "The rise would have been larger without the library",
+   "Reading scores cause libraries"
+  ],
+  "a": 1,
+  "why": "Two things moving together is correlation. Cause requires ruling out coincidence and common causes."
+ },
+ {
+  "q": "A 'second-order consequence' means:",
+  "opts": [
+   "A consequence of the consequence",
+   "The second thing that happens in time",
+   "A consequence nobody wanted",
+   "A less important consequence"
+  ],
+  "a": 0,
+  "why": "Order counts steps in a chain, not importance or timing. Second-order follows from the first effect."
+ },
+ {
+  "q": "A city caps rent to help tenants. Landlords convert units to condos. Fewer rentals exist. This is best described as:",
+  "opts": [
+   "An unrelated coincidence",
+   "A second-order effect that works against the goal",
+   "Proof the policy was malicious",
+   "A first-order effect"
+  ],
+  "a": 1,
+  "why": "The intended first-order effect was lower rent. The response of landlords is the second order, and it undercuts the aim."
+ },
+ {
+  "q": "Which question best tests whether X caused Y?",
+  "opts": [
+   "Did X happen before Y?",
+   "Does X sound like a plausible cause?",
+   "Do X and Y usually appear together?",
+   "Would Y still have happened without X?"
+  ],
+  "a": 3,
+  "why": "The counterfactual is the core of causal reasoning. Everything else is suggestive at best."
+ },
+ {
+  "q": "A factory closes. Ten years later the town's schools decline. The long gap means:",
+  "opts": [
+   "A slow chain is possible and must be traced, not assumed",
+   "The closure is certainly the cause",
+   "Only the schools are to blame",
+   "The closure cannot be the cause"
+  ],
+  "a": 0,
+  "why": "Distance in time neither proves nor disproves causation. It obliges you to show the intervening links."
+ },
+ {
+  "q": "'Survivorship bias' would most likely distort your reasoning if you studied:",
+  "opts": [
+   "Businesses that failed and those that survived",
+   "A random sample of all businesses",
+   "Only the businesses still operating today",
+   "Every business started in 1990"
+  ],
+  "a": 2,
+  "why": "Studying only survivors hides what killed the rest, making success look more repeatable than it is."
+ },
+ {
+  "q": "A trade school guarantees jobs to graduates. Graduates get jobs at a high rate. The weakest part of this evidence is:",
+  "opts": [
+   "The school may admit only those already likely to be hired",
+   "Schools can advertise",
+   "The rate is measured",
+   "Jobs are desirable"
+  ],
+  "a": 0,
+  "why": "Selection at the door can produce the outcome without the school adding anything. This is selection effect."
+ },
+ {
+  "q": "A feedback loop is 'reinforcing' when:",
+  "opts": [
+   "The output increases the input that produced it",
+   "The effect appears after a delay",
+   "It returns a system to where it started",
+   "Two causes cancel each other out"
+  ],
+  "a": 0,
+  "why": "Reinforcing loops compound. Balancing loops push back toward a set point."
+ },
+ {
+  "q": "Ending free bus fares reduces crowding. Ridership falls, so fares must rise to cover fixed costs, so ridership falls again. This is:",
+  "opts": [
+   "A balancing loop",
+   "A reinforcing loop, downward",
+   "A first-order effect only",
+   "Correlation without causation"
+  ],
+  "a": 1,
+  "why": "Each turn strengthens the next. Reinforcing loops can spiral down as easily as up."
+ },
+ {
+  "q": "The most useful thing to ask about any predicted consequence is:",
+  "opts": [
+   "Does it feel likely?",
+   "What would have to be true for this NOT to happen?",
+   "Has it happened before?",
+   "Who says so?"
+  ],
+  "a": 1,
+  "why": "Naming the conditions for failure exposes hidden assumptions faster than accumulating supporting reasons."
+ },
+ {
+  "q": "A country subsidizes corn. Corn syrup becomes cheap. Processed food gets cheaper than fresh. This chain is:",
+  "opts": [
+   "First order only",
+   "A balancing loop",
+   "Impossible to trace",
+   "A second- and third-order chain"
+  ],
+  "a": 3,
+  "why": "Subsidy lowers corn price (first), which lowers syrup price (second), which shifts relative food prices (third)."
+ },
+ {
+  "q": "'Opportunity cost' asks:",
+  "opts": [
+   "How long did it take?",
+   "What was given up to do this?",
+   "Who paid for it?",
+   "What did this cost in money?"
+  ],
+  "a": 1,
+  "why": "The real cost of a choice is the best option not taken, which never appears on a receipt."
+ },
+ {
+  "q": "Two variables rise together. The most commonly overlooked explanation is:",
+  "opts": [
+   "The second causes the first",
+   "A third factor causes both",
+   "One causes the other",
+   "Neither is real"
+  ],
+  "a": 1,
+  "why": "Confounding variables are the most frequent source of false causal claims."
+ },
+ {
+  "q": "You lower the speed limit and accidents fall 20%. The claim is weakest if:",
+  "opts": [
+   "The limit was enforced",
+   "Drivers noticed the change",
+   "Traffic volume also fell 30% that year",
+   "Accidents were counted the same way"
+  ],
+  "a": 2,
+  "why": "If exposure fell faster than accidents, the rate per mile may have worsened. Denominators matter."
+ },
+ {
+  "q": "A 'necessary' cause is one that:",
+  "opts": [
+   "Is the most important cause",
+   "Occurs first in time",
+   "Must be present for the effect to occur",
+   "Always produces the effect"
+  ],
+  "a": 2,
+  "why": "Necessary means the effect cannot happen without it. Sufficient means it alone can produce the effect."
+ },
+ {
+  "q": "Fire needs oxygen, fuel, and heat. Oxygen is therefore:",
+  "opts": [
+   "Necessary but not sufficient",
+   "Neither necessary nor sufficient",
+   "The cause of fire",
+   "Sufficient for fire"
+  ],
+  "a": 0,
+  "why": "Remove oxygen and there is no fire, but oxygen alone burns nothing."
+ },
+ {
+  "q": "An employer raises wages 20%. Six months later, profits are up. The most careful reading is:",
+  "opts": [
+   "The wage rise may have reduced turnover, but other causes must be excluded",
+   "Wages and profits are unrelated",
+   "Higher wages raise profits",
+   "Profits caused the wage rise"
+  ],
+  "a": 0,
+  "why": "A plausible mechanism exists, but plausibility is not evidence. Alternatives must be tested."
+ },
+ {
+  "q": "Which is a THIRD-order consequence of a town's only grocery store closing?",
+  "opts": [
+   "Residents drive farther for food",
+   "Families without cars rely on convenience stores, and diet-related illness rises",
+   "The store's sign comes down",
+   "The store's shelves empty"
+  ],
+  "a": 1,
+  "why": "Closure (first), longer trips (second), health effects among those who cannot travel (third)."
+ },
+ {
+  "q": "Goodhart's Law says that when a measure becomes a target:",
+  "opts": [
+   "It should be published",
+   "It ceases to be a good measure",
+   "It gets easier to collect",
+   "It becomes more accurate"
+  ],
+  "a": 1,
+  "why": "People optimize for the number rather than the thing it was meant to represent."
+ },
+ {
+  "q": "A school is judged on graduation rate. Graduation rate rises while reading scores fall. This most likely shows:",
+  "opts": [
+   "The measure was too hard",
+   "Reading is unrelated to graduating",
+   "Teachers worked less",
+   "Standards may have been lowered to hit the target"
+  ],
+  "a": 3,
+  "why": "A classic Goodhart outcome: the target is met by changing the bar, not the learning."
+ },
+ {
+  "q": "The phrase 'all else being equal' is dangerous in real reasoning because:",
+  "opts": [
+   "All else is rarely equal",
+   "It is hard to say",
+   "It applies only to money",
+   "It is a foreign phrase"
+  ],
+  "a": 0,
+  "why": "Systems respond. The assumption that nothing else moves is where most confident predictions fail."
+ },
+ {
+  "q": "You predict a policy will help. To reason honestly, you should ALSO:",
+  "opts": [
+   "Find more evidence it will help",
+   "Wait for results",
+   "Ask who disagrees and dismiss them",
+   "Name in advance what would show you were wrong"
+  ],
+  "a": 3,
+  "why": "Stating a falsifiable expectation beforehand is what separates reasoning from rationalizing."
+ },
+ {
+  "q": "Automation removes 30% of jobs in an industry. Which is the LEAST reliable prediction?",
+  "opts": [
+   "Some workers will need new skills",
+   "Wages in that industry may shift",
+   "Total employment in the economy will fall by 30%",
+   "Output per worker will rise"
+  ],
+  "a": 2,
+  "why": "Industry effects do not scale to the whole economy. Displaced labor moves; new work appears. This is a composition error."
+ },
+ {
+  "q": "'Base rate neglect' means ignoring:",
+  "opts": [
+   "How common the outcome is in general",
+   "How the question was worded",
+   "How recent the data is",
+   "Who collected the data"
+  ],
+  "a": 0,
+  "why": "A vivid case can overwhelm the underlying frequency, producing badly calibrated conclusions."
+ },
+ {
+  "q": "A rare disease affects 1 in 10,000. A test is 99% accurate. A positive result means:",
+  "opts": [
+   "The test is broken",
+   "You almost certainly have it",
+   "You probably do not have it",
+   "Nothing can be said"
+  ],
+  "a": 2,
+  "why": "False positives from the vast healthy majority outnumber true positives. Base rates dominate."
+ },
+ {
+  "q": "Which is the strongest evidence that a training program works?",
+  "opts": [
+   "Enrollment is growing",
+   "Graduates earn more than non-graduates",
+   "Graduates praise it",
+   "Similar applicants were randomly assigned in or out, and those in earned more"
+  ],
+  "a": 3,
+  "why": "Randomization removes selection effects, which is what makes the comparison causal rather than correlational."
+ },
+ {
+  "q": "A policy helps 90% and badly harms 10%. Reasoning honestly requires:",
+  "opts": [
+   "Ignoring the minority",
+   "Waiting for unanimity",
+   "Reporting only the average",
+   "Naming who bears the harm"
+  ],
+  "a": 3,
+  "why": "Averages conceal distribution. Who wins and who loses is part of the consequence, not a footnote."
+ },
+ {
+  "q": "'The Streetlight Effect' describes searching where:",
+  "opts": [
+   "Others have searched",
+   "The problem occurred",
+   "The light is best, not where the answer is",
+   "It is cheapest"
+  ],
+  "a": 2,
+  "why": "We study what is easy to measure and mistake it for what matters."
+ },
+ {
+  "q": "A river is dammed for power. Fish stocks collapse, then the fishing town empties, then the dam's own customer base shrinks. This shows:",
+  "opts": [
+   "First-order effects are unimportant",
+   "Consequences are always negative",
+   "Dams should never be built",
+   "A chain can loop back and undercut its own cause"
+  ],
+  "a": 3,
+  "why": "Consequence chains are not straight lines. They can return to damage the original purpose."
+ },
+ {
+  "q": "When someone says 'studies show,' the first question should be:",
+  "opts": [
+   "When were they published?",
+   "Who funded them?",
+   "How many studies?",
+   "Which studies, measuring what, on whom?"
+  ],
+  "a": 3,
+  "why": "Specificity comes first. Without knowing the claim's shape, funding and count cannot be judged."
+ },
+ {
+  "q": "Two towns differ in one policy and in twelve other ways. Comparing them tells you:",
+  "opts": [
+   "Nothing ever",
+   "The policy's effect precisely",
+   "The policy is harmful",
+   "Very little on its own"
+  ],
+  "a": 3,
+  "why": "With many differences, any of them could carry the effect. Confounding makes the comparison weak, not worthless."
+ },
+ {
+  "q": "You are told a change had 'no unintended consequences.' The most likely explanation is:",
+  "opts": [
+   "The change was perfectly designed",
+   "Nobody has looked for them yet",
+   "Consequences are rare",
+   "The change was small"
+  ],
+  "a": 1,
+  "why": "Unintended effects are typically found later and further away than anyone initially searched."
+ },
+ {
+  "q": "A skill becomes free to learn. Its wage premium falls. This is because:",
+  "opts": [
+   "Supply of people with the skill rose",
+   "The skill became less useful",
+   "Employers grew stingier",
+   "Free things have no value"
+  ],
+  "a": 0,
+  "why": "Scarcity, not usefulness, drives the premium. The skill is exactly as valuable; it is simply less rare."
+ },
+ {
+  "q": "Given that, the person who benefits MOST from free education is:",
+  "opts": [
+   "Someone who learns only what everyone else learns",
+   "Someone who resells it",
+   "Someone who combines it with something uncommon",
+   "Someone who learns nothing"
+  ],
+  "a": 2,
+  "why": "Value accrues to the uncommon combination. Widely held skills become a floor to stand on, not an edge."
+ },
+ {
+  "q": "The honest answer to 'what will happen if we do this?' usually includes:",
+  "opts": [
+   "Whatever the audience wants",
+   "A refusal to guess",
+   "A range, with the conditions that would produce each",
+   "A confident single outcome"
+  ],
+  "a": 2,
+  "why": "Conditional reasoning is more useful and more truthful than false precision."
+ },
+ {
+  "q": "The clearest sign someone is reasoning rather than defending a conclusion is:",
+  "opts": [
+   "They anticipate objections",
+   "They cite many sources",
+   "They can state what would change their mind",
+   "They speak confidently"
+  ],
+  "a": 2,
+  "why": "A named condition for changing one's mind is the hardest thing to fake and the cheapest thing to check."
+ }
 ];
 
 /* ====================== SHARED ENGINE (do not edit per subject) =========== */

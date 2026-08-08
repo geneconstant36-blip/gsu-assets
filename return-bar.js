@@ -1,5 +1,5 @@
 /* ============================================================
-   GSU RETURN BAR · v2.0 · Aug 7 2026
+   GSU RETURN BAR · v2.1 · Aug 8 2026
    ------------------------------------------------------------
    One line in any read.globalsovereignuniversity.org page:
 
@@ -11,9 +11,11 @@
      · Adds persistent quick-links (Library / Free Tutor /
        Certification) so a visitor is never one dead end away
        from the university.
-     · Adds an OPTIONAL Google rating badge. It is OFF by
-       default and renders NOTHING until real values are set
-       in the CONFIG block below. See the note there.
+     · v2.1: Google rating confirmed to be at zero - no reviews
+       exist. Rather than show nothing or invent a number, the
+       bar now carries a TRUST badge of permanently true facts.
+       The rating slot remains wired and disabled for the day
+       real reviews exist.
      · Mobile-aware: collapses to a single Home link under 560px.
      · Respects pages that already have their own fixed header
        (set data-gsu-nooffset="1" on <body> to skip the spacer).
@@ -33,20 +35,24 @@
     { label: 'Certification', href: HOME + '/certification' }
   ];
 
-  /* ---- GOOGLE RATING BADGE -------------------------------
-     DISABLED until real, verifiable numbers are supplied.
+  /* ---- TRUST BADGE ---------------------------------------
+     There is no Google rating yet. Zero reviews, zero score.
+     So the bar shows what IS true instead of what would sell.
+     Every claim below is verifiable and permanent.
 
-     Do NOT invent a rating or a review count. GSU is a
-     501(c)(3) that solicits donations; a fabricated rating
-     is a real legal and reputational exposure, not a
-     cosmetic shortcut.
-
-     To turn it on, set enabled:true and fill in the values
-     from the live Google Business Profile:
-        score  – the actual average, e.g. '5.0'
-        count  – the actual number of reviews, e.g. 47
-        href   – the public Google reviews URL
+     WHEN REAL GOOGLE REVIEWS EXIST: set RATING.enabled = true
+     and fill score / count / href from the live Google Business
+     Profile. The trust badge steps aside automatically. Do not
+     enable it with estimated, aspirational, or placeholder
+     numbers - GSU is a 501(c)(3) that solicits donations, and a
+     star rating is a material representation to donors.
      ------------------------------------------------------- */
+  var TRUST = {
+    enabled: true,
+    text: '501(c)(3) Nonprofit \u00b7 Free Forever \u00b7 No Logins',
+    href: HOME + '/mission'
+  };
+
   var RATING = {
     enabled: false,
     score:   null,
@@ -111,6 +117,8 @@
     ' display:flex;align-items:center;gap:6px;font-weight:700;font-size:13.5px;color:#000;',
     '}',
     '#gsu-return-bar .gsu-rb-stars{letter-spacing:1px;}',
+    '#gsu-return-bar .gsu-rb-trust{font-weight:700;font-size:13px;color:#000;opacity:.86;white-space:nowrap;}',
+    '@media (max-width:820px){#gsu-return-bar .gsu-rb-trust{display:none;}}',
     '#gsu-return-spacer{display:block;height:40px;}',
     '@media (max-width:560px){',
     ' #gsu-return-bar .gsu-rb-links{display:none;}',
@@ -141,6 +149,7 @@
     var inner = '<a class="gsu-rb-home" href="' + esc(backUrl) + '">&larr; ' +
                 esc(backLabel) + '</a>';
 
+    var showedBadge = false;
     if (RATING.enabled && RATING.score && RATING.count && RATING.href) {
       var full = Math.round(Number(RATING.score));
       var stars = '';
@@ -150,6 +159,12 @@
                '<span class="gsu-rb-stars">' + stars + '</span>' +
                '<span>' + esc(RATING.score) + ' on Google (' +
                esc(RATING.count) + ' reviews)</span></a>';
+      showedBadge = true;
+    }
+
+    if (!showedBadge && TRUST.enabled && TRUST.text) {
+      inner += '<a class="gsu-rb-trust" href="' + esc(TRUST.href) + '">' +
+               esc(TRUST.text) + '</a>';
     }
 
     var linkHtml = LINKS.map(function (l) {
