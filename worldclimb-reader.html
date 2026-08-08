@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Readers Toolkit — Read Free | GSU Sovereign Reading Room</title>
-<meta name="description" content="Read The Readers Toolkit by Dr. Gene A Constant free online — complete book in the Global Sovereign University Reading Room. Tap Listen to hear it read aloud, or ask GENO in any of 83 languages.">
+<title>The World Climb — Read Free | GSU Sovereign Reading Room</title>
+<meta name="description" content="Read The World Climb by Dr. Gene A Constant free online — the complete book in the Global Sovereign University Sovereign Reading Room. Tap Listen to hear it read aloud, or ask GENO, the free AI tutor, anything about it.">
 <link rel="canonical" href="https://read.globalsovereignuniversity.org/worldclimb-reader.html">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"Book",
-  "name":"The Readers Toolkit",
-  "alternateName":"Decoding — Turning Phonics Knowledge into Real-Time Reading Skill",
+  "name":"The World Climb",
+  "alternateName":"The Oldest Economy on Earth, Reborn — A Fourteen-Step Guide to Building a Barter Life Alongside the Money Life You Already Have",
   "author":{"@type":"Person","name":"Dr. Gene A Constant"},
   "publisher":{"@type":"Organization","name":"The Foundation for Global Instruction"},
   "inLanguage":"en",
@@ -106,14 +106,51 @@ a{color:var(--gold)}
   .rr-listen-bar{left:16px;right:16px;transform:none;width:auto}
 }
 </style>
+
+<!-- ============================================================
+     RETURN-BAR COEXISTENCE + PERSISTENT READER CONTROLS
+     Added Aug 7 2026. The GSU return bar is fixed at top:0 and is
+     40px tall (36px under 560px). Everything this page pins to the
+     top shifts down by that amount. Controls are folded into the
+     existing .rr-top bar rather than floated, because .rr-listen-bar
+     already owns bottom-centre and the GENO widget owns bottom-right.
+     ============================================================ -->
+<style>
+  body{padding-top:96px}
+  .rr-top{top:40px}
+  .rr-progressbar{top:96px}
+  .rr-nav{top:112px;max-height:calc(100vh - 136px)}
+  .rr-jump{
+    display:inline-flex;align-items:center;gap:6px;
+    background:transparent;border:1px solid var(--gold);color:var(--gold);
+    font-family:inherit;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:6px 12px;border-radius:6px;cursor:pointer;white-space:nowrap;
+    text-decoration:none;line-height:1;
+  }
+  .rr-jump:hover,.rr-jump:focus{background:var(--gold);color:#000}
+  .rr-jump-primary{background:var(--gold);color:#000;font-weight:700}
+  .rr-jump-primary:hover,.rr-jump-primary:focus{filter:brightness(1.1);color:#000}
+  @media (max-width:900px){
+    .rr-jump .rr-jump-txt{display:none}
+    .rr-jump{padding:6px 9px}
+  }
+  @media (max-width:560px){
+    body{padding-top:92px}
+    .rr-top{top:36px}
+    .rr-progressbar{top:92px}
+    .rr-nav{top:108px;max-height:calc(100vh - 132px)}
+  }
+</style>
 </head>
-<body>
+<body data-gsu-nooffset="1">
 
 <div class="rr-top">
   <a href="/library.html" class="rr-brand">← The Library</a>
-  <div class="rr-book"><em>The Readers Toolkit</em></div>
+  <div class="rr-book"><em>The World Climb</em></div>
   <div class="rr-tools">
-    <a href="https://www.amazon.com/dp/B0GXGTPB99?tag=gsu2026-20" target="_blank" rel="noopener" class="rr-own">Own the Kindle — $3.99</a>
+    <button type="button" class="rr-jump" id="rr-jump-start" title="Start at the beginning of the book">&#8593; <span class="rr-jump-txt">Start at Chapter 1</span></button>
+    <button type="button" class="rr-jump rr-jump-primary" id="rr-jump-listen" title="Hear this book read aloud">&#9654; <span class="rr-jump-txt">Listen</span></button>
+    <a href="https://www.amazon.com/dp/B0H8LVJX17?tag=gsu2026-20" target="_blank" rel="noopener" class="rr-own">Own the Kindle — $3.99</a>
   </div>
 </div>
 <div class="rr-progressbar" id="rr-progressbar"></div>
@@ -143,13 +180,13 @@ a{color:var(--gold)}
   <article class="rr-reader">
     <header class="rr-header">
       <div class="rr-kicker">The Sovereign Reading Room</div>
-      <h1>The Readers Toolkit</h1>
-      <p class="rr-sub">Decoding — Turning Phonics Knowledge into Real-Time Reading Skill</p>
+      <h1>The World Climb</h1>
+      <p class="rr-sub">The Oldest Economy on Earth, Reborn — A Fourteen-Step Guide to Building a Barter Life Alongside the Money Life You Already Have</p>
       <p class="rr-byline">By Dr. Gene A. Constant · Founding Chancellor, Global Sovereign University</p>
       <div class="rr-doors">
         <button class="rr-door rr-door-primary" id="rr-listen-btn"><span class="rr-icon">▶</span> Tap Listen</button>
         <button class="rr-door" id="rr-geno-btn"><span class="rr-icon">◇</span> Ask GENO</button>
-        <a href="https://www.amazon.com/dp/B0GXGTPB99?tag=gsu2026-20" target="_blank" rel="noopener" class="rr-door"><span class="rr-icon">◈</span> Own the Kindle — $3.99</a>
+        <a href="https://www.amazon.com/dp/B0H8LVJX17?tag=gsu2026-20" target="_blank" rel="noopener" class="rr-door"><span class="rr-icon">◈</span> Own the Kindle — $3.99</a>
       </div>
     </header>
 
@@ -2737,7 +2774,7 @@ a{color:var(--gold)}
     saveTimeout = setTimeout(() => {
       try {
         // Local reading position (persists in this browser only)
-        localStorage.setItem('rr-pos-the-readers-toolkit', window.scrollY);
+        localStorage.setItem('rr-pos-the-world-climb', window.scrollY);
       } catch(e) {}
     }, 500);
   }, {passive: true});
@@ -2745,7 +2782,7 @@ a{color:var(--gold)}
   // Restore reading position on load if no hash
   if (!window.location.hash) {
     try {
-      const savedPos = localStorage.getItem('rr-pos-the-readers-toolkit');
+      const savedPos = localStorage.getItem('rr-pos-the-world-climb');
       if (savedPos && parseInt(savedPos) > 100) {
         setTimeout(() => window.scrollTo(0, parseInt(savedPos)), 100);
       }
@@ -2755,14 +2792,14 @@ a{color:var(--gold)}
   // Library Card: record this book as opened (no login — the visitor's own browser remembers)
   try {
     const opened = JSON.parse(localStorage.getItem('rr-opened') || '[]');
-    if (!opened.includes('the-readers-toolkit')) {
-      opened.unshift('the-readers-toolkit');
+    if (!opened.includes('the-world-climb')) {
+      opened.unshift('the-world-climb');
       localStorage.setItem('rr-opened', JSON.stringify(opened.slice(0, 100)));
     } else {
       // Move to front (most recently read first)
-      const idx = opened.indexOf('the-readers-toolkit');
+      const idx = opened.indexOf('the-world-climb');
       opened.splice(idx, 1);
-      opened.unshift('the-readers-toolkit');
+      opened.unshift('the-world-climb');
       localStorage.setItem('rr-opened', JSON.stringify(opened));
     }
   } catch(e) {}
@@ -2882,7 +2919,7 @@ a{color:var(--gold)}
   // Ask GENO — open the ElevenLabs widget with a book-specific opener
   // ═══════════════════════════════════════════════════════════════
   const genoBtn = document.getElementById('rr-geno-btn');
-  const GENO_BOOK = {"book": "The Readers Toolkit", "subtitle": "Decoding \u2014 Turning Phonics Knowledge into Real-Time Reading Skill", "opener": "Let's talk about The Readers Toolkit. Where would you like to begin \u2014 the summary of the whole book, a specific chapter, or a question you already have?"};
+  const GENO_BOOK = {"book": "The World Climb", "subtitle": "The Oldest Economy on Earth, Reborn \u2014 A Fourteen-Step Guide to Building a Barter Life Alongside the Money Life You Already Have", "opener": "Let's talk about The World Climb. Where would you like to begin \u2014 the summary of the whole book, a specific chapter, or a question you already have?"};
 
   genoBtn.addEventListener('click', function() {
     // Store the book context so GENO can pick it up
@@ -2918,5 +2955,42 @@ a{color:var(--gold)}
 })();
 </script>
 
+
+<!-- ============================================================
+     PERSISTENT READER CONTROLS · behaviour
+     "Start at Chapter 1" clears the saved scroll position first, so
+     a returning reader is not yanked back to where they left off.
+     "Listen" drives the existing #rr-listen-btn so there is exactly
+     one read-aloud engine on the page.
+     ============================================================ -->
+<script>
+(function(){
+  var startBtn  = document.getElementById('rr-jump-start');
+  var listenBtn = document.getElementById('rr-jump-listen');
+
+  if (startBtn) {
+    startBtn.addEventListener('click', function(){
+      try { localStorage.removeItem('rr-pos-the-world-climb'); } catch(e){}
+      if (window.location.hash) {
+        history.replaceState(null,'',window.location.pathname + window.location.search);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  if (listenBtn) {
+    listenBtn.addEventListener('click', function(){
+      var real = document.getElementById('rr-listen-btn');
+      if (real) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(function(){ real.click(); }, 420);
+      }
+    });
+  }
+})();
+</script>
+
+<!-- GSU universal return bar -->
+<script src="/return-bar.js" defer></script>
 </body>
 </html>

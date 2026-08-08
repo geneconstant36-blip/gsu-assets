@@ -115,8 +115,28 @@ a{color:var(--gold)}
 .rr-stars-label{color:var(--dim);font-size:.85rem;letter-spacing:.04em}
 
 </style>
+
+<!-- ============================================================
+     RETURN-BAR COEXISTENCE · added Aug 7 2026
+     The GSU return bar is fixed at top:0, 40px tall (36px <560px).
+     Everything this page pins to the top shifts down to match.
+     body carries data-gsu-nooffset="1" because the offset is
+     handled here via padding-top instead of the bar's spacer.
+     ============================================================ -->
+<style>
+  body{padding-top:96px}
+  .rr-top{top:40px}
+  .rr-progressbar{top:96px}
+  .rr-nav{top:112px;max-height:calc(100vh - 136px)}
+  @media (max-width:560px){
+    body{padding-top:92px}
+    .rr-top{top:36px}
+    .rr-progressbar{top:92px}
+    .rr-nav{top:108px;max-height:calc(100vh - 132px)}
+  }
+</style>
 </head>
-<body>
+<body data-gsu-nooffset="1">
 
 <div class="rr-top">
   <a href="/library.html" class="rr-brand">← The Library</a>
@@ -2323,5 +2343,8 @@ a{color:var(--gold)}
   refresh();
 })();
 </script>
+
+<!-- GSU universal return bar -->
+<script src="/return-bar.js" defer></script>
 </body>
 </html>
