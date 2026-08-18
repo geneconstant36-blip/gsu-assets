@@ -418,8 +418,7 @@ const POOL = [
   window.GSUCERT = {
     tier: function(correct,total){
       const p = correct/total;
-      if(p >= CONFIG.goldPct) return "Gold";
-      if(p >= CONFIG.silverPct) return "Silver";
+      if(p >= CONFIG.silverPct) return "Silver"; // Gold is server-graded via the Gold Gate below
       return null;
     },
     makeSerial: function(){
@@ -709,5 +708,66 @@ const POOL = [
   window.addEventListener("resize", resize);
 })();
 </script>
+
+<!-- ============ GSU GOLD GATE · server-graded Gold + Vault unlock · v1 ============ -->
+<section id="goldGate" style="max-width:760px;margin:48px auto 0;padding:28px 22px;border:1px solid rgba(201,168,76,.45);border-radius:14px;background:#000">
+  <h2 style="color:#C9A84C;font-size:1.35rem;margin:0 0 6px">Go for Gold — and open the Vault</h2>
+  <p style="color:#ddd;line-height:1.55;margin:0 0 14px">Gold (90%) is graded on GSU's server — the answer key never touches your browser. A real bar to clear. Passing mints a Gold serial bound to your name and unlocks your <b style="color:#C9A84C">Business-in-a-Box</b>: the Launch Protocol, Synthesis Toolkit, and Unfair Advantage for this subject.</p>
+  <div id="ggIntro">
+    <label style="color:#bbb;font-size:.9rem">Name as you want it on your certificate (this is half your vault key — keep the spelling):</label>
+    <input id="ggName" maxlength="36" style="display:block;width:100%;max-width:420px;margin:6px 0 12px;padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff" placeholder="Your name">
+    <button id="ggStart" style="background:#C9A84C;color:#000;font-weight:700;border:0;border-radius:8px;padding:12px 22px;cursor:pointer">Begin the Gold Exam · 30 questions · 30:00</button>
+  </div>
+  <div id="ggExam" style="display:none">
+    <div style="display:flex;justify-content:space-between;color:#C9A84C;font-weight:700;margin-bottom:10px"><span id="ggProg"></span><span id="ggClock">30:00</span></div>
+    <div id="ggQs"></div>
+    <button id="ggSubmit" style="background:#C9A84C;color:#000;font-weight:700;border:0;border-radius:8px;padding:12px 22px;cursor:pointer;margin-top:8px">Submit for server grading</button>
+  </div>
+  <div id="ggResult" style="display:none"></div>
+  <hr style="border:0;border-top:1px solid rgba(201,168,76,.25);margin:22px 0">
+  <details><summary style="color:#C9A84C;cursor:pointer">Already Gold? Open your Vault with serial + name</summary>
+    <div style="margin-top:10px">
+      <input id="unSerial" style="padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff;margin:4px 6px 4px 0" placeholder="Serial (e.g. GSU-READ-XXXXXXX)">
+      <input id="unName" maxlength="36" style="padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff;margin:4px 6px 4px 0" placeholder="Name on certificate">
+      <button id="unGo" style="background:#C9A84C;color:#000;font-weight:700;border:0;border-radius:8px;padding:10px 18px;cursor:pointer">Unlock</button>
+      <div id="unOut" style="margin-top:10px"></div>
+    </div>
+  </details>
+</section>
+<script>
+(function(){
+  var WORKER="https://gsu-vault.geneconstant36.workers.dev"; // adjust if the worker name differs
+  var SUBJ="math";
+  var $=function(id){return document.getElementById(id)},tok=null,qs=[],tLeft=1800,tick=null;
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+  function clock(){tLeft--;var m=Math.floor(tLeft/60),s=tLeft%60;$('ggClock').textContent=m+':'+String(s).padStart(2,'0');if(tLeft<=0){clearInterval(tick);grade();}}
+  function render(){var h='';qs.forEach(function(item,n){h+='<div style="margin:0 0 18px;color:#eee"><div style="font-weight:700;margin-bottom:6px">'+(n+1)+'. '+esc(item.q)+'</div>';item.opts.forEach(function(o,i){h+='<label style="display:block;padding:6px 8px;cursor:pointer;color:#ccc"><input type="radio" name="gg'+n+'" value="'+i+'" style="margin-right:8px">'+esc(o)+'</label>'});h+='</div>'});$('ggQs').innerHTML=h;$('ggProg').textContent=qs.length+' questions · server-graded';}
+  function grade(){var ans=qs.map(function(_,n){var c=document.querySelector('input[name=gg'+n+']:checked');return c?Number(c.value):-1});
+    $('ggSubmit').disabled=true;$('ggSubmit').textContent='Grading on the server…';
+    fetch(WORKER+'/gold/grade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:tok,answers:ans,name:$('ggName').value})})
+    .then(function(r){return r.json()}).then(function(d){clearInterval(tick);$('ggExam').style.display='none';var R=$('ggResult');R.style.display='block';
+      if(d.error){R.innerHTML='<p style="color:#e77">'+esc(d.error)+'</p>';return}
+      var h='<h3 style="color:#C9A84C">Score: '+d.pct+'% — '+(d.tier?d.tier:'Below Silver — keep studying')+'</h3>';
+      if(d.serial){h+='<p style="color:#eee">Serial: <b style="color:#C9A84C">'+esc(d.serial)+'</b> — issued to <b>'+esc($('ggName').value)+'</b>. '+(d.recorded?'Recorded to the public registry.':'(Registry write pending — your serial is still valid.)')+' Write both down: serial + name is your permanent vault key.</p>'}
+      if(d.vault){h+='<div style="border:1px solid rgba(201,168,76,.45);border-radius:10px;padding:16px;margin-top:12px"><h3 style="color:#C9A84C;margin:0 0 8px">'+esc(d.vault.title)+'</h3><h4 style="color:#C9A84C">Launch Protocol</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(d.vault.launchProtocol)+'</p><h4 style="color:#C9A84C">Synthesis Toolkit</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(d.vault.synthesisToolkit)+'</p><h4 style="color:#C9A84C">Unfair Advantage</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(d.vault.unfairAdvantage)+'</p><button onclick="window.print()" style="background:#C9A84C;color:#000;font-weight:700;border:0;border-radius:8px;padding:10px 18px;cursor:pointer">Print / Save as PDF — it’s yours to keep</button></div>'}
+      var wrong=d.results?d.results.filter(function(x){return !x.correct}):[];
+      if(wrong.length){h+='<details style="margin-top:12px"><summary style="color:#C9A84C;cursor:pointer">Review the '+wrong.length+' you missed</summary>';wrong.forEach(function(x){h+='<p style="color:#bbb">Q'+(x.n+1)+': '+esc(x.why)+'</p>'});h+='</details>'}
+      R.innerHTML=h;})
+    .catch(function(){$('ggSubmit').disabled=false;$('ggSubmit').textContent='Submit for server grading';alert('Could not reach the grading server — check your connection and try again.')});}
+  $('ggStart').onclick=function(){var nm=($('ggName').value||'').trim();if(!nm){alert('Enter your name first — it goes on the certificate and is half your vault key.');return}
+    fetch(WORKER+'/gold/start?subject='+SUBJ).then(function(r){return r.json()}).then(function(d){if(d.error){alert(d.error);return}
+      tok=d.token;qs=d.questions;tLeft=d.timeLimitSec||1800;$('ggIntro').style.display='none';$('ggExam').style.display='block';render();tick=setInterval(clock,1000);})
+    .catch(function(){alert('Could not reach the exam server — check your connection and try again.')});};
+  $('ggSubmit').onclick=grade;
+  $('unGo').onclick=function(){$('unOut').innerHTML='<span style="color:#bbb">Checking…</span>';
+    fetch(WORKER+'/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({serial:$('unSerial').value,name:$('unName').value})})
+    .then(function(r){return r.json()}).then(function(d){if(d.error){$('unOut').innerHTML='<span style="color:#e77">'+esc(d.error)+'</span>';return}
+      var h='';Object.keys(d.vault).forEach(function(k){var v=d.vault[k];h+='<div style="border:1px solid rgba(201,168,76,.45);border-radius:10px;padding:16px;margin-top:10px"><h3 style="color:#C9A84C;margin:0 0 8px">'+esc(v.title)+'</h3><h4 style="color:#C9A84C">Launch Protocol</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(v.launchProtocol)+'</p><h4 style="color:#C9A84C">Synthesis Toolkit</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(v.synthesisToolkit)+'</p><h4 style="color:#C9A84C">Unfair Advantage</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(v.unfairAdvantage)+'</p><button onclick="window.print()" style="background:#C9A84C;color:#000;font-weight:700;border:0;border-radius:8px;padding:10px 18px;cursor:pointer">Print / Save as PDF</button></div>'});
+      $('unOut').innerHTML=h;})
+    .catch(function(){$('unOut').innerHTML='<span style="color:#e77">Could not reach the server.</span>'});};
+})();
+</script>
+<!-- ============ /GSU GOLD GATE ============ -->
+
 </body>
 </html>
