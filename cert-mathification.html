@@ -739,6 +739,13 @@ const POOL = [
   var WORKER="https://gsu-vault.geneconstant36.workers.dev"; // adjust if the worker name differs
   var SUBJ="math";
   var $=function(id){return document.getElementById(id)},tok=null,qs=[],tLeft=1800,tick=null;
+  function vaultHTML(v){var trades=Object.keys(v);var h='<div style="border:1px solid rgba(201,168,76,.45);border-radius:10px;padding:16px;margin-top:12px"><h3 style="color:#C9A84C;margin:0 0 4px">Your Business-in-a-Box</h3><p style="color:#bbb;margin:0 0 10px">Pick a trade — every trade is yours. Print each one; it’s yours to keep.</p><div>';
+    trades.forEach(function(k,i){h+='<button class="vtab" data-vt="'+k+'" style="background:'+(i===0?'#C9A84C':'#111')+';color:'+(i===0?'#000':'#C9A84C')+';border:1px solid rgba(201,168,76,.45);border-radius:8px;padding:8px 14px;margin:0 6px 10px 0;cursor:pointer;font-weight:700">'+esc(v[k].title.split(' ·')[0])+'</button>'});
+    h+='</div><div id="vtPanel"></div><button onclick="window.print()" style="background:#C9A84C;color:#000;font-weight:700;border:0;border-radius:8px;padding:10px 18px;cursor:pointer;margin-top:10px">Print / Save as PDF</button></div>';
+    setTimeout(function(){function show(k){document.getElementById('vtPanel').innerHTML='<h4 style="color:#C9A84C">'+esc(v[k].title)+'</h4><h5 style="color:#C9A84C;margin:14px 0 6px">Launch Protocol</h5><div style="color:#ddd;line-height:1.55">'+v[k].launchProtocol+'</div><h5 style="color:#C9A84C;margin:14px 0 6px">Synthesis Toolkit</h5><div style="color:#ddd;line-height:1.55">'+v[k].synthesisToolkit+'</div><h5 style="color:#C9A84C;margin:14px 0 6px">Unfair Advantage</h5><div style="color:#ddd;line-height:1.55">'+v[k].unfairAdvantage+'</div>';
+      document.querySelectorAll('.vtab').forEach(function(b){var on=b.dataset.vt===k;b.style.background=on?'#C9A84C':'#111';b.style.color=on?'#000':'#C9A84C'});}
+      document.querySelectorAll('.vtab').forEach(function(b){b.onclick=function(){show(b.dataset.vt)}});show(trades[0]);},0);
+    return h;}
   function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
   function clock(){tLeft--;var m=Math.floor(tLeft/60),s=tLeft%60;$('ggClock').textContent=m+':'+String(s).padStart(2,'0');if(tLeft<=0){clearInterval(tick);grade();}}
   function render(){var h='';qs.forEach(function(item,n){h+='<div style="margin:0 0 18px;color:#eee"><div style="font-weight:700;margin-bottom:6px">'+(n+1)+'. '+esc(item.q)+'</div>';item.opts.forEach(function(o,i){h+='<label style="display:block;padding:6px 8px;cursor:pointer;color:#ccc"><input type="radio" name="gg'+n+'" value="'+i+'" style="margin-right:8px">'+esc(o)+'</label>'});h+='</div>'});$('ggQs').innerHTML=h;$('ggProg').textContent=qs.length+' questions · server-graded';}
@@ -749,7 +756,7 @@ const POOL = [
       if(d.error){R.innerHTML='<p style="color:#e77">'+esc(d.error)+'</p>';return}
       var h='<h3 style="color:#C9A84C">Score: '+d.pct+'% — '+(d.tier?d.tier:'Below Silver — keep studying')+'</h3>';
       if(d.serial){h+='<p style="color:#eee">Serial: <b style="color:#C9A84C">'+esc(d.serial)+'</b> — issued to <b>'+esc($('ggName').value)+'</b>. '+(d.recorded?'Recorded to the public registry.':'(Registry write pending — your serial is still valid.)')+' Write both down: serial + name is your permanent vault key.</p>'}
-      if(d.vault){h+='<div style="border:1px solid rgba(201,168,76,.45);border-radius:10px;padding:16px;margin-top:12px"><h3 style="color:#C9A84C;margin:0 0 8px">'+esc(d.vault.title)+'</h3><h4 style="color:#C9A84C">Launch Protocol</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(d.vault.launchProtocol)+'</p><h4 style="color:#C9A84C">Synthesis Toolkit</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(d.vault.synthesisToolkit)+'</p><h4 style="color:#C9A84C">Unfair Advantage</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(d.vault.unfairAdvantage)+'</p><button onclick="window.print()" style="background:#C9A84C;color:#000;font-weight:700;border:0;border-radius:8px;padding:10px 18px;cursor:pointer">Print / Save as PDF — it’s yours to keep</button></div>'}
+      if(d.vault){h+=vaultHTML(d.vault)}
       var wrong=d.results?d.results.filter(function(x){return !x.correct}):[];
       if(wrong.length){h+='<details style="margin-top:12px"><summary style="color:#C9A84C;cursor:pointer">Review the '+wrong.length+' you missed</summary>';wrong.forEach(function(x){h+='<p style="color:#bbb">Q'+(x.n+1)+': '+esc(x.why)+'</p>'});h+='</details>'}
       R.innerHTML=h;})
@@ -762,8 +769,7 @@ const POOL = [
   $('unGo').onclick=function(){$('unOut').innerHTML='<span style="color:#bbb">Checking…</span>';
     fetch(WORKER+'/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({serial:$('unSerial').value,name:$('unName').value})})
     .then(function(r){return r.json()}).then(function(d){if(d.error){$('unOut').innerHTML='<span style="color:#e77">'+esc(d.error)+'</span>';return}
-      var h='';Object.keys(d.vault).forEach(function(k){var v=d.vault[k];h+='<div style="border:1px solid rgba(201,168,76,.45);border-radius:10px;padding:16px;margin-top:10px"><h3 style="color:#C9A84C;margin:0 0 8px">'+esc(v.title)+'</h3><h4 style="color:#C9A84C">Launch Protocol</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(v.launchProtocol)+'</p><h4 style="color:#C9A84C">Synthesis Toolkit</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(v.synthesisToolkit)+'</p><h4 style="color:#C9A84C">Unfair Advantage</h4><p style="color:#ddd;white-space:pre-wrap">'+esc(v.unfairAdvantage)+'</p><button onclick="window.print()" style="background:#C9A84C;color:#000;font-weight:700;border:0;border-radius:8px;padding:10px 18px;cursor:pointer">Print / Save as PDF</button></div>'});
-      $('unOut').innerHTML=h;})
+      $('unOut').innerHTML=vaultHTML(d.vault);})
     .catch(function(){$('unOut').innerHTML='<span style="color:#e77">Could not reach the server.</span>'});};
 })();
 </script>
