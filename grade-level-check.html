@@ -1,0 +1,483 @@
+<!-- ============================================================================
+     GSU · THE GRADE LEVEL CHECK  ·  v1.0 · Aug 28 2026
+     Paste as an HTML Embed. Self-contained: no build step, no dependencies,
+     no backend.
+
+     WHAT THIS IS
+       A free, private, honest grade-level screener for reading and
+       mathematics, grades 4-8, plus a self-scored writing rubric.
+
+     WHAT THIS IS NOT — AND THE PAGE SAYS SO IN PLAIN LANGUAGE
+       Not a standardized test. Not norm-referenced. Not psychometrically
+       validated. It does NOT satisfy any state homeschool assessment
+       requirement. Those claims are made nowhere in this file and must
+       never be added to it.
+
+     PRIVACY BY DESIGN
+       Every answer is scored in the browser. Nothing is transmitted,
+       stored, or logged — no server call of any kind. This is deliberate:
+       an adult checking their own true reading level must be able to do it
+       without anyone knowing, including us. Do not "improve" this by
+       adding analytics to the quiz. The confidentiality IS the product.
+
+     NUMBERS — VERIFY BEFORE CHANGING
+       The page deliberately uses "roughly nine in ten" and "roughly three
+       in ten" rather than precise percentages. If you replace these with
+       exact NAEP figures, verify every one at nces.ed.gov first. The
+       parent-confidence figure comes from Learning Heroes / Gallup survey
+       work; cite it as such.
+
+     GAUNTLET STANDARD: no video, no drag interactions, keyboard reachable,
+     GSU black and #C9A84C gold.
+============================================================================ -->
+
+<div class="glc" data-glc>
+<style>
+.glc{background:#000;color:#F5F1E8;font-family:Georgia,'Times New Roman',serif;padding:0 0 72px}
+.glc *{box-sizing:border-box}
+.glc-wrap{max-width:860px;margin:0 auto;padding:0 24px}
+.glc-hero{padding:64px 0 44px;border-bottom:1px solid #2b2721}
+.glc-eyebrow{color:#C9A84C;font-size:.76rem;letter-spacing:.24em;text-transform:uppercase;margin:0 0 16px}
+.glc h1{font-size:2.6rem;line-height:1.14;margin:0 0 22px;font-weight:400;color:#F5F1E8}
+.glc h2{font-size:1.62rem;line-height:1.25;margin:52px 0 16px;font-weight:400;color:#C9A84C}
+.glc h3{font-size:1.12rem;margin:30px 0 10px;font-weight:400;color:#F5F1E8}
+.glc p{font-size:1.06rem;line-height:1.68;margin:0 0 18px;opacity:.86}
+.glc .lead{font-size:1.2rem;line-height:1.6;opacity:1}
+.glc strong{color:#C9A84C;font-weight:400}
+.glc-gap{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:34px 0 10px;border:1px solid #2b2721;border-radius:8px;overflow:hidden}
+.glc-gap div{padding:34px 26px;text-align:center}
+.glc-gap div:first-child{border-right:1px solid #2b2721}
+.glc-gap .n{font-size:3.1rem;line-height:1;color:#C9A84C;display:block;margin-bottom:12px}
+.glc-gap .l{font-size:.95rem;line-height:1.45;opacity:.8}
+.glc-note{font-size:.86rem;opacity:.5;line-height:1.55;margin:10px 0 0}
+.glc-rule{border:0;border-top:1px solid #2b2721;margin:52px 0}
+.glc-callout{border-left:2px solid #C9A84C;padding:4px 0 4px 22px;margin:28px 0;font-size:1.12rem;line-height:1.6}
+/* ---- the check ---- */
+.glc-doors{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:26px 0 8px}
+.glc-door{background:#0A0907;border:1px solid #2b2721;border-radius:8px;padding:24px 22px;text-align:left;
+  cursor:pointer;color:inherit;font-family:inherit;transition:border-color .18s,transform .18s}
+.glc-door:hover,.glc-door:focus-visible{border-color:#C9A84C;transform:translateY(-2px);outline:none}
+.glc-door:focus-visible{box-shadow:0 0 0 3px rgba(201,168,76,.45)}
+.glc-door b{display:block;color:#C9A84C;font-size:1.2rem;font-weight:400;margin-bottom:7px}
+.glc-door span{font-size:.9rem;opacity:.72;line-height:1.5}
+.glc-panel{display:none;background:#0A0907;border:1px solid #2b2721;border-radius:8px;padding:30px 28px;margin:26px 0}
+.glc-panel.on{display:block}
+.glc-prog{font-size:.8rem;letter-spacing:.1em;color:#C9A84C;margin:0 0 6px}
+.glc-bar{height:2px;background:#2b2721;margin:0 0 24px}
+.glc-bar i{display:block;height:2px;background:#C9A84C;width:0;transition:width .3s}
+.glc-passage{background:#000;border:1px solid #2b2721;border-radius:6px;padding:18px 20px;margin:0 0 18px;
+  font-size:1rem;line-height:1.68;opacity:.92}
+.glc-q{font-size:1.12rem;line-height:1.5;margin:0 0 18px}
+.glc-opts{display:flex;flex-direction:column;gap:9px}
+.glc-opts button{text-align:left;background:#000;border:1px solid #2b2721;border-radius:6px;
+  padding:13px 16px;color:#F5F1E8;font-family:inherit;font-size:1rem;line-height:1.45;cursor:pointer;
+  transition:border-color .15s,background .15s}
+.glc-opts button:hover:not(:disabled),.glc-opts button:focus-visible{border-color:#C9A84C;outline:none}
+.glc-opts button:focus-visible{box-shadow:0 0 0 3px rgba(201,168,76,.4)}
+.glc-opts button:disabled{opacity:.5;cursor:default}
+.glc-opts button.picked{border-color:#C9A84C;background:rgba(201,168,76,.09);opacity:1}
+.glc-next{margin-top:20px;background:#C9A84C;color:#0A0907;border:0;border-radius:6px;padding:12px 26px;
+  font-family:inherit;font-size:1rem;cursor:pointer;display:none}
+.glc-next.on{display:inline-block}
+.glc-next:focus-visible{outline:3px solid rgba(201,168,76,.6);outline-offset:3px}
+/* ---- result ---- */
+.glc-result{display:none}
+.glc-result.on{display:block}
+.glc-level{font-size:2.4rem;color:#C9A84C;margin:0 0 6px;line-height:1.15}
+.glc-sub{font-size:1rem;opacity:.72;margin:0 0 22px}
+.glc-band{border:1px solid #2b2721;border-radius:8px;padding:22px 24px;margin:20px 0}
+.glc-band h4{color:#C9A84C;font-size:1rem;font-weight:400;margin:0 0 10px}
+.glc-band ul{margin:0;padding-left:20px}
+.glc-band li{font-size:.98rem;line-height:1.62;margin-bottom:8px;opacity:.86}
+.glc-restart{background:transparent;border:1px solid #C9A84C;color:#C9A84C;border-radius:6px;
+  padding:11px 24px;font-family:inherit;font-size:.95rem;cursor:pointer;margin-top:8px}
+.glc-restart:hover{background:rgba(201,168,76,.12)}
+.glc-disc{margin-top:44px;padding-top:26px;border-top:1px solid #2b2721;font-size:.9rem;line-height:1.65;opacity:.62}
+.glc-disc b{color:#C9A84C;font-weight:400;opacity:1}
+@media(max-width:680px){
+  .glc h1{font-size:1.9rem}
+  .glc-gap{grid-template-columns:1fr}
+  .glc-gap div:first-child{border-right:0;border-bottom:1px solid #2b2721}
+  .glc-gap .n{font-size:2.5rem}
+}
+</style>
+
+<div class="glc-wrap">
+
+  <div class="glc-hero">
+    <p class="glc-eyebrow">The Grade Level Check</p>
+    <h1>Ninety percent of parents believe their child is on grade level.<br>About thirty percent are.</h1>
+    <p class="lead">Both numbers are measured. Neither is disputed. The distance between
+    them is the most consequential thing almost nobody has told you.</p>
+  </div>
+
+  <h2>How a report card can be honest and still be wrong</h2>
+
+  <p>Ask parents of an eighth grader how their child is doing, and <strong>roughly nine
+  in ten</strong> say at or above grade level. They are not guessing. They are reading
+  the report card, and the report card says B.</p>
+
+  <p>Then look at national testing, where students sit the same questions and the
+  results are compared against what an eighth grader is expected to know.
+  <strong>Roughly three in ten</strong> are proficient in reading. Roughly three in
+  ten in mathematics.</p>
+
+  <div class="glc-gap">
+    <div><span class="n">~9 in 10</span><span class="l">parents who believe their eighth grader is at or above grade level</span></div>
+    <div><span class="n">~3 in 10</span><span class="l">eighth graders who test proficient in reading or mathematics</span></div>
+  </div>
+  <p class="glc-note">Parent confidence from national survey research. Proficiency from
+  the National Assessment of Educational Progress, the federal testing programme
+  known as the Nation's Report Card.</p>
+
+  <p>Something in the middle is translating one into the other. Researchers have a
+  name for it: <strong>B-flation</strong>.</p>
+
+  <p>Middle school grades usually blend two different things. One is whether the
+  student understands the material. The other is whether the student turned work
+  in on time, behaved in class, participated in the group, and followed
+  directions. Both matter. But they get added together and reported as a single
+  letter, and the second one is much easier to satisfy than the first.</p>
+
+  <p>A student who is organised, polite, and punctual — and who cannot read a
+  chapter and tell you what it argued — will earn B's for years. Every one of
+  those B's is a true statement about compliance and a false impression about
+  mastery.</p>
+
+  <div class="glc-callout">The report card is not lying. It is answering a
+  different question than the one you asked.</div>
+
+  <h2>Why this matters more than it sounds</h2>
+
+  <p>A gap you know about is a problem. A gap you do not know about is a
+  trajectory. The student moves to the next grade, and the next, on material they
+  never secured — and each year the work assumes the previous year held.</p>
+
+  <p>By the time it surfaces, it surfaces as something else. A failed placement
+  exam. A course that has to be repeated. A career door that quietly does not
+  open. And the person on the receiving end usually concludes they are not smart,
+  because nobody ever showed them the actual measurement.</p>
+
+  <p>They were not failed by their intelligence. They were failed by a
+  measurement that never arrived.</p>
+
+  <hr class="glc-rule">
+
+  <h2>So here is the measurement. Free, and nobody is watching.</h2>
+
+  <p>This check gives you a straight answer about reading and mathematics: the
+  highest grade level at which the answers hold up. It takes about ten minutes
+  per subject.</p>
+
+  <p><strong>Everything happens inside your browser.</strong> No account, no email,
+  no sign-up, and no results sent anywhere — not to a school, not to us. There is
+  no server call in this page at all. That is deliberate, and it is not only for
+  children.</p>
+
+  <p>Plenty of adults carry a private suspicion that something was missed. They
+  can find out here, alone, and start closing it the same day — with nobody
+  informed and nothing on a record. If that is you, this was built for you too.</p>
+
+  <div class="glc-doors">
+    <button type="button" class="glc-door" data-start="reading">
+      <b>Reading</b><span>Fifteen questions, grade 4 through 8. Passages get harder until they stop holding.</span>
+    </button>
+    <button type="button" class="glc-door" data-start="math">
+      <b>Mathematics</b><span>Fifteen questions, grade 4 through 8. Same ladder, same honest stopping point.</span>
+    </button>
+    <button type="button" class="glc-door" data-start="writing">
+      <b>Writing</b><span>One prompt and a scoring guide you apply yourself. Writing cannot be graded by a machine honestly.</span>
+    </button>
+  </div>
+
+  <div class="glc-panel" id="glcPanel">
+    <p class="glc-prog" id="glcProg">Question 1 of 15</p>
+    <div class="glc-bar"><i id="glcFill"></i></div>
+    <div class="glc-passage" id="glcPassage" style="display:none"></div>
+    <p class="glc-q" id="glcQ"></p>
+    <div class="glc-opts" id="glcOpts"></div>
+    <button type="button" class="glc-next" id="glcNext">Next question</button>
+  </div>
+
+  <div class="glc-panel glc-result" id="glcResult"></div>
+
+  <div class="glc-disc">
+    <p><b>What this check is, and what it is not.</b> It is a screener. It is
+    not a standardized test: it is not norm-referenced against a national sample
+    and it has not been psychometrically validated. <b>It does not satisfy any
+    state's homeschool assessment requirement.</b> If your state requires annual
+    testing, use an approved provider — this tells you where you stand before
+    you get there, which is a different and useful thing.</p>
+    <p>A result here is a signal, not a diagnosis. A tired child, an unfamiliar
+    question format, or a bad ten minutes can move it. If the result surprises
+    you in either direction, take it again another day before you act on it.</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var root = document.currentScript.closest('[data-glc]');
+  if (!root || root.dataset.glcInit) return;
+  root.dataset.glcInit = '1';
+
+  /* Two separate ladders, THREE items at each grade from 4 to 8.
+     Three is the minimum that lets "2 of 3" mean anything; with one item
+     per grade a 60% threshold is a coin toss dressed as a measurement. */
+
+  var BANK = {
+    reading: [
+      {g:4,p:"Marisol's grandmother kept a tin of buttons on the shelf above the sewing machine. Most were plain, but three were carved bone, and those had come across an ocean in a coat pocket. Marisol was allowed to hold them if her hands were clean.",
+       q:"Why does the passage mention that the three buttons crossed an ocean in a coat pocket?",
+       o:["To explain why the tin sat on a high shelf","To suggest the buttons matter for reasons beyond how they look","To show that the grandmother enjoyed sewing","To describe how people travelled long ago"],a:1},
+      {g:4,p:"The tide goes out twice a day. When it does, the flat grey mud left behind is not empty. Clams breathe beneath it, crabs wait in the shallow channels, and birds arrive within minutes, because they have learned the schedule.",
+       q:"What does \u201cthey have learned the schedule\u201d most nearly mean?",
+       o:["The birds can read a clock","The birds follow other birds to the mud","The birds have come to expect the tide's timing","People feed the birds at set times"],a:2},
+      {g:4,p:"Dad said we could paint the shed any colour we agreed on. Theo wanted red. I wanted green. We argued until Mum pointed out that the shed had two sides facing the road and two facing the garden.",
+       q:"What is most likely to happen next?",
+       o:["They will paint the shed two colours","Dad will choose the colour himself","They will not paint the shed at all","Mum will paint it while they argue"],a:0},
+
+      {g:5,p:"The first bicycles had no pedals. A rider sat on the frame and pushed along the ground with both feet. They were mocked in the newspapers and ridden anyway, mostly by young men with money and time. Within thirty years the design had pedals, a chain, and two wheels of equal size \u2014 and it was no longer a curiosity but a way for ordinary people to travel further than they could walk.",
+       q:"Which sentence best states the main idea?",
+       o:["Early bicycles were mocked by newspapers","Bicycles began as a hobby for wealthy young men","A ridiculed invention developed into practical transport for ordinary people","The chain was the most important part of the bicycle"],a:2},
+      {g:5,p:"Nobody on the crew liked the new checklist. It added nine minutes to every shutdown and it asked questions that felt obvious. Then in March a valve was found closed that everyone had assumed was open, and the checklist stopped being a nuisance.",
+       q:"How does the writer signal the change in the crew's attitude?",
+       o:["By stating that the crew apologised","By describing an event that proved the checklist's value","By explaining who wrote the checklist","By comparing March to other months"],a:1},
+      {g:5,p:"Cold air holds less moisture than warm air. This is why a glass of iced tea sweats on a summer afternoon: the air touching the cold glass is chilled, can no longer hold what it carried, and gives it up onto the surface. The water on the outside of the glass was never inside it.",
+       q:"According to the passage, where does the water on the glass come from?",
+       o:["It leaks through the glass","It condenses out of the surrounding air","It is left over from pouring the tea","It rises from the table"],a:1},
+
+      {g:6,p:"Every winter the town argues about the ice rink. It costs money the budget does not comfortably have. It serves perhaps two hundred children. And every year the council votes to keep it, because the alternative \u2014 explaining to those two hundred families why the rink closed \u2014 is a conversation no councillor wants to have in an election year.",
+       q:"What does the passage suggest about the council's reasoning?",
+       o:["The council believes the rink is the best use of the money","The decision is driven more by political cost than by budget analysis","Two hundred families have pressured the council","The rink is cheaper than councillors admit"],a:1},
+      {g:6,p:"Advertisement: \u201cFour out of five dentists recommend Brightsmile.\u201d Below, in small type: \u201cSurvey of 25 dentists, conducted by Brightsmile Laboratories.\u201d",
+       q:"What is the most important weakness in this claim?",
+       o:["Twenty-five is a small number and the surveyor sells the product","Dentists are not qualified to recommend toothpaste","The small type is difficult to read","Four out of five is not a large majority"],a:0},
+      {g:6,p:"The river was not always where it is now. Old maps put it half a mile east, running past what is today a supermarket car park. Rivers move. They cut the outside of each bend a little further every flood, and over centuries the whole channel walks sideways across its valley.",
+       q:"What is the author's main purpose?",
+       o:["To criticise the building of the supermarket","To explain a natural process using a local example","To argue that old maps are unreliable","To describe the damage caused by floods"],a:1},
+
+      {g:7,p:"Supporters of the new bridge say it will cut the commute by twelve minutes. That figure comes from the developer's own traffic study, which assumed the current volume of cars. Critics point out that new bridges tend to attract additional drivers, and that within a few years the saving may disappear entirely.",
+       q:"What is the strongest reason to treat the twelve-minute figure with caution?",
+       o:["Twelve minutes is not a large saving","It was produced by a party with an interest in the outcome","Critics disagree with the supporters","Bridges are expensive to build"],a:1},
+      {g:7,p:"When the mill closed, the town did not empty all at once. The young left first, then the shops that had served them, then the school lost a year group and never got it back. What remained was not a smaller version of the town. It was a different town wearing the same street plan.",
+       q:"What does the final sentence chiefly convey?",
+       o:["The town's population fell sharply","The town's buildings were altered","The town changed in kind, not merely in size","The street plan should have been redesigned"],a:2},
+      {g:7,p:"Two accounts of the same protest. The first: \u201cHundreds gathered peacefully to voice long-standing concerns.\u201d The second: \u201cA crowd blocked the high street for three hours.\u201d Both were written by reporters who were present.",
+       q:"What best explains how both accounts can be accurate?",
+       o:["One reporter arrived later than the other","Each selects true details that support a different impression","One of the reporters is lying","The protest changed character over three hours"],a:1},
+
+      {g:8,p:"It is often said that the printing press caused the Reformation. But presses had been operating for decades before Luther, printing mostly what the Church already approved. What changed was not the machine. What changed was that a dispute arose which enough people cared about enough to pay for \u2014 and a technology that had been quietly available suddenly had something to carry.",
+       q:"Which statement best captures the author's argument?",
+       o:["The printing press mattered less than historians claim","A technology's effects depend on the conditions it meets, not only on what it can do","Luther would have succeeded without the printing press","The Church controlled printing until the Reformation"],a:1},
+      {g:8,p:"A study finds that people who eat breakfast weigh less than those who skip it. A headline reports: \u201cSkipping breakfast makes you gain weight.\u201d The study measured what people ate and what they weighed on the same day.",
+       q:"What is the central flaw in the headline?",
+       o:["The study was too small to publish","It treats a correlation as though it established a cause","Breakfast has no effect on weight","The study measured the wrong meal"],a:1},
+      {g:8,p:"He writes that the reforms were introduced \u201cwith the usual fanfare, and the usual results.\u201d",
+       q:"What does this phrasing chiefly accomplish?",
+       o:["It praises the thoroughness of the reforms","It conveys scepticism by implying a familiar pattern of failure","It states that the reforms were widely publicised","It compares these reforms to reforms abroad"],a:1}
+    ],
+
+    math: [
+      {g:4,q:"A recipe needs 3/4 cup of milk. Which of these is the same amount?",
+       o:["6/8 cup","3/8 cup","4/3 cup","1/4 cup"],a:0},
+      {g:4,q:"A rectangular garden is 12 feet long and 8 feet wide. What is its area?",
+       o:["96 square feet","40 square feet","20 square feet","192 square feet"],a:0},
+      {g:4,q:"There are 6 rows of chairs with 14 chairs in each row. How many chairs are there?",
+       o:["84","74","20","86"],a:0},
+
+      {g:5,q:"Which number is largest?",
+       o:["0.7","0.68","0.709","0.6999"],a:2},
+      {g:5,q:"What is 2/3 + 1/6 ?",
+       o:["5/6","3/9","1/2","3/6"],a:0},
+      {g:5,q:"A box is 4 cm by 3 cm by 5 cm. What is its volume?",
+       o:["60 cubic cm","12 cubic cm","47 cubic cm","24 cubic cm"],a:0},
+
+      {g:6,q:"A shirt is marked down 20% from $35. What is the sale price?",
+       o:["$28.00","$15.00","$30.00","$7.00"],a:0},
+      {g:6,q:"The ratio of dogs to cats at a shelter is 3:5. If there are 40 animals in total, how many are dogs?",
+       o:["15","24","8","12"],a:0},
+      {g:6,q:"What is the value of \u22127 + 12 \u2212 (\u22123) ?",
+       o:["8","2","\u221222","\u22128"],a:0},
+
+      {g:7,q:"If 4 workers can paint a fence in 6 hours, how long would 3 workers take at the same rate?",
+       o:["8 hours","4.5 hours","7 hours","12 hours"],a:0},
+      {g:7,q:"Solve for x:  3x \u2212 7 = 2x + 5",
+       o:["x = 12","x = 2","x = \u22122","x = 6"],a:0},
+      {g:7,q:"A bag holds 3 red and 5 blue marbles. One is drawn at random. What is the probability it is red?",
+       o:["3/8","3/5","5/8","1/3"],a:0},
+
+      {g:8,q:"A line passes through (2, 3) and (6, 11). What is its slope?",
+       o:["2","4","1/2","8"],a:0},
+      {g:8,q:"A right triangle has legs of 9 and 12. What is the length of the hypotenuse?",
+       o:["15","21","144","10.5"],a:0},
+      {g:8,q:"Simplify:  (3x\u00b2)(4x\u00b3)",
+       o:["12x\u2075","12x\u2076","7x\u2075","12x"],a:0}
+    ]
+  };
+
+  var panel  = document.getElementById('glcPanel');
+  var result = document.getElementById('glcResult');
+  var progEl = document.getElementById('glcProg');
+  var fillEl = document.getElementById('glcFill');
+  var passEl = document.getElementById('glcPassage');
+  var qEl    = document.getElementById('glcQ');
+  var optsEl = document.getElementById('glcOpts');
+  var nextEl = document.getElementById('glcNext');
+
+  var items = [], idx = 0, answered = false, correctByGrade = {}, subject = '';
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1));
+    var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+  root.querySelectorAll('[data-start]').forEach(function(b){
+    b.addEventListener('click', function(){ start(b.getAttribute('data-start')); });
+  });
+
+  function start(which){
+    subject = which;
+    result.classList.remove('on');
+    if (which === 'writing'){ showWriting(); return; }
+    items = BANK[which];
+    idx = 0; correctByGrade = {};
+    panel.classList.add('on');
+    render();
+    panel.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function render(){
+    answered = false;
+    var it = items[idx];
+    progEl.textContent = 'Question ' + (idx+1) + ' of ' + items.length +
+                         '  \u00b7  grade ' + it.g + ' level';
+    fillEl.style.width = ((idx+1)/items.length*100) + '%';
+    if (it.p){ passEl.style.display='block'; passEl.textContent = it.p; }
+    else { passEl.style.display='none'; }
+    qEl.textContent = it.q;
+    optsEl.innerHTML = '';
+    nextEl.classList.remove('on');
+    var correctText = it.o[it.a];
+    shuffle(it.o).forEach(function(opt){
+      var b = document.createElement('button');
+      b.type='button'; b.textContent = opt;
+      b.addEventListener('click', function(){ choose(opt, correctText, it.g, b); });
+      optsEl.appendChild(b);
+    });
+  }
+
+  function choose(picked, correctText, grade, btn){
+    if (answered) return;
+    answered = true;
+    optsEl.querySelectorAll('button').forEach(function(b){ b.disabled = true; });
+    btn.classList.add('picked');
+    if (!correctByGrade[grade]) correctByGrade[grade] = {right:0, total:0};
+    correctByGrade[grade].total++;
+    if (picked === correctText) correctByGrade[grade].right++;
+    // No right/wrong shown mid-check. Seeing a wrong answer early changes
+    // how a person answers the rest, which ruins the measurement.
+    nextEl.classList.add('on');
+  }
+
+  nextEl.addEventListener('click', function(){
+    idx++;
+    if (idx >= items.length) finish();
+    else { render(); panel.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
+
+  function finish(){
+    panel.classList.remove('on');
+    var grades = Object.keys(correctByGrade).map(Number).sort(function(a,b){return a-b;});
+    var level = null, ceiling = null;
+    for (var i=0;i<grades.length;i++){
+      var g = grades[i], r = correctByGrade[g];
+      var held = (r.right / r.total) >= 0.6;
+      if (held) level = g;
+      else { ceiling = g; break; }
+    }
+    var total = 0, right = 0;
+    grades.forEach(function(g){ total += correctByGrade[g].total; right += correctByGrade[g].right; });
+
+    var name = subject === 'math' ? 'mathematics' : 'reading';
+    var html = '';
+
+    if (level === null){
+      html += '<p class="glc-level">Below grade 4 on this check</p>';
+      html += '<p class="glc-sub">' + right + ' of ' + total + ' correct in ' + esc(name) + '.</p>';
+      html += '<p>This is the most useful result on the page, and the least welcome. ' +
+              'It means the foundation is where the work belongs \u2014 and foundation work ' +
+              'is the fastest work there is, because everything above it stops being confusing ' +
+              'once it holds.</p>';
+    } else if (level >= 8){
+      html += '<p class="glc-level">Grade 8 and holding</p>';
+      html += '<p class="glc-sub">' + right + ' of ' + total + ' correct in ' + esc(name) + '.</p>';
+      html += '<p>Every level in this check held, including the last one. That is the ' +
+              'top of what this screener measures \u2014 it does not mean there is nothing ' +
+              'further, only that this instrument has run out of ladder.</p>';
+    } else {
+      html += '<p class="glc-level">Grade ' + level + '</p>';
+      html += '<p class="glc-sub">' + right + ' of ' + total + ' correct in ' + esc(name) +
+              '. Held through grade ' + level +
+              (ceiling ? '; grade ' + ceiling + ' did not hold.' : '.') + '</p>';
+      html += '<p>That is the honest reading. Not a verdict on ability \u2014 a description ' +
+              'of where the material currently stands, which is the one thing you cannot ' +
+              'act on until you know it.</p>';
+    }
+
+    html += '<div class="glc-band"><h4>What to do with this</h4><ul>' +
+      '<li>Start at the level that held, not the one you hoped for. Work that begins above the gap widens it.</li>' +
+      '<li>Take it again in a week before making a big decision. One sitting is a signal, not a measurement.</li>' +
+      '<li>GENO will teach any of this, free, at any hour, in eighty-three languages, and will not get impatient at the fourth time you ask.</li>' +
+      '<li>If you are an adult and this stung: it is information, not a verdict, and it arrived while there is still time to use it.</li>' +
+      '</ul></div>';
+
+    html += '<button type="button" class="glc-restart" id="glcAgain">Take another check</button>';
+    result.innerHTML = html;
+    result.classList.add('on');
+    document.getElementById('glcAgain').addEventListener('click', function(){
+      result.classList.remove('on');
+      root.querySelector('.glc-doors').scrollIntoView({behavior:'smooth', block:'center'});
+    });
+    result.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function showWriting(){
+    panel.classList.remove('on');
+    var html = '';
+    html += '<p class="glc-level">Writing</p>';
+    html += '<p class="glc-sub">Machine scoring of writing is guesswork dressed as measurement. This is scored by a person \u2014 you.</p>';
+    html += '<div class="glc-band"><h4>The prompt</h4><ul><li>Think of a rule at your school, your work, or your home that you believe should change. In four paragraphs or more, argue for the change. Name the strongest objection to your position and answer it. Take thirty minutes. Write it by hand or on a screen, but write it in one sitting.</li></ul></div>';
+    html += '<div class="glc-band"><h4>Score it honestly \u2014 one point each</h4><ul>' +
+      '<li>The position is stated plainly and does not change partway through</li>' +
+      '<li>At least two distinct reasons are given, not one reason twice</li>' +
+      '<li>Each reason is supported by something specific \u2014 an example, a consequence, a fact</li>' +
+      '<li>The strongest objection is stated fairly, in the form its holder would recognise</li>' +
+      '<li>The objection is answered, not merely dismissed</li>' +
+      '<li>Paragraphs each do one job and follow in an order that could not be shuffled</li>' +
+      '<li>Sentence boundaries are correct throughout \u2014 no run-ons, no fragments</li>' +
+      '<li>A reader could restate the argument accurately after one read</li>' +
+      '</ul></div>';
+    html += '<div class="glc-band"><h4>Reading the score</h4><ul>' +
+      '<li><b>7\u20138</b> \u2014 solid grade 8 writing. The argument would survive an unfriendly reader.</li>' +
+      '<li><b>5\u20136</b> \u2014 roughly grade 6\u20137. Usually the objection is being dismissed rather than answered.</li>' +
+      '<li><b>3\u20134</b> \u2014 roughly grade 4\u20135. Usually the reasons are there but the support is not.</li>' +
+      '<li><b>0\u20132</b> \u2014 the foundation is the place to work, and it is very fixable.</li>' +
+      '</ul></div>';
+    html += '<p style="opacity:.72;font-size:.96rem;line-height:1.62">Score it yourself first. ' +
+            'Then, if you want a second opinion, paste the piece to GENO and ask it to score ' +
+            'the same eight points and say where it disagrees with you. Disagreement between ' +
+            'the two scores is the most useful thing you will get out of this.</p>';
+    html += '<button type="button" class="glc-restart" id="glcAgain">Take another check</button>';
+    result.innerHTML = html;
+    result.classList.add('on');
+    document.getElementById('glcAgain').addEventListener('click', function(){
+      result.classList.remove('on');
+      root.querySelector('.glc-doors').scrollIntoView({behavior:'smooth', block:'center'});
+    });
+    result.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+})();
+</script>
+</div>
