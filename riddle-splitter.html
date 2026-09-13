@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Riddle Splitter | GSU</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#F5F1E8;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;min-height:100vh;padding:20px}
+.wrap{max-width:800px;margin:0 auto}
+h1{font-family:Georgia,serif;color:#C9A84C;font-size:clamp(28px,5vw,44px);line-height:1.1;text-align:center;margin-bottom:6px}
+.tag{text-align:center;color:#F5F1E8;opacity:.75;font-size:15px;margin-bottom:22px}
+.bar{display:flex;justify-content:space-between;gap:10px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.bar b{color:#C9A84C;display:block;font-family:Georgia,serif;font-size:20px;letter-spacing:0;text-transform:none}
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.28);border-radius:14px;padding:28px;margin-bottom:16px}
+.step{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#C9A84C;margin-bottom:14px}
+.q{font-family:Georgia,serif;font-size:clamp(21px,3.4vw,30px);line-height:1.3;margin-bottom:22px}
+button.opt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.3);color:#F5F1E8;padding:15px 18px;border-radius:10px;margin-bottom:10px;font-size:16px;cursor:pointer;font-family:inherit;transition:.15s}
+button.opt:hover:not(:disabled){border-color:#C9A84C;background:rgba(201,168,76,.1)}
+button.opt:disabled{cursor:default;opacity:.85}
+button.opt.right{border-color:#1A8B7F;background:rgba(26,139,127,.18)}
+button.opt.wrong{border-color:#8B1A1A;background:rgba(139,26,26,.18)}
+.geno{border-left:3px solid #C9A84C;padding:14px 0 14px 18px;margin:18px 0;font-size:15.5px;opacity:.95}
+.geno b{color:#C9A84C}
+.next{background:#C9A84C;color:#000;font-weight:700;border:none;padding:15px 32px;border-radius:10px;font-size:16px;cursor:pointer;font-family:inherit;display:block;margin:20px auto 0}
+.hide{display:none}
+.final{text-align:center;padding:36px 20px}
+.badge{font-family:Georgia,serif;font-size:clamp(32px,6vw,52px);color:#C9A84C;margin:10px 0}
+.rule{font-family:Georgia,serif;color:#C9A84C;font-size:18px;text-align:center;margin:26px 0 10px;line-height:1.4}
+a{color:#C9A84C}
+.foot{text-align:center;font-size:13px;opacity:.6;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The Riddle Splitter</h1>
+  <p class="tag">Some questions are impossible. Most are just unclear. Learn to tell the difference.</p>
+
+  <div class="bar">
+    <div>Round <b id="rnum">1 / 12</b></div>
+    <div>Score <b id="score">0</b></div>
+    <div>Streak <b id="streak">0</b></div>
+  </div>
+
+  <div id="game"></div>
+  <div class="rule" id="rule">Ask what the question means before you answer it.</div>
+  <p class="foot">Global Sovereign University &middot; Free forever &middot; <a href="https://globalsovereignuniversity.org/make-24">Play Make 24</a></p>
+</div>
+
+<script>
+const R=[
+{q:"Which came first, the chicken or the egg?",split:true,word:"egg",
+ words:["chicken","egg","first","came"],
+ m1:{t:'"Egg" means a CHICKEN egg',o:["The chicken came first","The egg came first"],a:0,
+     why:"If an egg only counts once a chicken lays it, a chicken had to exist first to lay it."},
+ m2:{t:'"Egg" means ANY egg at all',o:["The chicken came first","The egg came first"],a:1,
+     why:"Fish and dinosaurs laid eggs for hundreds of millions of years before any chicken existed."},
+ geno:"One little word was hiding two meanings. Split it, and both answers are easy."},
+
+{q:"If a tree falls in a forest and nobody hears it, does it make a sound?",split:true,word:"sound",
+ words:["tree","forest","sound","falls"],
+ m1:{t:'"Sound" means air moving in waves',o:["Yes","No"],a:0,
+     why:"The air moves whether or not anyone is standing there. That is physics."},
+ m2:{t:'"Sound" means something a person hears',o:["Yes","No"],a:1,
+     why:"If hearing is part of the definition, then with nobody there, no hearing happens."},
+ geno:"People have argued about this for two hundred years. They were arguing about a definition."},
+
+{q:"Is a tomato a fruit?",split:true,word:"fruit",
+ words:["tomato","fruit","is","a"],
+ m1:{t:'"Fruit" means what a botanist means',o:["Yes, it is a fruit","No, it is a vegetable"],a:0,
+     why:"To a botanist, a fruit grows from a flower and carries seeds. A tomato does both."},
+ m2:{t:'"Fruit" means what a cook means',o:["Yes, it is a fruit","No, it is a vegetable"],a:1,
+     why:"In a kitchen, fruit is sweet and goes in pudding. Nobody puts tomato on ice cream."},
+ geno:"Both people are right. They are just not answering the same question."},
+
+{q:"Can you divide by zero?",split:false,
+ o:["No, and that is settled","Yes, if you define it carefully","It depends what you mean"],a:0,
+ why:"This one is not a word trick. Dividing by zero breaks arithmetic itself, so it is left undefined. Some questions really do have a firm answer.",
+ geno:"Careful. Not every hard question is hiding a word. This one is simply settled."},
+
+{q:"How many sides does a circle have?",split:true,word:"side",
+ words:["circle","side","many","has"],
+ m1:{t:'"Side" means a straight edge',o:["Zero","One"],a:0,
+     why:"A circle has no straight edges at all, so by that meaning the answer is zero."},
+ m2:{t:'"Side" means a continuous boundary',o:["Zero","One"],a:1,
+     why:"Trace the outside without lifting your finger. You never stop. That is one side."},
+ geno:"Two teachers can give different answers and neither is wrong. Ask which one they mean."},
+
+{q:"Is a whale a fish?",split:false,
+ o:["No, it is a mammal","Yes, it lives in the sea","It depends what you mean"],a:0,
+ why:"Whales breathe air, have warm blood and feed their young milk. That is a mammal, and it is not a matter of opinion.",
+ geno:"Settled, not unclear. Scientists agreed on this one a long time ago."},
+
+{q:"Is a hot dog a sandwich?",split:true,word:"sandwich",
+ words:["hot dog","sandwich","is","a"],
+ m1:{t:'"Sandwich" means filling between bread',o:["Yes","No"],a:0,
+     why:"A sausage sits inside a split bread roll. By that definition it qualifies."},
+ m2:{t:'"Sandwich" means two separate slices',o:["Yes","No"],a:1,
+     why:"A hot dog bun is one piece of bread hinged at the back, not two slices."},
+ geno:"Families have fallen out over this. Now you can end the argument in one move."},
+
+{q:"Which is heavier, a pound of feathers or a pound of bricks?",split:false,
+ o:["They weigh exactly the same","The bricks","The feathers"],a:0,
+ why:"A pound is a pound. The bricks LOOK heavier because they are smaller, but the question asked about weight, and it gave you the weight.",
+ geno:"This one tries to trick you with a picture instead of a word. Read what was actually asked."},
+
+{q:"Does a straw have one hole or two?",split:true,word:"hole",
+ words:["straw","hole","two","one"],
+ m1:{t:'"Hole" means an opening you can see',o:["Two","One"],a:0,
+     why:"Look at a straw. There is an opening at the top and an opening at the bottom. You can see two."},
+ m2:{t:'"Hole" means a tunnel through an object',o:["Two","One"],a:1,
+     why:"It is one tunnel with two ends, the same way a sock has one hole and not two."},
+ geno:"Mathematicians say one. Most people say two. Both know exactly what they mean."},
+
+{q:"Is zero a number?",split:true,word:"number",
+ words:["zero","number","is","a"],
+ m1:{t:'"Number" means something you count with',o:["No","Yes"],a:0,
+     why:"You cannot count zero sheep. Counting starts at one, which is why zero took so long to be invented."},
+ m2:{t:'"Number" means a position on a line',o:["No","Yes"],a:1,
+     why:"On a number line zero sits right in the middle, between minus one and one. It is absolutely a number."},
+ geno:"Whole civilisations managed without zero for thousands of years, because of that first meaning."},
+
+{q:"Is the sun a star?",split:false,
+ o:["Yes, and that is settled","No, stars only come out at night","It depends what you mean"],a:0,
+ why:"The sun is a star. It looks different only because it is far closer than the others. Distance changed how it looks, not what it is.",
+ geno:"Settled again. You are getting good at spotting these."},
+
+{q:"Is cereal a soup?",split:true,word:"soup",
+ words:["cereal","soup","is","a"],
+ m1:{t:'"Soup" means solid bits in liquid in a bowl',o:["Yes","No"],a:0,
+     why:"Solid pieces, liquid around them, eaten from a bowl with a spoon. It fits."},
+ m2:{t:'"Soup" means a savoury dish, usually warm',o:["Yes","No"],a:1,
+     why:"Soup is cooked, savoury and usually hot. Cold sweet cereal is none of those."},
+ geno:"Silly question, serious skill. You just settled it in under a minute."}
+];
+
+let i=0,score=0,streak=0,best=0;
+const G=document.getElementById('game');
+const up=()=>{document.getElementById('rnum').textContent=(i+1)+" / "+R.length;
+  document.getElementById('score').textContent=score;
+  document.getElementById('streak').textContent=streak;};
+
+function opts(list,onPick){
+  return list.map((t,k)=>`<button class="opt" data-k="${k}">${t}</button>`).join('');
+}
+function wire(fn){[...G.querySelectorAll('.opt')].forEach(b=>b.onclick=()=>fn(+b.dataset.k,b));}
+function lock(right,btn){
+  [...G.querySelectorAll('.opt')].forEach(b=>b.disabled=true);
+  btn.classList.add(right?'right':'wrong');
+}
+
+function round(){
+  if(i>=R.length) return end();
+  up();
+  const r=R[i];
+  G.innerHTML=`<div class="card">
+    <div class="step">Step 1 of ${r.split?3:2} &middot; What kind of question is this?</div>
+    <div class="q">${r.q}</div>
+    ${opts(["A word is hiding two meanings. Split it.","It has one firm answer. Just answer it."])}
+  </div>`;
+  wire((k,btn)=>{
+    const correct = r.split ? k===0 : k===1;
+    lock(correct,btn);
+    score += correct?10:0; streak = correct?streak+1:0; best=Math.max(best,streak); up();
+    const note = correct
+      ? `<div class="geno"><b>Right.</b> ${r.split?"Something in this sentence means two things at once.":"No word trick here. This one has a real answer."}</div>`
+      : `<div class="geno"><b>Not this time.</b> ${r.split?"There IS a word hiding two meanings. Look again in a second.":"Careful. Not every hard question is a word trick. Some are simply settled."}</div>`;
+    G.insertAdjacentHTML('beforeend',note);
+    G.insertAdjacentHTML('beforeend',`<button class="next">Continue</button>`);
+    G.querySelector('.next').onclick = r.split ? pickWord : firm;
+  });
+}
+
+function pickWord(){
+  const r=R[i];
+  G.innerHTML=`<div class="card">
+    <div class="step">Step 2 of 3 &middot; Which word is hiding?</div>
+    <div class="q">${r.q}</div>
+    ${opts(r.words)}
+  </div>`;
+  wire((k,btn)=>{
+    const ok=r.words[k]===r.word;
+    lock(ok,btn); score+=ok?10:0; streak=ok?streak+1:0; best=Math.max(best,streak); up();
+    G.insertAdjacentHTML('beforeend',`<div class="geno"><b>${ok?'Found it.':'The word was "'+r.word+'".'}</b> Now split it and answer both ways.</div><button class="next">Split it</button>`);
+    G.querySelector('.next').onclick=()=>meaning(1);
+  });
+}
+
+function meaning(n){
+  const r=R[i], m=n===1?r.m1:r.m2;
+  G.innerHTML=`<div class="card">
+    <div class="step">Step 3 of 3 &middot; Meaning ${n} of 2</div>
+    <div class="q">${r.q}</div>
+    <div class="geno"><b>If</b> ${m.t}&hellip;</div>
+    ${opts(m.o)}
+  </div>`;
+  wire((k,btn)=>{
+    const ok=k===m.a;
+    lock(ok,btn); score+=ok?15:0; streak=ok?streak+1:0; best=Math.max(best,streak); up();
+    [...G.querySelectorAll('.opt')][m.a].classList.add('right');
+    G.insertAdjacentHTML('beforeend',`<div class="geno">${m.why}</div>`);
+    if(n===1){
+      G.insertAdjacentHTML('beforeend',`<button class="next">Now the other meaning</button>`);
+      G.querySelector('.next').onclick=()=>meaning(2);
+    }else{
+      G.insertAdjacentHTML('beforeend',`<div class="geno"><b>GENO says:</b> ${r.geno}</div><button class="next">Next riddle</button>`);
+      G.querySelector('.next').onclick=()=>{i++;round();};
+    }
+  });
+}
+
+function firm(){
+  const r=R[i];
+  G.innerHTML=`<div class="card">
+    <div class="step">Step 2 of 2 &middot; Answer it</div>
+    <div class="q">${r.q}</div>
+    ${opts(r.o)}
+  </div>`;
+  wire((k,btn)=>{
+    const ok=k===r.a;
+    lock(ok,btn); score+=ok?20:0; streak=ok?streak+1:0; best=Math.max(best,streak); up();
+    [...G.querySelectorAll('.opt')][r.a].classList.add('right');
+    G.insertAdjacentHTML('beforeend',`<div class="geno">${r.why}</div><div class="geno"><b>GENO says:</b> ${r.geno}</div><button class="next">Next riddle</button>`);
+    G.querySelector('.next').onclick=()=>{i++;round();};
+  });
+}
+
+function end(){
+  const max=R.reduce((s,r)=>s+10+(r.split?25:20),0);
+  const pct=Math.round(score/max*100);
+  let b,msg;
+  if(pct>=90){b="Platinum";msg="You did not just answer the riddles. You took them apart.";}
+  else if(pct>=75){b="Gold";msg="You are finding the hidden word almost every time.";}
+  else if(pct>=55){b="Silver";msg="Good. Watch the settled ones - they are the ones that catch people.";}
+  else {b="Bronze";msg="A start. Play again. The riddles do not change, but you will.";}
+  document.getElementById('rule').textContent="A Sovereign Thinker asks what the question means before answering it.";
+  G.innerHTML=`<div class="card final">
+    <div class="step">Finished</div>
+    <div class="badge">${b}</div>
+    <p style="font-size:18px;margin-bottom:8px">${score} of ${max} points &middot; longest streak ${best}</p>
+    <p style="opacity:.85;max-width:520px;margin:14px auto 0">${msg}</p>
+    <div class="geno" style="text-align:left;max-width:560px;margin:26px auto">
+      <b>Remember the two kinds.</b> Most impossible-sounding questions are hiding a word that means
+      two things. A few are simply settled, and no amount of arguing changes them. Telling one from
+      the other is worth more than being clever.
+    </div>
+    <button class="next" onclick="i=0;score=0;streak=0;best=0;document.getElementById('rule').textContent='Ask what the question means before you answer it.';round();">Play again</button>
+  </div>`;
+  up();
+}
+round();
+</script>
+</body>
+</html>
