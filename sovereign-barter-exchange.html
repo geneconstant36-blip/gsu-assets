@@ -19,7 +19,7 @@
 {"@type":"Question","name":"How does matching actually work?","acceptedAnswer":{"@type":"Answer","text":"When you post or search, the page compares the words in your TEACH and SEEK fields against every open offer on the board. A perfect match means your offer overlaps their seek AND their offer overlaps your seek — the ancient problem economists call the double coincidence of wants, solved by a shared board the whole world can read. Half matches are shown too, because a generous teacher is worth meeting even before the trade balances."}},
 {"@type":"Question","name":"Who may use the Exchange?","acceptedAnswer":{"@type":"Answer","text":"Adults only — you must be at least 18 years old, or older if the age of majority where you live is higher, to post or respond. No exceptions. GSU's lessons, games, and certifications serve learners of every age, but a marketplace that connects strangers is adult territory. Posting requires attesting your age and agreeing to the Rules of the Floor, and any offer that appears to involve a minor should be reported immediately."}},
 {"@type":"Question","name":"What are the Rules of the Floor?","acceptedAnswer":{"@type":"Answer","text":"Twelve plain laws printed on the page: consenting adults only; anything lawful and only what is lawful; barter only, never money in any form; ten forbidden stalls including weapons, drugs, alcohol, and anything intimate; licensed work stays licensed; barter income is taxable in many countries and yours to report; local laws travel with you; respect every trader; meet in public and ship only after terms are agreed; no recruiting or harvesting; tell the truth about goods and skills; report what is wrong. GSU is the bulletin board, not a party to any exchange. Breaking the Rules gets an offer removed."}},
-{"@type":"Question","name":"Is it safe? Does GSU verify people?","acceptedAnswer":{"@type":"Answer","text":"Be clear-eyed: GSU does not verify identities, vet participants, or supervise exchanges — this is a public bulletin board, and you deal with the people you meet here at your own judgment. Use an alias, share only contact channels you are comfortable making public, meet virtually first, and never send money or goods — the Exchange trades hours of teaching, nothing else. Every offer carries a report link, and flagged offers are reviewed and removed."}},
+{"@type":"Question","name":"Is it safe? Does GSU verify people?","acceptedAnswer":{"@type":"Answer","text":"Be clear-eyed: GSU does not verify identities, vet participants, or supervise exchanges — this is a public bulletin board, and you deal with the people you meet here at your own judgment. Use an alias, share only contact channels you are comfortable making public, meet virtually first, and never send money or goods — the Exchange trades hours of teaching, nothing else. Every offer carries a report link. A reported offer is hidden from the floor automatically within minutes, and GSU reviews it before it can ever return."}},
 {"@type":"Question","name":"How do we keep score once we connect?","acceptedAnswer":{"@type":"Answer","text":"The Trustline Ledger — GSU's companion tool at my-quid-pro-quo.com — exists exactly for this. When you and your match begin trading hours, record them on a Trustline so both sides can see the balance of the deal. An hour taught is an hour earned; the ledger keeps the handshake honest."}}
 ]}
 </script>
@@ -169,7 +169,7 @@ a{color:var(--gold)}
   <h3 class="gold">What are the Rules of the Floor?</h3>
   <p>Twelve plain laws printed above the posting form: consenting adults only; anything lawful and only what is lawful; barter only, never money; ten forbidden stalls including weapons, drugs, and anything intimate; licensed work stays licensed; taxes are real and yours; local laws travel with you; respect every trader; meet and ship wisely; no hunting; tell the truth; and report what is wrong — GSU is the board, never the deal. Posting is agreeing; breaking them removes the offer.</p>
   <h3 class="gold">Is it safe? Does GSU verify anyone?</h3>
-  <p>Be clear-eyed: GSU does not verify identities, vet participants, or supervise exchanges — you deal with people you meet here at your own judgment. Use an alias, share only contact channels you accept being public, meet in public when goods change hands, and never send money — a money request is the universal mark of a scam. Every offer carries a report link; flagged offers are reviewed and removed.</p>
+  <p>Be clear-eyed: GSU does not verify identities, vet participants, or supervise exchanges — you deal with people you meet here at your own judgment. Use an alias, share only contact channels you accept being public, meet in public when goods change hands, and never send money — a money request is the universal mark of a scam. Every offer carries a report link. A reported offer is hidden from the floor automatically within minutes, and GSU reviews it before it can ever return.</p>
   <h3 class="gold">Can I prove my skills to trade partners?</h3>
   <p>Yes — attach your GSU certificate serial numbers when you post, and each one is verified live against the public registry and displayed on your offer with a VERIFIED badge showing the subject and tier. No trader can fake it, because the badge only appears if the registry itself confirms the serial. Every credential is earned free through real exams at the <a href="https://www.globalsovereignuniversity.org/certification">Certification Hub</a>, and your full record assembles at the <a href="sovereign-transcript.html">Sovereign Transcript</a>.</p>
   <h3 class="gold">How do we keep score?</h3>
@@ -185,12 +185,17 @@ a{color:var(--gold)}
 
 <script>
 /* =====================================================================
-   THE SOVEREIGN BARTER EXCHANGE — v2.1 — verified credentials on the floor + gift mode
+   THE SOVEREIGN BARTER EXCHANGE — v2.2 — Nov 10 2026 — report safety
+   v2.2: offers marked hidden (reported, awaiting review) or removed are never
+   shown. A report hides the offer at once for the reporter. The GSU Barter
+   Guard (Google Apps Script, Gene's account) checks barter_flags every 5
+   minutes, sets hidden:true on reported offers, and emails Gene a Review link.
+   v2.1: verified credentials on the floor + gift mode
    Firestore project: gsu-handshake · collection: barter_offers
    Client-side matching: token overlap between TEACH and SEEK fields.
    Create-only writes; flags to barter_flags. Adults 18+ only.
    Post-time screen blocks the most egregious unlawful offers; the
-   flag system and admin console remain the real line of defense.
+   flag system and the Barter Guard review remain the real line of defense.
    ===================================================================== */
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyARIAF3fVoGReq27aY9u5SgNq6mlrw7SKc",
@@ -208,7 +213,7 @@ const CERT_CONFIG = {
   messagingSenderId: "124413390849",
   appId: "1:124413390849:web:e6f5ce2692b935e3f19000"
 };
-let db=null, certDb=null, uid=null, offers=[], mine=null;
+let db=null, certDb=null, uid=null, offers=[], mine=null, reported=new Set();
 try{
   firebase.initializeApp(FIREBASE_CONFIG);
   db=firebase.firestore();
@@ -325,7 +330,12 @@ function wireFlags(root){
       var reason=prompt("What is wrong with this offer? (breaks a Rule of the Floor, spam, scam, involves a minor, abusive, unlawful, other)");
       if(!reason) return;
       db.collection("barter_flags").add({offerId:btn.getAttribute("data-id"),reason:String(reason).slice(0,200),created:firebase.firestore.FieldValue.serverTimestamp()})
-        .then(function(){btn.textContent="reported — thank you";})
+        .then(function(){
+          var id=btn.getAttribute("data-id"); reported.add(id);
+          offers=offers.filter(function(o){return o.id!==id;});
+          var card=btn.closest(".offer");
+          if(card) card.innerHTML='<div class="meta">Reported — thank you. This offer is hidden while GSU reviews it.</div>';
+        })
         .catch(function(){btn.textContent="report failed — try again";});
     });
   });
@@ -335,7 +345,9 @@ function loadFloor(){
   if(!db){$("floorCount").textContent="The Exchange floor could not load. Please refresh.";return;}
   db.collection("barter_offers").orderBy("created","desc").limit(200).get().then(function(snap){
     offers=[];
-    snap.forEach(function(d){var o=d.data();o.id=d.id;offers.push(o);});
+    snap.forEach(function(d){var o=d.data();o.id=d.id;
+      if(o.hidden===true||o.removed===true||reported.has(o.id)) return;
+      offers.push(o);});
     renderFloor(); renderMatches();
   }).catch(function(){ $("floorCount").textContent="The Exchange floor could not load. Please refresh."; });
 }
