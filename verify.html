@@ -339,9 +339,17 @@ function normalizeSerial(raw) {
 }
 
 function isValidSerialFormat(serial) {
-  // GSU-XX-YYYYMMDD-XXXXXX  (subject code 1-4 chars, date 8 digits, code 4-8 chars)
-  return /^GSU-[A-Z]{1,4}-\d{8}-[A-Z0-9]{4,8}$/.test(serial);
+  // Nov 10 2026 v2: three formats are real.
+  //  1. Signed (grading server): GSU-SUBJ-YYMM-TierScore-NAME8-NONCE6-SIG10  (7 parts)
+  //  2. Older records: GSU-SUBJ-XXXXXXX  (e.g. GSU-HVAC-T4TB68M)
+  //  3. Original pattern: GSU-XX-YYYYMMDD-XXXXXX
+  return isSignedSerial(serial) || /^GSU-[A-Z]{1,5}-[A-Z0-9]{6,8}$/.test(serial) || /^GSU-[A-Z]{1,4}-\d{8}-[A-Z0-9]{4,8}$/.test(serial);
 }
+function isSignedSerial(serial) {
+  const p = serial.split('-');
+  return p.length === 7 && p[0] === 'GSU';
+}
+const GRADER = 'https://gsu-assess.geneconstant36.workers.dev';
 
 function formatDate(timestamp) {
   if (!timestamp) return '—';
@@ -378,6 +386,19 @@ async function verifySerial(rawSerial) {
   document.getElementById('loading-text').textContent = 'Verifying ' + serial + '…';
 
   try {
+    if (isSignedSerial(serial)) {
+      // Signed certificates are checked by their signature on the grading server; nothing is looked up by name.
+      const r = await fetch(GRADER + '/verify/' + encodeURIComponent(serial));
+      const d = await r.json();
+      if (!d.valid) {
+        document.getElementById('nf-serial').textContent = serial;
+        showScreen('screen-notfound');
+        return;
+      }
+      renderValidResult(serial, { subject: d.subject, tier: d.tier, score: d.score, signedIssued: d.issued });
+      showScreen('screen-valid');
+      return;
+    }
     const certRef = doc(db, 'certifications', serial);
     const snapshot = await getDoc(certRef);
 
@@ -421,9 +442,18 @@ function renderValidResult(serial, data) {
   document.getElementById('v-tier-name').textContent = tier;
   document.getElementById('v-subject').textContent = subjectMeta.display;
   document.getElementById('v-subject-title').textContent = subjectMeta.title;
-  document.getElementById('v-score').textContent = (data.score != null ? data.score : '—') + '%';
-  document.getElementById('v-correct').textContent = (data.correctCount != null ? data.correctCount : '—') + '/' + (data.totalQuestions != null ? data.totalQuestions : '25');
-  document.getElementById('v-date').textContent = formatDate(data.issued);
+  // Older records store the percentage as pct and the number correct as score.
+  const pct = data.pct != null ? data.pct : data.score;
+  const right = data.correctCount != null ? data.correctCount : (data.pct != null ? data.score : null);
+  const total = data.totalQuestions != null ? data.totalQuestions : data.total;
+  document.getElementById('v-score').textContent = (pct != null ? pct : '—') + '%';
+  document.getElementById('v-correct').textContent = (right != null && total != null) ? right + '/' + total : '—';
+  if (data.signedIssued) {
+    const m = /^(\d{4})-(\d{2})$/.exec(data.signedIssued);
+    document.getElementById('v-date').textContent = m ? new Date(+m[1], +m[2] - 1, 1).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }) : data.signedIssued;
+  } else {
+    document.getElementById('v-date').textContent = formatDate(data.issued || data.dateISO);
+  }
   document.getElementById('v-serial').textContent = serial;
 }
 
