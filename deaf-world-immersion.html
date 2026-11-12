@@ -402,8 +402,9 @@ function showEnd(){
 }
 
 window.addEventListener('load',()=>{
-  if(synth.getVoices().length===0) synth.addEventListener('voiceschanged',renderChapter);
-  else renderChapter();
+  /* Nov 11 2026 fix: always draw Chapter 1 right away. Before, the game waited for the device's voices to load,
+     and on a device with no voices (or when they loaded early) Chapter 1 never appeared. GENO's voice still loads by itself. */
+  renderChapter();
 });
 </script>
 </body>
