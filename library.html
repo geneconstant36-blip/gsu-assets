@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The GSU Library — 300+ Books, Free to Read | Global Sovereign University</title>
-<meta name="description" content="The complete GSU library. More than 300 books donated to the Foundation. Read online free, hear read aloud free, discuss with GENO in 83 languages, or own the Kindle for $3.99. No login. No paywall. Always free.">
+<meta name="description" content="The complete GSU library. More than 300 books donated to the Foundation. Read online free, hear read aloud free, discuss with GENO in 83 languages, or own the ebook for $3.99. No login. No paywall. Always free.">
 <link rel="canonical" href="https://read.globalsovereignuniversity.org/library.html">
 
 <style>
@@ -182,8 +182,8 @@
     <h1 class="lib-title">The GSU Library</h1>
     <p class="lib-subtitle">Every book on one shelf. Every door open.</p>
     <div class="lib-intro">
-      <p>Every book Dr. Gene A Constant has written is donated to The Foundation for Global Instruction. More than three hundred titles, and the shelf grows in waves. Every one earns a $3.99 Kindle purchase back to the mission &mdash; and a growing number can also be <strong>read online free, heard read aloud free, and discussed with GENO free</strong>, right here in the Reading Room.</p>
-      <p>Books already in the Reading Room show four doors: <em>Read</em>, <em>Listen</em>, <em>GENO</em>, and <em>Own the Kindle</em>. The rest show one door for now &mdash; the Kindle edition &mdash; and are being prepared for the shelf one careful build at a time.</p>
+      <p>Every book Dr. Gene A Constant has written is donated to The Foundation for Global Instruction. More than three hundred titles, and the shelf grows in waves. Every one earns a ebook at the GSU Bookstore purchase back to the mission &mdash; and a growing number can also be <strong>read online free, heard read aloud free, and discussed with GENO free</strong>, right here in the Reading Room.</p>
+      <p>Books already in the Reading Room show four doors: <em>Read</em>, <em>Listen</em>, <em>GENO</em>, and <em>Own the ebook</em>. The rest show one door for now &mdash; the ebook edition &mdash; and are being prepared for the shelf one careful build at a time.</p>
     </div>
     <div class="lib-cardsec" id="your-library-card">
       <div class="lib-cardsec-eyebrow">Your Library Card</div>
@@ -238,7 +238,7 @@
     <div class="lib-chips">
       <button class="lib-chip active" data-shelf="all">All Books</button>
       <button class="lib-chip" data-shelf="rr">In the Reading Room</button>
-      <button class="lib-chip" data-shelf="kindle">Kindle Only</button>
+      <button class="lib-chip" data-shelf="kindle">ebook Only</button>
       <button class="lib-chip" data-shelf="mine" id="lib-chip-mine" style="display:none">My Shelf</button>
     </div>
 
@@ -262,7 +262,7 @@
 <footer class="lib-footer">
   <div class="lib-wrap">
     <p class="lib-footer-mission">"Every person on Earth is born with an American spirit: an untamed yearning for a better tomorrow." &mdash; Dr. Gene A. Constant</p>
-    <p>The GSU Library is a program of <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>, operated by The Foundation for Global Instruction, a 501(c)(3) nonprofit. Every $3.99 Kindle purchase directly funds the mission.</p>
+    <p>The GSU Library is a program of <a href="https://www.globalsovereignuniversity.org/">Global Sovereign University</a>, operated by The Foundation for Global Instruction, a 501(c)(3) nonprofit. Every ebook at the GSU Bookstore purchase directly funds the mission.</p>
     <p style="font-size:10px">Book sales are the only thing that funds Global Sovereign University, a tuition-free 501(c)(3) nonprofit.</p>
     <div class="lib-footer-line">
       The Foundation for Global Instruction <span class="lib-dot">&bull;</span> 501(c)(3) <span class="lib-dot">&bull;</span> EIN 39-2716552 <span class="lib-dot">&bull;</span> Eugene, Oregon <span class="lib-dot">&bull;</span> No login. No paywall. Always free.
@@ -3217,7 +3217,7 @@ const readerHref = slug => READER_OVERRIDES[slug] || `/${slug}-reader.html`;
   function bookCard(book) {
     const isRR = book.readingRoom;
     const cov = coverUrl(book.asin);
-    const amazonUrl = book.asin ? `https://www.amazon.com/dp/${book.asin}?tag=${AMAZON_TAG}` : null;
+    const amazonUrl = book.asin ? `https://www.globalsovereignuniversity.org/library : null;
     const readerUrl = readerHref(book.slug);
 
     const coverInner = cov
@@ -3233,7 +3233,7 @@ const readerHref = slug => READER_OVERRIDES[slug] || `/${slug}-reader.html`;
       actions += `<a href="${readerUrl}#geno" class="lib-btn lib-btn-outline">GENO</a>`;
       if (amazonUrl) actions += `<a href="${amazonUrl}" class="lib-btn lib-btn-ghost" target="_blank" rel="noopener">$3.99</a>`;
     } else {
-      if (amazonUrl) actions += `<a href="${amazonUrl}" class="lib-btn lib-btn-outline" target="_blank" rel="noopener">Kindle $3.99</a>`;
+      if (amazonUrl) actions += `<a href="${amazonUrl}" class="lib-btn lib-btn-outline" target="_blank" rel="noopener">ebook $3.99</a>`;
       actions += `<span class="lib-card-coming">Coming to the Reading Room</span>`;
     }
 
@@ -3321,7 +3321,7 @@ const readerHref = slug => READER_OVERRIDES[slug] || `/${slug}-reader.html`;
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "name": "The GSU Library",
-  "description": "The complete GSU library. More than 300 books donated to the Foundation for Global Instruction. Read online free, hear read aloud, discuss with GENO in 83 languages, or own the Kindle edition for $3.99.",
+  "description": "The complete GSU library. More than 300 books donated to the Foundation for Global Instruction. Read online free, hear read aloud, discuss with GENO in 83 languages, or own the ebook edition for $3.99.",
   "url": "https://read.globalsovereignuniversity.org/library.html",
   "isAccessibleForFree": true,
   "publisher": {

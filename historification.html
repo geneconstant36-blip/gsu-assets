@@ -1825,7 +1825,7 @@ const FAQ = [
   },
   {
     q: "Are these books free?",
-    a: "<p>All PDF and digital downloads through GSU are <strong>free forever</strong>. The Kindle editions on Amazon are $3.99 — every royalty flows to the Foundation for Global Instruction, a 501(c)(3). No advertising. No paywall. No handout — a bridge.</p>"
+    a: "<p>All PDF and digital downloads through GSU are <strong>free forever</strong>. The ebook editions at the GSU Bookstore are $3.99 — every royalty flows to the Foundation for Global Instruction, a 501(c)(3). No advertising. No paywall. No handout — a bridge.</p>"
   },
   {
     q: "Why is the Peacemaker highlighted as the 'Center of Gravity'?",
@@ -1846,7 +1846,7 @@ function renderBooks(list, target) {
   const el = document.getElementById(target);
   let html = '';
   list.forEach((b, i) => {
-    const url = 'https://www.amazon.com/dp/' + b.asin + '';
+    const url = 'https://www.globalsovereignuniversity.org/library' + b.asin + '';
     html += '<a class="book-card" href="' + url + '" target="_blank" rel="noopener">'
       + '<div class="book-card-topbar"></div>'
       + '<div class="book-card-head">'
@@ -1857,8 +1857,8 @@ function renderBooks(list, target) {
       + '<span class="book-card-asin">ASIN: ' + b.asin + '</span>'
       + '<p style="font-size:0.85rem;color:var(--cream-dim);line-height:1.55;margin-bottom:1rem">' + b.tag + '</p>'
       + '<div class="book-card-cta">'
-      +   '<span>View on Amazon ↗</span>'
-      +   '<span class="book-card-price">Kindle $3.99 · Free PDF</span>'
+      +   '<span>View at the GSU Bookstore ↗</span>'
+      +   '<span class="book-card-price">ebook $3.99 · Free PDF</span>'
       + '</div>'
       + '</a>';
   });

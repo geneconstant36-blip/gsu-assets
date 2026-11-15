@@ -674,9 +674,9 @@ footer p{color:var(--dim);font-family:Verdana,Geneva,sans-serif;font-size:.8rem;
 </div>
 </main>
 <footer>
-  <a class="cta" href="https://www.amazon.com/dp/B0HFVVL343" rel="nofollow sponsored">Own It on Kindle &mdash; $3.99</a>
+  
   <a class="cta ghost" href="https://www.globalsovereignuniversity.org/trade-floor">Back to the Trade Floor</a>
-  <p>&copy; 2026 Dr Gene A Constant. Read free, forever &mdash; that is the GSU promise. If this book earns its keep, the Kindle copy funds free education for the next reader. Narration uses your device's built-in voice and runs entirely in your browser; nothing is tracked and nothing is sent anywhere.</p>
+  <p>&copy; 2026 Dr Gene A Constant. Read free, forever &mdash; that is the GSU promise. If this book earns its keep, the ebook funds free education for the next reader. Narration uses your device's built-in voice and runs entirely in your browser; nothing is tracked and nothing is sent anywhere.</p>
 </footer>
 <script>
 (function(){
@@ -690,7 +690,7 @@ function stopSpeak(){if(synth){synth.cancel()}speaking=false;pIdx=0;
 function show(n){stopSpeak();cur=Math.max(1,Math.min(6,n));
   document.querySelectorAll('.chapter').forEach(function(s){s.classList.toggle('active',+s.dataset.ch===cur)});
   document.getElementById('prevBtn').style.visibility=cur>1?'visible':'hidden';
-  document.getElementById('nextBtn').textContent=cur<6?'Next chapter \u2192':'Own it on Kindle \u2192';
+  document.getElementById('nextBtn').textContent=cur<6?'Next chapter \u2192':'Own it on ebook \u2192';
   save();window.scrollTo({top:document.getElementById('toc').offsetTop,behavior:'auto'})}
 function speakFrom(i){var ps=document.querySelectorAll('#ch'+cur+' .rp');if(i>=ps.length){stopSpeak();return}
   pIdx=i;var el=ps[i];
@@ -711,7 +711,7 @@ document.getElementById('stopBtn').onclick=stopSpeak;
 document.getElementById('fMinus').onclick=function(){fs=Math.max(.85,fs-.08);applyFs();save()};
 document.getElementById('fPlus').onclick=function(){fs=Math.min(1.6,fs+.08);applyFs();save()};
 document.getElementById('prevBtn').onclick=function(){show(cur-1)};
-document.getElementById('nextBtn').onclick=function(){if(cur<6){show(cur+1)}else{location.href='https://www.amazon.com/dp/B0HFVVL343'}};
+document.getElementById('nextBtn').onclick=function(){if(cur<6){show(cur+1)}else{location.href='https://www.globalsovereignuniversity.org/library'}};
 document.querySelectorAll('.tocb').forEach(function(b){b.onclick=function(){show(+b.dataset.go)}});
 window.addEventListener('beforeunload',function(){if(synth)synth.cancel()});
 applyFs();show(cur);
