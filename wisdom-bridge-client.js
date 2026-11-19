@@ -225,7 +225,7 @@ function renderRemedial(missed){
   html += '</ul>';
 
   html += '<div class="geno-invite"><b>Talk to GENO before you retake.</b> ' +
-          'GENO is available 24/7 in 83 languages and has memorized the entire book. ' +
+          'GENO is available 24/7 in 83 languages. ' +
           'Try this conversation starter:<div class="quote">"' + esc(PREPPATH.genoStarter) +
           '"</div>Scroll to the bottom-right of any GSU page to open the GENO widget, then paste the line above.</div>';
 
