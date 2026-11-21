@@ -1,4 +1,4 @@
-/* GSU Open My Book 2.0.2 (Nov 21 2026). A reader for EPUB books, inside one GSU page.
+/* GSU Open My Book 2.0.3 (Nov 21 2026). A reader for EPUB books, inside one GSU page.
    The book file is opened in the visitor's own browser and is never sent anywhere. No outside library.
    2.0.0, from the EPUB chat's handover "Six Tests and Your Turn" (approved by the Chancellor Nov 21 2026; he said "start"):
    1. Built to the six tests in Chapter 6 of his book Fractured Words, Fractured Worlds (GSU's own standard, from the book;
@@ -10,6 +10,11 @@
       and always has the last word. No grade, no percent.
    Also: styles and the reader's markup now live in this file, so the page embed is short. Storage: gsu-omb-v1 (place is now
    {ch,pg}; mic choice in "mic"), IndexedDB gsu-omb (the My books shelf). The Android file chooser is not filtered.
+   2.0.3: the Chancellor, on his Android: the site header, the GENO button and "Write in your language" took most of
+   the screen, and the Read / Back / Next / Your turn buttons scrolled away. Now the buttons stay at the top of the
+   screen with the page number, on every device. On PHONES ONLY, while a book is open, the site header, the founder
+   cards, the language button and the GENO call button are hidden so the book has the screen; "Close this book"
+   brings them all back. Nothing of theirs is changed; they are only hidden by a class on <body> (omb-reading).
    2.0.2: found on the Chancellor's phone with one of his older books: a chapter heading sat alone on a page and the
    voice stopped after it. A heading now always travels with the text that follows it, and a book whose text comes as one
    very long block (no paragraphs, or line breaks only) is cut into pages at line breaks, then at sentence ends.
@@ -172,8 +177,10 @@ var CSS=[
 '.omb .strip .where{display:block;font-size:16px;color:#C9A84C;line-height:1.3;padding:0 8px}',
 '.omb .strip .pg{display:block;font-family:Arial,sans-serif;font-size:14px;letter-spacing:.06em;color:#F5F1E8;padding:2px 0 6px}',
 '.omb .rail{height:4px;background:rgba(201,168,76,.25)}.omb .rail i{display:block;height:4px;width:0;background:#C9A84C}',
-'.omb .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:12px 0;margin:0 0 6px;border-bottom:1px solid rgba(201,168,76,.35)}',
-'@media (max-width:600px){.omb .btns{display:grid;grid-template-columns:1fr 1.5fr 1fr}.omb .btns .btn{padding:10px 6px}}',
+'.omb .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:8px 0;margin:0;border-bottom:1px solid rgba(201,168,76,.35)}',
+'.omb .strip{margin:0 0 8px}',
+'@media (max-width:700px){body.omb-reading nav.gn,body.omb-reading .gn-spacer,body.omb-reading aside.gsbr,body.omb-reading button.MC,body.omb-reading elevenlabs-convai{display:none!important}.omb .strip{padding-top:4px}.omb .strip .where{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.omb .strip .pg{padding:0 0 3px;font-size:13px}}',
+'@media (max-width:600px){.omb .btns{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:6px;padding:6px 0}.omb .btns .btn{padding:8px 4px}}',
 '.omb .turn{position:sticky;z-index:4;background:#000;border:2px solid #C9A84C;border-radius:10px;padding:12px 14px;margin:8px 0 14px}',
 '.omb .turn .tl{font-size:16px;color:#C9A84C;margin:0 0 6px}',
 '.omb .turn .tw{font-size:22px;line-height:1.7;margin:0 0 8px}',
@@ -203,8 +210,8 @@ $('omb-start-slot').innerHTML='<div class="shelf" id="omb-shelf" hidden><h2>My b
 $('omb-reader-slot').innerHTML='<p class="omb-msg" id="omb-msg" role="status" aria-live="polite"></p><div class="reader">'+
  '<div class="head"><div id="omb-cover"></div><div><h2 id="omb-title"></h2><button type="button" class="btn" id="omb-other">Close this book &middot; My books</button></div></div>'+
  '<details><summary>Contents</summary><ol id="omb-toc"></ol></details>'+
- '<div class="strip" id="omb-bar"><span class="where" id="omb-where"></span><span class="pg" id="omb-pg"></span><div class="rail" aria-hidden="true"><i id="omb-rail"></i></div></div>'+
- '<div class="btns"><button type="button" class="btn" id="omb-prev">&#9664; Back</button><button type="button" class="btn gold" id="omb-say">Read it to me</button><button type="button" class="btn" id="omb-next">Next &#9654;</button><button type="button" class="btn" id="omb-turn">Your turn</button><button type="button" class="btn" id="omb-smaller" aria-label="Smaller words">A&minus;</button><button type="button" class="btn" id="omb-larger" aria-label="Bigger words">A+</button></div>'+
+ '<div class="strip" id="omb-bar"><span class="where" id="omb-where"></span><span class="pg" id="omb-pg"></span><div class="rail" aria-hidden="true"><i id="omb-rail"></i></div>'+
+ '<div class="btns"><button type="button" class="btn" id="omb-prev">&#9664; Back</button><button type="button" class="btn gold" id="omb-say">Read it to me</button><button type="button" class="btn" id="omb-next">Next &#9654;</button><button type="button" class="btn" id="omb-turn">Your turn</button><button type="button" class="btn" id="omb-smaller" aria-label="Smaller words">A&minus;</button><button type="button" class="btn" id="omb-larger" aria-label="Bigger words">A+</button></div></div>'+
  '<div class="turn" id="omb-turn-box" hidden><p class="tl" id="omb-turn-lead"></p><div class="ask" id="omb-turn-ask" hidden><p>To listen, your browser sends your voice to the company that makes the browser. That company turns your voice into words. GSU does not receive it.</p><p>Or you can tap each word yourself. Then nothing is sent anywhere.</p><div class="ta"><button type="button" class="btn gold" id="omb-turn-yes">Listen to me</button><button type="button" class="btn" id="omb-turn-tap">I will tap the words</button></div></div>'+
  '<div id="omb-turn-main"><p class="tw" id="omb-turn-words"></p><p class="ts" id="omb-turn-status" role="status" aria-live="polite"></p><div class="ta"><button type="button" class="btn gold" id="omb-turn-done">I am done</button><button type="button" class="btn" id="omb-turn-again">Try again</button><button type="button" class="btn" id="omb-turn-nexts">Next sentence</button><button type="button" class="btn" id="omb-turn-mode"></button><button type="button" class="btn" id="omb-turn-close">Close</button></div></div></div>'+
  '<div id="omb-page"></div><div class="links" id="omb-links" hidden></div>'+
@@ -215,7 +222,7 @@ if(/Android/i.test(navigator.userAgent)) $('omb-file').removeAttribute('accept')
 var chap={i:-1,pages:[]}, pg=0, sents=[], pick=-1, sid=0;
 function show(){
  msg('');
- root.classList.add('open');
+ root.classList.add('open'); document.body.classList.add('omb-reading'); setTimeout(navTop,0); setTimeout(navTop,400);
  $('omb-title').textContent=book.title;
  var cv=$('omb-cover'); cv.innerHTML='';
  if(book.cover) blobUrl(book.cover).then(function(u){ var im=document.createElement('img'); im.src=u; im.alt='Cover of '+book.title; cv.appendChild(im); }).catch(function(){});
@@ -638,12 +645,12 @@ $('omb-prev2').addEventListener('click',function(){step(-1);}); $('omb-next2').a
 var inp=$('omb-file');
 inp.addEventListener('change',function(){ openFile(inp.files&&inp.files[0]); inp.value=''; });
 $('omb-other').addEventListener('click',function(){ closeBook(); });
-function closeBook(){ stopTalk(); closeTurn(); book=null; chap={i:-1,pages:[]}; sents=[]; urls.forEach(function(u){URL.revokeObjectURL(u);}); urls=[]; root.classList.remove('open'); msg(''); $('omb-page').innerHTML=''; drawShelf(); root.scrollIntoView(); }
+function closeBook(){ stopTalk(); closeTurn(); book=null; chap={i:-1,pages:[]}; sents=[]; urls.forEach(function(u){URL.revokeObjectURL(u);}); urls=[]; root.classList.remove('open'); document.body.classList.remove('omb-reading'); msg(''); $('omb-page').innerHTML=''; drawShelf(); navTop(); root.scrollIntoView(); }
 var drop=$('omb-drop');
 ['dragenter','dragover'].forEach(function(ev){ drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('over');}); });
 ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('over');}); });
 drop.addEventListener('drop',function(e){ var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; openFile(f); });
-function navTop(){ var t=0; try{ var n=document.querySelector('nav.gn'); if(n){ var ps=getComputedStyle(n).position; if(ps==='fixed'||ps==='sticky'){ t=Math.max(0,Math.round(n.getBoundingClientRect().bottom)); if(t>window.innerHeight*0.45) t=0; } } }catch(e){} var b=$('omb-bar'); b.style.top=t+'px'; $('omb-turn-box').style.top=(t+b.offsetHeight+4)+'px'; }
+function navTop(){ var t=0; try{ var n=document.querySelector('nav.gn'); if(n){ var ps=getComputedStyle(n).position; if(getComputedStyle(n).display!=='none'&&(ps==='fixed'||ps==='sticky')){ t=Math.max(0,Math.round(n.getBoundingClientRect().bottom)); if(t>window.innerHeight*0.45) t=0; } } }catch(e){} var b=$('omb-bar'); b.style.top=t+'px'; $('omb-turn-box').style.top=(t+b.offsetHeight+4)+'px'; }
 navTop(); window.addEventListener('resize',navTop); setTimeout(navTop,1500);
 window.GSU_OMB={open:openFile,close:closeBook,shelf:listShelf,match:function(sentence,heard){ var t=String(sentence).split(/\s+/).map(norm).filter(Boolean), g=matchWords(t,heard), n=0; g.forEach(function(x){ if(x) n++; }); return [n,t.length]; },
  state:function(){ return {open:!!book,where:$('omb-where').textContent,part:cur,parts:book?book.spine.length:0,page:pg,pages:chap.pages.length,sentences:sents.length,pick:pick,size:size,talking:talking,turn:turnOn,mode:tmode,title:book&&book.title,toc:book?book.toc.length:0}; }};
