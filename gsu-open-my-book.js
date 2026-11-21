@@ -1,4 +1,4 @@
-/* GSU Open My Book 2.1.0 (Nov 21 2026). A reader for EPUB books, inside one GSU page.
+/* GSU Open My Book 2.1.1 (Nov 21 2026). A reader for EPUB books, inside one GSU page.
    The book file is opened in the visitor's own browser and is never sent anywhere. No outside library.
    2.0.0, from the EPUB chat's handover "Six Tests and Your Turn" (approved by the Chancellor Nov 21 2026; he said "start"):
    1. Built to the six tests in Chapter 6 of his book Fractured Words, Fractured Worlds (GSU's own standard, from the book;
@@ -10,6 +10,8 @@
       and always has the last word. No grade, no percent.
    Also: styles and the reader's markup now live in this file, so the page embed is short. Storage: gsu-omb-v1 (place is now
    {ch,pg}; mic choice in "mic"), IndexedDB gsu-omb (the My books shelf). The Android file chooser is not filtered.
+   2.1.1: the free book now has its real cover (supplied by the Chancellor Nov 21); the cover shows beside the
+   "Try it with a free book" button and on the shelf.
    2.1.0: three additions the Chancellor approved Nov 21 ("All three. Go Big or Go Home!"):
    (1) "Try it with a free book": one tap opens The World Climb, GSU's free reading edition, fetched from the reading
        site (FREE below), so a visitor with no book file can use the reader at once. It goes on the shelf like any book.
@@ -153,7 +155,7 @@ var CSS=[
 '.omb .big{display:inline-block;background:#C9A84C;color:#000;border-radius:8px;padding:16px 30px;font-size:22px;cursor:pointer;font-family:Georgia,serif}',
 '.omb .drop input{position:absolute;left:-9999px}',
 '.omb .drop .hint{font-size:16px;color:rgba(245,241,232,.75);margin:14px 0 0}',
-'.omb .drop .or{font-size:17px;color:#F5F1E8;margin:22px 0 8px}.omb .btn.try{font-size:19px;padding:12px 22px}',
+'.omb .drop .or{font-size:17px;color:#F5F1E8;margin:22px 0 8px}.omb .btn.try{font-size:19px;padding:12px 22px}.omb .tryrow{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}.omb .tryrow img{width:96px;height:auto;border:1px solid rgba(201,168,76,.5);border-radius:4px;cursor:pointer}',
 '.omb #omb-page.roomy{line-height:2.25;word-spacing:.16em;letter-spacing:.02em}.omb #omb-page.roomy p,.omb #omb-page.roomy li{margin-bottom:1.5em}',
 '.omb .omb-msg{min-height:1.7em;text-align:center;color:#C9A84C;font-size:17px;margin:0 0 10px}',
 '.omb .omb-msg.bad{color:#e08a7a}',
@@ -214,7 +216,7 @@ var CSS=[
 (function(){ var st=document.createElement('style'); st.textContent=CSS; document.head.appendChild(st); })();
 $('omb-start-slot').innerHTML='<div class="shelf" id="omb-shelf" hidden><h2>My books on this <span class="omb-dev">device</span></h2><p class="note">Tap a cover to read. These copies are kept on this <span class="omb-dev">device</span> only.</p><ul id="omb-shelf-list"></ul></div>'+
  '<div class="drop" id="omb-drop"><label class="big" for="omb-file">Open my book</label><input type="file" id="omb-file" accept=".epub,application/epub+zip"><p class="hint">Tap the button and choose your book file. On a computer you can also drag the file onto this box.</p>'+
- '<p class="or">No book yet?</p><button type="button" class="btn try" id="omb-try">Try it with a free book</button><p class="hint" id="omb-try-note">One tap opens <i>The World Climb</i> by Dr. Gene A Constant, free from GSU.</p></div>';
+ '<p class="or">No book yet?</p><div class="tryrow"><img id="omb-try-cover" src="https://read.globalsovereignuniversity.org/free/the-world-climb-cover.jpg" alt="Cover of The World Climb" width="96" height="144" loading="lazy"><button type="button" class="btn try" id="omb-try">Try it with a free book</button></div><p class="hint" id="omb-try-note">One tap opens <i>The World Climb</i> by Dr. Gene A Constant, free from GSU.</p></div>';
 $('omb-reader-slot').innerHTML='<p class="omb-msg" id="omb-msg" role="status" aria-live="polite"></p><div class="reader">'+
  '<div class="head"><div id="omb-cover"></div><div><h2 id="omb-title"></h2><button type="button" class="btn" id="omb-other">Close this book &middot; My books</button></div></div>'+
  '<details><summary>Contents</summary><ol id="omb-toc"></ol></details>'+
@@ -655,6 +657,7 @@ $('omb-prev').addEventListener('click',function(){step(-1);}); $('omb-next').add
 $('omb-prev2').addEventListener('click',function(){step(-1);}); $('omb-next2').addEventListener('click',function(){step(1);});
 /* the free book: a GSU file fetched from the reading site; nothing about the visitor is sent */
 var FREE={url:'https://read.globalsovereignuniversity.org/free/the-world-climb.epub',name:'The World Climb - free reading edition.epub'};
+$('omb-try-cover').addEventListener('click',function(){ $('omb-try').click(); });
 $('omb-try').addEventListener('click',function(){
  var b=$('omb-try'); if(b.disabled) return; b.disabled=true; msg('Getting the free book\u2026');
  fetch(FREE.url).then(function(r){ if(!r.ok) throw new Error('http'); return r.arrayBuffer(); })
