@@ -1,4 +1,4 @@
-/* GSU Open My Book 2.0.3 (Nov 21 2026). A reader for EPUB books, inside one GSU page.
+/* GSU Open My Book 2.1.0 (Nov 21 2026). A reader for EPUB books, inside one GSU page.
    The book file is opened in the visitor's own browser and is never sent anywhere. No outside library.
    2.0.0, from the EPUB chat's handover "Six Tests and Your Turn" (approved by the Chancellor Nov 21 2026; he said "start"):
    1. Built to the six tests in Chapter 6 of his book Fractured Words, Fractured Worlds (GSU's own standard, from the book;
@@ -10,6 +10,11 @@
       and always has the last word. No grade, no percent.
    Also: styles and the reader's markup now live in this file, so the page embed is short. Storage: gsu-omb-v1 (place is now
    {ch,pg}; mic choice in "mic"), IndexedDB gsu-omb (the My books shelf). The Android file chooser is not filtered.
+   2.1.0: three additions the Chancellor approved Nov 21 ("All three. Go Big or Go Home!"):
+   (1) "Try it with a free book": one tap opens The World Climb, GSU's free reading edition, fetched from the reading
+       site (FREE below), so a visitor with no book file can use the reader at once. It goes on the shelf like any book.
+   (2) (the receipts line is store work, not in this file.)
+   (3) "More space": wider lines, words and paragraphs. It does not change which words are on a page.
    2.0.3: the Chancellor, on his Android: the site header, the GENO button and "Write in your language" took most of
    the screen, and the Read / Back / Next / Your turn buttons scrolled away. Now the buttons stay at the top of the
    screen with the page number, on every device. On PHONES ONLY, while a book is open, the site header, the founder
@@ -148,6 +153,8 @@ var CSS=[
 '.omb .big{display:inline-block;background:#C9A84C;color:#000;border-radius:8px;padding:16px 30px;font-size:22px;cursor:pointer;font-family:Georgia,serif}',
 '.omb .drop input{position:absolute;left:-9999px}',
 '.omb .drop .hint{font-size:16px;color:rgba(245,241,232,.75);margin:14px 0 0}',
+'.omb .drop .or{font-size:17px;color:#F5F1E8;margin:22px 0 8px}.omb .btn.try{font-size:19px;padding:12px 22px}',
+'.omb #omb-page.roomy{line-height:2.25;word-spacing:.16em;letter-spacing:.02em}.omb #omb-page.roomy p,.omb #omb-page.roomy li{margin-bottom:1.5em}',
 '.omb .omb-msg{min-height:1.7em;text-align:center;color:#C9A84C;font-size:17px;margin:0 0 10px}',
 '.omb .omb-msg.bad{color:#e08a7a}',
 '.omb .reader{display:none}.omb.open .reader{display:block}.omb.open .start-only,.omb.open #omb-start-slot{display:none}',
@@ -180,7 +187,7 @@ var CSS=[
 '.omb .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:8px 0;margin:0;border-bottom:1px solid rgba(201,168,76,.35)}',
 '.omb .strip{margin:0 0 8px}',
 '@media (max-width:700px){body.omb-reading nav.gn,body.omb-reading .gn-spacer,body.omb-reading aside.gsbr,body.omb-reading button.MC,body.omb-reading elevenlabs-convai{display:none!important}.omb .strip{padding-top:4px}.omb .strip .where{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.omb .strip .pg{padding:0 0 3px;font-size:13px}}',
-'@media (max-width:600px){.omb .btns{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:6px;padding:6px 0}.omb .btns .btn{padding:8px 4px}}',
+'@media (max-width:600px){.omb .btns{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;padding:6px 0}.omb .btns .btn{padding:8px 2px;font-size:15px;grid-column:span 3}.omb .btns #omb-prev,.omb .btns #omb-next{grid-column:span 3}.omb .btns #omb-say{grid-column:span 6}.omb .btns #omb-turn{grid-column:span 4}.omb .btns #omb-smaller,.omb .btns #omb-larger{grid-column:span 2}.omb .btns #omb-space{grid-column:span 4}}',
 '.omb .turn{position:sticky;z-index:4;background:#000;border:2px solid #C9A84C;border-radius:10px;padding:12px 14px;margin:8px 0 14px}',
 '.omb .turn .tl{font-size:16px;color:#C9A84C;margin:0 0 6px}',
 '.omb .turn .tw{font-size:22px;line-height:1.7;margin:0 0 8px}',
@@ -206,12 +213,13 @@ var CSS=[
 ].join('\n');
 (function(){ var st=document.createElement('style'); st.textContent=CSS; document.head.appendChild(st); })();
 $('omb-start-slot').innerHTML='<div class="shelf" id="omb-shelf" hidden><h2>My books on this <span class="omb-dev">device</span></h2><p class="note">Tap a cover to read. These copies are kept on this <span class="omb-dev">device</span> only.</p><ul id="omb-shelf-list"></ul></div>'+
- '<div class="drop" id="omb-drop"><label class="big" for="omb-file">Open my book</label><input type="file" id="omb-file" accept=".epub,application/epub+zip"><p class="hint">Tap the button and choose your book file. On a computer you can also drag the file onto this box.</p></div>';
+ '<div class="drop" id="omb-drop"><label class="big" for="omb-file">Open my book</label><input type="file" id="omb-file" accept=".epub,application/epub+zip"><p class="hint">Tap the button and choose your book file. On a computer you can also drag the file onto this box.</p>'+
+ '<p class="or">No book yet?</p><button type="button" class="btn try" id="omb-try">Try it with a free book</button><p class="hint" id="omb-try-note">One tap opens <i>The World Climb</i> by Dr. Gene A Constant, free from GSU.</p></div>';
 $('omb-reader-slot').innerHTML='<p class="omb-msg" id="omb-msg" role="status" aria-live="polite"></p><div class="reader">'+
  '<div class="head"><div id="omb-cover"></div><div><h2 id="omb-title"></h2><button type="button" class="btn" id="omb-other">Close this book &middot; My books</button></div></div>'+
  '<details><summary>Contents</summary><ol id="omb-toc"></ol></details>'+
  '<div class="strip" id="omb-bar"><span class="where" id="omb-where"></span><span class="pg" id="omb-pg"></span><div class="rail" aria-hidden="true"><i id="omb-rail"></i></div>'+
- '<div class="btns"><button type="button" class="btn" id="omb-prev">&#9664; Back</button><button type="button" class="btn gold" id="omb-say">Read it to me</button><button type="button" class="btn" id="omb-next">Next &#9654;</button><button type="button" class="btn" id="omb-turn">Your turn</button><button type="button" class="btn" id="omb-smaller" aria-label="Smaller words">A&minus;</button><button type="button" class="btn" id="omb-larger" aria-label="Bigger words">A+</button></div></div>'+
+ '<div class="btns"><button type="button" class="btn" id="omb-prev">&#9664; Back</button><button type="button" class="btn gold" id="omb-say">Read it to me</button><button type="button" class="btn" id="omb-next">Next &#9654;</button><button type="button" class="btn" id="omb-turn">Your turn</button><button type="button" class="btn" id="omb-smaller" aria-label="Smaller words">A&minus;</button><button type="button" class="btn" id="omb-larger" aria-label="Bigger words">A+</button><button type="button" class="btn" id="omb-space" aria-pressed="false">More space</button></div></div>'+
  '<div class="turn" id="omb-turn-box" hidden><p class="tl" id="omb-turn-lead"></p><div class="ask" id="omb-turn-ask" hidden><p>To listen, your browser sends your voice to the company that makes the browser. That company turns your voice into words. GSU does not receive it.</p><p>Or you can tap each word yourself. Then nothing is sent anywhere.</p><div class="ta"><button type="button" class="btn gold" id="omb-turn-yes">Listen to me</button><button type="button" class="btn" id="omb-turn-tap">I will tap the words</button></div></div>'+
  '<div id="omb-turn-main"><p class="tw" id="omb-turn-words"></p><p class="ts" id="omb-turn-status" role="status" aria-live="polite"></p><div class="ta"><button type="button" class="btn gold" id="omb-turn-done">I am done</button><button type="button" class="btn" id="omb-turn-again">Try again</button><button type="button" class="btn" id="omb-turn-nexts">Next sentence</button><button type="button" class="btn" id="omb-turn-mode"></button><button type="button" class="btn" id="omb-turn-close">Close</button></div></div></div>'+
  '<div id="omb-page"></div><div class="links" id="omb-links" hidden></div>'+
@@ -431,6 +439,9 @@ function setSize(s){ size=Math.max(16,Math.min(34,s)); $('omb-page').style.fontS
 setSize(size);
 $('omb-smaller').addEventListener('click',function(){setSize(size-2);});
 $('omb-larger').addEventListener('click',function(){setSize(size+2);});
+function setRoomy(on){ var p=$('omb-page'), b=$('omb-space'); p.classList.toggle('roomy',!!on); b.textContent=on?'Less space':'More space'; b.setAttribute('aria-pressed',on?'true':'false'); var m=load(); m.roomy=on?1:0; save(m); }
+setRoomy(!!load().roomy);
+$('omb-space').addEventListener('click',function(){ setRoomy(!$('omb-page').classList.contains('roomy')); });
 
 /* ---------- choose a sentence ---------- */
 function choose(k,quiet){
@@ -642,6 +653,14 @@ drawShelf();
 /* ---------- controls ---------- */
 $('omb-prev').addEventListener('click',function(){step(-1);}); $('omb-next').addEventListener('click',function(){step(1);});
 $('omb-prev2').addEventListener('click',function(){step(-1);}); $('omb-next2').addEventListener('click',function(){step(1);});
+/* the free book: a GSU file fetched from the reading site; nothing about the visitor is sent */
+var FREE={url:'https://read.globalsovereignuniversity.org/free/the-world-climb.epub',name:'The World Climb - free reading edition.epub'};
+$('omb-try').addEventListener('click',function(){
+ var b=$('omb-try'); if(b.disabled) return; b.disabled=true; msg('Getting the free book\u2026');
+ fetch(FREE.url).then(function(r){ if(!r.ok) throw new Error('http'); return r.arrayBuffer(); })
+  .then(function(buf){ b.disabled=false; openBuf(buf,{name:FREE.name,size:buf.byteLength},false); })
+  .catch(function(){ b.disabled=false; msg('The free book could not be reached just now. Please check your connection and try again.',true); });
+});
 var inp=$('omb-file');
 inp.addEventListener('change',function(){ openFile(inp.files&&inp.files[0]); inp.value=''; });
 $('omb-other').addEventListener('click',function(){ closeBook(); });
