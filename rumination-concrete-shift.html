@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Concrete Shift: From "Why?" to "How?" | The Rumination Book | Global Sovereign University</title>
+<meta name="description" content="A free interactive study page from The Rumination Book. Walk the five steps that turn an abstract 'Why?' loop into concrete action, then practice the shift in an endless challenge.">
+<meta property="og:title" content="The Concrete Shift: From Why? to How? | Global Sovereign University">
+<meta property="og:description" content="Catch the cue, break the loop, take one concrete step. A free study page from The Rumination Book.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://read.globalsovereignuniversity.org/rumination-concrete-shift.html">
+<link rel="icon" href="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/695f9e8f44a945b33f5bfa10_gsu%20logo%20square%2032x32.png">
+<!-- The Concrete Shift v1.0, Nov 27 2026. Rebuilt from the Chancellor's RFCBT decision-tree files for The Rumination Book
+     (Revision 2, ISBN 979-8-1682-6953-7). Self-contained: no fonts, no analytics, nothing sent anywhere.
+     Practice progress is kept only in this browser (localStorage, wrapped in try/catch). -->
+<style>
+:root{--bk:#000;--panel:#0b0b0b;--line:#2a2418;--gold:#d4af37;--gold2:#f2d27a;--red:#d62b3a;--txt:#f3ede2;--mut:#b8ad98;--ok:#d4af37;--r:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bk)}
+body{background:var(--bk);color:var(--txt);font:17px/1.6 Georgia,'Times New Roman',serif;padding-bottom:60px}
+a{color:var(--gold2)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header.hero{padding:42px 0 18px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.kick{font:700 12px/1.3 Arial,Helvetica,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:8px 0 10px;color:#fff}
+h1 em{color:var(--gold);font-style:normal}
+.lede{color:var(--mut);max-width:760px}
+h2{font-size:26px;color:#fff;margin:34px 0 6px}
+h2 small{display:block;font:700 12px Arial,sans-serif;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:4px}
+.sub{color:var(--mut);margin-bottom:14px;max-width:780px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 14px}
+.bar .lab{font:700 11px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-right:4px}
+button{font:600 15px Arial,Helvetica,sans-serif;cursor:pointer;border-radius:999px;border:1px solid var(--line);background:#111;color:var(--txt);padding:9px 16px;min-height:42px}
+button:hover{border-color:var(--gold)}
+button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+button.on{background:var(--gold);color:#000;border-color:var(--gold)}
+button.trap.on{background:var(--red);border-color:var(--red);color:#fff}
+button:disabled{opacity:.35;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:1.05fr 1fr;gap:18px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+svg text{font-family:Arial,Helvetica,sans-serif}
+.node rect,.node polygon{fill:#111;stroke:#3a3222;stroke-width:1.5;transition:all .25s}
+.node .t{fill:#f3ede2;font-size:15px;font-weight:700}
+.node .s{fill:#b8ad98;font-size:13px}
+.node{cursor:pointer}
+.node.dim{opacity:.28}
+.node.seen rect,.node.seen polygon{stroke:var(--gold)}
+.node.cur rect,.node.cur polygon{stroke:var(--gold2);stroke-width:3;fill:#1c1606}
+.node.trap.cur rect{stroke:var(--red);fill:#2a0b0e}
+.edge{stroke:#3a3222;stroke-width:2;fill:none}
+.edge.go{stroke:var(--gold)}
+.edge.bad{stroke:var(--red)}
+.edge.dim{opacity:.25}
+.pill{font:700 11px Arial,sans-serif;letter-spacing:.08em}
+.det h3{font-size:22px;color:#fff;margin-bottom:2px}
+.det .tag{font:700 11px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.det .blk{border-left:3px solid var(--gold);background:#0f0d07;border-radius:8px;padding:10px 12px;margin-bottom:10px}
+.det .blk.bad{border-color:var(--red);background:#140709}
+.det .blk b{display:block;font:700 12px Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:3px}
+.det .blk p{white-space:pre-line}
+.step{display:flex;justify-content:space-between;align-items:center;margin-top:10px;border-top:1px solid var(--line);padding-top:12px;gap:8px}
+.step span{color:var(--mut);font:600 14px Arial,sans-serif}
+/* practice */
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+@media(max-width:620px){.road{grid-template-columns:1fr}}
+.tier{border:1px solid var(--line);border-radius:var(--r);padding:12px;background:#0b0b0b;cursor:pointer;text-align:left;font:inherit;color:inherit;min-height:auto;border-radius:12px}
+.tier.on{border-color:var(--gold);background:#161104}
+.tier .n{font:700 13px Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.tier .d{color:var(--mut);font-size:14.5px;line-height:1.45;margin-top:4px}
+.tier .st{font:600 13px Arial,sans-serif;color:var(--gold2);margin-top:6px}
+.q{font-size:21px;color:#fff;margin:6px 0 4px}
+.q small{display:block;font:700 11px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.opts{display:grid;gap:9px;margin:12px 0}
+.opt{border-radius:10px;text-align:left;font:16px/1.45 Georgia,serif;padding:12px 14px;background:#101010}
+.opt.right{background:#1c1606;border-color:var(--gold);color:#fff}
+.opt.wrong{background:#1a080a;border-color:var(--red)}
+.fb{min-height:52px;color:var(--mut)}
+.fb b{color:var(--gold2)}
+.score{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font:600 14px Arial,sans-serif;color:var(--mut)}
+.score strong{color:var(--gold2);font-size:20px}
+.clock{height:6px;background:#1a1a1a;border-radius:6px;overflow:hidden;margin-top:6px}
+.clock i{display:block;height:100%;background:var(--gold);width:100%}
+.ouro{display:flex;gap:12px;align-items:center}
+.ouro img{width:64px;height:64px;object-fit:contain}
+.note{border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;color:var(--mut);font-size:15px;margin-top:30px}
+.note b{color:var(--txt)}
+.book{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.cta{display:inline-block;background:var(--gold);color:#000;text-decoration:none;font:700 15px Arial,sans-serif;padding:11px 18px;border-radius:999px}
+.ghost{display:inline-block;border:1px solid var(--gold);color:var(--gold2);text-decoration:none;font:700 15px Arial,sans-serif;padding:10px 17px;border-radius:999px}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kick">Study page · The Rumination Book · Chapters 2, 4 and 5</div>
+  <h1>The Concrete Shift: from <em>“Why?”</em> to <em>“How?”</em></h1>
+  <p class="lede">Rumination runs on abstract “why” questions: <i>Why am I like this? Why does this always happen?</i> Helpful thinking runs on concrete ones: <i>What exactly happened? What is one step I can take?</i> Walk the five steps below, watch where autopilot leads, then practice the shift until it comes on its own.</p>
+</header>
+
+<h2><small>Part 1 · Walk the path</small>Five steps out of the loop</h2>
+<p class="sub">Pick a scene, then step through it. Switch to <b>Autopilot</b> to see where the loop goes when nothing interrupts it. Click any box to jump to it.</p>
+<div class="bar" role="tablist" aria-label="Scene" id="scenes"><span class="lab">Scene</span></div>
+<div class="bar" role="tablist" aria-label="Path"><span class="lab">Path</span>
+  <button id="p-shift" class="on" role="tab" aria-selected="true">The Concrete Shift</button>
+  <button id="p-auto" class="trap" role="tab" aria-selected="false">Autopilot</button>
+</div>
+<div class="grid">
+  <div class="card">
+    <svg viewBox="0 0 520 560" width="100%" role="img" aria-label="Decision path from warning sign to absorbing action">
+      <defs>
+        <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#d4af37"/></marker>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#d62b3a"/></marker>
+        <marker id="an" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#3a3222"/></marker>
+      </defs>
+      <path id="e1" class="edge" d="M260,82 L260,122"/>
+      <path id="e2" class="edge" d="M175,196 L100,196 L100,262"/>
+      <path id="e3" class="edge" d="M345,196 L400,196 L400,262"/>
+      <path id="e4" class="edge" d="M400,330 L400,372"/>
+      <path id="e5" class="edge" d="M400,440 L400,482"/>
+      <path id="e6" class="edge" d="M100,330 C100,380 40,380 40,300 C40,230 100,240 100,262" stroke-dasharray="5 5"/>
+      <text class="pill" x="100" y="250" text-anchor="middle" fill="#d62b3a" id="pa">AUTOPILOT</text>
+      <text class="pill" x="400" y="250" text-anchor="middle" fill="#d4af37" id="pi">IF-THEN</text>
+      <g class="node" data-n="cue" tabindex="0"><rect x="150" y="18" width="220" height="64" rx="12"/><text class="t" x="260" y="44" text-anchor="middle">1 · Warning sign</text><text class="s" x="260" y="64" text-anchor="middle">Spot the cue early</text></g>
+      <g class="node" data-n="fork" tabindex="0"><polygon points="260,126 345,196 260,266 175,196"/><text class="t" x="260" y="192" text-anchor="middle">2 · The fork</text><text class="s" x="260" y="210" text-anchor="middle">Autopilot or plan?</text></g>
+      <g class="node trap" data-n="why" tabindex="0"><rect x="10" y="266" width="180" height="64" rx="12"/><text class="t" x="100" y="292" text-anchor="middle">The “Why?” loop</text><text class="s" x="100" y="312" text-anchor="middle">Brooding, round again</text></g>
+      <g class="node" data-n="ifthen" tabindex="0"><rect x="310" y="266" width="180" height="64" rx="12"/><text class="t" x="400" y="292" text-anchor="middle">3 · If-then plan</text><text class="s" x="400" y="312" text-anchor="middle">The circuit breaker</text></g>
+      <g class="node" data-n="how" tabindex="0"><rect x="310" y="376" width="180" height="64" rx="12"/><text class="t" x="400" y="402" text-anchor="middle">4 · “How?” questions</text><text class="s" x="400" y="422" text-anchor="middle">Facts and next step</text></g>
+      <g class="node" data-n="act" tabindex="0"><rect x="310" y="486" width="180" height="64" rx="12"/><text class="t" x="400" y="512" text-anchor="middle">5 · Absorbing action</text><text class="s" x="400" y="532" text-anchor="middle">Hands and attention busy</text></g>
+    </svg>
+  </div>
+  <div class="card det" aria-live="polite">
+    <div class="tag" id="d-tag"></div>
+    <h3 id="d-title"></h3>
+    <div id="d-blocks" style="margin-top:12px"></div>
+    <div class="step"><button id="prev">Previous</button><span id="count"></span><button id="next" class="on">Next step</button></div>
+  </div>
+</div>
+
+<h2><small>Part 2 · Practice the shift</small>Why to How: the endless challenge</h2>
+<p class="sub">Each round shows a “why” thought from the loop. Choose the concrete question or step that moves it forward. Climb the road: <b>Good</b>, <b>Better</b>, <b>Best</b>. Best never ends; the snake eats its tail, and so does practice.</p>
+<div class="road" id="road"></div>
+<div class="card" id="game">
+  <div class="score"><span>Streak <strong id="streak">0</strong></span><span>Best streak <strong id="best">0</strong></span><span id="goal"></span>
+    <span class="ouro" style="margin-left:auto"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6ab43c6865f7a71bbb4c3c7e_gsu-infinity-snake-jeweled.webp" alt="The GSU Ouroboros, the jeweled snake of endless learning"></span></div>
+  <div class="clock" id="clockwrap" hidden><i id="clock"></i></div>
+  <div class="q"><small id="qlab">The loop says</small><span id="q"></span></div>
+  <div class="opts" id="opts"></div>
+  <div class="fb" id="fb" aria-live="polite"></div>
+  <button id="nextq" class="on" hidden>Next thought</button>
+</div>
+
+<div class="note"><b>Education, not therapy.</b> This page teaches the ideas in <i>The Rumination Book</i>. It is not a diagnosis, a treatment or a substitute for care from a qualified professional. If your thoughts turn toward harming yourself, in the United States or Canada call or text <b>988</b>. Nothing you do on this page is recorded or sent anywhere; your best streak is kept only in this browser.</div>
+<div class="book">
+  <a class="cta" href="https://www.globalsovereignuniversity.org/books/the-rumination-book">Read about The Rumination Book</a>
+  <a class="ghost" href="rumination-brain-loop.html">Next: The Brain Loop</a>
+  <a class="ghost" href="https://www.globalsovereignuniversity.org/anxiety-toolkit">Anxiety Toolkit</a>
+</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- Part 1: the five steps ---------- */
+var SC=[
+ {k:'mistake',n:'A mistake at work',c:'You spot an error after sending a report.',w:'Tight chest; you have reread the sent message four times.',y:'“Why am I so careless? I always ruin my own work.”',i:'“If I reread a sent message twice, then I close it and write a one-sentence fix.”',h:'1. What exactly is wrong?\n2. Who needs to know?\n3. What is the two-minute correction?',a:'Send the short correction, then take a five-minute brisk walk.'},
+ {k:'talk',n:'A tense conversation',c:'A sharp disagreement with a co-worker or a family member.',w:'Clenched jaw; you are rehearsing comebacks in the shower.',y:'“Why do they never listen to me? Nothing ever changes.”',i:'“If I start rehearsing arguments, then I stop and write down what I actually want.”',h:'1. What exactly did we disagree about?\n2. What outcome do I want?\n3. What calm opening line will I use?',a:'Write a three-point plan for a calm follow-up, then switch to a hands-on task.'},
+ {k:'night',n:'2:47 in the morning',c:'Lying awake, going over tomorrow’s unfinished work.',w:'Staring at the ceiling, cataloguing everything that is behind.',y:'“Why can’t I keep up? I’m falling behind on everything.”',i:'“If I start listing tasks in bed, then I write the top three on paper and get up if sleep has not come in twenty minutes.”',h:'1. What are the two things that matter at 9 a.m.?\n2. What can wait until afternoon?\n3. What is the first five-minute step?',a:'Write the two-item morning list, set it aside, and do a slow two-minute body scan.'},
+ {k:'car',n:'The parking lot',c:'The meeting went fine, but you are still in the car twenty minutes later.',w:'Replaying the same eleven seconds of what you said.',y:'“Why did I say that? Everyone must think I’m an idiot.”',i:'“If I am still replaying a meeting after I park, then I name five things I can see and start the engine.”',h:'1. What exactly did I say, word for word?\n2. Did anyone react, or am I guessing?\n3. Is there one thing worth a follow-up email?',a:'Drive home with a podcast on, or send the one follow-up and close the laptop.'},
+ {k:'table',n:'The dinner table',c:'Your family is talking; you have not heard a word in four minutes.',w:'Nodding on autopilot while the argument from work plays again.',y:'“Why does this always happen to me?”',i:'“If I catch myself nodding without listening, then I ask the person in front of me one real question.”',h:'1. What is the one thing about work that needs a decision?\n2. When will I decide it: in my worry window?\n3. What did my daughter just say?',a:'Put the phone in another room and ask a question you want to hear the answer to.'},
+ {k:'gym',n:'The gym door',c:'You have planned to start exercising for weeks and still have not gone.',w:'Researching the perfect routine again instead of going.',y:'“Why can’t I ever follow through? What’s wrong with me?”',i:'“If I catch myself researching instead of doing, then I set a five-minute timer and start.”',h:'1. What is the smallest version I could do today?\n2. What time, exactly?\n3. What do I need to have ready?',a:'Walk through the door for five minutes. Certainty comes after action, not before it.'}
+];
+var META={
+ cue:{t:'Warning sign',g:'Step 1 · Catch it early',b:function(s){return [['The situation',s.c],['The first sign',s.w]]}},
+ fork:{t:'The fork',g:'Step 2 · Autopilot or plan?',b:function(s){return [['Autopilot would say',s.y,1],['The plan says',s.i]]}},
+ why:{t:'The “Why?” loop',g:'The trap · Brooding',b:function(s){return [['The thought',s.y,1],['What it costs','It feels like thinking, but nothing is solved. Your mood drops, your attention narrows, and the same question comes round again.',1]]}},
+ ifthen:{t:'The if-then plan',g:'Step 3 · The circuit breaker',b:function(s){return [['Decided in advance',s.i],['Why it works','A plan made while calm links the warning sign to one small action, so you do not have to make a decision mid-loop.']]}},
+ how:{t:'The “How?” questions',g:'Step 4 · Lower the altitude',b:function(s){return [['Ask instead',s.h],['The shift','From a verdict on yourself (“Why me?”) to facts you can see and a step you can take.']]}},
+ act:{t:'Absorbing action',g:'Step 5 · Hands and attention busy',b:function(s){return [['Do this now',s.a],['Why it works','An activity that needs your attention competes with the loop for the same space, and the action produces new information.']]}}
+};
+var PATH={shift:['cue','fork','ifthen','how','act'],auto:['cue','fork','why']};
+var st={s:0,p:'shift',i:0};
+var $=function(id){return document.getElementById(id)};
+var scBar=$('scenes');
+SC.forEach(function(s,ix){var b=document.createElement('button');b.textContent=s.n;b.setAttribute('role','tab');b.onclick=function(){st.s=ix;draw()};scBar.appendChild(b)});
+$('p-shift').onclick=function(){st.p='shift';st.i=Math.min(st.i,4);draw()};
+$('p-auto').onclick=function(){st.p='auto';st.i=Math.min(st.i,2);draw()};
+$('prev').onclick=function(){if(st.i>0){st.i--;draw()}};
+$('next').onclick=function(){if(st.i<PATH[st.p].length-1){st.i++;draw()}};
+Array.prototype.forEach.call(document.querySelectorAll('.node'),function(g){
+  var go=function(){var n=g.getAttribute('data-n');var p=PATH[st.p];if(p.indexOf(n)<0){st.p=(n==='why')?'auto':'shift';p=PATH[st.p]}st.i=p.indexOf(n);draw()};
+  g.addEventListener('click',go);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
+});
+function edge(id,on,cls,mk){var e=$(id);e.setAttribute('class','edge'+(on?' '+cls:' dim'));e.setAttribute('marker-end','url(#'+(on?mk:'an')+')')}
+function draw(){
+  var s=SC[st.s],p=PATH[st.p],cur=p[st.i];
+  Array.prototype.forEach.call(scBar.querySelectorAll('button'),function(b,ix){b.className=ix===st.s?'on':'';b.setAttribute('aria-selected',ix===st.s)});
+  $('p-shift').className=st.p==='shift'?'on':'';$('p-auto').className='trap'+(st.p==='auto'?' on':'');
+  $('p-shift').setAttribute('aria-selected',st.p==='shift');$('p-auto').setAttribute('aria-selected',st.p==='auto');
+  Array.prototype.forEach.call(document.querySelectorAll('.node'),function(g){var n=g.getAttribute('data-n'),k=p.indexOf(n);
+    var c='node'+(n==='why'?' trap':'');if(k<0)c+=' dim';else if(k===st.i)c+=' cur';else if(k<st.i)c+=' seen';g.setAttribute('class',c)});
+  var auto=st.p==='auto',reach=function(n){var k=p.indexOf(n);return k>=0&&k<=st.i};
+  edge('e1',reach('fork'),auto?'bad':'go',auto?'ar':'ag');
+  edge('e2',auto&&reach('why'),'bad','ar');edge('e6',auto&&reach('why'),'bad','ar');
+  edge('e3',!auto&&reach('ifthen'),'go','ag');edge('e4',!auto&&reach('how'),'go','ag');edge('e5',!auto&&reach('act'),'go','ag');
+  $('pa').setAttribute('opacity',auto?1:.3);$('pi').setAttribute('opacity',auto?.3:1);
+  var m=META[cur];$('d-title').textContent=m.t;$('d-tag').textContent=s.n+' · '+m.g;
+  var box=$('d-blocks');box.innerHTML='';
+  m.b(s).forEach(function(x){var d=document.createElement('div');d.className='blk'+(x[2]?' bad':'');var b=document.createElement('b');b.textContent=x[0];var q=document.createElement('p');q.textContent=x[1];d.appendChild(b);d.appendChild(q);box.appendChild(d)});
+  if(auto&&cur==='why'){var d=document.createElement('div');d.className='blk';d.innerHTML='<b>Try the other road</b><p>Switch the path to <i>The Concrete Shift</i> and walk the same scene again.</p>';box.appendChild(d)}
+  $('count').textContent='Step '+(st.i+1)+' of '+p.length;$('prev').disabled=st.i===0;$('next').disabled=st.i===p.length-1;
+}
+draw();
+
+/* ---------- Part 2: Why to How, endless ---------- */
+/* each: [why thought, concrete (right), looks-concrete-but-still-judging, another why, avoid/suppress] */
+var BANK=[
+ ['Why do I always mess things up when it matters?','What specific step failed, and what one check would catch it next time?','What exactly is wrong with me that makes me fail?','Why can’t I ever get anything right?','Stop thinking about it and hope nobody noticed.'],
+ ['Why don’t they respect me?','What exact words caused the tension, and how will I make my point tomorrow?','What is it about me that makes people disrespect me?','Why does everyone treat me like this?','Avoid them until it blows over.'],
+ ['Why can’t I ever get ahead of this work?','What is the single ten-minute task I can finish right now?','How many ways have I fallen behind this month?','Why am I always the one who is overwhelmed?','Watch a show until the feeling passes.'],
+ ['Why didn’t I see that coming years ago?','Given what I know today, what is my best move this week?','How stupid was I not to see it, on a scale of one to ten?','Why do I keep missing the obvious?','Tell myself it does not matter anymore.'],
+ ['Why did I say that in the meeting?','What did I actually say, and is one short follow-up note worth sending?','How bad did I sound compared with everyone else?','Why do I always embarrass myself?','Replay it once more to be sure.'],
+ ['Why can’t I sleep like a normal person?','What is the one thing I will write down before I get up and leave the bed for a while?','How many hours of sleep have I lost this week?','Why is my mind always racing?','Lie still and force myself to stop thinking.'],
+ ['Why do I feel this way?','What happened just before the feeling started, and what can I do in the next fifteen minutes?','What kind of person feels this way over nothing?','Why does this keep happening to me?','Push the feeling down and get on with it.'],
+ ['Why can’t I make a decision?','Which two options are real, and what will I do for five minutes to test one?','How many times have I been wrong before?','Why am I so indecisive about everything?','Ask three more people what they would do.'],
+ ['Why did they not text back?','What will I do with the next hour while I wait, and when will I check once?','What did I do wrong in my last message?','Why do people always lose interest in me?','Check the phone every few minutes.'],
+ ['Why is my life not where it should be?','What is one step this week toward the thing I care about most?','How far behind am I compared with people my age?','Why haven’t I achieved anything?','Make a long list of everything that is wrong.'],
+ ['Why am I so anxious all the time?','When is my worry window today, and what will I write down until then?','How anxious am I compared with yesterday, exactly?','Why can’t I just be calm like everyone else?','Keep busy so I never have to notice it.'],
+ ['Why did my friend seem cold today?','What did I actually see, and what is one kind question I could ask?','What flaw of mine made them pull away?','Why do my friendships always fall apart?','Go over the conversation in my head again tonight.'],
+ ['Why did I forget the appointment?','What will I put in my calendar today so the next one reminds me?','How unreliable am I, really?','Why do I always let people down?','Avoid calling them back.'],
+ ['Why did I lose my temper with my kids?','What will I say to them at bedtime, and what will I do the next time I feel it rising?','How bad a parent does this make me?','Why am I always the one who ruins things?','Pretend it did not happen.'],
+ ['Why can’t I stop checking that email?','What reply, if any, is needed, and what time will I look once more?','How careless did my message look?','Why do I always get so worked up?','Reread it until it feels right.'],
+ ['Why did I not get the job?','What one question can I ask the employer, and which application is next?','What is wrong with me that they saw?','Why do I never get chosen?','Stop applying for a while.'],
+ ['Why am I like this?','What exactly happened today, and what is one thing I will do differently tomorrow?','How many of my faults showed up today?','Why can’t I change?','Distract myself so I do not have to think.'],
+ ['Why is money always so tight?','Which one bill comes due first, and what is my next step on it today?','How badly have I handled money my whole life?','Why can’t I ever get ahead?','Avoid opening the bills.'],
+ ['Why didn’t I speak up?','What will I say, word for word, the next time, and to whom?','How weak did I look sitting there?','Why am I always so afraid?','Rehearse the argument all evening.'],
+ ['Why does my body feel so tense?','Where exactly is the tension, and can I relax that muscle for three slow breaths?','How unhealthy have I become?','Why can’t I ever relax?','Ignore it and keep going.'],
+ ['Why did the project fail?','Which one step went wrong, and what is the first thing to fix on the next one?','How much of the failure is my fault, as a percentage?','Why does everything I touch go wrong?','Never volunteer for a project again.'],
+ ['Why am I always behind my friends?','What is one thing I want, and the first small step toward it this week?','How do I rank against each of them?','Why do I never measure up?','Stop seeing them for a while.']
+];
+var TIERS=[
+ {n:'Good',d:'Two answers: the concrete step or the loop. Five in a row clears the tier.',k:2,goal:5,time:0},
+ {n:'Better',d:'Three answers. One sounds concrete but is still judging you. Eight in a row clears it.',k:3,goal:8,time:0},
+ {n:'Best',d:'Four answers, twelve seconds each. No finish line: keep the streak alive as long as you can.',k:4,goal:0,time:12}
+];
+var save={};try{save=JSON.parse(localStorage.getItem('gsu-rum-shift')||'{}')}catch(e){save={}}
+function put(){try{localStorage.setItem('gsu-rum-shift',JSON.stringify(save))}catch(e){}}
+var g={t:0,streak:0,order:[],pos:0,timer:null,left:0,done:false};
+var road=$('road');
+TIERS.forEach(function(t,ix){var b=document.createElement('button');b.className='tier';b.innerHTML='<div class="n">'+t.n+'</div><div class="d">'+t.d+'</div><div class="st" id="ts'+ix+'"></div>';b.onclick=function(){pick(ix)};road.appendChild(b)});
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
+function tierStatus(){TIERS.forEach(function(t,ix){var s=save['t'+ix]||0;$('ts'+ix).textContent=ix<2?((save['c'+ix]?'Cleared. ':'')+'Best streak '+s):('Best streak '+s);road.children[ix].className='tier'+(ix===g.t?' on':'')})}
+function pick(ix){g.t=ix;g.streak=0;g.order=shuffle(BANK.map(function(_,i){return i}));g.pos=0;tierStatus();ask()}
+function ask(){
+  clearInterval(g.timer);var t=TIERS[g.t];
+  if(g.pos>=g.order.length){g.order=shuffle(g.order);g.pos=0}
+  var it=BANK[g.order[g.pos++]];
+  var cands=[[it[1],1],[it[3],0]];if(t.k>=3)cands.push([it[2],0]);if(t.k>=4)cands.push([it[4],0]);shuffle(cands);
+  $('q').textContent='“'+it[0]+'”';$('fb').textContent='';$('nextq').hidden=true;
+  var box=$('opts');box.innerHTML='';
+  cands.forEach(function(c){var b=document.createElement('button');b.className='opt';b.textContent=c[0];b.onclick=function(){answer(b,c[1],it)};box.appendChild(b)});
+  $('streak').textContent=g.streak;$('best').textContent=save['t'+g.t]||0;
+  $('goal').textContent=t.goal?('Clear '+t.n+': '+Math.min(g.streak,t.goal)+' of '+t.goal):'Best: no finish line';
+  $('clockwrap').hidden=!t.time;
+  if(t.time){g.left=t.time*10;$('clock').style.width='100%';g.timer=setInterval(function(){g.left--;$('clock').style.width=(g.left/(t.time*10)*100)+'%';if(g.left<=0){clearInterval(g.timer);timeout(it)}},100)}
+}
+function lock(it){Array.prototype.forEach.call($('opts').children,function(b){b.disabled=true;if(b.textContent===it[1])b.classList.add('right')})}
+function timeout(it){lock(it);g.streak=0;$('streak').textContent=0;$('fb').innerHTML='<b>Time.</b> The loop got there first this time. The concrete answer is marked.';$('nextq').hidden=false}
+function answer(b,ok,it){
+  clearInterval(g.timer);lock(it);var t=TIERS[g.t];
+  if(ok){g.streak++;var k='t'+g.t;if(g.streak>(save[k]||0)){save[k]=g.streak;put()}
+    var msg='<b>Concrete.</b> That question has an answer you can act on.';
+    if(t.goal&&g.streak===t.goal){save['c'+g.t]=1;put();msg+=' <b>You cleared '+t.n+'.</b>'+(g.t<2?' The next tier is open whenever you are.':'')}
+    $('fb').innerHTML=msg}
+  else{b.classList.add('wrong');g.streak=0;
+    var why=b.textContent===it[2]?'It sounds specific, but it is still a verdict on you.':(b.textContent===it[4]?'Pushing a thought away or feeding it tends to bring it back stronger.':'Another “why” keeps the loop turning.');
+    $('fb').innerHTML='<b>Still the loop.</b> '+why+' The concrete answer is marked.'}
+  $('streak').textContent=g.streak;$('best').textContent=save['t'+g.t]||0;tierStatus();$('nextq').hidden=false;$('nextq').focus();
+}
+$('nextq').onclick=ask;
+pick(0);
+})();
+</script>
+<script src="/return-bar.js" defer></script>
+</body>
+</html>

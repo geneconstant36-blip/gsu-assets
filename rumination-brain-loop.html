@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Brain Loop: The Networks Behind Rumination | The Rumination Book | Global Sovereign University</title>
+<meta name="description" content="A free interactive study page from The Rumination Book. See the brain networks that keep a rumination loop turning, switch to engagement, and try three ways to break it. Then test yourself in an endless challenge.">
+<meta property="og:title" content="The Brain Loop | Global Sovereign University">
+<meta property="og:description" content="The networks behind rumination, and the three moves that quiet them. A free study page from The Rumination Book.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://read.globalsovereignuniversity.org/rumination-brain-loop.html">
+<link rel="icon" href="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/695f9e8f44a945b33f5bfa10_gsu%20logo%20square%2032x32.png">
+<!-- The Brain Loop v1.0, Nov 27 2026. Rebuilt from the Chancellor's neural-network state-transition file and his Deep Research
+     notes for The Rumination Book (Revision 2, ISBN 979-8-1682-6953-7). Self-contained: no fonts, no analytics, nothing sent.
+     Wording kept to what the research supports: these are patterns seen in groups of people, not a scan of any one reader. -->
+<style>
+:root{--bk:#000;--panel:#0b0b0b;--line:#2a2418;--gold:#d4af37;--gold2:#f2d27a;--red:#d62b3a;--txt:#f3ede2;--mut:#b8ad98;--r:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bk)}
+body{background:var(--bk);color:var(--txt);font:17px/1.6 Georgia,'Times New Roman',serif;padding-bottom:60px}
+a{color:var(--gold2)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header.hero{padding:42px 0 18px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.kick{font:700 12px/1.3 Arial,Helvetica,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:8px 0 10px;color:#fff}
+h1 em{color:var(--gold);font-style:normal}
+.lede{color:var(--mut);max-width:780px}
+h2{font-size:26px;color:#fff;margin:34px 0 6px}
+h2 small{display:block;font:700 12px Arial,sans-serif;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:4px}
+.sub{color:var(--mut);margin-bottom:14px;max-width:780px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 14px}
+.bar .lab{font:700 11px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-right:4px}
+button{font:600 15px Arial,Helvetica,sans-serif;cursor:pointer;border-radius:999px;border:1px solid var(--line);background:#111;color:var(--txt);padding:9px 16px;min-height:42px}
+button:hover{border-color:var(--gold)}
+button:focus-visible,.nd:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+button.on{background:var(--gold);color:#000;border-color:var(--gold)}
+button.trap.on{background:var(--red);border-color:var(--red);color:#fff}
+button:disabled{opacity:.35;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:1.25fr 1fr;gap:18px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+svg text{font-family:Arial,Helvetica,sans-serif}
+.nd{cursor:pointer}
+.nd .sh{fill:#111;stroke:#3a3222;stroke-width:2;transition:all .3s}
+.nd .t{fill:#f3ede2;font-size:15px;font-weight:700}
+.nd .s{fill:#b8ad98;font-size:12.5px}
+.nd.hot .sh{fill:#2a0b0e;stroke:var(--red)}
+.nd.jam .sh{fill:#1d0a0c;stroke:#8f1f29;stroke-dasharray:6 4}
+.nd.off .sh{fill:#0c0c0c;stroke:#2a2a2a}.nd.off .t,.nd.off .s{opacity:.45}
+.nd.calm .sh{fill:#0f0f0f;stroke:#4a4232}
+.nd.go .sh{fill:#1c1606;stroke:var(--gold)}
+.nd.sel .sh{stroke-width:4}
+.nd.target .sh{stroke:var(--gold2);stroke-width:5}
+.ed{fill:none;stroke-width:2.2;transition:opacity .3s}
+.ed.r{stroke:var(--red)}.ed.e{stroke:var(--gold)}
+.ed.hide{opacity:.08}
+.el{font:italic 12.5px Arial,sans-serif}
+.el.r{fill:#e88a92}.el.e{fill:var(--gold2)}.el.hide{opacity:.12}
+.det h3{font-size:22px;color:#fff;margin-bottom:2px}
+.det .tag{font:700 11px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.two div{border-radius:8px;padding:10px 12px;background:#0f0d07;border-left:3px solid var(--gold)}
+.two div.r{background:#140709;border-color:var(--red)}
+.two b{display:block;font:700 11px Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:3px}
+.int{border:1px solid var(--gold);border-radius:10px;padding:12px;margin-top:12px;background:#161104;display:none}
+.int.show{display:block}
+.int b{color:var(--gold2)}
+/* challenge */
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+@media(max-width:620px){.road{grid-template-columns:1fr}}
+.tier{border:1px solid var(--line);padding:12px;background:#0b0b0b;cursor:pointer;text-align:left;font:inherit;color:inherit;border-radius:12px;min-height:auto}
+.tier.on{border-color:var(--gold);background:#161104}
+.tier .n{font:700 13px Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.tier .d{color:var(--mut);font-size:14.5px;line-height:1.45;margin-top:4px}
+.tier .st{font:600 13px Arial,sans-serif;color:var(--gold2);margin-top:6px}
+.q{font-size:20px;color:#fff;margin:6px 0 4px}
+.q small{display:block;font:700 11px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+@media(max-width:620px){.opts{grid-template-columns:1fr}}
+.opt{border-radius:10px;text-align:left;font:16px/1.4 Georgia,serif;padding:12px 14px;background:#101010}
+.opt.right{background:#1c1606;border-color:var(--gold);color:#fff}
+.opt.wrong{background:#1a080a;border-color:var(--red)}
+.fb{min-height:52px;color:var(--mut)}.fb b{color:var(--gold2)}
+.score{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font:600 14px Arial,sans-serif;color:var(--mut)}
+.score strong{color:var(--gold2);font-size:20px}
+.clock{height:6px;background:#1a1a1a;border-radius:6px;overflow:hidden;margin-top:6px}
+.clock i{display:block;height:100%;background:var(--gold);width:100%}
+.ouro img{width:64px;height:64px;object-fit:contain}
+.note{border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;color:var(--mut);font-size:15px;margin-top:30px}
+.note b{color:var(--txt)}
+.src{font-size:14px;color:var(--mut);margin-top:12px}
+.book{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.cta{display:inline-block;background:var(--gold);color:#000;text-decoration:none;font:700 15px Arial,sans-serif;padding:11px 18px;border-radius:999px}
+.ghost{display:inline-block;border:1px solid var(--gold);color:var(--gold2);text-decoration:none;font:700 15px Arial,sans-serif;padding:10px 17px;border-radius:999px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kick">Study page · The Rumination Book · Chapters 1, 4 and 8 · The Rumination Toolkit</div>
+  <h1>The Brain Loop: <em>why the thought keeps coming back</em></h1>
+  <p class="lede">Researchers who scan the brains of people who ruminate find a pattern across three large networks. One turns attention inward to the self. One turns it outward to a task. One works like a switch between them. In a rumination loop the switch sticks on the inward side. Explore the loop below, then flip to engagement and try the three moves that help it let go.</p>
+</header>
+
+<h2><small>Part 1 · Explore</small>The loop, network by network</h2>
+<div class="bar" role="tablist" aria-label="State"><span class="lab">State</span>
+  <button id="m-rum" class="trap on" role="tab" aria-selected="true">Rumination loop</button>
+  <button id="m-eng" role="tab" aria-selected="false">Engagement</button>
+</div>
+<div class="grid">
+  <div class="card">
+    <svg viewBox="0 0 620 470" width="100%" role="img" aria-label="Diagram of five brain systems and the paths between them">
+      <defs>
+        <marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#d62b3a"/></marker>
+        <marker id="me" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#d4af37"/></marker>
+      </defs>
+      <!-- rumination paths -->
+      <path class="ed r" data-m="rum" d="M220,62 C120,62 110,120 110,180" marker-end="url(#mr)"/>
+      <text class="el r" data-m="rum" x="120" y="92">abstract “Why?”</text>
+      <path class="ed r" data-m="rum" d="M205,218 L250,218" marker-end="url(#mr)"/>
+      <text class="el r" data-m="rum" x="200" y="206">hijack</text>
+      <path class="ed r" data-m="rum" d="M120,258 C120,330 170,370 222,372" marker-end="url(#mr)"/>
+      <text class="el r" data-m="rum" x="112" y="322">self-criticism</text>
+      <path class="ed r" data-m="rum" d="M226,392 C80,420 40,330 72,256" marker-end="url(#mr)"/>
+      <text class="el r" data-m="rum" x="40" y="420">distress, round again</text>
+      <!-- engagement paths -->
+      <path class="ed e" data-m="eng" d="M310,92 L310,168" marker-end="url(#me)"/>
+      <text class="el e" data-m="eng" x="318" y="134">cue noticed</text>
+      <path class="ed e" data-m="eng" d="M372,218 L436,218" marker-end="url(#me)"/>
+      <text class="el e" data-m="eng" x="378" y="206">to the task</text>
+      <path class="ed e" data-m="eng" d="M520,258 C520,330 470,370 400,374" marker-end="url(#me)"/>
+      <text class="el e" data-m="eng" x="470" y="330">calms</text>
+      <path class="ed e" data-m="eng" d="M440,240 C330,290 230,270 205,248" marker-end="url(#me)"/>
+      <text class="el e" data-m="eng" x="262" y="300">quiets brooding</text>
+      <!-- nodes -->
+      <g class="nd" data-n="trigger" tabindex="0"><rect class="sh" x="220" y="30" width="180" height="62" rx="31"/><text class="t" x="310" y="57" text-anchor="middle">Trigger</text><text class="s" x="310" y="75" text-anchor="middle">now versus a goal</text></g>
+      <g class="nd" data-n="dmn" tabindex="0"><rect class="sh" x="20" y="180" width="185" height="78" rx="18"/><text class="t" x="112" y="212" text-anchor="middle">Default mode</text><text class="s" x="112" y="232" text-anchor="middle">mPFC · PCC · IPL</text></g>
+      <g class="nd" data-n="sal" tabindex="0"><polygon class="sh" points="310,168 372,218 310,268 248,218"/><text class="t" x="310" y="214" text-anchor="middle">Salience</text><text class="s" x="310" y="232" text-anchor="middle">the switch</text></g>
+      <g class="nd" data-n="cen" tabindex="0"><rect class="sh" x="436" y="180" width="170" height="78" rx="18"/><text class="t" x="521" y="212" text-anchor="middle">Central executive</text><text class="s" x="521" y="232" text-anchor="middle">dlPFC · task control</text></g>
+      <g class="nd" data-n="sg" tabindex="0"><rect class="sh" x="222" y="344" width="178" height="62" rx="31"/><text class="t" x="311" y="371" text-anchor="middle">sgPFC and amygdala</text><text class="s" x="311" y="389" text-anchor="middle">the emotion amplifier</text></g>
+    </svg>
+  </div>
+  <div class="card det" aria-live="polite">
+    <div class="tag" id="d-role"></div>
+    <h3 id="d-title"></h3>
+    <p id="d-desc" style="margin-top:8px"></p>
+    <div class="two"><div class="r"><b>In the loop</b><span id="d-rum"></span></div><div><b>In engagement</b><span id="d-eng"></span></div></div>
+    <div class="int" id="int"><b id="int-t"></b><p id="int-m" style="margin-top:4px"></p></div>
+  </div>
+</div>
+<div class="bar" style="margin-top:14px"><span class="lab">Break the loop</span>
+  <button data-i="how">The “How?” shift</button>
+  <button data-i="mind">Detached mindfulness</button>
+  <button data-i="ground">Grounding and action</button>
+</div>
+
+<h2><small>Part 2 · Test yourself</small>Name the network: the endless challenge</h2>
+<p class="sub">Read the clue and name the part of the loop it describes. Climb the road: <b>Good</b>, <b>Better</b>, <b>Best</b>. Best never ends.</p>
+<div class="road" id="road"></div>
+<div class="card">
+  <div class="score"><span>Streak <strong id="streak">0</strong></span><span>Best streak <strong id="best">0</strong></span><span id="goal"></span>
+    <span class="ouro" style="margin-left:auto"><img src="https://cdn.prod.website-files.com/690a4028667a2e2c27b665d0/6ab43c6865f7a71bbb4c3c7e_gsu-infinity-snake-jeweled.webp" alt="The GSU Ouroboros, the jeweled snake of endless learning"></span></div>
+  <div class="clock" id="clockwrap" hidden><i id="clock"></i></div>
+  <div class="q"><small id="qlab">Clue</small><span id="q"></span></div>
+  <div class="opts" id="opts"></div>
+  <div class="fb" id="fb" aria-live="polite"></div>
+  <button id="nextq" class="on" hidden>Next clue</button>
+</div>
+
+<div class="note"><b>Education, not therapy.</b> This page teaches the ideas in <i>The Rumination Book</i>. The diagram is a simplified teaching picture of patterns researchers have seen in groups of people; it is not a picture of your brain. It is not a diagnosis, a treatment or a substitute for care from a qualified professional. If your thoughts turn toward harming yourself, in the United States or Canada call or text <b>988</b>. Nothing you do here is recorded or sent anywhere.</div>
+<p class="src">Based on the author’s Deep Research notes for <i>The Rumination Book</i>, which draw on studies of the default mode network in rumination, the triple-network model of the brain (default mode, salience and central executive), rumination-focused CBT (Watkins and colleagues) and metacognitive therapy (Wells).</p>
+<div class="book">
+  <a class="cta" href="https://www.globalsovereignuniversity.org/books/the-rumination-book">Read about The Rumination Book</a>
+  <a class="ghost" href="rumination-concrete-shift.html">Next: The Concrete Shift</a>
+  <a class="ghost" href="https://www.globalsovereignuniversity.org/anxiety-toolkit">Anxiety Toolkit</a>
+</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var N={
+ trigger:{t:'Trigger',r:'Input cue',d:'A thought, a memory or something that happens: anything that signals a gap between where you are and a goal you care about.',a:'Read as a threat, an unsolved problem',b:'Noticed as one event among many'},
+ dmn:{t:'Default mode network',r:'The self-referential hub · mPFC, PCC, IPL',d:'Active when the mind turns inward: thinking about yourself, replaying the past, imagining the future. In rumination it locks onto abstract “Why?” questions about the self.',a:'Highly active and tightly connected',b:'Quieter while attention is on a task'},
+ sal:{t:'Salience network',r:'The switch',d:'Built around the anterior insula and the anterior cingulate. It notices what matters right now and helps hand control between the inward and the outward networks.',a:'Stuck on the inward side',b:'Hands control to the task'},
+ cen:{t:'Central executive network',r:'Task and action control · dlPFC',d:'Holds a plan in working memory and steers goal-directed action. When it is engaged in a concrete task, the inward network tends to quiet down.',a:'Pushed aside; hard to focus',b:'In charge: concrete problem-solving'},
+ sg:{t:'Subgenual PFC and amygdala',r:'The emotion amplifier',d:'Links the inward stream of thought to feeling. Coupled with the default mode network, it can turn a passing thought into lasting sadness, guilt or fear.',a:'Amplifying distress',b:'Settled toward baseline'}
+};
+var I={
+ how:{n:'The “How?” shift (rumination-focused CBT)',to:'cen',m:'Swapping an abstract “Why did this happen?” for concrete questions (what exactly happened, what is the next step) recruits the central executive network for a task with an answer. Chapters 4 and 5, and the 5-Step RFCBT Protocol in the Toolkit.'},
+ mind:{n:'Detached mindfulness (metacognitive therapy)',to:'sal',m:'Noticing the trigger as a passing mental event, and choosing not to engage it, works at the switch: the thought is seen, and the loop is not fed. Chapters 4 and 8.'},
+ ground:{n:'Grounding and absorbing action',to:'cen',m:'Turning attention outward through the senses (five things you can see) or into a hands-on task gives the outward network something to do, which leaves less room for the loop. Chapter 8 and Appendix A.'}
+};
+var MAP={rum:{trigger:'jam',dmn:'hot',sg:'hot',sal:'jam',cen:'off'},eng:{trigger:'calm',dmn:'calm',sg:'calm',sal:'go',cen:'go'}};
+var st={m:'rum',sel:'dmn',iv:null};
+var $=function(id){return document.getElementById(id)};
+function draw(){
+  $('m-rum').className='trap'+(st.m==='rum'?' on':'');$('m-eng').className=st.m==='eng'?'on':'';
+  $('m-rum').setAttribute('aria-selected',st.m==='rum');$('m-eng').setAttribute('aria-selected',st.m==='eng');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-m]'),function(e){var c=e.getAttribute('class').replace(/ hide/g,'');e.setAttribute('class',c+(e.getAttribute('data-m')===st.m?'':' hide'))});
+  var tgt=st.iv?I[st.iv].to:null;
+  Array.prototype.forEach.call(document.querySelectorAll('.nd'),function(g){var n=g.getAttribute('data-n');g.setAttribute('class','nd '+MAP[st.m][n]+(n===st.sel?' sel':'')+(st.m==='eng'&&n===tgt?' target':''))});
+  var d=N[st.sel];$('d-title').textContent=d.t;$('d-role').textContent=d.r;$('d-desc').textContent=d.d;$('d-rum').textContent=d.a;$('d-eng').textContent=d.b;
+  Array.prototype.forEach.call(document.querySelectorAll('[data-i]'),function(b){b.className=b.getAttribute('data-i')===st.iv?'on':''});
+  if(st.iv){$('int').className='int show';$('int-t').textContent='Applied: '+I[st.iv].n;$('int-m').textContent=I[st.iv].m}else $('int').className='int';
+}
+$('m-rum').onclick=function(){st.m='rum';st.iv=null;draw()};
+$('m-eng').onclick=function(){st.m='eng';draw()};
+Array.prototype.forEach.call(document.querySelectorAll('[data-i]'),function(b){b.onclick=function(){st.iv=b.getAttribute('data-i');st.m='eng';st.sel=I[st.iv].to;draw()}});
+Array.prototype.forEach.call(document.querySelectorAll('.nd'),function(g){var go=function(){st.sel=g.getAttribute('data-n');draw()};g.addEventListener('click',go);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
+draw();
+
+/* ---------- endless challenge ---------- */
+var NAMES={dmn:'Default mode network',sal:'Salience network',cen:'Central executive network',sg:'sgPFC and amygdala',trigger:'The trigger'};
+var CLUES=[
+ ['dmn','Busy when you replay yesterday’s conversation for the tenth time.'],['dmn','Includes the medial prefrontal cortex and the posterior cingulate cortex.'],
+ ['dmn','Thinking about yourself, your past and your future.'],['dmn','In rumination it locks onto “Why am I like this?”'],['dmn','Tends to quiet down when you are absorbed in a hands-on task.'],
+ ['sal','Works like a switch between looking inward and looking outward.'],['sal','Built around the anterior insula and the anterior cingulate.'],
+ ['sal','Notices what matters right now.'],['sal','Detached mindfulness works here: the thought is seen and not fed.'],
+ ['cen','Anchored in the dorsolateral prefrontal cortex.'],['cen','Holds a plan in working memory and steers action.'],
+ ['cen','The “How?” shift puts it to work.'],['cen','Gets pushed aside when the loop takes over, so it is hard to focus.'],['cen','Naming five things you can see recruits it.'],
+ ['sg','Turns a passing thought into lasting sadness or guilt.'],['sg','The emotion amplifier of the loop.'],['sg','Links the inward stream of thought to feeling.'],
+ ['trigger','A gap between where you are and a goal you care about.'],['trigger','A memory, a remark or a mistake that starts the loop.'],['trigger','The first box in a C-R-C log: the context.']
+];
+var TIERS=[
+ {n:'Good',d:'Pick from two names. Five in a row clears the tier.',k:2,goal:5,time:0},
+ {n:'Better',d:'Pick from four names. Eight in a row clears it.',k:4,goal:8,time:0},
+ {n:'Best',d:'All five names, ten seconds each. No finish line.',k:5,goal:0,time:10}
+];
+var save={};try{save=JSON.parse(localStorage.getItem('gsu-rum-brain')||'{}')}catch(e){save={}}
+function put(){try{localStorage.setItem('gsu-rum-brain',JSON.stringify(save))}catch(e){}}
+var g={t:0,streak:0,order:[],pos:0,timer:null,left:0};
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
+var road=$('road');
+TIERS.forEach(function(t,ix){var b=document.createElement('button');b.className='tier';b.innerHTML='<div class="n">'+t.n+'</div><div class="d">'+t.d+'</div><div class="st" id="ts'+ix+'"></div>';b.onclick=function(){pick(ix)};road.appendChild(b)});
+function tierStatus(){TIERS.forEach(function(t,ix){var s=save['t'+ix]||0;$('ts'+ix).textContent=(ix<2&&save['c'+ix]?'Cleared. ':'')+'Best streak '+s;road.children[ix].className='tier'+(ix===g.t?' on':'')})}
+function pick(ix){g.t=ix;g.streak=0;g.order=shuffle(CLUES.map(function(_,i){return i}));g.pos=0;tierStatus();ask()}
+function ask(){
+  clearInterval(g.timer);var t=TIERS[g.t];if(g.pos>=g.order.length){g.order=shuffle(g.order);g.pos=0}
+  var c=CLUES[g.order[g.pos++]];var others=shuffle(Object.keys(NAMES).filter(function(k){return k!==c[0]})).slice(0,t.k-1);
+  var opts=shuffle([c[0]].concat(others));$('q').textContent=c[1];$('fb').textContent='';$('nextq').hidden=true;
+  var box=$('opts');box.innerHTML='';
+  opts.forEach(function(k){var b=document.createElement('button');b.className='opt';b.textContent=NAMES[k];b.onclick=function(){answer(b,k===c[0],c)};box.appendChild(b)});
+  $('streak').textContent=g.streak;$('best').textContent=save['t'+g.t]||0;
+  $('goal').textContent=t.goal?('Clear '+t.n+': '+Math.min(g.streak,t.goal)+' of '+t.goal):'Best: no finish line';
+  $('clockwrap').hidden=!t.time;
+  if(t.time){g.left=t.time*10;$('clock').style.width='100%';g.timer=setInterval(function(){g.left--;$('clock').style.width=(g.left/(t.time*10)*100)+'%';if(g.left<=0){clearInterval(g.timer);lock(c);g.streak=0;$('streak').textContent=0;$('fb').innerHTML='<b>Time.</b> The right name is marked.';$('nextq').hidden=false}},100)}
+}
+function lock(c){Array.prototype.forEach.call($('opts').children,function(b){b.disabled=true;if(b.textContent===NAMES[c[0]])b.classList.add('right')})}
+function answer(b,ok,c){
+  clearInterval(g.timer);lock(c);var t=TIERS[g.t];
+  if(ok){g.streak++;if(g.streak>(save['t'+g.t]||0)){save['t'+g.t]=g.streak;put()}var msg='<b>Right.</b> '+NAMES[c[0]]+'.';
+    if(t.goal&&g.streak===t.goal){save['c'+g.t]=1;put();msg+=' <b>You cleared '+t.n+'.</b>'}$('fb').innerHTML=msg}
+  else{b.classList.add('wrong');g.streak=0;$('fb').innerHTML='<b>Not this one.</b> The right name is marked. Click it in the diagram above to read why.'}
+  $('streak').textContent=g.streak;$('best').textContent=save['t'+g.t]||0;tierStatus();$('nextq').hidden=false;$('nextq').focus();
+}
+$('nextq').onclick=ask;
+pick(0);
+})();
+</script>
+<script src="/return-bar.js" defer></script>
+</body>
+</html>
